@@ -1,0 +1,28 @@
+<div class="navigation-panel">
+  <div class="navigation-panel-brand">L<span [ngClass]="currentPanelState">ogo</span></div>
+  <ul class="navigation-panel-menu" *ngIf="links && links.length > 0">
+    <li *ngFor="let link of links">
+      <a [routerLink]="link.url" 
+          [routerLinkActive]="['active']"
+          [routerLinkActiveOptions]="{exact: true}">
+        <i class="fas fa-home" [ngClass]="link.iconClass"></i>
+        <span [ngClass]="currentPanelState">{{ link.text }}</span>
+      </a>
+    </li>
+  </ul>
+  <div class="navigation-panel-brand"><div class="navigation-top-bar">
+  <div class="toggler" role="button">
+    <svg 
+        singleDoubleClick
+        (onSingleClick)="handleSingleClick()"
+        viewBox="0 0 100 80" width="32" height="32">
+      <rect width="100" height="18"></rect>
+      <rect y="28" width="100" height="18"></rect>
+      <rect y="56" width="100" height="18"></rect>
+    </svg>
+  </div>
+  <div class="navigation-extended">
+    <ng-content select="[panel=navigationExtended"></ng-content>
+  </div>
+</div></div>
+</div>
