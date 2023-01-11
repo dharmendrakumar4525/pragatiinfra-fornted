@@ -8,6 +8,7 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AccountInfoComponent } from './pages/account-info.component';
 import { DashboardComponent } from './pages/dashboard.component';
@@ -20,10 +21,12 @@ import { ProgressSheetComponent } from './pages/progress-sheet/progress-sheet.co
 import { CustomMaterialModule } from './ang-material.module';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AddTasksComponent } from './pages/add-tasks/add-tasks.component';
+import { AddSubTasksComponent } from './pages/add-sub-tasks/add-sub-tasks.component';
 
 @NgModule({
-  imports:      [ AppRoutingModule, BrowserModule,ReactiveFormsModule, FormsModule, CoreModule, SharedModule, CustomMaterialModule,FlexLayoutModule, BrowserAnimationsModule ],
-  declarations: [ AppComponent, HomeComponent, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent ],
+  imports:      [ AppRoutingModule, BrowserModule,ReactiveFormsModule,HttpClientModule, FormsModule, CoreModule, SharedModule, CustomMaterialModule,FlexLayoutModule, BrowserAnimationsModule ],
+  declarations: [ AppComponent, HomeComponent, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

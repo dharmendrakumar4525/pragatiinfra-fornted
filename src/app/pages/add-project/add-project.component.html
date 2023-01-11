@@ -5,10 +5,10 @@
       fxLayoutAlign="space-around center" fxLayoutGap="0px">
       <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
         <div class="custom-form-group">
-            <label class="custom-label" for="">Business Type<span class="star">*</span></label>
+            <label class="custom-label" for="">Project Name<span class="star">*</span></label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput  placeholder="Enter Profession Type"
+                <input matInput  placeholder="Enter Project Name"
                   >
                 <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
                   <span>Please provide a valid Profession Type</span>
@@ -19,14 +19,19 @@
        
       </div>
       <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
+ 
         <div class="custom-form-group">
-            <label class="custom-label" for="">Business Type<span class="star">*</span></label>
+            <label class="custom-label" for=""> Project Date <span class="star">*</span>
+              <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
+            </label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput placeholder="Enter Profession Type"
-                  >
-                <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
-                  <span>Please provide a valid Profession Type</span>
+                <input matInput [matDatepicker]="startPicker"  placeholder="Enter start date"
+                (click)="startPicker.open()"/>
+                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
+                <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
+                  <span *ngIf="startDate.hasError('required')"> Start date is required </span>
                 </mat-error> -->
               </mat-form-field>
             </div>
@@ -35,10 +40,10 @@
       </div>
       <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
         <div class="custom-form-group">
-            <label class="custom-label" for="">Business Type<span class="star">*</span></label>
+            <label class="custom-label" for="">Location<span class="star">*</span></label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput  placeholder="Enter Profession Type"
+                <input matInput  placeholder="Enter Location"
                   >
                 <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
                   <span>Please provide a valid Profession Type</span>
@@ -53,18 +58,20 @@
     <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
       fxLayoutAlign="space-around center" fxLayoutGap="0px">
       <div fxLayout="column" fxFlex="92" fxFlexFill class="addform-50-column mobile_mb_0">
-        <div class="custom-form-group">
-            <label class="custom-label" for="">Business Type<span class="star">*</span></label>
-            <div class="custom-form-control">
-              <mat-form-field appearance="outline">
-                <input matInput  placeholder="Enter Profession Type"
-                  >
-                <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
-                  <span>Please provide a valid Profession Type</span>
-                </mat-error> -->
-              </mat-form-field>
-            </div>
-          </div>
+        <mat-form-field class="example-chip-list" appearance="outline">
+            <mat-chip-list #chipList>
+              <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable"
+                       [removable]="removable" (removed)="remove(fruit)">
+                {{fruit.name}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="New fruit..."
+                     [matChipInputFor]="chipList"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="addOnBlur"
+                     (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+          </mat-form-field>
        
       </div>
      
@@ -73,52 +80,186 @@
     <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
     fxLayoutAlign="space-around center" fxLayoutGap="0px">
     <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
-      <div class="custom-form-group">
-          <label class="custom-label" for="">Business Type<span class="star">*</span></label>
-          <div class="custom-form-control">
-            <mat-form-field appearance="outline">
-              <input matInput  placeholder="Enter Profession Type"
-                >
-              <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
-                <span>Please provide a valid Profession Type</span>
-              </mat-error> -->
-            </mat-form-field>
+        <div class="custom-form-group">
+            <label class="custom-label" for=""> R0 PreparedDate <span class="star">*</span>
+              <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
+            </label>
+            <div class="custom-form-control">
+              <mat-form-field appearance="outline">
+                <input matInput [matDatepicker]="r0Picker"  placeholder="Enter start date"
+                (click)="r0Picker.open()"/>
+                <mat-datepicker-toggle matSuffix [for]="r0Picker"></mat-datepicker-toggle>
+                <mat-datepicker #r0Picker></mat-datepicker>
+                <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
+                  <span *ngIf="startDate.hasError('required')"> Start date is required </span>
+                </mat-error> -->
+              </mat-form-field>
+            </div>
           </div>
-        </div>
      
     </div>
     <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
-      <div class="custom-form-group">
-          <label class="custom-label" for="">Business Type<span class="star">*</span></label>
-          <div class="custom-form-control">
-            <mat-form-field appearance="outline">
-              <input matInput placeholder="Enter Profession Type"
-                >
-              <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
-                <span>Please provide a valid Profession Type</span>
-              </mat-error> -->
-            </mat-form-field>
+        <div class="custom-form-group">
+            <label class="custom-label" for=""> R2 PreparedDate <span class="star">*</span>
+              <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
+            </label>
+            <div class="custom-form-control">
+              <mat-form-field appearance="outline">
+                <input matInput [matDatepicker]="r1Picker"  placeholder="Enter start date"
+                (click)="r1Picker.open()"/>
+                <mat-datepicker-toggle matSuffix [for]="r1Picker"></mat-datepicker-toggle>
+                <mat-datepicker #r1Picker></mat-datepicker>
+                <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
+                  <span *ngIf="startDate.hasError('required')"> Start date is required </span>
+                </mat-error> -->
+              </mat-form-field>
+            </div>
           </div>
-        </div>
   
     </div>
     <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
-      <div class="custom-form-group">
-          <label class="custom-label" for="">Business Type<span class="star">*</span></label>
-          <div class="custom-form-control">
-            <mat-form-field appearance="outline">
-              <input matInput  placeholder="Enter Profession Type"
-                >
-              <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
-                <span>Please provide a valid Profession Type</span>
-              </mat-error> -->
-            </mat-form-field>
+        <div class="custom-form-group">
+            <label class="custom-label" for=""> R2 PreparedDate <span class="star">*</span>
+              <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
+            </label>
+            <div class="custom-form-control">
+              <mat-form-field appearance="outline">
+                <input matInput [matDatepicker]="r2Picker"  placeholder="Enter start date"
+                (click)="r2Picker.open()"/>
+                <mat-datepicker-toggle matSuffix [for]="r2Picker"></mat-datepicker-toggle>
+                <mat-datepicker #r2Picker></mat-datepicker>
+                <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
+                  <span *ngIf="startDate.hasError('required')"> Start date is required </span>
+                </mat-error> -->
+              </mat-form-field>
+            </div>
           </div>
-        </div>
    
     </div>
     
   </div>
+  <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
+  fxLayoutAlign="space-around center" fxLayoutGap="0px">
+  <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
+  
+  <mat-card id="card" style="text-align: center;">
+	<mat-card-title>
+		
+	</mat-card-title>
+
+	<mat-card-content>
+
+		
+		<img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
+        <div>add activity with sub activity</div>
+
+	</mat-card-content>
+  </mat-card>
+  </div>
+  </div>
+<br>
+  <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
+  fxLayoutAlign="space-around center" fxLayoutGap="10px">
+  <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
+  
+  <mat-card id="card" style="text-align: center;" (click)="addTask()">
+	<mat-card-title>
+		
+	</mat-card-title>
+
+	<mat-card-content>
+
+		
+		<img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
+        <div>add activity with sub activity</div>
+
+	</mat-card-content>
+  </mat-card>
+  </div>
+  <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
+  
+    <mat-card id="card" style="text-align: center;">
+      <mat-card-title>
+          
+      </mat-card-title>
+  
+      <mat-card-content>
+  
+          
+          <img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
+          <div>add activity with sub activity</div>
+  
+      </mat-card-content>
+    </mat-card>
+    </div>
+    <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
+  
+        <mat-card id="card" style="text-align: center;">
+          <mat-card-title>
+              
+          </mat-card-title>
+      
+          <mat-card-content>
+      
+              
+              <img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
+              <div>add activity with sub activity</div>
+      
+          </mat-card-content>
+        </mat-card>
+        </div>
+        <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
+  
+            <mat-card id="card" style="text-align: center;">
+              <mat-card-title>
+                  
+              </mat-card-title>
+          
+              <mat-card-content>
+          
+                  
+                  <img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
+                  <div>add activity with sub activity</div>
+          
+              </mat-card-content>
+            </mat-card>
+            </div>
+  </div>
+<br>
+
+<div 
+   fxLayout="row wrap" 
+   fxLayout.lt-sm="column" 
+   fxLayoutGap="10px" 
+   fxLayoutAlign="flex-start"
+   style="margin-left: 5%;">
+
+   <ng-container *ngFor="let task of tasks">
+    <mat-card id="card" fxFlex="0 1 calc(33.3% - 32px)"
+    fxFlex.lt-md="0 1 calc(50% - 32px)"
+    fxFlex.lt-sm="100%">
+        <mat-card-title>
+            {{task.taskName}}
+            
+        </mat-card-title>
+    
+        <mat-card-content>
+            <span (click)="addSubTask(task.taskId)">add sub task+++</span>
+            <br>
+            <span *ngFor="let subTask of task?.result">
+            <span>{{subTask?.subTaskName}}</span>
+        </span>
+            <!-- <img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
+            <div>add activity with sub activity</div> -->
+    
+        </mat-card-content>
+      </mat-card>
+      <br>
+   </ng-container>
+
+</div>
+
+
 </form>
      
 
