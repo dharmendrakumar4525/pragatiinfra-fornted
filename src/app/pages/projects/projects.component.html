@@ -1,8 +1,184 @@
-<div style="padding: 1.5rem;"><h1>Projects screen</h1></div>
-  <button [routerLink]="['/add-project']" >
-  go to add project screen
-</button>
+<mat-toolbar>
+    <mat-toolbar-row fxLayoutAlign="space-between center">
+        <div style="padding: 1rem;margin-top: 60px;">
+        <span>Pragati Infra</span></div>
+        <div>
+            <button style="padding: 5px;width: 100px;margin-top: 60px;">Add Project +  </button>
+        <mat-icon>notifications</mat-icon>
+  
+        </div>
+      </mat-toolbar-row>
+        
+      <mat-toolbar-row>
+        <hr style="width:100%">
+      </mat-toolbar-row>
+  </mat-toolbar>
 
-<button [routerLink]="['/view-project']" >
-  go to project view
-</button>
+<div fxLayout="row" >
+  <div fxLayout="column" fxFlex="70">
+    <div class="leftside">
+
+
+  <div style="margin-left: 35px;" fxLayout="row" fxLayoutGap="100px" >
+ <div style="margin-left: 35px;width:40%">
+<button mat-button>Projects</button>
+</div>
+<div>
+<form class="Search-form">
+    <mat-form-field class="example-full-width" appearance="outline">
+    <span matPrefix> </span>
+    <input type="text" matInput placeholder="Search" name= "search" >
+    <button matSuffix mat-button><mat-icon >search</mat-icon></button>
+    </mat-form-field>
+   
+    </form>
+</div>
+</div>
+<div class="content" fxLayout="row" fxLayoutGap="10px">
+  <div class="scroll-bar">
+    <div fxLayout="row wrap" fxLayoutGap="16px grid" fxLayoutAlign="space-around center">
+      <div fxFlex="25%"  fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let num of [1,2,3,4,5,6,7,8,9,10,11,12]">
+        <mat-card class="mat-elevation-z4" >
+          <mat-card-header>
+            <mat-card-title>Projects{{num}}</mat-card-title>
+          </mat-card-header>
+          <img mat-card-image src=".\..\assets\images\project.jpg">
+          <mat-card-content>
+          
+          </mat-card-content>
+          <mat-card-actions>
+         
+          </mat-card-actions>
+        </mat-card>
+        
+      </div>
+      
+    </div>
+  </div>
+    </div>
+    <div><hr style="border: 1px solid #233A61;margin-left: 30px; background-color: #233A61;"></div>
+
+    
+    <div style="height: 30vh;margin-top: 1vh;">
+      <div style="margin-top: 30px;margin-left: 30px;"><h3>OverView</h3></div>
+    
+      <div class="container" >
+        <div class="row" fxLayout="row" fxLayoutGap="16px grid" fxLayoutAlign="space-around center"   >
+          <div fxFlex="25%"  fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let card of cards">
+            <mat-card class="card-below">
+            <mat-card-title style="display: flex;justify-content: center;">
+                   <h1>{{card.count}}</h1>
+                </mat-card-title>
+                <mat-card-content  style="display: flex;justify-content: center;">
+                  {{card.title}}
+                </mat-card-content>
+           
+            </mat-card>
+          </div>
+        </div>
+      </div>
+  </div>
+
+
+
+
+</div>
+</div>
+
+<div fxLayout="column" fxFlex="29" fxLayoutAlign="right" fxLayoutGap="30px" class="rightside" style="height: 145vh;">
+
+<div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right"  style="height: 70vh;" >
+  <mat-card fxLayout="column" fxLayoutAlign="left" style="height: 70vh; ">
+    <mat-card-header>
+  
+      <mat-card-title> About</mat-card-title>
+  
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+      Pellentesque volutpat enim ac ligula fermentum, 
+      eleifend tincidunt ex ullamcorpere
+      eleifend tincidunt ex ullamcorper
+      eleifend tincidunt ex ullamcorper
+      eleifend tincidunt ex ullamcorper
+      eleifend tincidunt ex ullamcorper
+
+      leifend tincidunt ex ullamcorper</p></mat-card-content>
+     
+      <mat-card-subtitle>Members</mat-card-subtitle>
+
+      <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3]">
+      <div mat-card-avatar class="example-header-image"></div>
+      <div >
+      <button mat-button >User1</button> 
+    </div>
+  
+  </div>
+  <div fxFlex="row" fxLayoutAlign="start" >
+    <div mat-card-avatar class="example-header-image"></div>
+    <div >
+    <button mat-button >User2</button> 
+  </div>
+
+
+
+</div>
+    <mat-card-actions>
+      <button mat-button>Addmembers+</button> 
+    </mat-card-actions>
+  </mat-card>
+
+</div>
+
+
+
+
+
+
+
+
+<div fxLayout="column" fxFlex="29" fxLayoutAlign="right"  class="rightside" style="height: 145vh;">
+
+  <div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right"  style="height: 70vh;" >
+    <mat-card fxLayout="column" fxLayoutAlign="left" style="height: 70vh;">
+     
+        <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3]">
+        <div mat-card-avatar class="example-header-image"></div>
+        <div >
+        <button mat-button >updatedsheet</button> 
+      </div>
+    
+    </div>
+    <div fxFlex="row" fxLayoutAlign="start" >
+      <div mat-card-avatar class="example-header-image"></div>
+      <div >
+      <button mat-button >updatedsheet</button> 
+    </div>
+  
+  
+  
+  </div>
+      
+    </mat-card>
+  
+  </div>
+  
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
