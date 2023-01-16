@@ -1,6 +1,6 @@
 <p>add-project works!</p>
 
-<form class="form-section" >
+<form class="form-section" [formGroup]="projectForm">
     <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
       fxLayoutAlign="space-around center" fxLayoutGap="0px">
       <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
@@ -8,7 +8,7 @@
             <label class="custom-label" for="">Project Name<span class="star">*</span></label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput  placeholder="Enter Project Name"
+                <input matInput  placeholder="Enter Project Name" formControlName="projectName"
                   >
                 <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
                   <span>Please provide a valid Profession Type</span>
@@ -26,7 +26,7 @@
             </label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="startPicker"  placeholder="Enter start date"
+                <input matInput [matDatepicker]="startPicker" formControlName="projectDate" placeholder="Enter start date"
                 (click)="startPicker.open()"/>
                 <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                 <mat-datepicker #startPicker></mat-datepicker>
@@ -43,7 +43,7 @@
             <label class="custom-label" for="">Location<span class="star">*</span></label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput  placeholder="Enter Location"
+                <input matInput  placeholder="Enter Location" formControlName="location"
                   >
                 <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
                   <span>Please provide a valid Profession Type</span>
@@ -59,13 +59,13 @@
       fxLayoutAlign="space-around center" fxLayoutGap="0px">
       <div fxLayout="column" fxFlex="92" fxFlexFill class="addform-50-column mobile_mb_0">
         <mat-form-field class="example-chip-list" appearance="outline">
-            <mat-chip-list #chipList>
+            <mat-chip-list #chipList formArrayName="fruits">
               <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable"
                        [removable]="removable" (removed)="remove(fruit)">
                 {{fruit.name}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
               </mat-chip>
-              <input placeholder="New fruit..."
+              <input placeholder="New email..." 
                      [matChipInputFor]="chipList"
                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                      [matChipInputAddOnBlur]="addOnBlur"
@@ -86,7 +86,7 @@
             </label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="r0Picker"  placeholder="Enter start date"
+                <input matInput [matDatepicker]="r0Picker" formControlName="r0Date" placeholder="Enter start date"
                 (click)="r0Picker.open()"/>
                 <mat-datepicker-toggle matSuffix [for]="r0Picker"></mat-datepicker-toggle>
                 <mat-datepicker #r0Picker></mat-datepicker>
@@ -105,7 +105,7 @@
             </label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="r1Picker"  placeholder="Enter start date"
+                <input matInput [matDatepicker]="r1Picker" formControlName="r1Date" placeholder="Enter start date"
                 (click)="r1Picker.open()"/>
                 <mat-datepicker-toggle matSuffix [for]="r1Picker"></mat-datepicker-toggle>
                 <mat-datepicker #r1Picker></mat-datepicker>
@@ -124,7 +124,7 @@
             </label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="r2Picker"  placeholder="Enter start date"
+                <input matInput [matDatepicker]="r2Picker" formControlName="r2Date" placeholder="Enter start date"
                 (click)="r2Picker.open()"/>
                 <mat-datepicker-toggle matSuffix [for]="r2Picker"></mat-datepicker-toggle>
                 <mat-datepicker #r2Picker></mat-datepicker>
@@ -244,11 +244,16 @@
         </mat-card-title>
     
         <mat-card-content>
-            <span (click)="addSubTask(task.taskId)">add sub task+++</span>
+            <button (click)="addSubTask(task.taskId)">add sub task+++</button>
             <br>
-            <span *ngFor="let subTask of task?.result">
+            <!-- <span *ngFor="let subTask of task?.result">
             <span>{{subTask?.subTaskName}}</span>
-        </span>
+        </span> -->
+        <li *ngFor="let item of task?.result">
+      <input type="checkbox" [checked]="getSelection(item,task)" (change)="changeHandler(item,task)">
+      <label>{{item?.subTaskName}}</label>
+    </li>
+    <!-- <button (click)="save()">save </button> -->
             <!-- <img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
             <div>add activity with sub activity</div> -->
     
@@ -259,7 +264,7 @@
 
 </div>
 
-
+<button (click)="addProject()">Submit</button>
 </form>
      
 
