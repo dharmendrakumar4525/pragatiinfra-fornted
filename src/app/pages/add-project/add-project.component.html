@@ -55,22 +55,37 @@
       </div>
       
     </div>
+
+
+    <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
+    fxLayoutAlign="space-around center" fxLayoutGap="0px">
+    <div fxLayout="column" fxFlex="92" fxFlexFill class="addform-50-column mobile_mb_0">
+    
+          
+        <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)" />
+    
+     
+    </div>
+   
+    
+  </div>
+
     <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
       fxLayoutAlign="space-around center" fxLayoutGap="0px">
       <div fxLayout="column" fxFlex="92" fxFlexFill class="addform-50-column mobile_mb_0">
         <mat-form-field class="example-chip-list" appearance="outline">
-            <mat-chip-list #chipList formArrayName="fruits">
-              <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable"
-                       [removable]="removable" (removed)="remove(fruit)">
-                {{fruit.name}}
-                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-              </mat-chip>
-              <input placeholder="New email..." 
-                     [matChipInputFor]="chipList"
-                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                     [matChipInputAddOnBlur]="addOnBlur"
-                     (matChipInputTokenEnd)="add($event)">
-            </mat-chip-list>
+          <mat-chip-list #chipList aria-label="Enter members" formControlName="members">
+            <mat-chip *ngFor="let tag of projectForm.controls['members'].value" [selectable]="selectable"
+                      [removable]="removable" (removed)="removeTag(tag)">
+              {{tag}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Add tag & hit Enter"
+                   [matChipInputFor]="chipList"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   [matChipInputAddOnBlur]="addOnBlur"
+                   (matChipInputTokenEnd)="addTag($event)">
+          </mat-chip-list>
           </mat-form-field>
        
       </div>

@@ -7,6 +7,7 @@ import { AddTasksComponent } from '../add-tasks/add-tasks.component';
 import { TaskService } from 'src/app/services/task.service';
 import { AddSubTasksComponent } from '../add-sub-tasks/add-sub-tasks.component';
 import { AddProjectService } from 'src/app/services/add-project.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 export interface Fruit {
   name: string;
@@ -26,27 +27,29 @@ export class AddProjectComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   selection: any[] = [];
+  imageUrl:any;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruits: Fruit[] = [
-    {name: 'Lemon'},
-    {name: 'Lime'},
-    {name: 'Apple'},
-  ];
+  // tags = [
+  //   {name: 'Lemon'},
+  //   {name: 'Lime'},
+  //   {name: 'Apple'},
+  // ];
   
   projectForm: FormGroup = this._fb.group({
     projectName: [null, [Validators.required]],
    // membership: [null],
    projectDate: [null, [Validators.required]],
    location: [null],
-   fruits: this._fb.array(["Lemon", "Lime", "Apple"]),
+   //fruits: this._fb.array(["Lemon", "Lime", "Apple"]),
    r0Date: [null],
    r1Date: [null],
    r2Date: [null],
+   members: [[]],
   //  address: [null, [Validators.required]],
 
   });
   tasks:any;
-  constructor(private _fb: FormBuilder, private _dialog: MatDialog,private taskService: TaskService,
+  constructor(private _fb: FormBuilder, private toast: ToastService, private _dialog: MatDialog,private taskService: TaskService,
     private projectService: AddProjectService,) { }
 
   ngOnInit(): void {
@@ -63,15 +66,16 @@ export class AddProjectComponent implements OnInit {
     return this.projectForm.get('courseIds');
 }
 
-  add(event: MatChipInputEvent): void {
+addTag(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
 
     // Add our fruit
     if ((value || '').trim()) {
-      this.fruits.push({name: value.trim()});
+     // this.tags.push({name: value.trim()});
       // this.courseIds.value.push(value);
-
+      this.projectForm.controls['members'].setValue([...this.projectForm.controls['members'].value, value.trim()]);
+      this.projectForm.controls['members'].updateValueAndValidity();
       // this.courseIds.updateValueAndValidity();
     }
 
@@ -81,13 +85,21 @@ export class AddProjectComponent implements OnInit {
     }
   }
 
-  remove(fruit: Fruit): void {
-    const index = this.fruits.indexOf(fruit);
+  removeTag(tag: string): void {
+    const index = this.projectForm.controls['members'].value.indexOf(tag);
 
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.projectForm.controls['members'].value.splice(index, 1);
+      this.projectForm.controls['members'].updateValueAndValidity();
     }
   }
+  // remove(fruit: Fruit): void {
+  //   const index = this.tags.indexOf(fruit);
+
+  //   if (index >= 0) {
+  //     this.tags.splice(index, 1);
+  //   }
+  // }
 
   addTask() {
     const dialogRef = this._dialog.open(AddTasksComponent, {
@@ -147,8 +159,13 @@ export class AddProjectComponent implements OnInit {
   }
 
   addProject(){
+    this.toast.openSnackBar(
+      'Enter Valid Details'
+    );
     console.log(this.selection);
+    console.log(this.projectForm.value);
     this.projectForm.value.sections = this.selection
+    this.projectForm.value.imageUrl = this.imageUrl
     this.projectService.addProject(this.projectForm.value).subscribe(
 
       {
@@ -173,5 +190,26 @@ export class AddProjectComponent implements OnInit {
   
     )
 
+  }
+
+  uploadFile(event:any) {
+    let reader = new FileReader(); // HTML5 FileReader API
+    let file = event.target.files[0];
+    if (event.target.files && event.target.files[0]) {
+      reader.readAsDataURL(file);
+
+      // When file uploads set it to file formcontrol
+      reader.onload = () => {
+        this.imageUrl = reader.result;
+        console.log(this.imageUrl)
+        // this.registrationForm.patchValue({
+        //   file: reader.result
+        // });
+        //this.editFile = false;
+        //this.removeUpload = true;
+      }
+      // ChangeDetectorRef since file is loading outside the zone
+      //this.cd.markForCheck();        
+    }
   }
 }
