@@ -7,6 +7,7 @@ import { CalenderComponent } from './pages/calender/calender.component';
 import { DashboardComponent } from './pages/dashboard.component';
 import { DataAnalysisComponent } from './pages/data-analysis/data-analysis.component';
 import { HomeComponent } from './pages/home.component';
+import { LoginComponent } from './pages/login/login.component';
 import { ProgressSheetComponent } from './pages/progress-sheet/progress-sheet.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { ViewProjectComponent } from './pages/view-project/view-project.component';
@@ -36,6 +37,7 @@ const routes: Routes = [
       {path: 'data-analysis', component: DataAnalysisComponent},
       {path: 'progress-sheet', component: ProgressSheetComponent},
       {path: 'calender', component: CalenderComponent}, 
+      {path: 'login', component: LoginComponent},
 
     ]
   },

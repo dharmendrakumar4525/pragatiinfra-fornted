@@ -1,1 +1,194 @@
-<p>data-analysis works!</p>
+
+<mat-toolbar style="background-color: #fff !important;">
+    <mat-toolbar-row fxLayoutAlign="space-between center" >
+        <div style="padding: 1rem;margin-top: 60px;">
+        <span>project 1</span></div>
+        <div>
+            <button style="padding: 12px 12px;width: 150px;margin-top: 50px;">Add Project +  </button>
+            
+            <button style="padding: 5px 5px;width: 150px;margin-left: 40px"> <mat-icon style="font-size: medium;position: relative;right:1px;top:10px">group_add</mat-icon>
+                Add Member </button>
+                
+
+        <mat-icon>notifications</mat-icon>
+  
+        </div>
+      </mat-toolbar-row>
+        
+      <mat-toolbar-row>
+        <hr style="width:100%">
+      </mat-toolbar-row>
+  </mat-toolbar>
+
+  
+<div class="toptext" >
+    <ul>
+      <li><a [routerLink]="['/dpr']" routerLinkActive="active-link"
+        ><i class="fa fa-eye" aria-hidden="true"></i> Projects</a></li>
+      <li><a [routerLink]="['data-analysis']" routerLinkActive="active-link-active"
+        [routerLinkActiveOptions]="{exact: true}" ><i class="fa fa-eye" aria-hidden="true"></i> Data-Analysis</a></li>
+      <li><a [routerLink]="['progress-sheet']" routerLinkActive="active-link-active"
+         ><i class="fa fa-pencil" aria-hidden="true"></i> Progress-sheet</a></li>
+      <li><a [routerLink]="['calender']" routerLinkActive="active-link"
+         ><i class="fa fa-pencil" aria-hidden="true"></i> Calender</a></li>
+    </ul>
+    
+  
+  </div><br>
+
+  
+
+
+  <mat-grid-list cols = "4" rowHeight="500px" style="background-color: #fff; margin-top:-20px !important">
+    
+    <mat-grid-tile  
+    colspan="3" >
+    <mat-card style="box-shadow: none !important;" >
+    <mat-toolbar>
+   <mat-toolbar-row fxLayoutGap="100" style="font-size: small;background-color: #233A61;color: white;"><span>R0Prepareddate:16/01/2023</span>
+    <span>R1Prepareddate:16/01/2023</span>
+    <span>R2Prepareddate:16/01/2023</span>
+  </mat-toolbar-row>
+      
+    </mat-toolbar>
+
+
+    <div style="width: 150px;text-align: center;position: absolute;top:150px">
+      <span>Todays update</span> <br>
+    
+    </div>
+      <div>
+      <mat-form-field appearance="outline" style="width: 150px;position: absolute;bottom:40px">
+    
+        <input matInput formControlName="releasedAt"
+        [matDatepickerFilter]="dateFilter"
+        [matDatepicker]="releasedAtPicker" >
+
+ <mat-datepicker-toggle matSuffix [for]="releasedAtPicker">
+
+ </mat-datepicker-toggle>
+
+ <mat-datepicker #releasedAtPicker >
+
+ </mat-datepicker>
+    
+      </mat-form-field>
+   
+    
+    <div style="margin-left: 200px; position: absolute; top:90px">
+    <button mat-button >Project OverView</button></div>
+    <div style="width:500px;height: 300px;margin-left: 200px; position: absolute; top:120px">
+      <canvas id="overviewChart" width="2" height="1" ></canvas>
+    </div>
+    
+  </div>
+
+  <hr style="width:100%; border: 3px solid gainsboro;border-radius: 10px; position: absolute; bottom: 0; left:0;" >
+   </mat-card>
+  
+    </mat-grid-tile>
+    
+    <mat-grid-tile 
+   
+    ><mat-card style="width: 200px;height: 400px;margin:10px 0px ;" >
+      <mat-card-header>
+      <mat-card-title> About</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+        Pellentesque volutpat enim ac ligula fermentum, 
+        eleifend tincidunt ex ullamcorpere
+        eleifend tincidunt ex ullamcorper
+        eleifend tincidunt ex ullamcorper
+      </p></mat-card-content>
+     <mat-card-subtitle>Members</mat-card-subtitle>
+     <div>
+     <div  fxLayout="column" fxLayoutGap="1px" *ngFor="let num of [1,2,3]">
+      <div mat-card-avatar class="example-header-image">
+        <div style="margin-left: 30px;">
+          <button mat-button >User1</button> </div>
+      </div>
+  </div>
+</div>
+<mat-card-actions>
+  <button mat-button>Addmembers+</button> 
+</mat-card-actions>
+    
+    </mat-card>
+
+
+    </mat-grid-tile>
+   
+
+
+
+    <mat-grid-tile 
+    colspan="3"
+
+    ><mat-card>
+
+      <select style="width: 50%;padding:10px;border-radius:10px">
+        <option>Activities</option>
+        <option>Activities</option>
+      </select>
+      <div class="cirle">
+  
+        <div class="left" align="center" style="margin-top:10%;" >
+        
+        <div><h5 style="color: #4675C2;">BoundaryWall</h5></div>
+          <circle-progress *ngFor="let single of [1] "  [percent]="80" [title]="'80'" [subtitle]="''"  [space]="-10" [radius]="60" [outerStrokeWidth]="10"
+            [innerStrokeWidth]="10" [outerStrokeColor]="'#1E293B'"   [innerStrokeColor]="'gainsboro'" [animation]="true"
+            [animationDuration]="100"></circle-progress>
+            
+        </div>
+        <div class="vertical-line"></div>
+        
+        <div id="center" align="center" style="margin-top:10%;margin-right: 1%;">
+        
+          <div ><h5 style="color: #4675C2;">WareHouse</h5></div>
+            <circle-progress *ngFor="let single of [2] "  [percent]="50" [title]="'50'" [subtitle]="''"  [space]="-10" [radius]="60" [outerStrokeWidth]="10"
+              [innerStrokeWidth]="10" [outerStrokeColor]="'#1E293B'"  [innerStrokeColor]="'gainsboro'" [animation]="true"
+              [animationDuration]="100"></circle-progress>
+              
+          </div>
+        
+          <div class="vertical-line"></div>
+          <div id="right" align="center" style="margin-top:10%;margin-right: 40%;">
+        
+            <div ><h5 style="color: #4675C2;">Water Pipe</h5></div>
+              <circle-progress *ngFor="let single of [3] "  [percent]="10" [title]="'10'" [subtitle]="''"  [space]="-10" [radius]="60" [outerStrokeWidth]="10"
+                [innerStrokeWidth]="10" [outerStrokeColor]="'#1E293B'"  [innerStrokeColor]="'gainsboro'" [animation]="true"
+                [animationDuration]="100"></circle-progress>
+                
+            </div>
+            </div>
+    
+    </mat-card>
+    </mat-grid-tile>
+
+
+    <mat-grid-tile 
+    
+
+    ><mat-card style="width: 200px;height: 400px;margin:10px 0px">
+      <div>
+        <div  fxLayout="column" fxLayoutGap="1px" *ngFor="let num of [1,2,3,4,5,6,7,8,9]">
+         <div mat-card-avatar class="example-header-image">
+           <div style="margin-left: 30px;">
+             <button mat-button >updatedsheet</button> </div>
+         </div>
+     </div>
+   </div>
+    </mat-card>
+    </mat-grid-tile>
+
+
+  
+ </mat-grid-list>
+
+
+            
+            
+            
+            
+            

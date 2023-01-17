@@ -1,0 +1,29 @@
+<div id="sect1" class="container">  
+    <div class="imgdiv">  
+        <img src="../../assets/images/Mainpage.png"  alt="cinque terre">  
+
+        <h1>Pragati Infra</h1>
+         <mat-card>
+       
+        <form class="example-form">
+            <h5><u><i>Login Form using Angular material!!</i></u></h5><br>
+            <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Your Email Id</mat-label>
+            <input matInput placeholder="Enter your emailid" name="Email"
+            [(ngModel)] ="email">
+            </mat-form-field>
+
+
+            <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Enter your password" value="" name="password" type="password" [(ngModel)]= "password">
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+            <span *ngIf="show"> <button mat-button color="accent">Login success !!</button></span>
+            </form>
+        </mat-card>
+        </div>
+        
+        
+
+        

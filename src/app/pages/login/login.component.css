@@ -1,0 +1,31 @@
+.imgdiv{
+    position: relative;
+}
+mat-card{
+    width:50%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top:60px;
+    left:30px !important;
+}
+
+.mat-form-field {
+    width: 100%;
+    min-width: 300px;
+  }
+
+  mat-card-title,
+  mat-card-content {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .button {
+    display: flex;
+    justify-content: flex-end;
+  }
+  mat-form-field{
+    background-color: white;
+  }
