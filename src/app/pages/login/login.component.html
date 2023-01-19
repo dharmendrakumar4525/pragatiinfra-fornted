@@ -1,29 +1,51 @@
-<div id="sect1" class="container">  
+<div id="sect1" >  
     <div class="imgdiv">  
-        <img src="../../assets/images/Mainpage.png"  alt="cinque terre">  
-
-        <h1>Pragati Infra</h1>
-         <mat-card>
        
-        <form class="example-form">
-            <h5><u><i>Login Form using Angular material!!</i></u></h5><br>
-            <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Your Email Id</mat-label>
-            <input matInput placeholder="Enter your emailid" name="Email"
-            [(ngModel)] ="email">
-            </mat-form-field>
 
 
-            <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Password</mat-label>
-            <input matInput placeholder="Enter your password" value="" name="password" type="password" [(ngModel)]= "password">
-            </mat-form-field>
-            <button mat-raised-button color="primary" (click)="submit()">Submit</button>
-            <span *ngIf="show"> <button mat-button color="accent">Login success !!</button></span>
-            </form>
-        </mat-card>
+        <mat-grid-list cols="4" rowHeight="800px" >
+            <div>
+            <img src="../../assets/images/Mainpage.png" style="width:100%" alt="cinque terre"> 
+            <div style="height: 100px;width:100px;position: absolute;bottom:18%;left:15%">
+            <img src="../../assets/images/dot.png" style="width:100%" alt="cinque terre"> </div>
         </div>
-        
+            <mat-grid-tile colspan="2" rowspan="1" >
+                
+                    <h1 style="font-size:70px;color: #fff;margin-top: 500px;margin-left: 150px;">Pragati Infra</h1>
+               
+            </mat-grid-tile>
+            <mat-grid-tile colspan="2" rowspan="1"  >
+                <mat-card  style="width:60%;padding: 20px;margin-top: 150px;margin-left: 60px;">
+       
+                    <form class="example-form" >
+                        <h2>Login</h2><br>
+                        <h4>Just signin if you have an account in here. Enjoy your website.</h4>
+                        <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Your Email Id</mat-label>
+                        <input matInput placeholder="Enter your emailid" name="Email"
+                        [(ngModel)] ="email">
+                        </mat-form-field>
+            
+            
+                        <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Enter Password</mat-label>
+                        <input matInput placeholder="Enter your password" value="" name="password" type="password" [(ngModel)]= "password">
+                        </mat-form-field>
+                     
+                        <input type="checkbox">Remember me<br><br>
+                        <div style="position: relative;bottom:40px;left:250px">
+                        <label >Forgot Password</label>
+                    </div>
+                        <button mat-raised-button style="background-color: #233A61;color: #fff;width:100%" (click)="submit()">Login</button>
+                        <span *ngIf="show"> <button mat-button color="accent">Login success !!</button></span>
+                        </form>
+                    </mat-card>
+                    
+            </mat-grid-tile>
+            </mat-grid-list>
+                
+</div>
+
         
 
         

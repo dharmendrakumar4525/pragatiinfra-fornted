@@ -1,1 +1,115 @@
-<p>calender works!</p>
+
+<mat-toolbar style="background-color: #fff !important;">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" >
+        <div style="padding: 1rem;margin-top: 60px;">
+            <select style="padding: 10px;width:100%;border: none;font-size: large;">
+                <option>
+        <span>Project 1</span></option>
+</select>
+<span style="font-size: small;">on track</span>
+</div>
+<div style="margin-left: 100px;font-size: small;position: relative;margin-top: 90px;">
+<span >Back to Calender</span></div>       
+      </mat-toolbar-row>
+        
+      <mat-toolbar-row>
+        <hr style="width:100%">
+      </mat-toolbar-row>
+  </mat-toolbar>
+  <div >
+    <ul class="toptext"  style="background-color: #fff !important;">
+      <li><a style="color: #000;" [routerLink]="['/dpr']" routerLinkActive="active-link"
+        ><i class="fa fa-eye" aria-hidden="true"></i> Projects</a></li>
+      <li><a style="color: #000;"[routerLink]="['data-analysis']" routerLinkActive="active-link-active"
+        [routerLinkActiveOptions]="{exact: true}" ><i class="fa fa-eye" aria-hidden="true"></i> Data-Analysis</a></li>
+      <li><a  style="color: #000;" [routerLink]="['progress-sheet']" routerLinkActive="active-link-active"
+         ><i class="fa fa-pencil" aria-hidden="true"></i> Progress-sheet</a></li>
+      <li><a style="color: #000;"[routerLink]="['calender']" routerLinkActive="active-link"
+         ><i class="fa fa-pencil" aria-hidden="true"></i> Calender</a></li>
+    </ul>
+    </div>
+
+    <mat-grid-list cols="4" rowHeight="400px" style="margin-top: 70px;">
+        <mat-grid-tile colspan="3" rowspan="2"  >
+           
+            <mat-card style="width: 95%; height: 99%;">
+                <div >
+                <mat-toolbar fxLayout="column" style="margin-bottom: 10px; background-color: #233A61;color: #fff;">
+                    <h2 style="font-size: xx-large;margin-right: 800px;margin-top: 10px;">16 </h2>
+                      <div style="margin-right: 680px;margin-bottom: 50px;position: absolute;"><h4 style="font-size: small">Jan<br>Monday 2023</h4></div><br>  
+                </mat-toolbar>
+            </div>
+            
+            <div class="scroll-bar1" style="width: 100%;">
+            <table>
+           
+          <thead>
+            <th >Description</th>
+           <th>Quantity used</th>
+             
+            
+              </thead>
+           
+            <tbody *ngFor= " let project of projectsData ">
+                <tr  style="font-size: large;border: 1px solid lightgray;">
+                    <td>{{project.taskName}}</td>
+                    
+                
+                </tr>
+                <tr *ngFor="let subTask of project.result" style="background-color: #F5F5F5;">
+    
+                  <td >{{subTask.subTaskName}}</td>
+                  <td id="myP" contenteditable="true"></td>
+                  
+                </tr>
+            </tbody>
+
+            </table>
+          </div>
+         
+            <script>
+              let answer = document.getElementById("myP").contentEditable;
+             
+              </script>
+            
+        
+            </mat-card>
+       
+                
+          
+        </mat-grid-tile>
+
+        <mat-grid-tile >
+            <mat-card style="width: 250px;height: 350px;margin:10px 0px">
+            <div class = "calendar-wrapper" style="height: 200px;">
+                <mat-calendar #calendar [(selected)]="selectedDate" >
+                </mat-calendar>
+                </div>
+                </mat-card>
+        </mat-grid-tile>
+
+        
+       
+
+        <mat-grid-tile >
+            <mat-card style="width: 250px;height: 350px;margin:10px 0px">
+                <div>
+                  <div class="scroll-bar">
+                  <div  fxLayout="column" fxLayoutGap="10px" *ngFor="let num of [1,2,3,4,5,6,7,8,9,10]">
+                   <div mat-card-avatar class="example-header-image">
+                     <div style="margin-left: 50px;">
+                       <button mat-button >updatedsheet</button> </div>
+                   </div>
+               </div>
+              </div>
+             </div>
+              </mat-card>
+        </mat-grid-tile>
+      <mat-grid-tile colspan="4" >
+        <mat-card style="width:150px;margin-right: 980px;margin-bottom: 300px;box-shadow: none;">
+          <button style="width:150px;padding: 10px;background-color: #233A61;color: #fff;">Submit</button>
+        </mat-card>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+  
