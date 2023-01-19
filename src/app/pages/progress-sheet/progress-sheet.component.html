@@ -40,76 +40,35 @@
   <h3>Project progress monitoring sheets(PPMS)</h3>
 </div>
 
-<div style="margin-bottom:20px;">
-  <section class="example-container mat-elevation-z8" tabindex="0">
-    <table mat-table [dataSource]="dataSource">
-  
-         <!-- Description Column -->
-    <ng-container matColumnDef="Description">
-      <th mat-header-cell *matHeaderCellDef>Description </th>
-      <td mat-cell *matCellDef="let element">  <button mat-button> <mat-icon class="material-icons-outlined">edit</mat-icon></button>{{element.Description}} </td>
-      
-    </ng-container>
+<body>
+  <table>
+      <caption>Table of Indian States and its Capitals</caption>
+      <thead>
+          <tr>
+              <th>Sl no.</th>
+              <th>State</th>
+              <th>Capital</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>1</td>
+              <td>West Bengal</td>
+              <td>Kolkata</td>
+          </tr>
+          <tr>
+              <td>2</td>
+              <td>Madhya Pradesh</td>
+              <td>Bhopal</td>
+          </tr>
+          <tr>
+              <td>3</td>
+              <td>Karnataka</td>
+              <td>Bengaluru</td>
+          </tr>
+      </tbody>
+  </table>
+</body>
 
-
-
-  
-    <!-- R2EndDate Column -->
-    <ng-container matColumnDef="R2EndDate">
-      <th mat-header-cell *matHeaderCellDef> R2EndDate </th>
-      <td mat-cell *matCellDef="let element"> {{element.R2EndDate}} </td>
-    </ng-container>
-
-       <!-- R1EndDate Column -->
-       <ng-container matColumnDef="R1EndDate">
-        <th mat-header-cell *matHeaderCellDef> R1EndDate </th>
-        <td mat-cell *matCellDef="let element"> {{element.R1EndDate}} </td>
-      </ng-container>
-       <!-- WorkingdaysRevised Column -->
-       <ng-container matColumnDef="WorkingdaysRevised">
-        <th mat-header-cell *matHeaderCellDef> WorkingdaysRevised </th>
-        <td mat-cell *matCellDef="let element"> {{element.WorkingdaysRevised}} </td>
-      </ng-container>
-  
-  <!-- BaselineStartDate Column -->
-  <ng-container matColumnDef="BaselineStartDate">
-    <th mat-header-cell *matHeaderCellDef> BaselineStartDate </th>
-    <td mat-cell *matCellDef="let element"> {{element.BaselineStartDate}} </td>
-  </ng-container>
-
-
-<!-- BaselineEndDate Column -->
-  <ng-container matColumnDef="BaselineEndDate">
-    <th mat-header-cell *matHeaderCellDef> BaselineEndDate </th>
-    <td mat-cell *matCellDef="let element"> {{element.BaselineEndDate}} </td>
-  </ng-container>
-
-  <!-- UOM Column -->
-  <ng-container matColumnDef="UOM">
-    <th mat-header-cell *matHeaderCellDef> UOM </th>
-    <td mat-cell *matCellDef="let element"> {{element.UOM}} </td>
-  </ng-container>
-  
-  <!-- Total Column -->
-  <ng-container matColumnDef="Total">
-    <th mat-header-cell *matHeaderCellDef> Total </th>
-    <td mat-cell *matCellDef="let element"> {{element.Total}} </td>
-  </ng-container>
-      
-      
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-      <ng-container matColumnDef="groupHeader" >
-        <td  style="background-color: rgb(246, 242, 242)" colspan="999" mat-cell *matCellDef="let groupBy"><strong>{{groupBy.initial}}<button mat-button> <mat-icon class="material-icons-outlined">add</mat-icon></button></strong></td>
-      </ng-container>
-    
-      <tr mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup"> </tr>
-
-    </table>
-  </section>
-  
-</div>
 
 

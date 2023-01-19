@@ -1,0 +1,35 @@
+
+<div id="card" style="text-align: center;">
+	<mat-card-title>
+		Add Member
+	</mat-card-title>
+    <br/>
+
+	<mat-card-content>
+        <form [formGroup]="memberForm">
+
+
+         <div>
+                  <mat-form-field appearance="outline">
+                    <mat-select placeholder="Choose Project" (selectionChange)="someMethod($event)" formControlName="project">
+                      
+                      <mat-option *ngFor="let single of data" [value]="single._id">{{single?.projectName}}</mat-option>
+                      <!-- <mat-option [value]="'EMAIL'">Email</mat-option>
+          <mat-option [value]="'PHONE'">Phone</mat-option> -->
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+               <div>
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="add email" formControlName="email">
+            </mat-form-field><br/>
+        </div>
+            
+            <button mat-raised-button color="primary" (click)="closeDialog('no')" style="margin-right:5px;">Cancel</button>
+            <button mat-raised-button color="primary" (click)="addTask()" style="margin-right:5px;">Submit</button>
+    
+        </form>
+
+		
+	</mat-card-content>
+</div>

@@ -25,6 +25,12 @@ import { AddTasksComponent } from './pages/add-tasks/add-tasks.component';
 import { AddSubTasksComponent } from './pages/add-sub-tasks/add-sub-tasks.component';
 import {  NgCircleProgressModule }from 'ng-circle-progress';
 import { LoginComponent } from './pages/login/login.component';
+import { AddMemberComponent } from './pages/add-member/add-member.component';
+import { UserManagementComponent } from './pages/user-management/user-management.component';
+import { UsersComponent } from './pages/users/users.component';
+import { RolesComponent } from './pages/roles/roles.component';
+import { PermissionsComponent } from './pages/permissions/permissions.component';
+import { AddUserComponent } from './pages/add-user/add-user.component';
 
 @NgModule({
   imports:      [ AppRoutingModule, BrowserModule,ReactiveFormsModule,HttpClientModule, FormsModule, CoreModule, SharedModule, CustomMaterialModule,
@@ -54,7 +60,7 @@ import { LoginComponent } from './pages/login/login.component';
    
      BrowserAnimationsModule,
   ],
-  declarations: [ AppComponent, HomeComponent, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent,LoginComponent ],
+  declarations: [ AppComponent, HomeComponent, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent,LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

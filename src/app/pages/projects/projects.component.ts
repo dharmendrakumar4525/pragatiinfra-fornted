@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AddProjectService } from 'src/app/services/add-project.service';
+import { AddMemberComponent } from '../add-member/add-member.component';
 
 
 
@@ -9,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectsComponent implements OnInit {
  
-
+  projects:any;
   cards = [
     {
       title: ' Total  Projects',
@@ -30,9 +33,30 @@ export class ProjectsComponent implements OnInit {
     },
 
   ];
-  constructor() { }
+  constructor(private projectService: AddProjectService,private _dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.projectService.getProjects().subscribe(data=>{
+      //this.spinner.hide()
+      this.projects = data
+      console.log(this.projects)
+    })
+  }
+
+  addMember(){
+    const dialogRef = this._dialog.open(AddMemberComponent, {
+      width: '30%',
+      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+      data: this.projects
+    });
+    dialogRef.afterClosed().subscribe(status => {
+      console.log(status);
+      if (status === 'yes') {
+       // this.filterSubject.next(this.filterForm.value);
+      }
+      if (status === 'no') {
+      }
+    })
   }
 
 }

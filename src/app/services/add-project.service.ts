@@ -10,6 +10,12 @@ export class AddProjectService {
 
   baseUrl='http://localhost:3000/api'
   constructor(private http:HttpClient) { }
+  getProjects(): Observable<any> {
+    
+    return this.http.get(`${this.baseUrl}/projects`).pipe(
+      catchError(this.handleError)
+    );
+  }
   addProject(project:any): Observable<any> {
     
     return this.http.post(`${this.baseUrl}/projects`, project).pipe(

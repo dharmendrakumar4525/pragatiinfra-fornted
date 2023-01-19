@@ -9,7 +9,52 @@
         <span [ngClass]="currentPanelState">{{ link.text }}</span>
       </a>
     </li>
+    <li *ngFor="let item of menuSidebar" class="sidebar"  #itemEl routerLinkActive="active">
+      <div  class="dropdown-title">
+        <a (click)="addSubItems()">
+          <i [class]="item.icon"></i>
+          <span class="link_name">{{item.link_name}}</span>
+        </a>
+      </div>
+      <div *ngIf="item.sub_menu.length > 0" class="dropdown-title" (click)="showSubmenu(itemEl)">
+        <!-- <a>
+          <i [class]="item.icon"></i>
+          <span class="link_name">{{item.link_name}}</span>
+        </a> -->
+        <i class='bx bxs-chevron-down arrow'></i>
+      </div>
+      <ul class="sub-menu" [class.blank]="item.sub_menu.length == 0">
+        <!-- <li><a class="link_name">{{item.link_name}}</a></li> -->
+        <li *ngFor="let item_sub of item.sub_menu" routerLinkActive="active">
+          <a [routerLink]="[item_sub.link]">{{item_sub.link_name}}</a>
+          <!-- <hr> -->
+        </li>
+      </ul>
+      
+    </li>
+    <!-- <li *ngFor="let link of menuSidebar">
+      <a [routerLink]="link.url" 
+          [routerLinkActive]="['active']"
+          [routerLinkActiveOptions]="{exact: true}">
+        <i class="fas fa-home" [ngClass]="link.iconClass"></i>
+        <span [ngClass]="currentPanelState">{{ link.link_name }}</span>
+      </a>
+      <ul class="sub-menu" [class.blank]="link.sub_menu.length == 0">
+        <li><a class="link_name">{{link.link_name}}</a></li>
+        <li *ngFor="let item_sub of link.sub_menu" routerLinkActive="active">
+          <a [routerLink]="[item_sub.link]">{{item_sub.link_name}}</a>
+        </li>
+      </ul>
+    </li> -->
+
+    
+      <!-- <ul class="nav-links" id="nav-links"> -->
+        
+      
+    
   </ul>
+ 
+  
   <div class="navigation-panel-brand"><div class="navigation-top-bar">
   <div class="toggler" role="button">
     <svg 

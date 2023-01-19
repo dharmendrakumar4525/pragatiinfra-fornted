@@ -12,7 +12,27 @@ import { NavigationLink } from './navigation-link.model';
 export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   @Input()
   public links: NavigationLink[];
-
+  openSidebar: boolean = false;
+  obj = [{
+    link_name: "Users",
+    link: "/users",
+  }, {
+    link_name: "Roles",
+    link: "/roles",
+  }, {
+    link_name: "Permissions",
+    link: "/permissions",
+  }]
+  menuSidebar = [
+     {
+      link_name: "User Management",
+      link: null,
+      icon: "bx bx-collection",
+      sub_menu: [
+        
+      ]
+    }
+  ]
   private _subscriptionsSubject$: Subject<void>;
   public currentPanelState: SidePanelState;
   public SidePanelState = SidePanelState;
@@ -42,5 +62,38 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
     } else {
       this._sidePanelService.changeState(SidePanelState.COLLAPSE);
     }
+  }
+
+
+  showSubmenu(itemEl: HTMLElement) {
+    itemEl.classList.toggle("showMenu");
+  }
+
+  addSubItems(){
+    this.openSidebar = !this.openSidebar
+    if(this.openSidebar){
+      this.menuSidebar = [
+        {
+         link_name: "User Management",
+         link: null,
+         icon: "bx bx-collection",
+         sub_menu: [
+           ...this.obj
+         ]
+       }
+     ]
+    }else{
+      this.menuSidebar = [
+        {
+         link_name: "User Management",
+         link: null,
+         icon: "bx bx-collection",
+         sub_menu: [
+           //...this.obj
+         ]
+       }
+     ]
+    }
+    
   }
 }

@@ -10,7 +10,7 @@ import { NavigationLink } from './shared';
 export class AppComponent {
   public configuration: DashboardLayoutConfiguration;
   public links: NavigationLink[];
-  
+  menuSidebar:any;
   constructor() {
     this.configuration = new DashboardLayoutConfiguration(
       SidePanelPosition.LEFT, 
@@ -23,7 +23,33 @@ export class AppComponent {
     this.links = [
       new NavigationLink("DPR", ['dpr'], "fas fa-home"),
       new NavigationLink("Dashboard", ['dashbaord'], "fas fa-tachometer-alt"),
-      new NavigationLink("Account Info", ['account'], "fas fa-user-circle")
+      new NavigationLink("Account Info", ['account'], "fas fa-user-circle"),
+      //new NavigationLink("User Management", ['user-management'], "fas fa-user-circle")
+
+    ]
+    this.menuSidebar = [
+      {
+        link_name: "Dashboard",
+        link: "/dashboard",
+        icon: "bx bx-grid-alt",
+        sub_menu: []
+      }, {
+        link_name: "Category",
+        link: null,
+        icon: "bx bx-collection",
+        sub_menu: [
+          {
+            link_name: "HTML & CSS",
+            link: "/html-n-css",
+          }, {
+            link_name: "JavaScript",
+            link: "/javascript",
+          }, {
+            link_name: "PHP & MySQL",
+            link: "/php-n-mysql",
+          }
+        ]
+      },
     ]
   }
 }
