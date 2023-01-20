@@ -33,6 +33,7 @@ li {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 98%;
+    height: 100%;
   }
  
   
@@ -76,8 +77,8 @@ background: lightblue;
 
 .scroll-bar1{
         
-  height: 200px;
-  width: 20px;
+  height: 600px;
+  width: 600px;
   
  
   overflow: auto;

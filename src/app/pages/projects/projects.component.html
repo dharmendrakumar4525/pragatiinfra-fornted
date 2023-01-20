@@ -4,7 +4,11 @@
         <span>Pragati Infra</span></div>
         <div>
             <button style="padding: 5px;width: 100px;margin-top: 60px;">Add Project +  </button>
-        <mat-icon>notifications</mat-icon>
+       <button  mat-button [matMenuTriggerFor]="menu"> <mat-icon matBadge="7" matBadgeColor="warn">notifications</mat-icon></button>
+       <mat-menu #menu="matMenu">
+        <button mat-menu-item>updatedsheet</button>
+        <button mat-menu-item>updatedsheet</button>
+      </mat-menu>
   
         </div>
       </mat-toolbar-row>
@@ -89,6 +93,7 @@
 
 <div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right"  style="height: 70vh;" >
   <mat-card fxLayout="column" fxLayoutAlign="left" style="height: 70vh; ">
+    <div class="scroll-bar" fxLayout="column">
     <mat-card-header>
   
       <mat-card-title> About</mat-card-title>
@@ -127,6 +132,7 @@
     <mat-card-actions>
       <button mat-button (click)="addMember()">Addmembers+</button> 
     </mat-card-actions>
+  </div>
   </mat-card>
 
 </div>
@@ -138,19 +144,19 @@
 
 
 
-<div fxLayout="column" fxFlex="29" fxLayoutAlign="right"  class="rightside" style="height: 145vh;">
+<div fxLayout="column" fxFlex="29" fxLayoutAlign="right" fxLayoutGap="30px" class="rightside" style="height: 145vh;">
 
   <div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right"  style="height: 70vh;" >
     <mat-card fxLayout="column" fxLayoutAlign="left" style="height: 70vh;">
-     
-        <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3]">
+      <div class="scroll-bar1" fxLayout="column">
+      <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,4,5,6,7,8,9]">
         <div mat-card-avatar class="example-header-image"></div>
         <div >
         <button mat-button >updatedsheet</button> 
       </div>
     
     </div>
-    <div fxFlex="row" fxLayoutAlign="start" >
+    <div fxFlex="column" fxLayoutAlign="start" >
       <div mat-card-avatar class="example-header-image"></div>
       <div >
       <button mat-button >updatedsheet</button> 
@@ -159,7 +165,7 @@
   
   
   </div>
-      
+</div>
     </mat-card>
   
   </div>

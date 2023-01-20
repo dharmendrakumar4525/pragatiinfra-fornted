@@ -17,6 +17,7 @@ import { UserManagementComponent } from './pages/user-management/user-management
 import { UsersComponent } from './pages/users/users.component';
 import { ViewProjectComponent } from './pages/view-project/view-project.component';
 import { ForgotpasswordComponent } from './pages/forgotpassword/forgotpassword.component';
+
 const routes: Routes = [
   {
     path: 'dpr',
@@ -55,6 +56,7 @@ const routes: Routes = [
     component: AddUserComponent
   },
   {path: 'forgotpassword', component: ForgotpasswordComponent},
+
   {
     path: 'view-project',
     component: ViewProjectComponent,
@@ -65,6 +67,7 @@ const routes: Routes = [
       {path: 'calender', component: CalenderComponent}, 
       {path: 'login', component: LoginComponent},
       {path: 'forgotpassword', component: ForgotpasswordComponent},
+    
     ]
   },
   {

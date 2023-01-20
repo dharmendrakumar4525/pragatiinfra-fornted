@@ -1,0 +1,17 @@
+
+<div id="card" style="text-align: center;width: 500px;height: 300px; display: flex;justify-content: center;flex-direction: column;">
+	<mat-card-title>
+		New Permission
+	</mat-card-title>
+  <mat-card-content>
+  <mat-form-field appearance="outline" style="width: 50%;">
+    <input matInput [(ngModel)]="data.animal">
+  </mat-form-field>
+
+
+<div mat-dialog-actions style="display: flex;justify-content: center;">
+  <button mat-raised-button  color="primary" (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button  color="primary" [mat-dialog-close]="data.animal" cdkFocusInitial>Submit</button>
+</div>
+</mat-card-content>
+</div>

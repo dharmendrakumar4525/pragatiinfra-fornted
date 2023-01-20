@@ -11,7 +11,13 @@ import { AddMemberComponent } from '../add-member/add-member.component';
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent implements OnInit {
- 
+  hidden = false;
+
+  toggleBadgeVisibility() {
+    this.hidden = !this.hidden;
+  }
+
+
   projects:any;
   cards = [
     {

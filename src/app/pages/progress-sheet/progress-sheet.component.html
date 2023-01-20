@@ -4,14 +4,17 @@
       <div style="padding: 1rem;margin-top: 60px;">
       <span>Project 1</span></div>
       <div>
-          <button style="padding: 12px 12px;width: 150px;margin-top: 50px;margin-left: 680px;position: relative;">Add Project +  </button>
+          <button style="padding: 12px 12px;width: 150px;margin-top: 50px;margin-left: 800px;position: relative;">Add Project +  </button>
           </div>
           <div>
           <button style="padding: 5px 5px;width: 150px;margin-left: 40px;margin-top: 50px;"> <mat-icon style="font-size: medium;position: relative;right:1px;top:10px">group_add</mat-icon>
               Add Member </button>
               
-
-      <mat-icon>notifications</mat-icon>
+<button mat-button [matMenuTriggerFor]="menu" ><mat-icon matBadge="7" matBadgeColor="warn" style="margin-left:-10px">notifications</mat-icon></button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>item1</button>
+  <button mat-menu-item>item2</button>
+</mat-menu>  
 
       </div>
     </mat-toolbar-row>
@@ -36,38 +39,57 @@
     
     </div>
    
-<div style="background-color: #fff !important;padding: 20px;">
+<div style="background-color: #fff !important;padding: 20px;margin-top: 20px;">
   <h3>Project progress monitoring sheets(PPMS)</h3>
 </div>
 
 <body>
-  <table>
-      <caption>Table of Indian States and its Capitals</caption>
-      <thead>
-          <tr>
-              <th>Sl no.</th>
-              <th>State</th>
-              <th>Capital</th>
-          </tr>
+  <div class="scroll-bar1" style="width: 98%;">
+    <table>
+   
+  <thead>
+    <th >Description</th>
+   <th>R2EndDate</th>
+   <th>R1EndDate</th>
+   <th>WorkingdaysRevised</th>
+   <th>BaselineStartDate</th>
+   <th>BaselineEndDate</th>
+   <th>UOM</th>
+   <th>Total</th>
+ 
+
+    
       </thead>
-      <tbody>
-          <tr>
-              <td>1</td>
-              <td>West Bengal</td>
-              <td>Kolkata</td>
-          </tr>
-          <tr>
-              <td>2</td>
-              <td>Madhya Pradesh</td>
-              <td>Bhopal</td>
-          </tr>
-          <tr>
-              <td>3</td>
-              <td>Karnataka</td>
-              <td>Bengaluru</td>
-          </tr>
-      </tbody>
-  </table>
+   
+    <tbody *ngFor= " let project of projectsData ">
+        <tr  style="font-size: large;border: 1px solid lightgray;">
+            <td>{{project.taskName}} <button mat-button> <mat-icon >add</mat-icon></button></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            
+        
+        </tr>
+        
+        <tr *ngFor="let subTask of project.result" style="background-color: #F5F5F5;" >
+
+          <td > <button mat-button> <mat-icon >edit</mat-icon></button>{{subTask.subTaskName}}</td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          
+        </tr>
+    </tbody>
+
+    </table>
+  </div>
 </body>
 
 

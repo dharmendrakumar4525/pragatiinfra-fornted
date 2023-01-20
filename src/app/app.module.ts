@@ -32,6 +32,9 @@ import { RolesComponent } from './pages/roles/roles.component';
 import { PermissionsComponent } from './pages/permissions/permissions.component';
 import { AddUserComponent } from './pages/add-user/add-user.component';
 import { ForgotpasswordComponent } from './pages/forgotpassword/forgotpassword.component';
+import { NewRoleComponent } from './pages/new-role/new-role.component';
+import { NewPermissionComponent } from './pages/new-permission/new-permission.component';
+
 
 @NgModule({
   imports:      [ AppRoutingModule, BrowserModule,ReactiveFormsModule,HttpClientModule, FormsModule, CoreModule, SharedModule, CustomMaterialModule,
@@ -62,7 +65,8 @@ import { ForgotpasswordComponent } from './pages/forgotpassword/forgotpassword.c
    
      BrowserAnimationsModule,
   ],
-  declarations: [ AppComponent, HomeComponent, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent,LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,ForgotpasswordComponent ],
+  declarations: [ AppComponent, HomeComponent, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent,LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,
+    ForgotpasswordComponent, NewRoleComponent,NewPermissionComponent],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

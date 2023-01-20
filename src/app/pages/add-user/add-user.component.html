@@ -1,1 +1,57 @@
-<p>add-user works!</p>
+
+<mat-toolbar style="background-color: #fff !important;">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" >
+        <div style="padding: 1rem;margin-top: 60px;font-size: 30px;">  
+        <span>Project 1</span>
+</div>     
+      </mat-toolbar-row>
+        
+      <mat-toolbar-row>
+        <hr style="width:100%">
+      </mat-toolbar-row>
+  </mat-toolbar>
+  <div style="height: 150vh;margin-bottom: 10px;" >
+    <div><h2 style="padding:10px 50px ;">Create user</h2></div>
+<div>
+    <label>Name</label><br>
+    <mat-form-field appearance="outline">
+        <mat-label>Enter Name</mat-label>
+        <input matInput>
+      </mat-form-field><br>
+
+      <label>Email</label><br>
+      <mat-form-field appearance="outline">
+          <mat-label>Enter email</mat-label>
+          <input matInput>
+        </mat-form-field><br>
+
+        <label>Contact Number</label><br>
+        <mat-form-field appearance="outline">
+            <mat-label>Enter Contact Number</mat-label>
+            <input matInput>
+          </mat-form-field><br>
+          
+          <label>Role</label><br>
+          <mat-form-field appearance="outline">
+            <mat-label>Enter role</mat-label>
+            <mat-select>
+              <mat-option value="one">Admin</mat-option>
+              <mat-option value="two">Employee</mat-option>
+            </mat-select>
+          </mat-form-field><br>
+
+          <label>Password</label><br>
+        <mat-form-field appearance="outline">
+            <mat-label></mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'">
+          </mat-form-field><br>
+
+          <label>Confirm Password</label><br>
+          <mat-form-field appearance="outline">
+              <mat-label></mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'">
+            </mat-form-field><br>
+
+            <button mat-button>Submit</button>
+    </div>
+    </div>
