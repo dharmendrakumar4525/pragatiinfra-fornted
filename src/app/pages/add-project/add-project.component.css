@@ -5,3 +5,24 @@
 .mat-form-field.expandFull{
    
  }
+
+ .upload-file {
+   width: 100%;
+   border-radius: 5px;
+   border: 2px dashed lightgrey;
+   height: 150px;
+   background-color: lightgrey;
+   position: relative;
+   margin-top: 10px;
+
+}
+
+input .uploadImg {
+   opacity: 0;
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   cursor: pointer;
+}

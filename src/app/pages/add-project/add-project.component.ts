@@ -21,7 +21,8 @@ export interface MatchData {
   styleUrls: ['./add-project.component.css']
 })
 export class AddProjectComponent implements OnInit {
-
+  showMaster:boolean = false
+  showAddProject:boolean = true
   visible = true;
   selectable = true;
   removable = true;
@@ -110,6 +111,11 @@ addTag(event: MatChipInputEvent): void {
     dialogRef.afterClosed().subscribe(status => {
       console.log(status);
       if (status === 'yes') {
+        this.taskService.getTasks().subscribe(data=>{
+          //this.spinner.hide()
+          this.tasks = data
+          console.log(this.tasks)
+        })
        // this.filterSubject.next(this.filterForm.value);
       }
       if (status === 'no') {
@@ -126,6 +132,11 @@ addTag(event: MatChipInputEvent): void {
     dialogRef.afterClosed().subscribe(status => {
       console.log(status);
       if (status === 'yes') {
+        this.taskService.getTasks().subscribe(data=>{
+          //this.spinner.hide()
+          this.tasks = data
+          console.log(this.tasks)
+        })
        // this.filterSubject.next(this.filterForm.value);
       }
       if (status === 'no') {
@@ -211,5 +222,13 @@ addTag(event: MatChipInputEvent): void {
       // ChangeDetectorRef since file is loading outside the zone
       //this.cd.markForCheck();        
     }
+  }
+  displayMater(){
+    this.showMaster = true;
+    this.showAddProject  = false
+  }
+  dispalyProject(){
+    this.showMaster = false;
+    this.showAddProject  = true
   }
 }

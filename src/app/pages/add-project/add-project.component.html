@@ -1,6 +1,18 @@
-<p>add-project works!</p>
+
 
 <form class="form-section" [formGroup]="projectForm">
+  <div *ngIf="showAddProject">
+    <mat-toolbar>
+      <mat-toolbar-row fxLayoutAlign="space-between center">
+          <div style="padding: 1rem;margin-top: 40px;">
+          <span>Add New Project</span></div>
+         
+        </mat-toolbar-row>
+          
+        <mat-toolbar-row>
+          <hr style="width:100%">
+        </mat-toolbar-row>
+    </mat-toolbar>
     <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
       fxLayoutAlign="space-around center" fxLayoutGap="0px">
       <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
@@ -57,15 +69,30 @@
     </div>
 
 
-    <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
-    fxLayoutAlign="space-around center" fxLayoutGap="0px">
-    <div fxLayout="column" fxFlex="92" fxFlexFill class="addform-50-column mobile_mb_0">
+    <div 
+   fxLayout="row wrap" 
+   fxLayout.lt-sm="column" 
+   fxLayoutGap="10px" 
+   fxLayoutAlign="flex-start"
+   style="margin-left: 5%;">
+    <div class="custom-form-group">
+      <label class="custom-label">Project Image</label>
+      <div class="custom-form-control" fxLayout="row" fxLayoutAlign="center center">
+          <div class="upload-file" dropzone fxLayout="column" fxLayoutAlign="center center">
+              <img src="../../../assets/images/icons/upload-file.svg" class="mb-15" alt="upload-file">
+              <h5>Project Image</h5>
+              <input type="file" class="uploadImg"  id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)">
+          </div>
+          <div class="upload-file">
     
-          
-        <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)" />
+            <img [src]="imageUrl" height="150px" width="200px">
+        </div>
+      </div>
+      
+  </div>
+
+
     
-     
-    </div>
    
     
   </div>
@@ -157,7 +184,7 @@
   fxLayoutAlign="space-around center" fxLayoutGap="0px">
   <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
   
-  <mat-card id="card" style="text-align: center;">
+  <mat-card id="card" style="text-align: center;" (click)="displayMater()">
 	<mat-card-title>
 		
 	</mat-card-title>
@@ -172,75 +199,25 @@
   </mat-card>
   </div>
   </div>
+</div>
 <br>
-  <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
-  fxLayoutAlign="space-around center" fxLayoutGap="10px">
-  <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
-  
-  <mat-card id="card" style="text-align: center;" (click)="addTask()">
-	<mat-card-title>
-		
-	</mat-card-title>
-
-	<mat-card-content>
-
-		
-		<img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
-        <div>add activity with sub activity</div>
-
-	</mat-card-content>
-  </mat-card>
-  </div>
-  <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
-  
-    <mat-card id="card" style="text-align: center;">
-      <mat-card-title>
-          
-      </mat-card-title>
-  
-      <mat-card-content>
-  
-          
-          <img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
-          <div>add activity with sub activity</div>
-  
-      </mat-card-content>
-    </mat-card>
-    </div>
-    <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
-  
-        <mat-card id="card" style="text-align: center;">
-          <mat-card-title>
-              
-          </mat-card-title>
+<div *ngIf="showMaster">
+  <mat-toolbar>
+    <mat-toolbar-row fxLayoutAlign="space-between center">
+        <div >
+        <span>Master Data</span></div>
+        <div>
+          <button mat-raised-button (click)="dispalyProject()">Go Back</button>
+          <!-- <button style="padding: 5px;width: 100px;margin-top: 60px;">Go Back  </button> -->
       
-          <mat-card-content>
-      
-              
-              <img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
-              <div>add activity with sub activity</div>
-      
-          </mat-card-content>
-        </mat-card>
-        </div>
-        <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
-  
-            <mat-card id="card" style="text-align: center;">
-              <mat-card-title>
-                  
-              </mat-card-title>
-          
-              <mat-card-content>
-          
-                  
-                  <img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
-                  <div>add activity with sub activity</div>
-          
-              </mat-card-content>
-            </mat-card>
-            </div>
-  </div>
-<br>
+
+      </div>
+      </mat-toolbar-row>
+        
+      <mat-toolbar-row>
+        <hr style="width:100%">
+      </mat-toolbar-row>
+  </mat-toolbar>
 
 <div 
    fxLayout="row wrap" 
@@ -257,14 +234,16 @@
             {{task.taskName}}
             
         </mat-card-title>
+        <hr>
     
         <mat-card-content>
-            <button (click)="addSubTask(task.taskId)">add sub task+++</button>
-            <br>
+          <button mat-raised-button (click)="addSubTask(task.taskId)">+ add sub task</button>
+            <!-- <button > </button> -->
+            <br> <br>
             <!-- <span *ngFor="let subTask of task?.result">
             <span>{{subTask?.subTaskName}}</span>
         </span> -->
-        <li *ngFor="let item of task?.result">
+        <li *ngFor="let item of task?.result" style="list-style-type:none;">
       <input type="checkbox" [checked]="getSelection(item,task)" (change)="changeHandler(item,task)">
       <label>{{item?.subTaskName}}</label>
     </li>
@@ -274,13 +253,54 @@
     
         </mat-card-content>
       </mat-card>
-      <br>
+      
    </ng-container>
 
 </div>
+<br>
+<div 
+   fxLayout="row wrap" 
+   fxLayout.lt-sm="column" 
+   fxLayoutGap="10px" 
+   fxLayoutAlign="flex-start"
+   style="margin-left: 5%;">
 
-<button (click)="addProject()">Submit</button>
+   <ng-container >
+    <mat-card id="card" fxFlex="0 1 calc(33.3% - 32px)"
+    fxFlex.lt-md="0 1 calc(50% - 32px)"
+    fxFlex.lt-sm="100%" style="text-align: center;" (click)="addTask()">
+        <mat-card-title>
+            
+            
+        </mat-card-title>
+        
+    
+        <mat-card-content>
+          <img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
+        <div>add activity</div>
+    
+        </mat-card-content>
+      </mat-card>
+      
+   </ng-container>
+
+</div>
+<br>
+<div 
+   fxLayout="row wrap" 
+   fxLayout.lt-sm="column" 
+   fxLayoutGap="10px" 
+   fxLayoutAlign="flex-start"
+   style="margin-left: 5%;">
+   <button mat-raised-button (click)="addProject()" color="primary">Submit</button>
+</div>
+
+
+
+</div>
 </form>
+
+
      
 
                 
