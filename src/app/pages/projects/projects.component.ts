@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddProjectService } from 'src/app/services/add-project.service';
 import { AddMemberComponent } from '../add-member/add-member.component';
@@ -11,6 +11,11 @@ import { AddMemberComponent } from '../add-member/add-member.component';
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent implements OnInit {
+
+  @Input() people: string;
+  location1: string;
+  location2: string;
+  
   hidden = false;
 
   toggleBadgeVisibility() {
@@ -39,14 +44,12 @@ export class ProjectsComponent implements OnInit {
     },
 
   ];
-  projectsLenth:any
   constructor(private projectService: AddProjectService,private _dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.projectService.getProjects().subscribe(data=>{
       //this.spinner.hide()
       this.projects = data
-      this.projectsLenth = this.projects.length
       console.log(this.projects)
     })
   }
