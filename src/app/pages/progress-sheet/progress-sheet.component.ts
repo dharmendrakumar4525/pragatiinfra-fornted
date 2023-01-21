@@ -28,31 +28,31 @@ export interface GroupBy {
 export class ProgressSheetComponent implements OnInit {
     projectId:any
     progressData:any;
-    projectsData:any
+  //  projectsData:any
     tasks:any
-//   projectsData = [
-//     {
-//         "_id": "63c6aa45a1593c88fae7b09b",
-//         "taskName": "Boundarywall",
-//         "projectId": "63c6aa44a1593c88fae7b099",
-//         "taskId": "63be3548941e8f5b1b1f0928",
-//         "createdAt": "2023-01-17T14:01:41.032Z",
-//         "__v": 0,
-//         "result": [
-//             {
-//                 "_id": "63c6aa45a1593c88fae7b09e",
-//                 "subTaskName": "cement",
-//                 "taskId": "63be3548941e8f5b1b1f0928",
-//                 "__v": 0
-//             },
-//             {
-//                 "_id": "63c6aa45a1593c88fae7b09f",
-//                 "subTaskName": "evacuation",
-//                 "taskId": "63be3548941e8f5b1b1f0928",
-//                 "__v": 0
-//             }
-//         ]
-//     },
+  projectsData = [
+    {
+        "_id": "63c6aa45a1593c88fae7b09b",
+        "taskName": "Boundarywall",
+        "projectId": "63c6aa44a1593c88fae7b099",
+        "taskId": "63be3548941e8f5b1b1f0928",
+        "createdAt": "2023-01-17T14:01:41.032Z",
+        "__v": 0,
+        "result": [
+            {
+                "_id": "63c6aa45a1593c88fae7b09e",
+                "subTaskName": "cement",
+                "taskId": "63be3548941e8f5b1b1f0928",
+                "__v": 0
+            },
+            {
+                "_id": "63c6aa45a1593c88fae7b09f",
+                "subTaskName": "evacuation",
+                "taskId": "63be3548941e8f5b1b1f0928",
+                "__v": 0
+            }
+        ]
+    },
 //     {
 //         "_id": "63c6aa45a1593c88fae7b09c",
 //         "taskName": "Warehouse",
@@ -162,8 +162,8 @@ export class ProgressSheetComponent implements OnInit {
 //               "__v": 0
 //           }
 //       ]
-//   }
-//    ] 
+//   } 
+   ] 
 
   constructor(private activeRoute: ActivatedRoute, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private taskService:TaskService) { }
 
@@ -172,7 +172,7 @@ export class ProgressSheetComponent implements OnInit {
         console.log(params.id)
         this.projectId = params.id
         this.progressSheetService.getTasksById(this.projectId).subscribe(data=>{
-            this.projectsData = data
+      //      this.projectsData = data
         console.log(this.projectsData)
         })
 

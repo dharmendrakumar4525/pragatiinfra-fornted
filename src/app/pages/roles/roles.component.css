@@ -76,3 +76,11 @@
     width: 1000px;
     margin-left: 100px;
   }
+  ::ng-deep.mat-menu-panel {
+    max-width: none !important;
+  }
+  .notification-container{
+   width: 200px;
+   margin-left: 10px;
+  }
+  

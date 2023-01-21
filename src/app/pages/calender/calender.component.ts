@@ -3,7 +3,7 @@ import { FormControl, FormArray, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {  ViewChild } from '@angular/core';
 //import { FullCalendarComponent } from '@fullcalendar/angular';
-import { EventInput } from '@fullcalendar/core';
+//import { EventInput } from '@fullcalendar/core';
 //import dayGridPlugin from '@fullcalendar/daygrid';
 //import timeGrigPlugin from '@fullcalendar/timegrid';
 //import interactionPlugin from '@fullcalendar/interaction'; // for dateClick

@@ -84,5 +84,70 @@ body{
   background-color: #fff !important;
 }
 
+.scroll-bar{
+        
+ 
+  height: 420px;
+    
+ 
+    
+   
+  overflow-y:auto;
+ overflow-x: hidden;
+
+  
+  }
+
+::-webkit-scrollbar {
+width: 10px;
+
+}
+::-webkit-scrollbar-track{
+border: 1px solid lightgrey;
+border-radius: 5px;
+background-color:lightgrey ;
+}
+::-webkit-scrollbar-thumb{
+background: #1E293B;
+border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover{
+background: lightblue;
+}
 
 
+.scroll-bar1{
+      
+ 
+  height: 300px;
+
+  
+ 
+  overflow: auto;
+  
+  }
+
+::-webkit-scrollbar {
+width: 10px;
+height:10px;
+}
+::-webkit-scrollbar-track{
+border: 1px solid lightgrey;
+border-radius: 5px;
+background-color:lightgrey ;
+}
+::-webkit-scrollbar-thumb{
+background: #1E293B;
+border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover{
+background: lightblue;
+}
+
+::ng-deep.mat-menu-panel {
+  max-width: none !important;
+}
+.notification-container{
+ width: 200px;
+ margin-left: 10px;
+}

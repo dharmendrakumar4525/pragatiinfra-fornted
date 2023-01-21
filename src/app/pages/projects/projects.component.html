@@ -4,12 +4,30 @@
         <span>Pragati Infra</span></div>
         <div>
             <button style="padding: 5px;width: 100px;margin-top: 60px;" [routerLink]="['/add-project']">Add Project +  </button>
-       <button  mat-button [matMenuTriggerFor]="menu"> <mat-icon matBadge="7" matBadgeColor="warn">notifications</mat-icon></button>
-       <mat-menu #menu="matMenu">
-        <button mat-menu-item>updatedsheet</button>
-        <button mat-menu-item>updatedsheet</button>
-      </mat-menu>
-  
+            <button mat-button [matMenuTriggerFor]="menu"> <mat-icon matBadge="7" matBadgeColor="warn">notifications</mat-icon></button>
+            <mat-menu #menu="matMenu" style="width:300px;">
+            
+              <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,]">
+                <div mat-card-avatar class="example-header-image"></div>
+                <div  class="notification-container">
+                  <div class="content"><b>Updatedsheet...</b>
+                    <div class="time">5 hours ago</div>
+                  </div>
+              </div>
+            
+            </div>
+            <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,]">
+              <div mat-card-avatar class="example-header-image"></div>
+              <div >
+                <div class="content"><b>Kate: .</b>
+                  <div class="time">1 hour ago</div>
+                </div>
+            </div>
+          
+          </div>
+      
+       
+           </mat-menu>
         </div>
       </mat-toolbar-row>
         
@@ -40,7 +58,7 @@
 </div>
 <div class="content" fxLayout="row" fxLayoutGap="10px">
   <div class="scroll-bar">
-    <div fxLayout="row wrap" *ngIf="projectsLenth" fxLayoutGap="16px grid" fxLayoutAlign="space-around center">
+    <div fxLayout="row wrap"  fxLayoutGap="16px grid" fxLayoutAlign="space-around center">
       <div fxFlex="25%"  fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let project of projects">
         <mat-card class="mat-elevation-z4" >
           <mat-card-header>
@@ -60,13 +78,13 @@
     </div>
 
 
-    <div  *ngIf="!projectsLenth" >
+    <!-- <div>
       <div fxLayoutAlign="center center">
        <img src="../../../assets/images/no-data-vector-outline-icon-260nw-2082722071.webp">
         
       </div>
       
-    </div>
+    </div> -->
 
 
 
@@ -160,26 +178,28 @@
 <div fxLayout="column" fxFlex="29" fxLayoutAlign="right" fxLayoutGap="30px" class="rightside" style="height: 145vh;">
 
   <div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right"  style="height: 70vh;" >
-    <mat-card fxLayout="column" fxLayoutAlign="left" style="height: 70vh;">
+    <mat-card fxLayout="row" fxLayoutAlign="left" style="height: 70vh;">
       <div class="scroll-bar1" fxLayout="column">
-      <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,4,5,6,7,8,9]">
-        <div mat-card-avatar class="example-header-image"></div>
-        <div >
-        <button mat-button >updatedsheet</button> 
+        <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3]">
+          <div mat-card-avatar class="example-header-image"></div>
+          <div >
+            <div class="content"><b>Updatedsheet...</b>
+              <div class="time">5 hours ago</div>
+            </div>
+        </div>
+      
       </div>
-    
-    </div>
-    <div fxFlex="column" fxLayoutAlign="start" >
-      <div mat-card-avatar class="example-header-image"></div>
-      <div >
-      <button mat-button >updatedsheet</button> 
-    </div>
-  
-  
-  
-  </div>
-</div>
+      <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2]" >
+        <div mat-card-avatar class="example-header-image"></div>
+        <div>
+        <div class="content"><b>Kate: .</b>
+          <div class="time">1 hour ago</div>
+        </div>
+        </div>
+        </div>
+        </div>
     </mat-card>
+    
   
   </div>
   

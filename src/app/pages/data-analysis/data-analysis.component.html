@@ -10,9 +10,22 @@
                 Add Member </button>
                 
 
-        <mat-icon>notifications</mat-icon>
+             
+                <button mat-button [matMenuTriggerFor]="menu"> <mat-icon matBadge="7" matBadgeColor="warn" >notifications</mat-icon></button>
+                <mat-menu #menu="matMenu" >
+                  <div  fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,4,5,6,7]">
+                    <div mat-card-avatar class="example-header-image" style="margin-left: 10px;"></div>
+                    <div class="notification-container" >
+                      <div class="content"><b>Updatedsheet...</b>
+                        <div class="time">5 hours ago</div><br>
+                      </div>
+                  </div>
+                
+                </div>
+               </mat-menu>
   
-        </div>
+       
+      </div>
       </mat-toolbar-row>
         
       <mat-toolbar-row>
@@ -88,10 +101,12 @@
   
     </mat-grid-tile>
     
-    <mat-grid-tile 
-   
-    ><mat-card style="width: 200px;height: 400px;margin:10px 0px ;" >
+    <mat-grid-tile  >
+      <div classs="scroll-bar">
+      <mat-card style="width: 200px;height: 400px;margin:10px 0px ;" >
+        <div classs="scroll-bar" fxLayout="column">
       <mat-card-header>
+       
       <mat-card-title> About</mat-card-title>
       </mat-card-header>
       <mat-card-content>
@@ -113,10 +128,10 @@
 <mat-card-actions>
   <button mat-button>Addmembers+</button> 
 </mat-card-actions>
-    
+</div>
     </mat-card>
 
-
+  </div>
     </mat-grid-tile>
    
 
@@ -172,14 +187,20 @@
 
     ><mat-card style="width: 200px;height: 400px;margin:10px 0px">
       <div>
-        <div  fxLayout="column" fxLayoutGap="1px" *ngFor="let num of [1,2,3,4,5,6,7,8,9]">
-         <div mat-card-avatar class="example-header-image">
-           <div style="margin-left: 30px;">
-             <button mat-button >updatedsheet</button> </div>
-         </div>
-     </div>
+       <div class="scroll-bar1">
+        <div  fxLayout="row" fxLayoutGap="10px" *ngFor="let num of [1,2,3,4,5,6,7]">
+          <div mat-card-avatar class="example-header-image"></div>
+        <div >
+          <div class="content"><b>Updatedsheet...</b>
+            <div class="time">5 hours ago</div><br>
+          </div>
+      </div><br>
+
    </div>
+  </div>
+  </div>
     </mat-card>
+  
     </mat-grid-tile>
 
 

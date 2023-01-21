@@ -1,24 +1,29 @@
+<div>
+  <div fxLayout="row" fxLayoutAlign="space-between center" style="background-color:#233A61 ;color:white;">
+<div>
+  <h2 style="margin-left: 20px;margin-top: 10px;">Cement</h2>
+</div>
+<div style="margin-right: 10px;">Back to Chart</div></div>
 
+  <form class="form-section" [formGroup]="itemForm"> 
 
-
-   <form class="form-section" [formGroup]="itemForm">
-
-    <ng-container formArrayName="addRevisesDates">
-      <ng-container *ngFor="let single of addRevisesDates.controls; let i = index" [formGroupName]="i">
-  
+    <ng-container formArrayName="addRevisesDates" fxLayout="row">
+      <div>
+      <ng-container *ngFor="let single of addRevisesDates.controls; let i = index" [formGroupName]="i" >
+ 
           <div 
-          fxLayout="row wrap" 
-          fxLayout.lt-sm="column" 
+          fxLayout="row" 
+          fxLayout.lt-sm="row" 
           fxLayoutGap="10px" 
           fxLayoutAlign="flex-start"
           style="margin-left: 5%;">
   
      
-          <div class="custom-form-group">
+          <div class="custom-form-group" fxLayout="row" >
               <label class="custom-label" for=""> Revised Date <span class="star">*</span>
                 <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
               </label>
-              <div class="custom-form-control">
+              <div class="custom-form-control" fxLayout="row">
                 <mat-form-field appearance="outline">
                   <input matInput [matDatepicker]="startPicker" formControlName="revisedDate" placeholder="Enter Revised Date"
                   (click)="startPicker.open()"/>
@@ -30,30 +35,26 @@
                 </mat-form-field>
               </div>
             </div>
-          </div>
-  
-      
-  
-  
-  
-  
-  
+         <!----> 
+
   
       <div>
         <button type="button" mat-button class="global-btn save-btn" (click)="minusBlocks(i)">
           <span> - Remove </span>
         </button>
-        </div>
-    </ng-container>
+        </div></div>
+     </ng-container>
+
     <div fxLayout="row" fxLayoutAlign="end center">
-      <button type="button" mat-button class="global-btn save-btn" (click)="plusBlocks()">
-         <span> + Add Revised Dates</span>
+      <button type="button" mat-button class="global-btn save-btn" style="margin-top: 10px;" (click)="plusBlocks()">
+         <span  > + Add Revised Dates</span>
       </button>
    </div>
+  </div>
     </ng-container>
 
-    <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
-    fxLayoutAlign="space-around center" fxLayoutGap="0px">
+    <div fxLayout="row wrap" 
+    fxLayoutAlign="space-around center" fxLayoutGap="0px" style="margin-top: 30px;">
   
     <div class="custom-form-group">
       <label class="custom-label" for=""> actual Revised Start Date <span class="star">*</span>
@@ -104,13 +105,14 @@
           </mat-form-field>
         </div>
       </div>
-
-      <div class="custom-form-group">
-        <label class="custom-label" for=""> uom <span class="star">*</span>
+</div>
+<div fxLayout="row" fxLayoutGap="100px">
+<div class="custom-form-group"  >
+        <label class="custom-label" for="" style="margin-left: 30px;position: relative;"> uom <span class="star">*</span>
           <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
         </label>
-        <div class="custom-form-control">
-            <mat-form-field appearance="outline">
+        <div class="custom-form-control" style="margin-left: 30px;position: relative;">
+            <mat-form-field appearance="outline" style="width: 115%;">
                 <input matInput  placeholder="Enter uom" formControlName="uom"
                   >
                 <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
@@ -121,11 +123,11 @@
       </div>
 
       <div class="custom-form-group">
-        <label class="custom-label" for=""> total <span class="star">*</span>
+        <label class="custom-label" for="" style="margin-left: -10px;position: relative;"> total <span class="star">*</span>
           <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
         </label>
-        <div class="custom-form-control">
-            <mat-form-field appearance="outline">
+        <div class="custom-form-control" style="margin-left: -18px;position: relative;">
+            <mat-form-field appearance="outline" style="width: 115%;">
                 <input matInput  placeholder="Enter total" formControlName="total"
                   >
                 <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
@@ -135,12 +137,12 @@
         </div>
       </div>
     </div>
-      
-
-      
-  <button (click)="AddData()">submit</button>
-  
-     </form>
     
+    
+  <button mat-button (click)="AddData()" style="background-color: #233A61;color: #fff;padding: 1px 40px;margin-left: 30px;">submit</button>
+      
+  </form>
+
+    </div>
   
   

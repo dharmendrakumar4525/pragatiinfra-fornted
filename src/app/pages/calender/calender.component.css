@@ -33,7 +33,7 @@ li {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 98%;
-    height: 100%;
+ 
   }
  
   
@@ -99,14 +99,4 @@ border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:hover{
 background: lightblue;
-}
-
-
-.app-top {
-  margin: 0 0 3em;
-}
-
-.app-calendar {
-  margin: 0 auto;
-  max-width: 900px;
 }

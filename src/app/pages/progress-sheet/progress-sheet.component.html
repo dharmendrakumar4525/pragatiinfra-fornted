@@ -4,7 +4,7 @@
       <div style="padding: 1rem;margin-top: 60px;">
       <span>Project 1</span></div>
       <div>
-          <button style="padding: 12px 12px;width: 150px;margin-top: 50px;margin-left: 800px;position: relative;">Add Project +  </button>
+          <button style="padding: 12px 12px;width: 150px;margin-top: 50px;margin-left: 600px;position: relative;">Add Project +  </button>
           </div>
           <div>
           <button style="padding: 5px 5px;width: 150px;margin-left: 40px;margin-top: 50px;"> <mat-icon style="font-size: medium;position: relative;right:1px;top:10px">group_add</mat-icon>
@@ -12,8 +12,10 @@
               
 <button mat-button [matMenuTriggerFor]="menu" ><mat-icon matBadge="7" matBadgeColor="warn" style="margin-left:-10px">notifications</mat-icon></button>
 <mat-menu #menu="matMenu">
+  <div class="notification-container">
   <button mat-menu-item>item1</button>
   <button mat-menu-item>item2</button>
+</div>
 </mat-menu>  
 
       </div>
