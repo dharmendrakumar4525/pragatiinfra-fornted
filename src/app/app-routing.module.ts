@@ -36,6 +36,10 @@ const routes: Routes = [
     component: AddProjectComponent
   },
   {
+    path: 'add-project/:id',
+    component: AddProjectComponent
+  },
+  {
     path: 'user-management',
     component: UserManagementComponent
   },
@@ -62,9 +66,9 @@ const routes: Routes = [
     component: ViewProjectComponent,
     children: [
       {path: '', redirectTo: 'data-analysis', pathMatch:'full'}, 
-      {path: 'data-analysis', component: DataAnalysisComponent},
-      {path: 'progress-sheet', component: ProgressSheetComponent},
-      {path: 'calender', component: CalenderComponent}, 
+      {path: 'data-analysis/:id', component: DataAnalysisComponent},
+      {path: 'progress-sheet/:id', component: ProgressSheetComponent},
+      {path: 'calender/:id', component: CalenderComponent}, 
       {path: 'login', component: LoginComponent},
       {path: 'forgotpassword', component: ForgotpasswordComponent},
     

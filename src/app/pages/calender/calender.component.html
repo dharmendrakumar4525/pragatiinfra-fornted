@@ -17,7 +17,7 @@
       </mat-toolbar-row>
   </mat-toolbar>
   <div >
-    <ul class="toptext"  style="background-color: #fff !important;">
+    <ul class="toptext"  style="background-color: #fff !important;list-style: none;">
       <li><a style="color: #000;" [routerLink]="['/dpr']" routerLinkActive="active-link"
         ><i class="fa fa-eye" aria-hidden="true"></i> Projects</a></li>
       <li><a style="color: #000;"[routerLink]="['data-analysis']" routerLinkActive="active-link-active"
@@ -28,6 +28,31 @@
          ><i class="fa fa-pencil" aria-hidden="true"></i> Calender</a></li>
     </ul>
     </div>
+
+
+
+
+    <!-- <div class='app'>
+
+
+
+      <div class='app-calendar' >
+        <full-calendar
+          #calendar
+          defaultView="dayGridMonth"
+          [header]="{
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth'
+          }"
+          [plugins]="calendarPlugins"
+          [weekends]="calendarWeekends"
+          (dateClick)="handleDateClick($event)"
+        ></full-calendar>
+      </div>
+    
+    </div> -->
+    
 
     <mat-grid-list cols="4" rowHeight="400px" style="margin-top: 70px;">
         <mat-grid-tile colspan="3" rowspan="2"  >

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
@@ -9,7 +9,7 @@ import { SharedModule } from './shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+//import { FullCalendarModule } from '@fullcalendar/angular';
 import { AccountInfoComponent } from './pages/account-info.component';
 import { DashboardComponent } from './pages/dashboard.component';
 import { HomeComponent } from './pages/home.component';
@@ -34,12 +34,13 @@ import { AddUserComponent } from './pages/add-user/add-user.component';
 import { ForgotpasswordComponent } from './pages/forgotpassword/forgotpassword.component';
 import { NewRoleComponent } from './pages/new-role/new-role.component';
 import { NewPermissionComponent } from './pages/new-permission/new-permission.component';
+import { AddDataComponent } from './services/add-data/add-data.component';
 
 
 @NgModule({
   imports:      [ AppRoutingModule, BrowserModule,ReactiveFormsModule,HttpClientModule, FormsModule, CoreModule, SharedModule, CustomMaterialModule,
     FlexLayoutModule,
-  
+    //FullCalendarModule,
     NgCircleProgressModule.forRoot({
 
     
@@ -66,7 +67,11 @@ import { NewPermissionComponent } from './pages/new-permission/new-permission.co
      BrowserAnimationsModule,
   ],
   declarations: [ AppComponent, HomeComponent, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent,LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,
-    ForgotpasswordComponent, NewRoleComponent,NewPermissionComponent],
+    ForgotpasswordComponent, NewRoleComponent,NewPermissionComponent, AddDataComponent],
+    schemas: [
+      CUSTOM_ELEMENTS_SCHEMA,
+      //NO_ERRORS_SCHEMA
+    ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

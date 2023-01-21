@@ -17,6 +17,13 @@ export class TaskService {
     );
   }
 
+  getOnlyTasks(): Observable<any> {
+    
+    return this.http.get(`${this.baseUrl}/tasks`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   addTask(task:any): Observable<any> {
     
     return this.http.post(`${this.baseUrl}/masterTasks`, task).pipe(

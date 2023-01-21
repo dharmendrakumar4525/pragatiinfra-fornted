@@ -8,6 +8,7 @@ import { TaskService } from 'src/app/services/task.service';
 import { AddSubTasksComponent } from '../add-sub-tasks/add-sub-tasks.component';
 import { AddProjectService } from 'src/app/services/add-project.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { ActivatedRoute } from '@angular/router';
 
 export interface Fruit {
   name: string;
@@ -50,17 +51,31 @@ export class AddProjectComponent implements OnInit {
 
   });
   tasks:any;
+  projectId:any;
+  tasksData:any;
   constructor(private _fb: FormBuilder, private toast: ToastService, private _dialog: MatDialog,private taskService: TaskService,
-    private projectService: AddProjectService,) { }
+    private projectService: AddProjectService,private activeRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
   
+    this.activeRoute.params.subscribe((params:any) => {
+      console.log(params.id)
+      this.projectId = params.id
+      if(this.projectId == undefined){
+        this.projectId = null
+      }
+    });
+
       this.taskService.getTasks().subscribe(data=>{
         //this.spinner.hide()
         this.tasks = data
         console.log(this.tasks)
       })
     
+      this.taskService.getOnlyTasks().subscribe(data=>{
+        this.tasksData = data
+        console.log(this.tasksData)
+      })
   }
 
   get courseIds() { 
@@ -151,7 +166,7 @@ addTag(event: MatChipInputEvent): void {
     item.taskName = task.taskName
     const id = item._id;
     
-    console.log(task)
+   // console.log(task)
 
     const index = this.selection.findIndex(u => u._id === id);
     if (index === -1) {
@@ -170,36 +185,56 @@ addTag(event: MatChipInputEvent): void {
   }
 
   addProject(){
-    this.toast.openSnackBar(
-      'Enter Valid Details'
-    );
-    console.log(this.selection);
-    console.log(this.projectForm.value);
-    this.projectForm.value.sections = this.selection
-    this.projectForm.value.imageUrl = this.imageUrl
-    this.projectService.addProject(this.projectForm.value).subscribe(
-
-      {
-        next: (data: any) =>  {
-          console.log(data)
-          // this.spinner.hide()
-          // this.router.navigate(['/usersList']);
-          // this.toast.openSnackBar('User Added Successfully');
-          
-        },
-        error: (err) => {
-          // this.spinner.hide()
-          // this.toast.openSnackBar('Something went wrong, please try again later');
-          // console.log(err) 
+    let hh = []
+    if(!this.projectId){
+      this.toast.openSnackBar(
+        'Enter Valid Details'
+      );
+      console.log(this.selection);
+      console.log(this.projectForm.value);
+      this.projectForm.value.sections = this.selection
+      this.projectForm.value.imageUrl = this.imageUrl
+      this.projectService.addProject(this.projectForm.value).subscribe(
   
-          // this.errorData = err
-  
-          
-  
+        {
+          next: (data: any) =>  {
+            console.log(data)
+            // this.spinner.hide()
+            // this.router.navigate(['/usersList']);
+            // this.toast.openSnackBar('User Added Successfully');
+            
+          },
+          error: (err) => {
+            // this.spinner.hide()
+            // this.toast.openSnackBar('Something went wrong, please try again later');
+            // console.log(err) 
+    
+            // this.errorData = err
+    
+            
+    
+          }
         }
+    
+      )
+    }else{
+     // console.log(this.selection);
+      //console.log(this.tasksData)
+      for(let one of this.selection){
+        //console.log(one)
+        for(let single of this.tasksData){
+          if(single.taskId === one.taskId){
+
+          }else{
+            hh.push(one)
+            
+
+          }
+        }
+        console.log(hh)
       }
-  
-    )
+    }
+ 
 
   }
 

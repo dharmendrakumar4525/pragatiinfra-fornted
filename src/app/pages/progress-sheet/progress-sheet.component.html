@@ -25,14 +25,14 @@
     </mat-toolbar>
 
     <div >
-      <ul class="toptext"  style="background-color: #fff !important;">
+      <ul class="toptext"  style="background-color: #fff !important;list-style: none;">
         <li><a style="color: #000;" [routerLink]="['/dpr']" routerLinkActive="active-link"
           ><i class="fa fa-eye" aria-hidden="true"></i> Projects</a></li>
-        <li><a style="color: #000;"[routerLink]="['data-analysis']" routerLinkActive="active-link-active"
+        <li><a style="color: #000;" [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
           [routerLinkActiveOptions]="{exact: true}" ><i class="fa fa-eye" aria-hidden="true"></i> Data-Analysis</a></li>
-        <li><a  style="color: #000;" [routerLink]="['progress-sheet']" routerLinkActive="active-link-active"
+        <li><a  style="color: #000;" [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
            ><i class="fa fa-pencil" aria-hidden="true"></i> Progress-sheet</a></li>
-        <li><a style="color: #000;"[routerLink]="['calender']" routerLinkActive="active-link"
+        <li><a style="color: #000;" [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"
            ><i class="fa fa-pencil" aria-hidden="true"></i> Calender</a></li>
       </ul>
       
@@ -63,7 +63,7 @@
    
     <tbody *ngFor= " let project of projectsData ">
         <tr  style="font-size: large;border: 1px solid lightgray;">
-            <td>{{project.taskName}} <button mat-button> <mat-icon >add</mat-icon></button></td>
+            <td>{{project.taskName}} <button mat-button> <mat-icon [routerLink]="['/add-project',projectId]" >add</mat-icon></button></td>
             <td ></td>
             <td ></td>
             <td ></td>
@@ -76,7 +76,7 @@
         
         <tr *ngFor="let subTask of project.result" style="background-color: #F5F5F5;" >
 
-          <td > <button mat-button> <mat-icon >edit</mat-icon></button>{{subTask.subTaskName}}</td>
+          <td > <button mat-button> <mat-icon (click)="addData(subTask._id)" >edit</mat-icon></button>{{subTask.subTaskName}}</td>
           <td ></td>
           <td ></td>
           <td ></td>

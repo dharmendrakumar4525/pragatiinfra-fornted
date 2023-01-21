@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 export interface Tile {
@@ -30,10 +32,16 @@ export class DataAnalysisComponent implements OnInit {
     {text: 'Three', cols: 3, rows: 3, color: 'lightpink'},
    
   ];
+  projectId:any
 
-  constructor() { }
+  constructor(private activeRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.activeRoute.params.subscribe((params:any) => {
+      console.log(params.id)
+      this.projectId = params.id
+
+    });
     var myChart = new Chart('overviewChart', {
       type: 'line',
       data: {

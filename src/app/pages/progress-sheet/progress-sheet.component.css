@@ -50,7 +50,7 @@
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 97%;
-    height: 100vh;
+    /* height: 100vh; */
     font-size: 12px;
     margin-left: 20px;
   }

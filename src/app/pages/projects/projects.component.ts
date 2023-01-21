@@ -39,12 +39,14 @@ export class ProjectsComponent implements OnInit {
     },
 
   ];
+  projectsLenth:any
   constructor(private projectService: AddProjectService,private _dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.projectService.getProjects().subscribe(data=>{
       //this.spinner.hide()
       this.projects = data
+      this.projectsLenth = this.projects.length
       console.log(this.projects)
     })
   }

@@ -1,0 +1,146 @@
+
+
+
+   <form class="form-section" [formGroup]="itemForm">
+
+    <ng-container formArrayName="addRevisesDates">
+      <ng-container *ngFor="let single of addRevisesDates.controls; let i = index" [formGroupName]="i">
+  
+          <div 
+          fxLayout="row wrap" 
+          fxLayout.lt-sm="column" 
+          fxLayoutGap="10px" 
+          fxLayoutAlign="flex-start"
+          style="margin-left: 5%;">
+  
+     
+          <div class="custom-form-group">
+              <label class="custom-label" for=""> Revised Date <span class="star">*</span>
+                <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
+              </label>
+              <div class="custom-form-control">
+                <mat-form-field appearance="outline">
+                  <input matInput [matDatepicker]="startPicker" formControlName="revisedDate" placeholder="Enter Revised Date"
+                  (click)="startPicker.open()"/>
+                  <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #startPicker></mat-datepicker>
+                  <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
+                    <span *ngIf="startDate.hasError('required')"> Start date is required </span>
+                  </mat-error> -->
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+  
+      
+  
+  
+  
+  
+  
+  
+      <div>
+        <button type="button" mat-button class="global-btn save-btn" (click)="minusBlocks(i)">
+          <span> - Remove </span>
+        </button>
+        </div>
+    </ng-container>
+    <div fxLayout="row" fxLayoutAlign="end center">
+      <button type="button" mat-button class="global-btn save-btn" (click)="plusBlocks()">
+         <span> + Add Revised Dates</span>
+      </button>
+   </div>
+    </ng-container>
+
+    <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
+    fxLayoutAlign="space-around center" fxLayoutGap="0px">
+  
+    <div class="custom-form-group">
+      <label class="custom-label" for=""> actual Revised Start Date <span class="star">*</span>
+        <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
+      </label>
+      <div class="custom-form-control">
+        <mat-form-field appearance="outline">
+          <input matInput [matDatepicker]="actualRevisedStartDate" formControlName="actualRevisedStartDate" placeholder="Enter actual Revised Start Date"
+          (click)="actualRevisedStartDate.open()"/>
+          <mat-datepicker-toggle matSuffix [for]="actualRevisedStartDate"></mat-datepicker-toggle>
+          <mat-datepicker #actualRevisedStartDate></mat-datepicker>
+          <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
+            <span *ngIf="startDate.hasError('required')"> Start date is required </span>
+          </mat-error> -->
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="custom-form-group">
+      <label class="custom-label" for=""> base Line Start Date <span class="star">*</span>
+        <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
+      </label>
+      <div class="custom-form-control">
+        <mat-form-field appearance="outline">
+          <input matInput [matDatepicker]="baseLineStartDate" formControlName="baseLineStartDate" placeholder="Enter base Line Start Date"
+          (click)="baseLineStartDate.open()"/>
+          <mat-datepicker-toggle matSuffix [for]="baseLineStartDate"></mat-datepicker-toggle>
+          <mat-datepicker #baseLineStartDate></mat-datepicker>
+          <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
+            <span *ngIf="startDate.hasError('required')"> Start date is required </span>
+          </mat-error> -->
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="custom-form-group">
+        <label class="custom-label" for=""> base Line End Date <span class="star">*</span>
+          <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
+        </label>
+        <div class="custom-form-control">
+          <mat-form-field appearance="outline">
+            <input matInput [matDatepicker]="baseLineEndDate" formControlName="baseLineEndDate" placeholder="Enter base Line End Date"
+            (click)="baseLineEndDate.open()"/>
+            <mat-datepicker-toggle matSuffix [for]="baseLineEndDate"></mat-datepicker-toggle>
+            <mat-datepicker #baseLineEndDate></mat-datepicker>
+            <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
+              <span *ngIf="startDate.hasError('required')"> Start date is required </span>
+            </mat-error> -->
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="custom-form-group">
+        <label class="custom-label" for=""> uom <span class="star">*</span>
+          <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
+        </label>
+        <div class="custom-form-control">
+            <mat-form-field appearance="outline">
+                <input matInput  placeholder="Enter uom" formControlName="uom"
+                  >
+                <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
+                  <span>Please provide a valid Profession Type</span>
+                </mat-error> -->
+              </mat-form-field>
+        </div>
+      </div>
+
+      <div class="custom-form-group">
+        <label class="custom-label" for=""> total <span class="star">*</span>
+          <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
+        </label>
+        <div class="custom-form-control">
+            <mat-form-field appearance="outline">
+                <input matInput  placeholder="Enter total" formControlName="total"
+                  >
+                <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
+                  <span>Please provide a valid Profession Type</span>
+                </mat-error> -->
+              </mat-form-field>
+        </div>
+      </div>
+    </div>
+      
+
+      
+  <button (click)="AddData()">submit</button>
+  
+     </form>
+    
+  
+  

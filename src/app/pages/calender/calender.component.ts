@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormArray, FormGroup, Validators } from '@angular/forms';
-
+import { ActivatedRoute } from '@angular/router';
+import {  ViewChild } from '@angular/core';
+//import { FullCalendarComponent } from '@fullcalendar/angular';
+import { EventInput } from '@fullcalendar/core';
+//import dayGridPlugin from '@fullcalendar/daygrid';
+//import timeGrigPlugin from '@fullcalendar/timegrid';
+//import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
 
 
 
@@ -11,8 +17,37 @@ import { FormControl, FormArray, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./calender.component.css']
 })
 export class CalenderComponent implements OnInit {
-  selectedDate: Date = new Date();
+    //@ViewChild('calendar') calendarComponent: FullCalendarComponent; // the #calendar in the template
 
+  calendarVisible = true;
+  //calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
+  calendarWeekends = true;
+  
+
+  toggleVisible() {
+    this.calendarVisible = !this.calendarVisible;
+  }
+
+  toggleWeekends() {
+    this.calendarWeekends = !this.calendarWeekends;
+  }
+
+  gotoPast() {
+    //let calendarApi = this.calendarComponent.getApi();
+    //calendarApi.gotoDate('2000-01-01'); // call a method on the Calendar object
+  }
+
+  handleDateClick(arg) {
+    if (confirm('Would you like to add an event to ' + arg.dateStr + ' ?')) {
+    //   this.calendarEvents = this.calendarEvents.concat({ // add new event data. must create new array
+    //     title: 'New Event',
+    //     start: arg.date,
+    //     allDay: arg.allDay
+    //   })
+    }
+  }
+  selectedDate: Date = new Date();
+  projectId:any;
  projectsData = [
   {
       "_id": "63c6aa45a1593c88fae7b09b",
@@ -147,9 +182,14 @@ export class CalenderComponent implements OnInit {
     ]
 }
 ] 
-  constructor() { }
+  constructor(private activeRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.activeRoute.params.subscribe((params:any) => {
+        console.log(params.id)
+        this.projectId = params.id
+  
+      });
   }
 
 }

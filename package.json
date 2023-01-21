@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^14.1.0",
     "@angular/platform-browser-dynamic": "^14.1.0",
     "@angular/router": "^14.1.0",
+    "@fullcalendar/core": "4.4.2",
     "chart.js": "^4.1.2",
     "ng-circle-progress": "^1.6.0",
     "rxjs": "~7.5.0",
