@@ -100,3 +100,8 @@ border-radius: 5px;
 ::-webkit-scrollbar-thumb:hover{
 background: lightblue;
 }
+
+.calenderForm{
+  width:90% !important;
+  height: 100% !important;
+}

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { AddDataComponent } from 'src/app/services/add-data/add-data.component';
+import { AddDataComponent } from 'src/app/pages/add-data/add-data.component';
 import { ProgressSheetService } from 'src/app/services/progress-sheet.service';
 import { TaskService } from 'src/app/services/task.service';
 
@@ -220,21 +220,41 @@ export class ProgressSheetComponent implements OnInit {
     return item.isGroupBy;
   }
 
-  addData(id){
+  addData(subTask){
     const dialogRef = this._dialog.open(AddDataComponent, {
         width: '60%',
         panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-        data: id
+        data: subTask
       });
       dialogRef.afterClosed().subscribe(status => {
         console.log(status);
         if (status === 'yes') {
-          this.taskService.getTasks().subscribe(data=>{
-            //this.spinner.hide()
-            this.tasks = data
-            console.log(this.tasks)
-          })
-         // this.filterSubject.next(this.filterForm.value);
+          this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data=>{
+            this.activesData = data
+        console.log(this.activesData)
+        this.activesData.forEach(obj => {
+          //this.grandTotal += obj['discAmount'];
+          //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
+          //console.log(this.grandTotal);
+          const arr = this.projectsData.filter(ele => ele['name'] === obj['taskName']);
+          if (arr.length === 0) {
+            this.projectsData.push(
+              { 'name': obj['taskName'] });
+          }
+      });
+
+      this.projectsData.forEach(obj => {
+          const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
+          obj['result'] = uniqData;
+          
+        });
+        console.log(this.projectsData);
+
+        
+
+      
+
+        })
         }
         if (status === 'no') {
         }

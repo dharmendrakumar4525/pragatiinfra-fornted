@@ -30,7 +30,13 @@
     </div>
 
 
-
+    <!-- <full-calendar [options]="calendarOptions"></full-calendar> -->
+    <!-- <full-calendar
+    [options]="calendarOptions"
+    [events]="eventsPromise | async"
+  ></full-calendar> -->
+  <!-- <full-calendar (dateClick)="handleDateClick($event)" [options]="calendarOptions" [plugins]="calendarPlugins"></full-calendar> -->
+  <full-calendar [options]="calendarOptions"></full-calendar>
 
     <!-- <div class='app'>
 
@@ -77,7 +83,7 @@
            
             <tbody *ngFor= " let project of projectsData ">
                 <tr  style="font-size: large;border: 1px solid lightgray;">
-                    <td>{{project.taskName}}</td>
+                    <td>{{project.name}}</td>
                     
                 
                 </tr>
@@ -86,7 +92,7 @@
                   <td >{{subTask.subTaskName}}</td>
                   <td>
                   <form role="form" (submit)="onBid($event, subTask, name.value,subTask._id)">
-                    <input type="number" #name  min={{subTask.value}} value={{subTask.value}}>
+                    <input type="number" class="calenderForm" #name  min={{subTask.value}} value={{subTask.value}}>
                     <button type="submit">Add</button>
                  </form></td>
                   

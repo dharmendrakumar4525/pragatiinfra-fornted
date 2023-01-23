@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormArray, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CalenderService } from 'src/app/services/calender.service';
 import { ProgressSheetService } from 'src/app/services/progress-sheet.service';
 import { ToastService } from 'src/app/services/toast.service';
-
-
+//import { CalendarOptions } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import { CalendarOptions } from '@fullcalendar/core'; // useful for typechecking
 
 
 
@@ -16,9 +17,39 @@ import { ToastService } from 'src/app/services/toast.service';
   styleUrls: ['./calender.component.css']
 })
 export class CalenderComponent implements OnInit {
+  calendarOptions: CalendarOptions = {
+    initialView: 'dayGridMonth'
+  };
+  // calendarPlugins = [dayGridPlugin];
+
+  // handleDateClick(arg) { // handler method
+  //   alert(arg.dateStr);
+  // }
+  // calendarOptions: CalendarOptions = {
+  //   plugins: [dayGridPlugin],
+  //   initialView: 'dayGridMonth',
+  //   weekends: false,
+  //   events: [
+  //     { title: 'Meeting', start: new Date() }
+  //   ]
+  // };
+  // calendarOptions: CalendarOptions = {
+  //   initialView: 'dayGridMonth',
+  //   dateClick: this.handleDateClick.bind(this)
+  // };
+  // eventsPromise: Promise<EventInput>;
+
+  // handleDateClick(arg) {
+  //   alert('date click! ' + arg.dateStr);
+  // }
+  // calendarOptions: CalendarOptions = {
+  //   initialView: 'dayGridMonth',
+  //   plugins: [dayGridPlugin]
+  // };
   selectedDate: Date = new Date();
   projectId:any;
-  projectsData:any;
+  projectsData = [];
+  activesData:any;
   project:any;
 //  projectsData = [
 //   {
@@ -157,6 +188,11 @@ export class CalenderComponent implements OnInit {
   constructor(private activeRoute: ActivatedRoute, private progressSheetService:ProgressSheetService, private toast:ToastService, private calenderService:CalenderService) { }
 
   ngOnInit(): void {
+
+
+
+
+    
     this.activeRoute.params.subscribe((params:any) => {
         console.log(params.id)
         this.projectId = params.id
@@ -166,10 +202,30 @@ export class CalenderComponent implements OnInit {
         console.log(this.project)
         })
 
-        this.progressSheetService.getTasksById(this.projectId).subscribe(data=>{
-                  this.projectsData = data
-              console.log(this.projectsData)
-              })
+        this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data=>{
+          this.activesData = data
+      console.log(this.activesData)
+      this.activesData.forEach(obj => {
+        //this.grandTotal += obj['discAmount'];
+        //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
+        //console.log(this.grandTotal);
+        const arr = this.projectsData.filter(ele => ele['name'] === obj['taskName']);
+        if (arr.length === 0) {
+          this.projectsData.push(
+            { 'name': obj['taskName'] });
+        }
+    });
+
+    this.projectsData.forEach(obj => {
+        const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
+        obj['result'] = uniqData;
+        
+      });
+      console.log(this.projectsData);
+
+    
+
+      })
   
       });
   }
@@ -185,6 +241,7 @@ export class CalenderComponent implements OnInit {
             console.log(data)
            
             this.toast.openSnackBar('Data updated successfully');
+            player.value=null
              //this.router.navigate(['/users']);
              
             

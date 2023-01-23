@@ -1,9 +1,9 @@
 <div>
   <div fxLayout="row" fxLayoutAlign="space-between center" style="background-color:#233A61 ;color:white;">
 <div>
-  <h2 style="margin-left: 20px;margin-top: 10px;">Cement</h2>
+  <h2 style="margin-left: 20px;margin-top: 10px;">{{data.subTaskName}}</h2>
 </div>
-<div style="margin-right: 10px;">Back to Chart</div></div>
+<div style="margin-right: 10px;cursor: pointer;" (click)="closeDialog('no')">Back to Chart</div></div>
 
   <form class="form-section" [formGroup]="itemForm"> 
 
@@ -20,7 +20,7 @@
   
      
           <div class="custom-form-group" fxLayout="row" >
-              <label class="custom-label" for=""> Revised Date <span class="star">*</span>
+              <label class="custom-label" for="">R{{i+1}} End Date <span class="star">*</span>
                 <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
               </label>
               <div class="custom-form-control" fxLayout="row">
@@ -66,6 +66,9 @@
           (click)="actualRevisedStartDate.open()"/>
           <mat-datepicker-toggle matSuffix [for]="actualRevisedStartDate"></mat-datepicker-toggle>
           <mat-datepicker #actualRevisedStartDate></mat-datepicker>
+          <!-- <mat-error *ngIf="actualRevisedStartDate.invalid">
+            <span > actualRevisedStartDate is required </span>
+          </mat-error> -->
           <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
             <span *ngIf="startDate.hasError('required')"> Start date is required </span>
           </mat-error> -->
@@ -82,6 +85,9 @@
           (click)="baseLineStartDate.open()"/>
           <mat-datepicker-toggle matSuffix [for]="baseLineStartDate"></mat-datepicker-toggle>
           <mat-datepicker #baseLineStartDate></mat-datepicker>
+          <!-- <mat-error *ngIf="baseLineStartDate.invalid && ( baseLineStartDate.dirty || baseLineStartDate.touched )">
+            <span>Please provide a valid Base Line Start Date</span>
+          </mat-error> -->
           <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
             <span *ngIf="startDate.hasError('required')"> Start date is required </span>
           </mat-error> -->
@@ -99,6 +105,9 @@
             (click)="baseLineEndDate.open()"/>
             <mat-datepicker-toggle matSuffix [for]="baseLineEndDate"></mat-datepicker-toggle>
             <mat-datepicker #baseLineEndDate></mat-datepicker>
+            <!-- <mat-error *ngIf="baseLineEndDate.invalid && ( baseLineEndDate.dirty || baseLineEndDate.touched )">
+                <span>Please provide a valid Base Line End Date</span>
+              </mat-error> -->
             <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
               <span *ngIf="startDate.hasError('required')"> Start date is required </span>
             </mat-error> -->
@@ -115,6 +124,9 @@
             <mat-form-field appearance="outline" style="width: 115%;">
                 <input matInput  placeholder="Enter uom" formControlName="uom"
                   >
+                  <!-- <mat-error *ngIf="uom.invalid && ( uom.dirty || uom.touched )">
+                    <span>Please provide a valid Uom</span>
+                  </mat-error> -->
                 <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
                   <span>Please provide a valid Profession Type</span>
                 </mat-error> -->
@@ -128,8 +140,11 @@
         </label>
         <div class="custom-form-control" style="margin-left: -18px;position: relative;">
             <mat-form-field appearance="outline" style="width: 115%;">
-                <input matInput  placeholder="Enter total" formControlName="total"
+                <input matInput type="number"  placeholder="Enter total" formControlName="total"
                   >
+                  <!-- <mat-error *ngIf="total.invalid && ( total.dirty || total.touched )">
+                    <span>Please provide a valid Total</span>
+                  </mat-error> -->
                 <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
                   <span>Please provide a valid Profession Type</span>
                 </mat-error> -->
@@ -144,5 +159,3 @@
   </form>
 
     </div>
-  
-  

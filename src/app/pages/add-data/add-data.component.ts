@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TaskService } from 'src/app/services/task.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl, NgForm, FormArray } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
-import { ProgressSheetService } from '../progress-sheet.service';
+import { ProgressSheetService } from '../../services/progress-sheet.service';
 
 @Component({
   selector: 'app-add-data',
@@ -54,7 +54,25 @@ export class AddDataComponent implements OnInit {
   }
 
 
+  get actualRevisedStartDate(): AbstractControl {
+    return this.itemForm.get('actualRevisedStartDate');
+  }
 
+  get baseLineStartDate(): AbstractControl {
+    return this.itemForm.get('baseLineStartDate');
+  }
+
+  get baseLineEndDate(): AbstractControl {
+    return this.itemForm.get('baseLineEndDate');
+  }
+
+  get uom(): AbstractControl {
+    return this.itemForm.get('uom');
+  }
+
+  get total(): AbstractControl {
+    return this.itemForm.get('total');
+  }
 
   plusBlocks() {
     this.addRevisesDates.push(this.getBlocks());
@@ -69,6 +87,27 @@ export class AddDataComponent implements OnInit {
   }
 
   AddData(){
+
+    if (this.itemForm.invalid) {
+      this.toast.openSnackBar(
+        'Enter Valid Details'
+      );
+      //this.clearForm = true;
+      //this.clearForm = true;
+      this.itemForm.markAllAsTouched();
+      return;
+    }
+
+    if (!this.itemForm.value.addRevisesDates.length) {
+      this.toast.openSnackBar(
+        'Please add Atleast one revised end date'
+      );
+      //this.clearForm = true;
+      //this.clearForm = true;
+      //this.itemForm.markAllAsTouched();
+      return;
+    }
+
     console.log(this.itemForm.value)
     var oneDay=1000 * 60 * 60 * 24;
     var difference_ms = Math.abs(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate.getTime() - this.itemForm.value.actualRevisedStartDate.getTime())
@@ -99,7 +138,22 @@ export class AddDataComponent implements OnInit {
    this.itemForm.value.noofDaysBalanceasperrevisedEnddate = noofDaysBalanceasperrevisedEnddate
    this.itemForm.value.dailyAskingRateasperRevisedEndDate = dailyAskingRateasperRevisedEndDate
 
-        this.progressSheetService.addSubActivityData(this.itemForm.value,this.data).subscribe(
+   if(this.itemForm.value.addRevisesDates.length == 1){
+    this.itemForm.value.r1EndDate = this.itemForm.value.addRevisesDates[0].revisedDate
+    this.itemForm.value.r2EndDate = null
+    this.itemForm.value.r3EndDate = null
+   }else if(this.itemForm.value.addRevisesDates.length == 2){
+    this.itemForm.value.r1EndDate = this.itemForm.value.addRevisesDates[0].revisedDate
+    this.itemForm.value.r2EndDate = this.itemForm.value.addRevisesDates[1].revisedDate
+    this.itemForm.value.r3EndDate = null
+   }else if(this.itemForm.value.addRevisesDates.length == 3){
+    this.itemForm.value.r1EndDate = this.itemForm.value.addRevisesDates[0].revisedDate
+    this.itemForm.value.r2EndDate = this.itemForm.value.addRevisesDates[1].revisedDate
+    this.itemForm.value.r3EndDate = this.itemForm.value.addRevisesDates[2].revisedDate
+
+   }
+
+        this.progressSheetService.addSubActivityData(this.itemForm.value,this.data._id).subscribe(
 
       {
         next: (data: any) =>  {
@@ -129,5 +183,7 @@ export class AddDataComponent implements OnInit {
 
   }
   
+
+
 
 }

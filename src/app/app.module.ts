@@ -9,7 +9,7 @@ import { SharedModule } from './shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { FullCalendarModule } from '@fullcalendar/angular';
+//import { FullCalendarModule } from '@fullcalendar/angular';
 import { AccountInfoComponent } from './pages/account-info.component';
 import { DashboardComponent } from './pages/dashboard.component';
 import { HomeComponent } from './pages/home.component';
@@ -34,14 +34,23 @@ import { AddUserComponent } from './pages/add-user/add-user.component';
 import { ForgotpasswordComponent } from './pages/forgotpassword/forgotpassword.component';
 import { NewRoleComponent } from './pages/new-role/new-role.component';
 import { NewPermissionComponent } from './pages/new-permission/new-permission.component';
-import { AddDataComponent } from './services/add-data/add-data.component';
+import { AddDataComponent } from './pages/add-data/add-data.component';
 import { ManagePermissionsComponent } from './pages/manage-permissions/manage-permissions.component';
+import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
+import { AuthGuard } from './services/auth.guard';
+
+// FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+//   dayGridPlugin,
+//   interactionPlugin
+// ]);
 
 
 @NgModule({
   imports:      [ AppRoutingModule, BrowserModule,ReactiveFormsModule,HttpClientModule, FormsModule, CoreModule, SharedModule, CustomMaterialModule,
     FlexLayoutModule,
-    FullCalendarModule,
+    FullCalendarModule ,
     NgCircleProgressModule.forRoot({
 
     
@@ -69,6 +78,7 @@ import { ManagePermissionsComponent } from './pages/manage-permissions/manage-pe
   ],
   declarations: [ AppComponent, HomeComponent, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent,LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,
     ForgotpasswordComponent, NewRoleComponent,NewPermissionComponent, AddDataComponent, ManagePermissionsComponent],
+    providers:[AuthGuard],
     schemas: [
       CUSTOM_ELEMENTS_SCHEMA,
       //NO_ERRORS_SCHEMA

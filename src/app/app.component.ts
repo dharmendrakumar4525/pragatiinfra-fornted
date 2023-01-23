@@ -2,6 +2,7 @@ import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SidePanelState, DashboardLayoutConfiguration, SidePanelPosition } from './core';
+import { AuthGuard } from './services/auth.guard';
 import { UsersService } from './services/users.service';
 import { NavigationLink } from './shared';
 
@@ -15,7 +16,7 @@ export class AppComponent implements OnInit {
   public links: NavigationLink[];
   menuSidebar:any;
   showDashboard:boolean
-  constructor(private userService:UsersService, private router:Router) {
+  constructor(private userService:UsersService, private router:Router, private authGuard:AuthGuard) {
     this.configuration = new DashboardLayoutConfiguration(
       SidePanelPosition.LEFT, 
       SidePanelState.OPEN
@@ -61,6 +62,12 @@ export class AppComponent implements OnInit {
 
     this.userService.data.subscribe(data => {
       if(data === 'logout')
+      this.showDashboard = false
+      this.router.navigate(['/login']);
+    })
+
+    this.authGuard.authData.subscribe(data => {
+      if(data === 'auth')
       this.showDashboard = false
       this.router.navigate(['/login']);
     })

@@ -40,6 +40,15 @@ export class AddTasksComponent implements OnInit {
   }
 
   addTask(){
+    if (this.taskForm.invalid) {
+      // this.toast.openSnackBar(
+      //   'Enter Valid Details'
+      // );
+      //this.clearForm = true;
+      //this.clearForm = true;
+      this.taskForm.markAllAsTouched();
+      return;
+    }
     this.taskService.addTask(this.taskForm.value).subscribe(
 
       {
@@ -68,7 +77,9 @@ export class AddTasksComponent implements OnInit {
     )
   }
 
- 
+  get taskName(): AbstractControl {
+    return this.taskForm.get('taskName');
+  }
 
 
 }

@@ -51,12 +51,21 @@
    
   <thead>
     <th >Description</th>
-   <th>R2EndDate</th>
-   <th>R1EndDate</th>
-   <th>WorkingdaysRevised</th>
-   <th>BaselineStartDate</th>
-   <th>BaselineEndDate</th>
+    <th>R1 End Date</th>
+   <th>R2 End Date</th>
+   <th>R3 End Date</th>
+   <th>Actual/ Revised Start Date   </th>
+   <th>Working Days Revised</th>
+   <th>Baseline Start Date</th>
+   <th>Baseline End Date</th>
+   <th>Base Line Working Days</th>
    <th>UOM</th>
+   <th>Total</th>
+   <th>Cumulative Completed</th>
+   <th>Target Till Date as per Revised End Date  </th>
+   <th>No of Days Balance as per revised dates  </th>
+   <th>Daily Asking Rate as per Revised End Date  </th>
+   <th>Activity Balance (%)   </th>
    <th>Total</th>
  
 
@@ -72,20 +81,42 @@
             <td ></td>
             <td ></td>
             <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            
             
         
         </tr>
         
         <tr *ngFor="let subTask of project.result" style="background-color: #F5F5F5;" >
 
-          <td > <button mat-button> <mat-icon (click)="addData(subTask._id)" >edit</mat-icon></button>{{subTask.subTaskName}}</td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
+          <td > <button mat-button> <mat-icon (click)="addData(subTask)" >edit</mat-icon></button>{{subTask.subTaskName}}</td>
+          <td >{{subTask?.r1EndDate | date}}</td>
+          <td >{{subTask?.r2EndDate | date}}</td>
+          <td >{{subTask?.r3EndDate | date}}</td>
+          <td >{{subTask?.actualRevisedStartDate | date}}</td>
+          <td >{{subTask?.workingDaysRevised}}</td>
+          <td >{{subTask?.baseLineStartDate| date}}</td>
+          <td >{{subTask?.baseLineEndDate | date}}</td>
+          <td >{{subTask?.baseLineWorkingDays}}</td>
+          <td >{{subTask?.uom}}</td>
+          <td >{{subTask?.total}}</td>
+          <td>{{subTask?.dailyCumulativeTotal}}</td>
+          <td></td>
+          <td>{{subTask?.noofDaysBalanceasperrevisedEnddate}}</td>
+          <td>{{subTask?.dailyAskingRateasperRevisedEndDate}}</td>
+          <td></td>
+          <td>{{subTask?.dailyCumulativeTotal}}</td>
+
+          
           
         </tr>
     </tbody>

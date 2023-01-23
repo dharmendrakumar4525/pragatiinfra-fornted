@@ -38,6 +38,15 @@ export class AddSubTasksComponent implements OnInit {
   }
 
   addTask(){
+    if (this.subTaskForm.invalid) {
+      // this.toast.openSnackBar(
+      //   'Enter Valid Details'
+      // );
+      //this.clearForm = true;
+      //this.clearForm = true;
+      this.subTaskForm.markAllAsTouched();
+      return;
+    }
     this.subTaskForm.value.taskId = this.data
     this.taskService.addSubTask(this.subTaskForm.value).subscribe(
 
@@ -84,5 +93,8 @@ export class AddSubTasksComponent implements OnInit {
     // })
   }
 
+  get subTaskName(): AbstractControl {
+    return this.subTaskForm.get('subTaskName');
+  }
 
 }

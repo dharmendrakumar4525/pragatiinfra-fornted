@@ -9,6 +9,9 @@
         <form [formGroup]="subTaskForm">
             <mat-form-field>
                 <input matInput placeholder="add sub Activity" formControlName="subTaskName">
+                <mat-error *ngIf="subTaskName.invalid && ( subTaskName.dirty || subTaskName.touched )">
+                    <span>Please provide a valid name</span>
+                  </mat-error>
             </mat-form-field><br/>
     
             

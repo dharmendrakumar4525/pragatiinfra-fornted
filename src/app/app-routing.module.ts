@@ -18,11 +18,12 @@ import { UsersComponent } from './pages/users/users.component';
 import { ViewProjectComponent } from './pages/view-project/view-project.component';
 import { ForgotpasswordComponent } from './pages/forgotpassword/forgotpassword.component';
 import { ManagePermissionsComponent } from './pages/manage-permissions/manage-permissions.component';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'dpr',
     pathMatch: 'prefix',
   },
   {
@@ -31,60 +32,70 @@ const routes: Routes = [
   },
   {
     path: 'dpr',
-    component: ProjectsComponent
+    component: ProjectsComponent,
+    canActivate:[AuthGuard]
   },
-  {
-    path: 'dashbaord',
-    component: DashboardComponent
-  },
-  {
-    path: 'account',
-    component: AccountInfoComponent
-  },
+  // {
+  //   path: 'dashbaord',
+  //   component: DashboardComponent,
+  // },
+  // {
+  //   path: 'account',
+  //   component: AccountInfoComponent
+  // },
   {
     path: 'add-project',
-    component: AddProjectComponent
+    component: AddProjectComponent,
+    canActivate:[AuthGuard]
   },
   {
     path: 'add-project/:id',
-    component: AddProjectComponent
+    component: AddProjectComponent,
+    canActivate:[AuthGuard]
   },
   {
     path: 'user-management',
-    component: UserManagementComponent
+    component: UserManagementComponent,
+    canActivate:[AuthGuard]
   },
   {
     path: 'users',
-    component: UsersComponent
+    component: UsersComponent,
+    canActivate:[AuthGuard]
   },
   {
     path: 'roles',
-    component: RolesComponent
+    component: RolesComponent,
+    canActivate:[AuthGuard]
   },
   {
     path: 'permissions',
-    component: PermissionsComponent
+    component: PermissionsComponent,
+    canActivate:[AuthGuard]
   },
   {
     path: 'manage-permissions',
-    component: ManagePermissionsComponent
+    component: ManagePermissionsComponent,
+    canActivate:[AuthGuard]
   },
   {
     path: 'add-user',
-    component: AddUserComponent
+    component: AddUserComponent,
+    canActivate:[AuthGuard]
   },
   {path: 'forgotpassword', component: ForgotpasswordComponent},
 
   {
     path: 'view-project',
     component: ViewProjectComponent,
+    canActivate:[AuthGuard],
     children: [
       {path: '', redirectTo: 'data-analysis', pathMatch:'full'}, 
-      {path: 'data-analysis/:id', component: DataAnalysisComponent},
-      {path: 'progress-sheet/:id', component: ProgressSheetComponent},
-      {path: 'calender/:id', component: CalenderComponent}, 
+      {path: 'data-analysis/:id', component: DataAnalysisComponent,canActivate:[AuthGuard]},
+      {path: 'progress-sheet/:id', component: ProgressSheetComponent,canActivate:[AuthGuard]},
+      {path: 'calender/:id', component: CalenderComponent,canActivate:[AuthGuard]} 
       //{path: 'login', component: LoginComponent},
-      {path: 'forgotpassword', component: ForgotpasswordComponent},
+      //{path: 'forgotpassword', component: ForgotpasswordComponent},
     
     ]
   },
