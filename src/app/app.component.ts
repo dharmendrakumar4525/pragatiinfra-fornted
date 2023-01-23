@@ -1,5 +1,8 @@
+import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { SidePanelState, DashboardLayoutConfiguration, SidePanelPosition } from './core';
+import { UsersService } from './services/users.service';
 import { NavigationLink } from './shared';
 
 @Component({
@@ -7,11 +10,12 @@ import { NavigationLink } from './shared';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public configuration: DashboardLayoutConfiguration;
   public links: NavigationLink[];
   menuSidebar:any;
-  constructor() {
+  showDashboard:boolean
+  constructor(private userService:UsersService, private router:Router) {
     this.configuration = new DashboardLayoutConfiguration(
       SidePanelPosition.LEFT, 
       SidePanelState.OPEN
@@ -22,8 +26,8 @@ export class AppComponent {
   private createLinks() {
     this.links = [
       new NavigationLink("DPR", ['dpr'], "fas fa-home"),
-      new NavigationLink("Dashboard", ['dashbaord'], "fas fa-tachometer-alt"),
-      new NavigationLink("Account Info", ['account'], "fas fa-user-circle"),
+      //new NavigationLink("Dashboard", ['dashbaord'], "fas fa-tachometer-alt"),
+      //new NavigationLink("Account Info", ['account'], "fas fa-user-circle"),
       //new NavigationLink("User Management", ['user-management'], "fas fa-user-circle")
 
     ]
@@ -51,5 +55,31 @@ export class AppComponent {
         ]
       },
     ]
+  }
+
+  ngOnInit(): void {
+
+    this.userService.data.subscribe(data => {
+      if(data === 'logout')
+      this.showDashboard = false
+      this.router.navigate(['/login']);
+    })
+
+    this.userService.dataOpen.subscribe(data => {
+      if(data === 'dashboard'){
+        this.showDashboard = true
+        
+      }
+     
+    })
+
+    if(localStorage.getItem('loginData')){
+      this.showDashboard = true
+      this.router.navigate(['/dpr']);
+    }else{
+      this.showDashboard = false
+      this.router.navigate(['/login']);
+    }
+    
   }
 }

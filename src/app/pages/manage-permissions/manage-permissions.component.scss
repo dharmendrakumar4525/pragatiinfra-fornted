@@ -1,0 +1,175 @@
+.master_roles_selection {
+    background-color: #fff;
+    padding: 10px 10px 10px 10px;
+  
+    .select_all_box {
+      display: flex;
+      align-items: center;
+      width: 50%;
+      justify-content: flex-start;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+  
+      span {
+        display: flex;
+        align-items: center;
+  
+        .material-icons {
+          position: relative;
+          top: 2px;
+        }
+  
+        i {
+          margin-right: 10px;
+        }
+  
+        .fa-angle-down {
+          font-size: 20px;
+          font-weight: 600;
+          position: relative;
+          top: 3px;
+          left: 5px;
+          cursor: pointer;
+        }
+      }
+    }
+  
+    .roles_head {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+  
+      .form-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #ccc;
+        padding: 0 0 5px 0px;
+        margin-bottom: 10px;
+  
+        .custom-form-group {
+          margin-bottom: 0;
+          margin: 0 0px;
+          width: 40%;
+          display: flex;
+          align-items: center;
+  
+          .custom-label {
+            margin: 0 10px 5px 0;
+            font-weight: 600;
+            font-size: 15px;
+            //font-family: $font-family-light;
+            min-width: 100px;
+          }
+  
+          .custom-form-control {
+            .mat-form-field {
+              width: 100%;
+              background: transparent !important;
+  
+              .mat-form-field-wrapper {
+                padding-bottom: 0px;
+  
+                .mat-form-field-flex {
+                  .mat-form-field-outline {
+                    background: transparent;
+                    border-radius: 0px !important;
+  
+                    // box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.05);
+                    .mat-form-field-outline-start {
+                      min-width: 0;
+                      border-left-style: none;
+                    }
+  
+                    .mat-form-field-outline-end {
+                      border-radius: 0px !important;
+                      border-left-style: solid;
+                      background: #fff;
+                    }
+                  }
+  
+                  .mat-form-field-infix {
+                    padding: 0.2em 0 0.6em 0 !important;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  
+    .row-wrap {
+      background: #eee;
+      margin: 10px -10px 0 -10px;
+      padding: 10px;
+    }
+  
+    .user-role-card {
+      background: #ffffff;
+      padding: 0px 0px 10px 0px;
+      border-radius: 6px;
+      margin: 10px 5px 10px 5px;
+  
+      .roles_inner_head {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        font-size: 14px;
+        padding: 0px 10px 10px 10px;
+        margin: 5px 0px 5px 0px;
+        border-bottom: 2px solid #eee;
+        // font-family: $font-family-light;
+        font-weight: 600;
+  
+        input[type=checkbox] {
+          height: 20px !important;
+          width: 20px !important;
+          margin-right: 8px;
+          border-radius: 24px !important;
+        }
+  
+        i {
+          font-size: 20px;
+          font-weight: 600;
+          position: relative;
+          top: 3px;
+          left: 5px;
+          cursor: pointer;
+        }
+      }
+  
+      .roles_inner_body {
+        .list-group-item {
+          position: relative;
+          display: block;
+          padding: 6px 10px;
+          margin-bottom: 0;
+          background-color: #fff;
+          border-bottom: 1px solid #eee;
+          text-transform: capitalize;
+          font-weight: 600;
+          font-size: 14px;
+          letter-spacing: 0.5px;
+          //font-family: $font-family-light;
+          border-radius: 0;
+          border-left: 0;
+          border-right: 0;
+          border-top: 0;
+          color: #121212;
+  
+          &:last-child {
+            border-bottom: 0px !important;
+          }
+  
+          input[type=checkbox] {
+            height: 15px !important;
+            width: 15px !important;
+            margin-right: 10px;
+            border-radius: 24px !important;
+          }
+        }
+      }
+    }
+  }

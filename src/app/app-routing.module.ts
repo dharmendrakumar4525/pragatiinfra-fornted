@@ -17,8 +17,18 @@ import { UserManagementComponent } from './pages/user-management/user-management
 import { UsersComponent } from './pages/users/users.component';
 import { ViewProjectComponent } from './pages/view-project/view-project.component';
 import { ForgotpasswordComponent } from './pages/forgotpassword/forgotpassword.component';
+import { ManagePermissionsComponent } from './pages/manage-permissions/manage-permissions.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'prefix',
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
   {
     path: 'dpr',
     component: ProjectsComponent
@@ -56,6 +66,10 @@ const routes: Routes = [
     component: PermissionsComponent
   },
   {
+    path: 'manage-permissions',
+    component: ManagePermissionsComponent
+  },
+  {
     path: 'add-user',
     component: AddUserComponent
   },
@@ -69,7 +83,7 @@ const routes: Routes = [
       {path: 'data-analysis/:id', component: DataAnalysisComponent},
       {path: 'progress-sheet/:id', component: ProgressSheetComponent},
       {path: 'calender/:id', component: CalenderComponent}, 
-      {path: 'login', component: LoginComponent},
+      //{path: 'login', component: LoginComponent},
       {path: 'forgotpassword', component: ForgotpasswordComponent},
     
     ]

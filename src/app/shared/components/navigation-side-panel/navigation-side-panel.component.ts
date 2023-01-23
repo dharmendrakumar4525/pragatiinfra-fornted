@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { UsersService } from 'src/app/services/users.service';
 import { SidePanelService, SidePanelState } from '../../../core';
 import { NavigationLink } from './navigation-link.model';
 
@@ -22,6 +24,10 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   }, {
     link_name: "Permissions",
     link: "/permissions",
+  },
+  {
+    link_name: "manage Permissions",
+    link: "/manage-permissions",
   }]
   menuSidebar = [
      {
@@ -37,7 +43,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   public currentPanelState: SidePanelState;
   public SidePanelState = SidePanelState;
 
-  constructor(private _sidePanelService: SidePanelService) {
+  constructor(private _sidePanelService: SidePanelService, private router:Router,private userService:UsersService) {
     this._subscriptionsSubject$ = new Subject<void>();
   }
 
@@ -95,5 +101,12 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
      ]
     }
     
+  }
+
+
+  logout(){
+  localStorage.removeItem('loginData')
+  this.userService.updateLogin('logout');
+  this.router.navigate(['/login']);
   }
 }

@@ -1,5 +1,6 @@
 <div class="navigation-panel">
-  <div class="navigation-panel-brand">L<span [ngClass]="currentPanelState">ogo</span></div>
+  <div class="navigation-panel-brand">P<span [ngClass]="currentPanelState">ragati Infra
+  </span></div>
   <ul class="navigation-panel-menu" *ngIf="links && links.length > 0">
     <li *ngFor="let link of links">
       <a [routerLink]="link.url" 
@@ -30,7 +31,13 @@
           <!-- <hr> -->
         </li>
       </ul>
+
       
+    </li>
+
+    <li  routerLinkActive="active" (click)="logout()">
+      <a >Log out</a>
+      <!-- <hr> -->
     </li>
     <!-- <li *ngFor="let link of menuSidebar">
       <a [routerLink]="link.url" 
@@ -55,7 +62,7 @@
   </ul>
  
   
-  <div class="navigation-panel-brand"><div class="navigation-top-bar">
+  <!-- <div class="navigation-panel-brand"><div class="navigation-top-bar">
   <div class="toggler" role="button">
     <svg 
         singleDoubleClick
@@ -69,5 +76,5 @@
   <div class="navigation-extended">
     <ng-content select="[panel=navigationExtended"></ng-content>
   </div>
-</div></div>
+</div></div> -->
 </div>

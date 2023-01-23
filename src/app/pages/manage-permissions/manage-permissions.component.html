@@ -1,0 +1,114 @@
+<section class="dashboard_content_sec">
+    <div class="dashboard_bred_crumb">
+      <ul>
+        <li><img src="../../../../../assets/images/icons/bred_crumb_arrow.svg" alt=""></li>
+        <li> Roles Management </li>
+      </ul>
+    </div>
+    <div class="master_listing_sec">
+      <section class="master_roles_selection">
+        <!-- <div fxLayout="row" fxLayout.xl="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column" i
+          fxLayoutAlign="start stretch" fxLayoutGap="15px"> -->
+          <div 
+   fxLayout="row wrap" 
+   fxLayout.lt-sm="column" 
+   fxLayoutGap="10px" 
+   fxLayoutAlign="flex-start"
+   style="margin-left: 5%;">
+          <div fxLayout="column" fxFlex="100" fxFlexFill>
+            <div class="roles_head">
+              <form [formGroup]="roleForm" class="form-section">
+                <div class="custom-form-group">
+                  <label class="custom-label" for="">Select Role<span class="star" style="display: inline-block !important;">*</span></label>
+                  <div class="custom-form-control">
+                    <mat-form-field appearance="outline">
+                      <mat-select placeholder="Select any type" formControlName="role">
+                        <mat-option disabled=""> Select role </mat-option>
+                        <!-- <mat-option [value]=cat.id *ngFor="let cati of catCategories">{{cat.name}}</mat-option> -->
+                        <mat-option *ngFor="let role of roles" value="role.role" (click)="getPermissions(role.role)"> {{role.role}} </mat-option>
+                    
+                        <!-- <mat-option value="ADMI"> </mat-option> -->
+                      </mat-select>
+                      <!-- <mat-error
+                    *ngIf="catalogue_category_id.invalid && ( catalogue_category_id.dirty || catalogue_category_id.touched )">
+                    <span>Please provide a valid category</span>
+                  </mat-error> -->
+                    </mat-form-field>
+                  </div>
+                </div>
+                <button mat-button class="mat_step8per_next global-btn" type="button" (click)="addPermissions()">Save
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="" fxLayout="row" fxLayout.xl="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row"
+          fxLayout.xs="column" fxLayoutAlign="start stretch" fxLayoutGap="15px"> -->
+          <div 
+   fxLayout="row wrap" 
+   fxLayout.lt-sm="column" 
+   fxLayoutGap="10px" 
+   fxLayoutAlign="flex-start"
+   style="margin-left: 5%;">
+          <div fxLayout="column" fxFlex.xl="100" fxFlex.lg="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100"
+            fxFlexFill>
+            <!-- Master Checkbox -->
+            <div class="select_all_box">
+              <span (click)="selectUnselectAll(data)">
+                <span *ngIf="data.isAllSelected;else noneSelected"><i class="material-icons">task_alt</i>Unselect
+                  All</span>
+                <ng-template #noneSelected>
+                  <i class="material-icons">radio_button_unchecked</i>Select All</ng-template>
+              </span>
+              <!--Master Expand/ Collapse Arrow  -->
+              <span (click)="expandCollapseAll(data)">
+                <i class="fa fa-angle-up" *ngIf="data.isAllCollapsed;else isCollapsed"></i>
+                <ng-template #isCollapsed><i class="fa fa-angle-down"></i></ng-template>
+              </span>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="row-wrap" fxLayout="row" fxLayout.xl="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row"
+          fxLayout.xs="column" fxLayoutAlign="start stretch"> -->
+          <div 
+   fxLayout="row wrap" 
+   fxLayout.lt-sm="column" 
+   fxLayoutGap="10px" 
+   fxLayoutAlign="flex-start"
+   style="margin-left: 5%;">
+          <div *ngFor="let item of data.ParentChildchecklist" fxLayout="column" fxFlex.xl="25" fxFlex.lg="25"
+            fxFlex.md="25" fxFlex.sm="50" fxFlex.xs="100" fxFlexFill>
+            <!-- Parent Item -->
+            <div class="user-role-card">
+              <!-- Parent Checkbox -->
+              <div class="roles_inner_head">
+                <input type="checkbox" [(ngModel)]="item.isSelected" name="list_name" value="{{item.id}}"
+                  (ngModelChange)="parentCheck(item)" />
+                {{item.moduleName | titlecase}}
+                <!-- Parent Arrow -->
+                <span (click)="expandCollapse(item)">
+                  <i class="fa fa-angle-up" *ngIf="item.isClosed;else isCollapsed"></i>
+                  <ng-template #isCollapsed>
+                    <i class="fa fa-angle-down"></i>
+                  </ng-template>
+                </span>
+              </div>
+              <div class="roles_inner_body" [hidden]="item.isClosed">
+                <ul class="list-group level-two">
+                  <!-- Child Item -->
+                  <li class="list-group-item level-two" *ngFor="let itemChild of
+                    item.childList">
+                    <!-- Child Checkbox -->
+                    <input type="checkbox" [(ngModel)]="itemChild.isSelected" name="list_name_child"
+                      value="{{itemChild.id}}" (ngModelChange)="childCheck(item,item.childList)" />
+                    {{itemChild.value}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+  

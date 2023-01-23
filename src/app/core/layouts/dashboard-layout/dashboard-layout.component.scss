@@ -24,6 +24,8 @@
 
     &.open {
       flex: 0 0 290px;
+      border-top-right-radius: 30px;
+      border-bottom-right-radius: 30px;
     }
 
     &.close {

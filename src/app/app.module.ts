@@ -35,6 +35,7 @@ import { ForgotpasswordComponent } from './pages/forgotpassword/forgotpassword.c
 import { NewRoleComponent } from './pages/new-role/new-role.component';
 import { NewPermissionComponent } from './pages/new-permission/new-permission.component';
 import { AddDataComponent } from './services/add-data/add-data.component';
+import { ManagePermissionsComponent } from './pages/manage-permissions/manage-permissions.component';
 
 
 @NgModule({
@@ -67,7 +68,7 @@ import { AddDataComponent } from './services/add-data/add-data.component';
      BrowserAnimationsModule,
   ],
   declarations: [ AppComponent, HomeComponent, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent,LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,
-    ForgotpasswordComponent, NewRoleComponent,NewPermissionComponent, AddDataComponent],
+    ForgotpasswordComponent, NewRoleComponent,NewPermissionComponent, AddDataComponent, ManagePermissionsComponent],
     schemas: [
       CUSTOM_ELEMENTS_SCHEMA,
       //NO_ERRORS_SCHEMA

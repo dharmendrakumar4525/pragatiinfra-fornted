@@ -37,7 +37,7 @@
             
 
     <div>
-        <button mat-button style="width: 150px;padding: 1px;margin-left: 400px;background-color: lightgrey;color: black;" (click)="openDialog()" >New Role</button>
+        <button mat-button style="width: 150px;padding: 1px;margin-left: 400px;background-color: lightgrey;color: black;" (click)="addRole()" >New Role</button>
     <div style="margin-left: 290px;margin-top: 10px;">
         <form class="Search-form">
         <mat-form-field class="example-full-width" appearance="outline">
@@ -71,15 +71,15 @@
                 
                   
                     <!-- # Column -->
-                    <ng-container matColumnDef="No">
-                      <th mat-header-cell *matHeaderCellDef> #</th>
-                      <td mat-cell *matCellDef="let element"> {{element.No}} </td>
+                    <ng-container matColumnDef="sNo">
+                      <th mat-header-cell *matHeaderCellDef>S.No</th>
+                      <td mat-cell *matCellDef="let element;let i = index" data-label="S No"> {{i + 1}} </td>
                     </ng-container>
                 
                        <!-- Name Column -->
-                       <ng-container matColumnDef="Name">
-                        <th mat-header-cell *matHeaderCellDef> Name </th>
-                        <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+                       <ng-container matColumnDef="role">
+                        <th mat-header-cell *matHeaderCellDef> Role </th>
+                        <td mat-cell *matCellDef="let element"> {{element.role}} </td>
                       </ng-container>
                    
                 

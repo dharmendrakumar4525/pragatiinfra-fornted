@@ -39,7 +39,7 @@
 </div>
 
 <div  class="right" style="height: 150px;width:50%">
-<div><button style="width: 150px;padding: 10px;margin-left: 400px;">Create User</button></div>
+<div><button routerLink="/add-user" style="width: 150px;padding: 10px;margin-left: 400px;">Create User</button></div>
 <div style="margin-left: 290px;margin-top: 10px;">
     <form class="Search-form">
     <mat-form-field class="example-full-width" appearance="outline">
@@ -73,25 +73,25 @@
       
         <!-- R2EndDate Column -->
         <ng-container matColumnDef="No">
-          <th mat-header-cell *matHeaderCellDef> No</th>
-          <td mat-cell *matCellDef="let element"> {{element.No}} </td>
+          <th mat-header-cell *matHeaderCellDef>S.No</th>
+          <td mat-cell *matCellDef="let element;let i = index" data-label="No"> {{i + 1}} </td>
         </ng-container>
     
            <!-- R1EndDate Column -->
-           <ng-container matColumnDef="Name">
+           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
           </ng-container>
            <!-- WorkingdaysRevised Column -->
-           <ng-container matColumnDef="Email">
+           <ng-container matColumnDef="email">
             <th mat-header-cell *matHeaderCellDef> Email </th>
-            <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
           </ng-container>
       
       <!-- BaselineStartDate Column -->
-      <ng-container matColumnDef="Roles">
+      <ng-container matColumnDef="role">
         <th mat-header-cell *matHeaderCellDef> Roles </th>
-        <td mat-cell *matCellDef="let element"> {{element.Roles}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.role}} </td>
       </ng-container>
     
     

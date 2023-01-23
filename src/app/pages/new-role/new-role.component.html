@@ -1,19 +1,22 @@
 
-<div id="card" style="text-align: center;width: 500px;height: 300px; display: flex;justify-content: center;flex-direction: column;">
+<div id="card" style="text-align: center;">
 	<mat-card-title>
-		New Role
-	</mat-card-title><br>
-  <mat-card-content>
-  <mat-form-field appearance="outline" style="width: 50%;">
-    <input matInput [(ngModel)]="data.animal" placeholder="Enter new role">
-  </mat-form-field>
+		Add Role
+	</mat-card-title>
+    <br/>
 
+	<mat-card-content>
+        <form [formGroup]="roleForm">
+            <mat-form-field>
+                <input matInput placeholder="add Activity" formControlName="role">
+            </mat-form-field><br/>
+    
+            
+            <button mat-raised-button color="primary" (click)="closeDialog('no')" style="margin-right:5px;">Cancel</button>
+            <button mat-raised-button color="primary" (click)="addRole()" style="margin-right:5px;">Submit</button>
+    
+        </form>
 
-<div mat-dialog-actions style="display: flex;justify-content: center;">
-  <button mat-raised-button  color="primary" (click)="onNoClick()">Cancel</button>
-  <button mat-raised-button  color="primary" [mat-dialog-close]="data.animal" cdkFocusInitial>Submit</button>
+		
+	</mat-card-content>
 </div>
-</mat-card-content>
-</div>
-
-

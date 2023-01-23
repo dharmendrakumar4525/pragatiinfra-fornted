@@ -1,0 +1,659 @@
+
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RolesService } from 'src/app/services/roles.service';
+
+@Component({
+  selector: 'app-manage-permissions',
+  templateUrl: './manage-permissions.component.html',
+  styleUrls: ['./manage-permissions.component.scss']
+})
+export class ManagePermissionsComponent implements OnInit {
+
+  title = 'CheckList for Parents and Child Structure with Expand/ Collapse';
+  data: any;
+  permi:any;
+  userRolePermissions:any;
+  roles:any
+
+  roleForm :FormGroup = this._fb.group({
+    role: [null, [Validators.required]],
+    
+  });
+  roleType:any;
+
+  permissionsObj = {
+    dashboard_permissions:null
+  }
+  dashboard_permissions
+  newOne:any
+  constructor(private _fb: FormBuilder, private roleService:RolesService) {
+
+    
+    this.data = {};
+    this.data.isAllSelected = false;
+    this.data.isAllCollapsed = false;
+
+    
+    
+    //List object having hierarchy of parents and its children
+    this.data.ParentChildchecklist = [
+      {
+        id: 1,moduleName: 'my_supplies',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 2,moduleName: 'my_pre_owned_supplies',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 3,moduleName: 'my_orders',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 4,moduleName: 'Pre_Owned_supplies',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 5,moduleName: 'my_coupons',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 6,moduleName: 'my_supply_deals',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 7,moduleName: 'my_catalogues',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 8,moduleName: 'my_directories',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 9,moduleName: 'enquiries',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 10,moduleName: 'support_requests',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 11,moduleName: 'account_pay_requests',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 12,moduleName: 'freight_ranges',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+ 
+    ];
+    this.newOne = [
+      {
+        id: 1,moduleName: 'my_supplies',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 2,moduleName: 'my_pre_owned_supplies',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 3,moduleName: 'my_orders',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 4,moduleName: 'Pre_Owned_supplies',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 5,moduleName: 'my_coupons',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 6,moduleName: 'my_supply_deals',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 7,moduleName: 'my_catalogues',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 8,moduleName: 'my_directories',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 9,moduleName: 'enquiries',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 10,moduleName: 'support_requests',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 11,moduleName: 'account_pay_requests',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 12,moduleName: 'freight_ranges',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+ 
+    ];
+   }
+
+  ngOnInit(): void {
+
+    this.roleService.getRoles().subscribe(data=>{
+      this.roles = data
+    })
+
+  }
+
+  getPermissions(type){
+
+    console.log(type)
+
+    this.roleType = type
+
+    this.roleService.getByRole(type).subscribe(data => {
+      console.log(data)
+      this.userRolePermissions = data
+
+      if(!this.userRolePermissions.dashboard_permissions.length){
+        this.userRolePermissions.dashboard_permissions = this.newOne
+        this.data.ParentChildchecklist = this.newOne
+      }else{
+        this.data.ParentChildchecklist = this.userRolePermissions.dashboard_permissions[0].ParentChildchecklist
+
+      }
+
+      
+
+      
+    });
+
+  }
+
+
+
+
+  parentCheck(parentObj) {
+    for (var i = 0; i < parentObj.childList.length; i++) {
+      parentObj.childList[i].isSelected = parentObj.isSelected;
+    }
+  }
+
+  //Click event on child checkbox  
+  childCheck(parentObj, childObj) {
+    parentObj.isSelected = childObj.every(function (itemChild: any) {
+      return itemChild.isSelected == true;
+    })
+  }
+
+  //Click event on master select
+  selectUnselectAll(obj) {
+    obj.isAllSelected = !obj.isAllSelected;
+    for (var i = 0; i < obj.ParentChildchecklist.length; i++) {
+      obj.ParentChildchecklist[i].isSelected = obj.isAllSelected;
+      for (var j = 0; j < obj.ParentChildchecklist[i].childList.length; j++) {
+        obj.ParentChildchecklist[i].childList[j].isSelected = obj.isAllSelected;
+      }
+    }
+  }
+
+  //Expand/Collapse event on each parent
+  expandCollapse(obj){
+    obj.isClosed = !obj.isClosed;
+  }
+
+  //Master expand/ collapse event
+  expandCollapseAll(obj){
+    for (var i = 0; i < obj.ParentChildchecklist.length; i++) {
+      obj.ParentChildchecklist[i].isClosed = !obj.isAllCollapsed;
+    }
+    obj.isAllCollapsed = !obj.isAllCollapsed;
+  }
+
+  //Just to show updated JSON object on view
+  stringify(obj) {
+    this.permi = obj
+
+    console.log(this.permi)
+
+    return JSON.stringify(obj);
+  }
+
+
+  async addPermissions(){
+
+    //this.roleForm.value.dashboard_permissions = this.permi
+
+    //console.log(this.roleForm.value)
+
+    // console.log(this.permi)
+
+    // this.permissionsObj.dashboard_permissions = this.permi
+
+    // console.log(this.permissionsObj.dashboard_permissions)
+
+  
+
+   this.roleService.addPermissionsToRoles(this.roleType,this.data).subscribe(data=>{
+      console.log(data)
+    })
+
+    
+
+    //this.roleForm.value
+
+  }
+
+}

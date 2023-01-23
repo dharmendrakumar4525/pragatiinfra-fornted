@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import {PageEvent} from '@angular/material/paginator';
 import { NewRoleComponent } from '../new-role/new-role.component';
 import { MatDialog } from '@angular/material/dialog';
+import { NewPermissionComponent } from '../new-permission/new-permission.component';
+import { RolesService } from 'src/app/services/roles.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 export interface PeriodicElement {
   SelectAll: string;
-  No: string;
-  Name: string;
+  sNo: string;
+  role: string;
   Action:string;
 
 }
@@ -20,7 +23,7 @@ export class RolesComponent implements OnInit {
 
   animal: string;
   name: string;
-
+  roles:any;
   checked = false;
   length = 50;
   pageSize = 10;
@@ -31,7 +34,8 @@ export class RolesComponent implements OnInit {
   showPageSizeOptions = false;
   showFirstLastButtons = true;
   disabled = false;
-
+  displayedColumns = ['SelectAll', 'sNo', 'role', 'Action'];
+  dataSource = null;
   pageEvent: PageEvent;
 
   handlePageEvent(e: PageEvent) {
@@ -46,33 +50,50 @@ export class RolesComponent implements OnInit {
       this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
     }
   }
-  constructor(public dialog: MatDialog) { }
-  openDialog(): void {
-    const dialogRef = this.dialog.open(NewRoleComponent, {
-      data: {name: this.name, animal: this.animal},
+  constructor(public dialog: MatDialog,private _dialog: MatDialog, private roleService:RolesService) { }
+  addRole() {
+    const dialogRef = this._dialog.open(NewRoleComponent, {
+      width: '30%',
+      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown']
+      //data: supply
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
-    });
+    dialogRef.afterClosed().subscribe(status => {
+      console.log(status);
+      if (status === 'yes') {
+        this.roleService.getRoles().subscribe(data=>{
+          //this.spinner.hide()
+          this.roles = data
+          this.dataSource = new MatTableDataSource(this.roles);
+          console.log(this.roles)
+        })
+       // this.filterSubject.next(this.filterForm.value);
+      }
+      if (status === 'no') {
+      }
+    })
   }
 
 
   ngOnInit(): void {
+    this.roleService.getRoles().subscribe(data=>{
+      //this.spinner.hide()
+      this.roles = data
+      this.dataSource = new MatTableDataSource(this.roles);
+      console.log(this.roles)
+    })
   }
-  displayedColumns = ['SelectAll', 'No', 'Name', 'Action'];
-  dataSource = ELEMENT_DATA;
+  
+  //dataSource = ELEMENT_DATA;
 }
 
 
-const ELEMENT_DATA: PeriodicElement [] = [
+// const ELEMENT_DATA: PeriodicElement [] = [
 
 
-  {SelectAll:'' , No: '1', Name: 'Admin', Action:'', },
-  {SelectAll:'' , No: '2', Name: 'Employee', Action:'', },
+//   {SelectAll:'' , No: '1', Name: 'Admin', Action:'', },
+//   {SelectAll:'' , No: '2', Name: 'Employee', Action:'', },
  
   
 
-];
+// ];
 
