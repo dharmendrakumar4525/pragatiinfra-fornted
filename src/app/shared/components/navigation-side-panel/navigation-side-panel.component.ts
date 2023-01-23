@@ -21,10 +21,11 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   }, {
     link_name: "Roles",
     link: "/roles",
-  }, {
-    link_name: "Permissions",
-    link: "/permissions",
   },
+  //  {
+  //   link_name: "Permissions",
+  //   link: "/permissions",
+  // },
   {
     link_name: "manage Permissions",
     link: "/manage-permissions",

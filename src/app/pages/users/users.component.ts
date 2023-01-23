@@ -22,12 +22,14 @@ export class UsersComponent implements OnInit {
   'Action']
   dataSource = null;
   users:any
+  usersLen:any;
   constructor(private userService:UsersService) { }
 
   ngOnInit(): void {
     this.userService.getUserss().subscribe(data=>{
       //this.spinner.hide()
       this.users = data
+      this.usersLen = this.users.length
       this.dataSource = new MatTableDataSource(this.users);
       //console.log(this.roles)
     })

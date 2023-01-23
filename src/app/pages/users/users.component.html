@@ -4,7 +4,7 @@
         <div style="padding: 1rem;margin-top: 60px;">
         <span style="font-size:xx-large;">Pragati Infra</span></div>
         <div>
-            <button mat-button style="padding: 1px 12px;width: 150px;margin-top: 50px;margin-left: 700px;position: relative;background-color: lightgrey;color: black;">Add Project +  </button>
+            <button mat-button style="padding: 1px 12px;width: 150px;margin-top: 50px;margin-left: 700px;position: relative;background-color: lightgrey;color: black;" [routerLink]="['/add-project']">Add Project +  </button>
             </div>
             <div>
                 <button mat-button [matMenuTriggerFor]="menu">
@@ -30,7 +30,7 @@
    <div class="userdiv"> <h3>Users</h3> 
     <div > <h3 style="margin-bottom: 100px;">Show Entries 
       <mat-card>
-        <mat-card-content style="position: absolute;bottom:10px">12</mat-card-content>
+        <mat-card-content style="position: absolute;bottom:10px">{{usersLen}}</mat-card-content>
       </mat-card>   
     </h3>  
          

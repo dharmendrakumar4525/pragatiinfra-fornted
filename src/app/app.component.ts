@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
 
     if(localStorage.getItem('loginData')){
       this.showDashboard = true
-      this.router.navigate(['/dpr']);
+      //this.router.navigate(['/dpr']);
     }else{
       this.showDashboard = false
       this.router.navigate(['/login']);

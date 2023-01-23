@@ -28,153 +28,184 @@ export interface GroupBy {
 export class ProgressSheetComponent implements OnInit {
     projectId:any
     progressData:any;
-  //  projectsData:any
+   // projectsData:any
     tasks:any
-  projectsData = [
-    {
-        "_id": "63c6aa45a1593c88fae7b09b",
-        "taskName": "Boundarywall",
-        "projectId": "63c6aa44a1593c88fae7b099",
-        "taskId": "63be3548941e8f5b1b1f0928",
-        "createdAt": "2023-01-17T14:01:41.032Z",
-        "__v": 0,
-        "result": [
-            {
-                "_id": "63c6aa45a1593c88fae7b09e",
-                "subTaskName": "cement",
-                "taskId": "63be3548941e8f5b1b1f0928",
-                "__v": 0
-            },
-            {
-                "_id": "63c6aa45a1593c88fae7b09f",
-                "subTaskName": "evacuation",
-                "taskId": "63be3548941e8f5b1b1f0928",
-                "__v": 0
-            }
-        ]
-    },
+    projectsData = [];
+    activesData:any;
+//   projectsData = [
 //     {
-//         "_id": "63c6aa45a1593c88fae7b09c",
-//         "taskName": "Warehouse",
+//         "_id": "63c6aa45a1593c88fae7b09b",
+//         "taskName": "Boundarywall",
 //         "projectId": "63c6aa44a1593c88fae7b099",
-//         "taskId": "63be66c7e2063a320960a7ec",
+//         "taskId": "63be3548941e8f5b1b1f0928",
 //         "createdAt": "2023-01-17T14:01:41.032Z",
 //         "__v": 0,
 //         "result": [
 //             {
-//                 "_id": "63c6aa45a1593c88fae7b0a0",
-//                 "subTaskName": "Iron",
-//                 "taskId": "63be66c7e2063a320960a7ec",
+//                 "_id": "63c6aa45a1593c88fae7b09e",
+//                 "subTaskName": "cement",
+//                 "taskId": "63be3548941e8f5b1b1f0928",
 //                 "__v": 0
 //             },
 //             {
-//                 "_id": "63c6aa45a1593c88fae7b0a1",
-//                 "subTaskName": "tiebeam",
-//                 "taskId": "63be66c7e2063a320960a7ec",
+//                 "_id": "63c6aa45a1593c88fae7b09f",
+//                 "subTaskName": "evacuation",
+//                 "taskId": "63be3548941e8f5b1b1f0928",
 //                 "__v": 0
 //             }
 //         ]
 //     },
-//     {
-//       "_id": "63c6aa45a1593c88fae7b09b",
-//       "taskName": "Boundarywall",
-//       "projectId": "63c6aa44a1593c88fae7b099",
-//       "taskId": "63be3548941e8f5b1b1f0928",
-//       "createdAt": "2023-01-17T14:01:41.032Z",
-//       "__v": 0,
-//       "result": [
-//           {
-//               "_id": "63c6aa45a1593c88fae7b09e",
-//               "subTaskName": "cement",
-//               "taskId": "63be3548941e8f5b1b1f0928",
-//               "__v": 0
-//           },
-//           {
-//               "_id": "63c6aa45a1593c88fae7b09f",
-//               "subTaskName": "evacuation",
-//               "taskId": "63be3548941e8f5b1b1f0928",
-//               "__v": 0
-//           }
-//       ]
-//   },
-//   {
-//       "_id": "63c6aa45a1593c88fae7b09c",
-//       "taskName": "Warehouse",
-//       "projectId": "63c6aa44a1593c88fae7b099",
-//       "taskId": "63be66c7e2063a320960a7ec",
-//       "createdAt": "2023-01-17T14:01:41.032Z",
-//       "__v": 0,
-//       "result": [
-//           {
-//               "_id": "63c6aa45a1593c88fae7b0a0",
-//               "subTaskName": "Iron",
-//               "taskId": "63be66c7e2063a320960a7ec",
-//               "__v": 0
-//           },
-//           {
-//               "_id": "63c6aa45a1593c88fae7b0a1",
-//               "subTaskName": "tiebeam",
-//               "taskId": "63be66c7e2063a320960a7ec",
-//               "__v": 0
-//           }
-//       ]
-//   },
-//   {
-//       "_id": "63c6aa45a1593c88fae7b09b",
-//       "taskName": "Boundarywall",
-//       "projectId": "63c6aa44a1593c88fae7b099",
-//       "taskId": "63be3548941e8f5b1b1f0928",
-//       "createdAt": "2023-01-17T14:01:41.032Z",
-//       "__v": 0,
-//       "result": [
-//           {
-//               "_id": "63c6aa45a1593c88fae7b09e",
-//               "subTaskName": "cement",
-//               "taskId": "63be3548941e8f5b1b1f0928",
-//               "__v": 0
-//           },
-//           {
-//               "_id": "63c6aa45a1593c88fae7b09f",
-//               "subTaskName": "evacuation",
-//               "taskId": "63be3548941e8f5b1b1f0928",
-//               "__v": 0
-//           }
-//       ]
-//   },
-//   {
-//       "_id": "63c6aa45a1593c88fae7b09c",
-//       "taskName": "Warehouse",
-//       "projectId": "63c6aa44a1593c88fae7b099",
-//       "taskId": "63be66c7e2063a320960a7ec",
-//       "createdAt": "2023-01-17T14:01:41.032Z",
-//       "__v": 0,
-//       "result": [
-//           {
-//               "_id": "63c6aa45a1593c88fae7b0a0",
-//               "subTaskName": "Iron",
-//               "taskId": "63be66c7e2063a320960a7ec",
-//               "__v": 0
-//           },
-//           {
-//               "_id": "63c6aa45a1593c88fae7b0a1",
-//               "subTaskName": "tiebeam",
-//               "taskId": "63be66c7e2063a320960a7ec",
-//               "__v": 0
-//           }
-//       ]
-//   } 
-   ] 
-
+// //     {
+// //         "_id": "63c6aa45a1593c88fae7b09c",
+// //         "taskName": "Warehouse",
+// //         "projectId": "63c6aa44a1593c88fae7b099",
+// //         "taskId": "63be66c7e2063a320960a7ec",
+// //         "createdAt": "2023-01-17T14:01:41.032Z",
+// //         "__v": 0,
+// //         "result": [
+// //             {
+// //                 "_id": "63c6aa45a1593c88fae7b0a0",
+// //                 "subTaskName": "Iron",
+// //                 "taskId": "63be66c7e2063a320960a7ec",
+// //                 "__v": 0
+// //             },
+// //             {
+// //                 "_id": "63c6aa45a1593c88fae7b0a1",
+// //                 "subTaskName": "tiebeam",
+// //                 "taskId": "63be66c7e2063a320960a7ec",
+// //                 "__v": 0
+// //             }
+// //         ]
+// //     },
+// //     {
+// //       "_id": "63c6aa45a1593c88fae7b09b",
+// //       "taskName": "Boundarywall",
+// //       "projectId": "63c6aa44a1593c88fae7b099",
+// //       "taskId": "63be3548941e8f5b1b1f0928",
+// //       "createdAt": "2023-01-17T14:01:41.032Z",
+// //       "__v": 0,
+// //       "result": [
+// //           {
+// //               "_id": "63c6aa45a1593c88fae7b09e",
+// //               "subTaskName": "cement",
+// //               "taskId": "63be3548941e8f5b1b1f0928",
+// //               "__v": 0
+// //           },
+// //           {
+// //               "_id": "63c6aa45a1593c88fae7b09f",
+// //               "subTaskName": "evacuation",
+// //               "taskId": "63be3548941e8f5b1b1f0928",
+// //               "__v": 0
+// //           }
+// //       ]
+// //   },
+// //   {
+// //       "_id": "63c6aa45a1593c88fae7b09c",
+// //       "taskName": "Warehouse",
+// //       "projectId": "63c6aa44a1593c88fae7b099",
+// //       "taskId": "63be66c7e2063a320960a7ec",
+// //       "createdAt": "2023-01-17T14:01:41.032Z",
+// //       "__v": 0,
+// //       "result": [
+// //           {
+// //               "_id": "63c6aa45a1593c88fae7b0a0",
+// //               "subTaskName": "Iron",
+// //               "taskId": "63be66c7e2063a320960a7ec",
+// //               "__v": 0
+// //           },
+// //           {
+// //               "_id": "63c6aa45a1593c88fae7b0a1",
+// //               "subTaskName": "tiebeam",
+// //               "taskId": "63be66c7e2063a320960a7ec",
+// //               "__v": 0
+// //           }
+// //       ]
+// //   },
+// //   {
+// //       "_id": "63c6aa45a1593c88fae7b09b",
+// //       "taskName": "Boundarywall",
+// //       "projectId": "63c6aa44a1593c88fae7b099",
+// //       "taskId": "63be3548941e8f5b1b1f0928",
+// //       "createdAt": "2023-01-17T14:01:41.032Z",
+// //       "__v": 0,
+// //       "result": [
+// //           {
+// //               "_id": "63c6aa45a1593c88fae7b09e",
+// //               "subTaskName": "cement",
+// //               "taskId": "63be3548941e8f5b1b1f0928",
+// //               "__v": 0
+// //           },
+// //           {
+// //               "_id": "63c6aa45a1593c88fae7b09f",
+// //               "subTaskName": "evacuation",
+// //               "taskId": "63be3548941e8f5b1b1f0928",
+// //               "__v": 0
+// //           }
+// //       ]
+// //   },
+// //   {
+// //       "_id": "63c6aa45a1593c88fae7b09c",
+// //       "taskName": "Warehouse",
+// //       "projectId": "63c6aa44a1593c88fae7b099",
+// //       "taskId": "63be66c7e2063a320960a7ec",
+// //       "createdAt": "2023-01-17T14:01:41.032Z",
+// //       "__v": 0,
+// //       "result": [
+// //           {
+// //               "_id": "63c6aa45a1593c88fae7b0a0",
+// //               "subTaskName": "Iron",
+// //               "taskId": "63be66c7e2063a320960a7ec",
+// //               "__v": 0
+// //           },
+// //           {
+// //               "_id": "63c6aa45a1593c88fae7b0a1",
+// //               "subTaskName": "tiebeam",
+// //               "taskId": "63be66c7e2063a320960a7ec",
+// //               "__v": 0
+// //           }
+// //       ]
+// //   } 
+//    ] 
+   project:any;
   constructor(private activeRoute: ActivatedRoute, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private taskService:TaskService) { }
 
   ngOnInit(): void {
     this.activeRoute.params.subscribe((params:any) => {
         console.log(params.id)
         this.projectId = params.id
-        this.progressSheetService.getTasksById(this.projectId).subscribe(data=>{
-      //      this.projectsData = data
-        console.log(this.projectsData)
+        this.progressSheetService.getProjectById(this.projectId).subscribe(data=>{
+            this.project = data
+        console.log(this.project)
         })
+    //     this.progressSheetService.getTasksById(this.projectId).subscribe(data=>{
+    //   //      this.projectsData = data
+    //     console.log(this.projectsData)
+    //     })
+
+        this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data=>{
+                  this.activesData = data
+              console.log(this.activesData)
+              this.activesData.forEach(obj => {
+                //this.grandTotal += obj['discAmount'];
+                //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
+                //console.log(this.grandTotal);
+                const arr = this.projectsData.filter(ele => ele['name'] === obj['taskName']);
+                if (arr.length === 0) {
+                  this.projectsData.push(
+                    { 'name': obj['taskName'] });
+                }
+            });
+
+            this.projectsData.forEach(obj => {
+                const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
+                obj['result'] = uniqData;
+                
+              });
+              console.log(this.projectsData);
+    
+            
+
+              })
 
   
       });

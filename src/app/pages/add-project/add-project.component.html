@@ -22,6 +22,9 @@
               <mat-form-field appearance="outline">
                 <input matInput  placeholder="Enter Project Name" formControlName="projectName"
                   >
+                  <mat-error *ngIf="projectName.invalid && ( projectName.dirty || projectName.touched )">
+                    <span>Please provide a valid project name</span>
+                  </mat-error>
                 <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
                   <span>Please provide a valid Profession Type</span>
                 </mat-error> -->
@@ -42,6 +45,9 @@
                 (click)="startPicker.open()"/>
                 <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                 <mat-datepicker #startPicker></mat-datepicker>
+                <mat-error *ngIf="projectDate.invalid && ( projectDate.dirty || projectDate.touched )">
+                  <span>Please provide a valid project date</span>
+                </mat-error>
                 <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
                   <span *ngIf="startDate.hasError('required')"> Start date is required </span>
                 </mat-error> -->
@@ -57,6 +63,9 @@
               <mat-form-field appearance="outline">
                 <input matInput  placeholder="Enter Location" formControlName="location"
                   >
+                  <mat-error *ngIf="location.invalid && ( location.dirty || location.touched )">
+                    <span>Please provide a valid location</span>
+                  </mat-error>
                 <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
                   <span>Please provide a valid Profession Type</span>
                 </mat-error> -->
@@ -83,7 +92,7 @@
               <h5>Project Image</h5>
               <input type="file" class="uploadImg"  id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)">
           </div>
-          <div class="upload-file">
+          <div class="upload-file" style="margin-left: 20px;" *ngIf="imageUrl">
     
             <img [src]="imageUrl" height="150px" width="200px">
         </div>
@@ -107,7 +116,7 @@
               {{tag}}
               <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
-            <input placeholder="Add tag & hit Enter"
+            <input placeholder="Add project members"
                    [matChipInputFor]="chipList"
                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                    [matChipInputAddOnBlur]="addOnBlur"
@@ -123,12 +132,12 @@
     fxLayoutAlign="space-around center" fxLayoutGap="0px">
     <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
         <div class="custom-form-group">
-            <label class="custom-label" for=""> R0 PreparedDate <span class="star">*</span>
+            <label class="custom-label" for=""> R0 End Date <span class="star">*</span>
               <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
             </label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="r0Picker" formControlName="r0Date" placeholder="Enter start date"
+                <input matInput [matDatepicker]="r0Picker" formControlName="r0Date" placeholder="Enter R0 EndDate"
                 (click)="r0Picker.open()"/>
                 <mat-datepicker-toggle matSuffix [for]="r0Picker"></mat-datepicker-toggle>
                 <mat-datepicker #r0Picker></mat-datepicker>
@@ -142,12 +151,12 @@
     </div>
     <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
         <div class="custom-form-group">
-            <label class="custom-label" for=""> R2 PreparedDate <span class="star">*</span>
+            <label class="custom-label" for=""> R1 End Date <span class="star">*</span>
               <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
             </label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="r1Picker" formControlName="r1Date" placeholder="Enter start date"
+                <input matInput [matDatepicker]="r1Picker" formControlName="r1Date" placeholder="Enter R1 End Date"
                 (click)="r1Picker.open()"/>
                 <mat-datepicker-toggle matSuffix [for]="r1Picker"></mat-datepicker-toggle>
                 <mat-datepicker #r1Picker></mat-datepicker>
@@ -161,12 +170,12 @@
     </div>
     <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
         <div class="custom-form-group">
-            <label class="custom-label" for=""> R2 PreparedDate <span class="star">*</span>
+            <label class="custom-label" for=""> R2 End Date <span class="star">*</span>
               <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
             </label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="r2Picker" formControlName="r2Date" placeholder="Enter start date"
+                <input matInput [matDatepicker]="r2Picker" formControlName="r2Date" placeholder="Enter R2 End Date"
                 (click)="r2Picker.open()"/>
                 <mat-datepicker-toggle matSuffix [for]="r2Picker"></mat-datepicker-toggle>
                 <mat-datepicker #r2Picker></mat-datepicker>
@@ -180,11 +189,14 @@
     </div>
     
   </div>
-  <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
-  fxLayoutAlign="space-around center" fxLayoutGap="0px">
-  <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
+  <div 
+  fxLayout="row wrap" 
+  fxLayout.lt-sm="column" 
+  fxLayoutGap="10px" 
+  fxLayoutAlign="flex-start"
+  style="margin-left: 5%;">
   
-  <mat-card id="card" style="text-align: center;" (click)="displayMater()">
+  <mat-card id="card" style="text-align: center;cursor: pointer;" (click)="displayMater()">
 	<mat-card-title>
 		
 	</mat-card-title>
@@ -197,7 +209,7 @@
 
 	</mat-card-content>
   </mat-card>
-  </div>
+  
   </div>
 </div>
 <br>
@@ -207,7 +219,7 @@
         <div >
         <span>Master Data</span></div>
         <div>
-          <button mat-raised-button (click)="dispalyProject()">Go Back</button>
+          <button mat-raised-button *ngIf="!projectId" (click)="dispalyProject()">Go Back</button>
           <!-- <button style="padding: 5px;width: 100px;margin-top: 60px;">Go Back  </button> -->
       
 

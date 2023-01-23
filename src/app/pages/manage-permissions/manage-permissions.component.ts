@@ -37,9 +37,9 @@ export class ManagePermissionsComponent implements OnInit {
     
     
     //List object having hierarchy of parents and its children
-    this.data.ParentChildchecklist = [
+    this.data.ParentChildchecklist =  [
       {
-        id: 1,moduleName: 'my_supplies',isSelected: false,isClosed:false,
+        id: 1,moduleName: 'projects',isSelected: false,isClosed:false,
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
@@ -60,7 +60,7 @@ export class ManagePermissionsComponent implements OnInit {
       },
 
       {
-        id: 2,moduleName: 'my_pre_owned_supplies',isSelected: false,isClosed:false,
+        id: 2,moduleName: 'progress_sheet',isSelected: false,isClosed:false,
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
@@ -81,7 +81,7 @@ export class ManagePermissionsComponent implements OnInit {
       },
 
       {
-        id: 3,moduleName: 'my_orders',isSelected: false,isClosed:false,
+        id: 3,moduleName: 'calender',isSelected: false,isClosed:false,
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
@@ -102,7 +102,7 @@ export class ManagePermissionsComponent implements OnInit {
       },
 
       {
-        id: 4,moduleName: 'Pre_Owned_supplies',isSelected: false,isClosed:false,
+        id: 4,moduleName: 'roles',isSelected: false,isClosed:false,
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
@@ -123,7 +123,7 @@ export class ManagePermissionsComponent implements OnInit {
       },
 
       {
-        id: 5,moduleName: 'my_coupons',isSelected: false,isClosed:false,
+        id: 5,moduleName: 'users',isSelected: false,isClosed:false,
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
@@ -144,7 +144,7 @@ export class ManagePermissionsComponent implements OnInit {
       },
 
       {
-        id: 6,moduleName: 'my_supply_deals',isSelected: false,isClosed:false,
+        id: 6,moduleName: 'permissions',isSelected: false,isClosed:false,
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
@@ -165,7 +165,7 @@ export class ManagePermissionsComponent implements OnInit {
       },
 
       {
-        id: 7,moduleName: 'my_catalogues',isSelected: false,isClosed:false,
+        id: 7,moduleName: 'members',isSelected: false,isClosed:false,
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
@@ -186,7 +186,7 @@ export class ManagePermissionsComponent implements OnInit {
       },
 
       {
-        id: 8,moduleName: 'my_directories',isSelected: false,isClosed:false,
+        id: 8,moduleName: 'data_analysis',isSelected: false,isClosed:false,
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
@@ -204,97 +204,15 @@ export class ManagePermissionsComponent implements OnInit {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
         ]
-      },
+      }
 
-      {
-        id: 9,moduleName: 'enquiries',isSelected: false,isClosed:false,
-        childList: [
-          {
-            id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
-          {
-            id: 5,parent_id: 1,value: 'view',isSelected: false
-          },
-        ]
-      },
 
-      {
-        id: 10,moduleName: 'support_requests',isSelected: false,isClosed:false,
-        childList: [
-          {
-            id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
-          {
-            id: 5,parent_id: 1,value: 'view',isSelected: false
-          },
-        ]
-      },
-
-      {
-        id: 11,moduleName: 'account_pay_requests',isSelected: false,isClosed:false,
-        childList: [
-          {
-            id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
-          {
-            id: 5,parent_id: 1,value: 'view',isSelected: false
-          },
-        ]
-      },
-
-      {
-        id: 12,moduleName: 'freight_ranges',isSelected: false,isClosed:false,
-        childList: [
-          {
-            id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
-          {
-            id: 5,parent_id: 1,value: 'view',isSelected: false
-          },
-        ]
-      },
 
  
     ];
     this.newOne = [
       {
-        id: 1,moduleName: 'my_supplies',isSelected: false,isClosed:false,
+        id: 1,moduleName: 'projects',isSelected: false,isClosed:false,
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
@@ -315,7 +233,7 @@ export class ManagePermissionsComponent implements OnInit {
       },
 
       {
-        id: 2,moduleName: 'my_pre_owned_supplies',isSelected: false,isClosed:false,
+        id: 2,moduleName: 'progress_sheet',isSelected: false,isClosed:false,
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
@@ -336,7 +254,7 @@ export class ManagePermissionsComponent implements OnInit {
       },
 
       {
-        id: 3,moduleName: 'my_orders',isSelected: false,isClosed:false,
+        id: 3,moduleName: 'calender',isSelected: false,isClosed:false,
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
@@ -357,7 +275,7 @@ export class ManagePermissionsComponent implements OnInit {
       },
 
       {
-        id: 4,moduleName: 'Pre_Owned_supplies',isSelected: false,isClosed:false,
+        id: 4,moduleName: 'roles',isSelected: false,isClosed:false,
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
@@ -378,7 +296,7 @@ export class ManagePermissionsComponent implements OnInit {
       },
 
       {
-        id: 5,moduleName: 'my_coupons',isSelected: false,isClosed:false,
+        id: 5,moduleName: 'users',isSelected: false,isClosed:false,
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
@@ -399,7 +317,7 @@ export class ManagePermissionsComponent implements OnInit {
       },
 
       {
-        id: 6,moduleName: 'my_supply_deals',isSelected: false,isClosed:false,
+        id: 6,moduleName: 'permissions',isSelected: false,isClosed:false,
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
@@ -420,7 +338,7 @@ export class ManagePermissionsComponent implements OnInit {
       },
 
       {
-        id: 7,moduleName: 'my_catalogues',isSelected: false,isClosed:false,
+        id: 7,moduleName: 'members',isSelected: false,isClosed:false,
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
@@ -441,7 +359,7 @@ export class ManagePermissionsComponent implements OnInit {
       },
 
       {
-        id: 8,moduleName: 'my_directories',isSelected: false,isClosed:false,
+        id: 8,moduleName: 'data_analysis',isSelected: false,isClosed:false,
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
@@ -459,91 +377,9 @@ export class ManagePermissionsComponent implements OnInit {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
         ]
-      },
+      }
 
-      {
-        id: 9,moduleName: 'enquiries',isSelected: false,isClosed:false,
-        childList: [
-          {
-            id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
-          {
-            id: 5,parent_id: 1,value: 'view',isSelected: false
-          },
-        ]
-      },
 
-      {
-        id: 10,moduleName: 'support_requests',isSelected: false,isClosed:false,
-        childList: [
-          {
-            id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
-          {
-            id: 5,parent_id: 1,value: 'view',isSelected: false
-          },
-        ]
-      },
-
-      {
-        id: 11,moduleName: 'account_pay_requests',isSelected: false,isClosed:false,
-        childList: [
-          {
-            id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
-          {
-            id: 5,parent_id: 1,value: 'view',isSelected: false
-          },
-        ]
-      },
-
-      {
-        id: 12,moduleName: 'freight_ranges',isSelected: false,isClosed:false,
-        childList: [
-          {
-            id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
-          {
-            id: 5,parent_id: 1,value: 'view',isSelected: false
-          },
-        ]
-      },
 
  
     ];

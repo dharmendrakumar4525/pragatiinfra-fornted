@@ -4,9 +4,9 @@
         <div style="padding: 1rem;margin-top: 60px;">
             <select style="padding: 10px;width:100%;border: none;font-size: large;">
                 <option>
-        <span>Project 1</span></option>
+        <span>{{project?.projectName}}</span></option>
 </select>
-<span style="font-size: small;">on track</span>
+<!-- <span style="font-size: small;">on track</span> -->
 </div>
 <div style="margin-left: 100px;font-size: small;position: relative;margin-top: 90px;">
 <span >Back to Calender</span></div>       
@@ -20,11 +20,11 @@
     <ul class="toptext"  style="background-color: #fff !important;list-style: none;">
       <li><a style="color: #000;" [routerLink]="['/dpr']" routerLinkActive="active-link"
         ><i class="fa fa-eye" aria-hidden="true"></i> Projects</a></li>
-      <li><a style="color: #000;"[routerLink]="['data-analysis']" routerLinkActive="active-link-active"
+      <li><a style="color: #000;" [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
         [routerLinkActiveOptions]="{exact: true}" ><i class="fa fa-eye" aria-hidden="true"></i> Data-Analysis</a></li>
-      <li><a  style="color: #000;" [routerLink]="['progress-sheet']" routerLinkActive="active-link-active"
+      <li><a  style="color: #000;" [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
          ><i class="fa fa-pencil" aria-hidden="true"></i> Progress-sheet</a></li>
-      <li><a style="color: #000;"[routerLink]="['calender']" routerLinkActive="active-link"
+      <li><a style="color: #000;" [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"
          ><i class="fa fa-pencil" aria-hidden="true"></i> Calender</a></li>
     </ul>
     </div>
@@ -84,7 +84,11 @@
                 <tr *ngFor="let subTask of project.result" style="background-color: #F5F5F5;">
     
                   <td >{{subTask.subTaskName}}</td>
-                  <td id="myP" contenteditable="true"></td>
+                  <td>
+                  <form role="form" (submit)="onBid($event, subTask, name.value,subTask._id)">
+                    <input type="number" #name  min={{subTask.value}} value={{subTask.value}}>
+                    <button type="submit">Add</button>
+                 </form></td>
                   
                 </tr>
             </tbody>
@@ -134,7 +138,7 @@
         </mat-grid-tile>
       <mat-grid-tile colspan="4" >
         <mat-card style="width:150px;margin-right: 980px;margin-bottom: 300px;box-shadow: none;">
-          <button style="width:150px;padding: 10px;background-color: #233A61;color: #fff;">Submit</button>
+          <!-- <button style="width:150px;padding: 10px;background-color: #233A61;color: #fff;">Submit</button> -->
         </mat-card>
       </mat-grid-tile>
 

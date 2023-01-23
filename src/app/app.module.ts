@@ -9,7 +9,7 @@ import { SharedModule } from './shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-//import { FullCalendarModule } from '@fullcalendar/angular';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { AccountInfoComponent } from './pages/account-info.component';
 import { DashboardComponent } from './pages/dashboard.component';
 import { HomeComponent } from './pages/home.component';
@@ -41,7 +41,7 @@ import { ManagePermissionsComponent } from './pages/manage-permissions/manage-pe
 @NgModule({
   imports:      [ AppRoutingModule, BrowserModule,ReactiveFormsModule,HttpClientModule, FormsModule, CoreModule, SharedModule, CustomMaterialModule,
     FlexLayoutModule,
-    //FullCalendarModule,
+    FullCalendarModule,
     NgCircleProgressModule.forRoot({
 
     

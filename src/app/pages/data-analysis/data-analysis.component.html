@@ -2,9 +2,9 @@
 <mat-toolbar style="background-color: #fff !important;">
     <mat-toolbar-row fxLayoutAlign="space-between center" >
         <div style="padding: 1rem;margin-top: 60px;">
-        <span>project 1</span></div>
+        <span>{{project?.projectName}}</span></div>
         <div>
-            <button style="padding: 12px 12px;width: 150px;margin-top: 50px;">Add Project +  </button>
+            <button style="padding: 12px 12px;width: 150px;margin-top: 50px;" [routerLink]="['/add-project']">Add Project +  </button>
             
             <button style="padding: 5px 5px;width: 150px;margin-left: 40px"> <mat-icon style="font-size: medium;position: relative;right:1px;top:10px">group_add</mat-icon>
                 Add Member </button>
@@ -42,7 +42,7 @@
         [routerLinkActiveOptions]="{exact: true}" ><i class="fa fa-eye" aria-hidden="true"></i> Data-Analysis</a></li>
       <li><a [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
          ><i class="fa fa-pencil" aria-hidden="true"></i> Progress-sheet</a></li>
-      <li><a [routerLink]="['/dpr']" routerLinkActive="active-link"
+      <li><a [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"
          ><i class="fa fa-pencil" aria-hidden="true"></i> Calender</a></li>
     </ul>
     
@@ -118,10 +118,10 @@
       </p></mat-card-content>
      <mat-card-subtitle>Members</mat-card-subtitle>
      <div>
-     <div  fxLayout="column" fxLayoutGap="1px" *ngFor="let num of [1,2,3]">
+     <div  fxLayout="column" fxLayoutGap="1px" *ngFor="let data of project?.members">
       <div mat-card-avatar class="example-header-image">
         <div style="margin-left: 30px;">
-          <button mat-button >User1</button> </div>
+          <button mat-button >{{data}}</button> </div>
       </div>
   </div>
 </div>

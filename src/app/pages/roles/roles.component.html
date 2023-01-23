@@ -4,7 +4,7 @@
         <div style="padding: 1rem;margin-top: 60px;">
         <span style="font-size:xx-large;">Pragati Infra</span></div>
         <div>
-            <button mat-button style="padding: 1px 12px;width: 150px;margin-top: 50px;margin-left: 700px;position: relative;background-color: lightgrey;color: black;">Add Project +  </button>
+            <button mat-button style="padding: 1px 12px;width: 150px;margin-top: 50px;margin-left: 700px;position: relative;background-color: lightgrey;color: black;" [routerLink]="['/add-project']">Add Project +  </button>
             </div>
             <div>
        <button mat-button [matMenuTriggerFor]="menu"> <mat-icon matBadge="7" matBadgeColor="warn" style="margin-top:50px">notifications</mat-icon></button>
@@ -28,7 +28,7 @@
                 <div > <button mat-button class="leftbtns">copy</button> &nbsp;    
                     <button mat-button class="leftbtns">Excel</button>   &nbsp;
                     <button mat-button class="leftbtns">PDF</button>  &nbsp;
-                    <button mat-button class="leftbtns">Column Visiblity</button>    
+                    <!-- <button mat-button class="leftbtns">Column Visiblity</button>     -->
             </div>
             </div>
         </mat-grid-tile>

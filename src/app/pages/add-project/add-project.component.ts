@@ -8,7 +8,7 @@ import { TaskService } from 'src/app/services/task.service';
 import { AddSubTasksComponent } from '../add-sub-tasks/add-sub-tasks.component';
 import { AddProjectService } from 'src/app/services/add-project.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export interface Fruit {
   name: string;
@@ -29,40 +29,39 @@ export class AddProjectComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   selection: any[] = [];
-  imageUrl:any;
+  imageUrl = null
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  // tags = [
-  //   {name: 'Lemon'},
-  //   {name: 'Lime'},
-  //   {name: 'Apple'},
-  // ];
+  
   
   projectForm: FormGroup = this._fb.group({
-    projectName: [null, [Validators.required]],
-   // membership: [null],
+   projectName: [null, [Validators.required]],
    projectDate: [null, [Validators.required]],
-   location: [null],
-   //fruits: this._fb.array(["Lemon", "Lime", "Apple"]),
+   location: [null,[Validators.required]],
    r0Date: [null],
    r1Date: [null],
    r2Date: [null],
-   members: [[]],
-  //  address: [null, [Validators.required]],
+   members: [[]]
+  
 
   });
   tasks:any;
   projectId:any;
   tasksData:any;
   constructor(private _fb: FormBuilder, private toast: ToastService, private _dialog: MatDialog,private taskService: TaskService,
-    private projectService: AddProjectService,private activeRoute: ActivatedRoute) { }
+    private projectService: AddProjectService,private activeRoute: ActivatedRoute, private router:Router) { }
 
   ngOnInit(): void {
   
     this.activeRoute.params.subscribe((params:any) => {
       console.log(params.id)
       this.projectId = params.id
+      
       if(this.projectId == undefined){
         this.projectId = null
+      }
+      if(this.projectId){
+        this.showMaster = true;
+    this.showAddProject  = false
       }
     });
 
@@ -185,28 +184,41 @@ addTag(event: MatChipInputEvent): void {
   }
 
   addProject(){
-    let hh = []
+    //let hh = []
     if(!this.projectId){
-      this.toast.openSnackBar(
-        'Enter Valid Details'
-      );
+      if (this.projectForm.invalid) {
+        this.toast.openSnackBar(
+          'Enter Valid Details'
+        );
+        //this.clearForm = true;
+        //this.clearForm = true;
+        this.projectForm.markAllAsTouched();
+        return;
+      }
       console.log(this.selection);
       console.log(this.projectForm.value);
       this.projectForm.value.sections = this.selection
       this.projectForm.value.imageUrl = this.imageUrl
+      if(!this.projectForm.value.imageUrl){
+        this.toast.openSnackBar(
+          'Please upload project image'
+        );
+        return;
+      }
       this.projectService.addProject(this.projectForm.value).subscribe(
   
         {
           next: (data: any) =>  {
             console.log(data)
             // this.spinner.hide()
-            // this.router.navigate(['/usersList']);
-            // this.toast.openSnackBar('User Added Successfully');
+             
+             this.toast.openSnackBar('Project Added Successfully');
+             this.router.navigate(['/dpr']);
             
           },
           error: (err) => {
             // this.spinner.hide()
-            // this.toast.openSnackBar('Something went wrong, please try again later');
+             this.toast.openSnackBar('Something went wrong, please try again later');
             // console.log(err) 
     
             // this.errorData = err
@@ -218,21 +230,46 @@ addTag(event: MatChipInputEvent): void {
     
       )
     }else{
-     // console.log(this.selection);
-      //console.log(this.tasksData)
-      for(let one of this.selection){
-        //console.log(one)
-        for(let single of this.tasksData){
-          if(single.taskId === one.taskId){
-
-          }else{
-            hh.push(one)
+      let selSectionsData = this.selection
+      this.projectService.updateActivitiesToProject(selSectionsData, this.projectId).subscribe(
+  
+        {
+          next: (data: any) =>  {
+            console.log(data)
+            // this.spinner.hide()
+             
+             this.toast.openSnackBar(' Updated Successfully');
+             this.router.navigate(['/view-project/progress-sheet',this.projectId]);
             
-
+          },
+          error: (err) => {
+            // this.spinner.hide()
+             this.toast.openSnackBar('Something went wrong, please try again later');
+            // console.log(err) 
+    
+            // this.errorData = err
+    
+            
+    
           }
         }
-        console.log(hh)
-      }
+    
+      )
+    //  // console.log(this.selection);
+    //   //console.log(this.tasksData)
+    //   for(let one of this.selection){
+    //     //console.log(one)
+    //     for(let single of this.tasksData){
+    //       if(single.taskId === one.taskId){
+
+    //       }else{
+    //         hh.push(one)
+            
+
+    //       }
+    //     }
+    //     console.log(hh)
+    //   }
     }
  
 
@@ -266,4 +303,16 @@ addTag(event: MatChipInputEvent): void {
     this.showMaster = false;
     this.showAddProject  = true
   }
+
+  get projectName(): AbstractControl {
+    return this.projectForm.get('projectName');
+  }
+  get projectDate(): AbstractControl {
+    return this.projectForm.get('projectDate');
+  }
+
+  get location(): AbstractControl {
+    return this.projectForm.get('location');
+  }
+
 }

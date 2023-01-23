@@ -17,6 +17,22 @@ export class ProgressSheetService {
       catchError(this.handleError)
     );
   }
+
+
+  getActivitiesByProjectId(id): Observable<any> {
+    
+    return this.http.get(`${this.baseUrl}/subTasks/activities/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getProjectById(id): Observable<any> {
+    
+    return this.http.get(`${this.baseUrl}/projects/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.

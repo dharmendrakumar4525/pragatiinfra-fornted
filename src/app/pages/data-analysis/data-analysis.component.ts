@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Chart, registerables } from 'chart.js';
+import { DataAnalysisService } from 'src/app/services/data-analysis.service';
 Chart.register(...registerables);
 export interface Tile {
   color: string;
@@ -33,13 +34,18 @@ export class DataAnalysisComponent implements OnInit {
    
   ];
   projectId:any
-
-  constructor(private activeRoute: ActivatedRoute) { }
+  project:any;
+  constructor(private activeRoute: ActivatedRoute, private dataAnalysis:DataAnalysisService) { }
 
   ngOnInit(): void {
     this.activeRoute.params.subscribe((params:any) => {
       console.log(params.id)
       this.projectId = params.id
+
+      this.dataAnalysis.getProjectById(this.projectId).subscribe(data=>{
+        this.project = data
+    console.log(this.project)
+    })
 
     });
     var myChart = new Chart('overviewChart', {
