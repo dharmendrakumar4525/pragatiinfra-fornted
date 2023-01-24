@@ -1,3 +1,12 @@
 form{
     height: 400px;
 }
+.my-selects {
+    display: flex;
+    flex-direction: row;
+   gap: 50px;
+   
+  }
+ng-container{
+    width: 200px;
+}
