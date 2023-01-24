@@ -58,7 +58,7 @@
     colspan="3" >
     <mat-card style="box-shadow: none !important;" >
     <mat-toolbar>
-   <mat-toolbar-row fxLayoutGap="100" style="font-size: small;background-color: #233A61;color: white;"><span>R0Prepareddate:{{project?.r0Date}}</span>
+   <mat-toolbar-row fxLayoutGap="20" style="font-size: small;background-color: #233A61;color: white;"><span>R0Prepareddate:{{project?.r0Date}}</span>
     <span>R1Prepareddate:{{project?.r1Date}}</span>
     <span>R2Prepareddate:{{project?.r2Date}}</span>
   </mat-toolbar-row>
@@ -102,13 +102,15 @@
     </mat-grid-tile>
     
     <mat-grid-tile  >
-      <div classs="scroll-bar">
+  
       <mat-card style="width: 200px;height: 400px;margin:10px 0px ;" >
-        <div classs="scroll-bar" fxLayout="column">
-      <mat-card-header>
+        <div>
+        <div classs="scroll-bar" >
+          <div  fxLayout="column" fxLayoutGap="10px" >
+      <div>
        
       <mat-card-title> About</mat-card-title>
-      </mat-card-header>
+      </div>
       <mat-card-content>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
         Pellentesque volutpat enim ac ligula fermentum, 
@@ -129,9 +131,11 @@
   <button mat-button (click)="addMember()">Addmembers+</button> 
 </mat-card-actions>
 </div>
+</div>
+</div>
     </mat-card>
 
-  </div>
+  
     </mat-grid-tile>
    
 

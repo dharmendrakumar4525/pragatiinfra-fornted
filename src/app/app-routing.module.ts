@@ -19,6 +19,7 @@ import { ViewProjectComponent } from './pages/view-project/view-project.componen
 import { ForgotpasswordComponent } from './pages/forgotpassword/forgotpassword.component';
 import { ManagePermissionsComponent } from './pages/manage-permissions/manage-permissions.component';
 import { AuthGuard } from './services/auth.guard';
+import { CreatenewpasswordComponent } from './pages/createnewpassword/createnewpassword.component';
 
 const routes: Routes = [
   {
@@ -84,6 +85,8 @@ const routes: Routes = [
     canActivate:[AuthGuard]
   },
   {path: 'forgotpassword', component: ForgotpasswordComponent},
+  {path: 'createnewpassword', component: CreatenewpasswordComponent,
+  canActivate:[AuthGuard],},
 
   {
     path: 'view-project',
@@ -96,6 +99,7 @@ const routes: Routes = [
       {path: 'calender/:id', component: CalenderComponent,canActivate:[AuthGuard]} 
       //{path: 'login', component: LoginComponent},
       //{path: 'forgotpassword', component: ForgotpasswordComponent},
+      
     
     ]
   },

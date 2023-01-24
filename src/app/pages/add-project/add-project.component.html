@@ -2,7 +2,7 @@
 
 <form class="form-section" [formGroup]="projectForm">
   <div *ngIf="showAddProject">
-    <mat-toolbar>
+    <mat-toolbar style="background-color: #fff;">
       <mat-toolbar-row fxLayoutAlign="space-between center">
           <div style="padding: 1rem;margin-top: 40px;">
           <span>Add New Project</span></div>
@@ -17,7 +17,7 @@
       fxLayoutAlign="space-around center" fxLayoutGap="0px">
       <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
         <div class="custom-form-group">
-            <label class="custom-label" for="">Project Name<span class="star">*</span></label>
+            <label class="custom-label" for="" style="color: #3568BA;">Project Name<span class="star">*</span></label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
                 <input matInput  placeholder="Enter Project Name" formControlName="projectName"
@@ -36,7 +36,7 @@
       <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
  
         <div class="custom-form-group">
-            <label class="custom-label" for=""> Project Date <span class="star">*</span>
+            <label class="custom-label" for="" style="color: #3568BA;"> Project Date <span class="star">*</span>
               <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
             </label>
             <div class="custom-form-control">
@@ -58,7 +58,7 @@
       </div>
       <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
         <div class="custom-form-group">
-            <label class="custom-label" for="">Location<span class="star">*</span></label>
+            <label class="custom-label" for="" style="color: #3568BA;">Location<span class="star">*</span></label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
                 <input matInput  placeholder="Enter Location" formControlName="location"
@@ -85,11 +85,11 @@
    fxLayoutAlign="flex-start"
    style="margin-left: 5%;">
     <div class="custom-form-group">
-      <label class="custom-label">Project Image</label>
+      <label class="custom-label" style="color: #3568BA;">Project Image</label>
       <div class="custom-form-control" fxLayout="row" fxLayoutAlign="center center">
           <div class="upload-file" dropzone fxLayout="column" fxLayoutAlign="center center">
               <img src="../../../assets/images/icons/upload-file.svg" class="mb-15" alt="upload-file">
-              <h5>Project Image</h5>
+              <h5 style="color: #3568BA;">Project Image</h5>
               <input type="file" class="uploadImg"  id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)">
           </div>
           <div class="upload-file" style="margin-left: 20px;" *ngIf="imageUrl">
@@ -132,7 +132,7 @@
     fxLayoutAlign="space-around center" fxLayoutGap="0px">
     <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
         <div class="custom-form-group">
-            <label class="custom-label" for=""> R0 End Date <span class="star">*</span>
+            <label class="custom-label" for="" style="color: #3568BA;"> R0 End Date <span class="star">*</span>
               <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
             </label>
             <div class="custom-form-control">
@@ -151,7 +151,7 @@
     </div>
     <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
         <div class="custom-form-group">
-            <label class="custom-label" for=""> R1 End Date <span class="star">*</span>
+            <label class="custom-label" for="" style="color: #3568BA;"> R1 End Date <span class="star">*</span>
               <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
             </label>
             <div class="custom-form-control">
@@ -170,7 +170,7 @@
     </div>
     <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
         <div class="custom-form-group">
-            <label class="custom-label" for=""> R2 End Date <span class="star">*</span>
+            <label class="custom-label" for="" style="color: #3568BA;"> R2 End Date <span class="star">*</span>
               <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
             </label>
             <div class="custom-form-control">
@@ -205,7 +205,7 @@
 
 		
 		<img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
-        <div>add activity with sub activity</div>
+        <div style="color: #3568BA;">add activity with sub activity</div>
 
 	</mat-card-content>
   </mat-card>
@@ -242,14 +242,14 @@
     <mat-card id="card" fxFlex="0 1 calc(33.3% - 32px)"
     fxFlex.lt-md="0 1 calc(50% - 32px)"
     fxFlex.lt-sm="100%">
-        <mat-card-title>
+        <mat-card-title style="color: #3568BA;">
             {{task.taskName}}
             
         </mat-card-title>
         <hr>
     
         <mat-card-content>
-          <button mat-raised-button (click)="addSubTask(task.taskId)">+ add sub task</button>
+          <button mat-raised-button (click)="addSubTask(task.taskId)" style="color: #3568BA;">+ add sub task</button>
             <!-- <button > </button> -->
             <br> <br>
             <!-- <span *ngFor="let subTask of task?.result">
@@ -289,7 +289,7 @@
     
         <mat-card-content>
           <img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
-        <div>add activity</div>
+        <div style="color: #3568BA;">add activity</div>
     
         </mat-card-content>
       </mat-card>
@@ -304,7 +304,7 @@
    fxLayoutGap="10px" 
    fxLayoutAlign="flex-start"
    style="margin-left: 5%;">
-   <button mat-raised-button (click)="addProject()" color="primary">Submit</button>
+   <button mat-raised-button (click)="addProject()" style="background-color: #233A61;color: #fff;">Submit</button>
 </div>
 
 

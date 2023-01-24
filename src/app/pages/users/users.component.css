@@ -47,31 +47,35 @@
            width:35%;
 }
 
+
 .scroll-bar1{
         
-    height: 400px;
-  
-    
    
-    overflow: auto;
-    
-    }
+  height: 300px;
   
-  ::-webkit-scrollbar {
-  width: 7px;
+  
+
+  overflow: auto;
+  overflow-x: hidden;
   }
-  ::-webkit-scrollbar-track{
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-  background-color:lightgrey ;
-  }
-  ::-webkit-scrollbar-thumb{
-  background: #1E293B;
-  border-radius: 5px;
-  }
-  ::-webkit-scrollbar-thumb:hover{
-  background: lightblue;
-  }
+
+::-webkit-scrollbar {
+width: 10px;
+height:10px;
+}
+::-webkit-scrollbar-track{
+border: 1px solid lightgrey;
+border-radius: 5px;
+background-color:lightgrey ;
+}
+::-webkit-scrollbar-thumb{
+background: #1E293B;
+border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover{
+background: lightblue;
+}
+
 
   mat-card{
     width:20px;
@@ -80,6 +84,15 @@
     bottom:30px;
     left:110px;
     border: 1px solid lightgrey;
+  }
+
+  .example-card{
+    max-width: 400px;
+}
+.example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+    margin-left: 10px;
   }
   ::ng-deep.mat-menu-panel {
     max-width: none !important;

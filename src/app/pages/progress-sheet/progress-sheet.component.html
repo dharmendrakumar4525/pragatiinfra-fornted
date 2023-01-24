@@ -49,7 +49,7 @@
   <div class="scroll-bar1" style="width: 98%;">
     <table>
    
-  <thead>
+  <thead >
     <th >Description</th>
     <th>R1 End Date</th>
    <th>R2 End Date</th>
@@ -74,7 +74,7 @@
    
     <tbody *ngFor= " let project of projectsData ">
         <tr  style="font-size: large;border: 1px solid lightgray;">
-            <td>{{project.name}} <button mat-button> <mat-icon [routerLink]="['/add-project',projectId]" >add</mat-icon></button></td>
+            <td>{{project.name}} <button mat-button style="width: 1px;"> <mat-icon [routerLink]="['/add-project',projectId]"  >add</mat-icon></button></td>
             <td ></td>
             <td ></td>
             <td ></td>

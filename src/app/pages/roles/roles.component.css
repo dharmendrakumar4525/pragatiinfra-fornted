@@ -46,31 +46,7 @@
            width:30%;
 }
 
-.scroll-bar1{
-        
- 
-  
-    
-   
-    overflow: auto;
-    
-    }
-  
-  ::-webkit-scrollbar {
-  width: 7px;
-  }
-  ::-webkit-scrollbar-track{
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-  background-color:lightgrey ;
-  }
-  ::-webkit-scrollbar-thumb{
-  background: #1E293B;
-  border-radius: 5px;
-  }
-  ::-webkit-scrollbar-thumb:hover{
-  background: lightblue;
-  }
+
 
   .demo-paginator {
     width: 1000px;
@@ -80,7 +56,45 @@
     max-width: none !important;
   }
   .notification-container{
-   width: 200px;
+   width: 300px;
    margin-left: 10px;
   }
+
+
+  .example-card{
+    max-width: 400px;
+}
+.example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+    margin-left: 20px;
+  }
+  
+.scroll-bar1{
+        
+   
+  height: 300px;
+  
+  
+
+  overflow: auto;
+  overflow-x: hidden;
+  }
+
+::-webkit-scrollbar {
+width: 10px;
+height:10px;
+}
+::-webkit-scrollbar-track{
+border: 1px solid lightgrey;
+border-radius: 5px;
+background-color:lightgrey ;
+}
+::-webkit-scrollbar-thumb{
+background: #1E293B;
+border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover{
+background: lightblue;
+}
   

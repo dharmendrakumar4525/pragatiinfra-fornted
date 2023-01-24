@@ -7,17 +7,17 @@
 
   <form class="form-section" [formGroup]="itemForm"> 
 
-    <ng-container formArrayName="addRevisesDates" fxLayout="row">
-      <div>
-      <ng-container *ngFor="let single of addRevisesDates.controls; let i = index" [formGroupName]="i" >
+    <ng-container formArrayName="addRevisesDates" fxLayout="row"  >
+      <div >
+      <ng-container  *ngFor="let single of addRevisesDates.controls; let i = index" [formGroupName]="i" >
  
           <div 
           fxLayout="row" 
           fxLayout.lt-sm="row" 
           fxLayoutGap="10px" 
           fxLayoutAlign="flex-start"
-          style="margin-left: 5%;">
-  
+          style="margin-left: 5%;" >
+        
      
           <div class="custom-form-group" fxLayout="row" >
               <label class="custom-label" for="">R{{i+1}} End Date <span class="star">*</span>

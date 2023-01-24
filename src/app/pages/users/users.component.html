@@ -11,9 +11,25 @@
         <mat-icon matBadge="7" matBadgeColor="warn" style="margin-top:50px">notifications</mat-icon>
     </button>
     <mat-menu #menu="matMenu" >
-      <div class="notification-container" >
-        <button mat-menu-item>item1</button>
-        <button mat-menu-item>item1</button>
+      <div class="scroll-bar1" fxLayout="column">
+      <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,]">
+        <div mat-card-avatar class="example-header-image"></div>
+        <div  class="notification-container">
+          <div class="content"><b>Updatedsheet...</b>
+            <div class="time">5 hours ago</div><br>
+          </div>
+      </div>
+    
+    </div>
+    <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,]">
+      <div mat-card-avatar class="example-header-image"></div>
+      <div >
+        <div class="content" style="margin-left: 15px;"><b>Kate: .</b>
+          <div class="time">1 hour ago</div><br>
+        </div>
+    </div>
+  
+  </div>
       </div>
       </mat-menu> 
         </div>
@@ -58,7 +74,7 @@
 
     <div>
         <div class="scroll-bar1">
-    <section class="example-container mat-elevation-z8" tabindex="0">
+    <section class="example-container" tabindex="0">
         <table mat-table [dataSource]="dataSource">
       
              <!-- Description Column -->
