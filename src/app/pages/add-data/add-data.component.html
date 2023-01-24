@@ -1,5 +1,5 @@
 <div>
-  <div fxLayout="row" fxLayoutAlign="space-between center" style="background-color:#233A61 ;color:white;">
+  <div fxLayout="row" fxLayoutAlign="space-between center" style="background-color:#233A61 ;color:white;height:50px">
 <div>
   <h2 style="margin-left: 20px;margin-top: 10px;">{{data.subTaskName}}</h2>
 </div>
@@ -8,21 +8,21 @@
   <form class="form-section" [formGroup]="itemForm"> 
 
     <ng-container formArrayName="addRevisesDates" fxLayout="row"  >
-      <div >
-      <ng-container  *ngFor="let single of addRevisesDates.controls; let i = index" [formGroupName]="i" >
+      <div class="my-selects">
+      <ng-select  *ngFor="let single of addRevisesDates.controls; let i = index" [formGroupName]="i" >
  
           <div 
           fxLayout="row" 
           fxLayout.lt-sm="row" 
           fxLayoutGap="10px" 
           fxLayoutAlign="flex-start"
-          style="margin-left: 5%;" >
+          style="margin-left: 5%;margin-top: 10px;" >
         
      
-          <div class="custom-form-group" fxLayout="row" >
-              <label class="custom-label" for="">R{{i+1}} End Date <span class="star">*</span>
+          <div class="custom-form-group"  >
+              <label class="custom-label" for="" style="padding: 10px;margin-top: 100px;">R{{i+1}} End Date <span class="star">*</span>
                 <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
-              </label>
+              </label><br>
               <div class="custom-form-control" fxLayout="row">
                 <mat-form-field appearance="outline">
                   <input matInput [matDatepicker]="startPicker" formControlName="revisedDate" placeholder="Enter Revised Date"
@@ -33,25 +33,27 @@
                     <span *ngIf="startDate.hasError('required')"> Start date is required </span>
                   </mat-error> -->
                 </mat-form-field>
+                
               </div>
+              <div style="margin-bottom: -50px;">
+                <button type="button" mat-button class="global-btn save-btn" (click)="minusBlocks(i)">
+                  <span style="margin-top: -50px;"> - Remove </span>
+                </button>
+                </div>
             </div>
          <!----> 
 
   
-      <div>
-        <button type="button" mat-button class="global-btn save-btn" (click)="minusBlocks(i)">
-          <span> - Remove </span>
-        </button>
-        </div></div>
-     </ng-container>
+      </div>
+      </ng-select>
 
     <div fxLayout="row" fxLayoutAlign="end center">
-      <button type="button" mat-button class="global-btn save-btn" style="margin-top: 10px;" (click)="plusBlocks()">
+      <button type="button" mat-button class="global-btn save-btn" style="margin-top: 130px;position: absolute;left:1000px" (click)="plusBlocks()">
          <span  > + Add Revised Dates</span>
       </button>
    </div>
   </div>
-    </ng-container>
+    </ng-container><br><br><br>
 
     <div fxLayout="row wrap" 
     fxLayoutAlign="space-around center" fxLayoutGap="0px" style="margin-top: 30px;">

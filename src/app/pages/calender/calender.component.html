@@ -92,8 +92,8 @@
                   <td >{{subTask.subTaskName}}</td>
                   <td>
                   <form role="form" (submit)="onBid($event, subTask, name.value,subTask._id)">
-                    <input type="number" class="calenderForm" #name  min={{subTask.value}} value={{subTask.value}}>
-                    <button type="submit">Add</button>
+                    <input type="number" class="calenderForm" style="border: none;padding: 5px;" #name  min={{subTask.value}} value={{subTask.value}}>
+                    <button type="submit" style="border: none;">Add</button>
                  </form></td>
                   
                 </tr>

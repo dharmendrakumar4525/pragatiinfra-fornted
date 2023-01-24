@@ -4,9 +4,9 @@ form{
 .my-selects {
     display: flex;
     flex-direction: row;
-   gap: 50px;
+   gap: 80px;
    
   }
-ng-container{
+ng-select{
     width: 200px;
 }
