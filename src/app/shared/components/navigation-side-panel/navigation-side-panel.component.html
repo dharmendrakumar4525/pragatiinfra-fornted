@@ -13,7 +13,7 @@
     <li *ngFor="let item of menuSidebar" class="sidebar"  #itemEl routerLinkActive="active">
       <div  class="dropdown-title">
         <a (click)="addSubItems()">
-          <i [class]="item.icon"></i>
+          <!-- <i class="fas fa-home" [ngClass]="link.iconClass"></i> -->
           <span class="link_name">{{item.link_name}}</span>
         </a>
       </div>
@@ -27,6 +27,7 @@
       <ul class="sub-menu" [class.blank]="item.sub_menu.length == 0">
         <!-- <li><a class="link_name">{{item.link_name}}</a></li> -->
         <li *ngFor="let item_sub of item.sub_menu" routerLinkActive="active">
+          <!-- <i class="fas fa-home" [ngClass]="link.iconClass"></i> -->
           <a [routerLink]="[item_sub.link]">{{item_sub.link_name}}</a>
           <!-- <hr> -->
         </li>
@@ -35,9 +36,14 @@
       
     </li>
 
-    <li  routerLinkActive="active" (click)="logout()">
-      <a >Log out</a>
-      <!-- <hr> -->
+  
+    <li >
+      <a  (click)="logout()"
+          [routerLinkActive]="['active']"
+          [routerLinkActiveOptions]="{exact: true}">
+          <i class='fas fa-sign-out-alt' style='color: white'></i>
+        <span [ngClass]="currentPanelState">Log out</span>
+      </a>
     </li>
     <!-- <li *ngFor="let link of menuSidebar">
       <a [routerLink]="link.url" 

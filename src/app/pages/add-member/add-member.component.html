@@ -11,17 +11,23 @@
 
          <div>
                   <mat-form-field appearance="outline">
-                    <mat-select placeholder="Choose Project" (selectionChange)="someMethod($event)" formControlName="project">
+                    <mat-select placeholder="Choose Project" (selectionChange)="someMethod($event)" formControlName="projectId">
                       
                       <mat-option *ngFor="let single of data" [value]="single._id">{{single?.projectName}}</mat-option>
                       <!-- <mat-option [value]="'EMAIL'">Email</mat-option>
           <mat-option [value]="'PHONE'">Phone</mat-option> -->
                     </mat-select>
+                    <mat-error *ngIf="projectId.invalid && ( projectId.dirty || projectId.touched )">
+                      <span>Please Select a Project</span>
+                    </mat-error>
                   </mat-form-field>
                 </div>
                <div>
             <mat-form-field appearance="outline">
                 <input matInput placeholder="add email" formControlName="email">
+                <mat-error *ngIf="email.invalid && ( email.dirty || email.touched )">
+                  <span>Please provide a valid email</span>
+                </mat-error>
             </mat-form-field><br/>
         </div>
             

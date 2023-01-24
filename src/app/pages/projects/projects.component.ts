@@ -44,6 +44,7 @@ export class ProjectsComponent implements OnInit {
     },
 
   ];
+  members = [];
   constructor(private projectService: AddProjectService,private _dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -51,6 +52,10 @@ export class ProjectsComponent implements OnInit {
       //this.spinner.hide()
       this.projects = data
       console.log(this.projects)
+      for(let single of this.projects){
+        this.members.push(...single.members)
+      }
+      console.log(this.members)
     })
   }
 
@@ -63,6 +68,15 @@ export class ProjectsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(status => {
       console.log(status);
       if (status === 'yes') {
+        this.projectService.getProjects().subscribe(data=>{
+          //this.spinner.hide()
+          this.projects = data
+          console.log(this.projects)
+          for(let single of this.projects){
+            this.members.push(...single.members)
+          }
+          console.log(this.members)
+        })
        // this.filterSubject.next(this.filterForm.value);
       }
       if (status === 'no') {

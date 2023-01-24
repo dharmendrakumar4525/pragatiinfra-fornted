@@ -45,6 +45,13 @@ export class UsersService {
 
   }
 
+  addMemberData(membersData:any,id): Observable<any> {
+    let members= {members:membersData}
+    return this.http.put(`${this.baseUrl}/projects/members/${id}`, members).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 
   handleError(error: HttpErrorResponse) {
     if (error.status === 0) {

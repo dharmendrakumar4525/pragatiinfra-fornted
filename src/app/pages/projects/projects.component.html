@@ -144,22 +144,21 @@
      
       <mat-card-subtitle>Members</mat-card-subtitle>
 
-      <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3]">
+      <div fxFlex="row" fxLayoutAlign="start" *ngFor="let mem of members">
       <div mat-card-avatar class="example-header-image"></div>
       <div >
-      <button mat-button >User1</button> 
+      <button mat-button >{{mem.split('@')[0]}}</button> 
     </div>
   
   </div>
-  <div fxFlex="row" fxLayoutAlign="start" >
+
+  <!-- <div fxFlex="row" fxLayoutAlign="start" >
     <div mat-card-avatar class="example-header-image"></div>
     <div >
     <button mat-button >User2</button> 
   </div>
+</div> -->
 
-
-
-</div>
     <mat-card-actions>
       <button mat-button (click)="addMember()">Addmembers+</button> 
     </mat-card-actions>

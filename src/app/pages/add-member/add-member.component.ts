@@ -2,17 +2,21 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TaskService } from 'src/app/services/task.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl, NgForm } from '@angular/forms';
+import { DataAnalysisComponent } from '../data-analysis/data-analysis.component';
+import { DataAnalysisService } from 'src/app/services/data-analysis.service';
+import { UsersService } from 'src/app/services/users.service';
+import { ToastService } from 'src/app/services/toast.service';
 @Component({
   selector: 'app-add-member',
   templateUrl: './add-member.component.html',
   styleUrls: ['./add-member.component.css']
 })
 export class AddMemberComponent implements OnInit {
-
+  project:any;
   memberForm: FormGroup = this._fb.group({
     
     email: [null, [Validators.required]],
-    project: [null, [Validators.required]],
+    projectId: [null, [Validators.required]],
 
 
   });
@@ -20,8 +24,10 @@ export class AddMemberComponent implements OnInit {
     private dialogRef: MatDialogRef<AddMemberComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private taskService: TaskService,
-    private _fb: FormBuilder
-   // private toast: ToastService
+    private _fb: FormBuilder,
+    private dataAnalysis:DataAnalysisService,
+    private userService:UsersService,
+    private toast: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -36,19 +42,34 @@ export class AddMemberComponent implements OnInit {
   }
 
   addTask(){
-    this.taskService.addTask(this.memberForm.value).subscribe(
+
+    if (this.memberForm.invalid) {
+      this.toast.openSnackBar(
+        'Enter Valid Details'
+      );
+      //this.clearForm = true;
+      //this.clearForm = true;
+      this.memberForm.markAllAsTouched();
+      return;
+    }
+
+
+    let membersData = this.project.members
+    membersData.push(this.memberForm.value.email)
+    this.userService.addMemberData(membersData, this.memberForm.value.projectId).subscribe(
 
       {
         next: (data: any) =>  {
           console.log(data)
           // this.spinner.hide()
           // this.router.navigate(['/usersList']);
-          // this.toast.openSnackBar('User Added Successfully');
+          this.closeDialog('yes');
+           this.toast.openSnackBar('Member Added Successfully');
           
         },
         error: (err) => {
           // this.spinner.hide()
-          // this.toast.openSnackBar('Something went wrong, please try again later');
+           this.toast.openSnackBar('Something went wrong, please try again later');
           // console.log(err) 
   
           // this.errorData = err
@@ -61,6 +82,14 @@ export class AddMemberComponent implements OnInit {
     )
   }
 
+
+  get projectId(): AbstractControl {
+    return this.memberForm.get('projectId');
+  }
+
+  get email(): AbstractControl {
+    return this.memberForm.get('email');
+  }
  
 
   updateSupply(){
@@ -79,6 +108,10 @@ export class AddMemberComponent implements OnInit {
 
   someMethod(ev){
     console.log(ev.value)
+    this.dataAnalysis.getProjectById(ev.value).subscribe(data=>{
+      this.project = data
+  console.log(this.project)
+  })
 
   }
 }

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 
 import { Chart, registerables } from 'chart.js';
+import { AddProjectService } from 'src/app/services/add-project.service';
 import { DataAnalysisService } from 'src/app/services/data-analysis.service';
+import { AddMemberComponent } from '../add-member/add-member.component';
 Chart.register(...registerables);
 export interface Tile {
   color: string;
@@ -35,9 +38,22 @@ export class DataAnalysisComponent implements OnInit {
   ];
   projectId:any
   project:any;
-  constructor(private activeRoute: ActivatedRoute, private dataAnalysis:DataAnalysisService) { }
+  projects:any;
+  members = [];
+  constructor(private activeRoute: ActivatedRoute,private _dialog: MatDialog,private projectService: AddProjectService, private dataAnalysis:DataAnalysisService) { }
 
   ngOnInit(): void {
+
+    this.projectService.getProjects().subscribe(data=>{
+      //this.spinner.hide()
+      this.projects = data
+      console.log(this.projects)
+      for(let single of this.projects){
+        this.members.push(...single.members)
+      }
+      console.log(this.members)
+    })
+
     this.activeRoute.params.subscribe((params:any) => {
       console.log(params.id)
       this.projectId = params.id
@@ -83,4 +99,29 @@ export class DataAnalysisComponent implements OnInit {
   });
   }
 
+
+  addMember(){
+    const dialogRef = this._dialog.open(AddMemberComponent, {
+      width: '30%',
+      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+      data: this.projects
+    });
+    dialogRef.afterClosed().subscribe(status => {
+      console.log(status);
+      if (status === 'yes') {
+        this.projectService.getProjects().subscribe(data=>{
+          //this.spinner.hide()
+          this.projects = data
+          console.log(this.projects)
+          for(let single of this.projects){
+            this.members.push(...single.members)
+          }
+          console.log(this.members)
+        })
+       // this.filterSubject.next(this.filterForm.value);
+      }
+      if (status === 'no') {
+      }
+    })
+  }
 }

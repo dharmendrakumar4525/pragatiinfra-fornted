@@ -6,7 +6,7 @@
         <div>
             <button style="padding: 12px 12px;width: 150px;margin-top: 50px;" [routerLink]="['/add-project']">Add Project +  </button>
             
-            <button style="padding: 5px 5px;width: 150px;margin-left: 40px"> <mat-icon style="font-size: medium;position: relative;right:1px;top:10px">group_add</mat-icon>
+            <button style="padding: 5px 5px;width: 150px;margin-left: 40px" (click)="addMember()"> <mat-icon style="font-size: medium;position: relative;right:1px;top:10px">group_add</mat-icon>
                 Add Member </button>
                 
 
@@ -58,9 +58,9 @@
     colspan="3" >
     <mat-card style="box-shadow: none !important;" >
     <mat-toolbar>
-   <mat-toolbar-row fxLayoutGap="100" style="font-size: small;background-color: #233A61;color: white;"><span>R0Prepareddate:16/01/2023</span>
-    <span>R1Prepareddate:16/01/2023</span>
-    <span>R2Prepareddate:16/01/2023</span>
+   <mat-toolbar-row fxLayoutGap="100" style="font-size: small;background-color: #233A61;color: white;"><span>R0Prepareddate:{{project?.r0Date}}</span>
+    <span>R1Prepareddate:{{project?.r1Date}}</span>
+    <span>R2Prepareddate:{{project?.r2Date}}</span>
   </mat-toolbar-row>
       
     </mat-toolbar>
@@ -118,15 +118,15 @@
       </p></mat-card-content>
      <mat-card-subtitle>Members</mat-card-subtitle>
      <div>
-     <div  fxLayout="column" fxLayoutGap="1px" *ngFor="let data of project?.members">
+     <div  fxLayout="column" fxLayoutGap="1px" *ngFor="let data of members">
       <div mat-card-avatar class="example-header-image">
         <div style="margin-left: 30px;">
-          <button mat-button >{{data}}</button> </div>
+          <button mat-button >{{data.split('@')[0]}}</button> </div>
       </div>
   </div>
 </div>
 <mat-card-actions>
-  <button mat-button>Addmembers+</button> 
+  <button mat-button (click)="addMember()">Addmembers+</button> 
 </mat-card-actions>
 </div>
     </mat-card>
