@@ -87,7 +87,7 @@ body{
 .scroll-bar{
         
  
-  height: 420px;
+  height: 200px;
     
  
     
@@ -124,7 +124,7 @@ background: lightblue;
   
  
   overflow: auto;
-  
+  overflow-x: hidden;
   }
 
 ::-webkit-scrollbar {
