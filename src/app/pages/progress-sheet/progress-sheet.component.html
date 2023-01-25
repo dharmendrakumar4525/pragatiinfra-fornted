@@ -50,9 +50,9 @@
         <li><a style="color: #000;" [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
           [routerLinkActiveOptions]="{exact: true}" ><i class="fa fa-eye" aria-hidden="true"></i> Data-Analysis</a></li>
         <li><a  style="color: #000;" [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
-           ><i class="fa fa-pencil" aria-hidden="true"></i> Progress-sheet</a></li>
+           ><i class="fa fa-edit" aria-hidden="true"></i> Progress-sheet</a></li>
         <li><a style="color: #000;" [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"
-           ><i class="fa fa-pencil" aria-hidden="true"></i> Calender</a></li>
+           ><i class="fa fa-edit" aria-hidden="true"></i> Calender</a></li>
       </ul>
       
     
@@ -64,7 +64,7 @@
 
 <body>
   <div class="scroll-bar1" style="width: 98%;">
-    <table>
+    <table *ngIf="progressPermissionsView.isSelected; else noView">
    
   <thead >
     <th >Description</th>
@@ -139,6 +139,10 @@
     </tbody>
 
     </table>
+    <ng-template #noView>
+      <h3>you don't have permissions to view Progress sheet</h3>
+    </ng-template>
+    
   </div>
 </body>
 

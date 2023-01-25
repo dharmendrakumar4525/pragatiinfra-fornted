@@ -27,8 +27,8 @@ export class AppComponent implements OnInit {
   private createLinks() {
     this.links = [
       new NavigationLink("DPR", ['dpr'], "fas fa-home"),
-      //new NavigationLink("Dashboard", ['dashbaord'], "fas fa-tachometer-alt"),
-      //new NavigationLink("Account Info", ['account'], "fas fa-user-circle"),
+    new NavigationLink("DMR", ['dashbaord'], "fas fa-tachometer-alt"),
+      new NavigationLink("PROCUREMENTS", ['account'], "fas fa-user-circle"),
       //new NavigationLink("User Management", ['user-management'], "fas fa-user-circle")
 
     ]

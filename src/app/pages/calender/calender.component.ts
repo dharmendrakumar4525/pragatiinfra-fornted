@@ -7,6 +7,8 @@ import { ToastService } from 'src/app/services/toast.service';
 //import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { CalendarOptions } from '@fullcalendar/core'; // useful for typechecking
+import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 
@@ -185,12 +187,16 @@ export class CalenderComponent implements OnInit {
 //     ]
 // }
 // ] 
-  constructor(private activeRoute: ActivatedRoute, private progressSheetService:ProgressSheetService, private toast:ToastService, private calenderService:CalenderService) { }
+permissions:any;
+calenderPermissions:any;
+  constructor(private activeRoute: ActivatedRoute,private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private toast:ToastService, private calenderService:CalenderService) { }
 
   ngOnInit(): void {
 
 
-
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    console.log(this.permissions)
+    this.calenderPermissions = this.permissions.permissions[0].ParentChildchecklist[2].childList[0]
 
     
     this.activeRoute.params.subscribe((params:any) => {
@@ -231,6 +237,15 @@ export class CalenderComponent implements OnInit {
   }
 
   onBid(e,player,value,id) {
+    
+    if(!this.calenderPermissions.isSelected){
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to add data throught calender"
+      });
+      return;
+    }
     player.cumTotal=value; //<-----this will add new property to your existing object with input value.
     console.log(player);
     console.log(id);

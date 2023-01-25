@@ -1,10 +1,10 @@
 <section class="dashboard_content_sec">
-    <div class="dashboard_bred_crumb">
+    <!-- <div class="dashboard_bred_crumb">
       <ul>
         <li><img src="../../../../../assets/images/icons/bred_crumb_arrow.svg" alt=""></li>
         <li> Roles Management </li>
       </ul>
-    </div>
+    </div> -->
     <div class="master_listing_sec">
       <section class="master_roles_selection">
         <!-- <div fxLayout="row" fxLayout.xl="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column" i
@@ -22,16 +22,16 @@
                   <label class="custom-label" for="">Select Role<span class="star" style="display: inline-block !important;">*</span></label>
                   <div class="custom-form-control">
                     <mat-form-field appearance="outline">
-                      <mat-select placeholder="Select any type" formControlName="role">
+                      <mat-select placeholder="Please Select Role" formControlName="role">
                         <mat-option disabled=""> Select role </mat-option>
                         <!-- <mat-option [value]=cat.id *ngFor="let cati of catCategories">{{cat.name}}</mat-option> -->
-                        <mat-option *ngFor="let role of roles" value="role.role" (click)="getPermissions(role.role)"> {{role.role}} </mat-option>
+                        <mat-option *ngFor="let role of roles" [value]="role.role" (click)="getPermissions(role.role)"> {{role.role}} </mat-option>
                     
                         <!-- <mat-option value="ADMI"> </mat-option> -->
                       </mat-select>
                       <!-- <mat-error
-                    *ngIf="catalogue_category_id.invalid && ( catalogue_category_id.dirty || catalogue_category_id.touched )">
-                    <span>Please provide a valid category</span>
+                    *ngIf="role.invalid && ( role.dirty || role.touched )">
+                    <span>Please provide a role</span>
                   </mat-error> -->
                     </mat-form-field>
                   </div>

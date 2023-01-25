@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AddDataComponent } from 'src/app/pages/add-data/add-data.component';
 import { ProgressSheetService } from 'src/app/services/progress-sheet.service';
 import { TaskService } from 'src/app/services/task.service';
+import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 
 export interface PeriodicElement {
   Description: string;
@@ -167,9 +168,18 @@ export class ProgressSheetComponent implements OnInit {
 // //   } 
 //    ] 
    project:any;
+   permissions:any
+   progressPermissionsView:any;
+   progressPermissionsEdit:any
   constructor(private activeRoute: ActivatedRoute, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private taskService:TaskService) { }
 
   ngOnInit(): void {
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    console.log(this.permissions)
+    this.progressPermissionsView = this.permissions.permissions[0].ParentChildchecklist[1].childList[1]
+    this.progressPermissionsEdit = this.permissions.permissions[0].ParentChildchecklist[1].childList[0]
+    console.log(this.progressPermissionsView)
+    console.log(this.progressPermissionsEdit)
     this.activeRoute.params.subscribe((params:any) => {
         console.log(params.id)
         this.projectId = params.id
@@ -221,6 +231,15 @@ export class ProgressSheetComponent implements OnInit {
   }
 
   addData(subTask){
+    if(!this.progressPermissionsEdit.isSelected){
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to update sheet"
+        //data: supply
+      });
+      return;
+    }
     const dialogRef = this._dialog.open(AddDataComponent, {
         width: '60%',
         panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],

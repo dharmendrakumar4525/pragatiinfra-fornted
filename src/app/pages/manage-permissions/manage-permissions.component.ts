@@ -1,7 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RolesService } from 'src/app/services/roles.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-manage-permissions',
@@ -27,7 +28,7 @@ export class ManagePermissionsComponent implements OnInit {
   }
   dashboard_permissions
   newOne:any
-  constructor(private _fb: FormBuilder, private roleService:RolesService) {
+  constructor(private _fb: FormBuilder, private roleService:RolesService, private toast:ToastService) {
 
     
     this.data = {};
@@ -44,15 +45,7 @@ export class ManagePermissionsComponent implements OnInit {
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
           },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
+      
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
@@ -63,16 +56,7 @@ export class ManagePermissionsComponent implements OnInit {
         id: 2,moduleName: 'progress_sheet',isSelected: false,isClosed:false,
         childList: [
           {
-            id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
-          {
             id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
           },
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
@@ -85,15 +69,6 @@ export class ManagePermissionsComponent implements OnInit {
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
           },
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
@@ -143,26 +118,6 @@ export class ManagePermissionsComponent implements OnInit {
         ]
       },
 
-      {
-        id: 6,moduleName: 'permissions',isSelected: false,isClosed:false,
-        childList: [
-          {
-            id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
-          {
-            id: 5,parent_id: 1,value: 'view',isSelected: false
-          },
-        ]
-      },
 
       {
         id: 7,moduleName: 'members',isSelected: false,isClosed:false,
@@ -170,62 +125,27 @@ export class ManagePermissionsComponent implements OnInit {
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
           },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
+
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
         ]
       },
 
-      {
-        id: 8,moduleName: 'data_analysis',isSelected: false,isClosed:false,
-        childList: [
-          {
-            id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
-          {
-            id: 5,parent_id: 1,value: 'view',isSelected: false
-          },
-        ]
-      }
+    
 
 
 
  
     ];
-    this.newOne = [
+    this.newOne =  [
       {
         id: 1,moduleName: 'projects',isSelected: false,isClosed:false,
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
           },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
+      
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
@@ -236,16 +156,7 @@ export class ManagePermissionsComponent implements OnInit {
         id: 2,moduleName: 'progress_sheet',isSelected: false,isClosed:false,
         childList: [
           {
-            id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
-          {
             id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
           },
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
@@ -258,15 +169,6 @@ export class ManagePermissionsComponent implements OnInit {
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
           },
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
@@ -316,26 +218,6 @@ export class ManagePermissionsComponent implements OnInit {
         ]
       },
 
-      {
-        id: 6,moduleName: 'permissions',isSelected: false,isClosed:false,
-        childList: [
-          {
-            id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
-          {
-            id: 5,parent_id: 1,value: 'view',isSelected: false
-          },
-        ]
-      },
 
       {
         id: 7,moduleName: 'members',isSelected: false,isClosed:false,
@@ -343,41 +225,14 @@ export class ManagePermissionsComponent implements OnInit {
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
           },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
+
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
         ]
       },
 
-      {
-        id: 8,moduleName: 'data_analysis',isSelected: false,isClosed:false,
-        childList: [
-          {
-            id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
-          {
-            id: 2,parent_id: 1,value: 'edit',isSelected: false
-          },
-          {
-            id: 3,parent_id: 1,value: 'delete',isSelected: false
-          },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
-          {
-            id: 5,parent_id: 1,value: 'view',isSelected: false
-          },
-        ]
-      }
+     
 
 
 
@@ -470,6 +325,16 @@ export class ManagePermissionsComponent implements OnInit {
 
   async addPermissions(){
 
+
+    if (this.roleForm.invalid) {
+      this.toast.openSnackBar(
+        'Please select role'
+      );
+      //this.clearForm = true;
+      //this.clearForm = true;
+      this.roleForm.markAllAsTouched();
+      return;
+    }
     //this.roleForm.value.dashboard_permissions = this.permi
 
     //console.log(this.roleForm.value)
@@ -484,12 +349,19 @@ export class ManagePermissionsComponent implements OnInit {
 
    this.roleService.addPermissionsToRoles(this.roleType,this.data).subscribe(data=>{
       console.log(data)
+      this.toast.openSnackBar(
+        'Permissions updated Successfully'
+      );
     })
 
     
 
     //this.roleForm.value
 
+  }
+
+  get taskName(): AbstractControl {
+    return this.roleForm.get('taskName');
   }
 
 }

@@ -24,33 +24,39 @@ export class ProjectsComponent implements OnInit {
 
 
   projects:any;
-  cards = [
-    {
-      title: ' Total  Projects',
-      count:'22'
-    
-    },
-    {
-      title: 'Completed Projects',
-      count:'10'
-    },
-    {
-      title: 'Incomplete Projects',
-      count:'5'
-    },
-    {
-      title: 'Overdue Projects',
-      count:'2'
-    },
-
-  ];
+  cards :any;
   members = [];
+  permissions:any;
+  projectsViewPermissions:any;
   constructor(private projectService: AddProjectService,private _dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    console.log(this.permissions)
+    this.projectsViewPermissions = this.permissions.permissions[0].ParentChildchecklist[0].childList[1]
     this.projectService.getProjects().subscribe(data=>{
       //this.spinner.hide()
-      this.projects = data
+      this.projects = data;
+      this.cards = [
+        {
+          title: ' Total  Projects',
+          count:this.projects.length
+        
+        },
+        {
+          title: 'Completed Projects',
+          count:'0'
+        },
+        {
+          title: 'Incomplete Projects',
+          count:this.projects.length
+        },
+        {
+          title: 'Overdue Projects',
+          count:'0'
+        },
+    
+      ];
       console.log(this.projects)
       for(let single of this.projects){
         this.members.push(...single.members)

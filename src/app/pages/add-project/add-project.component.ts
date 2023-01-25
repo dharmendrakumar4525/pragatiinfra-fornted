@@ -9,6 +9,7 @@ import { AddSubTasksComponent } from '../add-sub-tasks/add-sub-tasks.component';
 import { AddProjectService } from 'src/app/services/add-project.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 
 export interface Fruit {
   name: string;
@@ -47,11 +48,26 @@ export class AddProjectComponent implements OnInit {
   tasks:any;
   projectId:any;
   tasksData:any;
+  permissions:any;
+  projectsPermissions:any
   constructor(private _fb: FormBuilder, private toast: ToastService, private _dialog: MatDialog,private taskService: TaskService,
     private projectService: AddProjectService,private activeRoute: ActivatedRoute, private router:Router) { }
 
   ngOnInit(): void {
-  
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    console.log(this.permissions)
+    this.projectsPermissions = this.permissions.permissions[0].ParentChildchecklist[0].childList[0]
+    if(!this.projectsPermissions.isSelected){
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to add project"
+      });
+      //return;
+    }
+    //this.progressPermissionsEdit = this.permissions.permissions[0].ParentChildchecklist[1].childList[0]
+    //console.log(this.progressPermissionsView)
+    //console.log(this.progressPermissionsEdit)
     this.activeRoute.params.subscribe((params:any) => {
       console.log(params.id)
       this.projectId = params.id
@@ -184,6 +200,16 @@ addTag(event: MatChipInputEvent): void {
   }
 
   addProject(){
+
+    if(!this.projectsPermissions.isSelected){
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to add project"
+      });
+      return;
+    }
+
     //let hh = []
     if(!this.projectId){
       if (this.projectForm.invalid) {

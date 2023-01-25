@@ -59,14 +59,14 @@
 <div class="content" fxLayout="row" fxLayoutGap="10px">
 
   <div class="scroll-bar">
-    <div fxLayout="row wrap"  fxLayoutGap="10px" fxLayoutAlign="start center">
+    <div fxLayout="row wrap" *ngIf="projectsViewPermissions.isSelected; else noView"  fxLayoutGap="10px" fxLayoutAlign="start center">
       <div fxFlex="25%"  fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let project of projects">
         <div class="" >
           
           <div class="content1">
             <div style="position: relative;top:120px;color: #fff;margin-left: 10px;">{{project?.projectName}}</div>
           </div>
-          <img [routerLink]="['/view-project/data-analysis',project._id]" [src]="project?.imageUrl" style="box-shadow:none;width:100%;">
+          <img [routerLink]="['/view-project/data-analysis',project._id]" [src]="project?.imageUrl" style="box-shadow:none;width:100%;cursor: pointer;">
        
           <div>
           
@@ -79,6 +79,10 @@
       </div>
       
     </div>
+
+    <ng-template #noView>
+      <h3>you don't have permissions to view Progress sheet</h3>
+    </ng-template>
 
 
     <!-- <div>

@@ -23,9 +23,9 @@
       <li><a style="color: #000;" [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
         [routerLinkActiveOptions]="{exact: true}" ><i class="fa fa-eye" aria-hidden="true"></i> Data-Analysis</a></li>
       <li><a  style="color: #000;" [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
-         ><i class="fa fa-pencil" aria-hidden="true"></i> Progress-sheet</a></li>
+         ><i class="fa fa-edit" aria-hidden="true"></i> Progress-sheet</a></li>
       <li><a style="color: #000;" [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"
-         ><i class="fa fa-pencil" aria-hidden="true"></i> Calender</a></li>
+         ><i class="fa fa-edit" aria-hidden="true"></i> Calender</a></li>
     </ul>
     </div>
 
@@ -93,7 +93,7 @@
                   <td>
                   <form role="form" (submit)="onBid($event, subTask, name.value,subTask._id)">
                     <input type="number" class="calenderForm" style="border: none;padding: 5px;" #name  min={{subTask.value}} value={{subTask.value}}>
-                    <button type="submit" style="border: none;">Add</button>
+                    <button type="submit" style="border: none;cursor: pointer;">Add</button>
                  </form></td>
                   
                 </tr>
