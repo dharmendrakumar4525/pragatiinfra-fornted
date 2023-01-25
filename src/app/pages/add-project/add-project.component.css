@@ -23,3 +23,8 @@ input .uploadImg {
    height: 100%;
    cursor: pointer;
 }
+.horizontal{
+   border: 2px solid #3568BA;
+   width:70%;
+   margin-left: -10px;
+}

@@ -13,15 +13,21 @@
              
                 <button mat-button [matMenuTriggerFor]="menu"> <mat-icon matBadge="7" matBadgeColor="warn" >notifications</mat-icon></button>
                 <mat-menu #menu="matMenu" >
-                  <div  fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,4,5,6,7]">
-                    <div mat-card-avatar class="example-header-image" style="margin-left: 10px;"></div>
-                    <div class="notification-container" >
-                      <div class="content"><b>Updatedsheet...</b>
-                        <div class="time">5 hours ago</div><br>
-                      </div>
-                  </div>
-                
+                  <div>
+                    <div class="scroll-bar1">
+                     <div  fxLayout="row" fxLayoutGap="10px" *ngFor="let num of [1,2,3,4,5,6,7,8,9,10]">
+                       <div mat-card-avatar class="example-header-image"></div>
+                     
+                      <div class="notification-container" >
+                       <div class="content"><b>Updatedsheet...</b>
+                         <div class="time">5 hours ago</div><br>
+                       </div>
+                       </div>
+                   </div><br>
+             
                 </div>
+               </div>
+              
                </mat-menu>
   
        

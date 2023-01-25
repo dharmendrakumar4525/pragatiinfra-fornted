@@ -4,10 +4,10 @@
       <div style="padding: 1rem;margin-top: 60px;">
       <span>{{project?.projectName}}</span></div>
       <div>
-          <button style="padding: 12px 12px;width: 150px;margin-top: 50px;margin-left: 600px;position: relative;" [routerLink]="['/add-project']">Add Project +  </button>
+          <button mat-button style="background-color:lightgrey;padding: 5px 5px;width: 150px;margin-top: 50px;margin-left: 600px;position: relative;" [routerLink]="['/add-project']">Add Project +  </button>
           </div>
           <div>
-          <button style="padding: 5px 5px;width: 150px;margin-left: 40px;margin-top: 50px;"> <mat-icon style="font-size: medium;position: relative;right:1px;top:10px">group_add</mat-icon>
+          <button  mat-button style="background-color:lightgrey;padding: 5px 5px;width: 150px;margin-left: -80px;margin-top: 50px;"> <mat-icon style="font-size: medium;position: relative;right:-10px;">group_add</mat-icon>
               Add Member </button>
               
 <button mat-button [matMenuTriggerFor]="menu" ><mat-icon matBadge="7" matBadgeColor="warn" style="margin-left:-10px">notifications</mat-icon></button>

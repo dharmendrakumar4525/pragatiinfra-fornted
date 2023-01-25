@@ -77,16 +77,16 @@ background: lightblue;
 
 .scroll-bar1{
         
-  height: 600px;
-  width: 600px;
-  
- 
+  height: 10%;
+  width: 10%;
+
   overflow: auto;
   
   }
 
 ::-webkit-scrollbar {
 width: 7px;
+height:7px;
 }
 ::-webkit-scrollbar-track{
 border: 1px solid lightgrey;

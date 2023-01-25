@@ -47,6 +47,7 @@ card-below{
 .example-header-image {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
     background-size: cover;
+   
   }
 
   .cirle > div{
@@ -148,8 +149,9 @@ background: lightblue;
 
 ::ng-deep.mat-menu-panel {
   max-width: none !important;
+  margin-right: 20px;
 }
 .notification-container{
  width: 200px;
- margin-left: 10px;
+ 
 }
