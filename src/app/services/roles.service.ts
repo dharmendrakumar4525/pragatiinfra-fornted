@@ -33,6 +33,13 @@ export class RolesService {
     );
   }
 
+  deleteRole(id:any): Observable<any> {
+    
+    return this.http.delete(`${this.baseUrl}/roles/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   addPermissionsToRoles(role,permissionsObj): Observable<any> {
     console.log(permissionsObj)
     let data = {dashboard_permissions:permissionsObj}
