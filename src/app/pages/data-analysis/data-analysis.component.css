@@ -16,15 +16,17 @@ li {
     margin-left: 10px;
     background-color: #fff !important;
   }
+
   .container{
+    margin-top: 50px;
     margin-left: 30px;
     padding: 16px;
     
 }
 
 .top_container{
-    padding: 10px;
- 
+    padding: 20px;
+   
 }
 .down_container{
     padding: 10px;
@@ -87,7 +89,7 @@ body{
 .scroll-bar{
         
  
-  height: 300px;
+  height: 400px;
     
  
     
@@ -99,7 +101,7 @@ body{
   }
 
 ::-webkit-scrollbar {
-width: 10px;
+width: 7px;
 
 }
 ::-webkit-scrollbar-track{
@@ -119,7 +121,7 @@ background: lightblue;
 .scroll-bar1{
       
  
-  height: 300px;
+  height: 400px;
 
   
  
@@ -128,8 +130,8 @@ background: lightblue;
   }
 
 ::-webkit-scrollbar {
-width: 10px;
-height:10px;
+width: 7px;
+height:7px;
 }
 ::-webkit-scrollbar-track{
 border: 1px solid lightgrey;

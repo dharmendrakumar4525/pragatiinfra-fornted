@@ -9,7 +9,7 @@
 <!-- <span style="font-size: small;">on track</span> -->
 </div>
 <div style="margin-left: 100px;font-size: small;position: relative;margin-top: 90px;">
-<span >Back to Calender</span></div>       
+<button mat-button ><i class="fa fa-undo" aria-hidden="true"></i> Back to Calender</button></div>       
       </mat-toolbar-row>
         
       <mat-toolbar-row>
@@ -87,13 +87,13 @@
                     
                 
                 </tr>
-                <tr *ngFor="let subTask of project.result" style="background-color: #F5F5F5;">
+                <tr *ngFor="let subTask of project.result" style="background-color: #fff;">
     
                   <td >{{subTask.subTaskName}}</td>
                   <td>
                   <form role="form" (submit)="onBid($event, subTask, name.value,subTask._id)">
                     <input type="number" class="calenderForm" style="border: none;padding: 5px;" #name  min={{subTask.value}} value={{subTask.value}}>
-                    <button type="submit" style="border: none;cursor: pointer;">Add</button>
+                    <button type="submit" style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 2px;padding:5px 10px ">Add</button>
                  </form></td>
                   
                 </tr>
@@ -144,7 +144,7 @@
         </mat-grid-tile>
       <mat-grid-tile colspan="4" >
         <mat-card style="width:150px;margin-right: 980px;margin-bottom: 300px;box-shadow: none;">
-          <!-- <button style="width:150px;padding: 10px;background-color: #233A61;color: #fff;">Submit</button> -->
+          <button style="width:150px;padding: 10px;background-color: #233A61;color: #fff;">Submit</button> 
         </mat-card>
       </mat-grid-tile>
 

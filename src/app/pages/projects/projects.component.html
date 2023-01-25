@@ -6,27 +6,26 @@
             <button mat-button style="padding: 5px;width: 100px;margin-top: 60px;background-color: lightgrey;" [routerLink]="['/add-project']">Add Project +  </button>
             <button mat-button [matMenuTriggerFor]="menu"> <mat-icon matBadge="7" matBadgeColor="warn">notifications</mat-icon></button>
             <mat-menu #menu="matMenu" style="width:300px;">
-              <div class="scroll-bar1" fxLayout="column">
-              <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,]">
-                <div mat-card-avatar class="example-header-image"></div>
-                <div  class="notification-container">
-                  <div class="content"><b>Updatedsheet...</b>
-                    <div class="time">5 hours ago</div>
+              <div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right"  style="height: 70vh;" >
+                <div fxLayout="row" fxLayoutAlign="left" style="height: 60vh;">
+                  <div class="scroll-bar1" fxLayout="column">
+                    <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,4,5,9,10,11]">
+                      <div mat-card-avatar class="example-header-image"></div>
+                      <div >
+                        <div class="notification-container" >
+                        <div class="content"><b>Updatedsheet...</b>
+                          <div class="time">5 hours ago</div><br>
+                          </div>
+                        </div>
+                    </div>
+                  
                   </div>
+                 
+                    </div>
+                  </div>
+                
+              
               </div>
-            
-            </div>
-            <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,]">
-              <div mat-card-avatar class="example-header-image"></div>
-              <div >
-                <div class="content"><b>Kate: .</b>
-                  <div class="time">1 hour ago</div>
-                </div>
-            </div>
-          
-          </div>
-      
-       </div>
            </mat-menu>
         </div>
       </mat-toolbar-row>
@@ -56,10 +55,10 @@
     </form>
 </div>
 </div>
-<div class="content" fxLayout="row" fxLayoutGap="10px">
+<div class="projectcontent" fxLayout="row" fxLayoutGap="10px" style="height: 80%;">
 
   <div class="scroll-bar">
-    <div fxLayout="row wrap" *ngIf="projectsViewPermissions.isSelected; else noView"  fxLayoutGap="10px" fxLayoutAlign="start center">
+    <div fxLayout="row wrap" *ngIf="projectsViewPermissions.isSelected; else noView"  fxLayoutGap="50px" fxLayoutAlign="start center">
       <div fxFlex="25%"  fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let project of projects">
         <div class="" >
           
@@ -101,7 +100,7 @@
     <div><hr style="border: 1px solid #233A61;margin-left: 30px; background-color: #233A61;"></div>
 
     
-    <div style="height: 30vh;margin-top: 1vh;">
+    <div style="height: 30vh;margin-top: 5vh;">
       <div style="margin-top: 30px;margin-left: 30px;"><h3>OverView</h3></div>
     
       <div class="container" >
@@ -127,7 +126,7 @@
 </div>
 </div>
 
-<div fxLayout="column" fxFlex="29" fxLayoutAlign="right" fxLayoutGap="30px" class="rightside" style="height: 145vh;">
+<div fxLayout="column" fxFlex="29" fxLayoutAlign="right" fxLayoutGap="-10px" class="rightside" style="height: 145vh;">
 
 <div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right"  style="height: 70vh;" >
   <mat-card fxLayout="column" fxLayoutAlign="left" style="height: 70vh; ">
@@ -184,25 +183,18 @@
 <div fxLayout="column" fxFlex="29" fxLayoutAlign="right" fxLayoutGap="30px" class="rightside" style="height: 145vh;">
 
   <div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right"  style="height: 70vh;" >
-    <mat-card fxLayout="row" fxLayoutAlign="left" style="height: 70vh;">
+    <mat-card fxLayout="row" fxLayoutAlign="left" style="height: 60vh;">
       <div class="scroll-bar1" fxLayout="column">
-        <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3]">
+        <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,4,5,6,7,8,9,10,11]">
           <div mat-card-avatar class="example-header-image"></div>
           <div >
             <div class="content"><b>Updatedsheet...</b>
-              <div class="time">5 hours ago</div>
+              <div class="time">5 hours ago</div><br>
             </div>
         </div>
       
       </div>
-      <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2]" >
-        <div mat-card-avatar class="example-header-image"></div>
-        <div>
-        <div class="content"><b>Kate: .</b>
-          <div class="time">1 hour ago</div>
-        </div>
-        </div>
-        </div>
+     
         </div>
     </mat-card>
     

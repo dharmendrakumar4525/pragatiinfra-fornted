@@ -81,20 +81,20 @@
     margin-left: 20px;
   }
   
-/* .scroll-bar1{
+.scroll-bar1{
         
    
-  height: 300px;
-  
+  height: 250px;
+  width:90%;
   
 
   overflow: auto;
-  overflow-x: hidden;
+ 
   }
 
 ::-webkit-scrollbar {
-width: 10px;
-height:10px;
+width: 7px;
+height:7px;
 }
 ::-webkit-scrollbar-track{
 border: 1px solid lightgrey;
@@ -116,4 +116,4 @@ background: lightblue;
  width: 200px;
  margin-left: 10px;
 
-} */
+} 
