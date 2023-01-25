@@ -12,13 +12,13 @@ export class AddProjectService {
   constructor(private http:HttpClient) { }
   getProjects(): Observable<any> {
     
-    return this.http.get(`projects`).pipe(
+    return this.http.get(`${this.baseUrl}/projects`).pipe(
       catchError(this.handleError)
     );
   }
   addProject(project:any): Observable<any> {
     
-    return this.http.post(`projects`, project).pipe(
+    return this.http.post(`${this.baseUrl}/projects`, project).pipe(
       catchError(this.handleError)
     );
   }
