@@ -52,6 +52,13 @@ export class UsersService {
     );
   }
 
+  deleteUser(id:any): Observable<any> {
+    
+    return this.http.delete(`${this.baseUrl}/users/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 
   handleError(error: HttpErrorResponse) {
     if (error.status === 0) {

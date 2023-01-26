@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastService } from 'src/app/services/toast.service';
 import { UsersService } from 'src/app/services/users.service';
 export interface PeriodicElement {
   SelectAll: string;
@@ -23,7 +24,7 @@ export class UsersComponent implements OnInit {
   dataSource = null;
   users:any
   usersLen:any;
-  constructor(private userService:UsersService) { }
+  constructor(private userService:UsersService,private toast:ToastService) { }
 
   ngOnInit(): void {
     this.userService.getUserss().subscribe(data=>{
@@ -34,6 +35,36 @@ export class UsersComponent implements OnInit {
       //console.log(this.roles)
     })
   }
+
+  deleteUser(id){
+
+    this.userService.deleteUser(id).subscribe(
+  
+      {
+        next: (data: any) =>  {
+          console.log(data)
+          this.toast.openSnackBar("User deleted Successfully");
+          this.userService.getUserss().subscribe(data=>{
+            //this.spinner.hide()
+            this.users = data
+            this.usersLen = this.users.length
+            this.dataSource = new MatTableDataSource(this.users);
+            //console.log(this.roles)
+          })
+          
+        },
+        error: (err) => {
+          this.toast.openSnackBar("Something went wrong. Unable to delete Use");
+          
+  
+          
+  
+        }
+      }
+  
+    )
+  }
+
   // displayedColumns = ['SelectAll', 'No', 'name', 'email', 'role',
   // 'Action'];
   //dataSource = ELEMENT_DATA;
