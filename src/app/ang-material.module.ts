@@ -34,7 +34,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 //import {MatTooltipModule} from '@angular/material/tooltip';
 //import {MatTreeModule} from '@angular/material/tree';
-
+import { MatTableExporterModule } from 'mat-table-exporter';
 
 
 @NgModule({
@@ -48,6 +48,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     MatCardModule,
     MatCheckboxModule,
     MatChipsModule,
+    MatTableExporterModule,
     //MatStepperModule,
     MatDatepickerModule,
     MatDialogModule,

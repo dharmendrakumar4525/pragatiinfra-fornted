@@ -11,8 +11,8 @@
       </mat-toolbar-row>
   </mat-toolbar>
   <div style="height: 150vh;margin-bottom: 10px;" >
-    <div><h2 style="padding:10px 50px ;">Create user</h2></div>
-    <form [formGroup]="addUserForm" >
+    <div><h2 style="padding:10px 50px ;">Update user</h2></div>
+    <form [formGroup]="editUserForm" >
 <div>
     <label>Name</label><br>
     <mat-form-field appearance="outline">
@@ -52,26 +52,9 @@
             </mat-error>
           </mat-form-field><br>
 
-          <label>Password</label><br>
-        <mat-form-field appearance="outline">
-            <mat-label></mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-            <mat-error *ngIf="password.invalid && ( password.dirty || password.touched )">
-              <span *ngIf="password.hasError('required')">Please provide a valid password</span>
-              <span *ngIf="password.hasError('minlength')">Password must be at least 6 digits long</span>
-            </mat-error>
-          </mat-form-field><br>
+       
 
-          <label>Confirm Password</label><br>
-          <mat-form-field appearance="outline">
-              <mat-label></mat-label>
-              <input matInput [type]="hide ? 'password' : 'text'" formControlName="cPassword">
-              <mat-error *ngIf="cPassword.invalid && ( cPassword.dirty || cPassword.touched )">
-                <span>Please provide a valid confirm password</span>
-              </mat-error>
-            </mat-form-field><br>
-
-            <button mat-button (click)="addUser()">Submit</button>
+            <button mat-button (click)="updateUser()">Submit</button>
     </div>
   </form>
     </div>

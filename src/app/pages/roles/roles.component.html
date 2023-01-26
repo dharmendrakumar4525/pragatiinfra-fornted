@@ -42,9 +42,13 @@
       <mat-grid-list   cols="4" rowHeight="2:1">
         <mat-grid-tile colspan="2" >
             <div style="margin-right: 200px;margin-bottom: 50px;"><h3>Roles</h3> 
-                <div > <button mat-button class="leftbtns">copy</button> &nbsp;    
-                    <button mat-button class="leftbtns">Excel</button>   &nbsp;
+                <div > <button mat-button class="leftbtns" (click)="exporter.exportTable('json')">copy</button> &nbsp;    
+                    <button mat-button class="leftbtns" (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>   &nbsp;
                     <button mat-button class="leftbtns">PDF</button>  &nbsp;
+                    <!-- <button mat-raised-button (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>
+                    <button mat-raised-button (click)="exporter.exportTable('csv')">Csv</button>
+                    <button mat-raised-button (click)="exporter.exportTable('json')">Json</button>
+                    <button mat-raised-button (click)="exporter.exportTable('txt')">Txt</button> -->
                     <!-- <button mat-button class="leftbtns">Column Visiblity</button>     -->
             </div>
             </div>
@@ -59,7 +63,7 @@
         <form class="Search-form">
         <mat-form-field class="example-full-width" appearance="outline">
         <span matPrefix> </span>
-        <input type="text" matInput placeholder="Search" name= "search" >
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search">
         <button matSuffix mat-button><mat-icon >search</mat-icon></button>
         </mat-form-field>
        
@@ -69,20 +73,33 @@
         <mat-grid-tile style="height: 100vh;box-shadow: none;" colspan="4" rowheight="900px">
             <div style="width: 100%;height: 100vh;margin-bottom: 400px;">
 
-                <div style="margin-left: 50px;background-color: brown;color: #fff;width:100px;margin-top:150px ;"><button mat-button style="background-color: brown;text-align: center;">Delete All</button> 
+              <div style="margin-left: 50px;background-color: brown;color: #fff;width:130px;margin-top:150px ;"><button *ngIf="selection.selected.length" (click)="deleteMultipleDialog()" mat-button>Delete Multiple</button> 
                 </div><br>
             
                 <div>
                     <div class="scroll-bar1">
                 <section class="example-container" tabindex="0">
-                    <table mat-table [dataSource]="dataSource">
+                    <table mat-table [dataSource]="dataSource" matTableExporter #exporter="matTableExporter">
                   
                          <!-- Select Column -->
-                    <ng-container matColumnDef="SelectAll">
+                         <ng-container matColumnDef="SelectAll">
+                          <th mat-header-cell *matHeaderCellDef >
+                            <mat-checkbox (change)="$event ? masterToggle() : null"
+                              [checked]="selection.hasValue() && isAllSelected()"
+                              [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                            </mat-checkbox><span style="margin-left: 10px;">SelectAll</span>
+                          </th>
+                          <td mat-cell *matCellDef="let row"  >
+                            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                              [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                            </mat-checkbox>
+                          </td>
+                        </ng-container>
+                    <!-- <ng-container matColumnDef="SelectAll">
                       <th mat-header-cell *matHeaderCellDef> <mat-checkbox class="example-margin" [(ngModel)]="checked" >SelectAll</mat-checkbox> </th>
                       <td mat-cell *matCellDef="let element"> <mat-checkbox class="example-margin" [(ngModel)]="checked"></mat-checkbox> {{element.SelectAll}} </td>
                       
-                    </ng-container>
+                    </ng-container> -->
                 
                 
                 
@@ -106,7 +123,7 @@
                     <th mat-header-cell *matHeaderCellDef> Action </th>
                     <td mat-cell *matCellDef="let element"> {{element.Action}} 
                         <span class="action_btn">
-                            <button mat-button>Edit</button>
+                            <button mat-button (click)="editRole(element)">Edit</button>
                             <button mat-button (click)="deleteRole(element._id)">Delete</button>
                           </span>
                     </td>

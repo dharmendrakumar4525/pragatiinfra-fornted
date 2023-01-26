@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import {PageEvent} from '@angular/material/paginator';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import { NewRoleComponent } from '../new-role/new-role.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NewPermissionComponent } from '../new-permission/new-permission.component';
 import { RolesService } from 'src/app/services/roles.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastService } from 'src/app/services/toast.service';
+import { RoleEditComponent } from '../role-edit/role-edit.component';
+import { SelectionModel } from '@angular/cdk/collections';
+import { RolesDeleteMultipleComponent } from '../roles-delete-multiple/roles-delete-multiple.component';
 
 
 export interface PeriodicElement {
@@ -21,6 +24,7 @@ export interface PeriodicElement {
   styleUrls: ['./roles.component.css']
 })
 export class RolesComponent implements OnInit {
+  selection = new SelectionModel<any>(true, []);
 
   animal: string;
   name: string;
@@ -30,7 +34,7 @@ export class RolesComponent implements OnInit {
   pageSize = 10;
   pageIndex = 0;
   pageSizeOptions = [5, 10, 25];
-
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   hidePageSize = false;
   showPageSizeOptions = false;
   showFirstLastButtons = true;
@@ -65,6 +69,7 @@ export class RolesComponent implements OnInit {
           //this.spinner.hide()
           this.roles = data
           this.dataSource = new MatTableDataSource(this.roles);
+          this.dataSource.paginator = this.paginator;
           console.log(this.roles)
         })
        // this.filterSubject.next(this.filterForm.value);
@@ -80,6 +85,7 @@ export class RolesComponent implements OnInit {
       //this.spinner.hide()
       this.roles = data
       this.dataSource = new MatTableDataSource(this.roles);
+      this.dataSource.paginator = this.paginator;
       console.log(this.roles)
     })
   }
@@ -99,6 +105,7 @@ export class RolesComponent implements OnInit {
           //this.spinner.hide()
           this.roles = data
           this.dataSource = new MatTableDataSource(this.roles);
+          this.dataSource.paginator = this.paginator;
           console.log(this.roles)
         })
         
@@ -114,7 +121,117 @@ export class RolesComponent implements OnInit {
 
   )
 }
+
+editRole(ele){
+
+  const dialogRef = this._dialog.open(RoleEditComponent, {
+    width: '30%',
+    panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+    data: ele
+  });
+  dialogRef.afterClosed().subscribe(status => {
+    console.log(status);
+    if (status === 'yes') {
+      this.roleService.getRoles().subscribe(data=>{
+        //this.spinner.hide()
+        this.roles = data
+        this.dataSource = new MatTableDataSource(this.roles);
+        this.dataSource.paginator = this.paginator;
+        console.log(this.roles)
+      })
+     // this.filterSubject.next(this.filterForm.value);
+    }
+    if (status === 'no') {
+    }
+  })
+
 }
+
+applyFilter(filterValue: any) {
+  filterValue = filterValue.target.value.trim(); // Remove whitespace
+  filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+  this.dataSource.filter = filterValue;
+}
+
+isAllSelected() {
+  if (this.dataSource) {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  } else {
+    return false;
+  }
+}
+/** Selects all rows if they are not all selected; otherwise clear selection. */
+masterToggle() {
+  if (this.dataSource) {
+    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+}
+
+checkboxLabel(row?: any): string {
+  if (!row) {
+    return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+  }
+  return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`;
+}
+
+deleteMultipleDialog() {
+  if (this.selection.selected.length === 0) {
+    this.toast.openSnackBar("Please select users to delete");
+    return;
+  }
+  const idArray = this.selection.selected.map(single => single._id);
+  console.log(idArray)
+  const dialogRef = this._dialog.open(RolesDeleteMultipleComponent, {
+    width: '30%',
+    panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+    data: idArray
+  });
+  dialogRef.afterClosed().subscribe(status => {
+    console.log(status);
+    if (status === 'yes') {
+      this.selection.clear();
+      this.roleService.getRoles().subscribe(data=>{
+        //this.spinner.hide()
+        this.roles = data
+        this.dataSource = new MatTableDataSource(this.roles);
+        this.dataSource.paginator = this.paginator;
+        console.log(this.roles)
+      })
+    }
+    if (status === 'no') {
+    }
+  })
+}
+}
+ 
+// const ELEMENT_DATA: PeriodicElement [] = [
+
+
+//   {SelectAll:'' , No: '1', Name: 'Safiya', Email: 'abc@gmail.com',Roles:'develop',
+//   Action:'', },
+//   {SelectAll:'' , No: '2', Name: 'Safiya', Email: 'abc@gmail.com',Roles:'develop',
+//   Action:'', },
+//   {SelectAll:'' , No: '3', Name: 'Safiya', Email: 'abc@gmail.com',Roles:'develop',
+//   Action:'', },
+
+//   {SelectAll:'' , No: '4', Name: 'Safiya', Email: 'abc@gmail.com',Roles:'develop',
+//   Action:'', },
+//   {SelectAll:'' , No: '4', Name: 'Safiya', Email: 'abc@gmail.com',Roles:'develop',
+//   Action:'', },
+//   {SelectAll:'' , No: '4', Name: 'Safiya', Email: 'abc@gmail.com',Roles:'develop',
+//   Action:'', },
+//   {SelectAll:'' , No: '4', Name: 'Safiya', Email: 'abc@gmail.com',Roles:'develop',
+//   Action:'', },
+
+
+
+
+
+// ];
+
+
 // const ELEMENT_DATA: PeriodicElement [] = [
 
 

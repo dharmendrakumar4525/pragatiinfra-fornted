@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -13,6 +13,7 @@ export class UsersService {
   private subject = new Subject<any>();
   data = this.subject.asObservable();
   dataOpen = this.subject.asObservable();
+  ffff:any;
   constructor(private http:HttpClient) { }
 
   updateLogin(data){
@@ -52,9 +53,58 @@ export class UsersService {
     );
   }
 
+  editUser(user:any,id): Observable<any> {
+    
+    return this.http.put(`${this.baseUrl}/users/${id}`, user).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+
+  // deleteMultipleUsers(userIds){
+  //   let dem= "ooo"
+  //   // const options = {
+  //   //   headers: new HttpHeaders({
+  //   //     'Content-Type': 'application/json',
+  //   //   }),
+  //   //   body: {
+  //   //     selUsers:userIds
+  //   //   },
+  //   // };
+  //   //let deleteMultipleUsers = {selUsers:userIds}
+  //   return this.http.delete(`${this.baseUrl}/users/${dem}`).pipe(
+  //     catchError(this.handleError)
+  //   );
+
+  deleteMultipleUsers(userIds){
+    console.log(userIds)
+
+    // return this.http.delete(`${this.baseUrl}/users`, {ff:userIds}).pipe(
+    //   catchError(this.handleError)
+    // );
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        selUsers:userIds
+      },
+    };
+    //let deleteMultipleUsers = {selUsers:userIds}
+    return this.http.delete(`${this.baseUrl}/users`, options).pipe(
+      catchError(this.handleError)
+    );
+  }
   deleteUser(id:any): Observable<any> {
     
     return this.http.delete(`${this.baseUrl}/users/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getUserById(id): Observable<any> {
+    
+    return this.http.get(`${this.baseUrl}/users/${id}`).pipe(
       catchError(this.handleError)
     );
   }

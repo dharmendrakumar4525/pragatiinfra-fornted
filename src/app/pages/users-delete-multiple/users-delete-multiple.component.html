@@ -1,0 +1,34 @@
+<div class="master-modal reviepw_items_modal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <!-- Modal-Header -->
+        <div class="modal-header">
+          <h4 class="modal-title"> Delete selected Users </h4>
+          
+        </div>
+        <!-- Modal content-->
+          
+            <div mat-dialog-content>
+              <div class="modal-body">
+                 <p>
+                   Are you really want to delete these selected users ?
+                 </p>
+              </div>
+            </div>
+          
+          <!-- Modal-Footer -->
+          <div class="modal-footer">
+            <div mat-dialog-actions class="modal_footer">
+              <button type="button" mat-button (click)="closeDialog('no')" class="modal-cancel-btn modal-footer-btn">
+                <span> Cancel </span>
+              </button>
+              <button type="button" mat-button (click)="deleteMultiple()" class="modal-save-btn global-btn modal-footer-btn">
+                <span> Delete </span>
+              </button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  

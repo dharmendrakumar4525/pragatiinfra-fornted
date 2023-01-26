@@ -1,23 +1,16 @@
-import { Component, OnInit,Inject } from '@angular/core';
-//import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-//import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TaskService } from 'src/app/services/task.service';
-import { FormGroup, FormBuilder, Validators, AbstractControl, NgForm } from '@angular/forms';
-import { ToastService } from 'src/app/services/toast.service';
 import { RolesService } from 'src/app/services/roles.service';
-
-export interface DialogData {
-  animal: string;
-  name: string;
-}
+import { ToastService } from 'src/app/services/toast.service';
+import { FormGroup, Validators, AbstractControl, NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-new-role',
-  templateUrl: './new-role.component.html',
-  styleUrls: ['./new-role.component.css']
+  selector: 'app-role-edit',
+  templateUrl: './role-edit.component.html',
+  styleUrls: ['./role-edit.component.css']
 })
-export class NewRoleComponent implements OnInit {
+export class RoleEditComponent implements OnInit {
 
   roleForm: FormGroup = this._fb.group({
     
@@ -27,18 +20,21 @@ export class NewRoleComponent implements OnInit {
 
   });
 
-  constructor(private dialogRef: MatDialogRef<NewRoleComponent>,
+  constructor(private dialogRef: MatDialogRef<RoleEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private roleService: RolesService,
     private _fb: FormBuilder,
     private toast: ToastService
     
   ) { }
- 
 
   ngOnInit(): void {
-    
+    this.roleForm.patchValue({
+      role:this.data.role
+
+    })
   }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
@@ -51,7 +47,7 @@ export class NewRoleComponent implements OnInit {
     //setTimeout(() => { this.dialogRef.close(status); }, 1000);
   }
 
-  addRole(){
+  editRole(){
     if (this.roleForm.invalid) {
       this.toast.openSnackBar(
         'Please Enter Role'
@@ -61,12 +57,12 @@ export class NewRoleComponent implements OnInit {
       this.roleForm.markAllAsTouched();
       return;
     }
-    this.roleService.addRole(this.roleForm.value).subscribe(
+    this.roleService.editRole(this.roleForm.value,this.data._id).subscribe(
 
       {
         next: (data: any) =>  {
           console.log(data)
-          this.toast.openSnackBar("Role Added Successfully");
+          this.toast.openSnackBar("Role updated Successfully");
       this.closeDialog('yes');
           // this.spinner.hide()
           // this.router.navigate(['/usersList']);
@@ -74,7 +70,7 @@ export class NewRoleComponent implements OnInit {
           
         },
         error: (err) => {
-          this.toast.openSnackBar("Something went wrong. Unable to Add Role");
+          this.toast.openSnackBar("Something went wrong. Unable to Update Role");
           // this.spinner.hide()
           // this.toast.openSnackBar('Something went wrong, please try again later');
           // console.log(err) 

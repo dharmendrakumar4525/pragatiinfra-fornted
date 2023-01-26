@@ -20,6 +20,7 @@ import { ForgotpasswordComponent } from './pages/forgotpassword/forgotpassword.c
 import { ManagePermissionsComponent } from './pages/manage-permissions/manage-permissions.component';
 import { AuthGuard } from './services/auth.guard';
 import { CreatenewpasswordComponent } from './pages/createnewpassword/createnewpassword.component';
+import { UserEditComponent } from './pages/user-edit/user-edit.component';
 
 const routes: Routes = [
   {
@@ -82,6 +83,11 @@ const routes: Routes = [
   {
     path: 'add-user',
     component: AddUserComponent,
+    canActivate:[AuthGuard]
+  },
+  {
+    path: 'edit-user/:id',
+    component: UserEditComponent,
     canActivate:[AuthGuard]
   },
   {path: 'forgotpassword', component: ForgotpasswordComponent},

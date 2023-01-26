@@ -42,6 +42,10 @@ import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 import { AuthGuard } from './services/auth.guard';
 import { CreatenewpasswordComponent } from './pages/createnewpassword/createnewpassword.component';
 import { NoPermissionsComponent } from './pages/no-permissions/no-permissions.component';
+import { RoleEditComponent } from './pages/role-edit/role-edit.component';
+import { UserEditComponent } from './pages/user-edit/user-edit.component';
+import { UsersDeleteMultipleComponent } from './pages/users-delete-multiple/users-delete-multiple.component';
+import { RolesDeleteMultipleComponent } from './pages/roles-delete-multiple/roles-delete-multiple.component';
 
 // FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 //   dayGridPlugin,
@@ -79,7 +83,7 @@ import { NoPermissionsComponent } from './pages/no-permissions/no-permissions.co
      BrowserAnimationsModule,
   ],
   declarations: [ AppComponent, HomeComponent, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent,LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,
-    ForgotpasswordComponent, NewRoleComponent,NewPermissionComponent, AddDataComponent, ManagePermissionsComponent,CreatenewpasswordComponent, NoPermissionsComponent],
+    ForgotpasswordComponent, NewRoleComponent,NewPermissionComponent, AddDataComponent, ManagePermissionsComponent,CreatenewpasswordComponent, NoPermissionsComponent, RoleEditComponent, UserEditComponent, UsersDeleteMultipleComponent, RolesDeleteMultipleComponent],
     providers:[AuthGuard],
     schemas: [
       CUSTOM_ELEMENTS_SCHEMA,

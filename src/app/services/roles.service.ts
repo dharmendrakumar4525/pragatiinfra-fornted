@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -21,6 +21,39 @@ export class RolesService {
   getByRole(role): Observable<any> {
     
     return this.http.get(`${this.baseUrl}/roles/role/${role}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+
+  deleteMultipleRoles(roleIds){
+    console.log(roleIds)
+
+    // return this.http.delete(`${this.baseUrl}/users`, {ff:userIds}).pipe(
+    //   catchError(this.handleError)
+    // );
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        selUsers:roleIds
+      },
+    };
+    //let deleteMultipleUsers = {selUsers:userIds}
+    return this.http.delete(`${this.baseUrl}/roles`, options).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+
+
+
+
+
+  editRole(role:any,id): Observable<any> {
+    
+    return this.http.put(`${this.baseUrl}/roles/${id}`, role).pipe(
       catchError(this.handleError)
     );
   }

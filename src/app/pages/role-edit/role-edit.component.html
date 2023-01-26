@@ -1,19 +1,19 @@
 
 <div id="card" style="text-align: center;">
 	<mat-card-title>
-		Add Role
+		Edit Role
 	</mat-card-title>
     <br/>
 
 	<mat-card-content>
         <form [formGroup]="roleForm">
             <mat-form-field>
-                <input matInput placeholder="Add Role" formControlName="role">
+                <input matInput placeholder="Edit Role" formControlName="role">
             </mat-form-field><br/>
     
             
             <button mat-raised-button color="primary" (click)="closeDialog('no')" style="margin-right:5px;">Cancel</button>
-            <button mat-raised-button color="primary" (click)="addRole()" style="margin-right:5px;">Submit</button>
+            <button mat-raised-button color="primary" (click)="editRole()" style="margin-right:5px;">Submit</button>
     
         </form>
 
