@@ -91,8 +91,7 @@ const routes: Routes = [
     canActivate:[AuthGuard]
   },
   {path: 'forgotpassword', component: ForgotpasswordComponent},
-  {path: 'createnewpassword', component: CreatenewpasswordComponent,
-  canActivate:[AuthGuard],},
+  {path: 'createnewpassword', component: CreatenewpasswordComponent},
 
   {
     path: 'view-project',
