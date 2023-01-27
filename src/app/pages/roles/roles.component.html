@@ -9,7 +9,7 @@
             <div>
        <button mat-button [matMenuTriggerFor]="menu"> <mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" style="margin-top:50px">notifications</mat-icon></button>
        <mat-menu #menu="matMenu" >
-        <div class="scroll-bar1" fxLayout="column">
+        <div class="scroll-bar1" fxLayout="column" style="height: 500px;">
           <div fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
             <div mat-card-avatar class="example-header-image"></div>
             <div  class="notification-container">
