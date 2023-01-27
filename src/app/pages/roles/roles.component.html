@@ -43,8 +43,8 @@
         <mat-grid-tile colspan="2" >
             <div style="margin-right: 200px;margin-bottom: 50px;"><h3>Roles</h3> 
                 <div > <button mat-button class="leftbtns" (click)="exporter.exportTable('json')">copy</button> &nbsp;    
-                    <button mat-button class="leftbtns" (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>   &nbsp;
-                    <button mat-button class="leftbtns">PDF</button>  &nbsp;
+                    <button mat-button class="leftbtns" (click)="exporter.exportTable('xlsx', {fileName:'roles', sheet: 'sheet_name', Props: {Author: 'Pragatiinfra'}})">Excel</button>   &nbsp;
+                    <button mat-button class="leftbtns" (click)="exporter.exportTable('csv')">Csv</button>  &nbsp;
                     <!-- <button mat-raised-button (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>
                     <button mat-raised-button (click)="exporter.exportTable('csv')">Csv</button>
                     <button mat-raised-button (click)="exporter.exportTable('json')">Json</button>
