@@ -77,8 +77,8 @@ background: lightblue;
 
 .scroll-bar1{
         
-  height: 10%;
-  width: 10%;
+  height: 60%;
+  width: 100%;
 
   overflow: auto;
   
@@ -102,8 +102,11 @@ background: lightblue;
 }
 
 .calenderForm{
-  width:90% !important;
+  width:150% !important;
   height: 100% !important;
 }
-
+.calender{
+  width: 130%;
+ margin-bottom: 100px;
+}
 

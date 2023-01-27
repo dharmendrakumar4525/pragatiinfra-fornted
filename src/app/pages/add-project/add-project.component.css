@@ -28,3 +28,28 @@ input .uploadImg {
    width:70%;
    margin-left: -10px;
 }
+
+.scroll-bar1{
+        
+
+    height: 90px;
+    overflow: auto;
+    overflow-x: hidden;
+    }
+
+::-webkit-scrollbar {
+width: 7px;
+height:10px;
+}
+::-webkit-scrollbar-track{
+border: 1px solid lightgrey;
+border-radius: 5px;
+background-color:lightgrey ;
+}
+::-webkit-scrollbar-thumb{
+background: #1E293B;
+border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover{
+background: lightblue;
+}

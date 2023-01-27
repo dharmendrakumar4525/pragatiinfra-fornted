@@ -31,11 +31,11 @@
 
 
     <div class="gallery_row" fxLayout="row" fxLayout.xl="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row"
-    fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="15px" *ngIf="!showCalData">
+    fxLayout.xs="column" fxLayoutAlign="start enter"  fxLayoutGap="15px" *ngIf="!showCalData">
     <div class="gallery_left_column" fxLayout="column" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
     fxFlex.xs="100" fxFlexFill>
-    <div class="calender custom_calender" >
-      <mat-calendar [dateClass]="dateClass()" [selected]="selectedDateNew" (selectedChange)="onSelect($event)"></mat-calendar>
+    <div class="calender custom_calender" style="border-collapse: collapse;border: 1px solid lightgrey;background-color: gainsboro;">
+      <mat-calendar  [dateClass]="dateClass()" [selected]="selectedDateNew" (selectedChange)="onSelect($event)"></mat-calendar>
     </div>
   </div>
     </div>

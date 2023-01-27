@@ -58,7 +58,7 @@
     background-color: #233A61;
     border: 1px solid #94A3B8;
     text-align: left;
-    padding: 15px 30px;
+    padding: 1px 40px;
     color: white;
     font-weight: 80;
 
@@ -84,9 +84,9 @@
 .scroll-bar1{
         
    
-  height: 250px;
-  width:90%;
-  
+  height: 500px;
+  width:93%;
+  margin-left: 20px;
 
   overflow: auto;
  
