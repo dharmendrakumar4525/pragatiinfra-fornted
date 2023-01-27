@@ -31,6 +31,8 @@ export class AddProjectComponent implements OnInit {
   addOnBlur = true;
   selection: any[] = [];
   imageUrl = null
+  subTaskName = [];
+  aa:boolean=false;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   
   
@@ -339,6 +341,28 @@ addTag(event: MatChipInputEvent): void {
 
   get location(): AbstractControl {
     return this.projectForm.get('location');
+  }
+
+
+  onKeyUp(ev,id){
+
+    console.log(ev.target.value,id)
+
+    let dataMatched = this.tasks.filter((product) => {
+      return product.result.some((prod) => {
+        return prod.subtaskName == ev.target.value;
+      });
+    });
+
+    console.log(dataMatched)
+
+    //this.tasks = dataMatched
+
+  }
+
+  setIndex(ii){
+    this.aa=ii;
+    console.log
   }
 
 }
