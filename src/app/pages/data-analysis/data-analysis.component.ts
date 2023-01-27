@@ -5,7 +5,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Chart, registerables } from 'chart.js';
 import { AddProjectService } from 'src/app/services/add-project.service';
 import { DataAnalysisService } from 'src/app/services/data-analysis.service';
+import { RecentActivityService } from 'src/app/services/recent-activity.service';
 import { AddMemberComponent } from '../add-member/add-member.component';
+import * as moment from 'moment';
+import { ProgressSheetService } from 'src/app/services/progress-sheet.service';
+
 Chart.register(...registerables);
 export interface Tile {
   color: string;
@@ -22,6 +26,8 @@ export interface Tile {
   styleUrls: ['./data-analysis.component.css']
 })
 export class DataAnalysisComponent implements OnInit {
+  projectsData = [];
+    activesData:any;
   dateFilter: (date: Date | null) => boolean =
   (date: Date | null) => {
     if (!date) {
@@ -40,7 +46,10 @@ export class DataAnalysisComponent implements OnInit {
   project:any;
   projects:any;
   members = [];
-  constructor(private activeRoute: ActivatedRoute,private _dialog: MatDialog,private projectService: AddProjectService, private dataAnalysis:DataAnalysisService) { }
+  recentActivities:any;
+  showDefaultFirst:any;
+  recentActivitiesLen:any;
+  constructor(private activeRoute: ActivatedRoute, private progressSheetService:ProgressSheetService, private recentActivityService:RecentActivityService, private _dialog: MatDialog,private projectService: AddProjectService, private dataAnalysis:DataAnalysisService) { }
 
   ngOnInit(): void {
 
@@ -58,12 +67,60 @@ export class DataAnalysisComponent implements OnInit {
       console.log(params.id)
       this.projectId = params.id
 
+
+      this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data=>{
+        this.activesData = data
+    console.log(this.activesData)
+    this.activesData.forEach(obj => {
+      //this.grandTotal += obj['discAmount'];
+      //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
+      //console.log(this.grandTotal);
+      const arr = this.projectsData.filter(ele => ele['name'] === obj['taskName']);
+      if (arr.length === 0) {
+        this.projectsData.push(
+          { 'name': obj['taskName'] });
+      }
+  });
+
+  this.projectsData.forEach(obj => {
+      const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
+      obj['result'] = uniqData;
+      
+    });
+    console.log(this.projectsData);
+
+    this.showDefaultFirst = this.projectsData[0]
+
+   
+    for(let data of this.showDefaultFirst.result){
+      if(data.dailyCumulativeTotal && data.total){
+        data.cpPercentage =  ((100 * data.dailyCumulativeTotal) / data.total).toFixed(1)
+      }else{
+        data.cpPercentage = 0
+      }
+      
+    }
+
+    console.log(this.showDefaultFirst)
+
+  
+
+    })
+
       this.dataAnalysis.getProjectById(this.projectId).subscribe(data=>{
         this.project = data
     console.log(this.project)
     })
 
     });
+
+
+
+
+
+
+
+    
     var myChart = new Chart('overviewChart', {
       type: 'line',
       data: {
@@ -97,6 +154,15 @@ export class DataAnalysisComponent implements OnInit {
         }
     }
   });
+
+  this.recentActivityService.getRecentAtivities().subscribe(data=>{
+    this.recentActivities = data
+    for(let single of this.recentActivities){
+      single.time = moment(single.createdAt).fromNow()
+    }
+    this.recentActivitiesLen = this.recentActivities.length
+    
+  });
   }
 
 
@@ -123,5 +189,32 @@ export class DataAnalysisComponent implements OnInit {
       if (status === 'no') {
       }
     })
+  }
+
+  onChange(ev){
+    console.log(ev.target.value)
+
+    let selectedBar = this.projectsData.filter((project) => {
+      
+        return project.name == ev.target.value;
+      
+    });
+    console.log(this.showDefaultFirst)
+
+
+    this.showDefaultFirst = selectedBar[0]
+    
+
+    for(let data of this.showDefaultFirst.result){
+      if(data.dailyCumulativeTotal && data.total){
+        data.cpPercentage =  ((100 * data.dailyCumulativeTotal) / data.total).toFixed(1)
+      }else{
+        data.cpPercentage = 0
+      }
+      
+    }
+
+    console.log(this.showDefaultFirst)
+
   }
 }

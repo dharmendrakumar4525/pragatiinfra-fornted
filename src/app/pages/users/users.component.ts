@@ -6,6 +6,8 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UsersDeleteMultipleComponent } from '../users-delete-multiple/users-delete-multiple.component';
 import { MatDialog } from '@angular/material/dialog';
+import { RecentActivityService } from 'src/app/services/recent-activity.service';
+import * as moment from 'moment';
 
 export interface PeriodicElement {
   SelectAll: string;
@@ -48,7 +50,9 @@ export class UsersComponent implements OnInit {
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
   }
-  constructor(private userService:UsersService,private toast:ToastService,private _dialog: MatDialog,) { }
+  recentActivities:any;
+  recentActivitiesLen:any
+  constructor(private userService:UsersService, private recentActivityService:RecentActivityService, private toast:ToastService,private _dialog: MatDialog,) { }
 
   ngOnInit(): void {
     this.userService.getUserss().subscribe(data=>{
@@ -58,7 +62,15 @@ export class UsersComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.users);
       this.dataSource.paginator = this.paginator;
       //console.log(this.roles)
-    })
+    });
+    this.recentActivityService.getRecentAtivities().subscribe(data=>{
+      this.recentActivities = data
+      for(let single of this.recentActivities){
+        single.time = moment(single.createdAt).fromNow()
+      }
+      this.recentActivitiesLen = this.recentActivities.length
+      
+    });
   }
 
   deleteUser(id){

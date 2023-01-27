@@ -7,19 +7,19 @@
             <button mat-button style="padding: 1px 12px;width: 150px;margin-top: 50px;margin-left: 700px;position: relative;background-color: lightgrey;color: black;" [routerLink]="['/add-project']">Add Project +  </button>
             </div>
             <div>
-       <button mat-button [matMenuTriggerFor]="menu"> <mat-icon matBadge="7" matBadgeColor="warn" style="margin-top:50px">notifications</mat-icon></button>
+       <button mat-button [matMenuTriggerFor]="menu"> <mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" style="margin-top:50px">notifications</mat-icon></button>
        <mat-menu #menu="matMenu" >
         <div class="scroll-bar1" fxLayout="column">
-          <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,]">
+          <div fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
             <div mat-card-avatar class="example-header-image"></div>
             <div  class="notification-container">
-              <div class="content"><b>Updatedsheet...</b>
-                <div class="time">5 hours ago</div>
+              <div class="content"><b>{{data.description}}</b>
+                <div class="time">{{data.time}}</div>
               </div>
           </div>
         
         </div>
-        <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,]">
+        <!-- <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,]">
           <div mat-card-avatar class="example-header-image"></div>
           <div >
             <div class="content" style="margin-left: 10px;"><b>Kate: .</b>
@@ -27,7 +27,7 @@
             </div>
         </div>
       
-      </div>
+      </div> -->
   
    </div>
       </mat-menu>

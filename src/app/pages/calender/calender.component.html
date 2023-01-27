@@ -9,7 +9,7 @@
 <!-- <span style="font-size: small;">on track</span> -->
 </div>
 <div style="margin-left: 100px;font-size: small;position: relative;margin-top: 90px;">
-<button mat-button ><i class="fa fa-undo" aria-hidden="true"></i> Back to Calender</button></div>       
+<button mat-button (click)="backToCalender()"><i class="fa fa-undo" aria-hidden="true"></i> Back to Calender</button></div>       
       </mat-toolbar-row>
         
       <mat-toolbar-row>
@@ -30,13 +30,23 @@
     </div>
 
 
+    <div class="gallery_row" fxLayout="row" fxLayout.xl="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row"
+    fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="15px" *ngIf="!showCalData">
+    <div class="gallery_left_column" fxLayout="column" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
+    fxFlex.xs="100" fxFlexFill>
+    <div class="calender custom_calender" >
+      <mat-calendar [dateClass]="dateClass()" [selected]="selectedDateNew" (selectedChange)="onSelect($event)"></mat-calendar>
+    </div>
+  </div>
+    </div>
+
     <!-- <full-calendar [options]="calendarOptions"></full-calendar> -->
     <!-- <full-calendar
     [options]="calendarOptions"
     [events]="eventsPromise | async"
   ></full-calendar> -->
   <!-- <full-calendar (dateClick)="handleDateClick($event)" [options]="calendarOptions" [plugins]="calendarPlugins"></full-calendar> -->
-  <full-calendar [options]="calendarOptions"></full-calendar>
+  <!-- <full-calendar [options]="calendarOptions"></full-calendar> -->
 
     <!-- <div class='app'>
 
@@ -60,14 +70,14 @@
     </div> -->
     
 
-    <mat-grid-list cols="4" rowHeight="400px" style="margin-top: 70px;">
+    <mat-grid-list cols="4" rowHeight="400px" style="margin-top: 70px;" *ngIf="showCalData">
         <mat-grid-tile colspan="3" rowspan="2"  >
            
             <mat-card style="width: 95%; height: 99%;">
                 <div >
                 <mat-toolbar fxLayout="column" style="margin-bottom: 10px; background-color: #233A61;color: #fff;">
-                    <h2 style="font-size: xx-large;margin-right: 800px;margin-top: 10px;">16 </h2>
-                      <div style="margin-right: 680px;margin-bottom: 50px;position: absolute;"><h4 style="font-size: small">Jan<br>Monday 2023</h4></div><br>  
+                    <h2 style="font-size: xx-large;margin-right: 800px;margin-top: 10px;">{{getDay}} </h2>
+                      <div style="margin-right: 680px;margin-bottom: 50px;position: absolute;"><h4 style="font-size: small">th<br>{{getWeekName}} {{getYear}}</h4></div><br>  
                 </mat-toolbar>
             </div>
             
@@ -130,11 +140,11 @@
             <mat-card style="width: 250px;height: 350px;margin:10px 0px">
                 <div>
                   <div class="scroll-bar">
-                    <div  fxLayout="row" fxLayoutGap="10px" *ngFor="let num of [1,2,3,4,5,6,7,8,9]">
+                    <div  fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities">
                       <div mat-card-avatar class="example-header-image"></div>
                     <div >
-                      <div class="content"><b>Updatedsheet...</b>
-                        <div class="time">5 hours ago</div><br>
+                      <div class="content"><b>{{data.description}}</b>
+                        <div class="time">{{data.time}}</div><br>
                       </div>
                   </div><br>
                   </div>
@@ -142,11 +152,11 @@
              </div>
               </mat-card>
         </mat-grid-tile>
-      <mat-grid-tile colspan="4" >
+      <!-- <mat-grid-tile colspan="4" >
         <mat-card style="width:150px;margin-right: 980px;margin-bottom: 300px;box-shadow: none;">
           <button style="width:150px;padding: 10px;background-color: #233A61;color: #fff;">Submit</button> 
         </mat-card>
-      </mat-grid-tile>
+      </mat-grid-tile> -->
 
     </mat-grid-list>
   

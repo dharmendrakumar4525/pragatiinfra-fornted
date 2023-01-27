@@ -9,6 +9,8 @@ import { ToastService } from 'src/app/services/toast.service';
 import { RoleEditComponent } from '../role-edit/role-edit.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { RolesDeleteMultipleComponent } from '../roles-delete-multiple/roles-delete-multiple.component';
+import { RecentActivityService } from 'src/app/services/recent-activity.service';
+import * as moment from 'moment';
 
 
 export interface PeriodicElement {
@@ -55,7 +57,9 @@ export class RolesComponent implements OnInit {
       this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
     }
   }
-  constructor(public dialog: MatDialog,private _dialog: MatDialog, private roleService:RolesService, private toast:ToastService) { }
+  recentActivities:any;
+  recentActivitiesLen:any
+  constructor(public dialog: MatDialog,private _dialog: MatDialog, private recentActivityService:RecentActivityService, private roleService:RolesService, private toast:ToastService) { }
   addRole() {
     const dialogRef = this._dialog.open(NewRoleComponent, {
       width: '30%',
@@ -87,7 +91,15 @@ export class RolesComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.roles);
       this.dataSource.paginator = this.paginator;
       console.log(this.roles)
-    })
+    });
+    this.recentActivityService.getRecentAtivities().subscribe(data=>{
+      this.recentActivities = data
+      for(let single of this.recentActivities){
+        single.time = moment(single.createdAt).fromNow()
+      }
+      this.recentActivitiesLen = this.recentActivities.length
+      
+    });
   }
   
   //dataSource = ELEMENT_DATA;

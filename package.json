@@ -28,6 +28,7 @@
     "@fullcalendar/timegrid": "^6.0.3",
     "chart.js": "^4.1.2",
     "mat-table-exporter": "^10.2.4",
+    "moment": "^2.29.4",
     "ng-circle-progress": "^1.6.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

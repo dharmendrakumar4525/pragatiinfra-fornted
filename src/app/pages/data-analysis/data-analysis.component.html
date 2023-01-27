@@ -11,16 +11,16 @@
                 
 
              
-                <button mat-button [matMenuTriggerFor]="menu"> <mat-icon matBadge="7" matBadgeColor="warn" >notifications</mat-icon></button>
+                <button mat-button [matMenuTriggerFor]="menu"> <mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" >notifications</mat-icon></button>
                 <mat-menu #menu="matMenu" >
                   <div>
                     <div class="scroll-bar1">
-                     <div  fxLayout="row" fxLayoutGap="10px" *ngFor="let num of [1,2,3,4,5,6,7,8,9,10]">
+                     <div  fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities">
                        <div mat-card-avatar class="example-header-image"></div>
                      
                       <div class="notification-container" >
-                       <div class="content"><b>Updatedsheet...</b>
-                         <div class="time">5 hours ago</div><br>
+                       <div class="content"><b>{{data.description}}</b>
+                         <div class="time">{{data.time}}</div><br>
                        </div>
                        </div>
                    </div><br>
@@ -158,23 +158,23 @@
 
     ><mat-card>
 
-      <select style="width: 50%;padding:10px;border-radius:10px">
-        <option>Activities</option>
-        <option>Activities</option>
+      <select style="width: 50%;padding:10px;border-radius:10px" (change)="onChange($event)">
+        <option *ngFor="let single of projectsData">{{single.name}}</option>
+        
       </select>
       <div class="cirle">
   
-        <div class="left" align="center" style="margin-top:10%;" >
+        <div class="left" align="center" style="margin-top:10%;" *ngFor="let single of  showDefaultFirst?.result">
         
-        <div><h5 style="color: #4675C2;">BoundaryWall</h5></div>
-          <circle-progress *ngFor="let single of [1] "  [percent]="0" [title]="'0'" [subtitle]="''"  [space]="-10" [radius]="60" [outerStrokeWidth]="10"
+        <div><h5 style="color: #4675C2;">{{single.subTaskName}}</h5></div>
+          <circle-progress   [percent]="single.cpPercentage" [title]="single.cpPercentage" [subtitle]="''"  [space]="-10" [radius]="60" [outerStrokeWidth]="10"
             [innerStrokeWidth]="10" [outerStrokeColor]="'#1E293B'"   [innerStrokeColor]="'gainsboro'" [animation]="true"
             [animationDuration]="100"></circle-progress>
-            
+            <!-- <div class="vertical-line"></div> -->
         </div>
-        <div class="vertical-line"></div>
         
-        <div id="center" align="center" style="margin-top:10%;margin-right: 1%;">
+        
+        <!-- <div id="center" align="center" style="margin-top:10%;margin-right: 1%;">
         
           <div ><h5 style="color: #4675C2;">WareHouse</h5></div>
             <circle-progress *ngFor="let single of [2] "  [percent]="0" [title]="'0'" [subtitle]="''"  [space]="-10" [radius]="60" [outerStrokeWidth]="10"
@@ -191,7 +191,7 @@
                 [innerStrokeWidth]="10" [outerStrokeColor]="'#1E293B'"  [innerStrokeColor]="'gainsboro'" [animation]="true"
                 [animationDuration]="100"></circle-progress>
                 
-            </div>
+            </div> -->
             </div>
     
     </mat-card>
@@ -204,11 +204,11 @@
     ><mat-card style="width: 200px;height: 400px;margin:10px 0px">
       <div>
        <div class="scroll-bar1">
-        <div  fxLayout="row" fxLayoutGap="10px" *ngFor="let num of [1,2,3,4,5,6,7,8,9,10]">
+        <div  fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities">
           <div mat-card-avatar class="example-header-image"></div>
         <div >
-          <div class="content"><b>Updatedsheet...</b>
-            <div class="time">5 hours ago</div><br>
+          <div class="content"><b>{{data.description}}</b>
+            <div class="time">{{data.time}}</div><br>
           </div>
       </div><br>
 

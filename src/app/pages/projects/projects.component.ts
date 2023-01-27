@@ -1,7 +1,9 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddProjectService } from 'src/app/services/add-project.service';
+import { RecentActivityService } from 'src/app/services/recent-activity.service';
 import { AddMemberComponent } from '../add-member/add-member.component';
+import * as moment from 'moment';
 
 
 
@@ -28,7 +30,12 @@ export class ProjectsComponent implements OnInit {
   members = [];
   permissions:any;
   projectsViewPermissions:any;
-  constructor(private projectService: AddProjectService,private _dialog: MatDialog) { }
+  projectName = "";
+  aa:boolean=false;
+  recentActivities:any
+  filterProjects = [];
+  recentActivitiesLen:any;
+  constructor(private projectService: AddProjectService,private _dialog: MatDialog, private recentActivityService:RecentActivityService) { }
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
@@ -37,6 +44,20 @@ export class ProjectsComponent implements OnInit {
     this.projectService.getProjects().subscribe(data=>{
       //this.spinner.hide()
       this.projects = data;
+      console.log(this.projects)
+      if(this.permissions.user.role !== 'superadmin'){
+
+        this.filterProjects = this.projects.filter((product) => {
+          return product.members.some((prod) => {
+            return prod === this.permissions.user.email;
+          });
+        });
+        //push(this.projects.find(product => product.members.some(item => item === this.permissions.user.email)))
+        
+      console.log(this.filterProjects)
+      this.projects = this.filterProjects
+      }
+      
       this.cards = [
         {
           title: ' Total  Projects',
@@ -62,7 +83,19 @@ export class ProjectsComponent implements OnInit {
         this.members.push(...single.members)
       }
       console.log(this.members)
-    })
+    });
+    this.recentActivityService.getRecentAtivities().subscribe(data=>{
+      this.recentActivities = data
+      for(let single of this.recentActivities){
+        single.time = moment(single.createdAt).fromNow()
+      }
+      this.recentActivitiesLen = this.recentActivities.length
+      
+    });
+  }
+  setIndex(ii){
+    this.aa=ii;
+    console.log
   }
 
   addMember(){

@@ -10,19 +10,19 @@
           <button  mat-button style="background-color:lightgrey;padding: 5px 5px;width: 150px;margin-left: -80px;margin-top: 50px;"> <mat-icon style="font-size: medium;position: relative;right:-10px;">group_add</mat-icon>
               Add Member </button>
               
-<button mat-button [matMenuTriggerFor]="menu" ><mat-icon matBadge="7" matBadgeColor="warn" style="margin-left:-10px">notifications</mat-icon></button>
+<button mat-button [matMenuTriggerFor]="menu" ><mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" style="margin-left:-10px">notifications</mat-icon></button>
 <mat-menu #menu="matMenu">
   <div class="scroll-bar1" fxLayout="column">
-    <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,]">
+    <div fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
       <div mat-card-avatar class="example-header-image"></div>
       <div  class="notification-container">
-        <div class="content"><b>Updatedsheet...</b>
-          <div class="time">5 hours ago</div>
+        <div class="content"><b>{{data.description}}</b>
+          <div class="time">{{data.time}}</div>
         </div>
     </div>
   
   </div>
-  <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,]">
+  <!-- <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,]">
     <div mat-card-avatar class="example-header-image"></div>
     <div >
       <div class="content" style="margin-left: 10px;"><b>Kate: .</b>
@@ -30,7 +30,7 @@
       </div>
   </div>
 
-</div>
+</div> -->
 
 </div>
 </mat-menu>  
@@ -127,10 +127,14 @@
           <td >{{subTask?.uom}}</td>
           <td >{{subTask?.total}}</td>
           <td>{{subTask?.dailyCumulativeTotal}}</td>
-          <td></td>
+          <td>
+            <span *ngIf="(subTask?.dailyCumulativeTotal == subTask?.total) && subTask?.dailyCumulativeTotal">Completed</span>
+            <span *ngIf="subTask?.dailyCumulativeTotal !== subTask?.total">{{subTask?.dailyCumulativeTotal}}</span>
+          
+          </td>
           <td>{{subTask?.noofDaysBalanceasperrevisedEnddate}}</td>
           <td>{{subTask?.dailyAskingRateasperRevisedEndDate}}</td>
-          <td></td>
+          <td>{{(100-(100 * subTask.dailyCumulativeTotal) / subTask.total).toFixed(1)}}</td>
           <td>{{subTask?.dailyCumulativeTotal}}</td>
 
           

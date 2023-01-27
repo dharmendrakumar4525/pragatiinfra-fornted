@@ -3,8 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { AddDataComponent } from 'src/app/pages/add-data/add-data.component';
 import { ProgressSheetService } from 'src/app/services/progress-sheet.service';
+import { RecentActivityService } from 'src/app/services/recent-activity.service';
 import { TaskService } from 'src/app/services/task.service';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
+import * as moment from 'moment';
 
 export interface PeriodicElement {
   Description: string;
@@ -33,6 +35,7 @@ export class ProgressSheetComponent implements OnInit {
     tasks:any
     projectsData = [];
     activesData:any;
+    recentActivitiesLen:any
 //   projectsData = [
 //     {
 //         "_id": "63c6aa45a1593c88fae7b09b",
@@ -171,7 +174,8 @@ export class ProgressSheetComponent implements OnInit {
    permissions:any
    progressPermissionsView:any;
    progressPermissionsEdit:any
-  constructor(private activeRoute: ActivatedRoute, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private taskService:TaskService) { }
+   recentActivities:any
+  constructor(private activeRoute: ActivatedRoute, private recentActivityService:RecentActivityService, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private taskService:TaskService) { }
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
@@ -220,6 +224,14 @@ export class ProgressSheetComponent implements OnInit {
   
       });
 
+      this.recentActivityService.getRecentAtivities().subscribe(data=>{
+        this.recentActivities = data
+        for(let single of this.recentActivities){
+          single.time = moment(single.createdAt).fromNow()
+        }
+        this.recentActivitiesLen = this.recentActivities.length
+        
+      });
      
   }
   displayedColumns = ['Description', 'R2EndDate', 'R1EndDate', 'WorkingdaysRevised', 'BaselineStartDate',

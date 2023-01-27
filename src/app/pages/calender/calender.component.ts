@@ -9,6 +9,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { CalendarOptions } from '@fullcalendar/core'; // useful for typechecking
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 import { MatDialog } from '@angular/material/dialog';
+import * as moment from 'moment';
+import { RecentActivityService } from 'src/app/services/recent-activity.service';
+import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 
 
 
@@ -189,11 +192,24 @@ export class CalenderComponent implements OnInit {
 // ] 
 permissions:any;
 calenderPermissions:any;
-  constructor(private activeRoute: ActivatedRoute,private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private toast:ToastService, private calenderService:CalenderService) { }
+recentActivities:any;
+datas = []
+showCalData:boolean = false
+selectedDateNew: any;
+getWeekName:any;
+getMonth:any;
+getYear:any;
+getDay:any;
+  constructor(private activeRoute: ActivatedRoute, private recentActivityService:RecentActivityService, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private toast:ToastService, private calenderService:CalenderService) { }
 
   ngOnInit(): void {
 
+    this.getWeekName = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][new Date().getDay()]
+    this.getMonth = new Date().getMonth()
+    this.getYear = new Date().getFullYear()
+    this.getDay = new Date().getDate()
 
+ 
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     console.log(this.permissions)
     this.calenderPermissions = this.permissions.permissions[0].ParentChildchecklist[2].childList[0]
@@ -234,6 +250,31 @@ calenderPermissions:any;
       })
   
       });
+
+      this.recentActivityService.getRecentAtivities().subscribe(data=>{
+        this.recentActivities = data
+        for(let single of this.recentActivities){
+          single.time = moment(single.createdAt).fromNow()
+        }
+        
+      });
+  }
+
+  backToCalender(){
+    this.showCalData = false
+  }
+
+  onSelect(event){
+    this.showCalData = true
+    console.log(event)
+  }
+
+  dateClass() {
+    return (date: Date): MatCalendarCellCssClasses => {
+      const highlightDate = this.datas.map(strDate => new Date(strDate))
+        .some(d => d.getDate() === date.getDate() && d.getMonth() === date.getMonth() && d.getFullYear() === date.getFullYear());
+      return highlightDate ? 'special-date' : '';
+    };
   }
 
   onBid(e,player,value,id) {
