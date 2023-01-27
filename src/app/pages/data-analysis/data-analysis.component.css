@@ -90,7 +90,7 @@ body{
 .scroll-bar{
         
  
-  height: 400px;
+  height: 350px;
     
  
     
@@ -151,4 +151,36 @@ background: lightblue;
 .notification-container{
  width: 200px;
  
+}
+
+
+.scroll-bar2{
+        
+ 
+  height: 350px;
+    
+ 
+    
+   
+  overflow-y:auto;
+ overflow-x: hidden;
+
+  
+  }
+
+::-webkit-scrollbar {
+width: 7px;
+
+}
+::-webkit-scrollbar-track{
+border: 1px solid lightgrey;
+border-radius: 5px;
+background-color:lightgrey ;
+}
+::-webkit-scrollbar-thumb{
+background: #1E293B;
+border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover{
+background: lightblue;
 }

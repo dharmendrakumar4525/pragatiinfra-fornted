@@ -59,7 +59,7 @@
 
   <div class="scroll-bar">
     <div fxLayout="row wrap" *ngIf="projectsViewPermissions.isSelected; else noView"  fxLayoutGap="50px" fxLayoutAlign="start center">
-      <div fxFlex="25%"  fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let project of projects | customerEmailFilter:projectName">
+      <div  fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let project of projects | customerEmailFilter:projectName">
         <div class="" >
           
           <div class="content1">
@@ -130,7 +130,7 @@
 
 <div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right"  style="height: 70vh;" >
   <mat-card fxLayout="column" fxLayoutAlign="left" style="height: 70vh; ">
-    <div class="scroll-bar" fxLayout="column">
+    <div class="scroll-bar2" fxLayout="column">
     <mat-card-header>
   
       <mat-card-title> About &nbsp;&nbsp; <i class="fa fa-edit" style="cursor: pointer;" (click)="addAboutUs()" aria-hidden="true"></i></mat-card-title>
@@ -157,10 +157,11 @@
   </div>
 </div> -->
 
-    <mat-card-actions>
-      <button mat-button (click)="addMember()">Addmembers+</button> 
-    </mat-card-actions>
+  
   </div>
+  <mat-card-actions style="margin-top: 100px;">
+    <button mat-button (click)="addMember()">Addmembers+</button> 
+  </mat-card-actions>
   </mat-card>
 
 </div>

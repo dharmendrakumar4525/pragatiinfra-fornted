@@ -102,11 +102,10 @@ background: lightblue;
 }
 
 .calenderForm{
-  width:150% !important;
+  width:100% !important;
   height: 100% !important;
 }
 .calender{
-  width: 130%;
  margin-bottom: 100px;
 }
 
