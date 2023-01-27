@@ -16,6 +16,13 @@ export class AddProjectService {
       catchError(this.handleError)
     );
   }
+
+  getAboutUs(): Observable<any> {
+    
+    return this.http.get(`${this.baseUrl}/aboutUs`).pipe(
+      catchError(this.handleError)
+    );
+  }
   addProject(project:any): Observable<any> {
     
     return this.http.post(`${this.baseUrl}/projects`, project).pipe(
@@ -49,5 +56,19 @@ export class AddProjectService {
     }
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later.'));
+  }
+
+  addAboutUs(about:any): Observable<any> {
+    
+    return this.http.post(`${this.baseUrl}/aboutUs`, about).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  updateAboutUsById(selection:any,id): Observable<any> {
+    
+    return this.http.put(`${this.baseUrl}/aboutUs/${id}`, selection).pipe(
+      catchError(this.handleError)
+    );
   }
 }

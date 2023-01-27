@@ -47,6 +47,7 @@ import { UserEditComponent } from './pages/user-edit/user-edit.component';
 import { UsersDeleteMultipleComponent } from './pages/users-delete-multiple/users-delete-multiple.component';
 import { RolesDeleteMultipleComponent } from './pages/roles-delete-multiple/roles-delete-multiple.component';
 import { SearchPipe } from './services/search.pipe';
+import { AboutUsComponent } from './pages/about-us/about-us.component';
 
 // FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 //   dayGridPlugin,
@@ -84,7 +85,7 @@ import { SearchPipe } from './services/search.pipe';
      BrowserAnimationsModule,
   ],
   declarations: [ AppComponent, HomeComponent,SearchPipe, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent,LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,
-    ForgotpasswordComponent, NewRoleComponent,NewPermissionComponent, AddDataComponent, ManagePermissionsComponent,CreatenewpasswordComponent, NoPermissionsComponent, RoleEditComponent, UserEditComponent, UsersDeleteMultipleComponent, RolesDeleteMultipleComponent],
+    ForgotpasswordComponent, NewRoleComponent,NewPermissionComponent, AddDataComponent, ManagePermissionsComponent,CreatenewpasswordComponent, NoPermissionsComponent, RoleEditComponent, UserEditComponent, UsersDeleteMultipleComponent, RolesDeleteMultipleComponent, AboutUsComponent],
     providers:[AuthGuard],
     schemas: [
       CUSTOM_ELEMENTS_SCHEMA,

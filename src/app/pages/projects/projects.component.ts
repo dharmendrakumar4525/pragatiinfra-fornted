@@ -4,6 +4,7 @@ import { AddProjectService } from 'src/app/services/add-project.service';
 import { RecentActivityService } from 'src/app/services/recent-activity.service';
 import { AddMemberComponent } from '../add-member/add-member.component';
 import * as moment from 'moment';
+import { AboutUsComponent } from '../about-us/about-us.component';
 
 
 
@@ -35,6 +36,9 @@ export class ProjectsComponent implements OnInit {
   recentActivities:any
   filterProjects = [];
   recentActivitiesLen:any;
+  aboutUs:any;
+  aboutUsLen:any;
+  about:any;
   constructor(private projectService: AddProjectService,private _dialog: MatDialog, private recentActivityService:RecentActivityService) { }
 
   ngOnInit(): void {
@@ -96,6 +100,39 @@ export class ProjectsComponent implements OnInit {
   setIndex(ii){
     this.aa=ii;
     console.log
+  }
+
+  addAboutUs() {
+    const dialogRef = this._dialog.open(AboutUsComponent, {
+      width: '30%',
+      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown']
+      //data: supply
+    });
+    dialogRef.afterClosed().subscribe(status => {
+      console.log(status);
+      if (status === 'yes') {
+
+        this.projectService.getAboutUs().subscribe(data=>{
+          //this.spinner.hide()
+          this.about = data
+          this.aboutUs = this.about[0]
+
+           this.aboutUsLen = this.aboutUs.length
+          // if(this.aboutUsLen){
+          //   this.aboutUsForm.patchValue(this.aboutUs[0])
+          // }
+          // console.log(this.aboutUsLen)
+        });
+        // this.taskService.getTasks().subscribe(data=>{
+        //   //this.spinner.hide()
+        //   this.tasks = data
+        //   console.log(this.tasks)
+        // })
+       // this.filterSubject.next(this.filterForm.value);
+      }
+      if (status === 'no') {
+      }
+    })
   }
 
   addMember(){

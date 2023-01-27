@@ -12,7 +12,7 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class AddTasksComponent implements OnInit {
 
-  taskForm: FormGroup = this._fb.group({
+taskForm: FormGroup = this._fb.group({
     
     taskName: [null, [Validators.required, Validators.pattern('.*\\S.*[a-zA-Z ]')]],
     
@@ -46,7 +46,7 @@ export class AddTasksComponent implements OnInit {
       // );
       //this.clearForm = true;
       //this.clearForm = true;
-      this.taskForm.markAllAsTouched();
+      this.taskForm.markAllAsTouched();  
       return;
     }
     this.taskService.addTask(this.taskForm.value).subscribe(
