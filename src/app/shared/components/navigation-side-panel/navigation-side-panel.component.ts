@@ -43,12 +43,15 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   private _subscriptionsSubject$: Subject<void>;
   public currentPanelState: SidePanelState;
   public SidePanelState = SidePanelState;
-
+  permissions:any;
   constructor(private _sidePanelService: SidePanelService, private router:Router,private userService:UsersService) {
     this._subscriptionsSubject$ = new Subject<void>();
   }
 
   ngOnInit(): void {
+
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+
     this._sidePanelService.panelStateChanges
       .pipe(takeUntil(this._subscriptionsSubject$))
       .subscribe((state: SidePanelState) => (this.currentPanelState = state));

@@ -1,4 +1,11 @@
 <div class="navigation-panel">
+  <br> <br>
+  <div class="user-profile">
+    <img class="avatar" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTF_erFD1SeUnxEpvFjzBCCDxLvf-wlh9ZuPMqi02qGnyyBtPWdE-3KoH3s" alt="Ash" />
+      <div class="username">{{permissions?.user?.name}}</div>
+  </div>
+  <br>
+  
   <div class="navigation-panel-brand">P<span [ngClass]="currentPanelState">ragati Infra
   </span></div>
   <ul class="navigation-panel-menu" *ngIf="links && links.length > 0">
