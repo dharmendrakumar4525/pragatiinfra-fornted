@@ -58,14 +58,14 @@
 <div class="projectcontent" fxLayout="row" fxLayoutGap="10px" style="height: 80%;">
 
   <div class="scroll-bar">
-    <div fxLayout="row wrap" *ngIf="projectsViewPermissions.isSelected; else noView"  fxLayoutGap="50px" fxLayoutAlign="start center">
-      <div  fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let project of projects | customerEmailFilter:projectName">
+    <div fxLayout="row wrap" *ngIf="projectsViewPermissions.isSelected; else noView"  fxLayoutGap="20px" fxLayoutAlign="start center">
+      <div  fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let project of projects | customerEmailFilter:projectName">
         <div class="" >
           
           <div class="content1">
-            <div style="position: relative;top:120px;color: #fff;margin-left: 10px;">{{project?.projectName}}</div>
+            <div style="position: relative;top:120px;color: #fff;margin-left: 15px;margin-bottom: 20px;">{{project?.projectName}}</div>
           </div>
-          <img [routerLink]="['/view-project/data-analysis',project._id]" [src]="project?.imageUrl" style="box-shadow:none;width:100%;cursor: pointer;">
+          <img [routerLink]="['/view-project/data-analysis',project._id]" height="120px" width="200px" [src]="project?.imageUrl" style="box-shadow:none;width:100%;cursor: pointer;">
        
           <div>
           
@@ -142,9 +142,9 @@
      
       <mat-card-subtitle>Members</mat-card-subtitle>
 
-      <div fxFlex="row" fxLayoutAlign="start" *ngFor="let mem of members">
-      <div mat-card-avatar class="example-header-image"></div>
-      <div >
+      <div  fxFlex="row" fxLayoutAlign="start"  *ngFor="let mem of members">
+      <div style="margin-top:10px" mat-card-avatar class="example-header-image"></div>
+      <div  style="margin-top:10px">
       <button mat-button >{{mem.split('@')[0]}}</button> 
     </div>
   
@@ -159,7 +159,7 @@
 
   
   </div>
-  <mat-card-actions style="margin-top: 100px;">
+  <mat-card-actions style="margin-top: 20px;">
     <button mat-button (click)="addMember()">Addmembers+</button> 
   </mat-card-actions>
   </mat-card>
@@ -178,7 +178,7 @@
   <div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right"  style="height: 70vh;" >
     <mat-card fxLayout="row" fxLayoutAlign="left" style="height: 60vh;">
       <div class="scroll-bar1" fxLayout="column">
-        <div fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
+        <div  fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
           <div mat-card-avatar class="example-header-image"></div>
           <div >
             <div class="content"><b>{{data.description}}</b>

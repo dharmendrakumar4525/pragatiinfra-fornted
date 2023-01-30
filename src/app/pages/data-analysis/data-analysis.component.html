@@ -132,8 +132,8 @@
             <mat-card-subtitle>Members</mat-card-subtitle>
           
      <div  fxFlex="row" fxLayoutAlign="start" *ngFor="let data of members">
-      <div mat-card-avatar class="example-header-image"></div>
-      <div>
+      <div  style="margin-top:10px" mat-card-avatar class="example-header-image"></div>
+      <div style="margin-top:10px">
         <button mat-button >{{data.split('@')[0]}}</button>
        
   </div>
@@ -171,8 +171,9 @@
           <circle-progress   [percent]="single.cpPercentage" [title]="single.cpPercentage" [subtitle]="''"  [space]="-10" [radius]="60" [outerStrokeWidth]="10"
             [innerStrokeWidth]="10" [outerStrokeColor]="'#1E293B'"   [innerStrokeColor]="'gainsboro'" [animation]="true"
             [animationDuration]="100"></circle-progress>
-            <!-- <div class="vertical-line"></div> -->
+          <!-- <div class="vertical-line"></div> --> 
         </div>
+        
         
         
         <!-- <div id="center" align="center" style="margin-top:10%;margin-right: 1%;">

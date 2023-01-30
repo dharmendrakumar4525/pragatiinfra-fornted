@@ -59,8 +59,9 @@ card-below{
 
 .cirle{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    gap:100px;
    
    
 }
@@ -70,8 +71,8 @@ card-below{
    position: relative;
 
    border-left: 3px solid gainsboro;
-   top: 50px;
-   margin: 50px;
+   top: 10px;
+ margin-bottom: 80px;
  
   
 

@@ -32,9 +32,9 @@
 
     <div class="gallery_row" fxLayout="row" fxLayout.xl="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row"
     fxLayout.xs="column" fxLayoutAlign="start enter"  fxLayoutGap="15px" *ngIf="!showCalData">
-    <div class="gallery_left_column" fxLayout="column" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
+    <div class="gallery_left_column" fxLayout="column" fxFlex.xl="50" fxFlex.lg="60" fxFlex.md="50" fxFlex.sm="50"
     fxFlex.xs="100" fxFlexFill>
-    <div class="calender custom_calender" style="border-collapse: collapse;border: 1px solid lightgrey;background-color: gainsboro;">
+    <div class="calender custom_calender" style="border-collapse: collapse;border: 1px solid lightgrey;margin-left: 50px;margin-top: 50px;">
       <mat-calendar  [dateClass]="dateClass()" [selected]="selectedDateNew" (selectedChange)="onSelect($event)"></mat-calendar>
     </div>
   </div>
@@ -92,7 +92,7 @@
               </thead>
            
             <tbody *ngFor= " let project of projectsData ">
-                <tr  style="font-size: large;border: 1px solid lightgray;">
+                <tr  style="font-size: large;border: 1px solid lightgray;font-weight: bold;">
                     <td>{{project.name}}</td>
                     
                 

@@ -50,11 +50,13 @@ li {
 
   .scroll-bar{
         
-    height: 300px;
-    width: 200px;
+    height: 350px;
+    
+ 
     
    
-    overflow: auto;
+    overflow-y:auto;
+   overflow-x: hidden;
     
     }
 
@@ -102,10 +104,9 @@ background: lightblue;
 }
 
 .calenderForm{
-  width:100% !important;
+  width:90% !important;
   height: 100% !important;
 }
 .calender{
  margin-bottom: 100px;
 }
-

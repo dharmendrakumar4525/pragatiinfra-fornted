@@ -231,17 +231,17 @@
       </mat-toolbar-row>
   </mat-toolbar>
 
-<div 
+<div class="gapset"
    fxLayout="row wrap" 
    fxLayout.lt-sm="column" 
    fxLayoutGap="10px" 
    fxLayoutAlign="flex-start"
-   style="margin-left: 5%;">
+   style="margin-left: 5%;" >
 
-   <ng-container *ngFor="let task of tasks;let i = index">
+   <ng-container *ngFor="let task of tasks;let i = index" >
     <mat-card id="card" fxFlex="0 1 calc(33.3% - 32px)"
     fxFlex.lt-md="0 1 calc(50% - 32px)"
-    fxFlex.lt-sm="100%">
+    fxFlex.lt-sm="100%" >
         <mat-card-title style="color: #3568BA;font-size: 25px;font-weight:normal;">
             {{task.taskName}}
             

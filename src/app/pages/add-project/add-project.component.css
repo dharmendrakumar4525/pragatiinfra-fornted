@@ -32,7 +32,7 @@ input .uploadImg {
 .scroll-bar1{
         
 
-    height: 90px;
+    height: 180px;
     overflow: auto;
     overflow-x: hidden;
     }
@@ -52,4 +52,8 @@ border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:hover{
 background: lightblue;
+}
+.gapset{
+   row-gap: 20px !important;
+   
 }
