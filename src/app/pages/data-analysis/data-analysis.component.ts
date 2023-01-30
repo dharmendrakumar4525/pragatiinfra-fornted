@@ -128,7 +128,7 @@ export class DataAnalysisComponent implements OnInit {
           datasets: [
             {
               label: 'Remaining Task',
-              data: [12, 90, 20, 40, 2, 3],
+              data: [0, 0, 0, 0, 0, 0],
                backgroundColor: '#267ADC',
               borderColor: '#267ADC',
               borderWidth: 1
