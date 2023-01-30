@@ -124,7 +124,7 @@ export class DataAnalysisComponent implements OnInit {
     var myChart = new Chart('overviewChart', {
       type: 'line',
       data: {
-          labels: ['2012', '2013', '2014', '2015', '2016', '2017'],
+          labels: ['jan', 'feb', 'mar', 'april', 'may', 'june'],
           datasets: [
             {
               label: 'Remaining Task',
@@ -133,13 +133,13 @@ export class DataAnalysisComponent implements OnInit {
               borderColor: '#267ADC',
               borderWidth: 1
           },
-          {
-            label: 'Completed Task',
-            data: [20, 50, 90, 10, 70, 3],
-             backgroundColor: 'black',
-            borderColor: 'black',
-            borderWidth: 1
-        }
+        //   {
+        //     label: 'Completed Task',
+        //     data: [20, 50, 90, 10, 70, 3],
+        //      backgroundColor: 'black',
+        //     borderColor: 'black',
+        //     borderWidth: 1
+        // }
         
         
         
