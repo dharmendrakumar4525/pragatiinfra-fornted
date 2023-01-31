@@ -63,9 +63,9 @@
         <div class="" >
           
           <div class="content1">
-            <div style="position: relative;top:120px;color: #fff;margin-left: 15px;margin-bottom: 20px;">{{project?.projectName}}</div>
+            <div style="position: relative;top:120px;color: #fff;margin-left: 40px;margin-bottom: 20px;">{{project?.projectName}}</div>
           </div>
-          <img [routerLink]="['/view-project/data-analysis',project._id]" height="120px" width="200px" [src]="project?.imageUrl" style="box-shadow:none;width:100%;cursor: pointer;">
+          <img [routerLink]="['/view-project/data-analysis',project._id]"  [src]="project?.imageUrl" style="box-shadow:none;width:200px;height:130px;cursor: pointer;object-fit: contain;">
        
           <div>
           

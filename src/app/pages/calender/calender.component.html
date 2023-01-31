@@ -34,7 +34,7 @@
     fxLayout.xs="column" fxLayoutAlign="start enter"  fxLayoutGap="15px" *ngIf="!showCalData">
     <div class="gallery_left_column" fxLayout="column" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
     fxFlex.xs="100" fxFlexFill>
-    <div class="calender custom_calender" style="border-collapse: collapse;border: 1px solid lightgrey;background-color: gainsboro;">
+    <div class="calender custom_calender" style="border-collapse: collapse;border: 1px solid lightgrey;margin-left: 100px;margin-top: 20px;margin-bottom: 50px;width:110%">
       <mat-calendar  [dateClass]="dateClass()" [selected]="selectedDateNew" (selectedChange)="onSelect($event)"></mat-calendar>
     </div>
   </div>
