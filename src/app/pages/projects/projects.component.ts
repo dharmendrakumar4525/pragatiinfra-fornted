@@ -5,6 +5,7 @@ import { RecentActivityService } from 'src/app/services/recent-activity.service'
 import { AddMemberComponent } from '../add-member/add-member.component';
 import * as moment from 'moment';
 import { AboutUsComponent } from '../about-us/about-us.component';
+import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 
 
 
@@ -39,12 +40,15 @@ export class ProjectsComponent implements OnInit {
   aboutUs:any;
   aboutUsLen:any;
   about:any;
+  memberAddPermissions:any;
   constructor(private projectService: AddProjectService,private _dialog: MatDialog, private recentActivityService:RecentActivityService) { }
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     console.log(this.permissions)
     this.projectsViewPermissions = this.permissions.permissions[0].ParentChildchecklist[0].childList[1]
+    this.memberAddPermissions = this.permissions.permissions[0].ParentChildchecklist[5].childList[0]
+
     this.projectService.getProjects().subscribe(data=>{
       //this.spinner.hide()
       this.projects = data;
@@ -96,6 +100,17 @@ export class ProjectsComponent implements OnInit {
       this.recentActivitiesLen = this.recentActivities.length
       
     });
+    this.projectService.getAboutUs().subscribe(data=>{
+      //this.spinner.hide()
+      this.about = data
+      this.aboutUs = this.about[0]
+
+       this.aboutUsLen = this.aboutUs.length
+      // if(this.aboutUsLen){
+      //   this.aboutUsForm.patchValue(this.aboutUs[0])
+      // }
+      // console.log(this.aboutUsLen)
+    });
   }
   setIndex(ii){
     this.aa=ii;
@@ -136,6 +151,17 @@ export class ProjectsComponent implements OnInit {
   }
 
   addMember(){
+
+    if(!this.memberAddPermissions.isSelected){
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to add member"
+        //data: supply
+      });
+      return;
+    }
+
     const dialogRef = this._dialog.open(AddMemberComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],

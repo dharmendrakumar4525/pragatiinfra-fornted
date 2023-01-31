@@ -205,9 +205,12 @@ getDay:any;
   ngOnInit(): void {
 
     this.getWeekName = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][new Date().getDay()]
-    this.getMonth = new Date().getMonth()
+    this.getMonth = new Date().toLocaleString('default', { month: 'short' });
     this.getYear = new Date().getFullYear()
     this.getDay = new Date().getDate()
+    //this.getDay = new Date().getMonth()
+
+    
 
  
     this.permissions = JSON.parse(localStorage.getItem('loginData'))

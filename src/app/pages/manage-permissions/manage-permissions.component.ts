@@ -124,11 +124,9 @@ export class ManagePermissionsComponent implements OnInit {
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
+          }
 
-          {
-            id: 5,parent_id: 1,value: 'view',isSelected: false
-          },
+        
         ]
       },
 
@@ -224,11 +222,9 @@ export class ManagePermissionsComponent implements OnInit {
         childList: [
           {
             id: 1,parent_id: 1,value: 'add',isSelected: false
-          },
+          }
 
-          {
-            id: 5,parent_id: 1,value: 'view',isSelected: false
-          },
+        
         ]
       },
 

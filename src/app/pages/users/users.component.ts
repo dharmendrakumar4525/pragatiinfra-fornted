@@ -8,6 +8,8 @@ import { UsersDeleteMultipleComponent } from '../users-delete-multiple/users-del
 import { MatDialog } from '@angular/material/dialog';
 import { RecentActivityService } from 'src/app/services/recent-activity.service';
 import * as moment from 'moment';
+import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
+import { Router } from '@angular/router';
 
 export interface PeriodicElement {
   SelectAll: string;
@@ -42,8 +44,10 @@ export class UsersComponent implements OnInit {
   disabled = false;
   pageEvent: PageEvent;
   selection = new SelectionModel<any>(true, []);
-
-
+  userPermissionsAdd:any;
+  userPermissionsEdit:any;
+  userPermissionsDelete:any;
+  userPermissionsDeleteMul:any;
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.length = e.length;
@@ -51,10 +55,17 @@ export class UsersComponent implements OnInit {
     this.pageIndex = e.pageIndex;
   }
   recentActivities:any;
-  recentActivitiesLen:any
-  constructor(private userService:UsersService, private recentActivityService:RecentActivityService, private toast:ToastService,private _dialog: MatDialog,) { }
+  recentActivitiesLen:any;
+  permissions:any;
+  constructor(private userService:UsersService, private router:Router, private recentActivityService:RecentActivityService, private toast:ToastService,private _dialog: MatDialog,) { }
 
   ngOnInit(): void {
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    console.log(this.permissions)
+    this.userPermissionsAdd = this.permissions.permissions[0].ParentChildchecklist[4].childList[0]
+    this.userPermissionsEdit = this.permissions.permissions[0].ParentChildchecklist[4].childList[1]
+    this.userPermissionsDelete = this.permissions.permissions[0].ParentChildchecklist[4].childList[2]
+    this.userPermissionsDeleteMul = this.permissions.permissions[0].ParentChildchecklist[4].childList[3]
     this.userService.getUserss().subscribe(data=>{
       //this.spinner.hide()
       this.users = data
@@ -74,7 +85,15 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(id){
-
+    if(!this.userPermissionsDelete.isSelected){
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to delete user"
+        //data: supply
+      });
+      return;
+    }
     this.userService.deleteUser(id).subscribe(
   
       {
@@ -137,6 +156,15 @@ checkboxLabel(row?: any): string {
 }
 
 deleteMultipleDialog() {
+  if(!this.userPermissionsDeleteMul.isSelected){
+    const dialogRef = this._dialog.open(NoPermissionsComponent, {
+      width: '30%',
+      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+      data: "you don't have permissions to delete users"
+      //data: supply
+    });
+    return;
+  }
   if (this.selection.selected.length === 0) {
     this.toast.openSnackBar("Please select users to delete");
     return;
@@ -165,8 +193,35 @@ deleteMultipleDialog() {
     }
   })
 }
+editUser(element){
+  if(!this.userPermissionsEdit.isSelected){
+    const dialogRef = this._dialog.open(NoPermissionsComponent, {
+      width: '30%',
+      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+      data: "you don't have permissions to edit users"
+      //data: supply
+    });
+    return;
+  }
+  this.router.navigate(['/edit-user',element._id]);
+}
+
+addUser(){
+  if(!this.userPermissionsAdd.isSelected){
+    const dialogRef = this._dialog.open(NoPermissionsComponent, {
+      width: '30%',
+      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+      data: "you don't have permissions to add users"
+      //data: supply
+    });
+    return;
+  }
+  this.router.navigate(['/add-user']);
 }
  
+}
+
+
 // const ELEMENT_DATA: PeriodicElement [] = [
 
 

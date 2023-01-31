@@ -9,6 +9,8 @@ import { RecentActivityService } from 'src/app/services/recent-activity.service'
 import { AddMemberComponent } from '../add-member/add-member.component';
 import * as moment from 'moment';
 import { ProgressSheetService } from 'src/app/services/progress-sheet.service';
+import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
+import { AboutUsComponent } from '../about-us/about-us.component';
 
 Chart.register(...registerables);
 export interface Tile {
@@ -49,9 +51,20 @@ export class DataAnalysisComponent implements OnInit {
   recentActivities:any;
   showDefaultFirst:any;
   recentActivitiesLen:any;
+  memberAddPermissions:any;
+  permissions:any;
+  about:any;
+  aboutUs:any;
+  aboutUsLen:any;
+  graphData = []
   constructor(private activeRoute: ActivatedRoute, private progressSheetService:ProgressSheetService, private recentActivityService:RecentActivityService, private _dialog: MatDialog,private projectService: AddProjectService, private dataAnalysis:DataAnalysisService) { }
 
   ngOnInit(): void {
+
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    //console.log(this.permissions)
+    //this.projectsViewPermissions = this.permissions.permissions[0].ParentChildchecklist[0].childList[1]
+    this.memberAddPermissions = this.permissions.permissions[0].ParentChildchecklist[5].childList[0]
 
     this.projectService.getProjects().subscribe(data=>{
       //this.spinner.hide()
@@ -71,6 +84,10 @@ export class DataAnalysisComponent implements OnInit {
       this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data=>{
         this.activesData = data
     console.log(this.activesData)
+    for(let one of this.activesData){
+      this.graphData.push(one.dailyCumulativeTotal)
+    }
+    console.log(this.graphData)
     this.activesData.forEach(obj => {
       //this.grandTotal += obj['discAmount'];
       //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
@@ -128,7 +145,7 @@ export class DataAnalysisComponent implements OnInit {
           datasets: [
             {
               label: 'Remaining Task',
-              data: [0, 0, 0, 0, 0, 0],
+              data: this.graphData,
                backgroundColor: '#267ADC',
               borderColor: '#267ADC',
               borderWidth: 1
@@ -148,7 +165,7 @@ export class DataAnalysisComponent implements OnInit {
       options: {
         scales: {
             y: {
-                suggestedMin: 50,
+                suggestedMin: 0,
                 suggestedMax: 100
             }
         }
@@ -163,10 +180,31 @@ export class DataAnalysisComponent implements OnInit {
     this.recentActivitiesLen = this.recentActivities.length
     
   });
+
+  this.projectService.getAboutUs().subscribe(data=>{
+    //this.spinner.hide()
+    this.about = data
+    this.aboutUs = this.about[0]
+
+     this.aboutUsLen = this.aboutUs.length
+    // if(this.aboutUsLen){
+    //   this.aboutUsForm.patchValue(this.aboutUs[0])
+    // }
+    // console.log(this.aboutUsLen)
+  });
   }
 
 
   addMember(){
+    if(!this.memberAddPermissions.isSelected){
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to add member"
+        //data: supply
+      });
+      return;
+    }
     const dialogRef = this._dialog.open(AddMemberComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -216,5 +254,38 @@ export class DataAnalysisComponent implements OnInit {
 
     console.log(this.showDefaultFirst)
 
+  }
+
+  addAboutUs() {
+    const dialogRef = this._dialog.open(AboutUsComponent, {
+      width: '30%',
+      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown']
+      //data: supply
+    });
+    dialogRef.afterClosed().subscribe(status => {
+      console.log(status);
+      if (status === 'yes') {
+
+        this.projectService.getAboutUs().subscribe(data=>{
+          //this.spinner.hide()
+          this.about = data
+          this.aboutUs = this.about[0]
+
+           this.aboutUsLen = this.aboutUs.length
+          // if(this.aboutUsLen){
+          //   this.aboutUsForm.patchValue(this.aboutUs[0])
+          // }
+          // console.log(this.aboutUsLen)
+        });
+        // this.taskService.getTasks().subscribe(data=>{
+        //   //this.spinner.hide()
+        //   this.tasks = data
+        //   console.log(this.tasks)
+        // })
+       // this.filterSubject.next(this.filterForm.value);
+      }
+      if (status === 'no') {
+      }
+    })
   }
 }

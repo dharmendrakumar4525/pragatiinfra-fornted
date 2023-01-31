@@ -11,6 +11,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { RolesDeleteMultipleComponent } from '../roles-delete-multiple/roles-delete-multiple.component';
 import { RecentActivityService } from 'src/app/services/recent-activity.service';
 import * as moment from 'moment';
+import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 
 
 export interface PeriodicElement {
@@ -44,7 +45,12 @@ export class RolesComponent implements OnInit {
   displayedColumns = ['SelectAll', 'sNo', 'role', 'Action'];
   dataSource = null;
   pageEvent: PageEvent;
-
+  permissions:any;
+  rolesPermissionsView:any;
+  rolesPermissionsEdit:any;
+  rolesPermissionsAdd:any;
+  rolesPermissionsDelete:any;
+  rolesPermissionsDeleteMul:any;
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.length = e.length;
@@ -61,6 +67,15 @@ export class RolesComponent implements OnInit {
   recentActivitiesLen:any
   constructor(public dialog: MatDialog,private _dialog: MatDialog, private recentActivityService:RecentActivityService, private roleService:RolesService, private toast:ToastService) { }
   addRole() {
+    if(!this.rolesPermissionsAdd.isSelected){
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to add role"
+        //data: supply
+      });
+      return;
+    }
     const dialogRef = this._dialog.open(NewRoleComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown']
@@ -85,6 +100,18 @@ export class RolesComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    console.log(this.permissions)
+    this.rolesPermissionsAdd = this.permissions.permissions[0].ParentChildchecklist[3].childList[0]
+    this.rolesPermissionsEdit = this.permissions.permissions[0].ParentChildchecklist[3].childList[1]
+    this.rolesPermissionsDelete = this.permissions.permissions[0].ParentChildchecklist[3].childList[2]
+    this.rolesPermissionsDeleteMul = this.permissions.permissions[0].ParentChildchecklist[3].childList[3]
+    //this.rolesPermissionsEdit = this.permissions.permissions[0].ParentChildchecklist[3].childList[1]
+
+    //console.log(this.progressPermissionsView)
+    //console.log(this.progressPermissionsEdit)
+
     this.roleService.getRoles().subscribe(data=>{
       //this.spinner.hide()
       this.roles = data
@@ -106,6 +133,16 @@ export class RolesComponent implements OnInit {
 
 
   deleteRole(id){
+
+    if(!this.rolesPermissionsDelete.isSelected){
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to delete role"
+        //data: supply
+      });
+      return;
+    }
 
   this.roleService.deleteRole(id).subscribe(
 
@@ -135,6 +172,16 @@ export class RolesComponent implements OnInit {
 }
 
 editRole(ele){
+
+  if(!this.rolesPermissionsEdit.isSelected){
+    const dialogRef = this._dialog.open(NoPermissionsComponent, {
+      width: '30%',
+      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+      data: "you don't have permissions to edit role"
+      //data: supply
+    });
+    return;
+  }
 
   const dialogRef = this._dialog.open(RoleEditComponent, {
     width: '30%',
@@ -189,6 +236,17 @@ checkboxLabel(row?: any): string {
 }
 
 deleteMultipleDialog() {
+
+  if(!this.rolesPermissionsDeleteMul.isSelected){
+    const dialogRef = this._dialog.open(NoPermissionsComponent, {
+      width: '30%',
+      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+      data: "you don't have permissions to delete multiple roles"
+      //data: supply
+    });
+    return;
+  }
+
   if (this.selection.selected.length === 0) {
     this.toast.openSnackBar("Please select users to delete");
     return;

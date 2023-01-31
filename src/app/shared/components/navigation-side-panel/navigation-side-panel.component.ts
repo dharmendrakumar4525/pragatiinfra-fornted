@@ -15,21 +15,12 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   @Input()
   public links: NavigationLink[];
   openSidebar: boolean = false;
-  obj = [{
-    link_name: "Users",
-    link: "/users",
-  }, {
-    link_name: "Roles",
-    link: "/roles",
-  },
+  obj = [ 
   //  {
   //   link_name: "Permissions",
   //   link: "/permissions",
   // },
-  {
-    link_name: "manage Permissions",
-    link: "/manage-permissions",
-  }]
+  ]
   menuSidebar = [
      {
       link_name: "User Management",
@@ -44,6 +35,8 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   public currentPanelState: SidePanelState;
   public SidePanelState = SidePanelState;
   permissions:any;
+  rolePermissionsView:any;
+  userPermissionsView:any;
   constructor(private _sidePanelService: SidePanelService, private router:Router,private userService:UsersService) {
     this._subscriptionsSubject$ = new Subject<void>();
   }
@@ -52,6 +45,62 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
 
+    this.rolePermissionsView = this.permissions.permissions[0].ParentChildchecklist[3].childList[4]
+    this.userPermissionsView = this.permissions.permissions[0].ParentChildchecklist[4].childList[4]
+    
+    if(this.permissions.user.role === 'superadmin'){
+
+      this.obj = [{
+        link_name: "Users",
+        link: "/users",
+      },{
+        link_name: "Roles",
+        link: "/roles",
+      },{
+        link_name: "manage Permissions",
+        link: "/manage-permissions",
+      }]
+      
+    }
+
+
+
+
+
+    if(this.permissions.user.role !== 'superadmin' && this.userPermissionsView.isSelected){
+
+      this.obj = [{
+        link_name: "Users",
+        link: "/users",
+      }]
+
+      
+
+    }
+
+    if(this.permissions.user.role !== 'superadmin' && this.rolePermissionsView.isSelected){
+
+      this.obj = [{
+        link_name: "Roles",
+        link: "/roles",
+      }]
+
+    }
+
+    if(this.permissions.user.role !== 'superadmin' && (this.rolePermissionsView.isSelected && this.userPermissionsView.isSelected)){
+
+      this.obj = [{
+        link_name: "Users",
+        link: "/users",
+      },{
+        link_name: "Roles",
+        link: "/roles",
+      }]
+
+    }
+
+
+    
     this._sidePanelService.panelStateChanges
       .pipe(takeUntil(this._subscriptionsSubject$))
       .subscribe((state: SidePanelState) => (this.currentPanelState = state));
