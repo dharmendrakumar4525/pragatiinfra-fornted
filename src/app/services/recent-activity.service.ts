@@ -4,15 +4,16 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class RecentActivityService {
 
-  baseUrl='http://localhost:3000/api'
+  //baseUrl='http://localhost:3000/api'
   constructor(private http:HttpClient) { }
   getRecentAtivities(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/recentActivity`).pipe(
+    return this.http.get(`${environment.aws_connection}/recentActivity`).pipe(
       catchError(this.handleError)
     );
   }

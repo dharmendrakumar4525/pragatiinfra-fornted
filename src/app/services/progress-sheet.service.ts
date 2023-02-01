@@ -3,17 +3,18 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProgressSheetService {
 
-  baseUrl='http://localhost:3000/api'
+  //baseUrl='http://localhost:3000/api'
   constructor(private http:HttpClient) { }
   getTasksById(id): Observable<any> {
     
-    return this.http.get(`${this.baseUrl}/tasks/tasksList/${id}`).pipe(
+    return this.http.get(`${environment.aws_connection}/tasks/tasksList/${id}`).pipe(
       catchError(this.handleError)
     );
   }
@@ -21,14 +22,14 @@ export class ProgressSheetService {
 
   getActivitiesByProjectId(id): Observable<any> {
     
-    return this.http.get(`${this.baseUrl}/subTasks/activities/${id}`).pipe(
+    return this.http.get(`${environment.aws_connection}/subTasks/activities/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
   getProjectById(id): Observable<any> {
     
-    return this.http.get(`${this.baseUrl}/projects/${id}`).pipe(
+    return this.http.get(`${environment.aws_connection}/projects/${id}`).pipe(
       catchError(this.handleError)
     );
   }
@@ -49,7 +50,7 @@ export class ProgressSheetService {
 
   addSubActivityData(subActivity:any,id): Observable<any> {
     
-    return this.http.put(`${this.baseUrl}/subTasks/${id}`, subActivity).pipe(
+    return this.http.put(`${environment.aws_connection}/subTasks/${id}`, subActivity).pipe(
       catchError(this.handleError)
     );
   }

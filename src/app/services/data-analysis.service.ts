@@ -3,17 +3,18 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class DataAnalysisService {
 
-  baseUrl='http://localhost:3000/api'
+  //baseUrl='http://localhost:3000/api'
   constructor(private http:HttpClient) { }
 
   getProjectById(id): Observable<any> {
     
-    return this.http.get(`${this.baseUrl}/projects/${id}`).pipe(
+    return this.http.get(`${environment.aws_connection}/projects/${id}`).pipe(
       catchError(this.handleError)
     );
   }

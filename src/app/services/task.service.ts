@@ -3,37 +3,38 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  baseUrl='http://localhost:3000/api'
+  //baseUrl='http://localhost:3000/api'
   constructor(private http:HttpClient) { }
 
   getTasks(): Observable<any> {
     
-    return this.http.get(`${this.baseUrl}/masterTasks`).pipe(
+    return this.http.get(`${environment.aws_connection}/masterTasks`).pipe(
       catchError(this.handleError)
     );
   }
 
   getOnlyTasks(): Observable<any> {
     
-    return this.http.get(`${this.baseUrl}/tasks`).pipe(
+    return this.http.get(`${environment.aws_connection}/tasks`).pipe(
       catchError(this.handleError)
     );
   }
 
   addTask(task:any): Observable<any> {
     
-    return this.http.post(`${this.baseUrl}/masterTasks`, task).pipe(
+    return this.http.post(`${environment.aws_connection}/masterTasks`, task).pipe(
       catchError(this.handleError)
     );
   }
 
   addSubTask(task:any): Observable<any> {
     
-    return this.http.post(`${this.baseUrl}/masterSubTasks`, task).pipe(
+    return this.http.post(`${environment.aws_connection}/masterSubTasks`, task).pipe(
       catchError(this.handleError)
     );
   }

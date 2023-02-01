@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-  baseUrl='http://localhost:3000/api'
+  //baseUrl='http://localhost:3000/api'
   private subject = new Subject<any>();
   data = this.subject.asObservable();
   dataOpen = this.subject.asObservable();
@@ -25,7 +26,7 @@ export class UsersService {
   }
   getUserss(): Observable<any> {
     
-    return this.http.get(`${this.baseUrl}/users`).pipe(
+    return this.http.get(`${environment.aws_connection}/users`).pipe(
       catchError(this.handleError)
     );
   }
@@ -34,13 +35,13 @@ export class UsersService {
 
   addUser(user:any): Observable<any> {
     
-    return this.http.post(`${this.baseUrl}/users/register`, user).pipe(
+    return this.http.post(`${environment.aws_connection}/users/register`, user).pipe(
       catchError(this.handleError)
     );
   }
 
   loginWithEmailPassword(login) : Observable<any> {
-    return this.http.post(`${this.baseUrl}/users/login`, login).pipe(
+    return this.http.post(`${environment.aws_connection}/users/login`, login).pipe(
       catchError(this.handleError)
     );
 
@@ -48,14 +49,14 @@ export class UsersService {
 
   addMemberData(membersData:any,id): Observable<any> {
     let members= {members:membersData}
-    return this.http.put(`${this.baseUrl}/projects/members/${id}`, members).pipe(
+    return this.http.put(`${environment.aws_connection}/projects/members/${id}`, members).pipe(
       catchError(this.handleError)
     );
   }
 
   editUser(user:any,id): Observable<any> {
     
-    return this.http.put(`${this.baseUrl}/users/${id}`, user).pipe(
+    return this.http.put(`${environment.aws_connection}/users/${id}`, user).pipe(
       catchError(this.handleError)
     );
   }
@@ -91,20 +92,20 @@ export class UsersService {
       },
     };
     //let deleteMultipleUsers = {selUsers:userIds}
-    return this.http.delete(`${this.baseUrl}/users`, options).pipe(
+    return this.http.delete(`${environment.aws_connection}/users`, options).pipe(
       catchError(this.handleError)
     );
   }
   deleteUser(id:any): Observable<any> {
     
-    return this.http.delete(`${this.baseUrl}/users/${id}`).pipe(
+    return this.http.delete(`${environment.aws_connection}/users/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
   getUserById(id): Observable<any> {
     
-    return this.http.get(`${this.baseUrl}/users/${id}`).pipe(
+    return this.http.get(`${environment.aws_connection}/users/${id}`).pipe(
       catchError(this.handleError)
     );
   }
