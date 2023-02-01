@@ -13,28 +13,28 @@ export class TaskService {
 
   getTasks(): Observable<any> {
     
-    return this.http.get(`${environment.aws_connection}/masterTasks`).pipe(
+    return this.http.get(`${environment.local_connection}/masterTasks`).pipe(
       catchError(this.handleError)
     );
   }
 
   getOnlyTasks(): Observable<any> {
     
-    return this.http.get(`${environment.aws_connection}/tasks`).pipe(
+    return this.http.get(`${environment.local_connection}/tasks`).pipe(
       catchError(this.handleError)
     );
   }
 
   addTask(task:any): Observable<any> {
     
-    return this.http.post(`${environment.aws_connection}/masterTasks`, task).pipe(
+    return this.http.post(`${environment.local_connection}/masterTasks`, task).pipe(
       catchError(this.handleError)
     );
   }
 
   addSubTask(task:any): Observable<any> {
     
-    return this.http.post(`${environment.aws_connection}/masterSubTasks`, task).pipe(
+    return this.http.post(`${environment.local_connection}/masterSubTasks`, task).pipe(
       catchError(this.handleError)
     );
   }

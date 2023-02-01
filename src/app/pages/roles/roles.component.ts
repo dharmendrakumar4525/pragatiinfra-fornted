@@ -248,7 +248,7 @@ deleteMultipleDialog() {
   }
 
   if (this.selection.selected.length === 0) {
-    this.toast.openSnackBar("Please select users to delete");
+    this.toast.openSnackBar("Please select roles to delete");
     return;
   }
   const idArray = this.selection.selected.map(single => single._id);

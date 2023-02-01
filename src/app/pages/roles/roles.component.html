@@ -4,7 +4,7 @@
         <div style="padding: 1rem;margin-top: 60px;">
         <span style="font-size:xx-large;">Pragati Infra</span></div>
         <div>
-            <button mat-button style="padding: 1px 12px;width: 150px;margin-top: 50px;margin-left: 700px;position: relative;background-color: lightgrey;color: black;" [routerLink]="['/add-project']">Add Project +  </button>
+            <button mat-button style="padding: 1px 12px;width: 150px;margin-top: 50px;margin-left: 700px;position: relative;background-color: #fff;color: #97989D;border: 1px solid #97989D;" [routerLink]="['/add-project']">Add Project +  </button>
             </div>
             <div>
        <button mat-button [matMenuTriggerFor]="menu"> <mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" style="margin-top:50px">notifications</mat-icon></button>
@@ -13,8 +13,8 @@
           <div fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
             <div mat-card-avatar class="example-header-image"></div>
             <div  class="notification-container">
-              <div class="content"><b>{{data.description}}</b>
-                <div class="time">{{data.time}}</div>
+              <div class="content">{{data.description}}
+                <div class="time" style="color: #BBBBBB;">{{data.time}}</div>
               </div>
           </div>
         
@@ -58,7 +58,7 @@
             
 
     <div>
-        <button mat-button style="width: 150px;padding: 1px;margin-left: 400px;background-color: lightgrey;color: black;" (click)="addRole()" >New Role</button>
+        <button mat-button style="width: 150px;padding: 1px;margin-left: 400px;background-color: #fff;color: #97989D;border: 1px solid #97989D;" (click)="addRole()" >New Role</button>
     <div style="margin-left: 290px;margin-top: 10px;">
         <form class="Search-form">
         <mat-form-field class="example-full-width" appearance="outline">
@@ -73,7 +73,7 @@
         <mat-grid-tile style="height: 100vh;box-shadow: none;" colspan="4" rowheight="900px">
             <div style="width: 100%;height: 100vh;margin-bottom: 400px;">
 
-              <div style="margin-left: 50px;background-color: brown;color: #fff;width:130px;margin-top:150px ;"><button *ngIf="selection.selected.length" (click)="deleteMultipleDialog()" mat-button>Delete Multiple</button> 
+              <div style="margin-left: 50px;background-color: brown;color: #fff;width:130px;margin-top:150px ;"><button  (click)="deleteMultipleDialog()" mat-button>Delete Multiple</button> 
                 </div><br>
             
                 <div>

@@ -47,6 +47,7 @@ card-below{
 .example-header-image {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
     background-size: cover;
+    margin-left: 10px;
    
   }
 
@@ -62,6 +63,8 @@ card-below{
     justify-content: center;
     align-items: center;
     gap:150px;
+position: relative;
+top:100px;
    
    
 }
@@ -71,11 +74,17 @@ card-below{
    position: relative;
 
    border-left: 3px solid gainsboro;
-   top: 10px;
+   top: -160px;
  margin-bottom: 80px;
- 
-  
+ left: 200px;
 
+}
+.vertical-line1{
+height:20px;
+border-left: 3px solid #D9D9D9;
+position: relative;
+left: 100px;
+top:20px;
 }
 mat-card{
   width: 90%;

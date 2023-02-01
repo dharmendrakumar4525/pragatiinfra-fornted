@@ -5,7 +5,7 @@
     <mat-toolbar style="background-color: #fff;">
       <mat-toolbar-row fxLayoutAlign="space-between center">
           <div style="padding: 1rem;margin-top: 40px;">
-          <span>Add New Project</span></div>
+          <span style="color: #2E2E2E;font-size: 35px;">Add New Project</span></div>
          
         </mat-toolbar-row>
           
@@ -86,8 +86,8 @@
    style="margin-left: 5%;">
     <div class="custom-form-group">
       <label class="custom-label" style="color: #3568BA;">Project Image</label>
-      <div class="custom-form-control" fxLayout="row" fxLayoutAlign="center center">
-          <div class="upload-file" dropzone fxLayout="column" fxLayoutAlign="center center">
+      <div class="custom-form-control" fxLayout="row" fxLayoutAlign="center center" >
+          <div class="upload-file" dropzone fxLayout="column" fxLayoutAlign="center center" style="background-color: #fff;">
               <img src="../../../assets/images/icons/upload-file.svg" class="mb-15" alt="upload-file">
               <h5 style="color: #3568BA;">Project Image</h5>
               <input type="file" class="uploadImg"  id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)">
@@ -104,7 +104,7 @@
     
    
     
-  </div>
+  </div><br>
 
     <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
       fxLayoutAlign="space-around center" fxLayoutGap="0px">
@@ -120,7 +120,7 @@
                    [matChipInputFor]="chipList"
                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                    [matChipInputAddOnBlur]="addOnBlur"
-                   (matChipInputTokenEnd)="addTag($event)">
+                   (matChipInputTokenEnd)="addTag($event)" ><i class="fa fa-plus" aria-hidden="true" style="margin-right:20px;margin-bottom: 10px;"></i>
           </mat-chip-list>
           </mat-form-field>
        
@@ -254,11 +254,11 @@
             <!-- <button > </button> -->
             <br> <br>
             <form class="Search-form" style="width:80%;">
-              <mat-form-field class="example-full-width" appearance="outline" >
+             
               <span matPrefix > </span>
               <input type="text" matInput [(ngModel)]="subTaskName[i]" placeholder="Search" name= "search" >
-              <button matSuffix mat-button><mat-icon >search</mat-icon></button>
-              </mat-form-field>
+              <button matSuffix mat-button style="bottom: 45px;left:180px"><mat-icon >search</mat-icon></button>
+             
              
               </form>
             <!-- <span *ngFor="let subTask of task?.result">

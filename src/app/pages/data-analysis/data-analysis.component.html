@@ -2,11 +2,15 @@
 <mat-toolbar style="background-color: #fff !important;">
     <mat-toolbar-row fxLayoutAlign="space-between center" >
         <div style="padding: 1rem;margin-top: 60px;">
-        <span>{{project?.projectName}}</span></div>
+          <select style="padding: 10px;width:100px;border: none;font-size: large;">
+            <option>
+              
+        <span>{{project?.projectName}}</span></option></select>
+        <span style="font-size: 10px;margin-left: 10px;">on track</span></div>
         <div>
-            <button mat-button style="background-color:lightgrey;width: 150px;margin-top: 50px;cursor: pointer;margin-right: 20px;" [routerLink]="['/add-project']">Add Project +  </button>
+            <button mat-button style="background-color:#fff;width: 150px;margin-top: 50px;cursor: pointer;margin-right: 50px;border-radius: 5px;border: 1px solid #97989D;color:#97989D" [routerLink]="['/add-project']">Add Project +  </button>
             
-            <button mat-button style="background-color:lightgrey;cursor: pointer;" (click)="addMember()"> <mat-icon style="font-size: medium;position: relative;right:1px;top:1px">group_add</mat-icon>
+            <button mat-button style="background-color:#fff;cursor: pointer; border-radius: 5px;border: 1px solid #97989D;color:#97989D" (click)="addMember()"> <mat-icon style="font-size: medium;position: relative;right:1px;top:1px">group_add</mat-icon>
                 Add Member </button>
                 
 
@@ -19,8 +23,8 @@
                        <div mat-card-avatar class="example-header-image"></div>
                      
                       <div class="notification-container" >
-                       <div class="content"><b>{{data.description}}</b>
-                         <div class="time">{{data.time}}</div><br>
+                       <div class="content">{{data.description}}
+                         <div class="time" style="color: #BBBBBB;">{{data.time}}</div><br>
                        </div>
                        </div>
                    </div><br>
@@ -42,14 +46,19 @@
   
 <div class="toptext" >
     <ul style="list-style: none;">
+    
       <li><a [routerLink]="['/dpr']" routerLinkActive="active-link"
         ><i class="fa fa-eye" aria-hidden="true"></i> Projects</a></li>
+       
       <li><a [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
         [routerLinkActiveOptions]="{exact: true}" ><i class="fa fa-eye" aria-hidden="true"></i> Data-Analysis</a></li>
+        
       <li><a [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
          ><i class="fa fa-edit" aria-hidden="true"></i> Progress-sheet</a></li>
+         
       <li><a [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"
          ><i class="fa fa-edit" aria-hidden="true"></i> Calender</a></li>
+      
     </ul>
     
   
@@ -74,7 +83,7 @@
 
     <div style="width: 150px;text-align: center;position: absolute;top:150px">
       <span>Todays update</span> <br>
-    
+      <h1 style="margin-top: 50px;color: #2E2E2E;font-size: 64px;">01 <h5 style="color: #2E2E2E;margin-top: -10px;margin-left: 100px;">Feb</h5></h1>
     </div>
       <div>
       <mat-form-field appearance="outline" style="width: 150px;position: absolute;bottom:40px">
@@ -150,7 +159,7 @@
 
     ><mat-card>
 
-      <select style="width: 50%;padding:10px;border-radius:10px" (change)="onChange($event)">
+      <select style="width: 50%;padding:10px;border-radius:10px;" (change)="onChange($event)">
         <option *ngFor="let single of projectsData">{{single.name}}</option>
         
       </select>
@@ -163,7 +172,7 @@
           <circle-progress   [percent]="single.cpPercentage" [title]="single.cpPercentage" [subtitle]="''"  [space]="-10" [radius]="60" [outerStrokeWidth]="10"
             [innerStrokeWidth]="10" [outerStrokeColor]="'#1E293B'"   [innerStrokeColor]="'gainsboro'" [animation]="true"
             [animationDuration]="100"></circle-progress>
-          <!-- <div class="vertical-line"></div> --> 
+         <div class="vertical-line"></div> 
         </div>
         
         
@@ -201,8 +210,8 @@
         <div  fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities">
           <div mat-card-avatar class="example-header-image"></div>
         <div >
-          <div class="content"><b>{{data.description}}</b>
-            <div class="time">{{data.time}}</div><br>
+          <div class="content">{{data.description}}
+            <div class="time" style="color: #BBBBBB;">{{data.time}}</div><br>
           </div>
       </div><br>
 

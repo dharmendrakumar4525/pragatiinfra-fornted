@@ -2,7 +2,7 @@
     padding: 1px;
 }
 .projectcontent{
-    padding: 30px;
+    padding: 60px;
 }
 .content1{
  
@@ -25,9 +25,9 @@
 card-below{
     
     border-radius: 5px;
-    box-shadow: 0px 0px 3px lightgray,
-    0px 0px 7px lightgray,
-    0px 0px 11px lightgray;
+    box-shadow: 0px 2px 8px lightgray,
+    0px 2px 8px lightgray,
+    0px 2px 8px lightgray;
   
  
 }

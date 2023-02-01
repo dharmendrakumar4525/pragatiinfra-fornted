@@ -46,8 +46,8 @@ export class ProjectsComponent implements OnInit {
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     console.log(this.permissions)
-    // this.projectsViewPermissions = this.permissions.permissions[0].ParentChildchecklist[0].childList[1]
-    // this.memberAddPermissions = this.permissions.permissions[0].ParentChildchecklist[5].childList[0]
+   this.projectsViewPermissions = this.permissions.permissions[0].ParentChildchecklist[0].childList[1]
+    this.memberAddPermissions = this.permissions.permissions[0].ParentChildchecklist[5].childList[0]
 
     this.projectService.getProjects().subscribe(data=>{
       //this.spinner.hide()

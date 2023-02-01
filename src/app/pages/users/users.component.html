@@ -4,7 +4,7 @@
         <div style="padding: 1rem;margin-top: 60px;">
         <span style="font-size:xx-large;">Pragati Infra</span></div>
         <div>
-            <button mat-button style="padding: 1px 12px;width: 150px;margin-top: 50px;margin-left: 700px;position: relative;background-color: lightgrey;color: black;" [routerLink]="['/add-project']">Add Project +  </button>
+            <button mat-button style="padding: 1px 12px;width: 150px;margin-top: 50px;margin-left: 700px;position: relative;background-color: #fff;color: #97989D;border:1px solid #97989D" [routerLink]="['/add-project']">Add Project +  </button>
             </div>
             <div>
                 <button mat-button [matMenuTriggerFor]="menu">
@@ -16,8 +16,8 @@
       <div fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
         <div mat-card-avatar class="example-header-image"></div>
         <div  class="notification-container">
-          <div class="content"><b>{{data.description}}</b>
-            <div class="time">{{data.time}}</div><br>
+          <div class="content">{{data.description}}
+            <div class="time" style="color:#BBBBBB">{{data.time}}</div><br>
           </div>
       </div>
     
@@ -57,7 +57,7 @@
 </div>
 
 <div  class="right" style="height: 150px;width:50%">
-<div><button (click)="addUser()" style="width: 150px;padding: 10px;margin-left: 400px;cursor: pointer;">Create User</button></div>
+<div><button (click)="addUser()" style="width: 150px;padding: 10px;margin-left: 400px;cursor: pointer;color: #818181;border:1px solid #97989D;background-color: #fff;border-radius: 5px;">Create User</button></div>
 <div style="margin-left: 290px;margin-top: 10px;">
     <form class="Search-form">
     <mat-form-field class="example-full-width" appearance="outline">
@@ -71,7 +71,7 @@
 </div>
 <div style="width: 100%;height: 100vh;">
 
-    <div style="margin-left: 50px;background-color: brown;color: #fff;width:130px;margin-top:150px ;"><button *ngIf="selection.selected.length" (click)="deleteMultipleDialog()" mat-button>Delete Multiple</button> 
+    <div style="margin-left: 50px;background-color: brown;color: #fff;width:130px;margin-top:150px ;"><button (click)="deleteMultipleDialog()" mat-button>Delete Multiple</button> 
     </div><br>
 
     <div>
