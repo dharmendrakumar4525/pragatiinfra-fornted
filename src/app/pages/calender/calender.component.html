@@ -16,20 +16,37 @@
         <hr style="width:100%">
       </mat-toolbar-row>
   </mat-toolbar>
-  <div >
-    <ul class="toptext"  style="background-color: #fff !important;list-style: none;">
-      <li><a style="color: #000;" [routerLink]="['/dpr']" routerLinkActive="active-link"
+  <div class="toptext" >
+    <ul style="list-style: none;">
+    
+      <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/dpr']" routerLinkActive="active-link"
         ><i class="fa fa-eye" aria-hidden="true"></i> Projects</a></li>
-      <li><a style="color: #000;" [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
+       
+      <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
         [routerLinkActiveOptions]="{exact: true}" ><i class="fa fa-eye" aria-hidden="true"></i> Data-Analysis</a></li>
-      <li><a  style="color: #000;" [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
+        
+      <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
          ><i class="fa fa-edit" aria-hidden="true"></i> Progress-sheet</a></li>
-      <li><a style="color: #000;" [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"
+         
+      <li><a [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"
          ><i class="fa fa-edit" aria-hidden="true"></i> Calender</a></li>
+      
     </ul>
-    </div>
+    
+  
+  </div><br>
 
+    <mat-grid-list cols="3" rowHeight="500px" style="background-color: green;">
+      <mat-grid-tile colspan="2" style="background-color: aqua;">
 
+      </mat-grid-tile>
+      <mat-grid-tile style="background-color: coral;">
+
+      </mat-grid-tile>
+      <mat-grid-tile colspan="3" style="background-color: blue;">
+
+      </mat-grid-tile>
+    </mat-grid-list> 
     <div class="gallery_row" fxLayout="row" fxLayout.xl="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row"
     fxLayout.xs="column" fxLayoutAlign="start enter"  fxLayoutGap="15px" *ngIf="!showCalData">
     <div class="gallery_left_column" fxLayout="column" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
@@ -38,7 +55,42 @@
       <mat-calendar  [dateClass]="dateClass()" [selected]="selectedDateNew" (selectedChange)="onSelect($event)"></mat-calendar>
     </div>
   </div>
+
     </div>
+<!-- <mat-grid-tile  >
+  
+      <div class="top_container" fxLayout="column" fxLayoutGap="10px"  style="height: 70vh;margin-right: 50px;" >
+        <mat-card style="width: 230px;height: 400px;margin:10px 0px;"  >
+          <div class="scroll-bar" fxLayout="column">
+          <mat-card-header>
+        
+            <mat-card-title> About &nbsp; <i class="fa fa-edit" style="cursor: pointer;"  aria-hidden="true"></i></mat-card-title>
+        
+          </mat-card-header>
+      
+          <mat-card-content>
+            <p>asasadsdas</p></mat-card-content>
+           
+            <mat-card-subtitle>Members</mat-card-subtitle>
+          
+     <div  fxFlex="row" fxLayoutAlign="start" >
+      <div  style="margin-top:10px" mat-card-avatar class="example-header-image"></div>
+      <div style="margin-top:10px">
+        <button mat-button >user1</button>
+       
+  </div>
+  </div>
+  
+  </div>
+  <mat-card-actions>
+  <button mat-button >Addmembers+</button> 
+  </mat-card-actions>
+  
+    </mat-card>
+  
+  </div>
+  
+    </mat-grid-tile>>-->
 
     <!-- <full-calendar [options]="calendarOptions"></full-calendar> -->
     <!-- <full-calendar
@@ -143,8 +195,8 @@
                     <div  fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities">
                       <div mat-card-avatar class="example-header-image"></div>
                     <div >
-                      <div class="content"><b>{{data.description}}</b>
-                        <div class="time">{{data.time}}</div><br>
+                      <div class="content">{{data.description}}
+                        <div class="time" style="color: #BBBBBB;">{{data.time}}</div><br>
                       </div>
                   </div><br>
                   </div>

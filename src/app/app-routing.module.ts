@@ -21,6 +21,9 @@ import { ManagePermissionsComponent } from './pages/manage-permissions/manage-pe
 import { AuthGuard } from './services/auth.guard';
 import { CreatenewpasswordComponent } from './pages/createnewpassword/createnewpassword.component';
 import { UserEditComponent } from './pages/user-edit/user-edit.component';
+import { MasteruserComponent } from './pages/masteruser/masteruser.component';
+import { MasterCreateuserComponent } from './pages/master-createuser/master-createuser.component';
+import { BigcalendarComponent } from './pages/bigcalendar/bigcalendar.component';
 
 const routes: Routes = [
   {
@@ -92,6 +95,9 @@ const routes: Routes = [
   },
   {path: 'forgotpassword', component: ForgotpasswordComponent},
   {path: 'createnewpassword', component: CreatenewpasswordComponent},
+  {path: 'masteruser', component: MasteruserComponent},
+  {path: 'master-createuser', component: MasterCreateuserComponent},
+  {path: 'bigcalendar', component: BigcalendarComponent},
 
   {
     path: 'view-project',

@@ -47,13 +47,13 @@
 <div class="toptext" >
     <ul style="list-style: none;">
     
-      <li><a [routerLink]="['/dpr']" routerLinkActive="active-link"
+      <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/dpr']" routerLinkActive="active-link"
         ><i class="fa fa-eye" aria-hidden="true"></i> Projects</a></li>
        
-      <li><a [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
+      <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
         [routerLinkActiveOptions]="{exact: true}" ><i class="fa fa-eye" aria-hidden="true"></i> Data-Analysis</a></li>
         
-      <li><a [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
+      <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
          ><i class="fa fa-edit" aria-hidden="true"></i> Progress-sheet</a></li>
          
       <li><a [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"
@@ -158,11 +158,20 @@
     colspan="3"
 
     ><mat-card>
-
-      <select style="width: 50%;padding:10px;border-radius:10px;" (change)="onChange($event)">
-        <option *ngFor="let single of projectsData">{{single.name}}</option>
+      <div class="activity-main">
+      <select style="width: 50%;padding:10px ;border-radius:10px;" (change)="onChange($event)">
+        <option *ngFor="let single of projectsData" style="padding-right: 10px;">{{single.name}}</option>
         
       </select>
+      <div class="sub-activity">
+       
+        <div class="first"></div>
+        <div><h5 style="margin-top: 10px;">Remaining Activity</h5></div>
+    
+        <div class="second" ></div>
+        <div> <h5 style="margin-top: 10px;">Completed Activity</h5></div>
+      </div>
+    </div>
       <div class="scroll-bar1" fxLayout="row">
       <div class="cirle">
      

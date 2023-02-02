@@ -4,10 +4,10 @@
       <div style="padding: 1rem;margin-top: 60px;">
       <span>{{project?.projectName}}</span></div>
       <div>
-          <button mat-button style="background-color:lightgrey;padding: 5px 5px;width: 150px;margin-top: 50px;margin-left: 600px;position: relative;" [routerLink]="['/add-project']">Add Project +  </button>
+          <button mat-button style="background-color:#fff;padding: 5px 5px;width: 150px;margin-top: 50px;margin-left: 600px;position: relative;border: 1px solid #97989D;border-radius: 5px;color: #97989D;" [routerLink]="['/add-project']">Add Project +  </button>
           </div>
           <div>
-          <button  mat-button style="background-color:lightgrey;padding: 5px 5px;width: 150px;margin-left: -80px;margin-top: 50px;"> <mat-icon style="font-size: medium;position: relative;right:-10px;">group_add</mat-icon>
+          <button  mat-button style="background-color:#fff;padding: 5px 5px;width: 150px;margin-left: -30px;margin-top: 50px;border: 1px solid #97989D;border-radius: 5px;color: #97989D;"> <mat-icon style="font-size: medium;position: relative;right:-10px;">group_add</mat-icon>
               Add Member </button>
               
 <button mat-button [matMenuTriggerFor]="menu" ><mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" style="margin-left:-10px">notifications</mat-icon></button>
@@ -45,11 +45,11 @@
 
     <div >
       <ul class="toptext"  style="background-color: #fff !important;list-style: none;">
-        <li><a style="color: #000;" [routerLink]="['/dpr']" routerLinkActive="active-link"
+        <li style="border-right: 1px solid #D9D9D9;padding-right: 10px;"><a style="color: #000;" [routerLink]="['/dpr']" routerLinkActive="active-link"
           ><i class="fa fa-eye" aria-hidden="true"></i> Projects</a></li>
-        <li><a style="color: #000;" [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
+        <li style="border-right: 1px solid #D9D9D9;padding-right: 20px;"><a style="color: #000;" [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
           [routerLinkActiveOptions]="{exact: true}" ><i class="fa fa-eye" aria-hidden="true"></i> Data-Analysis</a></li>
-        <li><a  style="color: #000;" [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
+        <li style="border-right: 1px solid #D9D9D9; padding-right: 20px;"><a  style="color: #000;" [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
            ><i class="fa fa-edit" aria-hidden="true"></i> Progress-sheet</a></li>
         <li><a style="color: #000;" [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"
            ><i class="fa fa-edit" aria-hidden="true"></i> Calender</a></li>
@@ -62,35 +62,36 @@
   <h3>Project progress monitoring sheets(PPMS)</h3>
 </div>
 
-<body>
+<body >
   <div class="scroll-bar1" style="width: 93%;">
-    <table *ngIf="progressPermissionsView?.isSelected; else noView">
+    <table *ngIf="progressPermissionsView?.isSelected; else noView" style="direction: ltr !important;">
    
-  <thead >
+
+    <tr>
     <th >Description</th>
-    <th>R1 End Date</th>
-   <th>R2 End Date</th>
-   <th>R3 End Date</th>
-   <th>Actual/ Revised Start Date   </th>
-   <th>Working Days Revised</th>
-   <th>Baseline Start Date</th>
-   <th>Baseline End Date</th>
-   <th>Base Line Working Days</th>
+    <th>R1&nbsp;End&nbsp;Date</th>
+   <th>R2&nbsp;End&nbsp;Date</th>
+   <th>R3&nbsp;End&nbsp;Date</th>
+   <th>Actual&nbsp;Revised&nbsp;Start&nbsp;Date</th>
+   <th>Working&nbsp;Days&nbsp;Revised</th>
+   <th>Baseline&nbsp;Start&nbsp;Date</th>
+   <th>Baseline&nbsp;End&nbsp;Date</th>
+   <th>Base&nbsp;Line&nbsp;Working&nbsp;Days</th>
    <th>UOM</th>
    <th>Total</th>
-   <th>Cumulative Completed</th>
-   <th>Target Till Date as per Revised End Date  </th>
-   <th>No of Days Balance as per revised dates  </th>
-   <th>Daily Asking Rate as per Revised End Date  </th>
-   <th>Activity Balance (%)   </th>
+   <th>Cumulative&nbsp;Completed</th>
+   <th>Target&nbsp;Till&nbsp;Date&nbsp;as&nbsp;per&nbsp;Revised&nbsp;End&nbsp;Date</th>
+   <th>No&nbsp;of&nbsp;Days&nbsp;Balance&nbsp;as&nbsp;per&nbsp;revised&nbsp;dates</th>
+   <th>Daily&nbsp;Asking&nbsp;Rate&nbsp;as&nbsp;per&nbsp;Revised&nbsp;End&nbsp;Date</th>
+   <th>Activity&nbsp;Balance&nbsp;(%)</th>
    <th>Total</th>
  
-
+</tr>
     
-      </thead>
+    
    
     <tbody *ngFor= " let project of projectsData ">
-        <tr  style="font-size: large;border: 1px solid lightgray;font-weight: bold;">
+        <tr  style="font-size: large;border: 1px solid lightgray;font-weight: bold;color:#233A61">
             <td>{{project.name}} <button mat-button style="width: 1px;"> <mat-icon [routerLink]="['/add-project',projectId]"  >add</mat-icon></button></td>
             <td ></td>
             <td ></td>
@@ -113,7 +114,7 @@
         
         </tr>
         
-        <tr *ngFor="let subTask of project.result" style="background-color: #F5F5F5;" >
+        <tr *ngFor="let subTask of project.result" style="background-color: #F4F4F5;font-size: 15px;" >
 
           <td > <button mat-button> <mat-icon (click)="addData(subTask)" >edit</mat-icon></button>{{subTask.subTaskName}}</td>
           <td >{{subTask?.r1EndDate | date}}</td>

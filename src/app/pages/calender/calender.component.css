@@ -30,7 +30,7 @@ li {
  
 
   table {
-    font-family: arial, sans-serif;
+    font-family: 'Poppins', sans-serif !important;
     border-collapse: collapse;
     width: 98%;
  

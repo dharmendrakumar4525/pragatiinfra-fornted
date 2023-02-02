@@ -123,8 +123,12 @@
           <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
         </label>
         <div class="custom-form-control" style="margin-left: 30px;position: relative;">
+         
             <mat-form-field appearance="outline" style="width: 115%;">
-                <input matInput  placeholder="Enter uom" formControlName="uom"
+              <mat-select  placeholder=" uom">
+                <mat-option>sqm </mat-option>
+                <mat-option>cm </mat-option>
+                <input matInput  placeholder="" formControlName="uom"
                   >
                   <!-- <mat-error *ngIf="uom.invalid && ( uom.dirty || uom.touched )">
                     <span>Please provide a valid Uom</span>
@@ -132,12 +136,14 @@
                 <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
                   <span>Please provide a valid Profession Type</span>
                 </mat-error> -->
+             
+                </mat-select>
               </mat-form-field>
         </div>
       </div>
 
       <div class="custom-form-group">
-        <label class="custom-label" for="" style="margin-left: -10px;position: relative;"> total <span class="star">*</span>
+        <label class="custom-label" for="" style="margin-left: -10px;position: relative;"> Quantity <span class="star">*</span>
           <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
         </label>
         <div class="custom-form-control" style="margin-left: -18px;position: relative;">

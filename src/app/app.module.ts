@@ -49,7 +49,9 @@ import { RolesDeleteMultipleComponent } from './pages/roles-delete-multiple/role
 import { SearchPipe } from './services/search.pipe';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
 import { SubActivitySearchPipe } from './services/subActivity.pipe';
-
+import { MasteruserComponent } from './pages/masteruser/masteruser.component';
+import { MasterCreateuserComponent } from './pages/master-createuser/master-createuser.component';
+import { BigcalendarComponent } from './pages/bigcalendar/bigcalendar.component';
 // FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 //   dayGridPlugin,
 //   interactionPlugin
@@ -86,7 +88,7 @@ import { SubActivitySearchPipe } from './services/subActivity.pipe';
      BrowserAnimationsModule,
   ],
   declarations: [ AppComponent, HomeComponent,SearchPipe,SubActivitySearchPipe, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent,LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,
-    ForgotpasswordComponent, NewRoleComponent,NewPermissionComponent, AddDataComponent, ManagePermissionsComponent,CreatenewpasswordComponent, NoPermissionsComponent, RoleEditComponent, UserEditComponent, UsersDeleteMultipleComponent, RolesDeleteMultipleComponent, AboutUsComponent],
+    ForgotpasswordComponent, NewRoleComponent,NewPermissionComponent, AddDataComponent, ManagePermissionsComponent,CreatenewpasswordComponent, NoPermissionsComponent, RoleEditComponent, UserEditComponent, UsersDeleteMultipleComponent, RolesDeleteMultipleComponent, AboutUsComponent,MasteruserComponent,MasterCreateuserComponent,BigcalendarComponent],
     providers:[AuthGuard],
     schemas: [
       CUSTOM_ELEMENTS_SCHEMA,

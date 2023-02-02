@@ -8,6 +8,14 @@
   
   <div class="navigation-panel-brand">P<span [ngClass]="currentPanelState">ragati Infra
   </span></div>
+  <form class="Search-form" style="width:80%;margin-left: 20px;">
+             
+    <span matPrefix > </span>
+    <input type="text"  placeholder="Search" name= "search" >
+    <button  style="bottom: 35px;left:200px;position: relative;background-color: #233A61;border: none;"><i class="fa fa-search" aria-hidden="true" style="color: #97989D;"></i></button>
+   
+   
+    </form>
   <ul class="navigation-panel-menu" *ngIf="links && links.length > 0">
     <li *ngFor="let link of links">
       <a [routerLink]="link.url" 

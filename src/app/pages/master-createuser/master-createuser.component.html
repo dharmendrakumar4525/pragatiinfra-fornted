@@ -1,0 +1,57 @@
+
+<mat-toolbar style="background-color: #fff !important;">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" >
+        <div style="padding: 1rem;margin-top: 60px;font-size: 30px;">  
+        <span>Pragati Infra</span>
+</div>     
+      </mat-toolbar-row>
+        
+      <mat-toolbar-row>
+        <hr style="width:100%">
+      </mat-toolbar-row>
+  </mat-toolbar>
+  <div style="height: 150vh;margin-bottom: 10px;" >
+    <div><h2 style="padding:10px 50px ;">Create user</h2></div>
+    <form >
+<div>
+    <label>Name</label><br>
+    <mat-form-field appearance="outline">
+       <input matInput placeholder="Enter name">
+      </mat-form-field><br>
+
+      <label>Email</label><br>
+      <mat-form-field appearance="outline">
+         <input matInput placeholder="Enter email">
+        </mat-form-field><br>
+
+        <label>Contact Number</label><br>
+        <mat-form-field appearance="outline">
+           <input matInput placeholder="Enter contact number">
+          </mat-form-field><br>
+
+          <label>Role</label><br>
+ <mat-form-field appearance="outline">
+    <mat-select formControlName="role">
+        <mat-option>admin</mat-option>
+        <mat-option>employee</mat-option>
+             <input matInput placeholder="">
+            </mat-select>
+            </mat-form-field><br>
+
+
+            <label>Password</label><br>
+            <mat-form-field appearance="outline">
+               <input matInput type="password">
+              </mat-form-field><br>
+
+              <label>Confirm Password</label><br>
+              <mat-form-field appearance="outline">
+                 <input matInput type="password">
+                </mat-form-field><br>
+  
+
+            <button mat-button style="width: 150px;margin-left: 50px;background-color: #233A61;color: #fff;" >Submit</button>
+    </div>
+  </form>
+    </div>
+

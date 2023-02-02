@@ -10,7 +10,7 @@ import { Component, Input } from '@angular/core';
 <button [routerLink]="['/view-project']" >
   go to project view
 </button>`,
-  styles: [`h1 { font-family: Lato; }`]
+  styles: [`h1 { font-family: 'Poppins', sans-serif !important; }`]
 })
 export class HomeComponent  {
 }
