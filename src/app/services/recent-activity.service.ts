@@ -13,7 +13,7 @@ export class RecentActivityService {
   //baseUrl='http://localhost:3000/api'
   constructor(private http:HttpClient) { }
   getRecentAtivities(): Observable<any> {
-    return this.http.get(`${environment.local_connection}/recentActivity`).pipe(
+    return this.http.get(`${environment.aws_connection}/recentActivity`).pipe(
       catchError(this.handleError)
     );
   }

@@ -14,7 +14,7 @@ export class DataAnalysisService {
 
   getProjectById(id): Observable<any> {
     
-    return this.http.get(`${environment.local_connection}/projects/${id}`).pipe(
+    return this.http.get(`${environment.aws_connection}/projects/${id}`).pipe(
       catchError(this.handleError)
     );
   }
