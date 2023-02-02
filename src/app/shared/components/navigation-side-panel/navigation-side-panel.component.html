@@ -7,7 +7,9 @@
   <br>
   
   <div class="navigation-panel-brand">P<span [ngClass]="currentPanelState">ragati Infra
-  </span></div>
+  </span>
+  <img src=".\assets\images\dotleft.png">
+</div>
   <form class="Search-form" style="width:80%;margin-left: 20px;">
              
     <span matPrefix > </span>
@@ -22,15 +24,19 @@
           [routerLinkActive]="['active']"
           [routerLinkActiveOptions]="{exact: true}">
         <i class="fas fa-home" [ngClass]="link.iconClass"></i>
+        
         <span [ngClass]="currentPanelState">{{ link.text }}</span>
       </a>
     </li>
     <li *ngFor="let item of menuSidebar" class="sidebar"  #itemEl routerLinkActive="active">
       <div  class="dropdown-title">
+        
         <a (click)="addSubItems()">
           <!-- <i class="fas fa-home" [ngClass]="link.iconClass"></i> -->
           <!-- <i class='fa-solid fa-users-gear' style='color: white'></i> -->
+          
           <i class="fa fa-user-circle" aria-hidden="true"></i>
+         
           <span class="link_name">{{item.link_name}}</span>
         </a>
       </div>
@@ -44,7 +50,9 @@
       <ul class="sub-menu" [class.blank]="item.sub_menu.length == 0">
         <!-- <li><a class="link_name">{{item.link_name}}</a></li> -->
         <li *ngFor="let item_sub of item.sub_menu" routerLinkActive="active">
+          
           <!-- <i class="fas fa-home" [ngClass]="link.iconClass"></i> -->
+          
           <a [routerLink]="[item_sub.link]">{{item_sub.link_name}}</a>
           <!-- <hr> -->
         </li>

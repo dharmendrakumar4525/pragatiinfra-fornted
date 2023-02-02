@@ -63,6 +63,7 @@
     width:1000px !important;
     color: white;
     font-weight: 80;
+    
 
   }
   
@@ -71,7 +72,10 @@
     border: 1px solid #D9D9D9;
     text-align: left;
     padding: 4px;
-    color: #94A3B8;
+    color: #233A61;
+    font-style: normal;
+    font-size: medium;
+  
     
   
   }
@@ -96,6 +100,44 @@
   margin-left: 20px;
 direction: rtl !important;
   overflow: auto;
+ 
+  }
+
+::-webkit-scrollbar {
+width: 7px;
+height:7px;
+}
+::-webkit-scrollbar-track{
+border: 1px solid lightgrey;
+border-radius: 5px;
+background-color:lightgrey ;
+}
+::-webkit-scrollbar-thumb{
+background: #1E293B;
+border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover{
+background: lightblue;
+}
+
+::ng-deep.mat-menu-panel {
+  max-width: none !important;
+}
+.notification-container{
+ width: 200px;
+
+
+} 
+
+ 
+.scroll-bar2{
+        
+   
+  height: 500px;
+  width:93%;
+  margin-left: 20px;
+  overflow: auto;
+  overflow-x: hidden;
  
   }
 

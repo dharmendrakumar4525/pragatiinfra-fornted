@@ -106,17 +106,21 @@
       <div class="container" >
         <div class="row" fxLayout="row" fxLayoutGap="50px grid" fxLayoutAlign="space-around center"   >
           <div fxFlex="25%"  fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let card of cards">
-            <mat-card class="card-below">
+            <mat-card class="card-below" style="border-radius:15px;background-color: #FBFBFB; box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25) !important;">
             <mat-card-title style="display: flex;justify-content: center;">
-                   <h1 style="color: #2E2E2E;font-size: 35px;"><b>{{card.count}}</b></h1>
+                   <h1 style="color: #2E2E2E;font-size: 35px;margin-top: 10px;"><b>{{card.count}}</b></h1>
                 </mat-card-title>
                 <mat-card-content  style="display: flex;justify-content: center; color: #2E2E2E;">
                   {{card.title}}
                 </mat-card-content>
            
             </mat-card>
+            
           </div>
         </div>
+        <img src=".\assets\images\arrow.jpg" width="30px" style="margin-left:170px;position: relative;bottom:60px;font-size: bold;">
+        <img src=".\assets\images\arrowgreen.png" width="30px" style="margin-left:170px;position: relative;bottom:60px;font-size: bold;">
+        <img src=".\assets\images\arrowblue.png" width="30px" style="margin-left:180px;position: relative;bottom:60px;font-size: bold;">
       </div>
   </div>
 
@@ -129,7 +133,7 @@
 <div fxLayout="column" fxFlex="29" fxLayoutAlign="right" fxLayoutGap="-10px" class="rightside" style="height: 145vh;">
 
 <div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right"  style="height: 70vh;" >
-  <mat-card fxLayout="column" fxLayoutAlign="left" style="height: 70vh; ">
+  <mat-card fxLayout="column" fxLayoutAlign="left" style="height: 70vh; background-color: #FAFAFA;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);">
     <div class="scroll-bar2" fxLayout="column">
     <mat-card-header>
   
@@ -176,7 +180,7 @@
 <div fxLayout="column" fxFlex="29" fxLayoutAlign="right" fxLayoutGap="30px" class="rightside" style="height: 145vh;">
 
   <div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right"  style="height: 70vh;" >
-    <mat-card fxLayout="row" fxLayoutAlign="left" style="height: 60vh;">
+    <mat-card fxLayout="row" fxLayoutAlign="left" style="height: 60vh;background-color: #FAFAFA;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);">
       <div class="scroll-bar1" fxLayout="column">
         <div  fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
           <div mat-card-avatar class="example-header-image"></div>

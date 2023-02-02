@@ -144,7 +144,7 @@ export class DataAnalysisComponent implements OnInit {
           labels: ['jan', 'feb', 'mar', 'april', 'may', 'june'],
           datasets: [
             {
-              label: 'Remaining Task',
+              label: 'Completed Task',
               data: this.graphData,
                backgroundColor: '#267ADC',
               borderColor: '#267ADC',

@@ -50,7 +50,7 @@ li {
 
   .scroll-bar{
         
-    height: 350px;
+   height: 350px;
     
  
     
@@ -109,4 +109,40 @@ background: lightblue;
 }
 .calender{
  margin-bottom: 100px;
+}
+
+.top_container{
+  padding: 20px;
+ 
+}
+
+.scroll-bar2{
+        
+ 
+  height: 530px;
+    
+ 
+    
+   
+  overflow-y:auto;
+ overflow-x: hidden;
+
+  
+  }
+
+::-webkit-scrollbar {
+width: 7px;
+
+}
+::-webkit-scrollbar-track{
+border: 1px solid lightgrey;
+border-radius: 5px;
+background-color:lightgrey ;
+}
+::-webkit-scrollbar-thumb{
+background: #1E293B;
+border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover{
+background: lightblue;
 }

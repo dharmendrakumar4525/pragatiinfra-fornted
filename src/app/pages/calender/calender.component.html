@@ -6,7 +6,7 @@
                 <option>
         <span>{{project?.projectName}}</span></option>
 </select>
-<!-- <span style="font-size: small;">on track</span> -->
+ <span style="font-size: small;">on track</span> 
 </div>
 <div style="margin-left: 100px;font-size: small;position: relative;margin-top: 90px;">
 <button mat-button (click)="backToCalender()"><i class="fa fa-undo" aria-hidden="true"></i> Back to Calender</button></div>       
@@ -36,27 +36,94 @@
   
   </div><br>
 
- <!-- <mat-grid-list cols="3" rowHeight="500px" style="background-color: green;">
-      <mat-grid-tile colspan="2" style="background-color: aqua;">
-
+  <mat-grid-list cols="3" rowHeight="700px" >
+      <mat-grid-tile colspan="2" >
+      
+        <div style="margin-right:-30px;"  *ngIf="!showCalData">
+      
+        <div class="calender custom_calender" style="border-radius:5px;border-collapse: collapse;border: 2px solid lightgrey;margin-top: 50px;margin-bottom: 50px;width:700px;">
+          <mat-calendar  [dateClass]="dateClass()" [selected]="selectedDateNew" (selectedChange)="onSelect($event)"></mat-calendar>
+        </div>
+     
+    
+        </div>
+   
       </mat-grid-tile>
-      <mat-grid-tile style="background-color: coral;">
 
+      <mat-grid-tile >
+        <div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right"  style="height: 93vh;" >
+          <mat-card  fxLayout="column" fxLayoutAlign="left" style="height: 93vh;width:350px;background-color: #FAFAFA; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);">
+            <div class="scroll-bar2" fxLayout="column">
+            <mat-card-header>
+          
+              <mat-card-title style="color: #1E293B;font-size: 14;"> About &nbsp;&nbsp; <i class="fa fa-edit" style="cursor: pointer;"  aria-hidden="true"></i></mat-card-title>
+          
+            </mat-card-header> <br>
+        
+            <mat-card-content>
+              <p>Lorem Ipsum is simply dummy text of the printing and 
+                typesetting industry. Lorem Ipsum has been the industry's 
+                standard dummy text ever since the 1500s,
+                 when an unknown printer took a galley of type and scrambled it
+                 Lorem Ipsum is simply dummy text of the printing and 
+                typesetting industry. Lorem Ipsum has been the industry's 
+                standard dummy text ever since the 1500s,
+                 when an unknown printer took a galley of type and scrambled it
+                 Lorem Ipsum is simply dummy text of the printing and 
+                typesetting industry. Lorem Ipsum has been the industry's 
+                standard dummy text ever since the 1500s,
+                 when an unknown printer took a galley of type and scrambled it
+              </p></mat-card-content>
+             
+              <mat-card-subtitle><i style="color: #1E293B;">Members</i></mat-card-subtitle>
+        
+              <div  fxFlex="row" fxLayoutAlign="start" >
+              <div style="margin-top:10px" mat-card-avatar class="example-header-image"></div>
+              <div  style="margin-top:10px;" fxLayout="column" >
+              <button mat-button >user1</button>
+            </div>
+          </div><br>
+           <div fxFlex="row" fxLayoutAlign="start" >
+            <div mat-card-avatar class="example-header-image"></div>
+            <div >
+            <button mat-button >User2</button> 
+            
+          </div>
+        </div> 
+        
+          
+          </div>
+          <mat-card-actions style="margin-top: 40px;">
+            <button mat-button >Addmembers+</button> 
+          </mat-card-actions>
+          </mat-card>
+        
+        </div>
+        
       </mat-grid-tile>
-      <mat-grid-tile colspan="3" style="background-color: blue;">
 
+      <mat-grid-tile colspan="3" >
+        <mat-card  style="width: 90%;height: 400px;margin:10px 0px;background-color: #FAFAFA;margin-top:-200px;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
+          
+          <div  >
+            <div class="scroll-bar" >
+              <div  fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities"  style="border-right: 2px solid #E5E5E5;margin-right: 800px;" >
+                <div mat-card-avatar class="example-header-image"></div>
+              <div   >
+                <div class="content">{{data.description}}
+                  <div class="time" style="color: #BBBBBB;">{{data.time}}</div><br>
+                 
+                </div>
+            </div><br>
+            </div>    
+      </div>
+       </div>
+       
+        </mat-card>
+    
       </mat-grid-tile>
-    </mat-grid-list> > -->
-    <div class="gallery_row" fxLayout="row" fxLayout.xl="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row"
-    fxLayout.xs="column" fxLayoutAlign="start enter"  fxLayoutGap="15px" *ngIf="!showCalData">
-    <div class="gallery_left_column" fxLayout="column" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
-    fxFlex.xs="100" fxFlexFill>
-    <div class="calender custom_calender" style="border-collapse: collapse;border: 1px solid lightgrey;margin-left: 100px;margin-top: 20px;margin-bottom: 50px;width:110%">
-      <mat-calendar  [dateClass]="dateClass()" [selected]="selectedDateNew" (selectedChange)="onSelect($event)"></mat-calendar>
-    </div>
-  </div>
-
-    </div>
+    </mat-grid-list> > 
+   
 <!-- <mat-grid-tile  >
   
       <div class="top_container" fxLayout="column" fxLayoutGap="10px"  style="height: 70vh;margin-right: 50px;" >
@@ -189,7 +256,7 @@
        
 
         <mat-grid-tile >
-            <mat-card style="width: 250px;height: 350px;margin:10px 0px">
+            <mat-card style="width: 250px;height: 350px;margin:10px 0px;background-color: #FAFAFA;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
                 <div>
                   <div class="scroll-bar">
                     <div  fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities">
