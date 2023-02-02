@@ -12,15 +12,14 @@
   </mat-toolbar>
   <div style="height: 150vh;margin-bottom: 10px;" >
     <div><h2 style="padding:10px 50px ;">Create user</h2></div>
+    
     <form [formGroup]="addUserForm" >
 <div>
     <label>Name</label><br>
     <mat-form-field appearance="outline">
         <mat-label>Enter Name</mat-label>
         <input matInput formControlName="name">
-        <mat-error *ngIf="name.invalid && ( name.dirty || name.touched )">
-          <span>Please provide a valid name</span>
-        </mat-error>
+        
       </mat-form-field><br>
 
       <label>Email</label><br>

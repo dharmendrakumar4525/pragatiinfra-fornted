@@ -13,9 +13,9 @@ $text-color-brand: #FFFFFF;
     height: 75px;
     line-height: 75px;
     padding-left: 2rem;
-    font-size: 1.5rem;
+   
     color: $text-color-brand;
-    font-weight: 700;
+   font-size: 20px !important;
     
     span {
       transition: opacity 0.2s;
@@ -47,7 +47,7 @@ $text-color-brand: #FFFFFF;
         cursor: pointer;
         padding-left: 1.8rem;
         text-transform: uppercase;
-        font-weight: 700;
+   font-size: 15px !important;
         white-space: nowrap;
         transition: background 0.2s;
 
@@ -83,7 +83,7 @@ $text-color-brand: #FFFFFF;
 
 .title-pen {
   color: #333;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif !important;
 font-weight: 20;
 
   text-align: center;
@@ -109,7 +109,7 @@ font-weight: 20;
   //margin-left: 5.80em;
   color: #658585;
   font-size: 1.53em;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif !important;
   font-weight: bold;
 }
 .user-profile  .bio {
@@ -118,7 +118,7 @@ font-weight: 20;
   margin-left: 10.43em;
   color: #e76043; 
   font-size: .87em;
-  font-family: "varela round", sans-serif;
+  font-family: 'Poppins', sans-serif !important;
 }
 .user-profile > .description {
   margin: auto;
@@ -127,7 +127,7 @@ font-weight: 20;
   width: 14em;
   color: #c0c5c5; 
   font-size: .87em;
-  font-family: "varela round", sans-serif;
+  font-family: 'Poppins', sans-serif !important;
 }
 .user-profile > img.avatar {
 	padding: .7em;
@@ -155,7 +155,7 @@ font-weight: 20;
 }
 
 .user-profile span {
-	font-family: "varela round", sans-serif;
+  font-family: 'Poppins', sans-serif !important;
 	color: #e3eeee;
   white-space: nowrap;
   font-size: 1.27em;
@@ -169,7 +169,7 @@ footer > h1 {
   display: block;
   text-align: center;
   clear: both;
-  font-family: "Coda", sans-serif;
+  font-family: 'Poppins', sans-serif !important;
   color: #343f3d;
   line-height: 6;
   font-size: 1.6em;
@@ -178,6 +178,18 @@ footer > h1 a {
   text-decoration: none;
   color: #ea4c89;
 }
-
+input[type=text] {
+  width: 100%;
+  border-radius: 8px;
+  padding: 8px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #97989D;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+  background-color: #233A61;
+  
+}
 
 
