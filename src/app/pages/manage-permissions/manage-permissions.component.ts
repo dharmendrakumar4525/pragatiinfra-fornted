@@ -254,11 +254,11 @@ export class ManagePermissionsComponent implements OnInit {
       console.log(data)
       this.userRolePermissions = data
 
-      if(!this.userRolePermissions.dashboard_permissions.length){
+      if(!this.userRolePermissions?.dashboard_permissions.length){
         this.userRolePermissions.dashboard_permissions = this.newOne
         this.data.ParentChildchecklist = this.newOne
       }else{
-        this.data.ParentChildchecklist = this.userRolePermissions.dashboard_permissions[0].ParentChildchecklist
+        this.data.ParentChildchecklist = this.userRolePermissions?.dashboard_permissions[0]?.ParentChildchecklist
 
       }
 

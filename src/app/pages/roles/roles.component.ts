@@ -67,7 +67,7 @@ export class RolesComponent implements OnInit {
   recentActivitiesLen:any
   constructor(public dialog: MatDialog,private _dialog: MatDialog, private recentActivityService:RecentActivityService, private roleService:RolesService, private toast:ToastService) { }
   addRole() {
-    if(!this.rolesPermissionsAdd.isSelected){
+    if(!this.rolesPermissionsAdd?.isSelected){
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
         panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -103,10 +103,10 @@ export class RolesComponent implements OnInit {
 
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     console.log(this.permissions)
-    this.rolesPermissionsAdd = this.permissions.permissions[0].ParentChildchecklist[3].childList[0]
-    this.rolesPermissionsEdit = this.permissions.permissions[0].ParentChildchecklist[3].childList[1]
-    this.rolesPermissionsDelete = this.permissions.permissions[0].ParentChildchecklist[3].childList[2]
-    this.rolesPermissionsDeleteMul = this.permissions.permissions[0].ParentChildchecklist[3].childList[3]
+    this.rolesPermissionsAdd = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[0]
+    this.rolesPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[1]
+    this.rolesPermissionsDelete = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[2]
+    this.rolesPermissionsDeleteMul = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[3]
     //this.rolesPermissionsEdit = this.permissions.permissions[0].ParentChildchecklist[3].childList[1]
 
     //console.log(this.progressPermissionsView)
@@ -134,7 +134,7 @@ export class RolesComponent implements OnInit {
 
   deleteRole(id){
 
-    if(!this.rolesPermissionsDelete.isSelected){
+    if(!this.rolesPermissionsDelete?.isSelected){
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
         panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -173,7 +173,7 @@ export class RolesComponent implements OnInit {
 
 editRole(ele){
 
-  if(!this.rolesPermissionsEdit.isSelected){
+  if(!this.rolesPermissionsEdit?.isSelected){
     const dialogRef = this._dialog.open(NoPermissionsComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -237,7 +237,7 @@ checkboxLabel(row?: any): string {
 
 deleteMultipleDialog() {
 
-  if(!this.rolesPermissionsDeleteMul.isSelected){
+  if(!this.rolesPermissionsDeleteMul?.isSelected){
     const dialogRef = this._dialog.open(NoPermissionsComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],

@@ -45,8 +45,8 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
 
-    this.rolePermissionsView = this.permissions.permissions[0].ParentChildchecklist[3].childList[4]
-    this.userPermissionsView = this.permissions.permissions[0].ParentChildchecklist[4].childList[4]
+    this.rolePermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[4]
+    this.userPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[4]?.childList[4]
     
     if(this.permissions.user.role === 'superadmin'){
 
@@ -67,7 +67,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
 
 
-    if(this.permissions.user.role !== 'superadmin' && this.userPermissionsView.isSelected){
+    if(this.permissions.user.role !== 'superadmin' && this.userPermissionsView?.isSelected){
 
       this.obj = [{
         link_name: "Users",
@@ -78,7 +78,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
     }
 
-    if(this.permissions.user.role !== 'superadmin' && this.rolePermissionsView.isSelected){
+    if(this.permissions.user.role !== 'superadmin' && this.rolePermissionsView?.isSelected){
 
       this.obj = [{
         link_name: "Roles",
@@ -87,7 +87,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
     }
 
-    if(this.permissions.user.role !== 'superadmin' && (this.rolePermissionsView.isSelected && this.userPermissionsView.isSelected)){
+    if(this.permissions.user.role !== 'superadmin' && (this.rolePermissionsView?.isSelected && this.userPermissionsView?.isSelected)){
 
       this.obj = [{
         link_name: "Users",

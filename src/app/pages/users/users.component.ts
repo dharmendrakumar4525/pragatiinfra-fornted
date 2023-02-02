@@ -62,10 +62,10 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     console.log(this.permissions)
-    this.userPermissionsAdd = this.permissions.permissions[0].ParentChildchecklist[4].childList[0]
-    this.userPermissionsEdit = this.permissions.permissions[0].ParentChildchecklist[4].childList[1]
-    this.userPermissionsDelete = this.permissions.permissions[0].ParentChildchecklist[4].childList[2]
-    this.userPermissionsDeleteMul = this.permissions.permissions[0].ParentChildchecklist[4].childList[3]
+    this.userPermissionsAdd = this.permissions.permissions[0]?.ParentChildchecklist[4]?.childList[0]
+    this.userPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[4]?.childList[1]
+    this.userPermissionsDelete = this.permissions.permissions[0]?.ParentChildchecklist[4]?.childList[2]
+    this.userPermissionsDeleteMul = this.permissions.permissions[0]?.ParentChildchecklist[4]?.childList[3]
     this.userService.getUserss().subscribe(data=>{
       //this.spinner.hide()
       this.users = data
@@ -85,7 +85,7 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(id){
-    if(!this.userPermissionsDelete.isSelected){
+    if(!this.userPermissionsDelete?.isSelected){
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
         panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -156,7 +156,7 @@ checkboxLabel(row?: any): string {
 }
 
 deleteMultipleDialog() {
-  if(!this.userPermissionsDeleteMul.isSelected){
+  if(!this.userPermissionsDeleteMul?.isSelected){
     const dialogRef = this._dialog.open(NoPermissionsComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -194,7 +194,7 @@ deleteMultipleDialog() {
   })
 }
 editUser(element){
-  if(!this.userPermissionsEdit.isSelected){
+  if(!this.userPermissionsEdit?.isSelected){
     const dialogRef = this._dialog.open(NoPermissionsComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -207,7 +207,7 @@ editUser(element){
 }
 
 addUser(){
-  if(!this.userPermissionsAdd.isSelected){
+  if(!this.userPermissionsAdd?.isSelected){
     const dialogRef = this._dialog.open(NoPermissionsComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],

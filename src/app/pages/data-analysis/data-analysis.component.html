@@ -73,9 +73,9 @@
     colspan="3" >
     <mat-card style="box-shadow: none !important;" >
     <mat-toolbar>
-   <mat-toolbar-row fxLayoutGap="20" style="font-size: small;background-color: #233A61;color: white;"><span>R0Prepareddate:{{project?.r0Date}}</span>
-    <span>R1Prepareddate:{{project?.r1Date}}</span>
-    <span>R2Prepareddate:{{project?.r2Date}}</span>
+   <mat-toolbar-row fxLayoutGap="20" style="font-size: small;background-color: #233A61;color: white;"><span>R0Prepareddate:{{project?.r0Date | date}}</span>
+    <span>R1Prepareddate:{{project?.r1Date | date}}</span>
+    <span>R2Prepareddate:{{project?.r2Date | date}}</span>
   </mat-toolbar-row>
       
     </mat-toolbar>

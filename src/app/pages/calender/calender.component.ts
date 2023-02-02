@@ -215,7 +215,7 @@ getDay:any;
  
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     console.log(this.permissions)
-    this.calenderPermissions = this.permissions.permissions[0].ParentChildchecklist[2].childList[0]
+    this.calenderPermissions = this.permissions.permissions[0]?.ParentChildchecklist[2]?.childList[0]
 
     
     this.activeRoute.params.subscribe((params:any) => {
@@ -282,7 +282,7 @@ getDay:any;
 
   onBid(e,player,value,id) {
     
-    if(!this.calenderPermissions.isSelected){
+    if(!this.calenderPermissions?.isSelected){
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
         panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],

@@ -64,7 +64,7 @@ export class DataAnalysisComponent implements OnInit {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     //console.log(this.permissions)
     //this.projectsViewPermissions = this.permissions.permissions[0].ParentChildchecklist[0].childList[1]
-    this.memberAddPermissions = this.permissions.permissions[0].ParentChildchecklist[5].childList[0]
+    this.memberAddPermissions = this.permissions.permissions[0]?.ParentChildchecklist[5]?.childList[0]
 
     this.projectService.getProjects().subscribe(data=>{
       //this.spinner.hide()
@@ -186,7 +186,7 @@ export class DataAnalysisComponent implements OnInit {
     this.about = data
     this.aboutUs = this.about[0]
 
-     this.aboutUsLen = this.aboutUs.length
+     //this.aboutUsLen = this.aboutUs.length
     // if(this.aboutUsLen){
     //   this.aboutUsForm.patchValue(this.aboutUs[0])
     // }
@@ -196,7 +196,7 @@ export class DataAnalysisComponent implements OnInit {
 
 
   addMember(){
-    if(!this.memberAddPermissions.isSelected){
+    if(!this.memberAddPermissions?.isSelected){
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
         panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -271,7 +271,7 @@ export class DataAnalysisComponent implements OnInit {
           this.about = data
           this.aboutUs = this.about[0]
 
-           this.aboutUsLen = this.aboutUs.length
+           //this.aboutUsLen = this.aboutUs.length
           // if(this.aboutUsLen){
           //   this.aboutUsForm.patchValue(this.aboutUs[0])
           // }

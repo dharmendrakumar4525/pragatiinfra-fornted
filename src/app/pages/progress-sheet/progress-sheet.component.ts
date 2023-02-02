@@ -180,8 +180,8 @@ export class ProgressSheetComponent implements OnInit {
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     console.log(this.permissions)
-    this.progressPermissionsView = this.permissions.permissions[0].ParentChildchecklist[1].childList[1]
-    this.progressPermissionsEdit = this.permissions.permissions[0].ParentChildchecklist[1].childList[0]
+    this.progressPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[1]?.childList[1]
+    this.progressPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[1]?.childList[0]
     console.log(this.progressPermissionsView)
     console.log(this.progressPermissionsEdit)
     this.activeRoute.params.subscribe((params:any) => {
@@ -243,7 +243,7 @@ export class ProgressSheetComponent implements OnInit {
   }
 
   addData(subTask){
-    if(!this.progressPermissionsEdit.isSelected){
+    if(!this.progressPermissionsEdit?.isSelected){
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
         panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],

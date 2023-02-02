@@ -58,8 +58,8 @@ export class AddProjectComponent implements OnInit {
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     console.log(this.permissions)
-    this.projectsPermissions = this.permissions.permissions[0].ParentChildchecklist[0].childList[0]
-    if(!this.projectsPermissions.isSelected){
+    this.projectsPermissions = this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[0]
+    if(!this.projectsPermissions?.isSelected){
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
         panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -203,7 +203,7 @@ addTag(event: MatChipInputEvent): void {
 
   addProject(){
 
-    if(!this.projectsPermissions.isSelected){
+    if(!this.projectsPermissions?.isSelected){
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
         panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
