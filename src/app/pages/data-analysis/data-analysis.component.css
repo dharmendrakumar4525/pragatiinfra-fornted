@@ -48,6 +48,7 @@ card-below{
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
     background-size: cover;
     margin-left: 10px;
+    margin-top: 10px;
    
   }
 
@@ -159,7 +160,8 @@ background: lightblue;
   margin-right: 20px;
 }
 .notification-container{
- width: 200px;
+ width: 250px;
+ margin-top: 10px;
  
 }
 
@@ -167,7 +169,8 @@ background: lightblue;
 .scroll-bar2{
         
  
-  height: 350px;
+  height: 500px;
+  width:93%;
     
  
     

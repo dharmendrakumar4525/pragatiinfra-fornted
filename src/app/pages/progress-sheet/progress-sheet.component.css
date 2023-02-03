@@ -89,7 +89,7 @@
 .example-header-image {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
     background-size: cover;
-    margin-left: 20px;
+   margin-top: 10px;
   }
   
 .scroll-bar1{
@@ -124,8 +124,8 @@ background: lightblue;
   max-width: none !important;
 }
 .notification-container{
- width: 200px;
-
+ width: 400px;
+ margin-top: 10px;
 
 } 
 
