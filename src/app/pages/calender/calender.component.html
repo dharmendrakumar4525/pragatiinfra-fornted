@@ -2,14 +2,16 @@
 <mat-toolbar style="background-color: #fff !important;">
     <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" >
         <div style="padding: 1rem;margin-top: 60px;">
-            <select style="padding: 10px;width:100%;border: none;font-size: large;">
-                <option>
-        <span>{{project?.projectName}}</span></option>
-</select>
+          <form [formGroup]="projectNameForm">
+            <select style="padding: 10px;width:100px;border: none;font-size: large;" (change)="onChangeProject($event)" formControlName="_id">
+              <option *ngFor=" let one of projectsList" [value]="one._id">
+                
+          <span>{{one?.projectName}}</span></option></select>
+        </form>
  <span style="font-size: small;">on Track</span> 
 </div>
 <div style="margin-left: 100px;font-size: small;position: relative;margin-top: 90px;">
-<button mat-button (click)="backToCalender()" style="color:#97989D"><img src=".\assets\images\back.svg" style="margin-bottom: 5px;"><!--<i class="fa fa-undo" aria-hidden="true"></i> -->&nbsp;Back to Calender</button></div>       
+<button mat-button (click)="backToCalender()" *ngIf="showCalData" style="color:#97989D"><img src=".\assets\images\back.svg" style="margin-bottom: 5px;"><!--<i class="fa fa-undo" aria-hidden="true"></i> -->&nbsp;Back to Calender</button></div>       
       </mat-toolbar-row>
         
       <mat-toolbar-row>
@@ -36,10 +38,10 @@
   
   </div><br>
 
-  <mat-grid-list cols="3" rowHeight="700px" >
+  <mat-grid-list cols="3" rowHeight="700px" *ngIf="!showCalData">
       <mat-grid-tile colspan="2" >
       
-        <div style="margin-right:-30px;"  *ngIf="!showCalData">
+        <div style="margin-right:-30px;"  >
       
         <div class="calender custom_calender" style="border-radius:5px;border-collapse: collapse;border: 2px solid lightgrey;margin-top: 50px;margin-bottom: 50px;width:700px;">
           <mat-calendar  [dateClass]="dateClass()" [selected]="selectedDateNew" (selectedChange)="onSelect($event)"></mat-calendar>
@@ -56,40 +58,23 @@
             <div class="scroll-bar2" fxLayout="column">
             <mat-card-header>
           
-              <mat-card-title style="color: #1E293B;font-size: 14;"> About &nbsp;&nbsp; <i class="fa fa-edit" style="cursor: pointer;"  aria-hidden="true"></i></mat-card-title>
+              <mat-card-title style="color: #1E293B;font-size: 14;"> About &nbsp;&nbsp; <i class="fa fa-edit" (click)="addAboutUs()" style="cursor: pointer;"  aria-hidden="true"></i></mat-card-title>
           
             </mat-card-header> <br>
         
             <mat-card-content>
-              <p>Lorem Ipsum is simply dummy text of the printing and 
-                typesetting industry. Lorem Ipsum has been the industry's 
-                standard dummy text ever since the 1500s,
-                 when an unknown printer took a galley of type and scrambled it
-                 Lorem Ipsum is simply dummy text of the printing and 
-                typesetting industry. Lorem Ipsum has been the industry's 
-                standard dummy text ever since the 1500s,
-                 when an unknown printer took a galley of type and scrambled it
-                 Lorem Ipsum is simply dummy text of the printing and 
-                typesetting industry. Lorem Ipsum has been the industry's 
-                standard dummy text ever since the 1500s,
-                 when an unknown printer took a galley of type and scrambled it
-              </p></mat-card-content>
+              <p>{{aboutUs?.description}}</p>
+            </mat-card-content>
              
               <mat-card-subtitle><i style="color: #1E293B;">Members</i></mat-card-subtitle>
         
-              <div  fxFlex="row" fxLayoutAlign="start" style="height: 55px;" >
-              <div style="margin-top:10px" mat-card-avatar class="example-header-image"></div>
-              <div  style="margin-top:10px;" fxLayout="column" >
-              <button mat-button >user1</button>
+              <div  fxFlex="row" fxLayoutAlign="start"  style="height: 55px;" *ngFor="let data of members">
+                <div  style="margin-top:10px" mat-card-avatar class="example-header-image"></div>
+                <div style="margin-top:10px">
+                  <button mat-button >{{data.split('@')[0]}}</button>
+                 
             </div>
-          </div><br>
-           <div fxFlex="row" fxLayoutAlign="start" style="height: 55px;" >
-            <div mat-card-avatar class="example-header-image"></div>
-            <div >
-            <button mat-button >User2</button> 
-            
           </div>
-        </div> 
         
           
           </div>

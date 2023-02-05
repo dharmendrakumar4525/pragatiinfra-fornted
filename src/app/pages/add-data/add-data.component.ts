@@ -21,6 +21,7 @@ export class AddDataComponent implements OnInit {
     addRevisesDates: this._fb.array([]),
     
   });
+  uomData = ['Bag','Sq.m.','Cu.m.','Litre','No.','Kg','g','Quintal','meters','c.m.']
   constructor(
     private dialogRef: MatDialogRef<AddDataComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

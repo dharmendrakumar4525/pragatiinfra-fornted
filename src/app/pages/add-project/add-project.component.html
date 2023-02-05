@@ -117,11 +117,19 @@
               <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
             <input placeholder="Add project members"
+            #fruitInput
                    [matChipInputFor]="chipList"
+                   [formControl]="fruitCtrl"
+                   [matAutocomplete]="auto"
                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                    [matChipInputAddOnBlur]="addOnBlur"
-                   (matChipInputTokenEnd)="addTag($event)" ><i class="fa fa-plus" aria-hidden="true" style="margin-right:20px;margin-bottom: 10px;"></i>
+                   (matChipInputTokenEnd)="addTag($event)" ><i class="fa fa-plus" aria-hidden="true" style="margin-right:20px;margin-bottom: 10px;cursor: pointer;"></i>
           </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit.email">
+              {{fruit.email}}
+            </mat-option>
+          </mat-autocomplete>
           </mat-form-field>
        
       </div>

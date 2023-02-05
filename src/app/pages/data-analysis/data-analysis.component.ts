@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, AbstractControl, NgForm, FormControl } from '@angular/forms';
 
 import { Chart, registerables } from 'chart.js';
 import { AddProjectService } from 'src/app/services/add-project.service';
@@ -11,6 +12,7 @@ import * as moment from 'moment';
 import { ProgressSheetService } from 'src/app/services/progress-sheet.service';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 import { AboutUsComponent } from '../about-us/about-us.component';
+import { InnerAddMemberComponent } from '../inner-add-member/inner-add-member.component';
 
 Chart.register(...registerables);
 export interface Tile {
@@ -57,10 +59,13 @@ export class DataAnalysisComponent implements OnInit {
   aboutUs:any;
   aboutUsLen:any;
   graphData = []
-  constructor(private activeRoute: ActivatedRoute, private progressSheetService:ProgressSheetService, private recentActivityService:RecentActivityService, private _dialog: MatDialog,private projectService: AddProjectService, private dataAnalysis:DataAnalysisService) { }
+  projectsList:any;
+  projectNameForm: FormGroup = this._fb.group({
+    _id: [null],
+   });
+  constructor(private activeRoute: ActivatedRoute, private router:Router, private _fb: FormBuilder, private progressSheetService:ProgressSheetService, private recentActivityService:RecentActivityService, private _dialog: MatDialog,private projectService: AddProjectService, private dataAnalysis:DataAnalysisService) { }
 
   ngOnInit(): void {
-
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     //console.log(this.permissions)
     //this.projectsViewPermissions = this.permissions.permissions[0].ParentChildchecklist[0].childList[1]
@@ -69,11 +74,11 @@ export class DataAnalysisComponent implements OnInit {
     this.projectService.getProjects().subscribe(data=>{
       //this.spinner.hide()
       this.projects = data
-      console.log(this.projects)
-      for(let single of this.projects){
-        this.members.push(...single.members)
-      }
-      console.log(this.members)
+      // console.log(this.projects)
+      // for(let single of this.projects){
+      //   this.members.push(...single.members)
+      // }
+      // console.log(this.members)
     })
 
     this.activeRoute.params.subscribe((params:any) => {
@@ -126,6 +131,10 @@ export class DataAnalysisComponent implements OnInit {
 
       this.dataAnalysis.getProjectById(this.projectId).subscribe(data=>{
         this.project = data
+        this.projectNameForm.patchValue({
+          _id:this.project._id
+        })
+        this.members = this.project.members
     console.log(this.project)
     })
 
@@ -192,6 +201,12 @@ export class DataAnalysisComponent implements OnInit {
     // }
     // console.log(this.aboutUsLen)
   });
+
+  this.projectService.getProjects().subscribe(data=>{
+    //this.spinner.hide()
+    this.projectsList = data;
+  });
+
   }
 
 
@@ -205,23 +220,28 @@ export class DataAnalysisComponent implements OnInit {
       });
       return;
     }
-    const dialogRef = this._dialog.open(AddMemberComponent, {
+    const dialogRef = this._dialog.open(InnerAddMemberComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-      data: this.projects
+      data: this.projectId
     });
     dialogRef.afterClosed().subscribe(status => {
       console.log(status);
       if (status === 'yes') {
-        this.projectService.getProjects().subscribe(data=>{
-          //this.spinner.hide()
-          this.projects = data
-          console.log(this.projects)
-          for(let single of this.projects){
-            this.members.push(...single.members)
-          }
-          console.log(this.members)
-        })
+        this.dataAnalysis.getProjectById(this.projectId).subscribe(data=>{
+          this.project = data
+          this.members = this.project.members
+      console.log(this.project)
+      })
+        // this.projectService.getProjects().subscribe(data=>{
+        //   //this.spinner.hide()
+        //   this.projects = data
+        //   console.log(this.projects)
+        //   for(let single of this.projects){
+        //     this.members.push(...single.members)
+        //   }
+        //   console.log(this.members)
+        // })
        // this.filterSubject.next(this.filterForm.value);
       }
       if (status === 'no') {
@@ -287,5 +307,9 @@ export class DataAnalysisComponent implements OnInit {
       if (status === 'no') {
       }
     })
+  }
+
+  onChangeProject(ev){
+    this.router.navigate(['/view-project/data-analysis',ev.target.value]);
   }
 }

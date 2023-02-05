@@ -125,11 +125,10 @@
         <div class="custom-form-control" style="margin-left: 30px;position: relative;">
          
             <mat-form-field appearance="outline" style="width: 115%;">
-              <mat-select  placeholder=" uom">
-                <mat-option>sqm </mat-option>
-                <mat-option>cm </mat-option>
-                <input matInput  placeholder="" formControlName="uom"
-                  >
+              <mat-select  placeholder=" uom" formControlName="uom">
+                <mat-option *ngFor="let single of uomData" [value]="single">{{single}}</mat-option>
+
+              
                   <!-- <mat-error *ngIf="uom.invalid && ( uom.dirty || uom.touched )">
                     <span>Please provide a valid Uom</span>
                   </mat-error> -->

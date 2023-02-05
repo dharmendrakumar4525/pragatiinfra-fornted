@@ -2,10 +2,12 @@
 <mat-toolbar style="background-color: #fff !important;" >
   <mat-toolbar-row fxLayoutAlign="space-between center">
       <div style="padding: 1rem;margin-top: 60px;">
-        <select style="padding: 10px;width:100px;border: none;font-size: large;">
-          <option>
-      <span>{{project?.projectName}}</span>
-    </option></select>
+        <form [formGroup]="projectNameForm">
+          <select style="padding: 10px;width:100px;border: none;font-size: large;" (change)="onChangeProject($event)" formControlName="_id">
+            <option *ngFor=" let one of projectsList" [value]="one._id">
+              
+        <span>{{one?.projectName}}</span></option></select>
+      </form>
     <span style="font-size: 10px;margin-left: 10px;">on track</span></div>
       <div>
           <button mat-button style="background-color:#fff;padding: 1px 1px;width: 150px;margin-top: 50px;margin-left: 500px;position: relative;border: 1px solid #97989D;border-radius: 5px;color: #97989D;" [routerLink]="['/add-project']">Add Project +  </button>

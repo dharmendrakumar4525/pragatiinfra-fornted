@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, NgForm } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, AbstractControl, NgForm, FormControl } from '@angular/forms';
 import { MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,7 +10,10 @@ import { AddProjectService } from 'src/app/services/add-project.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
-
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { Observable } from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import { UsersService } from 'src/app/services/users.service';
 export interface Fruit {
   name: string;
 }
@@ -33,6 +36,8 @@ export class AddProjectComponent implements OnInit {
   imageUrl = null
   subTaskName = [];
   aa:boolean=false;
+  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  users:any;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   
   
@@ -52,8 +57,12 @@ export class AddProjectComponent implements OnInit {
   tasksData:any;
   permissions:any;
   projectsPermissions:any
+  fruitCtrl = new FormControl();
+  filteredFruits: Observable<any>;
+  @ViewChild('fruitInput', {static: false}) fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
   constructor(private _fb: FormBuilder, private toast: ToastService, private _dialog: MatDialog,private taskService: TaskService,
-    private projectService: AddProjectService,private activeRoute: ActivatedRoute, private router:Router) { }
+    private projectService: AddProjectService, private userService: UsersService,private activeRoute: ActivatedRoute, private router:Router) { }
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
@@ -93,6 +102,18 @@ export class AddProjectComponent implements OnInit {
         this.tasksData = data
         console.log(this.tasksData)
       })
+
+      this.userService.getUserss().subscribe(data=>{
+        this.users = data
+        console.log(this.users)
+        this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+          startWith(null),
+          map((fruit: any | null) => fruit ? this._filter(fruit) : this.users.slice()));
+        //console.log(this.tasksData)
+      })
+
+
+      
   }
 
   get courseIds() { 
@@ -364,5 +385,47 @@ addTag(event: MatChipInputEvent): void {
     this.aa=ii;
     console.log
   }
+  selected(event: MatAutocompleteSelectedEvent): void {
 
+
+
+    //const input = event.input;
+    const value = event.option.viewValue;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+     // this.tags.push({name: value.trim()});
+      // this.courseIds.value.push(value);
+      this.projectForm.controls['members'].setValue([...this.projectForm.controls['members'].value, value.trim()]);
+      this.projectForm.controls['members'].updateValueAndValidity();
+      // this.courseIds.updateValueAndValidity();
+    }
+
+    // Reset the input value
+    // if (input) {
+    //   input.value = '';
+    // }
+
+
+
+
+
+
+
+    // this.projectForm.controls['members'].setValue([...this.projectForm.controls['members'].value]);
+    // this.projectForm.controls['members'].updateValueAndValidity();
+    // this.projectForm.controls['members'].setValue(event.option.viewValue);
+    // this.projectForm.controls['members'].updateValueAndValidity();
+    this.fruitInput.nativeElement.value = '';
+    this.fruitCtrl.setValue(null);
+    //this.fruits.push(event.option.viewValue);
+    // this.fruitInput.nativeElement.value = '';
+    // this.fruitCtrl.setValue(null);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.users.filter(fruit => fruit.email.toLowerCase().indexOf(filterValue) === 0);
+  }
 }

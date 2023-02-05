@@ -1,0 +1,118 @@
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TaskService } from 'src/app/services/task.service';
+import { FormGroup, FormBuilder, Validators, AbstractControl, NgForm } from '@angular/forms';
+import { DataAnalysisComponent } from '../data-analysis/data-analysis.component';
+import { DataAnalysisService } from 'src/app/services/data-analysis.service';
+import { UsersService } from 'src/app/services/users.service';
+import { ToastService } from 'src/app/services/toast.service';
+
+@Component({
+  selector: 'app-inner-add-member',
+  templateUrl: './inner-add-member.component.html',
+  styleUrls: ['./inner-add-member.component.css']
+})
+export class InnerAddMemberComponent implements OnInit {
+
+  project:any;
+  memberForm: FormGroup = this._fb.group({
+    
+    email: [null, [Validators.required]]
+   
+
+  });
+  constructor(
+    private dialogRef: MatDialogRef<InnerAddMemberComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private taskService: TaskService,
+    private _fb: FormBuilder,
+    private dataAnalysis:DataAnalysisService,
+    private userService:UsersService,
+    private toast: ToastService
+  ) { }
+
+  ngOnInit(): void {
+    this.dataAnalysis.getProjectById(this.data).subscribe(data=>{
+      this.project = data
+  console.log(this.project)
+  })
+  }
+
+  closeDialog(status: string) {
+    this.dialogRef.close(status)
+    // this.dialogRef.close(status);
+    // document.getElementsByClassName("animate__animated")[0].classList.remove("animate__fadeInDown")
+    // document.getElementsByClassName("animate__animated")[0].classList.add("animate__fadeOutUp"); 
+    //setTimeout(() => { this.dialogRef.close(status); }, 1000);
+  }
+
+  addTask(){
+
+    if (this.memberForm.invalid) {
+      this.toast.openSnackBar(
+        'Enter Valid Details'
+      );
+      //this.clearForm = true;
+      //this.clearForm = true;
+      this.memberForm.markAllAsTouched();
+      return;
+    }
+
+
+    let membersData = this.project.members
+    membersData.push(this.memberForm.value.email)
+    this.userService.addMemberData(membersData, this.data).subscribe(
+
+      {
+        next: (data: any) =>  {
+          console.log(data)
+          // this.spinner.hide()
+          // this.router.navigate(['/usersList']);
+          this.closeDialog('yes');
+           this.toast.openSnackBar('Member Added Successfully');
+          
+        },
+        error: (err) => {
+          // this.spinner.hide()
+           this.toast.openSnackBar('Something went wrong, please try again later');
+          // console.log(err) 
+  
+          // this.errorData = err
+  
+          
+  
+        }
+      }
+  
+    )
+  }
+
+
+
+
+  get email(): AbstractControl {
+    return this.memberForm.get('email');
+  }
+ 
+
+  updateSupply(){
+    // this.supplyService.updateSuppliesByPk(this.data.id,
+    // {
+    //   status: 'PENDING_APPROVAL',
+    //   status_changed_at: "now()"
+    // }).
+    // subscribe(success=>{
+    //   this.toast.openSnackBar("This product is sent for approval");
+    //   this.closeDialog('yes');
+    // },failure => {
+    //   this.toast.openSnackBar("Unable to send for approval");
+    // })
+  }
+
+  //someMethod(ev){
+    //console.log(ev.value)
+  
+
+  //}
+}
+

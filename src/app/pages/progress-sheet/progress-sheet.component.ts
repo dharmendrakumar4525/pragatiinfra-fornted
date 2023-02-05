@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AddDataComponent } from 'src/app/pages/add-data/add-data.component';
 import { ProgressSheetService } from 'src/app/services/progress-sheet.service';
 import { RecentActivityService } from 'src/app/services/recent-activity.service';
 import { TaskService } from 'src/app/services/task.service';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 import * as moment from 'moment';
+//import { FormBuilder } from '@angular/forms';
+import { FormControl, FormArray, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { AddProjectService } from 'src/app/services/add-project.service';
 
 export interface PeriodicElement {
   Description: string;
@@ -36,6 +39,9 @@ export class ProgressSheetComponent implements OnInit {
     projectsData = [];
     activesData:any;
     recentActivitiesLen:any
+    projectNameForm: FormGroup = this._fb.group({
+      _id: [null],
+     });
 //   projectsData = [
 //     {
 //         "_id": "63c6aa45a1593c88fae7b09b",
@@ -175,7 +181,8 @@ export class ProgressSheetComponent implements OnInit {
    progressPermissionsView:any;
    progressPermissionsEdit:any
    recentActivities:any
-  constructor(private activeRoute: ActivatedRoute, private recentActivityService:RecentActivityService, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private taskService:TaskService) { }
+   projectsList:any;
+  constructor(private activeRoute: ActivatedRoute,private router:Router, private projectService:AddProjectService, private _fb: FormBuilder, private recentActivityService:RecentActivityService, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private taskService:TaskService) { }
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
@@ -189,6 +196,9 @@ export class ProgressSheetComponent implements OnInit {
         this.projectId = params.id
         this.progressSheetService.getProjectById(this.projectId).subscribe(data=>{
             this.project = data
+            this.projectNameForm.patchValue({
+              _id:this.project._id
+            })
         console.log(this.project)
         })
     //     this.progressSheetService.getTasksById(this.projectId).subscribe(data=>{
@@ -231,6 +241,11 @@ export class ProgressSheetComponent implements OnInit {
         }
         this.recentActivitiesLen = this.recentActivities.length
         
+      });
+
+      this.projectService.getProjects().subscribe(data=>{
+        //this.spinner.hide()
+        this.projectsList = data;
       });
      
   }
@@ -290,6 +305,9 @@ export class ProgressSheetComponent implements OnInit {
         if (status === 'no') {
         }
       })
+  }
+  onChangeProject(ev){
+    this.router.navigate(['/view-project/progress-sheet',ev.target.value]);
   }
 }
 
