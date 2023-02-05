@@ -1,14 +1,14 @@
 
 <mat-toolbar style="background-color: #fff !important;" >
   <mat-toolbar-row fxLayoutAlign="space-between center">
-      <div style="padding: 1rem;margin-top: 60px;">
+      <div style="padding: 1rem;margin-top: 110px;">
         <form [formGroup]="projectNameForm">
           <select style="padding: 10px;width:100px;border: none;font-size: large;" (change)="onChangeProject($event)" formControlName="_id">
             <option *ngFor=" let one of projectsList" [value]="one._id">
               
         <span>{{one?.projectName}}</span></option></select>
       </form>
-    <span style="font-size: 10px;margin-left: 10px;">on track</span></div>
+    <span style="font-size: 10px;margin-left: 120px;position: relative;bottom:40px"><img src=".\assets\images\ontrack.svg">&nbsp;  On Track</span></div>
       <div>
           <button mat-button style="background-color:#fff;padding: 1px 1px;width: 150px;margin-top: 50px;margin-left: 500px;position: relative;border: 1px solid #97989D;border-radius: 5px;color: #97989D;" [routerLink]="['/add-project']">Add Project +  </button>
           </div>
@@ -55,17 +55,17 @@
     <div >
       <ul class="toptext"  style="background-color: #fff !important;list-style: none;">
         <li style="border-right: 1px solid #D9D9D9;padding-right: 10px;"><a style="color: #000;" [routerLink]="['/dpr']" routerLinkActive="active-link"
-          ><i class="fa fa-eye" aria-hidden="true"></i> Projects</a></li>
+          ><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i> <span style="color:#97989D;">Projects</span></a></li>
         <li style="border-right: 1px solid #D9D9D9;padding-right: 20px;"><a style="color: #000;" [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
-          [routerLinkActiveOptions]="{exact: true}" ><i class="fa fa-eye" aria-hidden="true"></i> Data-Analysis</a></li>
+          [routerLinkActiveOptions]="{exact: true}" ><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i> <span style="color:#97989D;" >Data-Analysis</span></a></li>
         <li style="border-right: 1px solid #D9D9D9; padding-right: 20px;"><a  style="color: #000;" [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
-           ><i class="fa fa-edit" aria-hidden="true"></i> Progress-sheet</a></li>
+           ><i class="fa fa-edit" aria-hidden="true" style="color:#233A61;"></i> <span style="color:#233A61">Progress-sheet</span></a></li>
         <li><a style="color: #000;" [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"
-           ><i class="fa fa-edit" aria-hidden="true"></i> Calender</a></li>
+           ><i class="fa fa-edit" aria-hidden="true" style="color:#97989D;"></i><span style="color:#97989D;"> Calender</span></a></li>
       </ul>
       
     
-    </div>
+    </div><br>
    
 <div style="background-color: #fff !important;margin-top: 20px;margin-left: 50px;">
   <h3>Project progress monitoring sheets(PPMS)</h3>

@@ -52,8 +52,9 @@
     width: 100%;
     /* height: 100vh; */
     font-size: 12px;
-    margin-left: 20px;
+    margin-left: 10px;
     margin-bottom: 20px;
+    margin-right: 20px;
   }
   th{
     background-color: #233A61;
@@ -97,8 +98,8 @@
    
   height: 500px;
   width:93%;
-  margin-left: 20px;
-direction: rtl !important;
+  margin-left: 40px;
+
   overflow: auto;
  
   }

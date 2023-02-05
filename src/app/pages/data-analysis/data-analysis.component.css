@@ -47,8 +47,8 @@ card-below{
 .example-header-image {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
     background-size: cover;
-    margin-left: 10px;
-    margin-top: 10px;
+   
+  
    
   }
 
@@ -169,9 +169,9 @@ background: lightblue;
 .scroll-bar2{
         
  
-  height: 500px;
+  height: 400px;
   width:93%;
-    
+ margin-left: 10px;
  
     
    
