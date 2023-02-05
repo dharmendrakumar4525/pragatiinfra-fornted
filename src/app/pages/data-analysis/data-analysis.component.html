@@ -134,9 +134,9 @@
            
             <mat-card-subtitle>Members</mat-card-subtitle>
           
-     <div  fxFlex="row" fxLayoutAlign="start"  style="height: 55px;" *ngFor="let data of members">
-      <div  style="margin-top:10px; " mat-card-avatar class="example-header-image"></div>
-      <div style="margin-top:10px">
+     <div  class="aboutcard-spaceset" fxFlex="row" fxLayoutAlign="start"  style="height: 55px;" *ngFor="let data of members">
+      <div class="item" style="margin-top:10px; " mat-card-avatar class="example-header-image"></div>
+      <div class="item" style="margin-top:10px">
         <button mat-button >{{data.split('@')[0]}}</button>
        
   </div>

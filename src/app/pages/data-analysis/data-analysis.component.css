@@ -221,3 +221,8 @@ background: lightblue;
   background-color: #1E293B;
   margin:0px 5px;
 }
+.aboutcard-spaceset{
+  display: flex;
+  flex: none !important;
+}
+
