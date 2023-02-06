@@ -60,8 +60,11 @@
           <!-- <i class="fas fa-home" [ngClass]="link.iconClass"></i> -->
           
           <a [routerLink]="[item_sub.link]">
-            <i class="fa fa-user-circle" aria-hidden="true"></i>
-            {{item_sub.link_name}}</a>
+            <div class="allignSvg">
+            <img [src]="item_sub.img">&nbsp;
+            {{item_sub.link_name}}
+          </div>
+          </a>
           <!-- <hr> -->
         </li>
       </ul>
@@ -76,7 +79,7 @@
           [routerLinkActiveOptions]="{exact: true}">
           <!-- <i class='fas fa-sign-out-alt' style='color: white'></i> -->
         <span [ngClass]="currentPanelState">
-          <img src="../../../assets/images/icons/logout.svg">&nbsp; Log out</span>
+          <img src="../../../assets/images/icons/Blogout.svg">&nbsp; Log out</span>
       </a>
     </li>
     <!-- <li *ngFor="let link of menuSidebar">

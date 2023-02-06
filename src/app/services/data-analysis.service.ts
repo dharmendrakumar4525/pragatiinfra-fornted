@@ -14,14 +14,14 @@ export class DataAnalysisService {
 
   getProjectById(id): Observable<any> {
     
-    return this.http.get(`${environment.local_connection}/projects/${id}`).pipe(
+    return this.http.get(`${environment.aws_connection}/projects/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
   getLineGraph(id): Observable<any> {
     
-    return this.http.get(`${environment.local_connection}/lineGraph/${id}`).pipe(
+    return this.http.get(`${environment.aws_connection}/lineGraph/${id}`).pipe(
       catchError(this.handleError)
     );
   }

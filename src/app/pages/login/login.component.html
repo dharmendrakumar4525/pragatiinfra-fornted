@@ -32,6 +32,7 @@
                         <mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>Enter Password</mat-label>
                         <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                        <mat-icon style="cursor: pointer;" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             <mat-error *ngIf="password.invalid && ( password.dirty || password.touched )">
               <span *ngIf="password.hasError('required')">Please provide a valid password</span>
               <span *ngIf="password.hasError('minlength')">Password must be at least 6 digits long</span>

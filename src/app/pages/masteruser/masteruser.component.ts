@@ -75,10 +75,10 @@ export class MasteruserComponent implements OnInit {
 
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     console.log(this.permissions)
-    this.tasksPermissionsAdd = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[0]
-    this.tasksPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[1]
-    this.tasksPermissionsDelete = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[2]
-    this.tasksPermissionsDeleteMul = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[3]
+    this.tasksPermissionsAdd = this.permissions.permissions[0]?.ParentChildchecklist[6]?.childList[0]
+    this.tasksPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[6]?.childList[1]
+    this.tasksPermissionsDelete = this.permissions.permissions[0]?.ParentChildchecklist[6]?.childList[2]
+    this.tasksPermissionsDeleteMul = this.permissions.permissions[0]?.ParentChildchecklist[6]?.childList[3]
     //this.rolesPermissionsEdit = this.permissions.permissions[0].ParentChildchecklist[3].childList[1]
 
     //console.log(this.progressPermissionsView)

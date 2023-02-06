@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TaskService } from 'src/app/services/task.service';
+import { ToastService } from 'src/app/services/toast.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-delete-mul-sub-activity',
@@ -7,9 +11,62 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeleteMulSubActivityComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private dialogRef: MatDialogRef<DeleteMulSubActivityComponent>,
+    @Inject(MAT_DIALOG_DATA) public idArray: string[],
+    private userService:UsersService,
+    private toast: ToastService,
+    private taskService:TaskService
+  ) { }
+
+/* ---------------------------- Life cycle hooks ---------------------------- */
 
   ngOnInit(): void {
+  }
+
+/* ------------------------------ Close Dialog ------------------------------ */
+
+  closeDialog(status: string) {
+    // this.dialogRef.close(status);
+    document.getElementsByClassName("animate__animated")[0].classList.remove("animate__fadeInDown")
+    document.getElementsByClassName("animate__animated")[0].classList.add("animate__fadeOutUp"); 
+    setTimeout(() => { this.dialogRef.close(status); }, 200);
+  }
+
+  deleteMultiple(){
+    this.taskService.deleteMultipleSubActivities(this.idArray).subscribe(
+
+      {
+        next: (data: any) =>  {
+          console.log(data)
+          this.toast.openSnackBar("sub activities deleted Successfully");
+      this.closeDialog('yes');
+          // this.spinner.hide()
+          // this.router.navigate(['/usersList']);
+          // this.toast.openSnackBar('User Added Successfully');
+          
+        },
+        error: (err) => {
+          this.toast.openSnackBar("Something went wrong. Unable to delete sub activities");
+          // this.spinner.hide()
+          // this.toast.openSnackBar('Something went wrong, please try again later');
+          // console.log(err) 
+  
+          // this.errorData = err
+  
+          
+  
+        }
+      }
+  
+    )
+    // this.userService.deleteMultipleUsers(this.idArray).
+    // subscribe(success=>{
+    //   this.toast.openSnackBar("This product is deleted successfully");
+    //   this.closeDialog('yes');
+    // },failure => {
+    //   this.toast.openSnackBar("Unable to send for approval");
+    // })
   }
 
 }

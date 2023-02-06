@@ -130,7 +130,47 @@ export class ManagePermissionsComponent implements OnInit {
         ]
       },
 
-    
+      {
+        id: 4,moduleName: 'activities',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
+
+      {
+        id: 4,moduleName: 'sub activities',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
 
 
 
@@ -229,7 +269,47 @@ export class ManagePermissionsComponent implements OnInit {
       },
 
      
+      {
+        id: 4,moduleName: 'activities',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      },
 
+      {
+        id: 4,moduleName: 'sub activities',isSelected: false,isClosed:false,
+        childList: [
+          {
+            id: 1,parent_id: 1,value: 'add',isSelected: false
+          },
+          {
+            id: 2,parent_id: 1,value: 'edit',isSelected: false
+          },
+          {
+            id: 3,parent_id: 1,value: 'delete',isSelected: false
+          },
+          {
+            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          },
+          {
+            id: 5,parent_id: 1,value: 'view',isSelected: false
+          },
+        ]
+      }
 
 
  

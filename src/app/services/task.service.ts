@@ -13,28 +13,28 @@ export class TaskService {
 
   getTasks(): Observable<any> {
     
-    return this.http.get(`${environment.local_connection}/masterTasks`).pipe(
+    return this.http.get(`${environment.aws_connection}/masterTasks`).pipe(
       catchError(this.handleError)
     );
   }
 
   editActivity(activity:any,id): Observable<any> {
     
-    return this.http.put(`${environment.local_connection}/masterTasks/${id}`, activity).pipe(
+    return this.http.put(`${environment.aws_connection}/masterTasks/${id}`, activity).pipe(
       catchError(this.handleError)
     );
   }
 
   getAllTasks(): Observable<any> {
     
-    return this.http.get(`${environment.local_connection}/masterTasks/all-tasks`).pipe(
+    return this.http.get(`${environment.aws_connection}/masterTasks/all-tasks`).pipe(
       catchError(this.handleError)
     );
   }
 
   deleteTask(id:any): Observable<any> {
     console.log(id)
-    return this.http.delete(`${environment.local_connection}/masterTasks/${id}`).pipe(
+    return this.http.delete(`${environment.aws_connection}/masterTasks/${id}`).pipe(
       catchError(this.handleError)
     );
   }
@@ -54,28 +54,28 @@ export class TaskService {
       },
     };
     //let deleteMultipleUsers = {selUsers:userIds}
-    return this.http.delete(`${environment.local_connection}/masterTasks`, options).pipe(
+    return this.http.delete(`${environment.aws_connection}/masterTasks`, options).pipe(
       catchError(this.handleError)
     );
   }
 
   getOnlyTasks(): Observable<any> {
     
-    return this.http.get(`${environment.local_connection}/tasks`).pipe(
+    return this.http.get(`${environment.aws_connection}/tasks`).pipe(
       catchError(this.handleError)
     );
   }
 
   addTask(task:any): Observable<any> {
     
-    return this.http.post(`${environment.local_connection}/masterTasks`, task).pipe(
+    return this.http.post(`${environment.aws_connection}/masterTasks`, task).pipe(
       catchError(this.handleError)
     );
   }
 
   addSubTask(task:any): Observable<any> {
     
-    return this.http.post(`${environment.local_connection}/masterSubTasks`, task).pipe(
+    return this.http.post(`${environment.aws_connection}/masterSubTasks`, task).pipe(
       catchError(this.handleError)
     );
   }
@@ -92,4 +92,66 @@ export class TaskService {
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
+
+  deleteSubActivity(id:any): Observable<any> {
+    
+    return this.http.delete(`${environment.aws_connection}/masterSubTasks/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getSubActivities(): Observable<any> {
+    
+    return this.http.get(`${environment.aws_connection}/masterSubTasks/all-sub-activities`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getSubActivityById(id): Observable<any> {
+    
+    return this.http.get(`${environment.aws_connection}/masterSubTasks/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  editSubActivity(sa:any,id): Observable<any> {
+    
+    return this.http.put(`${environment.aws_connection}/masterSubTasks/${id}`, sa).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getActivities(): Observable<any> {
+    
+    return this.http.get(`${environment.aws_connection}/masterTasks/all-tasks`).pipe(
+      catchError(this.handleError)
+    );
+  }
+  addSubActibity(sa:any): Observable<any> {
+    
+    return this.http.post(`${environment.aws_connection}/masterSubTasks`, sa).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  deleteMultipleSubActivities(userIds){
+    console.log(userIds)
+
+    // return this.http.delete(`${this.baseUrl}/users`, {ff:userIds}).pipe(
+    //   catchError(this.handleError)
+    // );
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        selUsers:userIds
+      },
+    };
+    //let deleteMultipleUsers = {selUsers:userIds}
+    return this.http.delete(`${environment.aws_connection}/masterSubTasks`, options).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 }

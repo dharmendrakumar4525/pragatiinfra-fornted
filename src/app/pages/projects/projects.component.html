@@ -65,8 +65,8 @@
           <div class="content1">
             <div style="position: relative;top:120px;color: #fff;margin-left: 40px;margin-bottom: 20px;">{{project?.projectName}}</div>
           </div>
-          <img [routerLink]="['/view-project/data-analysis',project._id]"  [src]="project?.imageUrl" style="box-shadow:none;width:200px;height:130px;cursor: pointer;object-fit: cover;">
-       
+          <img [routerLink]="['/view-project/data-analysis',project._id]"  [src]="project?.imageUrl" *ngIf="project?.imageUrl" style="box-shadow:none;width:200px;height:130px;cursor: pointer;object-fit: cover;">
+          <img [routerLink]="['/view-project/data-analysis',project._id]" *ngIf="!project?.imageUrl" src="../../../assets/images/project.jpg" style="box-shadow:none;width:200px;height:130px;cursor: pointer;object-fit: cover;">
           <div>
           
           </div>

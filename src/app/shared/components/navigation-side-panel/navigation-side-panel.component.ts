@@ -47,18 +47,20 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       link_name: "Activities",
       link: '/activities',
       icon: "bx bx-collection",
-     
+      img:'../../../assets/images/icons/Bactivity.svg',
     },
     {
       link_name: "sub Activities",
       link: '/sub-activities',
       icon: "bx bx-collection",
-     
+      img:'../../../assets/images/icons/Bsubactivity.svg',
+      //img:'../../../assets/images/icons/sub activity (1).svg',
     },
      {
       link_name: "User Management",
       link: null,
       icon: "bx bx-collection",
+      img:'../../../assets/images/icons/usercirlceadd.svg',
       sub_menu: [
         
       ]
@@ -86,12 +88,15 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       this.obj = [{
         link_name: "Users",
         link: "/users",
+        img:'../../../assets/images/icons/Buser.svg',
       },{
         link_name: "Roles",
         link: "/roles",
+        img:'../../../assets/images/icons/Broles.svg',
       },{
         link_name: "manage Permissions",
         link: "/manage-permissions",
+        img:'../../../assets/images/icons/Bpermission.svg',
       }]
       
     }
@@ -105,6 +110,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       this.obj = [{
         link_name: "Users",
         link: "/users",
+        img:'../../../assets/images/icons/Buser.svg'
       }]
 
       
@@ -116,6 +122,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       this.obj = [{
         link_name: "Roles",
         link: "/roles",
+        img:'../../../assets/images/icons/Broles.svg'
       }]
 
     }
@@ -125,9 +132,11 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       this.obj = [{
         link_name: "Users",
         link: "/users",
+        img:'../../../assets/images/icons/Buser.svg'
       },{
         link_name: "Roles",
         link: "/roles",
+        img:'../../../assets/images/icons/Broles.svg'
       }]
 
     }
@@ -197,19 +206,21 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
             link_name: "Activities",
             link: '/activities',
             icon: "bx bx-collection",
-           
+            img:'../../../assets/images/icons/Bactivity.svg',
           },
 
           {
             link_name: "sub Activities",
             link: '/sub-activities',
             icon: "bx bx-collection",
-           
+            img:'../../../assets/images/icons/Bsubactivity.svg',
+            //img:'../../../assets/images/icons/activity.svg',
           },
           {
            link_name: "User Management",
            link: null,
            icon: "bx bx-collection",
+           img:'../../../assets/images/icons/usercirlceadd.svg',
            sub_menu: [
              ...this.obj
            ]
@@ -242,18 +253,19 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
             link_name: "Activities",
             link: '/activities',
             icon: "bx bx-collection",
-           
+            img:'../../../assets/images/icons/Bactivity.svg',
           },
           {
             link_name: "sub Activities",
             link: '/sub-activities',
             icon: "bx bx-collection",
-           
+            img:'../../../assets/images/icons/Bsubactivity.svg',
           },
           {
            link_name: "User Management",
            link: null,
            icon: "bx bx-collection",
+           img:'../../../assets/images/icons/usercirlceadd.svg',
            sub_menu: [
              //...this.obj
            ]

@@ -62,6 +62,8 @@ export class DataAnalysisComponent implements OnInit {
   projectsList:any;
   lineGraph:any;
   xAxis = [];
+  totalMat:any;
+  xReqData = []
   projectNameForm: FormGroup = this._fb.group({
     _id: [null],
    });
@@ -91,6 +93,7 @@ export class DataAnalysisComponent implements OnInit {
       this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data=>{
         this.activesData = data
     console.log(this.activesData)
+    this.totalMat  = this.activesData.map(item => item.total).reduce((prev, curr) => prev + curr, 0);
     // for(let one of this.activesData){
     //   this.graphData.push(one.dailyCumulativeTotal)
     // }
@@ -166,17 +169,65 @@ export class DataAnalysisComponent implements OnInit {
       });
       console.log(this.graphData);
 
+      let total = 0
+
       for(let single of this.graphData){
 
         this.xAxis.push(single.name)
 
         for(let one of single.data){
 
+          total = total + one.value
+
+          
+
         }
+
+       let totData =  ((100 * total) / this.totalMat).toFixed(0)
+
+       this.xReqData.push(totData)
+
+    
+
+//console.log(total)
 
         //this.cum
 
       }
+
+      var myChart = new Chart('overviewChart', {
+        type: 'line',
+        data: {
+            labels: this.xAxis,
+            datasets: [
+              {
+                label: 'Completed Task',
+                data: this.xReqData,
+                 backgroundColor: '#267ADC',
+                borderColor: '#267ADC',
+                borderWidth: 1
+            },
+          //   {
+          //     label: 'Completed Task',
+          //     data: [20, 50, 90, 10, 70, 3],
+          //      backgroundColor: 'black',
+          //     borderColor: 'black',
+          //     borderWidth: 1
+          // }
+          
+          
+          
+          ]
+        },
+        options: {
+          scales: {
+              y: {
+                  suggestedMin: 0,
+                  suggestedMax: 100
+              }
+          }
+      }
+    });
 
       //console.log(this.lineGraph)
   
@@ -191,39 +242,7 @@ export class DataAnalysisComponent implements OnInit {
 
 
     
-    var myChart = new Chart('overviewChart', {
-      type: 'line',
-      data: {
-          labels: this.xAxis,
-          datasets: [
-            {
-              label: 'Completed Task',
-              data: this.graphData,
-               backgroundColor: '#267ADC',
-              borderColor: '#267ADC',
-              borderWidth: 1
-          },
-        //   {
-        //     label: 'Completed Task',
-        //     data: [20, 50, 90, 10, 70, 3],
-        //      backgroundColor: 'black',
-        //     borderColor: 'black',
-        //     borderWidth: 1
-        // }
-        
-        
-        
-        ]
-      },
-      options: {
-        scales: {
-            y: {
-                suggestedMin: 0,
-                suggestedMax: 100
-            }
-        }
-    }
-  });
+
 
   this.recentActivityService.getRecentAtivities().subscribe(data=>{
     this.recentActivities = data

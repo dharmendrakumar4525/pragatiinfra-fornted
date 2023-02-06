@@ -1,1 +1,49 @@
-<p>edit-sub-activity works!</p>
+
+<mat-toolbar style="background-color: #fff !important;">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" >
+        <div style="padding: 1rem;margin-top: 60px;font-size: 30px;">  
+        <span>Pragati Infra</span>
+</div>     
+      </mat-toolbar-row>
+        
+      <mat-toolbar-row>
+        <hr style="width:100%">
+      </mat-toolbar-row>
+  </mat-toolbar>
+  <div style="height: 150vh;margin-bottom: 10px;" >
+    <div><h2 style="padding:10px 50px ;">Update Sub Activity</h2></div>
+    <form [formGroup]="editSubActivityForm" >
+<div>
+
+    <label>Activity</label><br>
+    <mat-form-field appearance="outline">
+      <mat-label>Enter Activity</mat-label>
+      <mat-select formControlName="taskId">
+        <mat-option *ngFor="let activity of activities" [value]="activity._id">{{activity.taskName}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="taskId.invalid && ( taskId.dirty || taskId.touched )">
+        <span>Please provide a valid Activity</span>
+      </mat-error>
+    </mat-form-field><br>
+
+    <label>Sub activity</label><br>
+    <mat-form-field appearance="outline">
+        <mat-label>Enter Sub activity</mat-label>
+        <input matInput formControlName="subTaskName">
+        <mat-error *ngIf="subTaskName.invalid && ( subTaskName.dirty || subTaskName.touched )">
+          <span>Please provide a valid sub activity</span>
+        </mat-error>
+      </mat-form-field><br>
+
+   
+
+     
+          
+        
+
+       
+
+            <button mat-button (click)="updateSubActivity()">Submit</button>
+    </div>
+  </form>
+    </div>

@@ -26,6 +26,7 @@ import { MasterCreateuserComponent } from './pages/master-createuser/master-crea
 import { SubActivitiesComponent } from './pages/sub-activities/sub-activities.component';
 import { EditSubActivitiesComponent } from './pages/edit-sub-activities/edit-sub-activities.component';
 import { AddSubActivitiesComponent } from './pages/add-sub-activities/add-sub-activities.component';
+import { EditSubActivityComponent } from './pages/edit-sub-activity/edit-sub-activity.component';
 
 
 const routes: Routes = [
@@ -100,7 +101,7 @@ const routes: Routes = [
   {path: 'createnewpassword', component: CreatenewpasswordComponent},
   {path: 'activities', component: MasteruserComponent,canActivate:[AuthGuard]},
   {path: 'sub-activities', component: SubActivitiesComponent,canActivate:[AuthGuard]},
-  {path: 'edit-sub-activities/:id', component: EditSubActivitiesComponent,canActivate:[AuthGuard]},
+  {path: 'edit-sub-activity/:id', component: EditSubActivityComponent,canActivate:[AuthGuard]},
   {path: 'add-sub-activities', component: AddSubActivitiesComponent,canActivate:[AuthGuard]},
 
   //{path: 'create-activities', component: MasterCreateuserComponent,canActivate:[AuthGuard]},

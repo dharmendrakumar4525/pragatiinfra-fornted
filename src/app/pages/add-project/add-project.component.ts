@@ -248,12 +248,12 @@ addTag(event: MatChipInputEvent): void {
       console.log(this.projectForm.value);
       this.projectForm.value.sections = this.selection
       this.projectForm.value.imageUrl = this.imageUrl
-      if(!this.projectForm.value.imageUrl){
-        this.toast.openSnackBar(
-          'Please upload project image'
-        );
-        return;
-      }
+      // if(!this.projectForm.value.imageUrl){
+      //   this.toast.openSnackBar(
+      //     'Please upload project image'
+      //   );
+      //   return;
+      // }
       this.projectService.addProject(this.projectForm.value).subscribe(
   
         {
@@ -262,7 +262,7 @@ addTag(event: MatChipInputEvent): void {
             // this.spinner.hide()
              
              this.toast.openSnackBar('Project Added Successfully');
-             this.router.navigate(['/dpr']);
+             this.router.navigate(['/view-project/data-analysis',data._id]);
             
           },
           error: (err) => {
