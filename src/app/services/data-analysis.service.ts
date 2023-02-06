@@ -19,6 +19,13 @@ export class DataAnalysisService {
     );
   }
 
+  getLineGraph(id): Observable<any> {
+    
+    return this.http.get(`${environment.local_connection}/lineGraph/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.

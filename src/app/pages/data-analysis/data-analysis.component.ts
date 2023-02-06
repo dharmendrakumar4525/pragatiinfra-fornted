@@ -60,6 +60,8 @@ export class DataAnalysisComponent implements OnInit {
   aboutUsLen:any;
   graphData = []
   projectsList:any;
+  lineGraph:any;
+  xAxis = [];
   projectNameForm: FormGroup = this._fb.group({
     _id: [null],
    });
@@ -89,10 +91,10 @@ export class DataAnalysisComponent implements OnInit {
       this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data=>{
         this.activesData = data
     console.log(this.activesData)
-    for(let one of this.activesData){
-      this.graphData.push(one.dailyCumulativeTotal)
-    }
-    console.log(this.graphData)
+    // for(let one of this.activesData){
+    //   this.graphData.push(one.dailyCumulativeTotal)
+    // }
+    // console.log(this.graphData)
     this.activesData.forEach(obj => {
       //this.grandTotal += obj['discAmount'];
       //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
@@ -138,6 +140,48 @@ export class DataAnalysisComponent implements OnInit {
     console.log(this.project)
     })
 
+    this.dataAnalysis.getLineGraph(this.projectId).subscribe(data=>{
+      //this.spinner.hide()
+      this.lineGraph = data
+      for(let single of this.lineGraph){
+        let month = new Date(single.date).toLocaleString('default', { month: 'short' });
+    let year = new Date(single.date).getFullYear()
+    let day = new Date(single.date).getDate()
+    single.reqDate = `${month} ${day},${year}`
+      }
+
+      this.lineGraph.forEach(obj => {
+        
+        const arr = this.graphData.filter(ele => ele['name'] === obj['reqDate']);
+        if (arr.length === 0) {
+          this.graphData.push(
+            { 'name': obj['reqDate'] });
+        }
+    });
+  
+    this.graphData.forEach(obj => {
+        const uniqData = this.lineGraph.filter(ele => ele['reqDate'] === obj['name']);
+        obj['data'] = uniqData;
+        
+      });
+      console.log(this.graphData);
+
+      for(let single of this.graphData){
+
+        this.xAxis.push(single.name)
+
+        for(let one of single.data){
+
+        }
+
+        //this.cum
+
+      }
+
+      //console.log(this.lineGraph)
+  
+    });
+
     });
 
 
@@ -150,7 +194,7 @@ export class DataAnalysisComponent implements OnInit {
     var myChart = new Chart('overviewChart', {
       type: 'line',
       data: {
-          labels: ['jan', 'feb', 'mar', 'april', 'may', 'june'],
+          labels: this.xAxis,
           datasets: [
             {
               label: 'Completed Task',
@@ -206,6 +250,8 @@ export class DataAnalysisComponent implements OnInit {
     //this.spinner.hide()
     this.projectsList = data;
   });
+
+
 
   }
 

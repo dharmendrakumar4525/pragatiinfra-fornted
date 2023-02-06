@@ -45,10 +45,10 @@
       <div>
         <div style="height: 150px;width:50%; float: left;">
   
-     <div class="userdiv"> <h3>Users</h3> 
+     <div class="userdiv"> <h3>Activities</h3> 
       <div > <h3 style="margin-bottom: 100px;">Show Entries 
         <mat-card>
-          <mat-card-content style="position: absolute;bottom:10px">{{usersLen}}</mat-card-content>
+          <mat-card-content style="position: absolute;bottom:10px">{{taskLen}}</mat-card-content>
         </mat-card>   
       </h3>  
            
@@ -57,12 +57,12 @@
   </div>
   
   <div  class="right" style="height: 150px;width:50%">
-  <div><button  style="width: 150px;padding: 10px;margin-left: 400px;cursor: pointer;color: #818181;border:1px solid #97989D;background-color: #fff;border-radius: 5px;">Create User</button></div>
+  <div><button  style="width: 150px;padding: 10px;margin-left: 400px;cursor: pointer;color: #818181;border:1px solid #97989D;background-color: #fff;border-radius: 5px;" (click)="addActivity()" >Create Activity</button></div>
   <div style="margin-left: 290px;margin-top: 10px;">
       <form class="Search-form">
       <mat-form-field class="example-full-width" appearance="outline">
       <span matPrefix> </span>
-      <input matInput placeholder="Search">
+      <input matInput placeholder="Search" (keyup)="applyFilter($event)">
       <button matSuffix mat-button><mat-icon >search</mat-icon></button>
       </mat-form-field>
      
@@ -71,7 +71,7 @@
   </div>
   <div style="width: 100%;height: 100vh;">
 
-    <div style="margin-left: 50px;background-color: brown;color: #fff;width:130px;margin-top:150px ;"><button  mat-button>Delete Multiple</button> 
+    <div style="margin-left: 50px;background-color: brown;color: #fff;width:130px;margin-top:150px ;"><button  (click)="deleteMultipleDialog()" mat-button>Delete Multiple</button> 
     </div><br>
 
     <div>
@@ -82,11 +82,14 @@
              <!-- Description Column -->
              <ng-container matColumnDef="SelectAll">
               <th mat-header-cell *matHeaderCellDef >
-                <mat-checkbox ></mat-checkbox><span style="margin-left: 10px;">SelectAll</span>
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                  [checked]="selection.hasValue() && isAllSelected()"
+                  [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                </mat-checkbox><span style="margin-left: 10px;">SelectAll</span>
               </th>
               <td mat-cell *matCellDef="let row"  >
                 <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-                  [checked]="selection.isSelected(row)" >
+                  [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
                 </mat-checkbox>
               </td>
             </ng-container>
@@ -102,25 +105,16 @@
         <!-- R2EndDate Column -->
         <ng-container matColumnDef="No">
           <th mat-header-cell *matHeaderCellDef>S.No</th>
-          <td mat-cell *matCellDef="let element;let i = index" data-label="No"> {{i + 1}} </td>
+          <td mat-cell *matCellDef="let element;let i = index" data-label="S No"> {{i + 1}} </td>
         </ng-container>
     
            <!-- R1EndDate Column -->
-           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+           <ng-container matColumnDef="taskName">
+            <th mat-header-cell *matHeaderCellDef> Activity </th>
+            <td mat-cell *matCellDef="let element"> {{element.taskName}} </td>
           </ng-container>
            <!-- WorkingdaysRevised Column -->
-           <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef> Email </th>
-            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-          </ng-container>
-      
-      <!-- BaselineStartDate Column -->
-      <ng-container matColumnDef="role">
-        <th mat-header-cell *matHeaderCellDef> Roles </th>
-        <td mat-cell *matCellDef="let element"> {{element.role}} </td>
-      </ng-container>
+  
     
     
     <!-- BaselineEndDate Column -->
@@ -128,8 +122,8 @@
         <th mat-header-cell *matHeaderCellDef> Action </th>
         <td mat-cell *matCellDef="let element"> {{element.Action}} 
             <span class="action_btn">
-                <button mat-button >Edit</button>
-                <button mat-button >Delete</button>
+                <button mat-button (click)="editActivity(element)" >Edit</button>
+                <button mat-button (click)="deleteActivity(element._id)">Delete</button>
               </span>
         </td>
       </ng-container>

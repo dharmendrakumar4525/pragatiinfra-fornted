@@ -52,6 +52,14 @@ import { SubActivitySearchPipe } from './services/subActivity.pipe';
 import { MasteruserComponent } from './pages/masteruser/masteruser.component';
 import { MasterCreateuserComponent } from './pages/master-createuser/master-createuser.component';
 import { InnerAddMemberComponent } from './pages/inner-add-member/inner-add-member.component';
+import { EditActivityComponent } from './pages/edit-activity/edit-activity.component';
+import { EditSubActivityComponent } from './pages/edit-sub-activity/edit-sub-activity.component';
+import { TaskDeleteMulActivityComponent } from './pages/task-delete-mul-activity/task-delete-mul-activity.component';
+import { DeleteMulSubActivityComponent } from './pages/delete-mul-sub-activity/delete-mul-sub-activity.component';
+import { SubActivitiesComponent } from './pages/sub-activities/sub-activities.component';
+import { EditSubActivitiesComponent } from './pages/edit-sub-activities/edit-sub-activities.component';
+import { AddSubActivitiesComponent } from './pages/add-sub-activities/add-sub-activities.component';
+import { MenuSearchPipe } from './services/menuSearch.pipe';
 
 // FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 //   dayGridPlugin,
@@ -89,7 +97,7 @@ import { InnerAddMemberComponent } from './pages/inner-add-member/inner-add-memb
      BrowserAnimationsModule,
   ],
   declarations: [ AppComponent, HomeComponent,SearchPipe,SubActivitySearchPipe, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent,LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,
-    ForgotpasswordComponent, NewRoleComponent,NewPermissionComponent, AddDataComponent, ManagePermissionsComponent,CreatenewpasswordComponent, NoPermissionsComponent, RoleEditComponent, UserEditComponent, UsersDeleteMultipleComponent, RolesDeleteMultipleComponent, AboutUsComponent,MasteruserComponent,MasterCreateuserComponent, InnerAddMemberComponent],
+    ForgotpasswordComponent, NewRoleComponent,NewPermissionComponent, AddDataComponent, ManagePermissionsComponent,CreatenewpasswordComponent, NoPermissionsComponent, RoleEditComponent, UserEditComponent, UsersDeleteMultipleComponent, RolesDeleteMultipleComponent, AboutUsComponent,MasteruserComponent,MasterCreateuserComponent, InnerAddMemberComponent, EditActivityComponent, EditSubActivityComponent, TaskDeleteMulActivityComponent, DeleteMulSubActivityComponent, SubActivitiesComponent, EditSubActivitiesComponent, AddSubActivitiesComponent],
     providers:[AuthGuard],
     schemas: [
       CUSTOM_ELEMENTS_SCHEMA,

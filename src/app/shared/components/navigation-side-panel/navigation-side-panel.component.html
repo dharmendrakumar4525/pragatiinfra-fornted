@@ -13,13 +13,13 @@
   <form class="Search-form" style="width:80%;margin-left: 20px;">
              
     <span matPrefix > </span>
-    <input type="text"  placeholder="Search" name= "search" >
+    <input type="text"  placeholder="Search" name= "search" [(ngModel)]="link_name" >
     <button  style="bottom: 35px;left:200px;position: relative;background-color: #233A61;border: none;"><i class="fa fa-search" aria-hidden="true" style="color: #97989D;"></i></button>
    
    
     </form>
   <ul class="navigation-panel-menu" *ngIf="links && links.length > 0">
-    <li *ngFor="let link of links">
+    <!-- <li *ngFor="let link of links">
       <a [routerLink]="link.url" 
           [routerLinkActive]="['active']"
           [routerLinkActiveOptions]="{exact: true}">
@@ -27,33 +27,40 @@
         
         <span [ngClass]="currentPanelState">{{ link.text }}</span>
       </a>
-    </li>
-    <li *ngFor="let item of menuSidebar" class="sidebar"  #itemEl routerLinkActive="active">
+    </li> -->
+    <li *ngFor="let item of menuSidebar | menuFilter:link_name" class="sidebar"  #itemEl routerLinkActive="active">
       <div  class="dropdown-title">
         
-        <a (click)="addSubItems()">
+        <a routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}" (click)="addSubItems(item)" >
           <!-- <i class="fas fa-home" [ngClass]="link.iconClass"></i> -->
           <!-- <i class='fa-solid fa-users-gear' style='color: white'></i> -->
           
-          <i class="fa fa-user-circle" aria-hidden="true"></i>
-         
-          <span class="link_name">{{item.link_name}}</span>
+          <!-- <i class="fa fa-user-circle" aria-hidden="true"></i> -->
+          <div class="allignSvg">
+            <img [src]="item.img">
+         &nbsp;
+            <span class="link_name">{{item.link_name}}</span>
+          </div>
+          
         </a>
       </div>
-      <div *ngIf="item.sub_menu.length > 0" class="dropdown-title" (click)="showSubmenu(itemEl)">
+      <!-- <div *ngIf="item.sub_menu.length > 0" class="dropdown-title" (click)="showSubmenu(itemEl)"> -->
         <!-- <a>
           <i [class]="item.icon"></i>
           <span class="link_name">{{item.link_name}}</span>
         </a> -->
-        <i class='bx bxs-chevron-down arrow'></i>
-      </div>
-      <ul class="sub-menu" [class.blank]="item.sub_menu.length == 0">
+        <!-- <i class='bx bxs-chevron-down arrow'></i>
+      </div> -->
+      <ul class="sub-menu" >
         <!-- <li><a class="link_name">{{item.link_name}}</a></li> -->
         <li *ngFor="let item_sub of item.sub_menu" routerLinkActive="active">
           
           <!-- <i class="fas fa-home" [ngClass]="link.iconClass"></i> -->
           
-          <a [routerLink]="[item_sub.link]">{{item_sub.link_name}}</a>
+          <a [routerLink]="[item_sub.link]">
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+            {{item_sub.link_name}}</a>
           <!-- <hr> -->
         </li>
       </ul>
@@ -66,8 +73,9 @@
       <a  (click)="logout()"
           [routerLinkActive]="['active']"
           [routerLinkActiveOptions]="{exact: true}">
-          <i class='fas fa-sign-out-alt' style='color: white'></i>
-        <span [ngClass]="currentPanelState">Log out</span>
+          <!-- <i class='fas fa-sign-out-alt' style='color: white'></i> -->
+        <span [ngClass]="currentPanelState">
+          <img src="../../../assets/images/icons/logout.svg">&nbsp; Log out</span>
       </a>
     </li>
     <!-- <li *ngFor="let link of menuSidebar">

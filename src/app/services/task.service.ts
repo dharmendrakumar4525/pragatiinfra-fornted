@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -14,6 +14,47 @@ export class TaskService {
   getTasks(): Observable<any> {
     
     return this.http.get(`${environment.local_connection}/masterTasks`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  editActivity(activity:any,id): Observable<any> {
+    
+    return this.http.put(`${environment.local_connection}/masterTasks/${id}`, activity).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getAllTasks(): Observable<any> {
+    
+    return this.http.get(`${environment.local_connection}/masterTasks/all-tasks`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  deleteTask(id:any): Observable<any> {
+    console.log(id)
+    return this.http.delete(`${environment.local_connection}/masterTasks/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  deleteMultipleActivities(roleIds){
+    console.log(roleIds)
+
+    // return this.http.delete(`${this.baseUrl}/users`, {ff:userIds}).pipe(
+    //   catchError(this.handleError)
+    // );
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        selUsers:roleIds
+      },
+    };
+    //let deleteMultipleUsers = {selUsers:userIds}
+    return this.http.delete(`${environment.local_connection}/masterTasks`, options).pipe(
       catchError(this.handleError)
     );
   }

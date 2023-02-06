@@ -65,6 +65,7 @@ export class CalenderComponent implements OnInit {
   aboutUsLen:any;
   members:any;
   projectsList:any;
+  valueAddedDate:any;
   projectNameForm: FormGroup = this._fb.group({
     _id: [null],
    });
@@ -220,10 +221,7 @@ memberAddPermissions:any;
     //console.log(this.permissions)
     //this.projectsViewPermissions = this.permissions.permissions[0].ParentChildchecklist[0].childList[1]
     this.memberAddPermissions = this.permissions.permissions[0]?.ParentChildchecklist[5]?.childList[0]
-    this.getWeekName = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][new Date().getDay()]
-    this.getMonth = new Date().toLocaleString('default', { month: 'short' });
-    this.getYear = new Date().getFullYear()
-    this.getDay = new Date().getDate()
+ 
     //this.getDay = new Date().getMonth()
 
     
@@ -306,6 +304,11 @@ memberAddPermissions:any;
   onSelect(event){
     this.showCalData = true
     console.log(event)
+    this.valueAddedDate = event
+    this.getWeekName = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][new Date(this.valueAddedDate).getDay()]
+    this.getMonth = new Date(this.valueAddedDate).toLocaleString('default', { month: 'short' });
+    this.getYear = new Date(this.valueAddedDate).getFullYear()
+    this.getDay = new Date(this.valueAddedDate).getDate()
   }
 
   dateClass() {
@@ -328,6 +331,8 @@ memberAddPermissions:any;
     }
     player.cumTotal=value; //<-----this will add new property to your existing object with input value.
     console.log(player);
+    player.addedDate = this.valueAddedDate
+    player.projectId = this.projectId
     console.log(id);
     this.calenderService.cumutaleTotalData(player,id).subscribe(
 

@@ -15,6 +15,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   @Input()
   public links: NavigationLink[];
   openSidebar: boolean = false;
+  link_name = "";
   obj = [ 
   //  {
   //   link_name: "Permissions",
@@ -22,6 +23,38 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   // },
   ]
   menuSidebar = [
+    {
+      link_name: "DPR",
+      link: '/dpr',
+      icon: "bx bx-collection",
+      img:'../../../assets/images/icons/dpr.svg',
+      
+    },
+    {
+      link_name: "DMR",
+      link: null,
+      icon: "bx bx-collection",
+      img:'../../../assets/images/icons/dmr.svg',
+    },
+
+    {
+      link_name: "PROCUREMENTS",
+      link: null,
+      icon: "bx bx-collection",
+      img:'../../../assets/images/icons/procure.svg',
+    },
+    {
+      link_name: "Activities",
+      link: '/activities',
+      icon: "bx bx-collection",
+     
+    },
+    {
+      link_name: "sub Activities",
+      link: '/sub-activities',
+      icon: "bx bx-collection",
+     
+    },
      {
       link_name: "User Management",
       link: null,
@@ -128,31 +161,108 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
     itemEl.classList.toggle("showMenu");
   }
 
-  addSubItems(){
-    this.openSidebar = !this.openSidebar
-    if(this.openSidebar){
-      this.menuSidebar = [
-        {
-         link_name: "User Management",
-         link: null,
-         icon: "bx bx-collection",
-         sub_menu: [
-           ...this.obj
-         ]
-       }
-     ]
+  addSubItems(item){
+    console.log(item)
+    if(!item?.sub_menu){
+      console.log("subb1")
+      this.router.navigate([item.link]);
     }else{
-      this.menuSidebar = [
-        {
-         link_name: "User Management",
-         link: null,
-         icon: "bx bx-collection",
-         sub_menu: [
-           //...this.obj
-         ]
-       }
-     ]
+      console.log("subb1")
+
+      this.openSidebar = !this.openSidebar
+      if(this.openSidebar){
+        this.menuSidebar = [
+          {
+            link_name: "DPR",
+            link: '/dpr',
+            icon: "bx bx-collection",
+            img:'../../../assets/images/icons/dpr.svg',
+            
+          },   {
+            link_name: "DMR",
+            link: null,
+            icon: "bx bx-collection",
+            img:'../../../assets/images/icons/dmr.svg',
+          },   
+
+  
+    
+          {
+            link_name: "PROCUREMENTS",
+            link: null,
+            icon: "bx bx-collection",
+            img:'../../../assets/images/icons/procure.svg',
+          },
+          {
+            link_name: "Activities",
+            link: '/activities',
+            icon: "bx bx-collection",
+           
+          },
+
+          {
+            link_name: "sub Activities",
+            link: '/sub-activities',
+            icon: "bx bx-collection",
+           
+          },
+          {
+           link_name: "User Management",
+           link: null,
+           icon: "bx bx-collection",
+           sub_menu: [
+             ...this.obj
+           ]
+         }
+       ]
+      }else{
+        this.menuSidebar = [
+          {
+            link_name: "DPR",
+            link: '/dpr',
+            icon: "bx bx-collection",
+            img:'../../../assets/images/icons/dpr.svg',
+            
+          },
+          {
+            link_name: "DMR",
+            link: null,
+            icon: "bx bx-collection",
+            img:'../../../assets/images/icons/dmr.svg',
+          },
+          
+
+          {
+            link_name: "PROCUREMENTS",
+            link: null,
+            icon: "bx bx-collection",
+            img:'../../../assets/images/icons/procure.svg',
+          },
+          {
+            link_name: "Activities",
+            link: '/activities',
+            icon: "bx bx-collection",
+           
+          },
+          {
+            link_name: "sub Activities",
+            link: '/sub-activities',
+            icon: "bx bx-collection",
+           
+          },
+          {
+           link_name: "User Management",
+           link: null,
+           icon: "bx bx-collection",
+           sub_menu: [
+             //...this.obj
+           ]
+         }
+       ]
+      }
+
     }
+   
     
   }
 
