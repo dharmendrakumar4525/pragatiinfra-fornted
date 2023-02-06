@@ -18,7 +18,8 @@
    
    
     </form>
-  <ul class="navigation-panel-menu" *ngIf="links && links.length > 0">
+  <ul  class="navigation-panel-menu"  *ngIf="links && links.length > 0">
+    <div  class="scroll-bar2" width="10%" >
     <!-- <li *ngFor="let link of links">
       <a [routerLink]="link.url" 
           [routerLinkActive]="['active']"
@@ -97,7 +98,7 @@
       <!-- <ul class="nav-links" id="nav-links"> -->
         
       
-    
+    </div>
   </ul>
  
   
@@ -116,4 +117,5 @@
     <ng-content select="[panel=navigationExtended"></ng-content>
   </div>
 </div></div> -->
+
 </div>

@@ -199,4 +199,33 @@ input[type=text] {
   align-items: center;
   //justify-content: center;
 }
+  
+.scroll-bar2{
+        
+   
+  height: 450px;
+ 
+  margin-right: 50px;
+  overflow: auto;
+ width:250px;
+ overflow-x: hidden;
+  
 
+  }
+
+::-webkit-scrollbar {
+width: 7px;
+height:7px;
+}
+::-webkit-scrollbar-track{
+border: 1px solid lightgrey;
+border-radius: 5px;
+background-color:lightgrey ;
+}
+::-webkit-scrollbar-thumb{
+background: #1E293B;
+border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover{
+background: lightblue;
+}
