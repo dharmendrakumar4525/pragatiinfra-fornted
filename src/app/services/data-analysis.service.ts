@@ -39,4 +39,13 @@ export class DataAnalysisService {
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
+
+  calenderFilter(date:any,projectId): Observable<any> {
+
+   let data = {date:date,projectId:projectId}
+    
+    return this.http.post(`${environment.aws_connection}/lineGraph/date-filter`, data).pipe(
+      catchError(this.handleError)
+    );
+  }
 }

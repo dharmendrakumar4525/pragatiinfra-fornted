@@ -85,23 +85,18 @@
 
     <div style="width: 150px;text-align: center;position: absolute;top:150px">
       <span>Todays update</span> <br>
-      <h1 style="margin-top: 50px;color: #2E2E2E;font-size: 64px;">01 <h5 style="color: #2E2E2E;margin-top: -10px;margin-left: 100px;">Feb</h5></h1>
+      <h1 style="margin-top: 50px;color: #2E2E2E;font-size: 64px;">{{day}} <h5 style="color: #2E2E2E;margin-top: -10px;margin-left: 100px;">{{month}}</h5></h1>
     </div>
       <div>
+
+
       <mat-form-field appearance="outline" style="width: 150px;position: absolute;bottom:40px">
-    
-        <input matInput 
-        [matDatepickerFilter]="dateFilter"
-        [matDatepicker]="releasedAtPicker" >
-
- <mat-datepicker-toggle matSuffix [for]="releasedAtPicker">
-
- </mat-datepicker-toggle>
-
- <mat-datepicker #releasedAtPicker >
-
- </mat-datepicker>
-    
+        <input matInput [matDatepicker]="startPicker" placeholder="Enter date"
+        (click)="startPicker.open()" (dateChange)="filterFrom($event)"/>
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+     
+       
       </mat-form-field>
    
     
