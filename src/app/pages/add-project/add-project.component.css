@@ -98,3 +98,32 @@ input[type=text] {
  ::-webkit-scrollbar-thumb:hover{
  background: lightblue;
  }
+  
+.scroll-bar3{
+        
+   
+   height: 550px;
+   width:93%;
+   margin-left: 60px;
+
+   overflow: auto;
+   overflow-x: hidden;
+  
+   }
+ 
+ ::-webkit-scrollbar {
+ width: 7px;
+ height:7px;
+ }
+ ::-webkit-scrollbar-track{
+ border: 1px solid lightgrey;
+ border-radius: 5px;
+ background-color:lightgrey ;
+ }
+ ::-webkit-scrollbar-thumb{
+ background: #1E293B;
+ border-radius: 5px;
+ }
+ ::-webkit-scrollbar-thumb:hover{
+ background: lightblue;
+ }

@@ -1,6 +1,6 @@
 
 
-<form class="form-section" [formGroup]="projectForm">
+<form class="form-section" [formGroup]="projectForm" >
   <div *ngIf="showAddProject">
     <mat-toolbar style="background-color: #fff;">
       <mat-toolbar-row fxLayoutAlign="space-between center">
@@ -13,7 +13,8 @@
           <hr style="width:100%">
         </mat-toolbar-row>
     </mat-toolbar>
-    <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
+    <div  class="scroll-bar3" style="width: 93%;">
+    <div style="position:relative;left: 10px;" fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
       fxLayoutAlign="space-around center" fxLayoutGap="0px">
       <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
         <div class="custom-form-group">
@@ -106,7 +107,7 @@
     
   </div><br>
 
-    <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
+    <div style="margin-left: 10px;" fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
       fxLayoutAlign="space-around center" fxLayoutGap="0px">
       <div fxLayout="column" fxFlex="92" fxFlexFill class="addform-50-column mobile_mb_0">
         <mat-form-field class="example-chip-list" appearance="outline">
@@ -220,12 +221,18 @@
   
   </div>
 </div>
+</div>
 <br>
-<div *ngIf="showMaster">
-  <mat-toolbar style="background-color: #fff;">
+
+  <div style="margin-left: 100px;margin-bottom: 100px;" *ngIf="showAddProject">
+  <button  style="background-color: #233A61;color:#fff;width:150px;padding: 7px;" (click)="addProject()">Submit</button>
+</div> 
+
+<div *ngIf="showMaster" >
+  <mat-toolbar style="background-color: #fff;height: 100px;">
     <mat-toolbar-row fxLayoutAlign="space-between center">
         <div >
-        <span>Master Data</span></div>
+        <span >Master Data</span></div>
         <div>
           <button mat-raised-button *ngIf="!projectId" (click)="dispalyProject()">Go Back</button>
           <!-- <button style="padding: 5px;width: 100px;margin-top: 60px;">Go Back  </button> -->
@@ -235,7 +242,7 @@
       </mat-toolbar-row>
         
       <mat-toolbar-row>
-        <hr style="width:100%">
+        <hr style="width:100%;">
       </mat-toolbar-row>
   </mat-toolbar>
 <div  class="scroll-bar2" style="width: 93%;">
@@ -244,13 +251,13 @@
    fxLayout.lt-sm="column" 
    fxLayoutGap="10px" 
    fxLayoutAlign="flex-start"
-   style="margin-left: 5%;" >
+   style="margin-left: 5px;" >
 
    <ng-container *ngFor="let task of tasks;let i = index" >
     <mat-card id="card" fxFlex="0 1 calc(33.3% - 32px)"
     fxFlex.lt-md="0 1 calc(50% - 32px)"
     fxFlex.lt-sm="100%" >
-        <mat-card-title style="color: #3568BA;font-size: 25px;font-weight:normal;">
+        <mat-card-title style="color: #3568BA;font-size: 20px;font-weight:400;font-style: normal;">
             {{task.taskName}}
             
         </mat-card-title>
@@ -325,13 +332,14 @@
    fxLayoutGap="10px" 
    fxLayoutAlign="flex-start"
    style="margin-left: 5%;">
-   <button mat-raised-button (click)="addProject()" style="background-color: #233A61;color: #fff;left: 60px;width:130px;top: 30px;">Submit</button><br>
+   <button mat-raised-button (click)="addProject()" style="background-color: #233A61;color: #fff;left: 10px;width:130px;top: 30px;margin-bottom: 20px;">Submit</button><br>
 </div>
 
 
 
 </div>
 </form>
+
 
 
      

@@ -18,6 +18,7 @@
    
    
     </form>
+  
   <ul  class="navigation-panel-menu"  *ngIf="links && links.length > 0">
     <div  class="scroll-bar2" width="10%" >
     <!-- <li *ngFor="let link of links">
@@ -40,12 +41,15 @@
           <!-- <i class="fa fa-user-circle" aria-hidden="true"></i> -->
           <div class="allignSvg">
             <img [src]="item.img">
-         &nbsp;
-            <span class="link_name">{{item.link_name}}</span>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="link_name" >{{ caseconverter(item.link_name)  }} <span><mat-icon *ngIf="item.link_name == 'User Management'" style="top: 9px;position: relative;">arrow_drop_down</mat-icon></span></span>
+            
           </div>
           
         </a>
+        
       </div>
+      
       <!-- <div *ngIf="item.sub_menu.length > 0" class="dropdown-title" (click)="showSubmenu(itemEl)"> -->
         <!-- <a>
           <i [class]="item.icon"></i>
@@ -53,25 +57,32 @@
         </a> -->
         <!-- <i class='bx bxs-chevron-down arrow'></i>
       </div> -->
+      
       <ul class="sub-menu" >
+        
         <!-- <li><a class="link_name">{{item.link_name}}</a></li> -->
         <li *ngFor="let item_sub of item.sub_menu" routerLinkActive="active">
-          
+         
           <!-- <i class="fas fa-home" [ngClass]="link.iconClass"></i> -->
-          
+         
           <a [routerLink]="[item_sub.link]">
+           
             <div class="allignSvg">
-            <img [src]="item_sub.img">&nbsp;
-            {{item_sub.link_name}}
+            
+            <img [src]="item_sub.img"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {{item_sub.link_name | lowercase}}
+          
           </div>
+          
           </a>
-          <!-- <hr> -->
+         
+      
         </li>
       </ul>
 
       
     </li>
-
+ 
   
     <li >
       <a  (click)="logout()"
@@ -79,7 +90,7 @@
           [routerLinkActiveOptions]="{exact: true}">
           <!-- <i class='fas fa-sign-out-alt' style='color: white'></i> -->
         <span [ngClass]="currentPanelState">
-          <img src="../../../assets/images/icons/Blogout.svg">&nbsp; Log out</span>
+          <img src="../../../assets/images/icons/Blogout.svg"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Log out</span>
       </a>
     </li>
     <!-- <li *ngFor="let link of menuSidebar">

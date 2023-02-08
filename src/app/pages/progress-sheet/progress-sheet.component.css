@@ -70,7 +70,7 @@
   
   td {
     
-    border: 1px solid #D9D9D9;
+    border: 1px solid #94A3B8;
     text-align: left;
     padding: 4px;
     color: #233A61;
@@ -81,7 +81,7 @@
   
   }
   tr:nth-child(even) {
-    background-color: #dddddd !important;
+    background-color: #F4F4F5 !important;
   }
 
   .example-card{

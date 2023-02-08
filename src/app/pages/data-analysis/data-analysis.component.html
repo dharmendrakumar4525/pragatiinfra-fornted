@@ -3,7 +3,7 @@
     <mat-toolbar-row fxLayoutAlign="space-between center" >
         <div style="padding: 1rem;margin-top: 110px;" >
           <form [formGroup]="projectNameForm">
-          <select style="padding: 10px;width:100px;border: none;font-size: large;" (change)="onChangeProject($event)" formControlName="_id">
+          <select style="padding: 10px;width:100px;border: none;font-size: 22px;font-style: bold;" (change)="onChangeProject($event)" formControlName="_id">
             <option *ngFor=" let one of projectsList" [value]="one._id">
               
         <span>{{one?.projectName}}</span></option></select>
@@ -50,16 +50,16 @@
     <ul style="list-style: none;">
     
       <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/dpr']" routerLinkActive="active-link"
-        ><i class="fa fa-eye" aria-hidden="true" style="color:#97989D"></i> <span style="color:#97989D">Projects</span></a></li>
+        ><i class="fa fa-eye" aria-hidden="true" style="color:#97989D"></i> <span style="color:#97989D">&nbsp; Projects</span></a></li>
        
       <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
-        [routerLinkActiveOptions]="{exact: true}"  ><i class="fa fa-eye" aria-hidden="true" style="color:#233A61"></i><span style="color:#233A61">Data-Analysis</span> </a></li>
+        [routerLinkActiveOptions]="{exact: true}"  ><i class="fa fa-eye" aria-hidden="true" style="color:#233A61"></i><span style="color:#233A61">&nbsp;Data-Analysis</span> </a></li>
         
       <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
-         ><i class="fa fa-edit" aria-hidden="true" style="color:#97989D"></i> <span style="color:#97989D">Progress-sheet</span></a></li>
+         ><i class="fa fa-edit" aria-hidden="true" style="color:#97989D"></i> <span style="color:#97989D">&nbsp;Progress-sheet</span></a></li>
          
       <li><a [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"
-         ><i class="fa fa-edit" aria-hidden="true" style="color:#97989D"></i> <span style="color:#97989D;">Calender</span></a></li>
+         ><i class="fa fa-edit" aria-hidden="true" style="color:#97989D"></i> <span style="color:#97989D;">&nbsp;Calender</span></a></li>
       
     </ul>
     
@@ -100,9 +100,9 @@
       </mat-form-field>
    
     
-    <div style="margin-left: 200px; position: absolute; top:90px">
+    <div style="margin-left: 300px; position: absolute; top:90px">
     <button mat-button >Project OverView</button></div>
-    <div style="width:500px;height: 300px;margin-left: 200px; position: absolute; top:120px">
+    <div style="width:500px;height: 300px;margin-left: 300px; position: absolute; top:120px">
       <canvas id="overviewChart" width="2" height="1" ></canvas>
     </div>
     
@@ -115,7 +115,7 @@
     
     <mat-grid-tile  >
   
-      <div class="top_container" fxLayout="column" fxLayoutGap="10px"  style="height: 60vh;margin-right: 50px;" >
+      <div class="top_container" fxLayout="column" fxLayoutGap="10px"  style="height: 70vh;margin-right: 50px;" >
         <mat-card style="width: 240px;height: 600px;margin:10px 0px;background-color: #FAFAFA;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);"  >
           <div class="scroll-bar" fxLayout="column">
           <mat-card-header>
@@ -132,14 +132,14 @@
      <div  class="aboutcard-spaceset" fxFlex="row" fxLayoutAlign="start"  style="height: 55px;" *ngFor="let data of members">
       <div class="item" style="margin-top:10px; " mat-card-avatar class="example-header-image"></div>
       <div class="item" style="margin-top:10px">
-        <button mat-button >{{data.split('@')[0]}}</button>
+        <button mat-button style="font-size: 13px;font-weight: 300;" >{{data.split('@')[0]}}</button>
        
   </div>
 </div>
 
 </div>
 <mat-card-actions>
-  <button mat-button (click)="addMember()">Addmembers+</button> 
+  <button mat-button (click)="addMember()" style="margin-top: 30px;">Addmembers+</button> 
 </mat-card-actions>
 
     </mat-card>

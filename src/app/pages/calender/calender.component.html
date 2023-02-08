@@ -3,7 +3,7 @@
     <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" >
         <div style="padding: 1rem;margin-top: 110px;">
           <form [formGroup]="projectNameForm">
-            <select style="padding: 10px;width:100px;border: none;font-size: large;" (change)="onChangeProject($event)" formControlName="_id">
+            <select style="padding: 10px;width:100px;border: none;font-size: 22px;font-style: bold;" (change)="onChangeProject($event)" formControlName="_id">
               <option *ngFor=" let one of projectsList" [value]="one._id">
                 
           <span>{{one?.projectName}}</span></option></select>
@@ -22,16 +22,16 @@
     <ul style="list-style: none;">
     
       <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/dpr']" routerLinkActive="active-link"
-        ><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i><span style="color:#97989D;"> Projects</span></a></li>
+        ><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i><span style="color:#97989D;">&nbsp;Projects</span></a></li>
        
       <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
-        [routerLinkActiveOptions]="{exact: true}"  style="color:#97989D;"><i class="fa fa-eye" aria-hidden="true"></i> <span style="color:#97989D;">Data-Analysis</span></a></li>
+        [routerLinkActiveOptions]="{exact: true}"  style="color:#97989D;"><i class="fa fa-eye" aria-hidden="true"></i> <span style="color:#97989D;">&nbsp;Data-Analysis</span></a></li>
         
       <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
-         ><i class="fa fa-edit" aria-hidden="true" style="color:#97989D;"></i><span style="color:#97989D;">Progress-sheet</span> </a></li>
+         ><i class="fa fa-edit" aria-hidden="true" style="color:#97989D;"></i><span style="color:#97989D;">&nbsp;Progress-sheet</span> </a></li>
          
       <li><a [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"
-         ><i class="fa fa-edit" aria-hidden="true" style="color:#233A61"></i> <span style="color:#233A61">Calender</span></a></li>
+         ><i class="fa fa-edit" aria-hidden="true" style="color:#233A61"></i> <span style="color:#233A61">&nbsp;Calender</span></a></li>
       
     </ul>
     
@@ -71,7 +71,7 @@
               <div class="aboutcard-spaceset" fxFlex="row" fxLayoutAlign="start"  style="height: 55px;" *ngFor="let data of members">
                 <div  style="margin-top:10px" mat-card-avatar class="example-header-image"></div>
                 <div style="margin-top:10px">
-                  <button mat-button >{{data.split('@')[0]}}</button>
+                  <button mat-button  style="font-size: 13px;font-weight: 300;">{{data.split('@')[0]}}</button>
                  
             </div>
           </div>
@@ -90,7 +90,7 @@
       <mat-grid-tile colspan="3" style="margin-left: 20px;">
         <mat-card  style="width: 90%;height: 400px;margin:10px 0px;background-color: #FAFAFA;margin-top:-200px;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
           
-          <div  >
+          <div >
             <div class="scroll-bar" >
               <div  fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities"  style="border-right: 2px solid #E5E5E5;margin-right: 7 00px;" >
                 <div mat-card-avatar class="example-header-image"></div>
@@ -99,8 +99,11 @@
                   <div class="time" style="color: #BBBBBB;">{{data.time}}</div><br>
                  
                 </div>
+                 
             </div><br>
-            </div>    
+          
+            </div>   
+            <div class="v-line"></div> 
       </div>
        </div>
        

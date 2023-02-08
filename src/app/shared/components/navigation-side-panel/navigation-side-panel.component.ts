@@ -24,21 +24,21 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   ]
   menuSidebar = [
     {
-      link_name: "DPR",
+      link_name: "dpr",
       link: '/dpr',
       icon: "bx bx-collection",
       img:'../../../assets/images/icons/dpr.svg',
       
     },
     {
-      link_name: "DMR",
+      link_name: "dmr",
       link: null,
       icon: "bx bx-collection",
       img:'../../../assets/images/icons/dmr.svg',
     },
 
     {
-      link_name: "PROCUREMENTS",
+      link_name: "Procurements",
       link: null,
       icon: "bx bx-collection",
       img:'../../../assets/images/icons/procure.svg',
@@ -50,7 +50,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       img:'../../../assets/images/icons/Bactivity.svg',
     },
     {
-      link_name: "sub Activities",
+      link_name: "Sub Activities",
       link: '/sub-activities',
       icon: "bx bx-collection",
       img:'../../../assets/images/icons/Bsubactivity.svg',
@@ -146,8 +146,20 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
     this._sidePanelService.panelStateChanges
       .pipe(takeUntil(this._subscriptionsSubject$))
       .subscribe((state: SidePanelState) => (this.currentPanelState = state));
-  }
 
+    
+  }
+  caseconverter(value:any){
+ if(value=='dpr'||value=='dmr')
+ {
+  value=value.toUpperCase()
+ }
+ else{
+  value=value;
+ }
+ console.log(value);
+ return value;
+  }
   ngOnDestroy(): void {
     this._subscriptionsSubject$.next();
     this._subscriptionsSubject$.complete();
@@ -182,13 +194,13 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       if(this.openSidebar){
         this.menuSidebar = [
           {
-            link_name: "DPR",
+            link_name: "dpr",
             link: '/dpr',
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/dpr.svg',
             
           },   {
-            link_name: "DMR",
+            link_name: "dmr",
             link: null,
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/dmr.svg',
@@ -197,7 +209,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   
     
           {
-            link_name: "PROCUREMENTS",
+            link_name: "Procurements",
             link: null,
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/procure.svg',
@@ -229,14 +241,14 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       }else{
         this.menuSidebar = [
           {
-            link_name: "DPR",
+            link_name: "dpr",
             link: '/dpr',
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/dpr.svg',
             
           },
           {
-            link_name: "DMR",
+            link_name: "dmr",
             link: null,
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/dmr.svg',
@@ -244,7 +256,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
           
 
           {
-            link_name: "PROCUREMENTS",
+            link_name: "Procurements",
             link: null,
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/procure.svg',

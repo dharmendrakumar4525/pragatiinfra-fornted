@@ -150,3 +150,10 @@ background: lightblue;
   display: flex;
   flex: none !important;
 }
+.v-line{
+  height:2850px;
+  border-left: 3px solid #D9D9D9;
+  position: relative;
+  left: 500px;
+  bottom: 2850px;
+  }

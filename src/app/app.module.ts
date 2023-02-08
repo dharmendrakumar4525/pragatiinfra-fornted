@@ -60,6 +60,7 @@ import { SubActivitiesComponent } from './pages/sub-activities/sub-activities.co
 import { EditSubActivitiesComponent } from './pages/edit-sub-activities/edit-sub-activities.component';
 import { AddSubActivitiesComponent } from './pages/add-sub-activities/add-sub-activities.component';
 import { MenuSearchPipe } from './services/menuSearch.pipe';
+import { CommonModule } from '@angular/common';
 
 // FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 //   dayGridPlugin,
@@ -71,6 +72,7 @@ import { MenuSearchPipe } from './services/menuSearch.pipe';
   imports:      [ AppRoutingModule, BrowserModule,ReactiveFormsModule,HttpClientModule, FormsModule, CoreModule, SharedModule, CustomMaterialModule,
     FlexLayoutModule,
     FullCalendarModule ,
+    CommonModule,
     NgCircleProgressModule.forRoot({
 
     

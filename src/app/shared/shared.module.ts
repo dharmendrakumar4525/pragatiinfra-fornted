@@ -6,6 +6,7 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
 import { NavigationSidePanelComponent } from './components/navigation-side-panel/navigation-side-panel.component';
 import { SingleDoubleClickDirective } from './directives/single-double-click.directive';
 import { MenuSearchPipe } from '../services/menuSearch.pipe';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { MenuSearchPipe } from '../services/menuSearch.pipe';
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    MatIconModule
   ],
   exports: [
     NavigationBarComponent, 
