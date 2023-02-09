@@ -82,7 +82,7 @@
              <!-- Description Column -->
              <ng-container matColumnDef="SelectAll">
               <th mat-header-cell *matHeaderCellDef >
-                <mat-checkbox (change)="$event ? masterToggle() : null"
+                <mat-checkbox  (change)="$event ? masterToggle() : null"
                   [checked]="selection.hasValue() && isAllSelected()"
                   [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
                 </mat-checkbox><span style="margin-left: 10px;">SelectAll</span>
