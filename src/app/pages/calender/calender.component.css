@@ -48,9 +48,9 @@ li {
   }
   
 
-  .scroll-bar{
+   .scroll-bar{
         
-   height: 350px;
+   height: 380px;
     
  
     
@@ -74,7 +74,7 @@ border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:hover{
 background: lightblue;
-}
+} 
 
 
 .scroll-bar1{
@@ -158,7 +158,7 @@ background: lightblue;
   bottom: 2850px;
   }
   .columnLayout{
-    column-count: 4;
+    column-count: 2;
     column-gap: 10px;
     column-rule: 1px solid grey;
    width: 350px;

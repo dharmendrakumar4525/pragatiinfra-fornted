@@ -174,7 +174,7 @@
      
         <div class="left" align="center" style="margin-top:20px;" *ngFor="let single of  showDefaultFirst?.result">
         
-        <div><h5 style="color: #4675C2;">{{single.subTaskName}}</h5></div>
+        <div><h5 style="color: #4675C2;font-size: 15px;">{{single.subTaskName}}</h5></div>
           <circle-progress   [percent]="single.cpPercentage" [title]="single.cpPercentage" [subtitle]="''"  [space]="-10" [radius]="60" [outerStrokeWidth]="10"
             [innerStrokeWidth]="10" [outerStrokeColor]="'#1E293B'"   [innerStrokeColor]="'gainsboro'" [animation]="true"
             [animationDuration]="100"></circle-progress>
