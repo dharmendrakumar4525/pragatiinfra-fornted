@@ -87,12 +87,12 @@
         
       </mat-grid-tile>
 
-      <mat-grid-tile colspan="3" style="margin-left: 20px;">
-        <mat-card  style="width: 90%;height: 400px;margin:10px 0px;background-color: #FAFAFA;margin-top:-200px;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
+      <mat-grid-tile colspan="3" style="margin-left: 20px;" >
+        <mat-card  style="width: 90%;height: 400px;margin:10px 0px;background-color: #FAFAFA;margin-top:-200px;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);" >
           
           <div >
             <div class="scroll-bar" >
-              <div  fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities"  style="border-right: 2px solid #E5E5E5;margin-right: 7 00px;" >
+              <div class="columnLayout"  fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities"  style="border-right: 2px solid #E5E5E5;margin-right: 7 00px;"  >
                 <div mat-card-avatar class="example-header-image"></div>
               <div   >
                 <div class="content">{{data.description}}
@@ -103,7 +103,7 @@
             </div><br>
           
             </div>   
-            <div class="v-line"></div> 
+            <!-- <div class="v-line"></div>  -->
       </div>
        </div>
        
@@ -209,7 +209,7 @@
                   <td >{{subTask.subTaskName}}</td>
                   <td>
                   <form role="form" (submit)="onBid($event, subTask, name.value,subTask._id)">
-                    <input type="number" class="calenderForm" style="border: none;padding: 5px;" #name  min={{subTask.value}} value={{subTask.value}}>
+                    <input type="number" class="calenderForm" style="border: none;padding: 5px 0px;" #name  min={{subTask.value}} value={{subTask.value}}>
                     <button type="submit" style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 2px;padding:5px 10px ">Add</button>
                  </form></td>
                   

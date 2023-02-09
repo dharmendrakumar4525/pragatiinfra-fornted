@@ -157,3 +157,10 @@ background: lightblue;
   left: 500px;
   bottom: 2850px;
   }
+  .columnLayout{
+    column-count: 4;
+    column-gap: 10px;
+    column-rule: 1px solid grey;
+   width: 350px;
+    
+  }

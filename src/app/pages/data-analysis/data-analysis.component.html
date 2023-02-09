@@ -3,7 +3,7 @@
     <mat-toolbar-row fxLayoutAlign="space-between center" >
         <div style="padding: 1rem;margin-top: 110px;" >
           <form [formGroup]="projectNameForm">
-          <select style="padding: 10px;width:100px;border: none;font-size: 22px;font-style: bold;" (change)="onChangeProject($event)" formControlName="_id">
+          <select style="padding: 10px;width:50%;border: none;font-size: 22px;font-style: bold;" (change)="onChangeProject($event)" formControlName="_id">
             <option *ngFor=" let one of projectsList" [value]="one._id">
               
         <span>{{one?.projectName}}</span></option></select>

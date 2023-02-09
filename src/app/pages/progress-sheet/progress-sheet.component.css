@@ -63,7 +63,9 @@
     padding: 10px 40px !important;
     width:1000px !important;
     color: white;
-    font-weight: 80;
+    font-weight: 300;
+    font-size: 15px;
+    font-style: normal;
     
 
   }
@@ -76,7 +78,7 @@
     color: #233A61;
     font-style: normal;
     font-size: medium;
-  
+  /* width:100px; */
     
   
   }
