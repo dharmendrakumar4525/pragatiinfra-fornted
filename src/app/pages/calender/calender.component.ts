@@ -217,6 +217,7 @@ memberAddPermissions:any;
   constructor(private activeRoute: ActivatedRoute, private router:Router, private _fb: FormBuilder, private dataAnalysis:DataAnalysisService, private projectService: AddProjectService, private recentActivityService:RecentActivityService, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private toast:ToastService, private calenderService:CalenderService) { }
 
   ngOnInit(): void {
+    
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     //console.log(this.permissions)
     //this.projectsViewPermissions = this.permissions.permissions[0].ParentChildchecklist[0].childList[1]
