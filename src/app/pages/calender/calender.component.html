@@ -3,12 +3,12 @@
     <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" >
         <div style="padding: 1rem;margin-top: 110px;">
           <form [formGroup]="projectNameForm">
-            <select style="padding: 10px;width:100px;border: none;font-size: 22px;font-style: bold;" (change)="onChangeProject($event)" formControlName="_id">
+            <select style="padding: 10px;width:250px;border: none;font-size: 22px;font-style: bold;" (change)="onChangeProject($event)" formControlName="_id">
               <option *ngFor=" let one of projectsList" [value]="one._id">
                 
           <span>{{one?.projectName}}</span></option></select>
         </form>
- <span style="font-size: 10px;margin-left: 120px;position: relative;bottom:40px"> <img src=".\assets\images\ontrack.svg">&nbsp; On Track</span> 
+ <span style="font-size: 10px;left: 280px;position: relative;bottom:40px"> <img src=".\assets\images\ontrack.svg">&nbsp; On Track</span> 
 </div>
 <div style="margin-left: 100px;font-size: small;position: relative;margin-top: 90px;">
 <button mat-button (click)="backToCalender()" *ngIf="showCalData" style="color:#97989D"><img src=".\assets\images\back.svg" style="margin-bottom: 5px;"><!--<i class="fa fa-undo" aria-hidden="true"></i> -->&nbsp;Back to Calender</button></div>       
