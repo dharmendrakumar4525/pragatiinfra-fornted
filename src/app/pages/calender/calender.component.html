@@ -92,7 +92,7 @@
           
           <div >
             <div class="scroll-bar"  >
-              <div class="columnLayout" fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities"  style="border-right: 2px solid #E5E5E5;margin-right: 7 00px;"  >
+              <!-- <div class="columnLayout" fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities"  style="border-right: 2px solid #E5E5E5;margin-right: 7 00px;"  >
                 <div mat-card-avatar class="example-header-image"></div>
               <div   >
                 <div class="content">{{data.description}}
@@ -102,8 +102,22 @@
                  
             </div><br>
           
-            </div>   
+            </div>    -->
             <!-- <div class="v-line"></div>  -->
+            <div class="columnLayout" style="display: inline-block;">
+              <div  *ngFor="let data of recentActivities" >
+                <div class="parent">
+                 <div class="child"> 
+                  <img src="https://material.angular.io/assets/img/examples/shiba1.jpg" style="width: 30px;height: 30px;border-radius: 15px;">
+                </div>
+                 <div class="child">
+                 {{data.description}}<br>
+                 <div style="color: #BBBBBB;">{{data.time}}</div>
+                 </div>
+              </div>
+                
+              </div>
+                  </div>
       </div>
        </div>
        

@@ -158,9 +158,19 @@ background: lightblue;
   bottom: 2850px;
   }
   .columnLayout{
-    column-count: 2;
+    column-count: 4;
     column-gap: 10px;
-    column-rule: 1px solid grey;
-   width: 350px;
+    column-rule: 2px solid #E5E5E5;
+ 
     
+    
+  }
+  .parent{
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+    font-family: Poppins;
+    color: #233A61;
+    height: 70px;
+ 
   }
