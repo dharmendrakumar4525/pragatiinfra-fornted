@@ -20,7 +20,7 @@
         
      
           <div class="custom-form-group"  >
-              <label class="custom-label" for="" style="padding: 10px;margin-top: 100px;">R{{i+1}} End Date <span class="star">*</span>
+              <label class="custom-label" for="" style="padding: 10px;margin-top: 100px;color: #233A61;">R{{i+1}} End Date <span class="star">*</span>
                 <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
               </label><br>
               <div class="custom-form-control" fxLayout="row">
@@ -37,7 +37,7 @@
               </div>
               <div style="margin-bottom: -50px;">
                 <button type="button" mat-button class="global-btn save-btn" (click)="minusBlocks(i)">
-                  <span style="margin-top: -50px;"> - Remove </span>
+                  <span style="margin-top: -50px;color: #233A61;"> - Remove </span>
                 </button>
                 </div>
             </div>
@@ -47,11 +47,11 @@
       </div>
       </ng-select>
 
-    <div fxLayout="row" fxLayoutAlign="end center">
+    <!-- <div fxLayout="row" fxLayoutAlign="end center">
       <button type="button" mat-button class="global-btn save-btn" style="margin-top: 130px;position: absolute;left:1000px" (click)="plusBlocks()">
          <span  > + Add Revised Dates</span>
       </button>
-   </div>
+   </div> -->
   </div>
     </ng-container><br><br><br>
 
@@ -59,7 +59,7 @@
     fxLayoutAlign="space-around center" fxLayoutGap="0px" style="margin-top: 30px;">
   
     <div class="custom-form-group">
-      <label class="custom-label" for=""> actual Revised Start Date <span class="star">*</span>
+      <label class="custom-label" for="" style="color: #233A61;"> Actual Revised Start Date <span class="star">*</span>
         <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
       </label>
       <div class="custom-form-control">
@@ -78,7 +78,7 @@
       </div>
     </div>
     <div class="custom-form-group">
-      <label class="custom-label" for=""> base Line Start Date <span class="star">*</span>
+      <label class="custom-label" for="" style="color: #233A61;"> Base Line Start Date <span class="star">*</span>
         <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
       </label>
       <div class="custom-form-control">
@@ -98,7 +98,7 @@
     </div>
 
     <div class="custom-form-group">
-        <label class="custom-label" for=""> base Line End Date <span class="star">*</span>
+        <label class="custom-label" for="" style="color: #233A61;"> Base Line End Date <span class="star">*</span>
           <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
         </label>
         <div class="custom-form-control">
@@ -119,7 +119,7 @@
 </div>
 <div fxLayout="row" fxLayoutGap="100px">
 <div class="custom-form-group"  >
-        <label class="custom-label" for="" style="margin-left: 30px;position: relative;"> uom <span class="star">*</span>
+        <label class="custom-label" for="" style="margin-left: 30px;position: relative;color: #233A61;"> UOM <span class="star">*</span>
           <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
         </label>
         <div class="custom-form-control" style="margin-left: 30px;position: relative;">
@@ -142,7 +142,7 @@
       </div>
 
       <div class="custom-form-group">
-        <label class="custom-label" for="" style="margin-left: -10px;position: relative;"> Quantity <span class="star">*</span>
+        <label class="custom-label" for="" style="margin-left: -10px;position: relative;color: #233A61;"> Quantity <span class="star">*</span>
           <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
         </label>
         <div class="custom-form-control" style="margin-left: -18px;position: relative;">
@@ -160,9 +160,16 @@
       </div>
     </div>
     
-    
+   <div style="display: flex;flex-direction: row;">
+    <div>
   <button mat-button (click)="AddData()" style="background-color: #233A61;color: #fff;padding: 1px 40px;margin-left: 30px;">submit</button>
-      
+</div>
+<div style="margin-left: 20px;">
+  <button type="button"  class="global-btn save-btn"  (click)="plusBlocks()" style="border: 1px solid #94A3B8;border-radius: 5px;background-color: #fff;padding: 10px 10px;color:#233A61">
+    <span  > + Add Revised End Date</span>
+ </button>
+</div>
+</div>
   </form>
 
     </div>
