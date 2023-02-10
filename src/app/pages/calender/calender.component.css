@@ -161,7 +161,7 @@ background: lightblue;
     column-count: 4;
     column-gap: 10px;
     column-rule: 2px solid #E5E5E5;
- 
+  
     
     
   }
@@ -171,6 +171,6 @@ background: lightblue;
     gap:10px;
     font-family: Poppins;
     color: #233A61;
-    height: 70px;
+    height: 100px;
  
   }
