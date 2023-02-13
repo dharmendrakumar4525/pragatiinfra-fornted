@@ -51,7 +51,7 @@
 .scroll-bar1{
         
    
-  height: 300px;
+  height: 500px;
   
   
 
@@ -102,4 +102,12 @@ background: lightblue;
    margin-left: 10px;
   
   }
-  
+  ::ng-deep .mat-checkbox-frame {
+
+    border-color: rgb(75, 75, 75, 0.7);
+        background-color: #fff !important;
+        width:17px;
+        height: 16px;
+      
+    
+  }

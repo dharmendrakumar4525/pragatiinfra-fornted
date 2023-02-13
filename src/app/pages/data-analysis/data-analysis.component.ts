@@ -128,7 +128,7 @@ export class DataAnalysisComponent implements OnInit {
    
     for(let data of this.showDefaultFirst.result){
       if(data.dailyCumulativeTotal && data.total){
-        data.cpPercentage =  ((100 * data.dailyCumulativeTotal) / data.total).toFixed(1)
+        data.cpPercentage =  ((100 * data.dailyCumulativeTotal) / data.total).toFixed(0)
       }else{
         data.cpPercentage = 0
       }
