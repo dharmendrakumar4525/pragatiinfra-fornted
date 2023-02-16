@@ -125,7 +125,7 @@
         
         <tr *ngFor="let subTask of project.result" style="font-size: 10px;" >
 
-          <td style="color:#595b5d;"> <button mat-button> <mat-icon (click)="addData(subTask)" >edit</mat-icon></button>{{subTask.subTaskName}}</td>
+          <td style="color:#595b5d;"> <div style="display: flex;flex-direction: row;align-items: center;padding: 6px 5px;" > <mat-icon (click)="addData(subTask)">edit</mat-icon><div style="width: 200px;">{{subTask.subTaskName}}</div></div></td>
           <td >{{subTask?.r1EndDate | date}}</td>
           <td >{{subTask?.r2EndDate | date}}</td>
           <td >{{subTask?.r3EndDate | date}}</td>
