@@ -27,9 +27,15 @@ import { SubActivitiesComponent } from './pages/sub-activities/sub-activities.co
 import { EditSubActivitiesComponent } from './pages/edit-sub-activities/edit-sub-activities.component';
 import { AddSubActivitiesComponent } from './pages/add-sub-activities/add-sub-activities.component';
 import { EditSubActivityComponent } from './pages/edit-sub-activity/edit-sub-activity.component';
+import { SitemasterComponent } from './Procurement/sitemaster/sitemaster.component';
+import { OrgmasterComponent } from './Procurement/orgmaster/orgmaster.component';
+import { ItemmasterComponent } from './Procurement/itemmaster/itemmaster.component';
+import { VendormasterComponent } from './Procurement/vendormaster/vendormaster.component';
+import { CategorymanagementComponent } from './Procurement/categorymanagement/categorymanagement.component';
 
 
 const routes: Routes = [
+
   {
     path: '',
     redirectTo: 'dpr',
@@ -97,12 +103,18 @@ const routes: Routes = [
     component: UserEditComponent,
     canActivate:[AuthGuard]
   },
+ 
   {path: 'forgotpassword', component: ForgotpasswordComponent},
   {path: 'createnewpassword', component: CreatenewpasswordComponent},
   {path: 'activities', component: MasteruserComponent,canActivate:[AuthGuard]},
   {path: 'sub-activities', component: SubActivitiesComponent,canActivate:[AuthGuard]},
   {path: 'edit-sub-activity/:id', component: EditSubActivityComponent,canActivate:[AuthGuard]},
   {path: 'add-sub-activities', component: AddSubActivitiesComponent,canActivate:[AuthGuard]},
+  {path: 'sitemaster', component: SitemasterComponent,canActivate:[AuthGuard]},
+  {path: 'orgmaster', component: OrgmasterComponent,canActivate:[AuthGuard]},
+  {path: 'itemmaster', component: ItemmasterComponent,canActivate:[AuthGuard]},
+  {path: 'vendormaster', component: VendormasterComponent,canActivate:[AuthGuard]},
+  {path: 'categorymanagement', component: CategorymanagementComponent,canActivate:[AuthGuard]},
 
   //{path: 'create-activities', component: MasterCreateuserComponent,canActivate:[AuthGuard]},
  

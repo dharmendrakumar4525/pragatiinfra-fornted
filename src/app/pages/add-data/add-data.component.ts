@@ -22,6 +22,7 @@ export class AddDataComponent implements OnInit {
     
   });
   uomData = ['Bag','Sq.m.','Cu.m.','Litre','No.','Kg','g','Quintal','meters','c.m.']
+  permissions :any;
   constructor(
     private dialogRef: MatDialogRef<AddDataComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -33,6 +34,13 @@ export class AddDataComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    console.log(this.permissions)
+    if(this.permissions.user.role === 'superadmin'){
+    this.itemForm.get('actualRevisedStartDate').clearValidators()
+    this.itemForm.updateValueAndValidity()
+    }
+
   }
 
   closeDialog(status: string) {
@@ -98,38 +106,50 @@ export class AddDataComponent implements OnInit {
       this.itemForm.markAllAsTouched();
       return;
     }
+    if(this.permissions.user.role != 'superadmin' ){
+      if (!this.itemForm.value.addRevisesDates.length) {
+        this.toast.openSnackBar(
+          'Please add Atleast one revised end date'
+        );
+        //this.clearForm = true;
+        //this.clearForm = true;
+        //this.itemForm.markAllAsTouched();
+        return;
+      }
 
-    if (!this.itemForm.value.addRevisesDates.length) {
-      this.toast.openSnackBar(
-        'Please add Atleast one revised end date'
-      );
-      //this.clearForm = true;
-      //this.clearForm = true;
-      //this.itemForm.markAllAsTouched();
-      return;
     }
 
+   
+    let workingDaysRevised ;
     console.log(this.itemForm.value)
-    var oneDay=1000 * 60 * 60 * 24;
-    var difference_ms = Math.abs(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate.getTime() - this.itemForm.value.actualRevisedStartDate.getTime())
-    var diffValue = Math.round(difference_ms / oneDay);
-    //console.log(diffValue)
-    let workingDaysRevised = diffValue + 1
 
+    if(this.permissions.user.role != 'superadmin'){
+      var oneDay=1000 * 60 * 60 * 24;
+      var difference_ms = Math.abs(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate.getTime() - this.itemForm.value.actualRevisedStartDate.getTime())
+      var diffValue = Math.round(difference_ms / oneDay);
+      //console.log(diffValue)
+       workingDaysRevised = diffValue + 1
+    }else{
+      workingDaysRevised = null
+    }
+  
     console.log(this.itemForm.value)
     var oneDaybaseLine=1000 * 60 * 60 * 24;
     var difference_msbaseLine = Math.abs(this.itemForm.value.baseLineEndDate.getTime() - this.itemForm.value.baseLineStartDate.getTime())
     var diffValuebaseLine = Math.round(difference_msbaseLine / oneDaybaseLine);
     //console.log(diffValue)
     let baseLineWorkingDays = diffValuebaseLine + 1
-
+    let noofDaysBalanceasperrevisedEnddate;
+    if(this.permissions.user.role != 'superadmin'){
+      var oneDaynoofDaysBalanc=1000 * 60 * 60 * 24;
+      var difference_msnoofDaysBalance = Math.abs(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate.getTime() - new Date().getTime())
+      var diffValuenoofDaysBalance = Math.round(difference_msnoofDaysBalance / oneDaynoofDaysBalanc);
+      //console.log(diffValue)
+       noofDaysBalanceasperrevisedEnddate = diffValuenoofDaysBalance + 1
+  
+    }
     console.log(this.itemForm.value)
-    var oneDaynoofDaysBalanc=1000 * 60 * 60 * 24;
-    var difference_msnoofDaysBalance = Math.abs(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate.getTime() - new Date().getTime())
-    var diffValuenoofDaysBalance = Math.round(difference_msnoofDaysBalance / oneDaynoofDaysBalanc);
-    //console.log(diffValue)
-    let noofDaysBalanceasperrevisedEnddate = diffValuenoofDaysBalance + 1
-
+   
    let dailyAskingRateasperRevisedEndDate = Math.ceil(this.itemForm.value.total/workingDaysRevised)
    console.log(dailyAskingRateasperRevisedEndDate)
 
