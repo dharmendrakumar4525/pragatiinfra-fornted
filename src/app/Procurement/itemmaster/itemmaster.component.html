@@ -1,5 +1,5 @@
 <mat-toolbar style="height: 100px;background-color: #fff;">
-    <span style="margin-top: 40px;font-style: normal;font-weight: 400;font-size: 35px;color:#1E293B;margin-left: 20px;">Pragati Infra</span>
+    <span style="margin-top: 40px;font-style: normal;font-weight: 500;font-size: 30px;color:#1E293B;margin-left: 20px;">Pragati Infra</span>
     <span class="example-spacer"></span>
     <button mat-icon-button>
     <mat-icon style="margin-top: 40px;">notifications</mat-icon>
@@ -16,7 +16,7 @@
     <form class="Search-form" >
          <span matPrefix > </span>
         <input type="text" matInput  placeholder="Search by title" name= "search" >
-        <button matSuffix mat-button style="margin-left: -60px;"><mat-icon >search</mat-icon></button>
+        <button matSuffix mat-button style="margin-left: -60px;margin-top: 10px;"><mat-icon >search</mat-icon></button>
         </form></div>
         <div  style="width: 40%;margin-left: -650px;" >
             <form>
@@ -43,12 +43,44 @@
               <tbody>
                   <tr  style="font-weight: bolder;background-color: #F4F4F5;" *ngFor="let num of [1,2,3,4,5,6]">
                       <td ><input placeholder="Enter" style="width:100px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;background-color: Transparent"></td> 
-                      <td ><select style="padding: 10px;width: 150px;border:1px solid #9F9F9F;border-radius: 10px;cursor: pointer;background-color: Transparent !important;"><option style="color: #292C33;font-style: normal;font-weight: 300;">Enter</option></select></td> 
-                      <td ><select style="padding: 10px;width: 150px;border:1px solid #9F9F9F;border-radius: 10px;cursor: pointer;background-color: Transparent !important;"><option style="color: #292C33;font-style: normal;font-weight: 300;">Enter</option></select></td> 
-                      <td ><select style="padding: 10px;width: 150px;border:1px solid #9F9F9F;border-radius: 10px;cursor: pointer;background-color: Transparent !important;"><option style="color: #292C33;font-style: normal;font-weight: 300;">Enter</option></select></td> 
-                      <td ><select style="padding: 10px;width: 120px;border:1px solid #9F9F9F;border-radius: 20px;cursor: pointer;background-color: Transparent !important;"><option style="color: #292C33;font-style: normal;font-weight: 300;">Select</option></select></td>
-                      <td ><select style="padding: 10px;width: 80px;border:1px solid #9F9F9F;border-radius: 20px;cursor: pointer;background-color: Transparent !important;"><option style="color: #292C33;font-style: normal;font-weight: 300;">18%</option></select></td>
-                      <td ><input placeholder="Enter/paste" style="width:100px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;background-color: Transparent"></td> 
+                      <td >
+                        <input list="browsers" name="myBrowser" placeholder="Enter"  style="padding: 10px;width: 150px;border:1px solid #9F9F9F;border-radius: 10px;cursor: pointer;background-color: Transparent !important;"/>
+                        <datalist id="browsers" >
+                          <option value="Chrome">
+                          <option value="Firefox">
+                        </datalist>
+                      </td> 
+                      <td >
+                        <input list="browsers" name="myBrowser" placeholder="Enter"  style="padding: 10px;width: 150px;border:1px solid #9F9F9F;border-radius: 10px;cursor: pointer;background-color: Transparent !important;"/>
+                        <datalist id="browsers" >
+                          <option value="Chrome">
+                          <option value="Firefox">
+                        </datalist>
+                      </td> 
+                      <td >
+                        <input list="browsers" name="myBrowser" placeholder="Enter"  style="padding: 10px;width: 150px;border:1px solid #9F9F9F;border-radius: 10px;cursor: pointer;background-color: Transparent !important;"/>
+                        <datalist id="browsers" >
+                          <option value="Chrome">
+                          <option value="Firefox">
+                        </datalist>
+                      </td> 
+                      <td >
+                        <input list="browsers" name="myBrowser" placeholder="Select"  style="padding: 10px;width: 100px;border:1px solid #9F9F9F;border-radius: 20px;cursor: pointer;background-color: Transparent !important;"/>
+                        <datalist id="browsers" >
+                          <option value="Chrome">
+                          <option value="Firefox">
+                        </datalist>
+                      </td>
+                      <td >
+                        <input list="percent" name="percent" placeholder="18%"  style="padding: 10px;width: 80px;border:1px solid #9F9F9F;border-radius: 20px;cursor: pointer;background-color: Transparent !important;"/>
+                        <datalist id="percent">
+                          <option value="10%" >
+                          <option value="20%">
+                        </datalist>
+                      </td>
+                      <td >
+                        <input placeholder="Enter/paste" style="width:100px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;background-color: Transparent">
+                      </td> 
                      
                   </tr>
                   
@@ -57,20 +89,20 @@
         </div> 
             <div style="display: flex;flex-direction: row;gap: 40px;margin-left:60px;margin-bottom:100px;top: -50px;position: relative;">
             <div>
-                <button style="padding: 8px ;width: 120px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;font-size: 15px;">  Add  
+                <button style="padding: 8px ;width: 120px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">  Add  
                     <img src="./assets/images/add.png" style="margin-left: 30px;position: relative;top:5px"></button>
               </div>
               <div>
-                <button style="padding: 10px ;width: 120px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;font-size: 15px;">  Edit 
+                <button style="padding: 10px ;width: 120px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">  Edit 
                     <img src="./assets/images/edit.svg" style="margin-left: 30px;"> </button>
               </div>
               <div>
-                <button style="padding: 10px ;width: 120px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;font-size: 15px;">  Import/Export  </button>
+                <button style="padding: 10px ;width: 120px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">  Import/Export  </button>
               </div>
             </div>
             <div style="display: flex;flex-direction: row;gap: 10px;float: right;position: relative;top:-120px;right:60px">
-                <div><button style="padding: 8px;width: 120px;background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;">Submit</button></div>
-                <div><button style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;">Cancel</button></div>
+                <div><button style="padding: 8px;width: 120px;background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-size: 14px;cursor: pointer;font-family: 'Poppins';">Submit</button></div>
+                <div><button style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-size: 14px;cursor: pointer;font-family: 'Poppins';">Cancel</button></div>
             </div>
 
            

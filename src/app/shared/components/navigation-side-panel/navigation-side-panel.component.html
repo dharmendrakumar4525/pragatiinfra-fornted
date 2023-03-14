@@ -6,9 +6,12 @@
   </div>
   <br>
   
-  <div class="navigation-panel-brand">P<span [ngClass]="currentPanelState">ragati Infra
+  <!-- <div class="navigation-panel-brand">P<span [ngClass]="currentPanelState">ragati Infra
   </span>
   <img src=".\assets\images\dotleft.png">
+</div> -->
+<div style="margin-top: 20px;margin-left: 30px;">
+  <img src=".\assets\images\logo3.svg">
 </div>
   <form class="Search-form" style="width:80%;margin-left: 20px;">
              
@@ -20,7 +23,8 @@
     </form>
   
   <ul  class="navigation-panel-menu"  *ngIf="links && links.length > 0">
-    <div  class="scroll-bar2" width="10%" >
+   <div  class="scroll-bar2" width="10%" >
+      
     <!-- <li *ngFor="let link of links">
       <a [routerLink]="link.url" 
           [routerLinkActive]="['active']"
@@ -31,6 +35,7 @@
       </a>
     </li> -->
     <li *ngFor="let item of menuSidebar | menuFilter:link_name" class="sidebar"  #itemEl routerLinkActive="active">
+     
       <div  class="dropdown-title">
         
         <a routerLinkActive="active"
@@ -82,7 +87,7 @@
 
       
     </li>
- 
+   
   
     <li >
       <a  (click)="logout()"

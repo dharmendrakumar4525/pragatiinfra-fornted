@@ -1,7 +1,7 @@
 <mat-toolbar style="background-color: #fff;">
     <mat-toolbar-row fxLayoutAlign="space-between center">
         <div style="padding: 1rem;margin-top: 60px;">
-        <span style="color: #1E293B;font-size: 35px;">Pragati Infra</span></div>
+        <span style="color: #1E293B;font-size: 30px;font-weight: 500;">Pragati Infra</span></div>
         <div style="margin-right: 20px;">
             <button style="padding: 10px 10px;width: 150px;margin-top: 60px;background-color: #fff;cursor: pointer;border: 1px solid #97989D;border-radius: 5px;color: #97989D;" [routerLink]="['/add-project']">  Add Project +  </button>
             <button mat-button [matMenuTriggerFor]="menu"> <mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" >notifications</mat-icon></button>
@@ -45,28 +45,42 @@
 <button mat-button style="color: #4C4D50;font-size: medium;"><u>Projects</u></button>
 </div>
 <div>
-<form class="Search-form" style="width:100px;margin-top: 20px;">
-    <mat-form-field class="example-full-width" appearance="outline" >
-    <span matPrefix> </span>
+<mat-form-field appearance="outline" class="searchbar">
+  <mat-icon matSuffix >search</mat-icon>
     <input type="text" [(ngModel)]="projectName" matInput placeholder="Search" name= "search" >
-    <button matSuffix mat-button style="margin-left:50px;margin-bottom: 20px;"><mat-icon >search</mat-icon></button>
     </mat-form-field>
    
-    </form>
+   
 </div>
 </div>
 <div class="projectcontent" fxLayout="row" fxLayoutGap="10px" style="height: 60%;">
 
   <div class="scroll-bar">
-    <div fxLayout="row wrap" *ngIf="projectsViewPermissions?.isSelected; else noView"  fxLayoutGap="20px" fxLayoutAlign="start center">
+    <div fxLayout="row wrap" *ngIf="projectsViewPermissions?.isSelected; else noView"  fxLayoutGap="40px" fxLayoutAlign="start center" >
       <div  fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let project of projects | customerEmailFilter:projectName">
+      
         <div class="" >
           
           <div class="content1">
-            <div style="position: relative;top:120px;color: #fff;margin-left: 40px;margin-bottom: 20px;">{{project?.projectName}}</div>
+            <div style="position: relative;top:120px;color: #fff;margin-left: 20px;margin-bottom: 20px;">{{project?.projectName}}</div>
+            <div style="color: #fff;position: relative;top:110px;right:-5px" class="hamicon">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                  <mat-icon>edit</mat-icon>
+                  <span>Edit</span>
+                </button>
+                  <button mat-menu-item>
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </div>
           </div>
-          <img [routerLink]="['/view-project/data-analysis',project._id]"  [src]="project?.imageUrl" *ngIf="project?.imageUrl" style="box-shadow:none;width:200px;height:130px;cursor: pointer;object-fit: cover;">
-          <img [routerLink]="['/view-project/data-analysis',project._id]" *ngIf="!project?.imageUrl" src="../../../assets/images/project.jpg" style="box-shadow:none;width:200px;height:130px;cursor: pointer;object-fit: cover;">
+          <img [routerLink]="['/view-project/data-analysis',project._id]"  [src]="project?.imageUrl" *ngIf="project?.imageUrl" style="box-shadow:none;width:220px;height:130px;cursor: pointer;object-fit: cover;">
+          <img [routerLink]="['/view-project/data-analysis',project._id]" *ngIf="!project?.imageUrl" src="../../../assets/images/project.jpg" style="box-shadow:none;width:220px;height:130px;cursor: pointer;object-fit: cover;">
           <div>
           
           </div>
@@ -137,11 +151,11 @@
     <div class="scroll-bar2" fxLayout="column">
     <mat-card-header>
   
-      <mat-card-title style="color: #1E293B;font-size: 14;"> About &nbsp;&nbsp; <i class="fa fa-edit" style="cursor: pointer;" (click)="addAboutUs()" aria-hidden="true"></i></mat-card-title>
+      <mat-card-title style="color: #1E293B;font-size: 14;margin-left: -10px;"> About &nbsp;&nbsp; <i class="fa fa-edit" style="cursor: pointer;" (click)="addAboutUs()" aria-hidden="true"></i></mat-card-title>
   
     </mat-card-header>
 
-    <mat-card-content>
+    <mat-card-content >
       <p>{{aboutUs?.description}}</p></mat-card-content>
      
       <mat-card-subtitle><i style="color: #1E293B;">Members</i></mat-card-subtitle>
@@ -149,7 +163,7 @@
       <div  fxFlex="row" fxLayoutAlign="start"  style="height: 55px;" *ngFor="let mem of members">
       <div style="margin-top:10px" mat-card-avatar class="example-header-image"></div>
       <div  style="margin-top:10px">
-      <button mat-button style="font-size: 13px;font-weight: 300;">{{mem.split('@')[0]}}</button> 
+      <button mat-button style="font-size: 13px;font-weight: 300;font-family: 'Poppins';">{{mem.split('@')[0]}}</button> 
     </div>
   
   </div>
@@ -164,7 +178,7 @@
   
   </div>
   <mat-card-actions style="margin-top: 20px;">
-    <button mat-button (click)="addMember()">Addmembers+</button> 
+    <button mat-button (click)="addMember()" >Add members +</button> 
   </mat-card-actions>
   </mat-card>
 
@@ -182,6 +196,7 @@
   <div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right"  style="height: 70vh;" >
     <mat-card fxLayout="row" fxLayoutAlign="left" style="height: 70vh;background-color: #FAFAFA;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);">
       <div class="scroll-bar1" fxLayout="column">
+        <span style="font-size: 15px;font-weight: bold;text-align: left;margin-bottom: 20px;margin-left: 10px;">Notifications</span>
         <div  fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
           <div mat-card-avatar class="example-header-image"></div>
           <div style="margin-left: 10px;">

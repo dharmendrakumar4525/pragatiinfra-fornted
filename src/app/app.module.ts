@@ -66,6 +66,30 @@ import { OrgmasterComponent } from './Procurement/orgmaster/orgmaster.component'
 import { ItemmasterComponent } from './Procurement/itemmaster/itemmaster.component';
 import { VendormasterComponent } from './Procurement/vendormaster/vendormaster.component';
 import { CategorymanagementComponent } from './Procurement/categorymanagement/categorymanagement.component';
+import { PurchaserequestComponent } from './Procurement/purchaserequest/purchaserequest.component';
+import { PurchasereqlistComponent } from './Procurement/purchasereqlist/purchasereqlist.component';
+import { RequisitionapprovalsComponent } from './Procurement/requisitionapprovals/requisitionapprovals.component';
+import { ApprovedsummaryComponent } from './Procurement/approvedsummary/approvedsummary.component';
+import { RejectedsummaryComponent } from './Procurement/rejectedsummary/rejectedsummary.component';
+import { PendingsummaryComponent } from './Procurement/pendingsummary/pendingsummary.component';
+import { RevisedpurchasereqlistComponent } from './Procurement/revisedpurchasereqlist/revisedpurchasereqlist.component';
+import { ApprovedmaterialrequestComponent } from './Procurement/approvedmaterialrequest/approvedmaterialrequest.component';
+import { RejectedpurchaserequestComponent } from './Procurement/rejectedpurchaserequest/rejectedpurchaserequest.component';
+import { PendingpurchaserequestComponent } from './Procurement/pendingpurchaserequest/pendingpurchaserequest.component';
+import { RatecomparativeComponent } from './Procurement/Ratecomparative/ratecomparative/ratecomparative.component';
+import { RcomparativeComponent } from './Procurement/Ratecomparative/rcomparative/rcomparative.component';
+import { RateapprovallistComponent } from './Procurement/Ratecomparative/rateapprovallist/rateapprovallist.component';
+import { RevisedrateapprovallistComponent } from './Procurement/Ratecomparative/revisedrateapprovallist/revisedrateapprovallist.component';
+import { VendorscomparativeapprovedComponent } from './Procurement/Ratecomparative/vendorscomparativeapproved/vendorscomparativeapproved.component';
+import { VendorscomparativerejectedComponent } from './Procurement/Ratecomparative/vendorscomparativerejected/vendorscomparativerejected.component';
+import { VendorscomparativerevisedComponent } from './Procurement/Ratecomparative/vendorscomparativerevised/vendorscomparativerevised.component';
+import { RateapprovalsComponent } from './Procurement/Ratecomparative/rateapprovals/rateapprovals.component';
+import { RateapprovalsummaryComponent } from './Procurement/Ratecomparative/rateapprovalsummary/rateapprovalsummary.component';
+import { RejectedratessummaryComponent } from './Procurement/Ratecomparative/rejectedratessummary/rejectedratessummary.component';
+import { PendingratesComponent } from './Procurement/Ratecomparative/pendingrates/pendingrates.component';
+import { VendorSelectionComponent } from './Procurement/vendor-selection/vendor-selection.component';
+import { RejectReasonComponent } from './Procurement/reject-reason/reject-reason.component';
+
 
 // FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 //   dayGridPlugin,
@@ -105,7 +129,8 @@ import { CategorymanagementComponent } from './Procurement/categorymanagement/ca
   ],
   declarations: [ AppComponent, HomeComponent,SearchPipe,SubActivitySearchPipe, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent,LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,
     ForgotpasswordComponent, NewRoleComponent,NewPermissionComponent, AddDataComponent, ManagePermissionsComponent,CreatenewpasswordComponent, NoPermissionsComponent, RoleEditComponent, UserEditComponent, UsersDeleteMultipleComponent, RolesDeleteMultipleComponent, AboutUsComponent,MasteruserComponent,MasterCreateuserComponent, InnerAddMemberComponent, EditActivityComponent, EditSubActivityComponent, TaskDeleteMulActivityComponent, DeleteMulSubActivityComponent, SubActivitiesComponent, EditSubActivitiesComponent, AddSubActivitiesComponent,SitemasterComponent,
-    OrgmasterComponent,ItemmasterComponent,VendormasterComponent,CategorymanagementComponent],
+    OrgmasterComponent,ItemmasterComponent,VendormasterComponent,CategorymanagementComponent,PurchaserequestComponent,PurchasereqlistComponent,RequisitionapprovalsComponent,ApprovedsummaryComponent,RejectedsummaryComponent,PendingsummaryComponent,RevisedpurchasereqlistComponent,ApprovedmaterialrequestComponent,RejectedpurchaserequestComponent,PendingpurchaserequestComponent,RatecomparativeComponent,RcomparativeComponent,RateapprovallistComponent,RevisedrateapprovallistComponent,VendorscomparativeapprovedComponent,VendorscomparativerejectedComponent,
+    VendorscomparativerevisedComponent,RateapprovalsComponent,RateapprovalsummaryComponent,RejectedratessummaryComponent,PendingratesComponent,VendorSelectionComponent,RejectReasonComponent],
     providers:[AuthGuard],
     schemas: [
       CUSTOM_ELEMENTS_SCHEMA,

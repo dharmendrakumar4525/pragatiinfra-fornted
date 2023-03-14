@@ -39,23 +39,41 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
     {
       link_name: "Procurements",
-      link: null,
+      link: '/purchaserequest',
       icon: "bx bx-collection",
       img:'../../../assets/images/icons/procure.svg',
     },
+
     {
-      link_name: "Activities",
-      link: '/activities',
+      link_name: "Inventory",
+      link: null,
       icon: "bx bx-collection",
-      img:'../../../assets/images/icons/Bactivity.svg',
+      img:'../../../assets/images/icons/Inventory.svg',
     },
+
     {
-      link_name: "Sub Activities",
-      link: '/sub-activities',
+      link_name: "PR status",
+      link: null,
       icon: "bx bx-collection",
-      img:'../../../assets/images/icons/Bsubactivity.svg',
-      //img:'../../../assets/images/icons/sub activity (1).svg',
+      img:'../../../assets/images/icons/PR.svg',
     },
+
+
+    // {
+    //   link_name: "Activities",
+    //   link: '/activities',
+    //   icon: "bx bx-collection",
+    //   img:'../../../assets/images/icons/Bactivity.svg',
+    // },
+    // {
+    //   link_name: "Sub Activities",
+    //   link: '/sub-activities',
+    //   icon: "bx bx-collection",
+    //   img:'../../../assets/images/icons/Bsubactivity.svg',
+    //   //img:'../../../assets/images/icons/sub activity (1).svg',
+    // },
+
+    
      {
       link_name: "User Management",
       link: null,
@@ -64,7 +82,8 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       sub_menu: [
         
       ]
-    }
+    },
+    
   ]
   private _subscriptionsSubject$: Subject<void>;
   public currentPanelState: SidePanelState;
@@ -210,24 +229,11 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
     
           {
             link_name: "Procurements",
-            link: null,
+            link: '/purchaserequest',
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/procure.svg',
           },
-          {
-            link_name: "Activities",
-            link: '/activities',
-            icon: "bx bx-collection",
-            img:'../../../assets/images/icons/Bactivity.svg',
-          },
-
-          {
-            link_name: "sub Activities",
-            link: '/sub-activities',
-            icon: "bx bx-collection",
-            img:'../../../assets/images/icons/Bsubactivity.svg',
-            //img:'../../../assets/images/icons/activity.svg',
-          },
+        
           {
            link_name: "User Management",
            link: null,
@@ -236,7 +242,23 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
            sub_menu: [
              ...this.obj
            ]
-         }
+         },
+
+         {
+          link_name: "Activities",
+          link: '/activities',
+          icon: "bx bx-collection",
+          img:'../../../assets/images/icons/Bactivity.svg',
+        },
+
+        {
+          link_name: "sub Activities",
+          link: '/sub-activities',
+          icon: "bx bx-collection",
+          img:'../../../assets/images/icons/Bsubactivity.svg',
+          //img:'../../../assets/images/icons/activity.svg',
+        },
+
        ]
       }else{
         this.menuSidebar = [
@@ -257,22 +279,25 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
           {
             link_name: "Procurements",
-            link: null,
+            link: '/purchaserequest',
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/procure.svg',
           },
+
           {
-            link_name: "Activities",
-            link: '/activities',
+            link_name: "Inventory",
+            link: null,
             icon: "bx bx-collection",
-            img:'../../../assets/images/icons/Bactivity.svg',
+            img:'../../../assets/images/icons/Inventory.svg',
           },
+      
           {
-            link_name: "sub Activities",
-            link: '/sub-activities',
+            link_name: "PR status",
+            link: null,
             icon: "bx bx-collection",
-            img:'../../../assets/images/icons/Bsubactivity.svg',
+            img:'../../../assets/images/icons/PR.svg',
           },
+       
           {
            link_name: "User Management",
            link: null,
@@ -281,7 +306,20 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
            sub_menu: [
              //...this.obj
            ]
-         }
+         },
+         
+        //  {
+        //   link_name: "Activities",
+        //   link: '/activities',
+        //   icon: "bx bx-collection",
+        //   img:'../../../assets/images/icons/Bactivity.svg',
+        // },
+        // {
+        //   link_name: "sub Activities",
+        //   link: '/sub-activities',
+        //   icon: "bx bx-collection",
+        //   img:'../../../assets/images/icons/Bsubactivity.svg',
+        // },
        ]
       }
 

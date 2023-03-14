@@ -1,0 +1,27 @@
+<mat-card>
+        <form style="display: flex;flex-wrap: wrap;gap:40px;width:1000px">
+            <div style="display: flex;flex-direction: column;">
+        <label style="color: #4272BF;font-size: medium;">Vendor 1</label>
+        <input placeholder="name" style="width:300px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+    </div>
+    <div style="display: flex;flex-direction: column;margin-left: 10px;">
+        <label style="color: #4272BF;font-size: medium;">Vendor 3</label>
+        <input placeholder="name" style="width:300px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+    </div>
+    <div style="display: flex;flex-direction: column;margin-left: 5px;">
+        <label style="color: #4272BF;font-size: medium;">Vendor 2</label>
+        <input placeholder="name" style="width:300px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+    </div>
+     </form>
+     <div class="scroll-bar2">
+     <div class="vendors" *ngFor="let num of[1,2,3,4,5,6,7]">
+        <span>Vendor 1</span>
+     </div>
+     </div>
+
+     <div style="display: flex;justify-content: space-between;position: relative;top:10px;">
+        <div style="font-family: 'Poppins';font-weight: bold;margin-top: 15px;"><span>+ Add New Vendor</span></div>
+        <div><button style="padding: 8px;width: 150px;background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-family: 'Poppins';">Submit</button>
+     </div>
+     </div>
+   </mat-card>

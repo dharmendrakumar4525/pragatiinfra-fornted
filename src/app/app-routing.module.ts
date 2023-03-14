@@ -32,6 +32,30 @@ import { OrgmasterComponent } from './Procurement/orgmaster/orgmaster.component'
 import { ItemmasterComponent } from './Procurement/itemmaster/itemmaster.component';
 import { VendormasterComponent } from './Procurement/vendormaster/vendormaster.component';
 import { CategorymanagementComponent } from './Procurement/categorymanagement/categorymanagement.component';
+import { PurchaserequestComponent } from './Procurement/purchaserequest/purchaserequest.component';
+import { PurchasereqlistComponent } from './Procurement/purchasereqlist/purchasereqlist.component';
+import { RequisitionapprovalsComponent } from './Procurement/requisitionapprovals/requisitionapprovals.component';
+import { ApprovedsummaryComponent } from './Procurement/approvedsummary/approvedsummary.component';
+import { RejectedsummaryComponent } from './Procurement/rejectedsummary/rejectedsummary.component';
+import { PendingsummaryComponent } from './Procurement/pendingsummary/pendingsummary.component';
+import { RevisedpurchasereqlistComponent } from './Procurement/revisedpurchasereqlist/revisedpurchasereqlist.component';
+import { ApprovedmaterialrequestComponent } from './Procurement/approvedmaterialrequest/approvedmaterialrequest.component';
+import { RejectedpurchaserequestComponent } from './Procurement/rejectedpurchaserequest/rejectedpurchaserequest.component';
+import { PendingpurchaserequestComponent } from './Procurement/pendingpurchaserequest/pendingpurchaserequest.component';
+import { RatecomparativeComponent } from './Procurement/Ratecomparative/ratecomparative/ratecomparative.component';
+import { RcomparativeComponent } from './Procurement/Ratecomparative/rcomparative/rcomparative.component';
+import { RateapprovallistComponent } from './Procurement/Ratecomparative/rateapprovallist/rateapprovallist.component';
+import { RevisedrateapprovallistComponent } from './Procurement/Ratecomparative/revisedrateapprovallist/revisedrateapprovallist.component';
+import { VendorscomparativeapprovedComponent } from './Procurement/Ratecomparative/vendorscomparativeapproved/vendorscomparativeapproved.component';
+import { VendorscomparativerejectedComponent } from './Procurement/Ratecomparative/vendorscomparativerejected/vendorscomparativerejected.component';
+import { VendorscomparativerevisedComponent } from './Procurement/Ratecomparative/vendorscomparativerevised/vendorscomparativerevised.component';
+import { RateapprovalsComponent } from './Procurement/Ratecomparative/rateapprovals/rateapprovals.component';
+import { RateapprovalsummaryComponent } from './Procurement/Ratecomparative/rateapprovalsummary/rateapprovalsummary.component';
+import { RejectedratessummaryComponent } from './Procurement/Ratecomparative/rejectedratessummary/rejectedratessummary.component';
+import { PendingratesComponent } from './Procurement/Ratecomparative/pendingrates/pendingrates.component';
+import { VendorSelectionComponent } from './Procurement/vendor-selection/vendor-selection.component';
+import { RejectReasonComponent } from './Procurement/reject-reason/reject-reason.component';
+
 
 
 const routes: Routes = [
@@ -115,6 +139,30 @@ const routes: Routes = [
   {path: 'itemmaster', component: ItemmasterComponent,canActivate:[AuthGuard]},
   {path: 'vendormaster', component: VendormasterComponent,canActivate:[AuthGuard]},
   {path: 'categorymanagement', component: CategorymanagementComponent,canActivate:[AuthGuard]},
+  {path: 'purchaserequest', component: PurchaserequestComponent,canActivate:[AuthGuard]},
+  {path: 'purchasereqlist', component: PurchasereqlistComponent,canActivate:[AuthGuard]},
+  {path: 'requisitionapprovals', component: RequisitionapprovalsComponent,canActivate:[AuthGuard]},
+  {path: 'approvedsummary', component: ApprovedsummaryComponent,canActivate:[AuthGuard]},
+  {path: 'rejectedsummary', component: RejectedsummaryComponent,canActivate:[AuthGuard]},
+  {path: 'pendingsummary', component: PendingsummaryComponent,canActivate:[AuthGuard]},
+  {path: 'revisedpurchasereqlist', component: RevisedpurchasereqlistComponent,canActivate:[AuthGuard]},
+  {path: 'approvedmaterialrequest', component: ApprovedmaterialrequestComponent,canActivate:[AuthGuard]},
+  {path: 'rejectedpurchaserequest', component: RejectedpurchaserequestComponent,canActivate:[AuthGuard]},
+  {path: 'pendingpurchaserequest', component: PendingpurchaserequestComponent,canActivate:[AuthGuard]},
+  {path: 'ratecomparative', component: RatecomparativeComponent,canActivate:[AuthGuard]},
+  {path: 'rcomparative', component: RcomparativeComponent,canActivate:[AuthGuard]},
+  {path: 'rateapprovallist', component: RateapprovallistComponent,canActivate:[AuthGuard]},
+  {path: 'revisedrateapprovallist', component: RevisedrateapprovallistComponent,canActivate:[AuthGuard]},
+  {path: 'vendorscomparativeapproved', component: VendorscomparativeapprovedComponent,canActivate:[AuthGuard]},
+  {path: 'vendorscomparativerejected', component: VendorscomparativerejectedComponent,canActivate:[AuthGuard]},
+  {path: 'vendorscomparativerevised', component: VendorscomparativerevisedComponent,canActivate:[AuthGuard]},
+  {path: 'rateapprovals', component: RateapprovalsComponent,canActivate:[AuthGuard]},
+  {path: 'rateapprovalsummary', component: RateapprovalsummaryComponent,canActivate:[AuthGuard]},
+  {path: 'rejectedratessummary', component: RejectedratessummaryComponent,canActivate:[AuthGuard]},
+  {path: 'pendingrates', component: PendingratesComponent,canActivate:[AuthGuard]},
+  {path: 'vendor-selection', component: VendorSelectionComponent,canActivate:[AuthGuard]},
+  {path: 'reject-reason', component: RejectReasonComponent,canActivate:[AuthGuard]},
+  
 
   //{path: 'create-activities', component: MasterCreateuserComponent,canActivate:[AuthGuard]},
  

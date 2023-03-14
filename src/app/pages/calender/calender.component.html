@@ -3,7 +3,7 @@
     <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" >
         <div style="padding: 1rem;margin-top: 110px;">
           <form [formGroup]="projectNameForm">
-            <select style="padding: 10px;width:250px;border: none;font-size: 22px;font-style: bold;" (change)="onChangeProject($event)" formControlName="_id">
+            <select style="padding: 10px;width:250px;border: none;font-size: 30px;font-weight: 550;" (change)="onChangeProject($event)" formControlName="_id">
               <option *ngFor=" let one of projectsList" [value]="one._id">
                 
           <span>{{one?.projectName}}</span></option></select>
@@ -58,7 +58,7 @@
             <div class="scroll-bar2" fxLayout="column">
             <mat-card-header>
           
-              <mat-card-title style="color: #1E293B;font-size: 14;"> About &nbsp;&nbsp; <i class="fa fa-edit" (click)="addAboutUs()" style="cursor: pointer;"  aria-hidden="true"></i></mat-card-title>
+              <mat-card-title style="color: #1E293B;font-size: 14;margin-left: -10px;"> About &nbsp;&nbsp; <i class="fa fa-edit" (click)="addAboutUs()" style="cursor: pointer;"  aria-hidden="true"></i></mat-card-title>
           
             </mat-card-header> <br>
         
@@ -71,7 +71,7 @@
               <div class="aboutcard-spaceset" fxFlex="row" fxLayoutAlign="start"  style="height: 55px;" *ngFor="let data of members">
                 <div  style="margin-top:10px" mat-card-avatar class="example-header-image"></div>
                 <div style="margin-top:10px">
-                  <button mat-button  style="font-size: 13px;font-weight: 300;">{{data.split('@')[0]}}</button>
+                  <button mat-button  style="font-size: 13px;font-weight: 300;font-family: 'Poppins';">{{data.split('@')[0]}}</button>
                  
             </div>
           </div>
@@ -79,7 +79,7 @@
           
           </div>
           <mat-card-actions style="margin-top: 40px;">
-            <button mat-button >Addmembers+</button> 
+            <button mat-button >Add members +</button> 
           </mat-card-actions>
           </mat-card>
         
@@ -104,7 +104,8 @@
           
             </div>    -->
             <!-- <div class="v-line"></div>  -->
-            <div class="columnLayout" style="display: inline-block;">
+            <div style="font-size: 15px;font-weight: bold;margin-bottom: 20px;margin-left: 40px;">Notifications</div>
+            <div class="columnLayout" style="display: inline-block;" >
               <div  *ngFor="let data of recentActivities" >
                 <div class="parent">
                  <div class="child"> 
@@ -260,7 +261,8 @@
         <mat-grid-tile >
             <mat-card style="width: 250px;height: 350px;margin:10px 0px;background-color: #FAFAFA;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
                 <div>
-                  <div class="scroll-bar">
+                  <div class="scroll-bar" fxLayout="column">
+                    <span style="font-size: 15px;font-weight: bold;text-align: left;margin-bottom: 20px;margin-left: 30px;">Notifications</span>
                     <div  fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities">
                       <div mat-card-avatar class="example-header-image"></div>
                     <div >
