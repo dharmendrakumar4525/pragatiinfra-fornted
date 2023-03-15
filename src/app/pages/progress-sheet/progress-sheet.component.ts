@@ -10,6 +10,7 @@ import * as moment from 'moment';
 //import { FormBuilder } from '@angular/forms';
 import { FormControl, FormArray, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AddProjectService } from 'src/app/services/add-project.service';
+import { AddRemarksComponent } from '../add-remarks/add-remarks.component';
 
 export interface PeriodicElement {
   Description: string;
@@ -182,7 +183,7 @@ export class ProgressSheetComponent implements OnInit {
    progressPermissionsEdit:any
    recentActivities:any
    projectsList:any;
-  constructor(private activeRoute: ActivatedRoute,private router:Router, private projectService:AddProjectService, private _fb: FormBuilder, private recentActivityService:RecentActivityService, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private taskService:TaskService) { }
+  constructor(private activeRoute: ActivatedRoute,private router:Router, private projectService:AddProjectService, private _fb: FormBuilder, private recentActivityService:RecentActivityService, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private taskService:TaskService,public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
@@ -308,6 +309,18 @@ export class ProgressSheetComponent implements OnInit {
   }
   onChangeProject(ev){
     this.router.navigate(['/view-project/progress-sheet',ev.target.value]);
+  }
+
+  addremarks(): void {
+    const dialogRef = this.dialog.open(AddRemarksComponent, {
+      // width: '800px',
+      // data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
   }
 }
 

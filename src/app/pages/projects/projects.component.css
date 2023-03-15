@@ -1,4 +1,4 @@
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+/* ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
     padding: .8em;
     width:350px; 
     border-radius: 5px;
@@ -8,10 +8,10 @@
    position: relative;
    top:-5px;
   
-} 
+}  */
 
-/* input[type=text] {
-    width: 380%;
+input[type=text] {
+    width: 380px;
     border-radius: 8px;
     padding: 12px 20px;
     margin: 8px 0;
@@ -20,9 +20,9 @@
     -webkit-transition: 0.5s;
     transition: 0.5s;
     outline: none;
-  
-    
-  } */
+    bottom:50px;
+     
+  }
 .content {
     padding: 1px;
 }

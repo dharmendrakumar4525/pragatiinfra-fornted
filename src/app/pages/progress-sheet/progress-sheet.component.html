@@ -3,7 +3,7 @@
   <mat-toolbar-row fxLayoutAlign="space-between center">
       <div style="padding: 1rem;margin-top: 110px;">
         <form [formGroup]="projectNameForm">
-          <select style="padding: 10px;width:250px;border: none;font-size: 22px;font-style: bold;" (change)="onChangeProject($event)" formControlName="_id">
+          <select style="padding: 10px;width:250px;border: none;font-size: 30px;font-weight: 550;" (change)="onChangeProject($event)" formControlName="_id">
             <option *ngFor=" let one of projectsList" [value]="one._id">
               
         <h1 style="background-color: #2E2E2E;font-size: 200px;font-weight: 400;font-style: normal;">{{one?.projectName}}</h1></option></select>
@@ -94,6 +94,7 @@
    <th>Daily&nbsp;Asking&nbsp;Rate&nbsp;as&nbsp;per&nbsp;Revised&nbsp;End&nbsp;Date</th>
    <th>Activity&nbsp;Balance&nbsp;(%)</th>
    <th>Total</th>
+   <th>Remarks</th>
  
 </tr>
     
@@ -102,6 +103,7 @@
     <tbody *ngFor= " let project of projectsData ">
         <tr  style="color:#233A61 !important;font-weight: bolder ;">
             <td><div style="display: flex;align-items: center;padding: 6px 5px;"><div style="width:120px">{{project.name}} </div> <mat-icon [routerLink]="['/add-project',projectId]" style="margin-left: 70px;" >add</mat-icon></div></td>
+            <td ></td>
             <td ></td>
             <td ></td>
             <td ></td>
@@ -146,7 +148,7 @@
           <td>{{subTask?.dailyAskingRateasperRevisedEndDate}}</td>
           <td>{{(100-(100 * subTask.dailyCumulativeTotal) / subTask.total).toFixed(0)}}</td>
           <td>{{subTask?.dailyCumulativeTotal}}</td>
-
+          <td ><button mat-button style="background-color: #233A61;color:#fff;margin-bottom: 5px;margin-top: 5px;margin-left: 8px;font-family: 'Poppins';" (click)="addremarks()">View remarks</button></td>
           
           
         </tr>

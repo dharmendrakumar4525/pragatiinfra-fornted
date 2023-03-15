@@ -35,16 +35,17 @@ li {
     width: 98%;
  
   }
- 
   
   th{
     background-color:#233A61 ;
     color: #fff;
+  
   }
   td, th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
+  
   }
   
 

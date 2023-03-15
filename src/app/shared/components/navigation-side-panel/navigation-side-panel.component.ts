@@ -83,6 +83,12 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
         
       ]
     },
+    {
+      link_name: "Support",
+      link: null,
+      icon: "bx bx-collection",
+      img:'../../../assets/images/icons/PR.svg',
+    },
     
   ]
   private _subscriptionsSubject$: Subject<void>;
@@ -116,7 +122,22 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
         link_name: "manage Permissions",
         link: "/manage-permissions",
         img:'../../../assets/images/icons/Bpermission.svg',
-      }]
+      },
+          {
+          link_name: "Activities",
+          link: '/activities',
+          icon: "bx bx-collection",
+          img:'../../../assets/images/icons/Bactivity.svg',
+        },
+
+        {
+          link_name: "sub Activities",
+          link: '/sub-activities',
+          icon: "bx bx-collection",
+          img:'../../../assets/images/icons/Bsubactivity.svg',
+          //img:'../../../assets/images/icons/activity.svg',
+        },
+    ]
       
     }
 
@@ -243,21 +264,14 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
              ...this.obj
            ]
          },
-
          {
-          link_name: "Activities",
-          link: '/activities',
+          link_name: "Support",
+          link: null,
           icon: "bx bx-collection",
-          img:'../../../assets/images/icons/Bactivity.svg',
+          img:'../../../assets/images/icons/PR.svg',
         },
-
-        {
-          link_name: "sub Activities",
-          link: '/sub-activities',
-          icon: "bx bx-collection",
-          img:'../../../assets/images/icons/Bsubactivity.svg',
-          //img:'../../../assets/images/icons/activity.svg',
-        },
+        
+     
 
        ]
       }else{
@@ -307,6 +321,13 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
              //...this.obj
            ]
          },
+         {
+          link_name: "Support",
+          link: null,
+          icon: "bx bx-collection",
+          img:'../../../assets/images/icons/PR.svg',
+        },
+        
          
         //  {
         //   link_name: "Activities",

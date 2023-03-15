@@ -199,7 +199,7 @@
                 <div >
                 <mat-toolbar fxLayout="column" style="margin-bottom: 10px; background-color: #233A61;color: #fff;">
                     <h2 style="font-size: xx-large;margin-right: 800px;margin-top: 10px;">{{getDay}} </h2>
-                      <div style="margin-right: 680px;margin-bottom: 50px;position: absolute;"><h4 style="font-size: small">{{getMonth}}<br>{{getWeekName}} {{getYear}}</h4></div><br>  
+                      <div style="margin-right: 650px;margin-bottom: 50px;position: absolute;"><h4 style="font-size: small">{{getMonth}}<br>{{getWeekName}} {{getYear}}</h4></div><br>  
                 </mat-toolbar>
             </div>
             
@@ -208,14 +208,15 @@
            
           <thead>
             <th >Description</th>
-           <th>Quantity used</th>
+           <th style="width: 500px;">Quantity used</th>
+           <th style="width: 100px;">Remarks</th>
              
             
               </thead>
            
             <tbody *ngFor= " let project of projectsData ">
-                <tr  style="font-size: large;border: 1px solid lightgray;">
-                    <td>{{project.name}}</td>
+                <tr  style="font-size: large;border: 1px solid #94A3B8;">
+                    <td >{{project.name}}</td>
                     
                 
                 </tr>
@@ -227,7 +228,9 @@
                     <input type="number" class="calenderForm" style="border: none;padding: 5px 0px;" #name  min={{subTask.value}} value={{subTask.value}}>
                     <button type="submit" style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 2px;padding:5px 10px ">Add</button>
                  </form></td>
-                  
+                  <td>
+                    <textarea type="text" style="border: none;padding: 5px 5px;width:100px"></textarea>
+                  </td>
                 </tr>
             </tbody>
 
