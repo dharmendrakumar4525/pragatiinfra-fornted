@@ -431,4 +431,33 @@ addMember(){
 onChangeProject(ev){
   this.router.navigate(['/view-project/calender',ev.target.value]);
 }
+remarksData(e,player,value,id){
+  player.cumTotal=value; //<-----this will add new property to your existing object with input value.
+  console.log(player);
+  player.addedDate = this.valueAddedDate
+  player.projectId = this.projectId
+  console.log(id);
+  this.calenderService.cumutaleTotalData(player,id).subscribe(
+
+      {
+        next: (data: any) =>  {
+          console.log(data)
+         
+          this.toast.openSnackBar('Data updated successfully');
+          player.value=null
+           //this.router.navigate(['/users']);
+           
+          
+        },
+        error: (err) => {
+          this.toast.openSnackBar("Something went wrong. Unable to Update");
+          
+  
+          
+  
+        }
+      }
+  
+    )
+}
 }

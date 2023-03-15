@@ -207,9 +207,9 @@
             <table>
            
           <thead>
-            <th >Description</th>
-           <th style="width: 500px;">Quantity used</th>
-           <th style="width: 100px;">Remarks</th>
+            <th style="width:200px">Description</th>
+           <th style="width: 200px;">Quantity used</th>
+           <th style="width: 500px;">Remarks</th>
              
             
               </thead>
@@ -222,14 +222,17 @@
                 </tr>
                 <tr *ngFor="let subTask of project.result" style="background-color: #fff;">
     
-                  <td >{{subTask.subTaskName}}</td>
+                  <td style="width:100px">{{subTask.subTaskName}}</td>
                   <td>
                   <form role="form" (submit)="onBid($event, subTask, name.value,subTask._id)">
-                    <input type="number" class="calenderForm" style="border: none;padding: 5px 0px;" #name  min={{subTask.value}} value={{subTask.value}}>
-                    <button type="submit" style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 2px;padding:5px 10px ">Add</button>
+                    <input type="number" class="calenderForm" style="border: none;padding: 10px 0px;width:80px !important" #name  min={{subTask.value}} value={{subTask.value}}>
+                    <button type="submit" style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;top:-1px;left:20px ">Add</button>
                  </form></td>
                   <td>
-                    <textarea type="text" style="border: none;padding: 5px 5px;width:100px"></textarea>
+                    <form role="form" (submit)="remarksData($event, subTask, name.value,subTask._id)">
+                    <textarea type="text" style="border: none;padding: 10px 10px;width:350px;"></textarea>
+                    <button  style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;bottom:20px;left:20px ">Add</button>
+                  </form>
                   </td>
                 </tr>
             </tbody>
