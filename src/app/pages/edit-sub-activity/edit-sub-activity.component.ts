@@ -95,7 +95,7 @@ export class EditSubActivityComponent implements OnInit {
           
         },
         error: (err) => {
-          this.toast.openSnackBar("Something went wrong. Unable to Update Sub activity");
+          this.toast.openSnackBar("this sub activity already exits");
           
   
           

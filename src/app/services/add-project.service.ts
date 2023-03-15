@@ -14,34 +14,34 @@ export class AddProjectService {
   constructor(private http:HttpClient) { }
   getProjects(): Observable<any> {
     
-    return this.http.get(`${environment.aws_connection}/projects`).pipe(
+    return this.http.get(`${environment.local_connection}/projects`).pipe(
       catchError(this.handleError)
     );
   }
 
   getAboutUs(): Observable<any> {
     
-    return this.http.get(`${environment.aws_connection}/aboutUs`).pipe(
+    return this.http.get(`${environment.local_connection}/aboutUs`).pipe(
       catchError(this.handleError)
     );
   }
   addProject(project:any): Observable<any> {
     
-    return this.http.post(`${environment.aws_connection}/projects`, project).pipe(
+    return this.http.post(`${environment.local_connection}/projects`, project).pipe(
       catchError(this.handleError)
     );
   }
 
   addProjectById(selection:any,id): Observable<any> {
     
-    return this.http.post(`${environment.aws_connection}/projects/${id}`, selection).pipe(
+    return this.http.post(`${environment.local_connection}/projects/${id}`, selection).pipe(
       catchError(this.handleError)
     );
   }
 
   updateActivitiesToProject(selSectionsData:any,id): Observable<any> {
     let data = {sections:selSectionsData}
-    return this.http.post(`${environment.aws_connection}/projects/updateMoreActivities/${id}`, data).pipe(
+    return this.http.post(`${environment.local_connection}/projects/updateMoreActivities/${id}`, data).pipe(
       catchError(this.handleError)
     );
   }
@@ -62,14 +62,21 @@ export class AddProjectService {
 
   addAboutUs(about:any): Observable<any> {
     
-    return this.http.post(`${environment.aws_connection}/aboutUs`, about).pipe(
+    return this.http.post(`${environment.local_connection}/aboutUs`, about).pipe(
       catchError(this.handleError)
     );
   }
 
   updateAboutUsById(selection:any,id): Observable<any> {
     
-    return this.http.put(`${environment.aws_connection}/aboutUs/${id}`, selection).pipe(
+    return this.http.put(`${environment.local_connection}/aboutUs/${id}`, selection).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  deleteProject(id:any): Observable<any> {
+    
+    return this.http.delete(`${environment.local_connection}/projects/${id}`).pipe(
       catchError(this.handleError)
     );
   }

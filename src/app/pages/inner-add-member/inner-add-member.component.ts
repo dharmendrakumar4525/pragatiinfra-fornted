@@ -21,6 +21,7 @@ export class InnerAddMemberComponent implements OnInit {
    
 
   });
+  users:any;
   constructor(
     private dialogRef: MatDialogRef<InnerAddMemberComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -36,6 +37,13 @@ export class InnerAddMemberComponent implements OnInit {
       this.project = data
   console.log(this.project)
   })
+  this.userService.getUserss().subscribe(data=>{
+    //this.spinner.hide()
+    this.users = data
+    
+    console.log(this.users)
+  });
+
   }
 
   closeDialog(status: string) {
@@ -56,6 +64,16 @@ export class InnerAddMemberComponent implements OnInit {
       //this.clearForm = true;
       this.memberForm.markAllAsTouched();
       return;
+    }
+
+    let checkUserEmail = this.users.filter(ele=>{
+      return ele.email == this.memberForm.value.email
+    })
+
+    if(!checkUserEmail.length){
+      this.toast.openSnackBar("This email is not in users list. so you can't add it");
+      return;
+      
     }
 
 

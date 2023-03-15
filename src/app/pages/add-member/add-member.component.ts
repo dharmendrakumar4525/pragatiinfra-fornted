@@ -20,6 +20,7 @@ export class AddMemberComponent implements OnInit {
 
 
   });
+  users:any;
   constructor(
     private dialogRef: MatDialogRef<AddMemberComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -31,6 +32,12 @@ export class AddMemberComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.userService.getUserss().subscribe(data=>{
+      //this.spinner.hide()
+      this.users = data
+      
+      console.log(this.users)
+    });
   }
 
   closeDialog(status: string) {
@@ -51,6 +58,16 @@ export class AddMemberComponent implements OnInit {
       //this.clearForm = true;
       this.memberForm.markAllAsTouched();
       return;
+    }
+
+    let checkUserEmail = this.users.filter(ele=>{
+      return ele.email == this.memberForm.value.email
+    })
+
+    if(!checkUserEmail.length){
+      this.toast.openSnackBar("This email is not in users list. so you can't add it");
+      return;
+      
     }
 
 

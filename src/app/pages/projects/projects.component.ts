@@ -6,6 +6,7 @@ import { AddMemberComponent } from '../add-member/add-member.component';
 import * as moment from 'moment';
 import { AboutUsComponent } from '../about-us/about-us.component';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
+import { ToastService } from 'src/app/services/toast.service';
 
 
 
@@ -41,7 +42,7 @@ export class ProjectsComponent implements OnInit {
   aboutUsLen:any;
   about:any;
   memberAddPermissions:any;
-  constructor(private projectService: AddProjectService,private _dialog: MatDialog, private recentActivityService:RecentActivityService) { }
+  constructor(private projectService: AddProjectService, private toast:ToastService, private _dialog: MatDialog, private recentActivityService:RecentActivityService) { }
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
@@ -184,6 +185,44 @@ export class ProjectsComponent implements OnInit {
       if (status === 'no') {
       }
     })
+  }
+
+  deleteProject(id){
+    // if(!this.userPermissionsDelete?.isSelected){
+    //   const dialogRef = this._dialog.open(NoPermissionsComponent, {
+    //     width: '30%',
+    //     panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+    //     data: "you don't have permissions to delete user"
+    //     //data: supply
+    //   });
+    //   return;
+    // }
+    this.projectService.deleteProject(id).subscribe(
+  
+      {
+        next: (data: any) =>  {
+          console.log(data)
+          this.toast.openSnackBar("Project deleted Successfully");
+          this.projectService.getProjects().subscribe(data=>{
+            //this.spinner.hide()
+            this.projects = data
+            // this.usersLen = this.users.length
+            // this.dataSource = new MatTableDataSource(this.users);
+            // this.dataSource.paginator = this.paginator;
+            //console.log(this.roles)
+          })
+          
+        },
+        error: (err) => {
+          this.toast.openSnackBar("Something went wrong. Unable to delete project");
+          
+  
+          
+  
+        }
+      }
+  
+    )
   }
 
 }

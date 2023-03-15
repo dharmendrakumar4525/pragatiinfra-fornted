@@ -72,7 +72,7 @@ export class AddSubActivitiesComponent implements OnInit {
           
         },
         error: (err) => {
-          this.toast.openSnackBar("Something went wrong. Unable to Create Sub Activity");
+          this.toast.openSnackBar("this sub activity already exits");
           
   
           

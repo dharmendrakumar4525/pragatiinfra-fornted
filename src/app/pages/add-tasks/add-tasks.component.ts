@@ -62,7 +62,8 @@ taskForm: FormGroup = this._fb.group({
           
         },
         error: (err) => {
-          this.toast.openSnackBar("Something went wrong. Unable to Add Activity");
+          //console.log(err)
+          this.toast.openSnackBar("this activity is already exits");
           // this.spinner.hide()
           // this.toast.openSnackBar('Something went wrong, please try again later');
           // console.log(err) 

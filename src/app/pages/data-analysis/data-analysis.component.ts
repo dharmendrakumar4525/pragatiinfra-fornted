@@ -505,6 +505,35 @@ export class DataAnalysisComponent implements OnInit {
     }
 
 
-
+    deleteProject(id){
+      // if(!this.userPermissionsDelete?.isSelected){
+      //   const dialogRef = this._dialog.open(NoPermissionsComponent, {
+      //     width: '30%',
+      //     panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+      //     data: "you don't have permissions to delete user"
+      //     //data: supply
+      //   });
+      //   return;
+      // }
+      this.projectService.deleteProject(id).subscribe(
+    
+        {
+          next: (data: any) =>  {
+            console.log(data)
+            this.toast.openSnackBar("Project deleted Successfully");
+            this.router.navigate(['/']);
+            
+          },
+          error: (err) => {
+            this.toast.openSnackBar("Something went wrong. Unable to delete project");
+            
+    
+            
+    
+          }
+        }
+    
+      )
+    }
   
 }

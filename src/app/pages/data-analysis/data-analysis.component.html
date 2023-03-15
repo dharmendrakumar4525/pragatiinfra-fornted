@@ -10,7 +10,7 @@
       </form>
         <span style="font-size: 10px;left: 280px;position: relative;bottom:40px"><img src=".\assets\images\ontrack.svg">&nbsp; On Track</span></div>
         <div>
-          <button mat-button style="background-color:#fff;width: 150px;margin-top: 50px;cursor: pointer;margin-right: 30px;border-radius: 5px;border: 1px solid #97989D;color:#97989D" [routerLink]="['/']"><mat-icon>delete</mat-icon>Delete Project</button>
+          <button mat-button style="background-color:#fff;width: 150px;margin-top: 50px;cursor: pointer;margin-right: 30px;border-radius: 5px;border: 1px solid #97989D;color:#97989D" (click)="deleteProject(projectId)"><mat-icon>delete</mat-icon>Delete Project</button>
             <!-- <button mat-button style="background-color:#fff;width: 150px;margin-top: 50px;cursor: pointer;margin-right: 30px;border-radius: 5px;border: 1px solid #97989D;color:#97989D" [routerLink]="['/add-project']">Add Project +  </button> -->
             
             <button mat-button style="background-color:#fff;cursor: pointer; border-radius: 5px;border: 1px solid #97989D;color:#97989D" (click)="addMember()"> <mat-icon style="font-size: medium;position: relative;right:1px;top:1px">group_add</mat-icon>

@@ -72,7 +72,7 @@ export class EditActivityComponent implements OnInit {
           
         },
         error: (err) => {
-          this.toast.openSnackBar("Something went wrong. Unable to Update Activity");
+          this.toast.openSnackBar("this activity already exits");
           // this.spinner.hide()
           // this.toast.openSnackBar('Something went wrong, please try again later');
           // console.log(err) 
