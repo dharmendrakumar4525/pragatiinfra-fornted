@@ -77,9 +77,9 @@
     <mat-card style="box-shadow: none !important;" >
     <mat-toolbar>
    <mat-toolbar-row fxLayoutGap="20" style="font-size: small;background-color: #233A61;color: white;justify-content: space-around;">
-    <span> <mat-icon style="font-size: medium;position: relative;top:10px">edit</mat-icon>R0&nbsp;Prepareddate:{{project?.r0Date | date}}</span>
-    <span><mat-icon style="font-size: medium;position: relative;top:10px">edit</mat-icon>R1&nbsp;Prepareddate:{{project?.r1Date | date}}</span>
-    <span><mat-icon style="font-size: medium;position: relative;top:10px">edit</mat-icon>R2&nbsp;Prepareddate:{{project?.r2Date | date}}</span>
+    <span [routerLink]="['/add-project',project._id,'edit-project',project.projectName]"> <mat-icon style="font-size: medium;position: relative;top:10px" >edit</mat-icon>R0&nbsp;Prepareddate:{{project?.r0Date | date}}</span>
+    <span [routerLink]="['/add-project',project._id,'edit-project',project.projectName]"><mat-icon style="font-size: medium;position: relative;top:10px">edit</mat-icon>R1&nbsp;Prepareddate:{{project?.r1Date | date}}</span>
+    <span [routerLink]="['/add-project',project._id,'edit-project',project.projectName]"><mat-icon style="font-size: medium;position: relative;top:10px">edit</mat-icon>R2&nbsp;Prepareddate:{{project?.r2Date | date}}</span>
   </mat-toolbar-row>
       
     </mat-toolbar>

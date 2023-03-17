@@ -55,6 +55,8 @@ import { RejectedratessummaryComponent } from './Procurement/Ratecomparative/rej
 import { PendingratesComponent } from './Procurement/Ratecomparative/pendingrates/pendingrates.component';
 import { VendorSelectionComponent } from './Procurement/vendor-selection/vendor-selection.component';
 import { RejectReasonComponent } from './Procurement/reject-reason/reject-reason.component';
+import { PolistComponent } from './Procurement/Purchaseorder/polist/polist.component';
+import { PomapproverComponent } from './Procurement/Purchaseorder/pomapprover/pomapprover.component';
 
 
 
@@ -167,6 +169,8 @@ const routes: Routes = [
   {path: 'pendingrates', component: PendingratesComponent,canActivate:[AuthGuard]},
   {path: 'vendor-selection', component: VendorSelectionComponent,canActivate:[AuthGuard]},
   {path: 'reject-reason', component: RejectReasonComponent,canActivate:[AuthGuard]},
+  {path: 'polist', component: PolistComponent,canActivate:[AuthGuard]},
+  {path: 'pomapprover', component: PomapproverComponent,canActivate:[AuthGuard]},
   
 
   //{path: 'create-activities', component: MasterCreateuserComponent,canActivate:[AuthGuard]},

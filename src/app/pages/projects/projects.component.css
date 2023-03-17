@@ -20,7 +20,8 @@ input[type=text] {
     -webkit-transition: 0.5s;
     transition: 0.5s;
     outline: none;
-    bottom:50px;
+    position: relative;
+    top:1px;
      
   }
 .content {

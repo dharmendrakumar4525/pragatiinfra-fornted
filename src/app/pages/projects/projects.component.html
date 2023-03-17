@@ -46,8 +46,9 @@
 </div>
 <div>
 <form appearance="outline" class="searchbar">
-  <mat-icon matSuffix style="position: relative;left:340px;top:50px">search</mat-icon>
+  <!-- <mat-icon matSuffix style="position: absolute;left:340px;top:20px">search</mat-icon> -->
     <input type="text" [(ngModel)]="projectName" matInput placeholder="Search" name= "search" >
+    <button  style="bottom: 40px;left:340px;position: relative;background-color: #fff;border: none;"><i class="fa fa-search" aria-hidden="true" style="color: #97989D;"></i></button>
 </form>
    
    
@@ -62,7 +63,7 @@
         <div class="" >
           
           <div class="content1">
-            <div style="position: relative;top:120px;color: #fff;margin-left: 20px;margin-bottom: 20px;">{{project?.projectName}}</div>
+            <div style="position: relative;top:120px;color: #fff ;margin-left: 20px;margin-bottom: 20px;font-weight: 600;font-size: 17px;">{{project?.projectName}}</div>
             <div style="color: #fff;position: relative;top:110px;right:-5px" class="hamicon">
               <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                 <mat-icon>more_vert</mat-icon>
@@ -70,11 +71,11 @@
               <mat-menu #menu="matMenu">
                 <button mat-menu-item [routerLink]="['/add-project',project._id,'edit-project',project.projectName]">
                   <mat-icon>edit</mat-icon>
-                  <span>Edit</span>
+                  <span style="font-family: 'Poppins';">Edit</span>
                 </button>
                   <button mat-menu-item (click)="deleteProject(project._id)">
                   <mat-icon>delete</mat-icon>
-                  <span>Delete</span>
+                  <span style="font-family: 'Poppins';">Delete</span>
                 </button>
               </mat-menu>
             </div>
