@@ -448,7 +448,7 @@ remarksData(e,player,id){
          
           this.toast.openSnackBar('Remark updated successfully');
           //.value=null
-          this.remarkValue = ''
+          // this.remarkValue = ''
            //this.router.navigate(['/users']);
            
           
