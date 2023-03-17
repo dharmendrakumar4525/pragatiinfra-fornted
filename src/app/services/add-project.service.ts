@@ -32,6 +32,15 @@ export class AddProjectService {
     );
   }
 
+  updateProject(project:any,id): Observable<any> {
+    
+    return this.http.put(`${environment.local_connection}/projects/update-project/${id}`, project).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+
+
   addProjectById(selection:any,id): Observable<any> {
     
     return this.http.post(`${environment.local_connection}/projects/${id}`, selection).pipe(

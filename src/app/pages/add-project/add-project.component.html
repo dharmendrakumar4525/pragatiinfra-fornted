@@ -203,7 +203,7 @@
   fxLayout.lt-sm="column" 
   fxLayoutGap="10px" 
   fxLayoutAlign="flex-start"
-  style="margin-left: 5%;">
+  style="margin-left: 5%;" *ngIf="addPro">
   
   <mat-card id="card" style="text-align: center;cursor: pointer;" (click)="displayMater()">
 	<mat-card-title>
@@ -225,7 +225,9 @@
 <br>
 
   <div style="margin-left: 100px;margin-bottom: 100px;" *ngIf="showAddProject">
-  <button  style="background-color: #233A61;color:#fff;width:150px;padding: 7px;" (click)="addProject()">Submit</button>
+  <button  style="background-color: #233A61;color:#fff;width:150px;padding: 7px;" *ngIf="addPro"  (click)="addProject()">Submit</button>
+  <button  style="background-color: #233A61;color:#fff;width:150px;padding: 7px;" *ngIf="!addPro" (click)="editProject()"> Submit</button>
+
 </div> 
 
 <div *ngIf="showMaster" >

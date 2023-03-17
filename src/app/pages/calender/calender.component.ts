@@ -29,6 +29,8 @@ export class CalenderComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth'
   };
+
+  remarkValue = ''
   // calendarPlugins = [dayGridPlugin];
 
   // handleDateClick(arg) { // handler method
@@ -431,20 +433,22 @@ addMember(){
 onChangeProject(ev){
   this.router.navigate(['/view-project/calender',ev.target.value]);
 }
-remarksData(e,player,value,id){
-  player.cumTotal=value; //<-----this will add new property to your existing object with input value.
+remarksData(e,player,id){
+  let remarkObj = {remark:this.remarkValue,date:this.valueAddedDate}
+  player.remarks.push(remarkObj); //<-----this will add new property to your existing object with input value.
   console.log(player);
   player.addedDate = this.valueAddedDate
   player.projectId = this.projectId
   console.log(id);
-  this.calenderService.cumutaleTotalData(player,id).subscribe(
+  this.calenderService.addRemarks(player,id).subscribe(
 
       {
         next: (data: any) =>  {
           console.log(data)
          
-          this.toast.openSnackBar('Data updated successfully');
-          player.value=null
+          this.toast.openSnackBar('Remark updated successfully');
+          //.value=null
+          this.remarkValue = ''
            //this.router.navigate(['/users']);
            
           

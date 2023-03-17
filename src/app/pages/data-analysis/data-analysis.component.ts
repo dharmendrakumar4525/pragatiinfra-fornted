@@ -14,6 +14,7 @@ import { NoPermissionsComponent } from '../no-permissions/no-permissions.compone
 import { AboutUsComponent } from '../about-us/about-us.component';
 import { InnerAddMemberComponent } from '../inner-add-member/inner-add-member.component';
 import { ToastService } from 'src/app/services/toast.service';
+import { ProjectDeletePopupComponent } from '../project-delete-popup/project-delete-popup.component';
 
 Chart.register(...registerables);
 export interface Tile {
@@ -515,25 +516,24 @@ export class DataAnalysisComponent implements OnInit {
       //   });
       //   return;
       // }
-      this.projectService.deleteProject(id).subscribe(
-    
-        {
-          next: (data: any) =>  {
-            console.log(data)
-            this.toast.openSnackBar("Project deleted Successfully");
-            this.router.navigate(['/']);
-            
-          },
-          error: (err) => {
-            this.toast.openSnackBar("Something went wrong. Unable to delete project");
-            
-    
-            
-    
-          }
+
+
+      const dialogRef = this._dialog.open(ProjectDeletePopupComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: id
+      });
+      dialogRef.afterClosed().subscribe(status => {
+        console.log(status);
+        if (status === 'yes') {
+          
+          this.router.navigate(['/']);
         }
-    
-      )
+        if (status === 'no') {
+        }
+      })
+
+      
     }
   
 }

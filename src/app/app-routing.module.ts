@@ -93,6 +93,11 @@ const routes: Routes = [
     canActivate:[AuthGuard]
   },
   {
+    path: 'add-project/:id/edit-project/:name',
+    component: AddProjectComponent,
+    canActivate:[AuthGuard]
+  },
+  {
     path: 'user-management',
     component: UserManagementComponent,
     canActivate:[AuthGuard]

@@ -14,6 +14,7 @@ import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material
 import { Observable } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { UsersService } from 'src/app/services/users.service';
+import { DataAnalysisService } from 'src/app/services/data-analysis.service';
 export interface Fruit {
   name: string;
 }
@@ -38,6 +39,8 @@ export class AddProjectComponent implements OnInit {
   aa:boolean=false;
   allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
   users:any;
+  projectNameVal:any;
+  addPro:boolean = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   
   
@@ -61,7 +64,8 @@ export class AddProjectComponent implements OnInit {
   filteredFruits: Observable<any>;
   @ViewChild('fruitInput', {static: false}) fruitInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
-  constructor(private _fb: FormBuilder, private toast: ToastService, private _dialog: MatDialog,private taskService: TaskService,
+  project:any;
+  constructor(private _fb: FormBuilder, private dataAnalysis:DataAnalysisService, private toast: ToastService, private _dialog: MatDialog,private taskService: TaskService,
     private projectService: AddProjectService, private userService: UsersService,private activeRoute: ActivatedRoute, private router:Router) { }
 
   ngOnInit(): void {
@@ -82,13 +86,33 @@ export class AddProjectComponent implements OnInit {
     this.activeRoute.params.subscribe((params:any) => {
       console.log(params.id)
       this.projectId = params.id
+      this.projectNameVal = params.name
       
       if(this.projectId == undefined){
         this.projectId = null
       }
-      if(this.projectId){
+      if(this.projectName == undefined){
+        this.projectNameVal = null
+      }
+
+      if(this.projectId && this.projectNameVal){
+        this.dataAnalysis.getProjectById(this.projectId).subscribe(data=>{
+          this.project = data
+          this.projectForm.patchValue(this.project)
+          if(this.project.imageUrl){
+            this.imageUrl = this.project.imageUrl
+          }else{
+            this.imageUrl = null
+          }
+      })
+      
+      
+        this.showMaster = false;
+    this.showAddProject  = true;
+    this.addPro = false;
+      }else if(this.projectId){
         this.showMaster = true;
-    this.showAddProject  = false
+    this.showAddProject  = false;
       }
     });
 
@@ -322,6 +346,53 @@ addTag(event: MatChipInputEvent): void {
     }
  
 
+  }
+
+
+  editProject(){
+    if (this.projectForm.invalid) {
+      this.toast.openSnackBar(
+        'Enter Valid Details'
+      );
+      //this.clearForm = true;
+      //this.clearForm = true;
+      this.projectForm.markAllAsTouched();
+      return;
+    }
+    // console.log(this.selection);
+    // console.log(this.projectForm.value);
+    // this.projectForm.value.sections = this.selection
+    this.projectForm.value.imageUrl = this.imageUrl
+    // if(!this.projectForm.value.imageUrl){
+    //   this.toast.openSnackBar(
+    //     'Please upload project image'
+    //   );
+    //   return;
+    // }
+    this.projectService.updateProject(this.projectForm.value, this.projectId).subscribe(
+
+      {
+        next: (data: any) =>  {
+          console.log(data)
+          // this.spinner.hide()
+           
+           this.toast.openSnackBar('Project Updated Successfully');
+           this.router.navigate(['/view-project/data-analysis',data._id]);
+          
+        },
+        error: (err) => {
+          // this.spinner.hide()
+           this.toast.openSnackBar('Something went wrong, please try again later');
+          // console.log(err) 
+  
+          // this.errorData = err
+  
+          
+  
+        }
+      }
+  
+    )
   }
 
   uploadFile(event:any) {

@@ -311,16 +311,16 @@ export class ProgressSheetComponent implements OnInit {
     this.router.navigate(['/view-project/progress-sheet',ev.target.value]);
   }
 
-  addremarks(): void {
+  addremarks(subTask): void {
     const dialogRef = this.dialog.open(AddRemarksComponent, {
-      // width: '800px',
-      // data: {name: this.name, animal: this.animal}
+       width: '500px',
+       data: subTask.remarks
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      // this.animal = result;
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log('The dialog was closed');
+    //   // this.animal = result;
+    // });
   }
 }
 

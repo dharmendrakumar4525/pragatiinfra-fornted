@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { AboutUsComponent } from '../about-us/about-us.component';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 import { ToastService } from 'src/app/services/toast.service';
+import { ProjectDeletePopupComponent } from '../project-delete-popup/project-delete-popup.component';
 
 
 
@@ -188,6 +189,29 @@ export class ProjectsComponent implements OnInit {
   }
 
   deleteProject(id){
+
+    const dialogRef = this._dialog.open(ProjectDeletePopupComponent, {
+      width: '30%',
+      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+      data: id
+    });
+    dialogRef.afterClosed().subscribe(status => {
+      console.log(status);
+      if (status === 'yes') {
+        
+        this.projectService.getProjects().subscribe(data=>{
+          //this.spinner.hide()
+          this.projects = data
+          // this.usersLen = this.users.length
+          // this.dataSource = new MatTableDataSource(this.users);
+          // this.dataSource.paginator = this.paginator;
+          //console.log(this.roles)
+        })
+      }
+      if (status === 'no') {
+      }
+    })
+
     // if(!this.userPermissionsDelete?.isSelected){
     //   const dialogRef = this._dialog.open(NoPermissionsComponent, {
     //     width: '30%',
@@ -197,32 +221,7 @@ export class ProjectsComponent implements OnInit {
     //   });
     //   return;
     // }
-    this.projectService.deleteProject(id).subscribe(
-  
-      {
-        next: (data: any) =>  {
-          console.log(data)
-          this.toast.openSnackBar("Project deleted Successfully");
-          this.projectService.getProjects().subscribe(data=>{
-            //this.spinner.hide()
-            this.projects = data
-            // this.usersLen = this.users.length
-            // this.dataSource = new MatTableDataSource(this.users);
-            // this.dataSource.paginator = this.paginator;
-            //console.log(this.roles)
-          })
-          
-        },
-        error: (err) => {
-          this.toast.openSnackBar("Something went wrong. Unable to delete project");
-          
-  
-          
-  
-        }
-      }
-  
-    )
+    
   }
 
 }

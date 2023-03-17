@@ -68,7 +68,7 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button mat-menu-item>
+                <button mat-menu-item [routerLink]="['/add-project',project._id,'edit-project',project.projectName]">
                   <mat-icon>edit</mat-icon>
                   <span>Edit</span>
                 </button>

@@ -4,8 +4,23 @@
 		Remarks
 	</mat-card-title>
     <br/>
+	<br/>
 
 	<mat-card-content>
+
+
+		<table>
+			<tr>
+			  <th>date</th>
+			  <th>Remark</th>
+			  
+			</tr>
+			<tr *ngFor="let remark of data">
+				<td>{{remark?.date | date}}</td>
+				<td>{{remark?.remark}}</td>
+			</tr>
+			
+		  </table>
        
 
 		

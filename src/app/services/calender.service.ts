@@ -19,6 +19,13 @@ export class CalenderService {
     );
   }
 
+  addRemarks(subActivity:any,id): Observable<any> {
+    
+    return this.http.put(`${environment.local_connection}/subTasks/remarks/${id}`, subActivity).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   getProjectById(id): Observable<any> {
     
     return this.http.get(`${environment.local_connection}/projects/${id}`).pipe(
