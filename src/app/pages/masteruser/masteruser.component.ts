@@ -78,7 +78,7 @@ export class MasteruserComponent implements OnInit {
     this.tasksPermissionsAdd = this.permissions.permissions[0]?.ParentChildchecklist[6]?.childList[0]
     this.tasksPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[6]?.childList[1]
     this.tasksPermissionsDelete = this.permissions.permissions[0]?.ParentChildchecklist[6]?.childList[2]
-    this.tasksPermissionsDeleteMul = this.permissions.permissions[0]?.ParentChildchecklist[6]?.childList[3]
+    //this.tasksPermissionsDeleteMul = this.permissions.permissions[0]?.ParentChildchecklist[6]?.childList[3]
     //this.rolesPermissionsEdit = this.permissions.permissions[0].ParentChildchecklist[3].childList[1]
 
     //console.log(this.progressPermissionsView)
@@ -210,15 +210,15 @@ checkboxLabel(row?: any): string {
 
 deleteMultipleDialog() {
 
-  if(!this.tasksPermissionsDeleteMul?.isSelected){
-    const dialogRef = this._dialog.open(NoPermissionsComponent, {
-      width: '30%',
-      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-      data: "you don't have permissions to delete multiple activities"
-      //data: supply
-    });
-    return;
-  }
+  // if(!this.tasksPermissionsDeleteMul?.isSelected){
+  //   const dialogRef = this._dialog.open(NoPermissionsComponent, {
+  //     width: '30%',
+  //     panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+  //     data: "you don't have permissions to delete multiple activities"
+  //     //data: supply
+  //   });
+  //   return;
+  // }
 
   if (this.selection.selected.length === 0) {
     this.toast.openSnackBar("Please select activities to delete");

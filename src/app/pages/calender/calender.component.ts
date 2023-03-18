@@ -216,6 +216,7 @@ getMonth:any;
 getYear:any;
 getDay:any;
 memberAddPermissions:any;
+remarksPermissions:any;
   constructor(private activeRoute: ActivatedRoute, private router:Router, private _fb: FormBuilder, private dataAnalysis:DataAnalysisService, private projectService: AddProjectService, private recentActivityService:RecentActivityService, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private toast:ToastService, private calenderService:CalenderService) { }
 
   ngOnInit(): void {
@@ -233,6 +234,8 @@ memberAddPermissions:any;
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     console.log(this.permissions)
     this.calenderPermissions = this.permissions.permissions[0]?.ParentChildchecklist[2]?.childList[0]
+    this.remarksPermissions = this.permissions.permissions[0]?.ParentChildchecklist[2]?.childList[2]
+
 
     
     this.activeRoute.params.subscribe((params:any) => {
@@ -434,6 +437,14 @@ onChangeProject(ev){
   this.router.navigate(['/view-project/calender',ev.target.value]);
 }
 remarksData(e,player,remark,id){
+  if(!this.remarksPermissions?.isSelected){
+    const dialogRef = this._dialog.open(NoPermissionsComponent, {
+      width: '30%',
+      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+      data: "you don't have permissions to add remarks calender"
+    });
+    return;
+  }
   let remarkObj = {remark:remark,date:this.valueAddedDate}
   player.remarks.push(remarkObj); //<-----this will add new property to your existing object with input value.
   console.log(player);

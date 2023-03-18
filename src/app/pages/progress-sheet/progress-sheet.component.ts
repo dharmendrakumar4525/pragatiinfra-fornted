@@ -183,6 +183,7 @@ export class ProgressSheetComponent implements OnInit {
    progressPermissionsEdit:any
    recentActivities:any
    projectsList:any;
+   remarksPermissions:any;
   constructor(private activeRoute: ActivatedRoute,private router:Router, private projectService:AddProjectService, private _fb: FormBuilder, private recentActivityService:RecentActivityService, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private taskService:TaskService,public dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -190,6 +191,7 @@ export class ProgressSheetComponent implements OnInit {
     console.log(this.permissions)
     this.progressPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[1]?.childList[1]
     this.progressPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[1]?.childList[0]
+    this.remarksPermissions = this.permissions.permissions[0]?.ParentChildchecklist[2]?.childList[2]
     console.log(this.progressPermissionsView)
     console.log(this.progressPermissionsEdit)
     this.activeRoute.params.subscribe((params:any) => {
@@ -312,6 +314,14 @@ export class ProgressSheetComponent implements OnInit {
   }
 
   addremarks(subTask): void {
+    if(!this.remarksPermissions?.isSelected){
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to add remarks calender"
+      });
+      return;
+    }
     const dialogRef = this.dialog.open(AddRemarksComponent, {
        width: '500px',
        data: subTask.remarks

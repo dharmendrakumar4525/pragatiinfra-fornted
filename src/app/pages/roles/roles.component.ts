@@ -106,7 +106,7 @@ export class RolesComponent implements OnInit {
     this.rolesPermissionsAdd = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[0]
     this.rolesPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[1]
     this.rolesPermissionsDelete = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[2]
-    this.rolesPermissionsDeleteMul = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[3]
+    //this.rolesPermissionsDeleteMul = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[3]
     //this.rolesPermissionsEdit = this.permissions.permissions[0].ParentChildchecklist[3].childList[1]
 
     //console.log(this.progressPermissionsView)
@@ -237,15 +237,15 @@ checkboxLabel(row?: any): string {
 
 deleteMultipleDialog() {
 
-  if(!this.rolesPermissionsDeleteMul?.isSelected){
-    const dialogRef = this._dialog.open(NoPermissionsComponent, {
-      width: '30%',
-      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-      data: "you don't have permissions to delete multiple roles"
-      //data: supply
-    });
-    return;
-  }
+  // if(!this.rolesPermissionsDeleteMul?.isSelected){
+  //   const dialogRef = this._dialog.open(NoPermissionsComponent, {
+  //     width: '30%',
+  //     panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+  //     data: "you don't have permissions to delete multiple roles"
+  //     //data: supply
+  //   });
+  //   return;
+  // }
 
   if (this.selection.selected.length === 0) {
     this.toast.openSnackBar("Please select roles to delete");

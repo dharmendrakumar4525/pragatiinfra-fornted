@@ -64,7 +64,7 @@ export class SubActivitiesComponent implements OnInit {
     this.subActPermissionsAdd = this.permissions.permissions[0]?.ParentChildchecklist[7]?.childList[0]
     this.subActPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[7]?.childList[1]
     this.subActPermissionsDelete = this.permissions.permissions[0]?.ParentChildchecklist[7]?.childList[2]
-    this.subActPermissionsDeleteMul = this.permissions.permissions[0]?.ParentChildchecklist[7]?.childList[3]
+    //this.subActPermissionsDeleteMul = this.permissions.permissions[0]?.ParentChildchecklist[7]?.childList[3]
     this.taskService.getSubActivities().subscribe(data=>{
       //this.spinner.hide()
       this.subActivities = data
@@ -157,15 +157,15 @@ checkboxLabel(row?: any): string {
 }
 
 deleteMultipleDialog() {
-  if(!this.subActPermissionsDeleteMul?.isSelected){
-    const dialogRef = this._dialog.open(NoPermissionsComponent, {
-      width: '30%',
-      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-      data: "you don't have permissions to delete Sub Activities"
-      //data: supply
-    });
-    return;
-  }
+  // if(!this.subActPermissionsDeleteMul?.isSelected){
+  //   const dialogRef = this._dialog.open(NoPermissionsComponent, {
+  //     width: '30%',
+  //     panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+  //     data: "you don't have permissions to delete Sub Activities"
+  //     //data: supply
+  //   });
+  //   return;
+  // }
   if (this.selection.selected.length === 0) {
     this.toast.openSnackBar("Please select sub Activity to delete");
     return;

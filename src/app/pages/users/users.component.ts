@@ -65,7 +65,7 @@ export class UsersComponent implements OnInit {
     this.userPermissionsAdd = this.permissions.permissions[0]?.ParentChildchecklist[4]?.childList[0]
     this.userPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[4]?.childList[1]
     this.userPermissionsDelete = this.permissions.permissions[0]?.ParentChildchecklist[4]?.childList[2]
-    this.userPermissionsDeleteMul = this.permissions.permissions[0]?.ParentChildchecklist[4]?.childList[3]
+    //this.userPermissionsDeleteMul = this.permissions.permissions[0]?.ParentChildchecklist[4]?.childList[3]
     this.userService.getUserss().subscribe(data=>{
       //this.spinner.hide()
       this.users = data
@@ -156,15 +156,15 @@ checkboxLabel(row?: any): string {
 }
 
 deleteMultipleDialog() {
-  if(!this.userPermissionsDeleteMul?.isSelected){
-    const dialogRef = this._dialog.open(NoPermissionsComponent, {
-      width: '30%',
-      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-      data: "you don't have permissions to delete users"
-      //data: supply
-    });
-    return;
-  }
+  // if(!this.userPermissionsDeleteMul?.isSelected){
+  //   const dialogRef = this._dialog.open(NoPermissionsComponent, {
+  //     width: '30%',
+  //     panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+  //     data: "you don't have permissions to delete users"
+  //     //data: supply
+  //   });
+  //   return;
+  // }
   if (this.selection.selected.length === 0) {
     this.toast.openSnackBar("Please select users to delete");
     return;

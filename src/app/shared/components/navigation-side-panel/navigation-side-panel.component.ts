@@ -105,8 +105,8 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
 
-    this.rolePermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[4]
-    this.userPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[4]?.childList[4]
+    this.rolePermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[3]
+    this.userPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[4]?.childList[3]
     
     if(this.permissions.user.role === 'superadmin'){
 

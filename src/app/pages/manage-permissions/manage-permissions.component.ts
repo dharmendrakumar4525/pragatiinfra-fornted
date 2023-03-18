@@ -80,6 +80,9 @@ export class ManagePermissionsComponent implements OnInit {
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
+          {
+            id: 5,parent_id: 1,value: 'remarks',isSelected: false
+          },
         ]
       },
 
@@ -95,9 +98,9 @@ export class ManagePermissionsComponent implements OnInit {
           {
             id: 3,parent_id: 1,value: 'delete',isSelected: false
           },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
+          // {
+          //   id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          // },
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
@@ -116,9 +119,9 @@ export class ManagePermissionsComponent implements OnInit {
           {
             id: 3,parent_id: 1,value: 'delete',isSelected: false
           },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
+          // {
+          //   id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          // },
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
@@ -149,9 +152,9 @@ export class ManagePermissionsComponent implements OnInit {
           {
             id: 3,parent_id: 1,value: 'delete',isSelected: false
           },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
+          // {
+          //   id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          // },
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
@@ -170,9 +173,9 @@ export class ManagePermissionsComponent implements OnInit {
           {
             id: 3,parent_id: 1,value: 'delete',isSelected: false
           },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
+          // {
+          //   id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          // },
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
@@ -225,6 +228,9 @@ export class ManagePermissionsComponent implements OnInit {
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
+          {
+            id: 5,parent_id: 1,value: 'remarks',isSelected: false
+          },
         ]
       },
 
@@ -240,9 +246,9 @@ export class ManagePermissionsComponent implements OnInit {
           {
             id: 3,parent_id: 1,value: 'delete',isSelected: false
           },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
+          // {
+          //   id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          // },
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
@@ -261,9 +267,9 @@ export class ManagePermissionsComponent implements OnInit {
           {
             id: 3,parent_id: 1,value: 'delete',isSelected: false
           },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
+          // {
+          //   id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          // },
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
@@ -295,9 +301,9 @@ export class ManagePermissionsComponent implements OnInit {
           {
             id: 3,parent_id: 1,value: 'delete',isSelected: false
           },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
+          // {
+          //   id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          // },
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
@@ -316,9 +322,9 @@ export class ManagePermissionsComponent implements OnInit {
           {
             id: 3,parent_id: 1,value: 'delete',isSelected: false
           },
-          {
-            id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
-          },
+          // {
+          //   id: 4,parent_id: 1,value: 'deleteMultiple',isSelected: false
+          // },
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
