@@ -69,6 +69,7 @@ export class DataAnalysisComponent implements OnInit {
   myChart:any;
   month:any;
   day:any;
+  projectsDeletePermissions:any;
   projectNameForm: FormGroup = this._fb.group({
     _id: [null],
    });
@@ -79,7 +80,7 @@ export class DataAnalysisComponent implements OnInit {
     //console.log(this.permissions)
     //this.projectsViewPermissions = this.permissions.permissions[0].ParentChildchecklist[0].childList[1]
     this.memberAddPermissions = this.permissions.permissions[0]?.ParentChildchecklist[5]?.childList[0]
-
+    this.projectsDeletePermissions = this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[3]
     this.month = new Date().toLocaleString('default', { month: 'short' });
     ///let year = new Date(single.date).getFullYear()
     this.day = new Date().getDate()
@@ -507,6 +508,16 @@ export class DataAnalysisComponent implements OnInit {
 
 
     deleteProject(id){
+
+      if(!this.projectsDeletePermissions?.isSelected){
+        const dialogRef = this._dialog.open(NoPermissionsComponent, {
+          width: '30%',
+          panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+          data: "you don't have permissions to Delete project"
+          //data: supply
+        });
+        return;
+      }
       // if(!this.userPermissionsDelete?.isSelected){
       //   const dialogRef = this._dialog.open(NoPermissionsComponent, {
       //     width: '30%',

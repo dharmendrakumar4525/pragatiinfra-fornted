@@ -229,8 +229,8 @@
                     <button type="submit" style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;top:-1px;left:20px ">Add</button>
                  </form></td>
                   <td>
-                    <form role="form" (submit)="remarksData($event, subTask,subTask._id)">
-                    <textarea type="text" style="border: none;padding: 10px 10px;width:350px;" [(ngModel)]="remarkValue" name="remarkValue"></textarea>
+                    <form role="form" (submit)="remarksData($event, subTask, remark.value,subTask._id)">
+                    <textarea type="text" style="border: none;padding: 10px 10px;width:350px;" #remark  name="remarkValue"></textarea>
                     <button  style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;bottom:20px;left:20px ">Add</button>
                   </form>
                   </td>

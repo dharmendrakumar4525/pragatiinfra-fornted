@@ -433,8 +433,8 @@ addMember(){
 onChangeProject(ev){
   this.router.navigate(['/view-project/calender',ev.target.value]);
 }
-remarksData(e,player,id){
-  let remarkObj = {remark:this.remarkValue,date:this.valueAddedDate}
+remarksData(e,player,remark,id){
+  let remarkObj = {remark:remark,date:this.valueAddedDate}
   player.remarks.push(remarkObj); //<-----this will add new property to your existing object with input value.
   console.log(player);
   player.addedDate = this.valueAddedDate

@@ -49,6 +49,13 @@ export class ManagePermissionsComponent implements OnInit {
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
+          {
+            id: 3,parent_id: 1,value: 'Edit',isSelected: false
+          },
+      
+          {
+            id: 6,parent_id: 1,value: 'Delete',isSelected: false
+          }
         ]
       },
 
@@ -187,6 +194,13 @@ export class ManagePermissionsComponent implements OnInit {
           {
             id: 5,parent_id: 1,value: 'view',isSelected: false
           },
+          {
+            id: 3,parent_id: 1,value: 'Edit',isSelected: false
+          },
+      
+          {
+            id: 6,parent_id: 1,value: 'Delete',isSelected: false
+          }
         ]
       },
 

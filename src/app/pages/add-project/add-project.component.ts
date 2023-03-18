@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, NgForm, FormControl } from '@angular/forms';
 import { MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
@@ -65,9 +65,18 @@ export class AddProjectComponent implements OnInit {
   @ViewChild('fruitInput', {static: false}) fruitInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
   project:any;
+  
   constructor(private _fb: FormBuilder, private dataAnalysis:DataAnalysisService, private toast: ToastService, private _dialog: MatDialog,private taskService: TaskService,
     private projectService: AddProjectService, private userService: UsersService,private activeRoute: ActivatedRoute, private router:Router) { }
+    @HostListener('document:click', ['$event'])
+    documentClick(event: any): void {
+      //console.log("jjjjjjjjjjjjjj")
+      if(!this.projectsPermissions?.isSelected){
+        this.router.navigate(['/'])
 
+      }
+      //this.utilitiesService.documentClickedTarget.next(event.target)
+    }
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     console.log(this.permissions)

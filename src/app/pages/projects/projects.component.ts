@@ -8,6 +8,7 @@ import { AboutUsComponent } from '../about-us/about-us.component';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 import { ToastService } from 'src/app/services/toast.service';
 import { ProjectDeletePopupComponent } from '../project-delete-popup/project-delete-popup.component';
+import { Router } from '@angular/router';
 
 
 
@@ -43,12 +44,17 @@ export class ProjectsComponent implements OnInit {
   aboutUsLen:any;
   about:any;
   memberAddPermissions:any;
-  constructor(private projectService: AddProjectService, private toast:ToastService, private _dialog: MatDialog, private recentActivityService:RecentActivityService) { }
+  projectsEditPermissions:any;
+  projectsDeletePermissions:any;
+  constructor(private projectService: AddProjectService, private router:Router, private toast:ToastService, private _dialog: MatDialog, private recentActivityService:RecentActivityService) { }
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     console.log(this.permissions)
    this.projectsViewPermissions = this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[1]
+   this.projectsEditPermissions = this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[2]
+   this.projectsDeletePermissions = this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[3]
+
     this.memberAddPermissions = this.permissions.permissions[0]?.ParentChildchecklist[5]?.childList[0]
 
     this.projectService.getProjects().subscribe(data=>{
@@ -190,6 +196,16 @@ export class ProjectsComponent implements OnInit {
 
   deleteProject(id){
 
+    if(!this.projectsDeletePermissions?.isSelected){
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to Delete project"
+        //data: supply
+      });
+      return;
+    }
+
     const dialogRef = this._dialog.open(ProjectDeletePopupComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -222,6 +238,19 @@ export class ProjectsComponent implements OnInit {
     //   return;
     // }
     
+  }
+
+  editProject(id,name){
+    if(!this.projectsEditPermissions?.isSelected){
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to Edit project"
+        //data: supply
+      });
+      return;
+    }
+    this.router.navigate(['/add-project',id,'edit-project',name]);
   }
 
 }

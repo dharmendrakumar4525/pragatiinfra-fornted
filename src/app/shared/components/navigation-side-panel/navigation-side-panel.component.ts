@@ -197,7 +197,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
  else{
   value=value;
  }
- console.log(value);
+ //console.log(value);
  return value;
   }
   ngOnDestroy(): void {
