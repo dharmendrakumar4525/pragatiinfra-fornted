@@ -89,7 +89,15 @@
       
     </li>
     <hr style="border: 1px solid FAFAFA;width:220px"> 
- 
+    <li >
+      <a  
+          [routerLinkActive]="['active']"
+          [routerLinkActiveOptions]="{exact: true}">
+          <!-- <i class='fas fa-sign-out-alt' style='color: white'></i> -->
+        <span [ngClass]="currentPanelState">
+          <img src="../../../assets/images/support.svg" style="position: relative;top:5px"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Support</span>
+      </a>
+    </li>
     <li >
       <a  (click)="logout()"
           [routerLinkActive]="['active']"

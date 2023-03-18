@@ -174,4 +174,8 @@ background: lightblue;
     background-color: #d7dade;
     border-radius: 20px;
 }
- 
+.aboutcard-spaceset{
+    display: flex;
+    flex: none !important;
+  }
+  
