@@ -23,15 +23,15 @@ show: boolean= false;
   ngOnInit(): void {
 
     this.loginForm = this._fb.group({
-      
+
       email: [null, [Validators.required, Validators.pattern(this.emailRegex)]],
       password: [null, [Validators.required, Validators.minLength(6)]],
-      
 
-      
+
+
     });
 
-    
+
   }
 
 
@@ -42,7 +42,7 @@ show: boolean= false;
   get password(): AbstractControl {
     return this.loginForm.get('password');
   }
-  
+
 
   async login():Promise<void>{
 
@@ -50,7 +50,7 @@ show: boolean= false;
       this.toast.openSnackBar(
         'Enter Valid Details'
       );
-      
+
       this.loginForm.markAllAsTouched();
       return;
     }
@@ -62,23 +62,19 @@ show: boolean= false;
       {
         next: (data: any) =>  {
           console.log(data)
-         
+
           this.toast.openSnackBar('You logged in Successfully');
           this.afterSuccessLogin(data, login);
           this.userService.updateDashboard('dashboard');
            this.router.navigate(['/dpr']);
-           
-          
+
+
         },
         error: (err) => {
           this.toast.openSnackBar('Invalid Credentials');
-          
-  
-          
-  
         }
       }
-  
+
     )
     // try {
     //   const login = this.loginForm.value
@@ -94,11 +90,11 @@ show: boolean= false;
 
   afterSuccessLogin(response: any, login): void {
     //console.log(response);
-    
+
       localStorage.setItem('loginData', JSON.stringify(response));
-    
+
     this.router.navigate(['/dpr']);
   }
-  
+
 
 }
