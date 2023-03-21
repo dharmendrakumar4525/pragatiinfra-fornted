@@ -12,7 +12,7 @@ mat-toolbar{
   }
 .requests{
     height: 40px;
-    width: 1150px;
+    width: 1130px;
     background-color: #D9D9D9;
     display: flex;
     justify-content: space-around;

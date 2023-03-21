@@ -57,6 +57,14 @@ import { VendorSelectionComponent } from './Procurement/vendor-selection/vendor-
 import { RejectReasonComponent } from './Procurement/reject-reason/reject-reason.component';
 import { PolistComponent } from './Procurement/Purchaseorder/polist/polist.component';
 import { PomapproverComponent } from './Procurement/Purchaseorder/pomapprover/pomapprover.component';
+import { ApprovedpoComponent } from './Procurement/Purchaseorder/approvedpo/approvedpo.component';
+import { RejectedpoComponent } from './Procurement/Purchaseorder/rejectedpo/rejectedpo.component';
+import { PendingpoComponent } from './Procurement/Purchaseorder/pendingpo/pendingpo.component';
+import { ApoVendorpostatusComponent } from './Procurement/Purchaseorder/apo-vendorpostatus/apo-vendorpostatus.component';
+import { PomcreatorComponent } from './Procurement/Purchaseorder/pomcreator/pomcreator.component';
+import { PotokenComponent } from './Procurement/Purchaseorder/potoken/potoken.component';
+import { RejectedpomComponent } from './Procurement/Purchaseorder/rejectedpom/rejectedpom.component';
+import { PomcreatorEsignComponent } from './Procurement/Purchaseorder/pomcreator-esign/pomcreator-esign.component';
 
 
 
@@ -171,6 +179,14 @@ const routes: Routes = [
   {path: 'reject-reason', component: RejectReasonComponent,canActivate:[AuthGuard]},
   {path: 'polist', component: PolistComponent,canActivate:[AuthGuard]},
   {path: 'pomapprover', component: PomapproverComponent,canActivate:[AuthGuard]},
+  {path: 'approvedpo', component: ApprovedpoComponent,canActivate:[AuthGuard]},
+  {path: 'rejectedpo', component: RejectedpoComponent,canActivate:[AuthGuard]},
+  {path: 'pendingpo', component: PendingpoComponent,canActivate:[AuthGuard]},
+  {path: 'apovendorpostatus', component: ApoVendorpostatusComponent,canActivate:[AuthGuard]},
+  {path: 'pomcreator', component: PomcreatorComponent,canActivate:[AuthGuard]},
+  {path: 'potoken', component: PotokenComponent,canActivate:[AuthGuard]},
+  {path: 'rejectedpom', component: RejectedpomComponent,canActivate:[AuthGuard]},
+  {path: 'pomcreatoresign', component: PomcreatorEsignComponent,canActivate:[AuthGuard]},
   
 
   //{path: 'create-activities', component: MasterCreateuserComponent,canActivate:[AuthGuard]},
