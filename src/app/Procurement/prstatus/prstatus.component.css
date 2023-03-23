@@ -1,0 +1,100 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: .6em;
+    width:250px; 
+  }
+  .searchbar {
+    width:350px;
+    border-radius: 20px;
+    font-family: 'Poppins';
+ }
+ 
+.datebar{
+  
+     width:150px;
+     border-radius: 20px;
+     font-family: 'Poppins';
+   
+ }
+    
+table {
+  font-family: 'Poppins', sans-serif !important;
+  border-collapse: collapse;
+  width: 98%;
+  /* height: 100vh; */
+  font-size: 14px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  margin-top: 5px;
+
+}
+th{
+  background-color: #233A61;
+  border: 1px solid #94A3B8;
+
+  text-align: left;
+  padding: 10px 40px !important;
+  width:500px !important;
+  color: white;
+  font-weight: 100;
+  font-size: 14px;
+  font-style: normal;
+
+  
+
+}
+
+td {
+  
+  border: 1px solid #94A3B8;
+  
+  text-align: center;
+  padding: 10px ;
+  color: #233A61;
+  font-style: normal;
+  font-size: 14px;
+  font-family: 'Poppins';
+/* width:100px; */
+  
+
+}
+tr:nth-child(even) {
+  background-color: #e5e6eb !important;
+}
+
+.scroll-bar1{
+      
+ 
+  height: 600px;
+  width:90%;
+  margin-bottom: 100px;
+  margin-left: 20px;
+  margin-top: 50px;
+  overflow: auto;
+ direction: rtl;
+ 
+
+  }
+
+::-webkit-scrollbar {
+width: 7px;
+height:7px;
+}
+::-webkit-scrollbar-track{
+border: 1px solid lightgrey;
+border-radius: 5px;
+background-color:lightgrey ;
+}
+::-webkit-scrollbar-thumb{
+background: #1E293B;
+border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover{
+background: lightblue;
+}
+.imgstyle{
+  position: relative;
+  top:5px;
+}

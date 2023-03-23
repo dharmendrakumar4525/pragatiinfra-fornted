@@ -65,6 +65,8 @@ import { PomcreatorComponent } from './Procurement/Purchaseorder/pomcreator/pomc
 import { PotokenComponent } from './Procurement/Purchaseorder/potoken/potoken.component';
 import { RejectedpomComponent } from './Procurement/Purchaseorder/rejectedpom/rejectedpom.component';
 import { PomcreatorEsignComponent } from './Procurement/Purchaseorder/pomcreator-esign/pomcreator-esign.component';
+import { InventoryComponent } from './Procurement/inventory/inventory.component';
+import { PrstatusComponent } from './Procurement/prstatus/prstatus.component';
 
 
 
@@ -187,6 +189,8 @@ const routes: Routes = [
   {path: 'potoken', component: PotokenComponent,canActivate:[AuthGuard]},
   {path: 'rejectedpom', component: RejectedpomComponent,canActivate:[AuthGuard]},
   {path: 'pomcreatoresign', component: PomcreatorEsignComponent,canActivate:[AuthGuard]},
+  {path: 'inventory', component: InventoryComponent,canActivate:[AuthGuard]},
+  {path: 'prstatus', component: PrstatusComponent,canActivate:[AuthGuard]},
   
 
   //{path: 'create-activities', component: MasterCreateuserComponent,canActivate:[AuthGuard]},

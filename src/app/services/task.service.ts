@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class TaskService {
-  //baseUrl='http://localhost:3000/api'
+  //baseUrl='http://awshost:3000/api'
   constructor(private http:HttpClient) { }
 
   getTasks(): Observable<any> {

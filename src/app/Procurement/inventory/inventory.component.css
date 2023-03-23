@@ -2,7 +2,7 @@
     flex: 1 1 auto;
   }
   ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
-    padding: .8em;
+    padding: .6em;
     width:250px; 
   }
   .searchbar {
@@ -10,49 +10,43 @@
     border-radius: 20px;
     font-family: 'Poppins';
  }
- .filterbar{
-  width:200px;
-  border-radius: 20px;
-  font-family: 'Poppins';
- }
   /* input[type=text] {
-    width: 30%;
+    width: 380px;
     border-radius: 8px;
-    padding: 12px 20px;
+    padding: 10px 20px;
     margin: 8px 0;
     box-sizing: border-box;
-    border: 0.5px solid #94A3B8;
+    border: 3px solid #97989D;
     -webkit-transition: 0.5s;
     transition: 0.5s;
     outline: none;
-    font-family: 'Poppins';
-    font-size: 14px;
-  }
-   */
+    position: relative;
+    top:20px;
+    margin-left: 50px;
+    margin-bottom: 20px;
+     
+  } */
   table {
     font-family: 'Poppins', sans-serif !important;
     border-collapse: collapse;
-    width: 100%;
+    width: 98%;
     /* height: 100vh; */
-    font-size: 14px;
-    margin-left: 10px;
+    font-size: 12px;
+    margin-left: 30px;
     margin-bottom: 20px;
-    margin-right: 20px;
-    margin-top: 20px;
-  
+    margin-right: 10px;
+    margin-top: 10px;
   }
   th{
     background-color: #233A61;
     border: 1px solid #94A3B8;
-  
-    text-align: center;
+    text-align: left;
     padding: 10px 40px !important;
     width:1000px !important;
     color: white;
-    font-weight: 100;
-    font-size: 14px;
+    font-weight: 300;
+    font-size: 15px;
     font-style: normal;
-
     
 
   }
@@ -60,30 +54,32 @@
   td {
     
     border: 1px solid #94A3B8;
-    
     text-align: left;
     padding: 20px;
     color: #233A61;
     font-style: normal;
-    font-size: 14px;
+    font-size: medium;
   /* width:100px; */
     
   
   }
-  tr:nth-child(even) {
-    background-color: #e5e6eb !important;
+  tr:nth-child(odd) {
+    background-color: #F4F4F5 !important;
   }
-
+  
   .scroll-bar1{
         
    
     height: 500px;
-    width:50%;
-    margin-left: 40px;
+    width:98%;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 20px;
     margin-bottom: 100px;
+    gap:20px;
     overflow: auto;
-    overflow-y: hidden;
-  
+    direction: rtl;
+    overflow-x: hidden;
     }
   
   ::-webkit-scrollbar {
@@ -102,3 +98,4 @@
   ::-webkit-scrollbar-thumb:hover{
   background: lightblue;
   }
+  

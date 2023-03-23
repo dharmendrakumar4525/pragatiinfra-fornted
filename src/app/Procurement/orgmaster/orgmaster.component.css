@@ -1,7 +1,17 @@
 .example-spacer {
     flex: 1 1 auto;
   }
-  input[type=text] {
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: .6em;
+    width:250px; 
+  }
+  .searchbar {
+    width:350px;
+    border-radius: 20px;
+    font-family: 'Poppins';
+ }
+ 
+  /* input[type=text] {
     width: 30%;
     border-radius: 8px;
     padding: 12px 20px;
@@ -14,7 +24,7 @@
     font-family: 'Poppins';
     font-size: 14px;
    
-  }
+  } */
   ::placeholder {
     color: #94A3B8;
 
@@ -29,7 +39,7 @@
     margin-left: 10px;
     margin-bottom: 20px;
     margin-right: 20px;
-    margin-top: 50px;
+    margin-top: 10px;
   
   }
   th{

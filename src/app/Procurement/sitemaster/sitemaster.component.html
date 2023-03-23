@@ -12,12 +12,13 @@
     <h1 style="color: #1E293B;font-style:normal;margin-left: 40px;margin-top: 30px;">Site master</h1>
   </div>
 
-  <div style="margin-left: 40px;margin-top: 10px;">
-    <form class="Search-form" style="width:80%;">
-         <span matPrefix > </span>
-        <input type="text" matInput  placeholder="Search by title" name= "search" [(ngModel)]="searchValue" >
-        <button matSuffix mat-button style="margin-left: -60px;margin-top: 10px;"><mat-icon >search</mat-icon></button>
-        </form></div>
+  <div style="margin-left: 40px;width:100%;margin-top: 30px;">
+    <mat-form-field appearance="outline" class="searchbar">
+        <mat-icon matSuffix>search</mat-icon>
+        <input matInput type="search" placeholder="search title" class="search-input">
+       
+    </mat-form-field>
+    </div>
 
         <body >
             <div class="scroll-bar1" >

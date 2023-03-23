@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CalenderService {
 
-  //baseUrl='http://localhost:3000/api'
+  //baseUrl='http://awshost:3000/api'
   constructor(private http:HttpClient) { }
   cumutaleTotalData(subActivity:any,id): Observable<any> {
     

@@ -101,6 +101,8 @@ import { PomcreatorComponent } from './Procurement/Purchaseorder/pomcreator/pomc
 import { PotokenComponent } from './Procurement/Purchaseorder/potoken/potoken.component';
 import { RejectedpomComponent } from './Procurement/Purchaseorder/rejectedpom/rejectedpom.component';
 import { PomcreatorEsignComponent } from './Procurement/Purchaseorder/pomcreator-esign/pomcreator-esign.component';
+import { InventoryComponent } from './Procurement/inventory/inventory.component';
+import { PrstatusComponent } from './Procurement/prstatus/prstatus.component';
 
 
 // FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -142,7 +144,7 @@ import { PomcreatorEsignComponent } from './Procurement/Purchaseorder/pomcreator
   declarations: [ AppComponent, HomeComponent,SearchPipe,SubActivitySearchPipe, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent,LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,
     ForgotpasswordComponent, NewRoleComponent,NewPermissionComponent, AddDataComponent, ManagePermissionsComponent,CreatenewpasswordComponent, NoPermissionsComponent, RoleEditComponent, UserEditComponent, UsersDeleteMultipleComponent, RolesDeleteMultipleComponent, AboutUsComponent,MasteruserComponent,MasterCreateuserComponent, InnerAddMemberComponent, EditActivityComponent, EditSubActivityComponent, TaskDeleteMulActivityComponent, DeleteMulSubActivityComponent, SubActivitiesComponent, EditSubActivitiesComponent, AddSubActivitiesComponent,SitemasterComponent,
     OrgmasterComponent,ItemmasterComponent,VendormasterComponent,CategorymanagementComponent,PurchaserequestComponent,PurchasereqlistComponent,RequisitionapprovalsComponent,ApprovedsummaryComponent,RejectedsummaryComponent,PendingsummaryComponent,RevisedpurchasereqlistComponent,ApprovedmaterialrequestComponent,RejectedpurchaserequestComponent,PendingpurchaserequestComponent,RatecomparativeComponent,RcomparativeComponent,RateapprovallistComponent,RevisedrateapprovallistComponent,VendorscomparativeapprovedComponent,VendorscomparativerejectedComponent,
-    VendorscomparativerevisedComponent,RateapprovalsComponent,RateapprovalsummaryComponent,RejectedratessummaryComponent,PendingratesComponent,VendorSelectionComponent,RejectReasonComponent,AddRemarksComponent, ProjectDeletePopupComponent,PolistComponent,PomapproverComponent,ApprovedpoComponent,RejectedpoComponent,PendingpoComponent,ApoVendorpostatusComponent,PomcreatorComponent,PotokenComponent,RejectedpomComponent,PomcreatorEsignComponent],
+    VendorscomparativerevisedComponent,RateapprovalsComponent,RateapprovalsummaryComponent,RejectedratessummaryComponent,PendingratesComponent,VendorSelectionComponent,RejectReasonComponent,AddRemarksComponent, ProjectDeletePopupComponent,PolistComponent,PomapproverComponent,ApprovedpoComponent,RejectedpoComponent,PendingpoComponent,ApoVendorpostatusComponent,PomcreatorComponent,PotokenComponent,RejectedpomComponent,PomcreatorEsignComponent,InventoryComponent,PrstatusComponent],
     providers:[AuthGuard],
     schemas: [
       CUSTOM_ELEMENTS_SCHEMA,

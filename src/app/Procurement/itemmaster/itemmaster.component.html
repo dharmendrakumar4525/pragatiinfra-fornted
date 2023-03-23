@@ -12,18 +12,19 @@
     <h1 style="color: #1E293B;font-style:normal;margin-left: 40px;margin-top: 30px;">Item master</h1>
   </div>
 <div style="display: flex;flex-direction: row;gap:10px">
-  <div style="margin-left: 40px;width:80%">
-    <form class="Search-form" >
-         <span matPrefix > </span>
-        <input type="text" matInput  placeholder="Search by title" name= "search" >
-        <button matSuffix mat-button style="margin-left: -60px;margin-top: 10px;"><mat-icon >search</mat-icon></button>
-        </form></div>
-        <div  style="width: 40%;margin-left: -650px;" >
-            <form>
-                <span matPrefix > </span>
-               <input type="text" matInput  placeholder="Filter by" name= "search" >
-               </form>
-        </div>
+  <div style="margin-left: 40px;width:100%;margin-top: -5px;">
+    <mat-form-field appearance="outline" class="searchbar">
+        <mat-icon matSuffix>search</mat-icon>
+        <input matInput type="search" placeholder="search title" class="search-input">
+       
+    </mat-form-field>
+    </div>
+    <div style="margin-left: -400px;width:100%;margin-top: -5px;">
+      <mat-form-field appearance="outline" class="filterbar">
+          <input matInput type="search" placeholder="Filter by" class="search-input">
+         
+      </mat-form-field>
+      </div>
     </div>
         <body >
             <div class="scroll-bar1" >
