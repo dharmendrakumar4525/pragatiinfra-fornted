@@ -10,25 +10,25 @@ import { environment } from 'src/environments/environment';
 })
 export class CalenderService {
 
-  //baseUrl='http://localhost:3000/api'
+  //baseUrl='http://awshost:3000/api'
   constructor(private http:HttpClient) { }
   cumutaleTotalData(subActivity:any,id): Observable<any> {
     
-    return this.http.put(`${environment.local_connection}/subTasks/dailyTotalUpdate/${id}`, subActivity).pipe(
+    return this.http.put(`${environment.aws_connection}/subTasks/dailyTotalUpdate/${id}`, subActivity).pipe(
       catchError(this.handleError)
     );
   }
 
   addRemarks(subActivity:any,id): Observable<any> {
     
-    return this.http.put(`${environment.local_connection}/subTasks/remarks/${id}`, subActivity).pipe(
+    return this.http.put(`${environment.aws_connection}/subTasks/remarks/${id}`, subActivity).pipe(
       catchError(this.handleError)
     );
   }
 
   getProjectById(id): Observable<any> {
     
-    return this.http.get(`${environment.local_connection}/projects/${id}`).pipe(
+    return this.http.get(`${environment.aws_connection}/projects/${id}`).pipe(
       catchError(this.handleError)
     );
   }

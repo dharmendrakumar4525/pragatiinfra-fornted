@@ -114,3 +114,7 @@ background: lightblue;
       
     
   }
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: .6em;
+    width:200px; 
+  }

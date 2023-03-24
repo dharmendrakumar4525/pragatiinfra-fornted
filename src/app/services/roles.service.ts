@@ -9,19 +9,19 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class RolesService {
-  //baseUrl='http://localhost:3000/api'
+  //baseUrl='http://awshost:3000/api'
   constructor(private http:HttpClient) { }
 
   getRoles(): Observable<any> {
     
-    return this.http.get(`${environment.local_connection}/roles`).pipe(
+    return this.http.get(`${environment.aws_connection}/roles`).pipe(
       catchError(this.handleError)
     );
   }
 
   getByRole(role): Observable<any> {
     
-    return this.http.get(`${environment.local_connection}/roles/role/${role}`).pipe(
+    return this.http.get(`${environment.aws_connection}/roles/role/${role}`).pipe(
       catchError(this.handleError)
     );
   }
@@ -42,7 +42,7 @@ export class RolesService {
       },
     };
     //let deleteMultipleUsers = {selUsers:userIds}
-    return this.http.delete(`${environment.local_connection}/roles`, options).pipe(
+    return this.http.delete(`${environment.aws_connection}/roles`, options).pipe(
       catchError(this.handleError)
     );
   }
@@ -54,7 +54,7 @@ export class RolesService {
 
   editRole(role:any,id): Observable<any> {
     
-    return this.http.put(`${environment.local_connection}/roles/${id}`, role).pipe(
+    return this.http.put(`${environment.aws_connection}/roles/${id}`, role).pipe(
       catchError(this.handleError)
     );
   }
@@ -62,14 +62,14 @@ export class RolesService {
 
   addRole(role:any): Observable<any> {
     
-    return this.http.post(`${environment.local_connection}/roles`, role).pipe(
+    return this.http.post(`${environment.aws_connection}/roles`, role).pipe(
       catchError(this.handleError)
     );
   }
 
   deleteRole(id:any): Observable<any> {
     
-    return this.http.delete(`${environment.local_connection}/roles/${id}`).pipe(
+    return this.http.delete(`${environment.aws_connection}/roles/${id}`).pipe(
       catchError(this.handleError)
     );
   }
@@ -78,7 +78,7 @@ export class RolesService {
     console.log(permissionsObj)
     let data = {dashboard_permissions:permissionsObj}
     //let data = {role,permissionsObj}
-    return this.http.put(`${environment.local_connection}/roles/update-perm/${role}`, data).pipe(
+    return this.http.put(`${environment.aws_connection}/roles/update-perm/${role}`, data).pipe(
       catchError(this.handleError)
     );
   }

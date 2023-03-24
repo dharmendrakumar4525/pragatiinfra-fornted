@@ -59,14 +59,13 @@
 <div  class="right" style="height: 150px;width:50%">
 <div><button (click)="addUser()" style="width: 150px;padding: 10px;margin-left: 400px;cursor: pointer;color: #818181;border:1px solid #97989D;background-color: #fff;border-radius: 5px;font-family: 'Poppins';">Create User</button></div>
 <div style="margin-left: 290px;margin-top: 10px;cursor: pointer;font-family: 'Poppins';">
-    <form class="Search-form">
+   
     <mat-form-field class="example-full-width" appearance="outline">
-    <span matPrefix> </span>
+      <mat-icon matSuffix>search</mat-icon>
     <input matInput (keyup)="applyFilter($event)" placeholder="Search" style="font-family: 'Poppins';">
-    <button matSuffix mat-button><mat-icon >search</mat-icon></button>
     </mat-form-field>
    
-    </form></div>
+    </div>
 </div>
 </div>
 <div style="width: 100%;height: 100vh;">

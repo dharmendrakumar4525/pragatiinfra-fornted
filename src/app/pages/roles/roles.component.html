@@ -2,9 +2,9 @@
 <mat-toolbar style="background-color: #fff !important;" >
     <mat-toolbar-row fxLayoutAlign="space-between center">
         <div style="padding: 1rem;margin-top: 60px;">
-        <span style="font-size:xx-large;">Pragati Infra</span></div>
+        <span style="font-size:30px;font-family: 'Poppins';font-weight: 600;">Pragati Infra</span></div>
         <div>
-            <button mat-button style="padding: 1px 12px;width: 150px;margin-top: 50px;margin-left: 700px;position: relative;background-color: #fff;color: #97989D;border: 1px solid #97989D;" [routerLink]="['/add-project']">Add Project +  </button>
+            <button mat-button style="padding: 1px 12px;width: 150px;margin-top: 50px;margin-left: 700px;position: relative;background-color: #fff;color: #97989D;border: 1px solid #97989D;font-family: 'Poppins';" [routerLink]="['/add-project']">Add Project +  </button>
             </div>
             <div>
        <button mat-button [matMenuTriggerFor]="menu"> <mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" style="margin-top:50px">notifications</mat-icon></button>
@@ -41,9 +41,9 @@
 
       <mat-grid-list   cols="4" rowHeight="2:1">
         <mat-grid-tile colspan="2" >
-            <div style="margin-right: 300px;margin-bottom: 50px;"><h3>Roles</h3> 
-                <div > <button mat-button class="leftbtns" (click)="exporter.exportTable('json')">copy</button> &nbsp;    
-                    <button mat-button class="leftbtns" (click)="exporter.exportTable('xlsx', {fileName:'roles', sheet: 'sheet_name', Props: {Author: 'Pragatiinfra'}})">Excel</button>   &nbsp;
+            <div style="margin-right: 300px;margin-bottom: 50px;font-family: 'Poppins';"><h3>Roles</h3> 
+                <div > <button mat-button class="leftbtns" (click)="exporter.exportTable('json')" style="font-family: 'Poppins';">copy</button> &nbsp;    
+                    <button mat-button class="leftbtns" (click)="exporter.exportTable('xlsx', {fileName:'roles', sheet: 'sheet_name', Props: {Author: 'Pragatiinfra'}})" style="font-family: 'Poppins';">Excel</button>   &nbsp;
                     <!-- <button mat-button class="leftbtns" (click)="exporter.exportTable('csv')">Csv</button>  &nbsp; -->
                     <!-- <button mat-raised-button (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name', Props: {Author: 'Talha'}})">Excel</button>
                     <button mat-raised-button (click)="exporter.exportTable('csv')">Csv</button>
@@ -58,22 +58,21 @@
             
 
     <div>
-        <button mat-button style="width: 150px;padding: 1px;margin-left: 400px;background-color: #fff;color: #97989D;border: 1px solid #97989D;" (click)="addRole()" >New Role</button>
+        <button mat-button style="width: 150px;padding: 1px;margin-left: 400px;background-color: #fff;color: #97989D;border: 1px solid #97989D;font-family: 'Poppins';" (click)="addRole()" >New Role</button>
     <div style="margin-left: 290px;margin-top: 10px;">
-        <form class="Search-form">
+       
         <mat-form-field class="example-full-width" appearance="outline">
-        <span matPrefix> </span>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Search">
-        <button matSuffix mat-button><mat-icon >search</mat-icon></button>
+          <mat-icon matSuffix>search</mat-icon>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search" style="font-family: 'Poppins';">
         </mat-form-field>
        
-        </form></div></div>
+       </div></div>
         </mat-grid-tile>
 
         <mat-grid-tile style="height: 100vh;box-shadow: none;" colspan="4" rowheight="900px">
             <div style="width: 100%;height: 100vh;margin-bottom: 400px;">
 
-              <div style="margin-left: 50px;background-color: brown;color: #fff;width:130px;margin-top:150px ;"><button  (click)="deleteMultipleDialog()" mat-button>Delete Multiple</button> 
+              <div style="margin-left: 50px;background-color: brown;color: #fff;width:130px;margin-top:150px ;"><button  (click)="deleteMultipleDialog()" mat-button style="font-family: 'Poppins';">Delete Multiple</button> 
                 </div><br>
             
                 <div>

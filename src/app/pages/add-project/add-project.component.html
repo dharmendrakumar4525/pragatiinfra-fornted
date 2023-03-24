@@ -36,7 +36,7 @@
       </div>
       <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
  
-        <div class="custom-form-group">
+        <div class="custom-form-group" >
             <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> Project Date <span class="star">*</span>
               <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
             </label>
@@ -107,7 +107,7 @@
     
   </div><br>
 
-    <div style="margin-left: 10px;" fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
+    <div style="margin-left: 10px;width:1100px" fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
       fxLayoutAlign="space-around center" fxLayoutGap="0px">
       <div fxLayout="column" fxFlex="92" fxFlexFill class="addform-50-column mobile_mb_0">
         <mat-form-field class="example-chip-list" appearance="outline">
@@ -141,10 +141,10 @@
     fxLayoutAlign="space-around center" fxLayoutGap="0px">
     <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
         <div class="custom-form-group">
-            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> R0 Schedule Prepared date <span class="star">*</span>
+            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';margin-left: 10px;"> R0 Schedule Prepared date <span class="star">*</span>
               <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
             </label>
-            <div class="custom-form-control">
+            <div class="custom-form-control" style="margin-left: 10px;">
               <mat-form-field appearance="outline">
                 <input matInput [matDatepicker]="r0Picker" formControlName="r0Date" placeholder="Enter R0 Prepared date" style="font-family: 'Poppins';"
                 (click)="r0Picker.open()"/>
@@ -225,8 +225,8 @@
 <br>
 
   <div style="margin-left: 100px;margin-bottom: 100px;" *ngIf="showAddProject">
-  <button  style="background-color: #233A61;color:#fff;width:150px;padding: 7px;font-family: 'Poppins';" *ngIf="addPro"  (click)="addProject()">Submit</button>
-  <button  style="background-color: #233A61;color:#fff;width:150px;padding: 7px;font-family: 'Poppins';" *ngIf="!addPro" (click)="editProject()"> Submit</button>
+  <button  style="background-color: #233A61;color:#fff;width:150px;padding: 7px;font-family: 'Poppins';border: none;" *ngIf="addPro"  (click)="addProject()">Submit</button>
+  <button  style="background-color: #233A61;color:#fff;width:150px;padding: 7px;font-family: 'Poppins';border: none;" *ngIf="!addPro" (click)="editProject()"> Submit</button>
 
 </div> 
 

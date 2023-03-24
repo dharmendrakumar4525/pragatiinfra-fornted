@@ -46,14 +46,14 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
     {
       link_name: "Inventory",
-      link: null,
+      link: '/inventory',
       icon: "bx bx-collection",
       img:'../../../assets/images/icons/Inventory.svg',
     },
 
     {
       link_name: "PR status",
-      link: null,
+      link: '/prstatus',
       icon: "bx bx-collection",
       img:'../../../assets/images/icons/PR.svg',
     },
@@ -256,14 +256,14 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
           },
           {
             link_name: "Inventory",
-            link: null,
+            link: '/inventory',
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/Inventory.svg',
           },
       
           {
             link_name: "PR status",
-            link: null,
+            link: '/prstatus',
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/PR.svg',
           },
@@ -313,14 +313,14 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
           {
             link_name: "Inventory",
-            link: null,
+            link: '/inventory',
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/Inventory.svg',
           },
       
           {
             link_name: "PR status",
-            link: null,
+            link: '/prstatus',
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/PR.svg',
           },
