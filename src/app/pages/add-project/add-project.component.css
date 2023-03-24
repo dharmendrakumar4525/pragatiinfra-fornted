@@ -68,6 +68,7 @@ input[type=text] {
    -webkit-transition: 0.5s;
    transition: 0.5s;
    outline: none;
+   font-family: 'Poppins';
  }
 
    
@@ -103,7 +104,7 @@ input[type=text] {
         
    
    height: 550px;
-   width:93%;
+   width:98%;
    margin-left: 60px;
 
    overflow: auto;

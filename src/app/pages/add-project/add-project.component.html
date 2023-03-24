@@ -5,7 +5,7 @@
     <mat-toolbar style="background-color: #fff;">
       <mat-toolbar-row fxLayoutAlign="space-between center">
           <div style="padding: 1rem;margin-top: 40px;">
-          <span style="color: #2E2E2E;font-size: 35px;">Add New Project</span></div>
+          <span style="color: #2E2E2E;font-size: 30px;font-family: 'Poppins';font-weight: 600;">Add New Project</span></div>
          
         </mat-toolbar-row>
           
@@ -13,15 +13,15 @@
           <hr style="width:100%">
         </mat-toolbar-row>
     </mat-toolbar>
-    <div  class="scroll-bar3" style="width: 93%;">
+    <div  class="scroll-bar3" style="width: 98%;margin-left: 5px;">
     <div style="position:relative;left: 10px;" fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
       fxLayoutAlign="space-around center" fxLayoutGap="0px">
       <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
         <div class="custom-form-group">
-            <label class="custom-label" for="" style="color: #3568BA;">Project Name<span class="star">*</span></label>
+            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';">Project Name<span class="star">*</span></label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput  placeholder="Enter Project Name" formControlName="projectName"
+                <input matInput  placeholder="Enter Project Name" formControlName="projectName" style="font-family: 'Poppins';"
                   >
                   <mat-error *ngIf="projectName.invalid && ( projectName.dirty || projectName.touched )">
                     <span>Please provide a valid project name</span>
@@ -37,12 +37,12 @@
       <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
  
         <div class="custom-form-group">
-            <label class="custom-label" for="" style="color: #3568BA;"> Project Date <span class="star">*</span>
+            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> Project Date <span class="star">*</span>
               <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
             </label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="startPicker" formControlName="projectDate" placeholder="Enter start date"
+                <input matInput [matDatepicker]="startPicker" formControlName="projectDate" placeholder="Enter start date" style="font-family: 'Poppins';"
                 (click)="startPicker.open()"/>
                 <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                 <mat-datepicker #startPicker></mat-datepicker>
@@ -59,10 +59,10 @@
       </div>
       <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
         <div class="custom-form-group">
-            <label class="custom-label" for="" style="color: #3568BA;">Location<span class="star">*</span></label>
+            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';">Location<span class="star">*</span></label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput  placeholder="Enter Location" formControlName="location"
+                <input matInput  placeholder="Enter Location" formControlName="location" style="font-family: 'Poppins';"
                   >
                   <mat-error *ngIf="location.invalid && ( location.dirty || location.touched )">
                     <span>Please provide a valid location</span>
@@ -91,7 +91,7 @@
           <div class="upload-file" dropzone fxLayout="column" fxLayoutAlign="center center" style="background-color: #fff;">
               <img src="../../../assets/images/icons/upload-file.svg" class="mb-15" alt="upload-file">
               <h5 style="color: #3568BA;">Project Image</h5>
-              <input type="file" class="uploadImg"  id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)">
+              <input type="file" style="font-family: 'Poppins';" class="uploadImg"  id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)">
           </div>
           <div class="upload-file" style="margin-left: 20px;" *ngIf="imageUrl">
     
@@ -117,7 +117,7 @@
               {{tag}}
               <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
-            <input placeholder="Add project members"
+            <input placeholder="Add project members" style="font-family: 'Poppins';"
             #fruitInput
                    [matChipInputFor]="chipList"
                    [formControl]="fruitCtrl"
@@ -141,12 +141,12 @@
     fxLayoutAlign="space-around center" fxLayoutGap="0px">
     <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
         <div class="custom-form-group">
-            <label class="custom-label" for="" style="color: #3568BA;"> R0 End Date <span class="star">*</span>
+            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> R0 Schedule Prepared date <span class="star">*</span>
               <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
             </label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="r0Picker" formControlName="r0Date" placeholder="Enter R0 EndDate"
+                <input matInput [matDatepicker]="r0Picker" formControlName="r0Date" placeholder="Enter R0 Prepared date" style="font-family: 'Poppins';"
                 (click)="r0Picker.open()"/>
                 <mat-datepicker-toggle matSuffix [for]="r0Picker"></mat-datepicker-toggle>
                 <mat-datepicker #r0Picker></mat-datepicker>
@@ -160,12 +160,12 @@
     </div>
     <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
         <div class="custom-form-group">
-            <label class="custom-label" for="" style="color: #3568BA;"> R1 End Date <span class="star">*</span>
+            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> R1 Schedule Prepared date <span class="star">*</span>
               <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
             </label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="r1Picker" formControlName="r1Date" placeholder="Enter R1 End Date"
+                <input matInput [matDatepicker]="r1Picker" formControlName="r1Date" placeholder="Enter R1 Prepared date" style="font-family: 'Poppins';"
                 (click)="r1Picker.open()"/>
                 <mat-datepicker-toggle matSuffix [for]="r1Picker"></mat-datepicker-toggle>
                 <mat-datepicker #r1Picker></mat-datepicker>
@@ -179,12 +179,12 @@
     </div>
     <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
         <div class="custom-form-group">
-            <label class="custom-label" for="" style="color: #3568BA;"> R2 End Date <span class="star">*</span>
+            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> R2 Schedule Prepared date <span class="star">*</span>
               <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
             </label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="r2Picker" formControlName="r2Date" placeholder="Enter R2 End Date"
+                <input matInput [matDatepicker]="r2Picker" formControlName="r2Date" placeholder="Enter R2 Prepared date" style="font-family: 'Poppins';"
                 (click)="r2Picker.open()"/>
                 <mat-datepicker-toggle matSuffix [for]="r2Picker"></mat-datepicker-toggle>
                 <mat-datepicker #r2Picker></mat-datepicker>
@@ -214,7 +214,7 @@
 
 		
 		<img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
-        <div style="color: #3568BA;">add activity with sub activity</div>
+        <div style="color: #3568BA;font-family: 'Poppins';">add activity with sub activity</div>
 
 	</mat-card-content>
   </mat-card>
@@ -225,8 +225,8 @@
 <br>
 
   <div style="margin-left: 100px;margin-bottom: 100px;" *ngIf="showAddProject">
-  <button  style="background-color: #233A61;color:#fff;width:150px;padding: 7px;" *ngIf="addPro"  (click)="addProject()">Submit</button>
-  <button  style="background-color: #233A61;color:#fff;width:150px;padding: 7px;" *ngIf="!addPro" (click)="editProject()"> Submit</button>
+  <button  style="background-color: #233A61;color:#fff;width:150px;padding: 7px;font-family: 'Poppins';" *ngIf="addPro"  (click)="addProject()">Submit</button>
+  <button  style="background-color: #233A61;color:#fff;width:150px;padding: 7px;font-family: 'Poppins';" *ngIf="!addPro" (click)="editProject()"> Submit</button>
 
 </div> 
 
@@ -334,7 +334,7 @@
    fxLayoutGap="10px" 
    fxLayoutAlign="flex-start"
    style="margin-left: 5%;">
-   <button mat-raised-button (click)="addProject()" style="background-color: #233A61;color: #fff;left: 10px;width:130px;top: 30px;margin-bottom: 20px;">Submit</button><br>
+   <button mat-raised-button (click)="addProject()" style="background-color: #233A61;color: #fff;left: 10px;width:130px;top: 30px;margin-bottom: 20px;font-family: 'Poppins';cursor: pointer;;">Submit</button><br>
 </div>
 
 

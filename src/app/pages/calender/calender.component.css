@@ -16,6 +16,7 @@ li {
     margin-left: 10px;
    
     background-color: #fff !important;
+    font-family: 'Poppins';
   }
   .example-card{
     max-width: 400px;
@@ -33,6 +34,8 @@ li {
     font-family: 'Poppins', sans-serif !important;
     border-collapse: collapse;
     width: 98%;
+   
+    
  
  
   }
@@ -43,7 +46,7 @@ li {
   
   }
   td, th {
-    border: 1px solid #dddddd;
+    border: 1px solid #94A3B8;
     text-align: left;
     padding: 8px;
   
@@ -81,7 +84,7 @@ background: lightblue;
 
 .scroll-bar1{
         
-  height: 60%;
+  height: 80%;
   width: 100%;
 
   overflow: auto;
@@ -108,6 +111,7 @@ background: lightblue;
 .calenderForm{
   width:90% !important;
   height: 100% !important;
+ 
 }
 .calender{
  margin-bottom: 100px;

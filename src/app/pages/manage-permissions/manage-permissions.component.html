@@ -1,6 +1,6 @@
 <mat-toolbar style=" background-color: #fff !important;margin-top: 10px;height: 100px;">
   <div style="padding: 1rem;margin-top: 60px;">
-    <span style="font-size:xx-large;">Pragati Infra</span></div>
+    <span style="font-size:30px;font-family: 'Poppins';font-weight: 600;">Pragati Infra</span></div>
  
    
 </mat-toolbar>
@@ -8,7 +8,7 @@
   <hr style="width:95%;margin-left: 15px;">
 
 
-<section class="dashboard_content_sec" style="margin-top: 50px;">
+<section class="dashboard_content_sec" style="margin-top: 50px;font-family: 'Poppins';">
     <!-- <div class="dashboard_bred_crumb">
       <ul>
         <li><img src="../../../../../assets/images/icons/bred_crumb_arrow.svg" alt=""></li>
@@ -32,8 +32,8 @@
                   <label class="custom-label" for="">Select Role<span class="star" style="display: inline-block !important;">*</span></label>
                   <div class="custom-form-control">
                     <mat-form-field appearance="outline">
-                      <mat-select placeholder="Please Select Role" formControlName="role">
-                        <mat-option disabled=""> Select role </mat-option>
+                      <mat-select  style="font-family: 'Poppins';" placeholder="Please Select Role" formControlName="role">
+                        <mat-option disabled="" > Select role </mat-option>
                         <!-- <mat-option [value]=cat.id *ngFor="let cati of catCategories">{{cat.name}}</mat-option> -->
                         <mat-option *ngFor="let role of roles" [value]="role.role" (click)="getPermissions(role.role)"> {{role.role}} </mat-option>
                     
@@ -46,7 +46,7 @@
                     </mat-form-field>
                   </div>
                 </div>
-                <button mat-button class="mat_step8per_next global-btn" type="button" (click)="addPermissions()">Save
+                <button  class="mat_step8per_next global-btn" type="button" (click)="addPermissions()" style="margin-left: 20px;padding: 10px;width:100px;margin-top: -10px;border-radius: 5px;border: 1px solid #97989D;background-color: #fff;cursor: pointer;font-family: 'Poppins';">Save
                 </button>
               </form>
             </div>

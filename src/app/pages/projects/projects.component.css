@@ -26,6 +26,7 @@ input[type=text] {
   }
 .content {
     padding: 1px;
+    font-family: 'Poppins';
 }
 .projectcontent{
    margin-top: 10px;

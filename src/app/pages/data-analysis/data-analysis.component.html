@@ -3,17 +3,17 @@
     <mat-toolbar-row fxLayoutAlign="space-between center" >
         <div style="padding: 1rem;margin-top: 110px;" >
           <form [formGroup]="projectNameForm">
-          <select style="padding: 10px;width:250px;border: none;font-size: 30px;font-weight: 550;" (change)="onChangeProject($event)" formControlName="_id">
+          <select style="padding: 10px;width:300px;border: none;font-size: 30px;font-weight: 600;font-family: 'Poppins';" (change)="onChangeProject($event)" formControlName="_id">
             <option *ngFor=" let one of projectsList" [value]="one._id">
               
         <span >{{one?.projectName}}</span></option></select>
       </form>
-        <span style="font-size: 10px;left: 280px;position: relative;bottom:40px"><img src=".\assets\images\ontrack.svg">&nbsp; On Track</span></div>
+        <span style="font-size: 10px;left: 320px;position: relative;bottom:40px;font-family: 'Poppins';font-weight: bold;"><img src=".\assets\images\ontrack.svg">&nbsp; On Track</span></div>
         <div>
-          <button mat-button style="background-color:#fff;width: 150px;margin-top: 50px;cursor: pointer;margin-right: 30px;border-radius: 5px;border: 1px solid #97989D;color:#97989D" (click)="deleteProject(projectId)"><mat-icon>delete</mat-icon>Delete Project</button>
+          <button mat-button style="background-color:#fff;width: 150px;margin-top: 50px;cursor: pointer;margin-right: 30px;border-radius: 5px;border: 1px solid #97989D;color:#97989D;font-family: 'Poppins';" (click)="deleteProject(projectId)"><mat-icon>delete</mat-icon>Delete Project</button>
             <!-- <button mat-button style="background-color:#fff;width: 150px;margin-top: 50px;cursor: pointer;margin-right: 30px;border-radius: 5px;border: 1px solid #97989D;color:#97989D" [routerLink]="['/add-project']">Add Project +  </button> -->
             
-            <button mat-button style="background-color:#fff;cursor: pointer; border-radius: 5px;border: 1px solid #97989D;color:#97989D" (click)="addMember()"> <mat-icon style="font-size: medium;position: relative;right:1px;top:1px">group_add</mat-icon>
+            <button mat-button style="background-color:#fff;cursor: pointer; border-radius: 5px;border: 1px solid #97989D;color:#97989D;font-family: 'Poppins';" (click)="addMember()"> <mat-icon style="font-size: medium;position: relative;right:1px;top:1px">group_add</mat-icon>
                 Add Member </button>
                 
 
@@ -51,10 +51,10 @@
     <ul style="list-style: none;">
     
       <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/dpr']" routerLinkActive="active-link"
-        ><i class="fa fa-eye" aria-hidden="true" style="color:#97989D"></i> <span style="color:#97989D">&nbsp; Projects</span></a></li>
+        ><i class="fa fa-eye" aria-hidden="true" style="color:#97989D"></i> <span style="color:#97989D;font-family: 'Poppins';">&nbsp; Projects</span></a></li>
        
       <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
-        [routerLinkActiveOptions]="{exact: true}"  ><i class="fa fa-eye" aria-hidden="true" style="color:#233A61"></i><span style="color:#233A61">&nbsp;Data-Analysis</span> </a></li>
+        [routerLinkActiveOptions]="{exact: true}"  ><i class="fa fa-eye" aria-hidden="true" style="color:#233A61"></i><span style="color:#233A61;font-family: 'Poppins';">&nbsp;Data-Analysis</span> </a></li>
         
       <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
          ><i class="fa fa-edit" aria-hidden="true" style="color:#97989D"></i> <span style="color:#97989D">&nbsp;Progress-sheet</span></a></li>
@@ -63,7 +63,9 @@
          ><i class="fa fa-edit" aria-hidden="true" style="color:#97989D"></i> <span style="color:#97989D;">&nbsp;Calender</span></a></li>
       
     </ul>
-    
+  <div style="margin-left: 100px;font-family: 'Poppins';">
+    Project Start Date : 24 march 2023
+  </div>
   
   </div><br>
 
@@ -76,7 +78,7 @@
     colspan="3" >
     <mat-card style="box-shadow: none !important;" >
     <mat-toolbar>
-   <mat-toolbar-row fxLayoutGap="20" style="font-size: small;background-color: #233A61;color: white;justify-content: space-around;">
+   <mat-toolbar-row fxLayoutGap="20" style="font-size: 14px;background-color: #233A61;color: white;justify-content: space-around;font-family: 'Poppins';">
     <span [routerLink]="['/add-project',project._id,'edit-project',project.projectName]"> <mat-icon style="font-size: medium;position: relative;top:10px" >edit</mat-icon>R0&nbsp;Prepareddate:{{project?.r0Date | date}}</span>
     <span [routerLink]="['/add-project',project._id,'edit-project',project.projectName]"><mat-icon style="font-size: medium;position: relative;top:10px">edit</mat-icon>R1&nbsp;Prepareddate:{{project?.r1Date | date}}</span>
     <span [routerLink]="['/add-project',project._id,'edit-project',project.projectName]"><mat-icon style="font-size: medium;position: relative;top:10px">edit</mat-icon>R2&nbsp;Prepareddate:{{project?.r2Date | date}}</span>
@@ -85,14 +87,14 @@
     </mat-toolbar>
 
 
-    <div style="width: 150px;text-align: center;position: absolute;top:150px">
+    <div style="width: 150px;text-align: center;position: absolute;top:150px;font-family: 'Poppins';">
       <span>Todays update</span> <br>
       <h1 style="margin-top: 50px;color: #2E2E2E;font-size: 64px;">{{day}} <h5 style="color: #2E2E2E;margin-top: -10px;margin-left: 100px;">{{month}}</h5></h1>
     </div>
       <div>
 
 
-      <mat-form-field appearance="outline" style="width: 150px;position: absolute;bottom:40px">
+      <mat-form-field appearance="outline" style="width: 150px;position: absolute;bottom:40px;font-family: 'Poppins';">
         <input matInput [matDatepicker]="startPicker" placeholder="Enter date"
         (click)="startPicker.open()" (dateChange)="filterFrom($event)"/>
         <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
@@ -102,9 +104,9 @@
       </mat-form-field>
    
     
-    <div style="margin-left: 300px; position: absolute; top:90px">
+    <div style="margin-left: 300px; position: absolute; top:90px;font-family: 'Poppins';">
     <button mat-button >Project OverView</button></div>
-    <div style="width:500px;height: 300px;margin-left: 300px; position: absolute; top:120px">
+    <div style="width:500px;height: 300px;margin-left: 300px; position: absolute; top:120px;font-family: 'Poppins';">
       <canvas id="overviewChart" width="2" height="1" ></canvas>
     </div>
     
@@ -122,26 +124,26 @@
           <div class="scroll-bar" fxLayout="column">
           <mat-card-header>
         
-            <mat-card-title style="margin-left: -10px;"> About &nbsp; <i class="fa fa-edit" style="cursor: pointer;" (click)="addAboutUs()" aria-hidden="true"></i></mat-card-title>
+            <mat-card-title style="margin-left: -10px;font-family: 'Poppins';font-weight: bold;"> About &nbsp; <i class="fa fa-edit" style="cursor: pointer;" (click)="addAboutUs()" aria-hidden="true"></i></mat-card-title>
         
           </mat-card-header>
       
           <mat-card-content>
-            <p>{{aboutUs?.description}}</p></mat-card-content>
+            <p style="font-family: 'Poppins';">{{aboutUs?.description}}</p></mat-card-content>
            
-            <mat-card-subtitle>Members</mat-card-subtitle>
+            <mat-card-subtitle ><i style="color: #1E293B;font-family: 'Poppins';">Members</i></mat-card-subtitle>
           
      <div  class="aboutcard-spaceset" fxFlex="row" fxLayoutAlign="start"  style="height: 55px;" *ngFor="let data of members">
       <div class="item" style="margin-top:10px; " mat-card-avatar class="example-header-image"></div>
       <div class="item" style="margin-top:10px">
-        <button mat-button style="font-size: 13px;font-weight: 300;font-family: 'Poppins';" >{{data.split('@')[0]}}</button>
+        <button mat-button style="font-size: 14px;font-weight: 300;font-family: 'Poppins';" >{{data.split('@')[0]}}</button>
        
   </div>
 </div>
 
 </div>
 <mat-card-actions>
-  <button mat-button (click)="addMember()" style="margin-top: 30px;">Add members +</button> 
+  <button mat-button (click)="addMember()" style="margin-top: 30px;font-family: 'Poppins';font-weight: bold;">Add members +</button> 
 </mat-card-actions>
 
     </mat-card>
@@ -158,8 +160,8 @@
 
     ><mat-card>
       <div class="activity-main">
-      <select style="width: 50%;padding:10px ;border-radius:10px;" (change)="onChange($event)">
-        <option *ngFor="let single of projectsData" style="padding-right: 10px;">{{single.name}}</option>
+      <select style="width: 50%;padding:10px ;border-radius:10px;font-family: 'Poppins';" (change)="onChange($event)">
+        <option *ngFor="let single of projectsData" style="padding-right: 10px;font-family: 'Poppins';">{{single.name}}</option>
         
       </select>
       <div class="sub-activity">
@@ -174,7 +176,7 @@
       <div class="scroll-bar1" fxLayout="row">
       <div class="cirle">
      
-        <div class="left" align="center" style="margin-top:20px;" *ngFor="let single of  showDefaultFirst?.result">
+        <div class="left" align="center" style="margin-top:20px;font-family: 'Poppins';" *ngFor="let single of  showDefaultFirst?.result">
         
         <div><h5 style="color: #4675C2;font-size: 15px;">{{single.subTaskName}}</h5></div>
           <circle-progress   [percent]="single.cpPercentage" [title]="single.cpPercentage" [subtitle]="''"  [space]="-10" [radius]="60" [outerStrokeWidth]="10"
@@ -213,12 +215,12 @@
       <mat-card style="width: 240px;height: 400px;margin:10px 0px;background-color: #FAFAFA;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);">
       <div>
        <div class="scroll-bar2" fxLayout="column">
-        <span style="font-size: 15px;font-weight: bold;text-align: left;margin-bottom: 20px;margin-left: 10px;">Notifications</span>
+        <span style="font-size: 15px;font-weight: bold;text-align: left;margin-bottom: 20px;margin-left: 10px;font-family: 'Poppins';">Notifications</span>
         <div  fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities">
           <div mat-card-avatar class="example-header-image"></div>
         <div >
-          <div class="content">{{data.description}}
-            <div class="time" style="color: #BBBBBB;">{{data.time}}</div><br>
+          <div class="content" style="font-family: 'Poppins';">{{data.description}}
+            <div class="time" style="color: #BBBBBB;font-family: 'Poppins';">{{data.time}}</div><br>
           </div>
       </div><br>
 

@@ -3,17 +3,17 @@
   <mat-toolbar-row fxLayoutAlign="space-between center">
       <div style="padding: 1rem;margin-top: 110px;">
         <form [formGroup]="projectNameForm">
-          <select style="padding: 10px;width:250px;border: none;font-size: 30px;font-weight: 550;" (change)="onChangeProject($event)" formControlName="_id">
+          <select style="padding: 10px;width:300px;border: none;font-size: 30px;font-weight: 600;font-family: 'Poppins';" (change)="onChangeProject($event)" formControlName="_id">
             <option *ngFor=" let one of projectsList" [value]="one._id">
               
-        <h1 style="background-color: #2E2E2E;font-size: 200px;font-weight: 400;font-style: normal;">{{one?.projectName}}</h1></option></select>
+        <h1 style="background-color: #2E2E2E;font-size: 200px;font-weight: 400;font-style: normal;font-family: 'Poppins';">{{one?.projectName}}</h1></option></select>
       </form>
-    <span style="font-size: 10px;position: relative;bottom: 40px;left:280px"><img src=".\assets\images\ontrack.svg">&nbsp;  On Track</span></div>
+    <span style="font-size: 10px;position: relative;bottom: 40px;left:320px;font-family: 'Poppins';font-weight: bold;"><img src=".\assets\images\ontrack.svg">&nbsp;  On Track</span></div>
       <div>
-          <button mat-button style="background-color:#fff;padding: 1px 1px;width: 150px;margin-top: 50px;margin-left: 430px;position: relative;border: 1px solid #97989D;border-radius: 5px;color: #97989D;" [routerLink]="['/add-project']">Add Project +  </button>
+          <button mat-button style="background-color:#fff;padding: 1px 1px;width: 150px;margin-top: 50px;margin-left: 430px;position: relative;border: 1px solid #97989D;border-radius: 5px;color: #97989D;font-family: 'Poppins';" [routerLink]="['/add-project']">Add Project +  </button>
           </div>&nbsp;&nbsp;&nbsp;
           <div>
-          <button  mat-button style="background-color:#fff;padding: 1px 1px;width: 150px;margin-left: -30px;margin-top: 50px;border: 1px solid #97989D;border-radius: 5px;color: #97989D;"> <mat-icon style="font-size: medium;position: relative;right:-10px;">group_add</mat-icon>
+          <button  mat-button style="background-color:#fff;padding: 1px 1px;width: 150px;margin-left: -30px;margin-top: 50px;border: 1px solid #97989D;border-radius: 5px;color: #97989D;font-family: 'Poppins';"> <mat-icon style="font-size: medium;position: relative;right:-10px;">group_add</mat-icon>
               Add Member </button>
               
 <button mat-button [matMenuTriggerFor]="menu" ><mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" style="margin-left:-10px">notifications</mat-icon></button>
@@ -68,7 +68,7 @@
     </div><br>
    
 <div style="background-color: #fff !important;margin-top: 20px;margin-left: 50px;">
-  <h3>Project progress monitoring sheets(PPMS)</h3>
+  <h3 style="font-family: 'Poppins';">Project progress monitoring sheets(PPMS)</h3>
 </div>
 
 <body >
@@ -102,7 +102,11 @@
    
     <tbody *ngFor= " let project of projectsData ">
         <tr  style="color:#233A61 !important;font-weight: bolder ;">
-            <td><div style="display: flex;align-items: center;padding: 6px 5px;"><div style="width:120px">{{project.name}} </div> <mat-icon [routerLink]="['/add-project',projectId]" style="margin-left: 70px;" >add</mat-icon></div></td>
+            <td><div style="display: flex;align-items: center;padding: 6px 5px;">
+              <div style="width:120px">{{project.name}} </div> 
+              <mat-icon [routerLink]="['/add-project',projectId]" style="margin-left: 80px;margin-top: 10px;" >add</mat-icon>
+              <mat-icon style="margin-left: -5px;margin-top: 10px;">delete</mat-icon>
+            </div></td>
             <td ></td>
             <td ></td>
             <td ></td>
@@ -127,7 +131,13 @@
         
         <tr *ngFor="let subTask of project.result" style="font-size: 10px;" >
 
-          <td style="color:#595b5d;"> <div style="display: flex;flex-direction: row;align-items: center;padding: 6px 5px;" > <mat-icon (click)="addData(subTask)">edit</mat-icon><div style="width: 200px;">{{subTask.subTaskName}}</div></div></td>
+          <td style="color:#595b5d;"> 
+            <div style="display: flex;flex-direction: row;align-items: center;padding: 6px 5px;" >
+               <mat-icon (click)="addData(subTask)">edit</mat-icon>
+               <!-- <mat-icon style="margin-left: -15px;">delete</mat-icon> -->
+            <div style="width: 200px;">{{subTask.subTaskName}}</div>
+            <mat-icon style="margin-left: -5px;margin-top: 10px;">delete</mat-icon>
+          </div></td>
           <td >{{subTask?.r1EndDate | date}}</td>
           <td >{{subTask?.r2EndDate | date}}</td>
           <td >{{subTask?.r3EndDate | date}}</td>

@@ -1,9 +1,9 @@
 <mat-toolbar style="background-color: #fff;">
     <mat-toolbar-row fxLayoutAlign="space-between center">
         <div style="padding: 1rem;margin-top: 60px;">
-        <span style="color: #1E293B;font-size: 30px;font-weight: 500;">Pragati Infra</span></div>
+        <span style="color: #1E293B;font-size: 30px;font-weight: 600;font-family: 'Poppins';">Pragati Infra</span></div>
         <div style="margin-right: 20px;">
-            <button style="padding: 10px 10px;width: 150px;margin-top: 60px;background-color: #fff;cursor: pointer;border: 1px solid #97989D;border-radius: 5px;color: #97989D;" [routerLink]="['/add-project']">  Add Project +  </button>
+            <button style="padding: 10px 10px;width: 150px;margin-top: 60px;background-color: #fff;cursor: pointer;border: 1px solid #97989D;border-radius: 5px;color: #97989D;font-family: 'Poppins';" [routerLink]="['/add-project']">  Add Project +  </button>
             <button mat-button [matMenuTriggerFor]="menu"> <mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" >notifications</mat-icon></button>
             <mat-menu #menu="matMenu" style="width:300px;">
               <div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right"  style="height: 70vh;" >
@@ -42,7 +42,7 @@
 
   <div style="margin-left: 35px;" fxLayout="row" fxLayoutGap="100px" >
  <div style="margin-left: 35px;width:40%">
-<button mat-button style="color: #4C4D50;font-size: medium;"><u>Projects</u></button>
+<button mat-button style="color: #4C4D50;font-size: medium;font-family: 'Poppins';"><u>Projects</u></button>
 </div>
 <div>
 <form appearance="outline" class="searchbar">
@@ -63,7 +63,7 @@
         <div class="" >
           
           <div class="content1">
-            <div style="position: relative;top:120px;color: #fff ;margin-left: 20px;margin-bottom: 20px;font-weight: 600;font-size: 17px;">{{project?.projectName}}</div>
+            <div style="position: relative;top:120px;color: #fff ;margin-left: 20px;margin-bottom: 20px;font-weight: 600;font-size: 16px;">{{project?.projectName}}</div>
             <div style="color: #fff;position: relative;top:110px;right:-5px" class="hamicon">
               <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                 <mat-icon>more_vert</mat-icon>
@@ -116,7 +116,7 @@
 
     
     <div style="height: 30vh;margin-top: 5vh;width:100%">
-      <div style="margin-top: 50px;margin-left: 30px;"><h3 style="color: #1E293B;font-size: 25px;">OverView</h3></div>
+      <div style="margin-top: 50px;margin-left: 30px;"><h3 style="color: #1E293B;font-size: 25px;font-family: 'Poppins';">OverView</h3></div>
     
       <div class="container" >
         <div class="row" fxLayout="row" fxLayoutGap="50px grid" fxLayoutAlign="space-around center"   >
@@ -152,19 +152,19 @@
     <div class="scroll-bar2" fxLayout="column">
     <mat-card-header>
   
-      <mat-card-title style="color: #1E293B;font-size: 14;margin-left: -10px;"> About &nbsp;&nbsp; <i class="fa fa-edit" style="cursor: pointer;" (click)="addAboutUs()" aria-hidden="true"></i></mat-card-title>
+      <mat-card-title style="color: #1E293B;font-size: 14;margin-left: -10px;font-family: 'Poppins';font-weight: bold;"> About &nbsp;&nbsp; <i class="fa fa-edit" style="cursor: pointer;" (click)="addAboutUs()" aria-hidden="true"></i></mat-card-title>
   
     </mat-card-header>
 
     <mat-card-content >
-      <p>{{aboutUs?.description}}</p></mat-card-content>
+      <p style="font-family: Poppins;font-size: 14px;">{{aboutUs?.description}}</p></mat-card-content>
      
-      <mat-card-subtitle><i style="color: #1E293B;">Members</i></mat-card-subtitle>
+      <mat-card-subtitle><i style="color: #1E293B;font-family: 'Poppins';">Members</i></mat-card-subtitle>
 
       <div class="aboutcard-spaceset" fxFlex="row" fxLayoutAlign="start"  style="height: 55px;" *ngFor="let mem of members">
       <div style="margin-top:10px" mat-card-avatar class="example-header-image"></div>
       <div  style="margin-top:10px">
-      <button mat-button style="font-size: 13px;font-weight: 300;font-family: 'Poppins';">{{mem.split('@')[0]}}</button> 
+      <button mat-button style="font-size: 14px;font-weight: 300;font-family: 'Poppins';">{{mem.split('@')[0]}}</button> 
     </div>
   
   </div>
@@ -179,7 +179,7 @@
   
   </div>
   <mat-card-actions style="margin-top: 20px;">
-    <button mat-button (click)="addMember()" >Add members +</button> 
+    <button mat-button (click)="addMember()" style="font-family: 'Poppins';font-weight: bold;">Add members +</button> 
   </mat-card-actions>
   </mat-card>
 
@@ -197,12 +197,12 @@
   <div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right"  style="height: 70vh;" >
     <mat-card fxLayout="row" fxLayoutAlign="left" style="height: 70vh;background-color: #FAFAFA;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);">
       <div class="scroll-bar1" fxLayout="column">
-        <span style="font-size: 15px;font-weight: bold;text-align: left;margin-bottom: 20px;margin-left: 10px;">Notifications</span>
+        <span style="font-size: 15px;font-weight: bold;text-align: left;margin-bottom: 20px;margin-left: 10px;font-family: 'Poppins';">Notifications</span>
         <div  fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
           <div mat-card-avatar class="example-header-image"></div>
           <div style="margin-left: 10px;">
             <div class="content">{{data.description}}
-              <div class="time" style="color: #BBBBBB;">{{data.time}}</div><br>
+              <div class="time" style="color: #BBBBBB;font-family: 'Poppins';">{{data.time}}</div><br>
             </div>
         </div>
       
