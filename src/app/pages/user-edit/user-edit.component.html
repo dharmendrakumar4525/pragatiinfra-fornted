@@ -52,6 +52,14 @@
             </mat-error>
           </mat-form-field><br>
 
+          <mat-form-field appearance="outline">
+            <mat-label>Enter Password</mat-label>
+            <input matInput type="password" formControlName="password">
+            <!-- <mat-error *ngIf="password.invalid && ( password.dirty || password.touched )">
+              <span>Please provide a valid password</span>
+            </mat-error> -->
+          </mat-form-field><br>
+
        
 
             <button mat-button (click)="updateUser()">Submit</button>

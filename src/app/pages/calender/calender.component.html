@@ -233,7 +233,7 @@
                   <td>
                     <form role="form" (submit)="remarksData($event, subTask, remark.value,subTask._id)">
                     <textarea type="text" [readonly]="!remarksPermissions?.isSelected" style="border: none;padding: 10px 10px;width:350px;font-family: 'Poppins';" #remark  name="remarkValue"></textarea>
-                    <button  style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;bottom:20px;left:20px ">Add</button>
+                    <button style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;bottom:20px;left:20px ">Add</button>
                   </form>
                   </td>
                 </tr>
@@ -257,7 +257,7 @@
         <mat-grid-tile >
             <mat-card style="width: 250px;height: 350px;margin:10px 0px">
             <div class = "calendar-wrapper" style="height: 200px;">
-                <mat-calendar #calendar [(selected)]="selectedDate" >
+                <mat-calendar #calendar [(selected)]="selectedDate" (selectedChange)="onSelectDate($event)">
                 </mat-calendar>
                 </div>
                 </mat-card>

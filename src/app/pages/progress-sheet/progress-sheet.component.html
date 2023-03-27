@@ -105,7 +105,7 @@
             <td><div style="display: flex;align-items: center;padding: 6px 5px;">
               <div style="width:120px">{{project.name}} </div> 
               <mat-icon [routerLink]="['/add-project',projectId]" style="margin-left: 80px;margin-top: 10px;" >add</mat-icon>
-              <mat-icon style="margin-left: -5px;margin-top: 10px;">delete</mat-icon>
+              <mat-icon style="margin-left: -5px;margin-top: 10px;"  (click)="deleteTask(project)" >delete</mat-icon>
             </div></td>
             <td ></td>
             <td ></td>
@@ -136,7 +136,7 @@
                <mat-icon (click)="addData(subTask)">edit</mat-icon>
                <!-- <mat-icon style="margin-left: -15px;">delete</mat-icon> -->
             <div style="width: 200px;">{{subTask.subTaskName}}</div>
-            <mat-icon style="margin-left: -5px;margin-top: 10px;">delete</mat-icon>
+            <mat-icon style="margin-left: -5px;margin-top: 10px;" (click)="delete(subTask)">delete</mat-icon>
           </div></td>
           <td >{{subTask?.r1EndDate | date}}</td>
           <td >{{subTask?.r2EndDate | date}}</td>

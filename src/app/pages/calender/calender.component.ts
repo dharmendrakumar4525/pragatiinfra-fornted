@@ -326,6 +326,11 @@ remarksPermissions:any;
   }
 
   onBid(e,player,value,id) {
+
+    if(player.total <= 0 ){
+      this.toast.openSnackBar('Please add total in progress sheet');
+      return;
+    }
     
     if(!this.calenderPermissions?.isSelected){
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
@@ -474,5 +479,15 @@ remarksData(e,player,remark,id){
       }
   
     )
+}
+
+onSelectDate(event){
+  //this.showCalData = true
+  console.log(event)
+  this.valueAddedDate = event
+  this.getWeekName = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][new Date(this.valueAddedDate).getDay()]
+  this.getMonth = new Date(this.valueAddedDate).toLocaleString('default', { month: 'short' });
+  this.getYear = new Date(this.valueAddedDate).getFullYear()
+  this.getDay = new Date(this.valueAddedDate).getDate()
 }
 }

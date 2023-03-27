@@ -17,7 +17,7 @@ export class UserEditComponent implements OnInit {
   emailRegex = new RegExp(
     /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
   );
-  roles:any;
+  roles:any
   user:any;
   phoneRegex = new RegExp(/^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/);
   constructor( private activeRoute: ActivatedRoute,private _fb: FormBuilder,private router: Router,private userService:UsersService,private toast:ToastService, private roleService:RolesService) { }
@@ -30,7 +30,12 @@ export class UserEditComponent implements OnInit {
       this.userService.getUserById(params.id).subscribe(data=>{
         this.user = data
 
-        this.editUserForm.patchValue(this.user)
+        this.editUserForm.patchValue({
+          name:this.user.name,
+            email:this.user.email,
+            role:this.user.role,
+            phone:this.user.phone,
+        })
 
     console.log(this.user)
     })
@@ -47,6 +52,7 @@ export class UserEditComponent implements OnInit {
       email: [null, [Validators.required, Validators.pattern(this.emailRegex)]],
       phone: [null, [Validators.required, Validators.pattern(this.phoneRegex)]],
       role: [null, [Validators.required]],
+      password: [null]
       
 
       

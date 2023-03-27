@@ -26,7 +26,7 @@ export class UsersService {
   }
   getUserss(): Observable<any> {
     
-    return this.http.get(`${environment.aws_connection}/users`).pipe(
+    return this.http.get(`${environment.local_connection}/users`).pipe(
       catchError(this.handleError)
     );
   }
@@ -35,13 +35,13 @@ export class UsersService {
 
   addUser(user:any): Observable<any> {
     
-    return this.http.post(`${environment.aws_connection}/users/register`, user).pipe(
+    return this.http.post(`${environment.local_connection}/users/register`, user).pipe(
       catchError(this.handleError)
     );
   }
 
   loginWithEmailPassword(login) : Observable<any> {
-    return this.http.post(`${environment.aws_connection}/users/login`, login).pipe(
+    return this.http.post(`${environment.local_connection}/users/login`, login).pipe(
       catchError(this.handleError)
     );
 
@@ -49,14 +49,14 @@ export class UsersService {
 
   addMemberData(membersData:any,id): Observable<any> {
     let members= {members:membersData}
-    return this.http.put(`${environment.aws_connection}/projects/members/${id}`, members).pipe(
+    return this.http.put(`${environment.local_connection}/projects/members/${id}`, members).pipe(
       catchError(this.handleError)
     );
   }
 
   editUser(user:any,id): Observable<any> {
     
-    return this.http.put(`${environment.aws_connection}/users/${id}`, user).pipe(
+    return this.http.put(`${environment.local_connection}/users/${id}`, user).pipe(
       catchError(this.handleError)
     );
   }
@@ -92,20 +92,22 @@ export class UsersService {
       },
     };
     //let deleteMultipleUsers = {selUsers:userIds}
-    return this.http.delete(`${environment.aws_connection}/users`, options).pipe(
+    return this.http.delete(`${environment.local_connection}/users`, options).pipe(
       catchError(this.handleError)
     );
   }
   deleteUser(id:any): Observable<any> {
     
-    return this.http.delete(`${environment.aws_connection}/users/${id}`).pipe(
+    return this.http.delete(`${environment.local_connection}/users/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
+
+
   getUserById(id): Observable<any> {
     
-    return this.http.get(`${environment.aws_connection}/users/${id}`).pipe(
+    return this.http.get(`${environment.local_connection}/users/${id}`).pipe(
       catchError(this.handleError)
     );
   }

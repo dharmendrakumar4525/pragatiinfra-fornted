@@ -34,6 +34,14 @@ export class AddDataComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if(this.data.addRevisesDates){
+      this.data.addRevisesDates.forEach(single=>{
+           this.plusBlocks();
+       })
+   } else {
+     this.plusBlocks();
+   }
+    this.itemForm.patchValue(this.data)
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     console.log(this.permissions)
     if(this.permissions.user.role === 'superadmin'){
@@ -135,7 +143,7 @@ export class AddDataComponent implements OnInit {
   
     console.log(this.itemForm.value)
     var oneDaybaseLine=1000 * 60 * 60 * 24;
-    var difference_msbaseLine = Math.abs(this.itemForm.value.baseLineEndDate.getTime() - this.itemForm.value.baseLineStartDate.getTime())
+    var difference_msbaseLine = Math.abs(new Date(this.itemForm.value.baseLineEndDate).getTime() - new Date(this.itemForm.value.baseLineStartDate).getTime())
     var diffValuebaseLine = Math.round(difference_msbaseLine / oneDaybaseLine);
     //console.log(diffValue)
     let baseLineWorkingDays = diffValuebaseLine + 1

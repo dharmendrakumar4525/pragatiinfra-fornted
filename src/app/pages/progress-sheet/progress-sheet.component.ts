@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import { FormControl, FormArray, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AddProjectService } from 'src/app/services/add-project.service';
 import { AddRemarksComponent } from '../add-remarks/add-remarks.component';
+import { ToastService } from 'src/app/services/toast.service';
 
 export interface PeriodicElement {
   Description: string;
@@ -184,7 +185,7 @@ export class ProgressSheetComponent implements OnInit {
    recentActivities:any
    projectsList:any;
    remarksPermissions:any;
-  constructor(private activeRoute: ActivatedRoute,private router:Router, private projectService:AddProjectService, private _fb: FormBuilder, private recentActivityService:RecentActivityService, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private taskService:TaskService,public dialog: MatDialog) { }
+  constructor(private activeRoute: ActivatedRoute, private toast : ToastService, private router:Router, private projectService:AddProjectService, private _fb: FormBuilder, private recentActivityService:RecentActivityService, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private taskService:TaskService,public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
@@ -324,13 +325,103 @@ export class ProgressSheetComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(AddRemarksComponent, {
        width: '500px',
-       data: subTask.remarks
+       data: {reDate:subTask.remarks, id:subTask._id}
     });
 
     // dialogRef.afterClosed().subscribe(result => {
     //   console.log('The dialog was closed');
     //   // this.animal = result;
     // });
+  }
+
+
+
+  delete(subTask){
+    this.progressSheetService.deleteSubTask(subTask._id).subscribe(
+  
+      {
+        next: (data: any) =>  {
+          console.log(data)
+          this.toast.openSnackBar("sub activity deleted Successfully");
+
+          this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data=>{
+            this.activesData = data
+        console.log(this.activesData)
+        this.activesData.forEach(obj => {
+          //this.grandTotal += obj['discAmount'];
+          //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
+          //console.log(this.grandTotal);
+          const arr = this.projectsData.filter(ele => ele['name'] === obj['taskName']);
+          if (arr.length === 0) {
+            this.projectsData.push(
+              { 'name': obj['taskName'] });
+          }
+      });
+
+      this.projectsData.forEach(obj => {
+          const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
+          obj['result'] = uniqData;
+          
+        });
+        console.log(this.projectsData);
+
+      
+
+        })
+          // this.userService.getUserss().subscribe(data=>{
+          //   //this.spinner.hide()
+          //   this.users = data
+          //   this.usersLen = this.users.length
+          //   this.dataSource = new MatTableDataSource(this.users);
+          //   this.dataSource.paginator = this.paginator;
+          //   //console.log(this.roles)
+          // })
+          
+        },
+        error: (err) => {
+          this.toast.openSnackBar("Something went wrong. Unable to delete SubActivity");
+          
+  
+          
+  
+        }
+      }
+  
+    )
+  }
+
+  deleteTask(task){
+    this.progressSheetService.deleteTaskName(task.name).subscribe(
+  
+      {
+        next: (data: any) =>  {
+          console.log(data)
+          this.toast.openSnackBar("activity deleted Successfully");
+          window.location.reload();
+          // this.router.routeReuseStrategy.shouldReuseRoute = () => false
+          // this.router.navigate([this.router.url])
+
+          
+          // this.userService.getUserss().subscribe(data=>{
+          //   //this.spinner.hide()
+          //   this.users = data
+          //   this.usersLen = this.users.length
+          //   this.dataSource = new MatTableDataSource(this.users);
+          //   this.dataSource.paginator = this.paginator;
+          //   //console.log(this.roles)
+          // })
+          
+        },
+        error: (err) => {
+          this.toast.openSnackBar("Something went wrong. Unable to delete Activity");
+          
+  
+          
+  
+        }
+      }
+  
+    )
   }
 }
 
