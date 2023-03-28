@@ -18,7 +18,7 @@
               
 <button mat-button [matMenuTriggerFor]="menu" ><mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" style="margin-left:-10px">notifications</mat-icon></button>
 <mat-menu #menu="matMenu">
-  <div>
+  <div style="height: 450px;margin-top: 20px;">
   <div class="scroll-bar2" fxLayout="column">
     <div fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
       <div mat-card-avatar class="example-header-image"></div>
@@ -102,10 +102,13 @@
    
     <tbody *ngFor= " let project of projectsData ">
         <tr  style="color:#233A61 !important;font-weight: bolder ;">
-            <td><div style="display: flex;align-items: center;padding: 6px 5px;">
-              <div style="width:120px">{{project.name}} </div> 
-              <mat-icon [routerLink]="['/add-project',projectId]" style="margin-left: 80px;margin-top: 10px;" >add</mat-icon>
-              <mat-icon style="margin-left: -5px;margin-top: 10px;"  (click)="deleteTask(project)" >delete</mat-icon>
+            <td><div class="activityalign">
+              <div style="width:120px;">{{project.name}} </div> 
+              <div>
+                <mat-icon [routerLink]="['/add-project',projectId]" style="margin-top: 10px;" >add</mat-icon>
+              <mat-icon style="margin-top: 10px;"  (click)="deleteTask(project)" >delete</mat-icon>
+              </div>
+              
             </div></td>
             <td ></td>
             <td ></td>
@@ -132,7 +135,7 @@
         <tr *ngFor="let subTask of project.result" style="font-size: 10px;" >
 
           <td style="color:#595b5d;"> 
-            <div style="display: flex;flex-direction: row;align-items: center;padding: 6px 5px;" >
+            <div class="descriptionalign">
                <mat-icon (click)="addData(subTask)">edit</mat-icon>
                <!-- <mat-icon style="margin-left: -15px;">delete</mat-icon> -->
             <div style="width: 200px;">{{subTask.subTaskName}}</div>

@@ -13,7 +13,7 @@ li {
   }
   .toptext{
     display: flex;
-    margin-left: 10px;
+    margin-left: 50px;
     background-color: #fff !important;
     font-family: 'Poppins';
   }

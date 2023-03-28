@@ -10,3 +10,8 @@ form{
 ng-select{
     width: 200px;
 }
+.Actual-align{
+    display: flex;
+    align-items:center;
+    justify-content: space-around;
+}

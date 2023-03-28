@@ -73,7 +73,7 @@
   td {
     
     border: 1px solid #94A3B8;
-    text-align: left;
+    text-align: center;
     padding: 4px;
     color: #233A61;
     font-style: normal;
@@ -86,6 +86,20 @@
   }
   tr:nth-child(even) {
     background-color: #F4F4F5 !important;
+  }
+  .descriptionalign{
+    display: flex !important;
+    align-items: center !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+  
+    
+  }
+  .activityalign{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px !important;
   }
 
   .example-card{
@@ -126,9 +140,10 @@ background: lightblue;
 
 ::ng-deep.mat-menu-panel {
   max-width: none !important;
+  margin-right: 20px;
 }
 .notification-container{
- width: 400px;
+ width: 500px;
  margin-top: 10px;
 
 } 
@@ -137,7 +152,7 @@ background: lightblue;
 .scroll-bar2{
         
    
-  height: 500px;
+  height: 400px;
   width:93%;
   margin-left: 20px;
   overflow: auto;

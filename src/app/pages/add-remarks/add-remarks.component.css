@@ -1,20 +1,27 @@
 .card{
     width:350px;
-    height: 200px;
+    height: 400px;
 }
 
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 100%;
+    width: 120%;
+    border: 1px solid #dddddd;
+  }
+  th{
+    background-color: #233A61;
+    color: #fff;
+    width:100px;
   }
   
   td, th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
+   
   }
   
   tr:nth-child(even) {
-    background-color: #dddddd;
+    background-color: #F4F4F5;
   }
