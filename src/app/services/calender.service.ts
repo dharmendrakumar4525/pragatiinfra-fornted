@@ -19,6 +19,14 @@ export class CalenderService {
     );
   }
 
+  cumutaleTotalUpdate(subActivity:any,id): Observable<any> {
+    
+    return this.http.put(`${environment.local_connection}/subTasks/dailyTotalUpdate/update/${id}`, subActivity).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+
   addRemarks(subActivity:any,id): Observable<any> {
     
     return this.http.put(`${environment.local_connection}/subTasks/remarks/${id}`, subActivity).pipe(

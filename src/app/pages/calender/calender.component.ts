@@ -1,4 +1,4 @@
- import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormArray, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CalenderService } from 'src/app/services/calender.service';
@@ -31,6 +31,7 @@ export class CalenderComponent implements OnInit {
   };
 
   remarkValue = ''
+  dateForTotal:any;
   // calendarPlugins = [dayGridPlugin];
 
   // handleDateClick(arg) { // handler method
@@ -200,7 +201,7 @@ export class CalenderComponent implements OnInit {
 //             "_id": "63c6aa45a1593c88fae7b0a1",
 //             "subTaskName": "tiebeam",
 //             "taskId": "63be66c7e2063a320960a7ec",
-//             "__v": 0
+//co             "__v": 0
 //         }
 //     ]
 // }
@@ -315,6 +316,7 @@ remarksPermissions:any;
     this.getMonth = new Date(this.valueAddedDate).toLocaleString('default', { month: 'short' });
     this.getYear = new Date(this.valueAddedDate).getFullYear()
     this.getDay = new Date(this.valueAddedDate).getDate()
+    this.dateForTotal = moment(this.valueAddedDate).format('D MMM, YYYY')
   }
 
   dateClass() {
@@ -327,9 +329,26 @@ remarksPermissions:any;
 
   onBid(e,player,value,id) {
 
+    console.log(player)
+
     if(player.total <= 0 ){
       this.toast.openSnackBar('Please add total in progress sheet');
       return;
+    }
+
+    if((player.dailyCumulativeTotal + Number(value)) > player.total){
+      if(player.dateStr == this.dateForTotal){
+
+        if(((player.dailyCumulativeTotal - Number(player.previousValue)) + Number(value)) > player.total){
+          this.toast.openSnackBar('Value should not be greater then total');
+      return;
+        }
+
+      }else{
+       this.toast.openSnackBar('Value should not be greater then total');
+      return;
+      }
+     
     }
     
     if(!this.calenderPermissions?.isSelected){
@@ -340,19 +359,57 @@ remarksPermissions:any;
       });
       return;
     }
+
+    let selDateForTotal = moment(this.valueAddedDate).format('D MMM, YYYY')
+    this.dateForTotal = selDateForTotal
+    //for(let one of player.remarks){
+      
+    let tDate  = moment(player.totalDate).format('D MMM, YYYY')
+    //}
+  
+    console.log(player.remarks)
+    //console.log(selDate)
+  
     player.cumTotal=value; //<-----this will add new property to your existing object with input value.
     console.log(player);
     player.addedDate = this.valueAddedDate
+    player.dateStr = selDateForTotal
     player.projectId = this.projectId
     console.log(id);
-    this.calenderService.cumutaleTotalData(player,id).subscribe(
+  
+    if(selDateForTotal == tDate){
+      this.calenderService.cumutaleTotalUpdate(player,id).subscribe(
 
         {
           next: (data: any) =>  {
             console.log(data)
            
             this.toast.openSnackBar('Data updated successfully');
-            player.value=null
+            this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data=>{
+              this.activesData = data
+          console.log(this.activesData)
+          this.activesData.forEach(obj => {
+            //this.grandTotal += obj['discAmount'];
+            //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
+            //console.log(this.grandTotal);
+            const arr = this.projectsData.filter(ele => ele['name'] === obj['taskName']);
+            if (arr.length === 0) {
+              this.projectsData.push(
+                { 'name': obj['taskName'] });
+            }
+        });
+    
+        this.projectsData.forEach(obj => {
+            const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
+            obj['result'] = uniqData;
+            
+          });
+          console.log(this.projectsData);
+    
+        
+    
+          })
+            //player.value=null
              //this.router.navigate(['/users']);
              
             
@@ -367,6 +424,59 @@ remarksPermissions:any;
         }
     
       )
+      //this.toast.openSnackBar('You already added total on this date ');
+      //return;
+    }else{
+      this.calenderService.cumutaleTotalData(player,id).subscribe(
+
+        {
+          next: (data: any) =>  {
+            console.log(data)
+           
+            this.toast.openSnackBar('Data updated successfully');
+            this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data=>{
+              this.activesData = data
+          console.log(this.activesData)
+          this.activesData.forEach(obj => {
+            //this.grandTotal += obj['discAmount'];
+            //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
+            //console.log(this.grandTotal);
+            const arr = this.projectsData.filter(ele => ele['name'] === obj['taskName']);
+            if (arr.length === 0) {
+              this.projectsData.push(
+                { 'name': obj['taskName'] });
+            }
+        });
+    
+        this.projectsData.forEach(obj => {
+            const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
+            obj['result'] = uniqData;
+            
+          });
+          console.log(this.projectsData);
+    
+        
+    
+          })
+            //player.value=null
+             //this.router.navigate(['/users']);
+             
+            
+          },
+          error: (err) => {
+            this.toast.openSnackBar("Something went wrong. Unable to Update");
+            
+    
+            
+    
+          }
+        }
+    
+      )
+    }
+
+    
+    
  }
  addAboutUs() {
   const dialogRef = this._dialog.open(AboutUsComponent, {
@@ -442,6 +552,7 @@ onChangeProject(ev){
   this.router.navigate(['/view-project/calender',ev.target.value]);
 }
 remarksData(e,player,remark,id){
+  
   if(!this.remarksPermissions?.isSelected){
     const dialogRef = this._dialog.open(NoPermissionsComponent, {
       width: '30%',
@@ -450,8 +561,28 @@ remarksData(e,player,remark,id){
     });
     return;
   }
-  let remarkObj = {remark:remark,date:this.valueAddedDate}
-  player.remarks.push(remarkObj); //<-----this will add new property to your existing object with input value.
+  var selDate = moment(this.valueAddedDate).format('D MMM, YYYY')
+  for(let one of player.remarks){
+    
+    one.dateFormat = moment(one.date).format('D MMM, YYYY')
+  }
+
+  console.log(player.remarks)
+  console.log(selDate)
+
+  let matchedData = player.remarks.filter(ele=>{
+    return ele.dateFormat == selDate
+  })
+
+  if(!matchedData.length){
+    let remarkObj = {remark:remark,date:this.valueAddedDate}
+    player.remarks.push(remarkObj);
+  }else{
+    this.toast.openSnackBar('You already added remarks on this date ');
+    return;
+  }
+
+   //<-----this will add new property to your existing object with input value.
   console.log(player);
   player.addedDate = this.valueAddedDate
   player.projectId = this.projectId
@@ -489,5 +620,10 @@ onSelectDate(event){
   this.getMonth = new Date(this.valueAddedDate).toLocaleString('default', { month: 'short' });
   this.getYear = new Date(this.valueAddedDate).getFullYear()
   this.getDay = new Date(this.valueAddedDate).getDate()
+
+  this.dateForTotal = moment(this.valueAddedDate).format('D MMM, YYYY')
+  console.log(this.dateForTotal)
+
+    //this.dateForTotal = selDateForTotal
 }
 }

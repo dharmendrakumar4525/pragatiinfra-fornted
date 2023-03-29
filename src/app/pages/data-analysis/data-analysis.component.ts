@@ -210,7 +210,7 @@ export class DataAnalysisComponent implements OnInit {
             labels: this.xAxis,
             datasets: [
               {
-                label: 'Completed Task',
+                label: 'Completed Project in (%)',
                 data: this.xReqData,
                  backgroundColor: '#267ADC',
                 borderColor: '#267ADC',
