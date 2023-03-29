@@ -158,7 +158,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
     }
 
     if(this.permissions.user.role !== 'superadmin' && this.rolePermissionsView?.isSelected){
-
+      
       this.obj = [{
         link_name: "Roles",
         link: "/roles",

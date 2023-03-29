@@ -8,11 +8,14 @@ table {
     border-collapse: collapse;
     width: 120%;
     border: 1px solid #dddddd;
+   
   }
   th{
     background-color: #233A61;
     color: #fff;
     width:100px;
+    
+ 
   }
   
   td, th {

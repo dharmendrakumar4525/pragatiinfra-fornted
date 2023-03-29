@@ -63,8 +63,8 @@
         <div class="" >
           
           <div class="content1">
-            <div style="position: relative;top:120px;color: #fff ;margin-left: 20px;margin-bottom: 20px;font-weight: 600;font-size: 16px;">{{project?.projectName}}</div>
-            <div style="color: #fff;position: relative;top:110px;right:-5px" class="hamicon">
+            <!-- <div style="position: relative;top:120px;color: #fff ;margin-left: 20px;margin-bottom: 20px;font-weight: 600;font-size: 16px;">{{project?.projectName}}</div> -->
+            <div style="color: #000;position: relative;top:170px;right:-150px" class="hamicon">
               <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                 <mat-icon>more_vert</mat-icon>
               </button>
@@ -80,8 +80,14 @@
               </mat-menu>
             </div>
           </div>
+          <div class="card">
           <img [routerLink]="['/view-project/data-analysis',project._id]"  [src]="project?.imageUrl" *ngIf="project?.imageUrl" style="box-shadow:none;width:220px;height:130px;cursor: pointer;object-fit: cover;">
           <img [routerLink]="['/view-project/data-analysis',project._id]" *ngIf="!project?.imageUrl" src="../../../assets/images/sample.png" style="box-shadow:none;width:220px;height:130px;cursor: pointer;object-fit: cover;">
+          <div class="projname">
+            <h4><b>{{project?.projectName}}</b></h4> 
+            
+          </div>
+        </div>
           <div>
           
           </div>
@@ -125,7 +131,7 @@
             <mat-card-title style="display: flex;justify-content: center;">
                    <h1 style="color: #2E2E2E;font-size: 35px;margin-top: 10px;"><b>{{card.count}}</b></h1>
                 </mat-card-title>
-                <mat-card-content  style="display: flex;justify-content: start; color: #2E2E2E;font-size: 10px;font-family: 'Poppins';font-weight: bold;">
+                <mat-card-content  style="display: flex;justify-content: center; color: #2E2E2E;font-size: 10px;font-family: 'Poppins';font-weight: bold;">
                   {{card.title}}
                 </mat-card-content>
            
@@ -133,9 +139,9 @@
             
           </div>
         </div>
-        <img src=".\assets\images\arrow.jpg" width="30px" class="arrowblue">
+        <!-- <img src=".\assets\images\arrow.jpg" width="30px" class="arrowblue">
         <img src=".\assets\images\arrowgreen.png" width="30px" class="arrowblue" >
-        <img src=".\assets\images\arrowblue.png" width="30px"  class="arrowblue">
+        <img src=".\assets\images\arrowblue.png" width="30px"  class="arrowblue"> -->
       </div>
   </div>
 
@@ -159,7 +165,7 @@
     <mat-card-content >
       <p style="font-family: Poppins;font-size: 14px;">{{aboutUs?.description}}</p></mat-card-content>
      
-      <mat-card-subtitle><i style="color: #1E293B;font-family: 'Poppins';">Members</i></mat-card-subtitle>
+      <mat-card-subtitle><i style="color: #1E293B;font-family: 'Poppins';font-weight: bold;">Members</i></mat-card-subtitle>
 
       <div class="aboutcard-spaceset" fxFlex="row" fxLayoutAlign="start"  style="height: 55px;" *ngFor="let mem of members">
       <div style="margin-top:10px" mat-card-avatar class="example-header-image"></div>

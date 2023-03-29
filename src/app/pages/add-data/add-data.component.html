@@ -20,11 +20,11 @@
         
      
           <div class="custom-form-group"  >
-              <label class="custom-label" for="" style="padding: 10px;margin-top: 100px;color: #233A61;">R{{i+1}} End Date <span class="star">*</span>
+              <label class="custom-label" for="" style="padding: 10px;margin-top: 100px;color: #233A61;font-weight: bold;">R{{i+1}} End Date <span class="star">*</span>
                 <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
               </label><br>
               <div class="custom-form-control" fxLayout="row">
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="outline" style="margin-left: 10px;">
                   <input matInput [matDatepicker]="startPicker" formControlName="revisedDate" placeholder="Enter Revised Date"
                   (click)="startPicker.open()"/>
                   <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
@@ -55,10 +55,10 @@
   </div>
     </ng-container><br><br><br>
 
-    <div class="Actual-align" style="margin-top: 30px;">
+    <div class="Actual-align" >
   
     <div class="custom-form-group">
-      <label class="custom-label" for="" style="color: #233A61;"> Actual Revised Start Date <span class="star">*</span>
+      <label class="custom-label" for="" style="color: #233A61;font-weight: bold;"> Actual Revised Start Date <span class="star">*</span>
         <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
       </label>
       <div class="custom-form-control">
@@ -77,7 +77,7 @@
       </div>
     </div>
     <div class="custom-form-group">
-      <label class="custom-label" for="" style="color: #233A61;"> Base Line Start Date <span class="star">*</span>
+      <label class="custom-label" for="" style="color: #233A61;font-weight: bold;"> Base Line Start Date <span class="star">*</span>
         <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
       </label>
       <div class="custom-form-control">
@@ -97,7 +97,7 @@
     </div>
 
     <div class="custom-form-group">
-        <label class="custom-label" for="" style="color: #233A61;"> Base Line End Date <span class="star">*</span>
+        <label class="custom-label" for="" style="color: #233A61;font-weight: bold;"> Base Line End Date <span class="star">*</span>
           <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
         </label>
         <div class="custom-form-control">
@@ -118,7 +118,7 @@
 </div>
 <div fxLayout="row" fxLayoutGap="100px">
 <div class="custom-form-group"  >
-        <label class="custom-label" for="" style="margin-left: 30px;position: relative;color: #233A61;"> UOM <span class="star">*</span>
+        <label class="custom-label" for="" style="margin-left: 30px;position: relative;color: #233A61;font-weight: bold;"> UOM <span class="star">*</span>
           <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
         </label>
         <div class="custom-form-control" style="margin-left: 30px;position: relative;">
@@ -141,7 +141,7 @@
       </div>
 
       <div class="custom-form-group">
-        <label class="custom-label" for="" style="margin-left: -10px;position: relative;color: #233A61;"> Quantity <span class="star">*</span>
+        <label class="custom-label" for="" style="margin-left: -10px;position: relative;color: #233A61;font-weight: bold;"> Quantity <span class="star">*</span>
           <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
         </label>
         <div class="custom-form-control" style="margin-left: -18px;position: relative;">
@@ -161,11 +161,11 @@
     
    <div style="display: flex;flex-direction: row;">
     <div>
-  <button mat-button (click)="AddData()" style="background-color: #233A61;color: #fff;padding: 1px 40px;margin-left: 30px;">submit</button>
+  <button mat-button (click)="AddData()" style="background-color: #233A61;color: #fff;padding: 1px 40px;margin-left: 30px;font-family: 'Poppins';">submit</button>
 </div>
 <div style="margin-left: 20px;">
   <button type="button"  class="global-btn save-btn"  (click)="plusBlocks()" style="border: 1px solid #94A3B8;border-radius: 5px;background-color: #fff;padding: 10px 10px;color:#233A61">
-    <span  > + Add Revised End Date</span>
+    <span  style="font-family: 'Poppins';"> + Add Revised End Date</span>
  </button>
 </div>
 </div>

@@ -193,3 +193,17 @@ background: lightblue;
         font-size: bold;
       }
   }
+  .card {
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
+    transition: 0.3s;
+    width: 100%;
+  }
+  
+  .card:hover {
+    /* box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); */
+    background-color:whitesmoke;
+  }
+  
+  .projname {
+    padding: 2px 16px;
+  }
