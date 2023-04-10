@@ -31,7 +31,8 @@ export class ModifyRemarksComponent implements OnInit {
   ngOnInit(): void {
     this.remarkForm.patchValue({
       remark:this.data.selectedData.remark,
-      date:this.data.selectedData.date
+      date:this.data.selectedData.date,
+      
     })
   }
 

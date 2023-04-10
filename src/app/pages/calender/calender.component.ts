@@ -16,6 +16,8 @@ import { AddProjectService } from 'src/app/services/add-project.service';
 import { AboutUsComponent } from '../about-us/about-us.component';
 import { InnerAddMemberComponent } from '../inner-add-member/inner-add-member.component';
 import { DataAnalysisService } from 'src/app/services/data-analysis.service';
+import{ MatCalendar, MatCalendarCellClassFunction } from '@angular/material/datepicker';
+
 
 
 
@@ -26,6 +28,10 @@ import { DataAnalysisService } from 'src/app/services/data-analysis.service';
   styleUrls: ['./calender.component.css']
 })
 export class CalenderComponent implements OnInit {
+  minDate = new Date(2023, 1, 1);
+  maxDate=new Date(2023, 2, 1);
+
+
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth'
   };
@@ -303,6 +309,20 @@ remarksPermissions:any;
         this.projectsList = data;
       });
   }
+  // startDate = new FormControl(new Date());
+  // endDate = new FormControl(new Date());
+  // minDate = new Date();
+  // maxDate = new Date(2050, 11,30);
+  // dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
+  //   // Only apply the class to calendar cells in the month view
+  //   if (view === 'month') {
+  //     // Check if the cell date is within the range of minDate and maxDate
+  //     if (cellDate >= this.minDate && cellDate <= this.maxDate) {
+  //       return 'valid-date'; // Apply the valid-date CSS class
+  //     }
+  //   }
+  //   return ''; // Return an empty string if the date is not in the range
+  // };
 
   backToCalender(){
     this.showCalData = false
@@ -510,6 +530,7 @@ remarksPermissions:any;
     }
   })
 }
+
 addMember(){
   if(!this.memberAddPermissions?.isSelected){
     const dialogRef = this._dialog.open(NoPermissionsComponent, {
@@ -548,6 +569,7 @@ addMember(){
     }
   })
 }
+
 onChangeProject(ev){
   this.router.navigate(['/view-project/calender',ev.target.value]);
 }

@@ -8,33 +8,33 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class TaskService {
-  //baseUrl='http://awshost:3000/api'
+  //baseUrl='http://localhost:3000/api'
   constructor(private http:HttpClient) { }
 
   getTasks(): Observable<any> {
     
-    return this.http.get(`${environment.aws_connection}/masterTasks`).pipe(
+    return this.http.get(`${environment.local_connection}/masterTasks`).pipe(
       catchError(this.handleError)
     );
   }
 
   editActivity(activity:any,id): Observable<any> {
     
-    return this.http.put(`${environment.aws_connection}/masterTasks/${id}`, activity).pipe(
+    return this.http.put(`${environment.local_connection}/masterTasks/${id}`, activity).pipe(
       catchError(this.handleError)
     );
   }
 
   getAllTasks(): Observable<any> {
     
-    return this.http.get(`${environment.aws_connection}/masterTasks/all-tasks`).pipe(
+    return this.http.get(`${environment.local_connection}/masterTasks/all-tasks`).pipe(
       catchError(this.handleError)
     );
   }
 
   deleteTask(id:any): Observable<any> {
     console.log(id)
-    return this.http.delete(`${environment.aws_connection}/masterTasks/${id}`).pipe(
+    return this.http.delete(`${environment.local_connection}/masterTasks/${id}`).pipe(
       catchError(this.handleError)
     );
   }
@@ -54,28 +54,28 @@ export class TaskService {
       },
     };
     //let deleteMultipleUsers = {selUsers:userIds}
-    return this.http.delete(`${environment.aws_connection}/masterTasks`, options).pipe(
+    return this.http.delete(`${environment.local_connection}/masterTasks`, options).pipe(
       catchError(this.handleError)
     );
   }
 
   getOnlyTasks(): Observable<any> {
     
-    return this.http.get(`${environment.aws_connection}/tasks`).pipe(
+    return this.http.get(`${environment.local_connection}/tasks`).pipe(
       catchError(this.handleError)
     );
   }
 
   addTask(task:any): Observable<any> {
     
-    return this.http.post(`${environment.aws_connection}/masterTasks`, task).pipe(
+    return this.http.post(`${environment.local_connection}/masterTasks`, task).pipe(
       catchError(this.handleError)
     );
   }
 
   addSubTask(task:any): Observable<any> {
     
-    return this.http.post(`${environment.aws_connection}/masterSubTasks`, task).pipe(
+    return this.http.post(`${environment.local_connection}/masterSubTasks`, task).pipe(
       catchError(this.handleError)
     );
   }
@@ -95,28 +95,28 @@ export class TaskService {
 
   deleteSubActivity(id:any): Observable<any> {
     
-    return this.http.delete(`${environment.aws_connection}/masterSubTasks/${id}`).pipe(
+    return this.http.delete(`${environment.local_connection}/masterSubTasks/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
   getSubActivities(): Observable<any> {
     
-    return this.http.get(`${environment.aws_connection}/masterSubTasks/all-sub-activities`).pipe(
+    return this.http.get(`${environment.local_connection}/masterSubTasks/all-sub-activities`).pipe(
       catchError(this.handleError)
     );
   }
 
   getSubActivityById(id): Observable<any> {
     
-    return this.http.get(`${environment.aws_connection}/masterSubTasks/${id}`).pipe(
+    return this.http.get(`${environment.local_connection}/masterSubTasks/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
   editSubActivity(sa:any,id): Observable<any> {
     
-    return this.http.put(`${environment.aws_connection}/masterSubTasks/${id}`, sa).pipe(
+    return this.http.put(`${environment.local_connection}/masterSubTasks/${id}`, sa).pipe(
       catchError(this.handleError)
     );
   }
@@ -124,20 +124,20 @@ export class TaskService {
   modityRemarks(remarks:any,id): Observable<any> {
     let data = {remarks:remarks}
     
-    return this.http.put(`${environment.aws_connection}/subTasks/remarkUpdate/${id}`, data).pipe(
+    return this.http.put(`${environment.local_connection}/subTasks/remarkUpdate/${id}`, data).pipe(
       catchError(this.handleError)
     );
   }
 
   getActivities(): Observable<any> {
     
-    return this.http.get(`${environment.aws_connection}/masterTasks/all-tasks`).pipe(
+    return this.http.get(`${environment.local_connection}/masterTasks/all-tasks`).pipe(
       catchError(this.handleError)
     );
   }
   addSubActibity(sa:any): Observable<any> {
     
-    return this.http.post(`${environment.aws_connection}/masterSubTasks`, sa).pipe(
+    return this.http.post(`${environment.local_connection}/masterSubTasks`, sa).pipe(
       catchError(this.handleError)
     );
   }
@@ -157,7 +157,7 @@ export class TaskService {
       },
     };
     //let deleteMultipleUsers = {selUsers:userIds}
-    return this.http.delete(`${environment.aws_connection}/masterSubTasks`, options).pipe(
+    return this.http.delete(`${environment.local_connection}/masterSubTasks`, options).pipe(
       catchError(this.handleError)
     );
   }

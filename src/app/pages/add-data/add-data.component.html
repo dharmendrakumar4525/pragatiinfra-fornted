@@ -26,7 +26,7 @@
               <div class="custom-form-control" fxLayout="row">
                 <mat-form-field appearance="outline" style="margin-left: 10px;">
                   <input matInput [matDatepicker]="startPicker" formControlName="revisedDate" placeholder="Enter Revised Date"
-                  (click)="startPicker.open()"/>
+                  (click)="startPicker.open()" [matDatepickerFilter]="myFilter" />
                   <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                   <mat-datepicker #startPicker></mat-datepicker>
                   <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
@@ -35,6 +35,7 @@
                 </mat-form-field>
                 
               </div>
+              
               <div style="margin-bottom: -50px;">
                 <button type="button" mat-button class="global-btn save-btn" (click)="minusBlocks(i)">
                   <span style="margin-top: -50px;color: #233A61;"> - Remove </span>
@@ -63,8 +64,8 @@
       </label>
       <div class="custom-form-control">
         <mat-form-field appearance="outline">
-          <input matInput [matDatepicker]="actualRevisedStartDate" formControlName="actualRevisedStartDate" placeholder="Enter actual Revised Start Date"
-          (click)="actualRevisedStartDate.open()"/>
+          <input matInput [matDatepicker]="actualRevisedStartDate" formControlName="actualRevisedStartDate" placeholder="Enter actual Revised Date"
+          (click)="actualRevisedStartDate.open()" [min]="minToDate" [max]="maxToDate"  (dateInput)="toDateChange('input', $event)"/>
           <mat-datepicker-toggle matSuffix [for]="actualRevisedStartDate"></mat-datepicker-toggle>
           <mat-datepicker #actualRevisedStartDate></mat-datepicker>
           <!-- <mat-error *ngIf="actualRevisedStartDate.invalid">
@@ -82,10 +83,12 @@
       </label>
       <div class="custom-form-control">
         <mat-form-field appearance="outline">
-          <input matInput [matDatepicker]="baseLineStartDate" formControlName="baseLineStartDate" placeholder="Enter base Line Start Date"
-          (click)="baseLineStartDate.open()"/>
+          <input  matInput [matDatepicker]="baseLineStartDate" formControlName="baseLineStartDate" placeholder="Enter base Line Start Date"
+          (click)="baseLineStartDate.open()"  [min]="minFromDate" (dateInput)="fromDateChange('input', $event)"  />
+  
           <mat-datepicker-toggle matSuffix [for]="baseLineStartDate"></mat-datepicker-toggle>
           <mat-datepicker #baseLineStartDate></mat-datepicker>
+          
           <!-- <mat-error *ngIf="baseLineStartDate.invalid && ( baseLineStartDate.dirty || baseLineStartDate.touched )">
             <span>Please provide a valid Base Line Start Date</span>
           </mat-error> -->
@@ -102,8 +105,8 @@
         </label>
         <div class="custom-form-control">
           <mat-form-field appearance="outline">
-            <input matInput [matDatepicker]="baseLineEndDate" formControlName="baseLineEndDate" placeholder="Enter base Line End Date"
-            (click)="baseLineEndDate.open()"/>
+            <input  matInput [matDatepicker]="baseLineEndDate" formControlName="baseLineEndDate" placeholder="Enter base Line End Date"
+            (click)="baseLineEndDate.open()"  [min]="minToDate" [max]="maxToDate"  (dateInput)="toDateChange('input', $event)" />
             <mat-datepicker-toggle matSuffix [for]="baseLineEndDate"></mat-datepicker-toggle>
             <mat-datepicker #baseLineEndDate></mat-datepicker>
             <!-- <mat-error *ngIf="baseLineEndDate.invalid && ( baseLineEndDate.dirty || baseLineEndDate.touched )">

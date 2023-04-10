@@ -4,6 +4,8 @@ import { TaskService } from 'src/app/services/task.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl, NgForm, FormArray } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
 import { ProgressSheetService } from '../../services/progress-sheet.service';
+import { FormControl } from '@angular/forms';
+import { MatDatepickerInputEvent } from "@angular/material/datepicker";
 
 @Component({
   selector: 'app-add-data',
@@ -11,6 +13,16 @@ import { ProgressSheetService } from '../../services/progress-sheet.service';
   styleUrls: ['./add-data.component.css']
 })
 export class AddDataComponent implements OnInit {
+  minFromDate: Date;
+  maxFromDate: Date | null;
+  minToDate: Date | null;
+  maxToDate: Date;
+
+  yesterday = new Date();
+  tommorrow = new Date();
+  
+  // startDate = new FormControl(new Date(2023, 3, 1));
+  // endDate = new FormControl(new Date());
 
   itemForm: FormGroup = this._fb.group({
     actualRevisedStartDate:[null, [Validators.required]],
@@ -23,6 +35,7 @@ export class AddDataComponent implements OnInit {
   });
   uomData = ['Bag','Sq.m.','Cu.m.','Litre','No.','Kg','g','Quintal','meters','c.m.']
   permissions :any;
+  // baseStartDate:any;
   constructor(
     private dialogRef: MatDialogRef<AddDataComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -31,8 +44,47 @@ export class AddDataComponent implements OnInit {
     private toast: ToastService,
     private progressSheetService:ProgressSheetService
    // private toast: ToastService
-  ) { }
+  ) {
+    this.minFromDate = new Date();
+    this.maxFromDate = new Date();
 
+    this.minToDate = new Date();
+    this.maxToDate = new Date();
+
+    this.yesterday.setDate(this.yesterday.getDate() - 0);
+  }
+  myFilter = (d: Date ): boolean => {
+    const today = new Date(this.maxFromDate);
+    // return true if the selected date is greater than or equal to today
+    return d > today;
+    
+  }
+
+  fromDateChange(type: string, event: MatDatepickerInputEvent<Date>) {
+    // console.log(`${type}: ${event.value}`);
+    this.minToDate = event.value;
+
+    if (event.value !== null) {
+      this.maxToDate = new Date(
+        event!.value.getFullYear(),
+        event!.value.getMonth(),
+        event!.value.getDate() + 1000
+      );
+    }
+  }
+
+  toDateChange(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.maxFromDate = event.value;
+
+    if (event.value !== null) {
+      this.minFromDate = new Date(
+        event!.value.getFullYear(),
+        event!.value.getMonth(),
+        event!.value.getDate() - 100
+      );
+    }
+  }
+ 
   ngOnInit(): void {
     if(this.data.addRevisesDates){
       this.data.addRevisesDates.forEach(single=>{
@@ -43,7 +95,7 @@ export class AddDataComponent implements OnInit {
    }
     this.itemForm.patchValue(this.data)
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
-    console.log(this.permissions)
+    // console.log(this.permissions)
     if(this.permissions.user.role === 'superadmin'){
     this.itemForm.get('actualRevisedStartDate').clearValidators()
     this.itemForm.updateValueAndValidity()
@@ -69,6 +121,9 @@ export class AddDataComponent implements OnInit {
       revisedDate: [null]
     })
   }
+  // setStartDate(){
+  //   this.baseStartDate = this.itemForm.get('baseLineStartDate').value;
+  // }
 
 
   get actualRevisedStartDate(): AbstractControl {
@@ -129,34 +184,35 @@ export class AddDataComponent implements OnInit {
 
    
     let workingDaysRevised ;
-    console.log(this.itemForm.value)
+    // console.log(this.itemForm.value)
 
-    if(this.permissions.user.role != 'superadmin'){
+   
       var oneDay=1000 * 60 * 60 * 24;
+      console.log(oneDay);
       var difference_ms = Math.abs(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate.getTime() - this.itemForm.value.actualRevisedStartDate.getTime())
       var diffValue = Math.round(difference_ms / oneDay);
       //console.log(diffValue)
        workingDaysRevised = diffValue + 1
-    }else{
-      workingDaysRevised = null
-    }
+   
+     
+    
   
-    console.log(this.itemForm.value)
+    // console.log(this.itemForm.value)
     var oneDaybaseLine=1000 * 60 * 60 * 24;
     var difference_msbaseLine = Math.abs(new Date(this.itemForm.value.baseLineEndDate).getTime() - new Date(this.itemForm.value.baseLineStartDate).getTime())
     var diffValuebaseLine = Math.round(difference_msbaseLine / oneDaybaseLine);
     //console.log(diffValue)
     let baseLineWorkingDays = diffValuebaseLine + 1
     let noofDaysBalanceasperrevisedEnddate;
-    if(this.permissions.user.role != 'superadmin'){
+   
       var oneDaynoofDaysBalanc=1000 * 60 * 60 * 24;
       var difference_msnoofDaysBalance = Math.abs(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate.getTime() - new Date().getTime())
       var diffValuenoofDaysBalance = Math.round(difference_msnoofDaysBalance / oneDaynoofDaysBalanc);
       //console.log(diffValue)
        noofDaysBalanceasperrevisedEnddate = diffValuenoofDaysBalance + 1
   
-    }
-    console.log(this.itemForm.value)
+  
+    // console.log(this.itemForm.value)
    
    let dailyAskingRateasperRevisedEndDate = Math.ceil(this.itemForm.value.total/workingDaysRevised)
    console.log(dailyAskingRateasperRevisedEndDate)
@@ -186,7 +242,7 @@ export class AddDataComponent implements OnInit {
 
       {
         next: (data: any) =>  {
-          console.log(data)
+          // console.log(data)
           this.toast.openSnackBar("Activity Data Added Successfully");
       this.closeDialog('yes');
           // this.spinner.hide()

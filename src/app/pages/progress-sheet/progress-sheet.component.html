@@ -5,15 +5,15 @@
         <form [formGroup]="projectNameForm">
           <select style="padding: 10px;width:300px;border: none;font-size: 30px;font-weight: 600;font-family: 'Poppins';" (change)="onChangeProject($event)" formControlName="_id">
             <option *ngFor=" let one of projectsList" [value]="one._id">
-              
+              <!-- <span >{{one?.projectName}}</span></option></select>   -->
         <h1 style="background-color: #2E2E2E;font-size: 200px;font-weight: 400;font-style: normal;font-family: 'Poppins';">{{one?.projectName}}</h1></option></select>
       </form>
     <span style="font-size: 10px;position: relative;bottom: 40px;left:320px;font-family: 'Poppins';font-weight: bold;"><img src=".\assets\images\ontrack.svg">&nbsp;  On Track</span></div>
       <div>
           <button mat-button style="background-color:#fff;padding: 1px 1px;width: 150px;margin-top: 50px;margin-left: 430px;position: relative;border: 1px solid #97989D;border-radius: 5px;color: #97989D;font-family: 'Poppins';" [routerLink]="['/add-project']">Add Project +  </button>
-          </div>&nbsp;&nbsp;&nbsp;
+          </div>
           <div>
-          <button  mat-button style="background-color:#fff;padding: 1px 1px;width: 150px;margin-left: -30px;margin-top: 50px;border: 1px solid #97989D;border-radius: 5px;color: #97989D;font-family: 'Poppins';"> <mat-icon style="font-size: medium;position: relative;right:-10px;">group_add</mat-icon>
+          <button  mat-button style="background-color:#fff;padding: 1px 1px;width: 150px;margin-top: 50px;border: 1px solid #97989D;border-radius: 5px;color: #97989D;font-family: 'Poppins';" (click)="addMember()"> <mat-icon style="font-size: medium;position: relative;right:-10px;">group_add</mat-icon>
               Add Member </button>
               
 <button mat-button [matMenuTriggerFor]="menu" ><mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" style="margin-left:-10px">notifications</mat-icon></button>
@@ -63,9 +63,15 @@
         <li><a style="color: #000;" [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"
            ><i class="fa fa-edit" aria-hidden="true" style="color:#97989D;"></i><span style="color:#97989D;">&nbsp;Calender</span></a></li>
       </ul>
-      
-    
-    </div><br>
+   </div>
+   <div>
+    <input list="browsers" name="myBrowser" placeholder="Calendar History"  style="padding: 10px;width: 150px;border:1px solid #9F9F9F;border-radius: 5px;cursor: pointer;background-color: Transparent !important;font-family: 'Poppins';float: right;margin-top: -30px;margin-right: 80px;"/>
+    <datalist id="browsers" >
+      <option value="Calendar1">
+      <option value="Calendar2">
+    </datalist>
+   </div>
+   <br>
    
 <div style="background-color: #fff !important;margin-top: 20px;margin-left: 50px;">
   <h3 style="font-family: 'Poppins';">Project progress monitoring sheets(PPMS)</h3>
@@ -77,7 +83,7 @@
    
 
     <tr>
-    <th >Description</th>
+    <th>Description <i class="fa fa-plus" aria-hidden="true" style="cursor: pointer;font-size: small;float: right;position: relative;left:15px" [routerLink]="['/add-project',projectId]"></i></th>
     <th>R1&nbsp;End&nbsp;Date</th>
    <th>R2&nbsp;End&nbsp;Date</th>
    <th>R3&nbsp;End&nbsp;Date</th>
@@ -86,6 +92,9 @@
    <th>Baseline&nbsp;Start&nbsp;Date</th>
    <th>Baseline&nbsp;End&nbsp;Date</th>
    <th>Base&nbsp;Line&nbsp;Working&nbsp;Days</th>
+   <th>Target&nbsp;Till&nbsp;Date&nbsp;as&nbsp;per&nbsp;Baseline</th>
+   <th>No&nbsp;of&nbsp;Days&nbsp;Balance&nbsp;as&nbsp;per&nbsp;Baseline</th>
+   <th>Daily&nbsp;Asking&nbsp;Rate&nbsp;as&nbsp;per&nbsp;Baseline</th>
    <th>UOM</th>
    <th>Total</th>
    <th>Cumulative&nbsp;Completed</th>
@@ -105,7 +114,7 @@
             <td><div class="activityalign">
               <div style="width:120px;">{{project.name}} </div> 
               <div>
-                <mat-icon [routerLink]="['/add-project',projectId]" style="margin-top: 10px;" >add</mat-icon>
+                <mat-icon [routerLink]="['/add-project',projectId]" style="margin-top: 10px;"  >add</mat-icon>
               <mat-icon style="margin-top: 10px;"  (click)="deleteTask(project)" >delete</mat-icon>
               </div>
               
@@ -118,6 +127,11 @@
             <td ></td>
             <td ></td>
             <td ></td>
+
+            <td ></td>
+            <td ></td>
+            <td ></td>
+
             <td ></td>
             <td ></td>
             <td ></td>
@@ -138,8 +152,10 @@
             <div class="descriptionalign">
                <mat-icon (click)="addData(subTask)">edit</mat-icon>
                <!-- <mat-icon style="margin-left: -15px;">delete</mat-icon> -->
-            <div style="width: 200px;">{{subTask.subTaskName}}</div>
+            <div style="width: 200px;" >{{subTask.subTaskName}}</div>
+            <!-- <i class="fa fa-calendar" aria-hidden="true" [routerLink]="['/view-project/calender',projectId]"></i>&nbsp;&nbsp;&nbsp; -->
             <mat-icon style="margin-top: 10px;" (click)="delete(subTask)">delete</mat-icon>
+            
           </div></td>
           <td >{{subTask?.r1EndDate | date}}</td>
           <td >{{subTask?.r2EndDate | date}}</td>
@@ -148,7 +164,10 @@
           <td >{{subTask?.workingDaysRevised}}</td>
           <td >{{subTask?.baseLineStartDate| date}}</td>
           <td >{{subTask?.baseLineEndDate | date}}</td>
-          <td >{{subTask?.baseLineWorkingDays}}</td>
+           <td >{{subTask?.baseLineWorkingDays}}</td>
+           <td></td>
+           <td></td>
+           <td></td>
           <td >{{subTask?.uom}}</td>
           <td >{{subTask?.total}}</td>
           <td>{{subTask?.dailyCumulativeTotal}}</td>
@@ -160,7 +179,7 @@
           <td>{{subTask?.noofDaysBalanceasperrevisedEnddate}}</td>
           <td>{{subTask?.dailyAskingRateasperRevisedEndDate}}</td>
           <td>{{(100-(100 * subTask.dailyCumulativeTotal) / subTask.total).toFixed(0)}}</td>
-          <td>{{subTask?.dailyCumulativeTotal}}</td>
+          <td >{{subTask?.dailyCumulativeTotal}}</td>
           <td ><button mat-button style="background-color: #233A61;color:#fff;margin-bottom: 5px;margin-top: 5px;margin-left: 8px;font-family: 'Poppins';" (click)="addremarks(subTask)">View remarks</button></td>
           
           

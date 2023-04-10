@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddDataComponent } from 'src/app/pages/add-data/add-data.component';
 import { ProgressSheetService } from 'src/app/services/progress-sheet.service';
+import { DataAnalysisService } from 'src/app/services/data-analysis.service';
 import { RecentActivityService } from 'src/app/services/recent-activity.service';
 import { TaskService } from 'src/app/services/task.service';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
@@ -12,6 +13,9 @@ import { FormControl, FormArray, FormGroup, Validators, FormBuilder } from '@ang
 import { AddProjectService } from 'src/app/services/add-project.service';
 import { AddRemarksComponent } from '../add-remarks/add-remarks.component';
 import { ToastService } from 'src/app/services/toast.service';
+import { InnerAddMemberComponent } from '../inner-add-member/inner-add-member.component';
+import{  MatCalendarCellClassFunction } from '@angular/material/datepicker';
+
 
 export interface PeriodicElement {
   Description: string;
@@ -39,6 +43,8 @@ export class ProgressSheetComponent implements OnInit {
    // projectsData:any
     tasks:any
     projectsData = [];
+    members = [];
+    memberAddPermissions:any;
     activesData:any;
     recentActivitiesLen:any
     projectNameForm: FormGroup = this._fb.group({
@@ -185,7 +191,7 @@ export class ProgressSheetComponent implements OnInit {
    recentActivities:any
    projectsList:any;
    remarksPermissions:any;
-  constructor(private activeRoute: ActivatedRoute, private toast : ToastService, private router:Router, private projectService:AddProjectService, private _fb: FormBuilder, private recentActivityService:RecentActivityService, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private taskService:TaskService,public dialog: MatDialog) { }
+  constructor(private activeRoute: ActivatedRoute, private toast : ToastService, private router:Router, private projectService:AddProjectService, private _fb: FormBuilder, private recentActivityService:RecentActivityService, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private taskService:TaskService,public dialog: MatDialog,private dataAnalysis:DataAnalysisService,) { }
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
@@ -253,6 +259,8 @@ export class ProgressSheetComponent implements OnInit {
       });
      
   }
+
+
   displayedColumns = ['Description', 'R2EndDate', 'R1EndDate', 'WorkingdaysRevised', 'BaselineStartDate',
   'BaselineEndDate', 'UOM','Total'];
   dataSource = ELEMENT_DATA;
@@ -310,9 +318,48 @@ export class ProgressSheetComponent implements OnInit {
         }
       })
   }
+  addMember(){
+    if(!this.memberAddPermissions?.isSelected){
+      // const dialogRef = this._dialog.open(NoPermissionsComponent, {
+      //   width: '30%',
+      //   panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+      //   data: "you don't have permissions to add member"
+      //   //data: supply
+      // });
+      // return;
+    }
+    const dialogRef = this._dialog.open(InnerAddMemberComponent, {
+      width: '30%',
+      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+      data: this.projectId
+    });
+    dialogRef.afterClosed().subscribe(status => {
+      console.log(status);
+      if (status === 'yes') {
+        this.dataAnalysis.getProjectById(this.projectId).subscribe(data=>{
+          this.project = data
+          this.members = this.project.members
+      console.log(this.project)
+      })
+        // this.projectService.getProjects().subscribe(data=>{
+        //   //this.spinner.hide()
+        //   this.projects = data
+        //   console.log(this.projects)
+        //   for(let single of this.projects){
+        //     this.members.push(...single.members)
+        //   }
+        //   console.log(this.members)
+        // })
+       // this.filterSubject.next(this.filterForm.value);
+      }
+      if (status === 'no') {
+      }
+    })
+  }
   onChangeProject(ev){
     this.router.navigate(['/view-project/progress-sheet',ev.target.value]);
   }
+  
 
   addremarks(subTask): void {
     if(!this.remarksPermissions?.isSelected){
