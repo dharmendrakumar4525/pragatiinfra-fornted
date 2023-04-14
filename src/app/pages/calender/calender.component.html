@@ -44,7 +44,7 @@
         <div style="margin-right:10px;"  >
       
         <div class="calender custom_calender" style="border-radius:5px;border-collapse: collapse;border: 2px solid lightgrey;margin-top: 70px;margin-bottom: 50px;width:700px;">
-          <mat-calendar  [dateClass]="dateClass()" [selected]="selectedDateNew" (selectedChange)="onSelect($event)"></mat-calendar>
+          <mat-calendar  [dateClass]="dateClass()"  [selected]="selectedDateNew" (selectedChange)="onSelect($event)"></mat-calendar>
         </div>
      
     
@@ -262,7 +262,7 @@
         <mat-grid-tile >
             <mat-card style="width: 250px;height: 350px;margin:10px 0px">
             <div class = "calendar-wrapper" style="height: 200px;">
-                <mat-calendar #calendar  [minDate]="minDate" [maxDate]="maxDate" [(selected)]="selectedDate" (selectedChange)="onSelectDate($event)">
+                <mat-calendar #calendar   [(selected)]="selectedDate" (selectedChange)="onSelectDate($event)">
                 </mat-calendar>
                 </div>
                 </mat-card>

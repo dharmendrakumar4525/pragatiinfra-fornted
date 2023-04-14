@@ -25,7 +25,7 @@ export class AddDataComponent implements OnInit {
   // endDate = new FormControl(new Date());
 
   itemForm: FormGroup = this._fb.group({
-    actualRevisedStartDate:[null, [Validators.required]],
+    actualRevisedStartDate:[null],
     baseLineStartDate:[null, [Validators.required]],
     baseLineEndDate:[null, [Validators.required]],
     uom:[null, [Validators.required]],
@@ -36,6 +36,8 @@ export class AddDataComponent implements OnInit {
   uomData = ['Bag','Sq.m.','Cu.m.','Litre','No.','Kg','g','Quintal','meters','c.m.']
   permissions :any;
   // baseStartDate:any;
+
+  
   constructor(
     private dialogRef: MatDialogRef<AddDataComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -53,6 +55,9 @@ export class AddDataComponent implements OnInit {
 
     this.yesterday.setDate(this.yesterday.getDate() - 0);
   }
+  
+ 
+
   myFilter = (d: Date ): boolean => {
     const today = new Date(this.maxFromDate);
     // return true if the selected date is greater than or equal to today
@@ -100,7 +105,7 @@ export class AddDataComponent implements OnInit {
     this.itemForm.get('actualRevisedStartDate').clearValidators()
     this.itemForm.updateValueAndValidity()
     }
-
+    console.log(this.itemForm.get('actualRevisedStartDate'));
   }
 
   closeDialog(status: string) {
@@ -204,24 +209,31 @@ export class AddDataComponent implements OnInit {
     //console.log(diffValue)
     let baseLineWorkingDays = diffValuebaseLine + 1
     let noofDaysBalanceasperrevisedEnddate;
+    let noofDaysBalanceasperbaseLine;
    
       var oneDaynoofDaysBalanc=1000 * 60 * 60 * 24;
       var difference_msnoofDaysBalance = Math.abs(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate.getTime() - new Date().getTime())
       var diffValuenoofDaysBalance = Math.round(difference_msnoofDaysBalance / oneDaynoofDaysBalanc);
       //console.log(diffValue)
        noofDaysBalanceasperrevisedEnddate = diffValuenoofDaysBalance + 1
+       noofDaysBalanceasperbaseLine = diffValuenoofDaysBalance + 1
+      //  console.log(noofDaysBalanceasperbaseLine)
   
   
     // console.log(this.itemForm.value)
    
    let dailyAskingRateasperRevisedEndDate = Math.ceil(this.itemForm.value.total/workingDaysRevised)
-   console.log(dailyAskingRateasperRevisedEndDate)
+  //  console.log(dailyAskingRateasperRevisedEndDate)
 
+   let dailyAskingRateasperbaseLine = Math.ceil(this.itemForm.value.total/baseLineWorkingDays)
+  //  console.log(dailyAskingRateasperbaseLine)
 
    this.itemForm.value.workingDaysRevised = workingDaysRevised
    this.itemForm.value.baseLineWorkingDays = baseLineWorkingDays
    this.itemForm.value.noofDaysBalanceasperrevisedEnddate = noofDaysBalanceasperrevisedEnddate
    this.itemForm.value.dailyAskingRateasperRevisedEndDate = dailyAskingRateasperRevisedEndDate
+   this.itemForm.value.dailyAskingRateasperbaseLine = dailyAskingRateasperbaseLine
+   this.itemForm.value.noofDaysBalanceasperbaseLine = noofDaysBalanceasperbaseLine
 
    if(this.itemForm.value.addRevisesDates.length == 1){
     this.itemForm.value.r1EndDate = this.itemForm.value.addRevisesDates[0].revisedDate
@@ -237,6 +249,7 @@ export class AddDataComponent implements OnInit {
     this.itemForm.value.r3EndDate = this.itemForm.value.addRevisesDates[2].revisedDate
 
    }
+   console.log(this.itemForm.value);
 
         this.progressSheetService.addSubActivityData(this.itemForm.value,this.data._id).subscribe(
 

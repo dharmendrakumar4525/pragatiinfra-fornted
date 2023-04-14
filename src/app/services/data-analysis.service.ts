@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class DataAnalysisService {
 
-  //baseUrl='http://localhost:3000/api'
+  //baseUrl='http://awshost:3000/api'
   constructor(private http:HttpClient) { }
 
   getProjectById(id): Observable<any> {

@@ -64,13 +64,13 @@
            ><i class="fa fa-edit" aria-hidden="true" style="color:#97989D;"></i><span style="color:#97989D;">&nbsp;Calender</span></a></li>
       </ul>
    </div>
-   <div>
+   <!-- <div>
     <input list="browsers" name="myBrowser" placeholder="Calendar History"  style="padding: 10px;width: 150px;border:1px solid #9F9F9F;border-radius: 5px;cursor: pointer;background-color: Transparent !important;font-family: 'Poppins';float: right;margin-top: -30px;margin-right: 80px;"/>
     <datalist id="browsers" >
       <option value="Calendar1">
       <option value="Calendar2">
     </datalist>
-   </div>
+   </div> -->
    <br>
    
 <div style="background-color: #fff !important;margin-top: 20px;margin-left: 50px;">
@@ -104,6 +104,36 @@
    <th>Activity&nbsp;Balance&nbsp;(%)</th>
    <th>Total</th>
    <th>Remarks</th>
+   <!-- <th>30&nbsp;-&nbsp;April</th>
+   <th>29&nbsp;-&nbsp;April</th>
+   <th>28&nbsp;-&nbsp;April</th>
+   <th>27&nbsp;-&nbsp;April</th>
+   <th>26&nbsp;-&nbsp;April</th>
+   <th>25&nbsp;-&nbsp;April</th>
+   <th>24&nbsp;-&nbsp;April</th>
+   <th>23&nbsp;-&nbsp;April</th>
+   <th>22&nbsp;-&nbsp;April</th>
+   <th>21&nbsp;-&nbsp;April</th>
+   <th>20&nbsp;-&nbsp;April</th>
+   <th>19&nbsp;-&nbsp;April</th>
+   <th>18&nbsp;-&nbsp;April</th>
+   <th>17&nbsp;-&nbsp;April</th>
+   <th>16&nbsp;-&nbsp;April</th>
+   <th>15&nbsp;-&nbsp;April</th>
+   <th>14&nbsp;-&nbsp;April</th>
+   <th>13&nbsp;-&nbsp;April</th>
+   <th>12&nbsp;-&nbsp;April</th>
+   <th>11&nbsp;-&nbsp;April</th>
+   <th>10&nbsp;-&nbsp;April</th>
+   <th>09&nbsp;-&nbsp;April</th>
+   <th>08&nbsp;-&nbsp;April</th>
+   <th>07&nbsp;-&nbsp;April</th>
+   <th>06&nbsp;-&nbsp;April</th>
+   <th>05&nbsp;-&nbsp;April</th>
+   <th>04&nbsp;-&nbsp;April</th>
+   <th>03&nbsp;-&nbsp;April</th>
+   <th>02&nbsp;-&nbsp;April</th>
+   <th>01&nbsp;-&nbsp;April</th> -->
  
 </tr>
     
@@ -142,6 +172,36 @@
             <td ></td>
             <td ></td>
             
+            <!-- <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td> -->
             
         
         </tr>
@@ -165,9 +225,14 @@
           <td >{{subTask?.baseLineStartDate| date}}</td>
           <td >{{subTask?.baseLineEndDate | date}}</td>
            <td >{{subTask?.baseLineWorkingDays}}</td>
-           <td></td>
-           <td></td>
-           <td></td>
+           <td>
+            <span *ngIf="(subTask?.dailyCumulativeTotal == subTask?.total) && subTask?.dailyCumulativeTotal">Completed</span>
+            <span *ngIf="subTask?.dailyCumulativeTotal !== subTask?.total">{{subTask?.dailyCumulativeTotal}}</span>
+            <!-- <span *ngIf="subTask?.actualRevisedStartDate == subTask?.baseLineEndDate">{{subTask?.actualRevisedStartDate}}</span>
+            <span *ngIf="subTask?.actualRevisedStartDate == subTask?.baseLineStartDate">{{subTask?.actualRevisedStartDate}}</span> -->
+           </td>
+           <td>{{subTask?.noofDaysBalanceasperbaseLine}}</td>
+           <td>{{subTask?.dailyAskingRateasperbaseLine}}</td>
           <td >{{subTask?.uom}}</td>
           <td >{{subTask?.total}}</td>
           <td>{{subTask?.dailyCumulativeTotal}}</td>
@@ -181,7 +246,36 @@
           <td>{{(100-(100 * subTask.dailyCumulativeTotal) / subTask.total).toFixed(0)}}</td>
           <td >{{subTask?.dailyCumulativeTotal}}</td>
           <td ><button mat-button style="background-color: #233A61;color:#fff;margin-bottom: 5px;margin-top: 5px;margin-left: 8px;font-family: 'Poppins';" (click)="addremarks(subTask)">View remarks</button></td>
-          
+          <!-- <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td ></td> -->
           
         </tr>
     </tbody>

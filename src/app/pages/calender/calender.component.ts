@@ -28,8 +28,8 @@ import{ MatCalendar, MatCalendarCellClassFunction } from '@angular/material/date
   styleUrls: ['./calender.component.css']
 })
 export class CalenderComponent implements OnInit {
-  minDate = new Date(2023, 1, 1);
-  maxDate=new Date(2023, 2, 1);
+  // minDate = new Date();
+  // maxDate=new Date();
 
 
   calendarOptions: CalendarOptions = {

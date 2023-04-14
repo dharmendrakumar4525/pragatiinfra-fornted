@@ -24,6 +24,7 @@ export interface PeriodicElement {
   WorkingdaysRevised: string;
   BaselineStartDate:string;
   BaselineEndDate:string;
+  baseLineWorkingDays:string;
   UOM:string;
   Total:string
 }
@@ -35,7 +36,8 @@ export interface GroupBy {
 @Component({
   selector: 'app-progress-sheet',
   templateUrl: './progress-sheet.component.html',
-  styleUrls: ['./progress-sheet.component.css']
+  styleUrls: ['./progress-sheet.component.css'],
+ 
 })
 export class ProgressSheetComponent implements OnInit {
     projectId:any
@@ -269,6 +271,7 @@ export class ProgressSheetComponent implements OnInit {
     return item.isGroupBy;
   }
 
+
   addData(subTask){
     if(!this.progressPermissionsEdit?.isSelected){
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
@@ -478,22 +481,22 @@ const ELEMENT_DATA: (PeriodicElement | GroupBy)[] = [
 
   {initial: 'Boundarywall', isGroupBy: true},
   {Description:'Cement' , R2EndDate: 'jan 16', R1EndDate: 'feb 1', WorkingdaysRevised: 'mar1',BaselineStartDate:'mar2',
-  BaselineEndDate:'mar 3', UOM:'sqm', Total:'100'},
+  BaselineEndDate:'mar 3',baseLineWorkingDays:'mar 3', UOM:'sqm', Total:'100'},
   {Description:'Evacuation' , R2EndDate: 'jan 16', R1EndDate: 'feb 1', WorkingdaysRevised: 'mar1',BaselineStartDate:'mar2',
-  BaselineEndDate:'mar 3', UOM:'sqm', Total:'100'},
+  BaselineEndDate:'mar 3', baseLineWorkingDays:'mar 3',UOM:'sqm', Total:'100'},
   {Description:'Cement' , R2EndDate: 'jan 16', R1EndDate: 'feb 1', WorkingdaysRevised: 'mar1',BaselineStartDate:'mar2',
-  BaselineEndDate:'mar 3', UOM:'sqm', Total:'100'},
+  BaselineEndDate:'mar 3',baseLineWorkingDays:'mar 3',UOM:'sqm', Total:'100'},
   {initial: 'Warehouse', isGroupBy: true},
   {Description:'ironrod' , R2EndDate: 'jan 16', R1EndDate: 'feb 1', WorkingdaysRevised: 'mar1',BaselineStartDate:'mar2',
-  BaselineEndDate:'mar 3', UOM:'sqm', Total:'100'},
+  BaselineEndDate:'mar 3', baseLineWorkingDays:'mar 3',UOM:'sqm', Total:'100'},
   {Description:'ironrod' , R2EndDate: 'jan 16', R1EndDate: 'feb 1', WorkingdaysRevised: 'mar1',BaselineStartDate:'mar2',
-  BaselineEndDate:'mar 3', UOM:'sqm', Total:'100'},
+  BaselineEndDate:'mar 3', baseLineWorkingDays:'mar 3',UOM:'sqm', Total:'100'},
   {Description:'floorbeam' , R2EndDate: 'jan 16', R1EndDate: 'feb 1', WorkingdaysRevised: 'mar1',BaselineStartDate:'mar2',
-  BaselineEndDate:'mar 3', UOM:'sqm', Total:'100'},
+  BaselineEndDate:'mar 3', baseLineWorkingDays:'mar 3',UOM:'sqm', Total:'100'},
   {initial: 'watertank', isGroupBy: true},
   {Description:'iron ' , R2EndDate: 'jan 16', R1EndDate: 'feb 1', WorkingdaysRevised: 'mar1',BaselineStartDate:'mar2',
-  BaselineEndDate:'mar 3', UOM:'sqm', Total:'100'},
+  BaselineEndDate:'mar 3', baseLineWorkingDays:'mar 3',UOM:'sqm', Total:'100'},
   {Description:'iron' , R2EndDate: 'jan 16', R1EndDate: 'feb 1', WorkingdaysRevised: 'mar1',BaselineStartDate:'mar2',
-  BaselineEndDate:'mar 3', UOM:'sqm', Total:'100'},
+  BaselineEndDate:'mar 3',baseLineWorkingDays:'mar 3', UOM:'sqm', Total:'100'},
   
 ];
