@@ -197,7 +197,7 @@ export class AddDataComponent implements OnInit {
       var difference_ms = Math.abs(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate.getTime() - this.itemForm.value.actualRevisedStartDate.getTime())
       var diffValue = Math.round(difference_ms / oneDay);
       //console.log(diffValue)
-       workingDaysRevised = diffValue + 1
+       workingDaysRevised = diffValue 
    
      
     
