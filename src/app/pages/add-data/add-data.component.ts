@@ -6,11 +6,13 @@ import { ToastService } from 'src/app/services/toast.service';
 import { ProgressSheetService } from '../../services/progress-sheet.service';
 import { FormControl } from '@angular/forms';
 import { MatDatepickerInputEvent } from "@angular/material/datepicker";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-data',
   templateUrl: './add-data.component.html',
-  styleUrls: ['./add-data.component.css']
+  styleUrls: ['./add-data.component.css'],
+  providers: [DatePipe]
 })
 export class AddDataComponent implements OnInit {
   minFromDate: Date;
@@ -44,7 +46,8 @@ export class AddDataComponent implements OnInit {
     private taskService: TaskService,
     private _fb: FormBuilder,
     private toast: ToastService,
-    private progressSheetService:ProgressSheetService
+    private progressSheetService:ProgressSheetService,
+    private datePipe: DatePipe
    // private toast: ToastService
   ) {
     this.minFromDate = new Date();
@@ -164,8 +167,44 @@ export class AddDataComponent implements OnInit {
   }
 
   AddData(){
+    console.log(this.itemForm.value.addRevisesDates);
+    var array = this.itemForm.value.addRevisesDates;
+    var isDatesOrdered = true;
+    for (var i = 1; i < array.length; i++) {
+      var previousDate = array[i - 1].revisedDate;
+      var currentDate = array[i].revisedDate;
+    
+      if (currentDate <= previousDate) {
+        isDatesOrdered = false;
+        break;
+      }
+    }
+    
+    if (isDatesOrdered) {
+      console.log("Dates are ordered correctly in the array.");
+    } else {
+      this.toast.openSnackBar(
+        'Enter Valid Revised  Date'
+      );
+      return;
+    }
+    if(this.itemForm.value.actualRevisedStartDate <= this.itemForm.value.baseLineStartDate){
+      this.toast.openSnackBar(
+        'Enter Valid Date'
+      );
+      return;
+    }
+
+    if(this.itemForm.value.baseLineEndDate <= this.itemForm.value.baseLineStartDate && this.itemForm.value.baseLineEndDate <= this.itemForm.value.actualRevisedStartDate){
+      this.toast.openSnackBar(
+        'Enter Valid Date '
+      );
+      return;
+    }
+
 
     if (this.itemForm.invalid) {
+      
       this.toast.openSnackBar(
         'Enter Valid Details'
       );
@@ -197,7 +236,7 @@ export class AddDataComponent implements OnInit {
       var difference_ms = Math.abs(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate.getTime() - this.itemForm.value.actualRevisedStartDate.getTime())
       var diffValue = Math.round(difference_ms / oneDay);
       //console.log(diffValue)
-       workingDaysRevised = diffValue 
+       workingDaysRevised = diffValue
    
      
     
@@ -281,7 +320,6 @@ export class AddDataComponent implements OnInit {
 
   }
   
-
 
 
 }
