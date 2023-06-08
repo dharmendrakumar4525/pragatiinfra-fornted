@@ -179,15 +179,18 @@ export class AddDataComponent implements OnInit {
         break;
       }
     }
-    
-    if (isDatesOrdered) {
-      console.log("Dates are ordered correctly in the array.");
-    } else {
-      this.toast.openSnackBar(
-        'Enter Valid Revised  Date'
-      );
+    if (!isDatesOrdered) {
+      this.toast.openSnackBar('Enter Valid Revised Date');
       return;
     }
+    // if (isDatesOrdered) {
+    //   console.log("Dates are ordered correctly in the array.");
+    // } else {
+    //   this.toast.openSnackBar(
+    //     'Enter Valid Revised  Date'
+    //   );
+    //   return;
+    // }
     if(this.itemForm.value.actualRevisedStartDate <= this.itemForm.value.baseLineStartDate){
       this.toast.openSnackBar(
         'Enter Valid Date'
