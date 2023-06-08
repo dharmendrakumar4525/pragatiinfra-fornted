@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-local_connection  :  'http://localhost:3000/api',
+local_connection  :  'https://d2yt4av5mvk7ck.cloudfront.net/api',
 aws_connection  :  'https://pr.avidusinteractive.com/api'
 
 

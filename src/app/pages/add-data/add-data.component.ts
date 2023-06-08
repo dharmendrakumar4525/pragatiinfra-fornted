@@ -167,7 +167,7 @@ export class AddDataComponent implements OnInit {
   }
 
   AddData(){
-    console.log(this.itemForm.value.addRevisesDates);
+    //console.log(this.itemForm.value.addRevisesDates);
     var array = this.itemForm.value.addRevisesDates;
     var isDatesOrdered = true;
     for (var i = 1; i < array.length; i++) {
