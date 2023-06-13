@@ -31,6 +31,7 @@ export class CalenderComponent implements OnInit {
   // minDate = new Date();
   // maxDate=new Date();
   formattedStartDate: string; 
+  //for changing date formate
   formatDate(date: Date): string {
     // Change the date format as per your requirement
     const formattedDate = moment(date).format('yyyy-MM-D');
