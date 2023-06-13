@@ -30,6 +30,13 @@ import{ MatCalendar, MatCalendarCellClassFunction } from '@angular/material/date
 export class CalenderComponent implements OnInit {
   // minDate = new Date();
   // maxDate=new Date();
+  formattedStartDate: string; 
+  formatDate(date: Date): string {
+    // Change the date format as per your requirement
+    const formattedDate = moment(date).format('yyyy-MM-D');
+    return formattedDate;
+  }
+
 
 
   calendarOptions: CalendarOptions = {
@@ -224,6 +231,7 @@ getYear:any;
 getDay:any;
 memberAddPermissions:any;
 remarksPermissions:any;
+
   constructor(private activeRoute: ActivatedRoute, private router:Router, private _fb: FormBuilder, private dataAnalysis:DataAnalysisService, private projectService: AddProjectService, private recentActivityService:RecentActivityService, private _dialog: MatDialog, private progressSheetService:ProgressSheetService, private toast:ToastService, private calenderService:CalenderService) { }
 
   ngOnInit(): void {
@@ -276,11 +284,9 @@ remarksPermissions:any;
     this.projectsData.forEach(obj => {
         const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
         obj['result'] = uniqData;
-        
       });
+ 
       console.log(this.projectsData);
-
-    
 
       })
   
@@ -337,6 +343,10 @@ remarksPermissions:any;
     this.getYear = new Date(this.valueAddedDate).getFullYear()
     this.getDay = new Date(this.valueAddedDate).getDate()
     this.dateForTotal = moment(this.valueAddedDate).format('D MMM, YYYY')
+    console.log(this.dateForTotal)
+    
+    this.dateForTotal = moment(this.valueAddedDate).format('yyyy-MM-D')
+   
   }
 
   dateClass() {
@@ -418,7 +428,7 @@ remarksPermissions:any;
                 { 'name': obj['taskName'] });
             }
         });
-    
+       
         this.projectsData.forEach(obj => {
             const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
             obj['result'] = uniqData;
@@ -456,7 +466,7 @@ remarksPermissions:any;
             this.toast.openSnackBar('Data updated successfully');
             this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data=>{
               this.activesData = data
-          console.log(this.activesData)
+          
           this.activesData.forEach(obj => {
             //this.grandTotal += obj['discAmount'];
             //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
@@ -624,10 +634,7 @@ remarksData(e,player,remark,id){
         },
         error: (err) => {
           this.toast.openSnackBar("Something went wrong. Unable to Update");
-          
-  
-          
-  
+        
         }
       }
   
@@ -636,7 +643,7 @@ remarksData(e,player,remark,id){
 
 onSelectDate(event){
   //this.showCalData = true
-  console.log(event)
+  console.log(event);
   this.valueAddedDate = event
   this.getWeekName = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][new Date(this.valueAddedDate).getDay()]
   this.getMonth = new Date(this.valueAddedDate).toLocaleString('default', { month: 'short' });
