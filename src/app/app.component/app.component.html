@@ -1,0 +1,16 @@
+<app-dashboard-layout [configuration]="configuration"  *ngIf="showDashboard">
+  <div container="sidePanel">
+    <app-navigation-side-panel [links]="links"></app-navigation-side-panel>
+  </div>
+  <!-- <div container="navigationBar">
+    <app-navigation-bar></app-navigation-bar>
+  </div> -->
+  <div container="mainContent">
+    <router-outlet></router-outlet>
+  </div>
+</app-dashboard-layout>
+
+
+<div container="mainContent" *ngIf="!showDashboard">
+  <router-outlet></router-outlet>
+</div>

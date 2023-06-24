@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TaskService } from 'src/app/services/task.service';
-import { ToastService } from 'src/app/services/toast.service';
-import { UsersService } from 'src/app/services/users.service';
+import { TaskService } from '@services/task.service';
+import { ToastService } from '@services/toast.service';
+import { UsersService } from '@services/users.service';
 
 @Component({
   selector: 'app-delete-mul-sub-activity',

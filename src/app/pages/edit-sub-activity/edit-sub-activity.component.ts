@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RolesService } from 'src/app/services/roles.service';
-import { TaskService } from 'src/app/services/task.service';
-import { ToastService } from 'src/app/services/toast.service';
-import { UsersService } from 'src/app/services/users.service';
+import { RolesService } from '@services/roles.service';
+import { TaskService } from '@services/task.service';
+import { ToastService } from '@services/toast.service';
+import { UsersService } from '@services/users.service';
 @Component({
   selector: 'app-edit-sub-activity',
   templateUrl: './edit-sub-activity.component.html',

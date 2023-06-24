@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { environment } from '@env/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class ProgressSheetService {
   constructor(private http:HttpClient) { }
   getTasksById(id): Observable<any> {
     
-    return this.http.get(`${environment.local_connection}/tasks/tasksList/${id}`).pipe(
+    return this.http.get(`${environment.api_path}/tasks/tasksList/${id}`).pipe(
       catchError(this.handleError)
     );
   }
@@ -22,14 +22,14 @@ export class ProgressSheetService {
 
   getActivitiesByProjectId(id): Observable<any> {
     
-    return this.http.get(`${environment.local_connection}/subTasks/activities/${id}`).pipe(
+    return this.http.get(`${environment.api_path}/subTasks/activities/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
   getProjectById(id): Observable<any> {
     
-    return this.http.get(`${environment.local_connection}/projects/${id}`).pipe(
+    return this.http.get(`${environment.api_path}/projects/${id}`).pipe(
       catchError(this.handleError)
     );
   }
@@ -50,14 +50,14 @@ export class ProgressSheetService {
 
   addSubActivityData(subActivity:any,id): Observable<any> {
     
-    return this.http.put(`${environment.local_connection}/subTasks/${id}`, subActivity).pipe(
+    return this.http.put(`${environment.api_path}/subTasks/${id}`, subActivity).pipe(
       catchError(this.handleError)
     );
   }
 
   deleteSubTask(id:any): Observable<any> {
     
-    return this.http.delete(`${environment.local_connection}/subTasks/${id}`).pipe(
+    return this.http.delete(`${environment.api_path}/subTasks/${id}`).pipe(
       catchError(this.handleError)
     );
   }
@@ -66,7 +66,7 @@ export class ProgressSheetService {
 
     let data = {name:name}
     
-    return this.http.post(`${environment.local_connection}/subTasks/deleteMany`,data).pipe(
+    return this.http.post(`${environment.api_path}/subTasks/deleteMany`,data).pipe(
       catchError(this.handleError)
     );
   }

@@ -4,17 +4,17 @@ import { MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTasksComponent } from '../add-tasks/add-tasks.component';
-import { TaskService } from 'src/app/services/task.service';
+import { TaskService } from '@services/task.service';
 import { AddSubTasksComponent } from '../add-sub-tasks/add-sub-tasks.component';
-import { AddProjectService } from 'src/app/services/add-project.service';
-import { ToastService } from 'src/app/services/toast.service';
+import { AddProjectService } from '@services/add-project.service';
+import { ToastService } from '@services/toast.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import { UsersService } from 'src/app/services/users.service';
-import { DataAnalysisService } from 'src/app/services/data-analysis.service';
+import { UsersService } from '@services/users.service';
+import { DataAnalysisService } from '@services/data-analysis.service';
 export interface Fruit {
   name: string;
 }

@@ -1,8 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RolesService } from 'src/app/services/roles.service';
-import { ToastService } from 'src/app/services/toast.service';
+import { RolesService } from '@services/roles.service';
+import { ToastService } from '@services/toast.service';
 
 @Component({
   selector: 'app-manage-permissions',

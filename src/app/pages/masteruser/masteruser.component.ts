@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ToastService } from 'src/app/services/toast.service';
-import { UsersService } from 'src/app/services/users.service';
+import { ToastService } from '@services/toast.service';
+import { UsersService } from '@services/users.service';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UsersDeleteMultipleComponent } from '../users-delete-multiple/users-delete-multiple.component';
 import { MatDialog } from '@angular/material/dialog';
-import { RecentActivityService } from 'src/app/services/recent-activity.service';
+import { RecentActivityService } from '@services/recent-activity.service';
 import * as moment from 'moment';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 import { Router } from '@angular/router';
 import { ViewChild } from '@angular/core';
 import { MasterCreateuserComponent } from '../master-createuser/master-createuser.component';
 import { AddTasksComponent } from '../add-tasks/add-tasks.component';
-import { TaskService } from 'src/app/services/task.service';
+import { TaskService } from '@services/task.service';
 import { EditActivityComponent } from '../edit-activity/edit-activity.component';
 import { TaskDeleteMulActivityComponent } from '../task-delete-mul-activity/task-delete-mul-activity.component';
 

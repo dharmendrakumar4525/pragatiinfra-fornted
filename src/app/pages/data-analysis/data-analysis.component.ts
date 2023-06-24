@@ -4,16 +4,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, AbstractControl, NgForm, FormControl } from '@angular/forms';
 
 import { Chart, registerables } from 'chart.js';
-import { AddProjectService } from 'src/app/services/add-project.service';
-import { DataAnalysisService } from 'src/app/services/data-analysis.service';
-import { RecentActivityService } from 'src/app/services/recent-activity.service';
+import { AddProjectService } from '@services/add-project.service';
+import { DataAnalysisService } from '@services/data-analysis.service';
+import { RecentActivityService } from '@services/recent-activity.service';
 import { AddMemberComponent } from '../add-member/add-member.component';
 import * as moment from 'moment';
-import { ProgressSheetService } from 'src/app/services/progress-sheet.service';
+import { ProgressSheetService } from '@services/progress-sheet.service';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 import { AboutUsComponent } from '../about-us/about-us.component';
 import { InnerAddMemberComponent } from '../inner-add-member/inner-add-member.component';
-import { ToastService } from 'src/app/services/toast.service';
+import { ToastService } from '@services/toast.service';
 import { ProjectDeletePopupComponent } from '../project-delete-popup/project-delete-popup.component';
 
 Chart.register(...registerables);

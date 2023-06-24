@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { RolesService } from 'src/app/services/roles.service';
-import { ToastService } from 'src/app/services/toast.service';
+import { RolesService } from '@services/roles.service';
+import { ToastService } from '@services/toast.service';
 import { FormGroup, Validators, AbstractControl, NgForm } from '@angular/forms';
-import { TaskService } from 'src/app/services/task.service';
+import { TaskService } from '@services/task.service';
 
 @Component({
   selector: 'app-edit-activity',

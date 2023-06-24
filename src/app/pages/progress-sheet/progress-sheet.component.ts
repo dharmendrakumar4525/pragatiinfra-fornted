@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AddDataComponent } from 'src/app/pages/add-data/add-data.component';
-import { ProgressSheetService } from 'src/app/services/progress-sheet.service';
-import { DataAnalysisService } from 'src/app/services/data-analysis.service';
-import { RecentActivityService } from 'src/app/services/recent-activity.service';
-import { TaskService } from 'src/app/services/task.service';
+import { AddDataComponent } from 'app/pages/add-data/add-data.component';
+import { ProgressSheetService } from '@services/progress-sheet.service';
+import { DataAnalysisService } from '@services/data-analysis.service';
+import { RecentActivityService } from '@services/recent-activity.service';
+import { TaskService } from '@services/task.service';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 import * as moment from 'moment';
 //import { FormBuilder } from '@angular/forms';
 import { FormControl, FormArray, FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { AddProjectService } from 'src/app/services/add-project.service';
+import { AddProjectService } from '@services/add-project.service';
 import { AddRemarksComponent } from '../add-remarks/add-remarks.component';
-import { ToastService } from 'src/app/services/toast.service';
+import { ToastService } from '@services/toast.service';
 import { InnerAddMemberComponent } from '../inner-add-member/inner-add-member.component';
 import{  MatCalendarCellClassFunction } from '@angular/material/datepicker';
 

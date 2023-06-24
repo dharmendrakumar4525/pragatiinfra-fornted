@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { UsersService } from 'src/app/services/users.service';
+import { UsersService } from '@services/users.service';
 import { SidePanelService, SidePanelState } from '../../../core';
 import { NavigationLink } from './navigation-link.model';
 

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ToastService } from 'src/app/services/toast.service';
-import { UsersService } from 'src/app/services/users.service';
+import { ToastService } from '@services/toast.service';
+import { UsersService } from '@services/users.service';
 
 @Component({
   selector: 'app-users-delete-multiple',

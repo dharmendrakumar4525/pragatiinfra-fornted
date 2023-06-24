@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { ToastService } from 'src/app/services/toast.service';
+import { ToastService } from '@services/toast.service';
 
 @Component({
   selector: 'app-forgotpassword',

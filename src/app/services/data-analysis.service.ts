@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { environment } from '@env/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,14 +14,14 @@ export class DataAnalysisService {
 
   getProjectById(id): Observable<any> {
     
-    return this.http.get(`${environment.local_connection}/projects/${id}`).pipe(
+    return this.http.get(`${environment.api_path}/projects/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
   getLineGraph(id): Observable<any> {
     
-    return this.http.get(`${environment.local_connection}/lineGraph/${id}`).pipe(
+    return this.http.get(`${environment.api_path}/lineGraph/${id}`).pipe(
       catchError(this.handleError)
     );
   }
@@ -44,7 +44,7 @@ export class DataAnalysisService {
 
    let data = {date:date,projectId:projectId}
     
-    return this.http.post(`${environment.local_connection}/lineGraph/date-filter`, data).pipe(
+    return this.http.post(`${environment.api_path}/lineGraph/date-filter`, data).pipe(
       catchError(this.handleError)
     );
   }

@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { environment } from '@env/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +14,14 @@ export class CalenderService {
   constructor(private http:HttpClient) { }
   cumutaleTotalData(subActivity:any,id): Observable<any> {
     
-    return this.http.put(`${environment.local_connection}/subTasks/dailyTotalUpdate/${id}`, subActivity).pipe(
+    return this.http.put(`${environment.api_path}/subTasks/dailyTotalUpdate/${id}`, subActivity).pipe(
       catchError(this.handleError)
     );
   }
 
   cumutaleTotalUpdate(subActivity:any,id): Observable<any> {
     
-    return this.http.put(`${environment.local_connection}/subTasks/dailyTotalUpdate/update/${id}`, subActivity).pipe(
+    return this.http.put(`${environment.api_path}/subTasks/dailyTotalUpdate/update/${id}`, subActivity).pipe(
       catchError(this.handleError)
     );
   }
@@ -29,14 +29,14 @@ export class CalenderService {
 
   addRemarks(subActivity:any,id): Observable<any> {
     
-    return this.http.put(`${environment.local_connection}/subTasks/remarks/${id}`, subActivity).pipe(
+    return this.http.put(`${environment.api_path}/subTasks/remarks/${id}`, subActivity).pipe(
       catchError(this.handleError)
     );
   }
 
   getProjectById(id): Observable<any> {
     
-    return this.http.get(`${environment.local_connection}/projects/${id}`).pipe(
+    return this.http.get(`${environment.api_path}/projects/${id}`).pipe(
       catchError(this.handleError)
     );
   }

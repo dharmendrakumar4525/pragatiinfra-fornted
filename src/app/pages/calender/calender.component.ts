@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormArray, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CalenderService } from 'src/app/services/calender.service';
-import { ProgressSheetService } from 'src/app/services/progress-sheet.service';
-import { ToastService } from 'src/app/services/toast.service';
+import { CalenderService } from '@services/calender.service';
+import { ProgressSheetService } from '@services/progress-sheet.service';
+import { ToastService } from '@services/toast.service';
 //import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { CalendarOptions } from '@fullcalendar/core'; // useful for typechecking
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
-import { RecentActivityService } from 'src/app/services/recent-activity.service';
+import { RecentActivityService } from '@services/recent-activity.service';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
-import { AddProjectService } from 'src/app/services/add-project.service';
+import { AddProjectService } from '@services/add-project.service';
 import { AboutUsComponent } from '../about-us/about-us.component';
 import { InnerAddMemberComponent } from '../inner-add-member/inner-add-member.component';
-import { DataAnalysisService } from 'src/app/services/data-analysis.service';
+import { DataAnalysisService } from '@services/data-analysis.service';
 import{ MatCalendar, MatCalendarCellClassFunction } from '@angular/material/datepicker';
 
 

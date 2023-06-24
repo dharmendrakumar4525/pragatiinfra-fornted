@@ -1,12 +1,12 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddProjectService } from 'src/app/services/add-project.service';
-import { RecentActivityService } from 'src/app/services/recent-activity.service';
+import { AddProjectService } from '@services/add-project.service';
+import { RecentActivityService } from '@services/recent-activity.service';
 import { AddMemberComponent } from '../add-member/add-member.component';
 import * as moment from 'moment';
 import { AboutUsComponent } from '../about-us/about-us.component';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
-import { ToastService } from 'src/app/services/toast.service';
+import { ToastService } from '@services/toast.service';
 import { ProjectDeletePopupComponent } from '../project-delete-popup/project-delete-popup.component';
 import { Router } from '@angular/router';
 

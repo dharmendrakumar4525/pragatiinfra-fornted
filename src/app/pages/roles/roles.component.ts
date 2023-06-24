@@ -3,13 +3,13 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import { NewRoleComponent } from '../new-role/new-role.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NewPermissionComponent } from '../new-permission/new-permission.component';
-import { RolesService } from 'src/app/services/roles.service';
+import { RolesService } from '@services/roles.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { ToastService } from 'src/app/services/toast.service';
+import { ToastService } from '@services/toast.service';
 import { RoleEditComponent } from '../role-edit/role-edit.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { RolesDeleteMultipleComponent } from '../roles-delete-multiple/roles-delete-multiple.component';
-import { RecentActivityService } from 'src/app/services/recent-activity.service';
+import { RecentActivityService } from '@services/recent-activity.service';
 import * as moment from 'moment';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 

@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TaskService } from 'src/app/services/task.service';
+import { TaskService } from '@services/task.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl, NgForm } from '@angular/forms';
 import { DataAnalysisComponent } from '../data-analysis/data-analysis.component';
-import { DataAnalysisService } from 'src/app/services/data-analysis.service';
-import { UsersService } from 'src/app/services/users.service';
-import { ToastService } from 'src/app/services/toast.service';
+import { DataAnalysisService } from '@services/data-analysis.service';
+import { UsersService } from '@services/users.service';
+import { ToastService } from '@services/toast.service';
 
 @Component({
   selector: 'app-inner-add-member',

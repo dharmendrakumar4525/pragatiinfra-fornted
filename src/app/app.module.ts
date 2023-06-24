@@ -2,14 +2,13 @@ import { NgModule,NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component/app.component';
+import { AppRoutingModule } from './routing/app-routing.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-//import { FullCalendarModule } from '@fullcalendar/angular';
 import { AccountInfoComponent } from './pages/account-info.component';
 import { DashboardComponent } from './pages/dashboard.component';
 import { HomeComponent } from './pages/home.component';
@@ -39,16 +38,16 @@ import { ManagePermissionsComponent } from './pages/manage-permissions/manage-pe
 import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
-import { AuthGuard } from './services/auth.guard';
+import { AuthGuard } from '@services/auth.guard';
 import { CreatenewpasswordComponent } from './pages/createnewpassword/createnewpassword.component';
 import { NoPermissionsComponent } from './pages/no-permissions/no-permissions.component';
 import { RoleEditComponent } from './pages/role-edit/role-edit.component';
 import { UserEditComponent } from './pages/user-edit/user-edit.component';
 import { UsersDeleteMultipleComponent } from './pages/users-delete-multiple/users-delete-multiple.component';
 import { RolesDeleteMultipleComponent } from './pages/roles-delete-multiple/roles-delete-multiple.component';
-import { SearchPipe } from './services/search.pipe';
+import { SearchPipe } from '@services/search.pipe';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
-import { SubActivitySearchPipe } from './services/subActivity.pipe';
+import { SubActivitySearchPipe } from '@services/subActivity.pipe';
 import { MasteruserComponent } from './pages/masteruser/masteruser.component';
 import { MasterCreateuserComponent } from './pages/master-createuser/master-createuser.component';
 import { InnerAddMemberComponent } from './pages/inner-add-member/inner-add-member.component';
@@ -59,7 +58,7 @@ import { DeleteMulSubActivityComponent } from './pages/delete-mul-sub-activity/d
 import { SubActivitiesComponent } from './pages/sub-activities/sub-activities.component';
 import { EditSubActivitiesComponent } from './pages/edit-sub-activities/edit-sub-activities.component';
 import { AddSubActivitiesComponent } from './pages/add-sub-activities/add-sub-activities.component';
-import { MenuSearchPipe } from './services/menuSearch.pipe';
+import { MenuSearchPipe } from '@services/menuSearch.pipe';
 import { CommonModule } from '@angular/common';
 import { SitemasterComponent } from './Procurement/sitemaster/sitemaster.component';
 import { OrgmasterComponent } from './Procurement/orgmaster/orgmaster.component';
