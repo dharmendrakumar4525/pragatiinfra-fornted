@@ -22,24 +22,24 @@ export class AddDataComponent implements OnInit {
 
   yesterday = new Date();
   tommorrow = new Date();
-  
+
   // startDate = new FormControl(new Date(2023, 3, 1));
   // endDate = new FormControl(new Date());
 
   itemForm: FormGroup = this._fb.group({
-    actualRevisedStartDate:[null],
+    actualRevisedStartDate:[new Date()],
     baseLineStartDate:[null, [Validators.required]],
     baseLineEndDate:[null, [Validators.required]],
     uom:[null, [Validators.required]],
     total:[null, [Validators.required]],
-    addRevisesDates: this._fb.array([]),
-    
+    addRevisesDates: this._fb.array([this.getBlocks()]),
+
   });
   uomData = ['Bag','Sq.m.','Cu.m.','Litre','No.','Kg','g','Quintal','meters','c.m.']
   permissions :any;
   // baseStartDate:any;
 
-  
+
   constructor(
     private dialogRef: MatDialogRef<AddDataComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -58,14 +58,14 @@ export class AddDataComponent implements OnInit {
 
     this.yesterday.setDate(this.yesterday.getDate() - 0);
   }
-  
- 
+
+
 
   myFilter = (d: Date ): boolean => {
     const today = new Date(this.maxFromDate);
     // return true if the selected date is greater than or equal to today
     return d > today;
-    
+
   }
 
   fromDateChange(type: string, event: MatDatepickerInputEvent<Date>) {
@@ -92,7 +92,7 @@ export class AddDataComponent implements OnInit {
       );
     }
   }
- 
+
   ngOnInit(): void {
     if(this.data.addRevisesDates){
       this.data.addRevisesDates.forEach(single=>{
@@ -115,7 +115,7 @@ export class AddDataComponent implements OnInit {
     this.dialogRef.close(status)
     // this.dialogRef.close(status);
     // document.getElementsByClassName("animate__animated")[0].classList.remove("animate__fadeInDown")
-    // document.getElementsByClassName("animate__animated")[0].classList.add("animate__fadeOutUp"); 
+    // document.getElementsByClassName("animate__animated")[0].classList.add("animate__fadeOutUp");
     //setTimeout(() => { this.dialogRef.close(status); }, 1000);
   }
 
@@ -123,7 +123,7 @@ export class AddDataComponent implements OnInit {
 
 
 
-  
+
   getBlocks() {
     return this._fb.group({
       revisedDate: [null]
@@ -173,7 +173,7 @@ export class AddDataComponent implements OnInit {
     for (var i = 1; i < array.length; i++) {
       var previousDate = array[i - 1].revisedDate;
       var currentDate = array[i].revisedDate;
-    
+
       if (currentDate <= previousDate) {
         isDatesOrdered = false;
         break;
@@ -207,7 +207,7 @@ export class AddDataComponent implements OnInit {
 
 
     if (this.itemForm.invalid) {
-      
+
       this.toast.openSnackBar(
         'Enter Valid Details'
       );
@@ -229,21 +229,21 @@ export class AddDataComponent implements OnInit {
 
     }
 
-   
+
     let workingDaysRevised ;
     // console.log(this.itemForm.value)
 
-   
+
       var oneDay=1000 * 60 * 60 * 24;
       console.log(oneDay);
       var difference_ms = Math.abs(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate.getTime() - this.itemForm.value.actualRevisedStartDate.getTime())
       var diffValue = Math.round(difference_ms / oneDay);
       //console.log(diffValue)
        workingDaysRevised = diffValue
-   
-     
-    
-  
+
+
+
+
     // console.log(this.itemForm.value)
     var oneDaybaseLine=1000 * 60 * 60 * 24;
     var difference_msbaseLine = Math.abs(new Date(this.itemForm.value.baseLineEndDate).getTime() - new Date(this.itemForm.value.baseLineStartDate).getTime())
@@ -252,7 +252,7 @@ export class AddDataComponent implements OnInit {
     let baseLineWorkingDays = diffValuebaseLine + 1
     let noofDaysBalanceasperrevisedEnddate;
     let noofDaysBalanceasperbaseLine;
-   
+
       var oneDaynoofDaysBalanc=1000 * 60 * 60 * 24;
       var difference_msnoofDaysBalance = Math.abs(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate.getTime() - new Date().getTime())
       var diffValuenoofDaysBalance = Math.round(difference_msnoofDaysBalance / oneDaynoofDaysBalanc);
@@ -260,10 +260,10 @@ export class AddDataComponent implements OnInit {
        noofDaysBalanceasperrevisedEnddate = diffValuenoofDaysBalance + 1
        noofDaysBalanceasperbaseLine = diffValuenoofDaysBalance + 1
       //  console.log(noofDaysBalanceasperbaseLine)
-  
-  
+
+
     // console.log(this.itemForm.value)
-   
+
    let dailyAskingRateasperRevisedEndDate = Math.ceil(this.itemForm.value.total/workingDaysRevised)
   //  console.log(dailyAskingRateasperRevisedEndDate)
 
@@ -303,26 +303,26 @@ export class AddDataComponent implements OnInit {
           // this.spinner.hide()
           // this.router.navigate(['/usersList']);
           // this.toast.openSnackBar('User Added Successfully');
-          
+
         },
         error: (err) => {
           this.toast.openSnackBar("Something went wrong. Unable to Add Activity Data");
           // this.spinner.hide()
           // this.toast.openSnackBar('Something went wrong, please try again later');
-          // console.log(err) 
-  
+          // console.log(err)
+
           // this.errorData = err
-  
-          
-  
+
+
+
         }
       }
-  
+
     )
 
 
   }
-  
+
 
 
 }
