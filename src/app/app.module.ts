@@ -1,4 +1,4 @@
-import { NgModule,NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
@@ -22,7 +22,7 @@ import { ProjectsComponent } from './pages/projects/projects.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddTasksComponent } from './pages/add-tasks/add-tasks.component';
 import { AddSubTasksComponent } from './pages/add-sub-tasks/add-sub-tasks.component';
-import {  NgCircleProgressModule }from 'ng-circle-progress';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 import { LoginComponent } from './pages/login/login.component';
 import { AddMemberComponent } from './pages/add-member/add-member.component';
 import { UserManagementComponent } from './pages/user-management/user-management.component';
@@ -112,44 +112,42 @@ import { ModifyRemarksComponent } from './pages/modify-remarks/modify-remarks.co
 
 
 @NgModule({
-  imports:      [ AppRoutingModule, BrowserModule,ReactiveFormsModule,HttpClientModule, FormsModule, CoreModule, SharedModule, CustomMaterialModule,
+  imports: [AppRoutingModule, BrowserModule, ReactiveFormsModule, HttpClientModule, FormsModule, CoreModule, SharedModule, CustomMaterialModule,
     FlexLayoutModule,
-    FullCalendarModule ,
+    FullCalendarModule,
     CommonModule,
     NgCircleProgressModule.forRoot({
-
-    
-      radius:60,
-      space:-10,
-      outerStrokeGradient:false,
-      outerStrokeWidth:20,
-      outerStrokeGradientStopColor:'false',
-      innerStrokeColor:'false',
+      radius: 60,
+      space: -10,
+      outerStrokeGradient: false,
+      outerStrokeWidth: 20,
+      outerStrokeGradientStopColor: 'false',
+      innerStrokeColor: 'false',
       showInnerStroke: true,
-      innerStrokeWidth:10,
-      subtitle:'',
-      title:'',
+      innerStrokeWidth: 10,
+      subtitle: '',
+      title: '',
       animateTitle: false,
-      animationDuration:100,
-      showUnits:true,
-      showBackground:false,
-      clockwise:true,
-      startFromZero:false,
-     
-      
+      animationDuration: 100,
+      showUnits: true,
+      showBackground: false,
+      clockwise: true,
+      startFromZero: false,
+
+
     }),
-   
-     BrowserAnimationsModule,
+
+    BrowserAnimationsModule,
   ],
-  declarations: [ AppComponent, HomeComponent,SearchPipe,SubActivitySearchPipe, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent,LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,
-    ForgotpasswordComponent, NewRoleComponent,NewPermissionComponent, AddDataComponent, ManagePermissionsComponent,CreatenewpasswordComponent, NoPermissionsComponent, RoleEditComponent, UserEditComponent, UsersDeleteMultipleComponent, RolesDeleteMultipleComponent, AboutUsComponent,MasteruserComponent,MasterCreateuserComponent, InnerAddMemberComponent, EditActivityComponent, EditSubActivityComponent, TaskDeleteMulActivityComponent, DeleteMulSubActivityComponent, SubActivitiesComponent, EditSubActivitiesComponent, AddSubActivitiesComponent,SitemasterComponent,
-    OrgmasterComponent,ItemmasterComponent,VendormasterComponent,CategorymanagementComponent,PurchaserequestComponent,PurchasereqlistComponent,RequisitionapprovalsComponent,ApprovedsummaryComponent,RejectedsummaryComponent,PendingsummaryComponent,RevisedpurchasereqlistComponent,ApprovedmaterialrequestComponent,RejectedpurchaserequestComponent,PendingpurchaserequestComponent,RatecomparativeComponent,RcomparativeComponent,RateapprovallistComponent,RevisedrateapprovallistComponent,VendorscomparativeapprovedComponent,VendorscomparativerejectedComponent,
-    VendorscomparativerevisedComponent,RateapprovalsComponent,RateapprovalsummaryComponent,RejectedratessummaryComponent,PendingratesComponent,VendorSelectionComponent,RejectReasonComponent,AddRemarksComponent, ProjectDeletePopupComponent,PolistComponent,PomapproverComponent,ApprovedpoComponent,RejectedpoComponent,PendingpoComponent,ApoVendorpostatusComponent,PomcreatorComponent,PotokenComponent,RejectedpomComponent,PomcreatorEsignComponent,InventoryComponent,PrstatusComponent, ModifyRemarksComponent],
-    providers:[AuthGuard],
-    schemas: [
-      CUSTOM_ELEMENTS_SCHEMA,
-      //NO_ERRORS_SCHEMA
-    ],
-  bootstrap:    [ AppComponent ]
+  declarations: [AppComponent, HomeComponent, SearchPipe, SubActivitySearchPipe, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent, LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,
+    ForgotpasswordComponent, NewRoleComponent, NewPermissionComponent, AddDataComponent, ManagePermissionsComponent, CreatenewpasswordComponent, NoPermissionsComponent, RoleEditComponent, UserEditComponent, UsersDeleteMultipleComponent, RolesDeleteMultipleComponent, AboutUsComponent, MasteruserComponent, MasterCreateuserComponent, InnerAddMemberComponent, EditActivityComponent, EditSubActivityComponent, TaskDeleteMulActivityComponent, DeleteMulSubActivityComponent, SubActivitiesComponent, EditSubActivitiesComponent, AddSubActivitiesComponent, SitemasterComponent,
+    OrgmasterComponent, ItemmasterComponent, VendormasterComponent, CategorymanagementComponent, PurchaserequestComponent, PurchasereqlistComponent, RequisitionapprovalsComponent, ApprovedsummaryComponent, RejectedsummaryComponent, PendingsummaryComponent, RevisedpurchasereqlistComponent, ApprovedmaterialrequestComponent, RejectedpurchaserequestComponent, PendingpurchaserequestComponent, RatecomparativeComponent, RcomparativeComponent, RateapprovallistComponent, RevisedrateapprovallistComponent, VendorscomparativeapprovedComponent, VendorscomparativerejectedComponent,
+    VendorscomparativerevisedComponent, RateapprovalsComponent, RateapprovalsummaryComponent, RejectedratessummaryComponent, PendingratesComponent, VendorSelectionComponent, RejectReasonComponent, AddRemarksComponent, ProjectDeletePopupComponent, PolistComponent, PomapproverComponent, ApprovedpoComponent, RejectedpoComponent, PendingpoComponent, ApoVendorpostatusComponent, PomcreatorComponent, PotokenComponent, RejectedpomComponent, PomcreatorEsignComponent, InventoryComponent, PrstatusComponent, ModifyRemarksComponent],
+  providers: [AuthGuard],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    //NO_ERRORS_SCHEMA
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
