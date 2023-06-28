@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent} from './snackbar-component/snackbar.component';
-import { LocalizationService } from '@services/localization/localization.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,13 +11,8 @@ export class SnackbarService {
   pageDir = 'ltr';
   directionClass="";
   constructor(
-    private snackBar: MatSnackBar,
-    private locale: LocalizationService
+    private snackBar: MatSnackBar
     ) { 
-
-      this.locale.activeLanguage.subscribe(lang=>{
-        this.pageDir = this.locale.getDirection(lang);       
-      })
 
     }
 

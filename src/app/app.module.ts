@@ -103,7 +103,7 @@ import { PomcreatorEsignComponent } from './Procurement/Purchaseorder/pomcreator
 import { InventoryComponent } from './Procurement/inventory/inventory.component';
 import { PrstatusComponent } from './Procurement/prstatus/prstatus.component';
 import { ModifyRemarksComponent } from './pages/modify-remarks/modify-remarks.component';
-
+import { CookieModule } from 'ngx-cookie';
 
 // FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 //   dayGridPlugin,
@@ -116,6 +116,7 @@ import { ModifyRemarksComponent } from './pages/modify-remarks/modify-remarks.co
     FlexLayoutModule,
     FullCalendarModule,
     CommonModule,
+    CookieModule.withOptions(),
     NgCircleProgressModule.forRoot({
       radius: 60,
       space: -10,
