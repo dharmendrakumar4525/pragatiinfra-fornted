@@ -28,6 +28,7 @@
     "@fullcalendar/daygrid": "^6.0.3",
     "@fullcalendar/interaction": "^6.0.3",
     "@fullcalendar/timegrid": "^6.0.3",
+    "bootstrap": "^5.3.0",
     "chart.js": "^4.1.2",
     "crypto-ts": "^1.0.2",
     "mat-table-exporter": "^10.2.4",
