@@ -68,149 +68,201 @@ import { InventoryComponent } from '../Procurement/inventory/inventory.component
 import { PrstatusComponent } from '../Procurement/prstatus/prstatus.component';
 
 export const routes: Routes = [
-    {
-        path: '',
-        redirectTo: 'dpr',
-        pathMatch: 'prefix',
-    },
-    {
-        path: 'login',
-        component: LoginComponent
-    },
-    {
-        path: 'dpr',
-        component: ProjectsComponent,
-        canActivate: [AuthGuard]
-    },
-    // {
-    //   path: 'dashbaord',
-    //   component: DashboardComponent,
-    // },
-    // {
-    //   path: 'account',
-    //   component: AccountInfoComponent
-    // },
-    {
-        path: 'add-project',
-        component: AddProjectComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'add-project/:id',
-        component: AddProjectComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'add-project/:id/edit-project/:name',
-        component: AddProjectComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'user-management',
-        component: UserManagementComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'users',
-        component: UsersComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'roles',
-        component: RolesComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'permissions',
-        component: PermissionsComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'manage-permissions',
-        component: ManagePermissionsComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'add-user',
-        component: AddUserComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'edit-user/:id',
-        component: UserEditComponent,
-        canActivate: [AuthGuard]
-    },
+  {
+    path: 'procurement',
+    loadChildren: () => import('./../components/procurment-module/procurment-module.module')
+      .then(mod => mod.ProcurmentModuleModule),
+    canActivate: [AuthGuard]
+  },
 
-    { path: 'forgotpassword', component: ForgotpasswordComponent },
-    { path: 'createnewpassword', component: CreatenewpasswordComponent },
-    { path: 'activities', component: MasteruserComponent, canActivate: [AuthGuard] },
-    { path: 'sub-activities', component: SubActivitiesComponent, canActivate: [AuthGuard] },
-    { path: 'edit-sub-activity/:id', component: EditSubActivityComponent, canActivate: [AuthGuard] },
-    { path: 'add-sub-activities', component: AddSubActivitiesComponent, canActivate: [AuthGuard] },
-    { path: 'sitemaster', component: SitemasterComponent, canActivate: [AuthGuard] },
-    { path: 'orgmaster', component: OrgmasterComponent, canActivate: [AuthGuard] },
-    { path: 'itemmaster', component: ItemmasterComponent, canActivate: [AuthGuard] },
-    { path: 'vendormaster', component: VendormasterComponent, canActivate: [AuthGuard] },
-    { path: 'categorymanagement', component: CategorymanagementComponent, canActivate: [AuthGuard] },
-    { path: 'purchaserequest', component: PurchaserequestComponent, canActivate: [AuthGuard] },
-    { path: 'purchasereqlist', component: PurchasereqlistComponent, canActivate: [AuthGuard] },
-    { path: 'requisitionapprovals', component: RequisitionapprovalsComponent, canActivate: [AuthGuard] },
-    { path: 'approvedsummary', component: ApprovedsummaryComponent, canActivate: [AuthGuard] },
-    { path: 'rejectedsummary', component: RejectedsummaryComponent, canActivate: [AuthGuard] },
-    { path: 'pendingsummary', component: PendingsummaryComponent, canActivate: [AuthGuard] },
-    { path: 'revisedpurchasereqlist', component: RevisedpurchasereqlistComponent, canActivate: [AuthGuard] },
-    { path: 'approvedmaterialrequest', component: ApprovedmaterialrequestComponent, canActivate: [AuthGuard] },
-    { path: 'rejectedpurchaserequest', component: RejectedpurchaserequestComponent, canActivate: [AuthGuard] },
-    { path: 'pendingpurchaserequest', component: PendingpurchaserequestComponent, canActivate: [AuthGuard] },
-    { path: 'ratecomparative', component: RatecomparativeComponent, canActivate: [AuthGuard] },
-    { path: 'rcomparative', component: RcomparativeComponent, canActivate: [AuthGuard] },
-    { path: 'rateapprovallist', component: RateapprovallistComponent, canActivate: [AuthGuard] },
-    { path: 'revisedrateapprovallist', component: RevisedrateapprovallistComponent, canActivate: [AuthGuard] },
-    { path: 'vendorscomparativeapproved', component: VendorscomparativeapprovedComponent, canActivate: [AuthGuard] },
-    { path: 'vendorscomparativerejected', component: VendorscomparativerejectedComponent, canActivate: [AuthGuard] },
-    { path: 'vendorscomparativerevised', component: VendorscomparativerevisedComponent, canActivate: [AuthGuard] },
-    { path: 'rateapprovals', component: RateapprovalsComponent, canActivate: [AuthGuard] },
-    { path: 'rateapprovalsummary', component: RateapprovalsummaryComponent, canActivate: [AuthGuard] },
-    { path: 'rejectedratessummary', component: RejectedratessummaryComponent, canActivate: [AuthGuard] },
-    { path: 'pendingrates', component: PendingratesComponent, canActivate: [AuthGuard] },
-    { path: 'vendor-selection', component: VendorSelectionComponent, canActivate: [AuthGuard] },
-    { path: 'reject-reason', component: RejectReasonComponent, canActivate: [AuthGuard] },
-    { path: 'polist', component: PolistComponent, canActivate: [AuthGuard] },
-    { path: 'pomapprover', component: PomapproverComponent, canActivate: [AuthGuard] },
-    { path: 'approvedpo', component: ApprovedpoComponent, canActivate: [AuthGuard] },
-    { path: 'rejectedpo', component: RejectedpoComponent, canActivate: [AuthGuard] },
-    { path: 'pendingpo', component: PendingpoComponent, canActivate: [AuthGuard] },
-    { path: 'apovendorpostatus', component: ApoVendorpostatusComponent, canActivate: [AuthGuard] },
-    { path: 'pomcreator', component: PomcreatorComponent, canActivate: [AuthGuard] },
-    { path: 'potoken', component: PotokenComponent, canActivate: [AuthGuard] },
-    { path: 'rejectedpom', component: RejectedpomComponent, canActivate: [AuthGuard] },
-    { path: 'pomcreatoresign', component: PomcreatorEsignComponent, canActivate: [AuthGuard] },
-    { path: 'inventory', component: InventoryComponent, canActivate: [AuthGuard] },
-    { path: 'prstatus', component: PrstatusComponent, canActivate: [AuthGuard] },
+  {
+    path: 'site',
+    loadChildren: () => import('../components/site/site.module')
+      .then(mod => mod.SiteModule),
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: 'category',
+    loadChildren: () => import('../components/category/category.module')
+      .then(mod => mod.CategoryModule),
+    canActivate: [AuthGuard]
+  },
 
 
-    //{path: 'create-activities', component: MasterCreateuserComponent,canActivate:[AuthGuard]},
+  {
+    path: 'subb-category',
+    loadChildren: () => import('../components/sub-category/sub-category.module')
+      .then(mod => mod.SubCategoryModule),
+    canActivate: [AuthGuard]
+  },
 
 
-    {
-        path: 'view-project',
-        component: ViewProjectComponent,
-        canActivate: [AuthGuard],
-        children: [
-            { path: '', redirectTo: 'data-analysis', pathMatch: 'full' },
-            { path: 'data-analysis/:id', component: DataAnalysisComponent, canActivate: [AuthGuard] },
-            { path: 'progress-sheet/:id', component: ProgressSheetComponent, canActivate: [AuthGuard] },
-            { path: 'calender/:id', component: CalenderComponent, canActivate: [AuthGuard] }
-            //{path: 'login', component: LoginComponent},
-            //{path: 'forgotpassword', component: ForgotpasswordComponent},
+  {
+    path: 'vendor',
+    loadChildren: () => import('../components/vendor/vendor.module')
+      .then(mod => mod.VendorModule),
+    canActivate: [AuthGuard]
+  },
 
 
-        ]
-    },
-    {
-        path: '**',
-        redirectTo: 'dpr',
-        pathMatch: 'full'
-    }
+  {
+    path: 'organisation',
+    loadChildren: () => import('../components/organisation/organisation.module')
+      .then(mod => mod.OrganisationModule),
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: 'item',
+    loadChildren: () => import('../components/item/item.module')
+      .then(mod => mod.ItemModule),
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: '',
+    redirectTo: 'dpr',
+    pathMatch: 'prefix',
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'dpr',
+    component: ProjectsComponent,
+    canActivate: [AuthGuard]
+  },
+  // {
+  //   path: 'dashbaord',
+  //   component: DashboardComponent,
+  // },
+  // {
+  //   path: 'account',
+  //   component: AccountInfoComponent
+  // },
+  {
+    path: 'add-project',
+    component: AddProjectComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'add-project/:id',
+    component: AddProjectComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'add-project/:id/edit-project/:name',
+    component: AddProjectComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'user-management',
+    component: UserManagementComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'users',
+    component: UsersComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'roles',
+    component: RolesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'permissions',
+    component: PermissionsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'manage-permissions',
+    component: ManagePermissionsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'add-user',
+    component: AddUserComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'edit-user/:id',
+    component: UserEditComponent,
+    canActivate: [AuthGuard]
+  },
+
+  { path: 'forgotpassword', component: ForgotpasswordComponent },
+  { path: 'createnewpassword', component: CreatenewpasswordComponent },
+  { path: 'activities', component: MasteruserComponent, canActivate: [AuthGuard] },
+  { path: 'sub-activities', component: SubActivitiesComponent, canActivate: [AuthGuard] },
+  { path: 'edit-sub-activity/:id', component: EditSubActivityComponent, canActivate: [AuthGuard] },
+  { path: 'add-sub-activities', component: AddSubActivitiesComponent, canActivate: [AuthGuard] },
+  { path: 'sitemaster', component: SitemasterComponent, canActivate: [AuthGuard] },
+  { path: 'orgmaster', component: OrgmasterComponent, canActivate: [AuthGuard] },
+  { path: 'itemmaster', component: ItemmasterComponent, canActivate: [AuthGuard] },
+  { path: 'vendormaster', component: VendormasterComponent, canActivate: [AuthGuard] },
+  { path: 'categorymanagement', component: CategorymanagementComponent, canActivate: [AuthGuard] },
+  { path: 'purchaserequest', component: PurchaserequestComponent, canActivate: [AuthGuard] },
+  { path: 'purchasereqlist', component: PurchasereqlistComponent, canActivate: [AuthGuard] },
+  { path: 'requisitionapprovals', component: RequisitionapprovalsComponent, canActivate: [AuthGuard] },
+  { path: 'approvedsummary', component: ApprovedsummaryComponent, canActivate: [AuthGuard] },
+  { path: 'rejectedsummary', component: RejectedsummaryComponent, canActivate: [AuthGuard] },
+  { path: 'pendingsummary', component: PendingsummaryComponent, canActivate: [AuthGuard] },
+  { path: 'revisedpurchasereqlist', component: RevisedpurchasereqlistComponent, canActivate: [AuthGuard] },
+  { path: 'approvedmaterialrequest', component: ApprovedmaterialrequestComponent, canActivate: [AuthGuard] },
+  { path: 'rejectedpurchaserequest', component: RejectedpurchaserequestComponent, canActivate: [AuthGuard] },
+  { path: 'pendingpurchaserequest', component: PendingpurchaserequestComponent, canActivate: [AuthGuard] },
+  { path: 'ratecomparative', component: RatecomparativeComponent, canActivate: [AuthGuard] },
+  { path: 'rcomparative', component: RcomparativeComponent, canActivate: [AuthGuard] },
+  { path: 'rateapprovallist', component: RateapprovallistComponent, canActivate: [AuthGuard] },
+  { path: 'revisedrateapprovallist', component: RevisedrateapprovallistComponent, canActivate: [AuthGuard] },
+  { path: 'vendorscomparativeapproved', component: VendorscomparativeapprovedComponent, canActivate: [AuthGuard] },
+  { path: 'vendorscomparativerejected', component: VendorscomparativerejectedComponent, canActivate: [AuthGuard] },
+  { path: 'vendorscomparativerevised', component: VendorscomparativerevisedComponent, canActivate: [AuthGuard] },
+  { path: 'rateapprovals', component: RateapprovalsComponent, canActivate: [AuthGuard] },
+  { path: 'rateapprovalsummary', component: RateapprovalsummaryComponent, canActivate: [AuthGuard] },
+  { path: 'rejectedratessummary', component: RejectedratessummaryComponent, canActivate: [AuthGuard] },
+  { path: 'pendingrates', component: PendingratesComponent, canActivate: [AuthGuard] },
+  { path: 'vendor-selection', component: VendorSelectionComponent, canActivate: [AuthGuard] },
+  { path: 'reject-reason', component: RejectReasonComponent, canActivate: [AuthGuard] },
+  { path: 'polist', component: PolistComponent, canActivate: [AuthGuard] },
+  { path: 'pomapprover', component: PomapproverComponent, canActivate: [AuthGuard] },
+  { path: 'approvedpo', component: ApprovedpoComponent, canActivate: [AuthGuard] },
+  { path: 'rejectedpo', component: RejectedpoComponent, canActivate: [AuthGuard] },
+  { path: 'pendingpo', component: PendingpoComponent, canActivate: [AuthGuard] },
+  { path: 'apovendorpostatus', component: ApoVendorpostatusComponent, canActivate: [AuthGuard] },
+  { path: 'pomcreator', component: PomcreatorComponent, canActivate: [AuthGuard] },
+  { path: 'potoken', component: PotokenComponent, canActivate: [AuthGuard] },
+  { path: 'rejectedpom', component: RejectedpomComponent, canActivate: [AuthGuard] },
+  { path: 'pomcreatoresign', component: PomcreatorEsignComponent, canActivate: [AuthGuard] },
+  { path: 'inventory', component: InventoryComponent, canActivate: [AuthGuard] },
+  { path: 'prstatus', component: PrstatusComponent, canActivate: [AuthGuard] },
+
+
+  //{path: 'create-activities', component: MasterCreateuserComponent,canActivate:[AuthGuard]},
+
+
+  {
+    path: 'view-project',
+    component: ViewProjectComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: '', redirectTo: 'data-analysis', pathMatch: 'full' },
+      { path: 'data-analysis/:id', component: DataAnalysisComponent, canActivate: [AuthGuard] },
+      { path: 'progress-sheet/:id', component: ProgressSheetComponent, canActivate: [AuthGuard] },
+      { path: 'calender/:id', component: CalenderComponent, canActivate: [AuthGuard] }
+      //{path: 'login', component: LoginComponent},
+      //{path: 'forgotpassword', component: ForgotpasswordComponent},
+
+
+    ]
+  },
+  {
+    path: '**',
+    redirectTo: 'dpr',
+    pathMatch: 'full'
+  }
 ];
 

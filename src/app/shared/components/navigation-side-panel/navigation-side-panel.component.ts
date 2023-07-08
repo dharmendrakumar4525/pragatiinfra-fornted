@@ -16,7 +16,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   public links: NavigationLink[];
   openSidebar: boolean = false;
   link_name = "";
-  obj = [ 
+  obj = [
   //  {
   //   link_name: "Permissions",
   //   link: "/permissions",
@@ -28,7 +28,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       link: '/dpr',
       icon: "bx bx-collection",
       img:'../../../assets/images/icons/dpr.svg',
-      
+
     },
     {
       link_name: "dmr",
@@ -39,7 +39,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
     {
       link_name: "Procurements",
-      link: '/purchaserequest',
+      link: '/procurement',
       icon: "bx bx-collection",
       img:'../../../assets/images/icons/procure.svg',
     },
@@ -73,14 +73,14 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
     //   //img:'../../../assets/images/icons/sub activity (1).svg',
     // },
 
-    
+
      {
       link_name: "User Management",
       link: null,
       icon: "bx bx-collection",
       img:'../../../assets/images/icons/usercirlceadd.svg',
       sub_menu: [
-        
+
       ]
     },
     // {
@@ -89,7 +89,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
     //   icon: "bx bx-collection",
     //   img:'../../../assets/images/icons/PR.svg',
     // },
-    
+
   ]
   private _subscriptionsSubject$: Subject<void>;
   public currentPanelState: SidePanelState;
@@ -107,7 +107,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
     this.rolePermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[4]
     this.userPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[4]?.childList[4]
-    
+
     if(this.permissions.user.role === 'superadmin'){
 
       this.obj = [{
@@ -138,7 +138,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
           //img:'../../../assets/images/icons/activity.svg',
         },
     ]
-      
+
     }
 
 
@@ -153,12 +153,12 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
         img:'../../../assets/images/icons/Buser.svg'
       }]
 
-      
+
 
     }
 
     if(this.permissions.user.role !== 'superadmin' && this.rolePermissionsView?.isSelected){
-      
+
       this.obj = [{
         link_name: "Roles",
         link: "/roles",
@@ -182,12 +182,12 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
     }
 
 
-    
+
     this._sidePanelService.panelStateChanges
       .pipe(takeUntil(this._subscriptionsSubject$))
       .subscribe((state: SidePanelState) => (this.currentPanelState = state));
 
-    
+
   }
   caseconverter(value:any){
  if(value=='dpr'||value=='dmr')
@@ -228,7 +228,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       console.log("subb1")
       this.router.navigate([item.link]);
     }else{
-      console.log("subb1")
+      console.log("subb2")
 
       this.openSidebar = !this.openSidebar
       if(this.openSidebar){
@@ -238,16 +238,16 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
             link: '/dpr',
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/dpr.svg',
-            
+
           },   {
             link_name: "dmr",
             link: null,
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/dmr.svg',
-          },   
+          },
 
-  
-    
+
+
           {
             link_name: "Procurements",
             link: '/purchaserequest',
@@ -260,14 +260,14 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/Inventory.svg',
           },
-      
+
           {
             link_name: "PR status",
             link: '/prstatus',
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/PR.svg',
           },
-        
+
           {
            link_name: "User Management",
            link: null,
@@ -283,8 +283,8 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
         //   icon: "bx bx-collection",
         //   img:'../../../assets/images/icons/PR.svg',
         // },
-        
-     
+
+
 
        ]
       }else{
@@ -294,7 +294,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
             link: '/dpr',
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/dpr.svg',
-            
+
           },
           {
             link_name: "dmr",
@@ -302,7 +302,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/dmr.svg',
           },
-          
+
 
           {
             link_name: "Procurements",
@@ -317,14 +317,14 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/Inventory.svg',
           },
-      
+
           {
             link_name: "PR status",
             link: '/prstatus',
             icon: "bx bx-collection",
             img:'../../../assets/images/icons/PR.svg',
           },
-       
+
           {
            link_name: "User Management",
            link: null,
@@ -340,8 +340,8 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
         //   icon: "bx bx-collection",
         //   img:'../../../assets/images/icons/PR.svg',
         // },
-        
-         
+
+
         //  {
         //   link_name: "Activities",
         //   link: '/activities',
@@ -358,8 +358,8 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       }
 
     }
-   
-    
+
+
   }
 
 

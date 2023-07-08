@@ -137,7 +137,6 @@ import { CookieModule } from 'ngx-cookie';
 
 
     }),
-
     BrowserAnimationsModule,
   ],
   declarations: [AppComponent, HomeComponent, SearchPipe, SubActivitySearchPipe, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent, LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,

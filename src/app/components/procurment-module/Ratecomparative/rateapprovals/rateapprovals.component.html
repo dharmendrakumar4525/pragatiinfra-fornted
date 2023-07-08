@@ -1,0 +1,248 @@
+
+<mat-toolbar style="height: 100px;background-color: #fff;">
+    <div style="margin-top: 50px;margin-left: 20px;">
+        <img src="./assets/images/RA.svg" >
+    </div>
+    <span style="font-family: 'Poppins';margin-top: 40px;font-style: normal;font-weight:600;font-size: 30px;color:#1E293B;margin-left: 10px;">Rate approvals</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button style="margin-right: 40px;">
+    <mat-icon style="margin-top: 40px;">notifications</mat-icon>
+    </button>
+   
+  </mat-toolbar>
+    <div><hr style="width: 1130px;border: 2px solid #C5C5C5;margin-left: 30px;"></div>
+    <div style="display: flex;flex-direction: row;font-family: 'Poppins';font-weight: 600;">
+      
+            <div style="margin-top: 20px;margin-left: 30px;display: flex;">
+               
+                <div><img src="./assets/images/box.svg"></div>
+                <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Purchase&nbsp;request</span>
+                <div ><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
+            </div>
+            <div style="margin-top: 20px;margin-left: 10px;display: flex;">
+                
+               <div> <img src="./assets/images/approval.svg" ></div>
+                <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Approvals</span>
+                <div ><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
+            </div>
+            <div style="margin-top: 20px;margin-left: 10px;display: flex;">
+              <div>  <img src="./assets/images/rc.svg" ></div>
+                <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Rate&nbsp;Comparative</span>
+                <div ><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
+            </div>
+            <div style="margin-top: 20px;margin-left: 10px;display: flex;">
+               <div> <img src="./assets/images/app.svg"></div>
+                <span style="color: #233A61;margin-left: 5px;font-size: 14px;">Rate&nbsp;Approvals</span>
+                <div ><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
+            </div>
+            <div style="margin-top: 20px;margin-left: 10px;display: flex;">
+                <div><img src="./assets/images/po.svg" ></div>
+                <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Purchase&nbsp;orders</span>
+            </div>
+         </div>
+
+
+         <mat-card class="topcard">
+            <form style="display: flex;flex-wrap: wrap;gap:10px;width:1000px">
+                <div style="display: flex;flex-direction: column;">
+            <label style="color: #4272BF;font-size: 14px;">Request title</label>
+            <input placeholder="Enter title" style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+        </div>
+        <div style="display: flex;flex-direction: column;margin-left: 100px;">
+            <label style="color: #4272BF;font-size: 14px;">Request date</label>
+            <input placeholder="" style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+        </div>
+        <div style="display: flex;flex-direction: column;margin-left: 100px;">
+            <label style="color: #4272BF;font-size: 14px;">Handled by</label>
+            <input placeholder="Name" style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+        </div>
+        <div style="display: flex;flex-direction: column;">
+            <label style="color: #4272BF;font-size: 14px;">Request no</label>
+            <input placeholder="Auto generate" style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+        </div>
+        <div style="display: flex;flex-direction: column;margin-left: 100px;">
+            <label style="color: #4272BF;font-size: 14px;">Site name</label>
+            <input list="sitename" name="sitename" placeholder="Select site"  style="padding: 10px;width: 200px;border:1px solid #9F9F9F;border-radius: 6px;cursor: pointer;margin-top: 10px;font-family: 'Poppins';"/>
+            <datalist id="sitename">
+              <option value="pragti" >
+              <option value="infra">
+            </datalist>
+        </div>
+
+        <div style="display: flex;flex-direction: column;margin-left: 100px;">
+            <label style="color: #4272BF;font-size: 14px;">Required by</label>
+            <input placeholder="date" style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+        </div>
+
+        <div style="position: relative;left: 950px;bottom:160px">
+            <label style="color: #4272BF;font-size: 14px;">Local Purchase</label>
+            <div style="margin-top: 20px;display: flex;flex-direction: column;">
+            <mat-checkbox color="primary">Yes</mat-checkbox><br>
+            <mat-checkbox color="primary">No</mat-checkbox>
+        </div>
+        </div>
+        </form>
+         </mat-card>
+
+         
+           
+         <div class="scroll-bar1" >
+            <table style="direction: ltr !important;border-left: 2px solid #000 !important;">
+            <tr >
+            <th >S&nbsp;No</th>
+            <th>Item</th>
+           <th>Category</th>
+           <th>Sub&nbsp;category</th>
+           <th>UOM</th>
+           <th>Quantity</th>
+           <th>GST</th>
+           <th   colspan="3" >Name1
+            <div class="main">
+              <div class="left">item rate</div>
+              <div class="right">Amount</div>
+              
+            </div>
+           </th>
+
+           <th colspan="3">Name2
+            <div class="main">
+              <div class="left">item rate</div>
+              <div class="right">Amount</div>
+              
+            </div>
+           </th>
+         
+        </tr>
+    
+            
+           
+            <tbody>
+                <tr  style="background-color: #F4F4F5;" *ngFor="let num of [1,2,3,]">
+                    <td style="text-align: center;">
+                   001
+                    </td>
+                    <td >
+                      <input list="browsers" name="myBrowser" placeholder="Select item"  style="padding: 10px;width: 100px;border:1px solid #9F9F9F;border-radius: 20px;cursor: pointer;background-color: Transparent !important;"/>
+                      <datalist id="browsers" >
+                        <option value="Chrome">
+                        <option value="Firefox">
+                      </datalist>
+                    </td>
+                    <td style="color: #000;width:100px">
+                    Auto&nbsp;Generated
+                    </td>
+                    <td style="color: #000;width:50px !important">
+                      Auto&nbsp;Generated
+                    </td> 
+                    <td >
+                      <input list="browsers" name="myBrowser" placeholder="Select"  style="padding: 10px;width: 80px;border:1px solid #9F9F9F;border-radius: 20px;cursor: pointer;background-color: Transparent !important;"/>
+                      <datalist id="browsers" >
+                        <option value="Chrome">
+                        <option value="Firefox">
+                      </datalist>
+                    </td>
+                    <td>
+                      <input list="browsers" name="myBrowser" placeholder="Type"  style="padding: 10px;width: 50px;border:1px solid #9F9F9F;border-radius: 10px;cursor: pointer;background-color: Transparent !important;"/>
+                      <datalist id="browsers" >
+                        <option value="Chrome">
+                        <option value="Firefox">
+                      </datalist>
+                    </td>
+                    <td >
+                        <input list="percent" name="percent" placeholder="18%"  style="padding: 10px;width: 50px;border:1px solid #9F9F9F;border-radius: 20px;cursor: pointer;background-color: Transparent !important;"/>
+                        <datalist id="percent">
+                          <option value="10%" >
+                          <option value="20%">
+                        </datalist>
+                      </td>
+                      <td >
+                        <input placeholder="Enter" style="width:50px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;background-color: Transparent">
+                       </td>
+                      <td>
+                        <input placeholder="Enter" style="width:50px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;background-color: Transparent">
+                      </td>
+                      <td>
+                        <mat-radio-button color="primary" ></mat-radio-button>
+                      </td>
+                      <td>
+                        <input placeholder="Enter" style="width:50px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;background-color: Transparent">
+                      </td>
+                   <td> <input placeholder="Enter" style="width:50px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;background-color: Transparent"></td>
+                   <td><mat-radio-button color="primary"></mat-radio-button></td>
+                </tr>
+              
+            </tbody>
+          </table>
+      </div> 
+   
+   
+    <div class="container" style="display: flex; height: 400px;margin-bottom: 30px;width:100%">
+      <div class="scroll-bar2">
+        <div style="display: flex !important;gap:10px;">
+     <div style="width: 60%;direction: ltr;margin-top: -30px;" *ngFor="let num of [1,2,3]">
+  
+      <table class="downtable">
+    
+         <tr>
+              <td style="border: none;font-size: small;">Total&nbsp;amount</td>
+              <td style="border: none;font-size: small;">INR&nbsp;0000.00</td>
+            </tr>
+            <tr>
+              <td style="border: none;font-size: small;">GST&nbsp;amount</td>
+              <td style="border: none;font-size: small;">INR&nbsp;0000.00</td>
+            </tr>
+            <tr>
+              <td style="border: none;font-size: small;">Freight</td>
+              <td style="border: none;font-size: small;"><input type="text" style="padding: 5px;width:100px;border:none;color:#186D3C;background-color: transparent;"></td>
+              
+            </tr>
+            <tr>
+              <td style="border: none;font-size: small;">Freight&nbsp;GST</td>
+              <td style="border: none;font-size: small;"><input type="text" style="padding: 5px;width:100px;border:none;color:#073B4C;background-color: transparent;"></td>
+              
+            </tr>
+            <tr>
+              <td style="border: none;font-size: small;">Grand&nbsp;total</td>
+              <td style="border: none;color:#073B4C;font-weight: bold;font-size: small;">INR&nbsp;0000.00</td>
+              
+            </tr>
+         
+          </table>
+     
+         
+           <!-- <div>
+            <span>Total amount</span><br><br><br>
+            <span>GST amount</span><br><br><br>
+            <span>Freight amount</span><br><br><br>
+            <span>Freight GST</span><br><br><br>
+            <span>Grand Total</span><br><br><br>
+
+          </div>
+           <div>
+            <span>INR 0000.00</span><br><br><br>
+            <span>INR 0000.00</span><br><br><br>
+            <span>INR 0000.00</span><br><br><br>
+            <span>INR 0000.00</span><br><br><br>
+            <span>INR 0000.00</span><br><br><br>
+           </div>
+            -->
+        </div>
+        </div>
+        </div>
+     
+      
+        <div style="flex-grow: 1;width:50% ">
+            <div class="remarktab">
+                <label style="color: #3568BA;font-size: 15px;">Remarks</label><br>
+                <textarea placeholder="Please describe"></textarea>
+            </div>
+
+            <div style="display: flex;flex-direction: row;gap: 10px;float: right;position: relative;top:-150px;right:70px;">
+                <div><button style="padding: 8px;width: 120px;background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-family: 'Poppins';font-size: 14px;">Sanction</button></div>
+                <div><button style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-family: 'Poppins';font-size: 14px;" (click)="openDialog()" >Reject</button></div>
+                <div><button style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-family: 'Poppins';font-size: 14px;">Revise rates</button></div>
+               
+            </div>
+        </div>
+    </div>
+

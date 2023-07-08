@@ -1,0 +1,115 @@
+<div style="width:1160px">
+<mat-toolbar style="height: 100px;background-color: #fff;">
+    <span style="margin-top: 40px;font-style: normal;font-weight: 600;font-size: 30px;color:#1E293B;margin-left: 20px;font-family: 'Poppins';">Pragati Infra</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button style="margin-right: 20px;">
+    <mat-icon style="margin-top: 40px;">notifications</mat-icon>
+    </button>
+   
+  </mat-toolbar>
+
+  <div><hr style="width: 1140px;border: 2px solid #C5C5C5;margin-left: 30px;"></div>
+  <div>
+    <h1 style="color: #1E293B;font-style:normal;margin-left: 40px;margin-top: 30px;">Site master</h1>
+  </div>
+
+  <div style="margin-left: 40px;width:100%;margin-top: 30px;">
+    <mat-form-field appearance="outline" class="searchbar">
+        <mat-icon matSuffix>search</mat-icon>
+        <input matInput type="search" placeholder="search title" class="search-input">
+       
+    </mat-form-field>
+    </div>
+
+        <body >
+            <div class="scroll-bar1" >
+              <table style="direction: ltr !important;border-left: 2px solid #000 !important;">
+              <tr>
+              <th >Site&nbsp;name</th>
+              <th>Location</th>
+             <th>Code</th>
+             <th>Delivery&nbsp;Address</th>
+             <th>Store&nbsp;manager</th>
+             <th>Store&nbsp;manager&nbsp;number</th>
+             <th>Store&nbsp;manager&nbsp;email</th>
+          </tr>
+              
+              
+             
+              <tbody>
+                  <tr  style="font-weight: bolder;background-color: #F4F4F5;" *ngFor="let num of [1,2,3,4,5,6]">
+                      <td>
+                      <input list="browsers" name="myBrowser" placeholder="Select"  style="padding: 10px;width: 100px;border:1px solid #9F9F9F;border-radius: 20px;cursor: pointer;background-color: Transparent !important;"/>
+                          <datalist id="browsers" >
+                            <option value="Chrome">
+                            <option value="Firefox">
+                          </datalist>
+                      </td>
+                      <td >
+                        <input list="browsers" name="myBrowser" placeholder="Select"  style="padding: 10px;width: 100px;border:1px solid #9F9F9F;border-radius: 20px;cursor: pointer;background-color: Transparent !important;"/>
+                          <datalist id="browsers" >
+                            <option value="Chrome">
+                            <option value="Firefox">
+                          </datalist>
+                      </td>
+                      <td >
+                        <input list="browsers" name="myBrowser" placeholder="Enter"  style="padding: 10px;width: 100px;border:1px solid #9F9F9F;border-radius: 10px;cursor: pointer;background-color: Transparent !important;"/>
+                        <datalist id="browsers" >
+                          <option value="Chrome">
+                          <option value="Firefox">
+                        </datalist>
+                      </td>
+                      <td >
+                        <input list="browsers" name="myBrowser" placeholder="Enter"  style="padding: 10px;width: 100px;border:1px solid #9F9F9F;border-radius: 10px;cursor: pointer;background-color: Transparent !important;"/>
+                        <datalist id="browsers" >
+                          <option value="Chrome">
+                          <option value="Firefox">
+                        </datalist>
+                      </td> 
+                      <td >
+                        <input list="browsers" name="myBrowser" placeholder="Select"  style="padding: 10px;width: 100px;border:1px solid #9F9F9F;border-radius: 20px;cursor: pointer;background-color: Transparent !important;"/>
+                        <datalist id="browsers" >
+                          <option value="Chrome">
+                          <option value="Firefox">
+                        </datalist>
+                      </td>
+                      <td >
+                        <input list="browsers" name="myBrowser" placeholder="Enter"  style="padding: 10px;width: 120px;border:1px solid #9F9F9F;border-radius: 10px;cursor: pointer;background-color: Transparent !important;"/>
+                        <datalist id="browsers" >
+                          <option value="Chrome">
+                          <option value="Firefox">
+                        </datalist>
+                      </td>
+                      <td >
+                        <input list="browsers" name="myBrowser" placeholder="Enter"  style="padding: 10px;width: 120px;border:1px solid #9F9F9F;border-radius: 10px;cursor: pointer;background-color: Transparent !important;"/>
+                        <datalist id="browsers" >
+                          <option value="Chrome">
+                          <option value="Firefox">
+                        </datalist>
+                      </td>
+                  </tr>
+                  
+              </tbody>
+            </table>
+        </div> 
+            <div style="display: flex;flex-direction: row;gap: 40px;margin-left:60px;margin-bottom:100px;top: -50px;position: relative;">
+            <div>
+                <button style="padding: 8px ;width: 120px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">  Add  
+                    <img src="./assets/images/add.png" style="margin-left: 30px;position: relative;top:5px"></button>
+              </div>
+              <div>
+                <button style="padding: 10px ;width: 120px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">  Edit 
+                    <img src="./assets/images/edit.svg" style="margin-left: 30px;"> </button>
+              </div>
+              <div>
+                <button style="padding: 10px ;width: 120px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">  Import/Export  </button>
+              </div>
+            </div>
+            <div style="display: flex;flex-direction: row;gap: 10px;float: right;position: relative;top:-120px;right:10px">
+                <div><button style="padding: 8px;width: 120px;background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-size: 14px;cursor: pointer;font-family: 'Poppins';">Submit</button></div>
+                <div><button style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-size: 14px;cursor: pointer;font-family: 'Poppins';">Cancel</button></div>
+            </div>
+
+           
+          </body>
+        </div>

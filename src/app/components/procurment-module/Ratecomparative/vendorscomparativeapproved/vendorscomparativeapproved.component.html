@@ -1,0 +1,97 @@
+<mat-toolbar style="height: 100px;background-color: #fff;">
+    <div style="margin-top: 50px;margin-left: 20px;">
+        <img src="./assets/images/ratehead.svg" >
+    </div>
+    <span style="font-family: 'Poppins';margin-top: 40px;font-style: normal;font-weight:600;font-size: 30px;color:#1E293B;margin-left: 10px;">Vendors comparative</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button style="margin-right: 40px;">
+    <mat-icon style="margin-top: 40px;">notifications</mat-icon>
+    </button>
+   
+  </mat-toolbar>
+    <div><hr style="width: 1130px;border: 2px solid #C5C5C5;margin-left: 30px;"></div>
+    <div style="display: flex;flex-direction: row;font-family: 'Poppins';font-weight: 600;">
+      
+            <div style="margin-top: 20px;margin-left: 30px;display: flex;">
+               
+                <div><img src="./assets/images/box.svg"></div>
+                <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Purchase&nbsp;request</span>
+                <div ><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
+            </div>
+            <div style="margin-top: 20px;margin-left: 10px;display: flex;">
+                
+               <div> <img src="./assets/images/approval.svg" ></div>
+                <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Approvals</span>
+                <div ><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
+            </div>
+            <div style="margin-top: 20px;margin-left: 10px;display: flex;">
+              <div>  <img src="./assets/images/ratedown.svg" ></div>
+                <span style="color: #233A61;margin-left: 5px;font-size: 14px;">Rate&nbsp;Comparative</span>
+                <div ><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
+            </div>
+            <div style="margin-top: 20px;margin-left: 10px;display: flex;">
+               <div> <img src="./assets/images/approval.svg" ></div>
+                <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Rate&nbsp;Approvals</span>
+                <div ><mat-divider style="width: 100px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
+            </div>
+            <div style="margin-top: 20px;margin-left: 10px;display: flex;">
+                <div><img src="./assets/images/po.svg" ></div>
+                <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Purchase&nbsp;orders</span>
+            </div>
+         </div>
+
+         <div class="requests">
+            <div class="innerreq">Rate comparative</div>
+            <div class="approvedreq">Approved request</div>
+            <div class="innerreq">Rejected request</div>
+            <div class="innerreq">Revised request</div>
+         </div>
+         <div style="display: flex;flex-direction: row;gap:10px">
+            <div style="margin-left: 40px;width:100%;margin-top: 30px;">
+                <mat-form-field appearance="outline" class="searchbar">
+                    <mat-icon matSuffix>search</mat-icon>
+                    <input matInput type="search" placeholder="search item" class="search-input">
+                   
+                </mat-form-field>
+                </div>
+                <div style=" margin-right: 600px;margin-top: 30px;display: flex;gap:10px">   
+              <div style="margin-top: 15px;color: #94A3B8;margin-left: 40px;"> <span>Filter&nbsp;by</span></div> 
+                  <div>  <mat-form-field appearance="outline" class="datebar" >
+                        <input matInput [matDatepicker]="startPicker" placeholder="Date"
+                        (click)="startPicker.open()" />
+                        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startPicker></mat-datepicker>
+                    </mat-form-field></div>
+                    </div>
+                    <div style="margin-top: 30px;display: flex;position: relative;right:570px;gap:10px">   
+                        <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter&nbsp;by</span></div> 
+                            <div>  <mat-form-field appearance="outline" class="datebar" >
+                                  <input matInput  placeholder="Site" />
+                                </mat-form-field></div>
+                              </div>            
+              </div>
+
+              <div class="scroll-bar1" style="width: 93%;">
+                <table style="direction: ltr !important;margin-top: -20px;">
+                
+                
+               
+                <tbody>
+                    <tr *ngFor="let num of [1,2,3,4,5,6,7,8,9,10]">
+                        <td style="color: #4272BF;width:300px;text-align: left;padding: 10px;">Request&nbsp;no</td>
+                        <hr style="border: 1px solid #D9D9D9;height: 30px;">
+                        <td style="color: #4272BF;width:200px;">Title</td>
+                        <hr style="border: 1px solid #D9D9D9;height: 30px;">
+                        <td style="color: #4272BF;width:800px;text-align: left;padding: 10px;">Site</td>
+                        <td style="background-color: #54AA52;color:#fff;width:200px">Approved&nbsp;Vendor</td>
+                        <td style="width: 100px;"><mat-icon>
+                            arrow_forward_ios
+                        </mat-icon></td>   
+                    </tr>
+                    </tbody>
+                  </table>      
+              </div>
+          
+
+
+

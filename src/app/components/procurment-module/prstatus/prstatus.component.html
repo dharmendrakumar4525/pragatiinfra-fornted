@@ -1,0 +1,75 @@
+
+<mat-toolbar style="height: 100px;background-color: #fff;">
+    <div style="margin-top: 40px;margin-left: 20px;">
+        <img src="./assets/images/prstatus.svg" >
+    </div>
+    <span style="font-family: 'Poppins';margin-top: 40px;font-style: normal;font-weight:600;font-size: 30px;color:#1E293B;margin-left: 10px;">PR status</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button style="margin-right: 40px;">
+    <mat-icon style="margin-top: 40px;">notifications</mat-icon>
+    </button>
+   
+  </mat-toolbar>
+  <div><hr style="width: 1130px;border: 2px solid #C5C5C5;margin-left: 30px;"></div>
+
+  <div style="display: flex;flex-direction: row;gap:10px">
+    <div style="margin-left: 40px;width:100%;margin-top: 30px;">
+        <mat-form-field appearance="outline" class="searchbar">
+            <mat-icon matSuffix>search</mat-icon>
+            <input matInput type="search" placeholder="search title" class="search-input">
+           
+        </mat-form-field>
+        </div>
+        <div style=" margin-right: 600px;margin-top: 30px;display: flex;gap:10px">   
+      <div style="margin-top: 15px;color: #94A3B8;margin-left: 30px;"> <span>Filter&nbsp;by</span></div> 
+          <div>  <mat-form-field appearance="outline" class="datebar" >
+                <input matInput [matDatepicker]="startPicker" placeholder="Date"
+                (click)="startPicker.open()" />
+                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
+            </mat-form-field></div>
+            </div>
+            <div style="position: relative;right:570px;top:35px"> 
+                <button style="padding: 7px ;width: 150px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;color:#797979;font-family: 'Poppins';font-size: 14px;">  
+                Show history <img src="./assets/images/showhistory.svg" class="imgstyle"> </button>
+               
+               </div>
+      </div>
+
+      <div class="scroll-bar1" >
+        <table style="direction: ltr !important;border-left: 2px solid #000 !important;">
+        <tr>
+        <th >PO no</th>
+        <th>Request title</th>
+       <th>Site name</th>
+       <th>Required by</th>
+       <th>Handled by</th>
+       <th>PR status</th>
+    </tr>
+        
+        
+       
+        <tbody>
+            <tr  style="background-color: #F4F4F5;" *ngFor="let item of prList">
+                <td style="text-align: center;"> {{item.purchaseRequestNumber}}</td>
+                <td style="color: #000;" >{{item.requestTitle}}</td> 
+                <td > {{item.siteData.siteName}}</td>
+                <td>{{item.requiredBy | date:'dd-MM-yyyy'}} </td>
+                <td>- </td>
+                <td >
+                  <button style="padding: 15px ;width:120px;background-color: #3CB03A;font-family: 'Poppins';border-radius: 8px;color: #fff;border-color: lightgrey;font-size: 14px;">
+                
+                    <ng-container>
+                       {{item.status}}
+                    </ng-container>
+                    
+                
+                
+                </button>
+                
+                </td>
+            </tr>
+            
+        </tbody>
+      </table>
+  </div> 

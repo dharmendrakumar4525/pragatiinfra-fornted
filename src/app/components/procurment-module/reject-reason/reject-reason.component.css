@@ -1,0 +1,26 @@
+mat-card{
+    width:640px;
+    height: 350px;
+    margin-top: 10px;
+    margin-right: 40px;
+    margin-left: 50px;
+}
+.remarktab{
+    margin-top: 30px;
+    margin-left: 35px;
+    font-family: 'Poppins';
+   
+ }
+ textarea{
+    width:550px;
+    height: 150px;
+    margin-top: 10px;
+    margin-right: 50px;
+    border: 2px solid #94A3B8;
+    border-radius: 5px;
+    margin-bottom: 200px;
+    color: #94A3B8;
+    padding: 10px;
+    font-family: 'Poppins';
+
+ }

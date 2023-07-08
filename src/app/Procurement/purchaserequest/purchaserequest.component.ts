@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { PURCHASE_REQUEST_API, GET_SITE_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
 import * as moment from 'moment';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-purchaserequest',
@@ -17,11 +17,12 @@ export class PurchaserequestComponent implements OnInit {
   id: any;
   siteList: any;
   load = false;
-
+  items: FormArray;
   constructor(
     private router: Router,
     private httpService: RequestService,
     private snack: SnackbarService,
+    private formBuilder: FormBuilder
   ) { }
 
   purchaseRequestForm = new FormGroup({
@@ -32,27 +33,25 @@ export class PurchaserequestComponent implements OnInit {
     siteName: new FormControl('', Validators.required),
     localPurchase: new FormControl('yes', Validators.required),
     remarks: new FormControl(''),
-    // items: this.formBuilder.array([this.createItemArrayForm(), this.createItemArrayForm(), this.createItemArrayForm()]),
+    items: this.formBuilder.array([this.createItemArrayForm(), this.createItemArrayForm(), this.createItemArrayForm()]),
   });
 
 
 
-  createItemArrayForm(designations?) {
+  createItemArrayForm() {
     return new FormGroup({
       itemId: new FormControl('', Validators.required),
       qty: new FormControl('', Validators.required),
-      intendedUse: new FormControl('', Validators.required),
-      attachment: new FormControl('', Validators.required),
+      // intendedUse: new FormControl('', Validators.required),
+      attachment: new FormControl(''),
       remark: new FormControl('', Validators.required),
+      uom: new FormControl('', Validators.required),
 
     })
 
   }
 
   onSubmit() {
-
-    console.log('this.purchaseRequestForm', this.purchaseRequestForm)
-
     if (this.load) {
       return
     }
@@ -95,6 +94,23 @@ export class PurchaserequestComponent implements OnInit {
     this.httpService.GET(GET_SITE_API, {}).subscribe(res => {
       this.siteList = res;
     })
+  }
+
+  addItem(): void {
+    this.items = this.purchaseRequestForm.get('items') as FormArray;
+    this.items.push(this.createItem());
+  }
+
+  createItem(): FormGroup {
+    return this.formBuilder.group({
+      itemId: new FormControl('', Validators.required),
+      qty: new FormControl('', Validators.required),
+      // intendedUse: new FormControl('', Validators.required),
+      attachment: new FormControl(''),
+      remark: new FormControl('', Validators.required),
+      uom: new FormControl('', Validators.required),
+
+    });
   }
 
   ngOnInit(): void {

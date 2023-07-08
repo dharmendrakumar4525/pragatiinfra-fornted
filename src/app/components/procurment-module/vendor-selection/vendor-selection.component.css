@@ -1,0 +1,75 @@
+mat-card{
+    width:700px;
+    height: 480px;
+    margin-top: 10px;
+    margin-right: 40px;
+    margin-left: 50px;
+    box-shadow: 0px 2px 12px rgba(220, 217, 217, 0.25);
+}
+.vendors{
+   display: flex;
+   flex-direction: column;
+   margin-top:5px;
+   height: 30px;
+   font-family: 'Poppins';
+   font-weight: 400;
+   font-size: 15px;
+   color:#4272BF;
+   margin-left: 5px;
+   cursor: pointer;
+   position: relative;
+   
+}
+.vendors:hover{
+    color: #233A61;
+}
+.vendors::before{
+    content: '';
+    position: absolute;
+    height: 80%;
+    width: 15px;
+    top:0;
+    left:0;
+    background-color: #D9D9D9;
+    opacity: 0;
+    transform: scaleY(0);
+    transition: transform 0.2s,opacity 0.2s;
+}
+.vendors:hover::before{
+    opacity: 1;
+    transform: scaleY(1);
+}
+.scroll-bar2{
+        
+   
+    height: 200px;
+    width:100px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-top:40px;
+    overflow: auto;
+    gap:100px;
+    direction: rtl !important;
+  
+  
+    }
+  
+  ::-webkit-scrollbar {
+  width: 8px;
+  height:7px;
+  }
+  ::-webkit-scrollbar-track{
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  background-color:lightgrey ;
+  }
+  ::-webkit-scrollbar-thumb{
+  background: #1E293B;
+  border-radius: 5px;
+  }
+  ::-webkit-scrollbar-thumb:hover{
+  background: lightblue;
+  }
+  
+  
+  

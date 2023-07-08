@@ -15,7 +15,7 @@ import { StorageCookieService } from '@services/cookie/storage-cookie.service';
 
 
 export class RequestService {
-  
+
   that: any;
   constructor(
     private http: HttpClient,
@@ -37,8 +37,8 @@ export class RequestService {
         }, 500)
       }
 
-      if(error.status && error.status== 402 ){     
-        window.location.href = "/login";    
+      if (error.status && error.status == 402) {
+        window.location.href = "/login";
       }
 
       if (error.status && error.status == 401) {
@@ -67,17 +67,17 @@ export class RequestService {
         }, 500)
       }
 
-      if(error.status && error.status== 402 ){     
-        window.location.href = `/login`;     
+      if (error.status && error.status == 402) {
+        window.location.href = `/login`;
       }
-      
+
       console.error(
         `Backend returned code ${error.status}, `, error);
     }
 
 
     // return an observable with a user-facing error message
-    return throwError(()=>error.error);
+    return throwError(() => error.error);
   }
 
 
@@ -92,6 +92,11 @@ export class RequestService {
       }
       request = `${URL}?${req.join('&')}`;
     }
+    else {
+      request = URL
+    }
+
+
     return this.http.get<Response>(request)
       .pipe(
         catchError(this.handleError.bind({ that: this, request: data })), // then handle the error

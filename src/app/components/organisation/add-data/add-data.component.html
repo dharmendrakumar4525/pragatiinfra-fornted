@@ -1,0 +1,164 @@
+<div class="section-wrapper">
+
+  <div class="section-header">
+    <div class="header-left">
+      <h2>Add Organisation</h2>
+    </div>
+    <div class="header-right">
+      <div class="buttons-containers">
+        <button mat-button class="submit-btn" (click)="saveData()">Submit</button>
+        <button mat-button class="cancel-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <form (ngSubmit)="saveData()" [formGroup]="orgmasterForm">
+      <div class="row">
+        <!-- <div formGroupName="name">
+        <input formControlName="first" placeholder="First name" /><br />
+        <input formControlName="last" placeholder="Last name" /><br />
+        <p *ngIf="f.name.touched && f.name.invalid" [style.color]="'red'">
+          Name is invalid.
+        </p>
+      </div> -->
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Location</mat-label>
+            <input matInput formControlName="location">
+            <!-- <mat-error>
+              <span>Please provide a valid email</span>
+            </mat-error> -->
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Contact Person</mat-label>
+            <input matInput formControlName="contact_person">
+            <!-- <mat-error>
+              <span>Please provide a valid email</span>
+            </mat-error> -->
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Designation</mat-label>
+            <input matInput formControlName="designation">
+            <!-- <mat-error>
+              <span>Please provide a valid email</span>
+            </mat-error> -->
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Phone Number</mat-label>
+            <input matInput formControlName="phone_number" type="number">
+            <!-- <mat-error>
+              <span>Please provide a valid email</span>
+            </mat-error> -->
+          </mat-form-field>
+
+        </div>
+
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>GST Number</mat-label>
+            <input matInput formControlName="gst_number">
+            <!-- <mat-error>
+              <span>Please provide a valid email</span>
+            </mat-error> -->
+          </mat-form-field>
+
+        </div>
+
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>PAN Number</mat-label>
+            <input matInput formControlName="pan_number">
+            <!-- <mat-error>
+              <span>Please provide a valid email</span>
+            </mat-error> -->
+          </mat-form-field>
+
+        </div>
+
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Enter Email</mat-label>
+            <input matInput formControlName="email">
+            <!-- <mat-error>
+              <span>Please provide a valid email</span>
+            </mat-error> -->
+          </mat-form-field>
+        </div>
+
+        <h4>Address</h4>
+        <div formGroupName="address" class="row">
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Street Address</mat-label>
+              <input matInput formControlName="street_address">
+              <!-- <mat-error>
+                <span>Please provide a valid email</span>
+              </mat-error> -->
+            </mat-form-field>
+
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Street Address 2</mat-label>
+              <input matInput formControlName="street_address2">
+              <!-- <mat-error>
+                <span>Please provide a valid email</span>
+              </mat-error> -->
+            </mat-form-field>
+
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>State</mat-label>
+              <input matInput formControlName="state">
+              <!-- <mat-error>
+                <span>Please provide a valid email</span>
+              </mat-error> -->
+            </mat-form-field>
+
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>City</mat-label>
+              <input matInput formControlName="city">
+              <!-- <mat-error>
+                <span>Please provide a valid email</span>
+              </mat-error> -->
+            </mat-form-field>
+
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Zip Code</mat-label>
+              <input matInput formControlName="zip_code">
+              <!-- <mat-error>
+                <span>Please provide a valid email</span>
+              </mat-error> -->
+            </mat-form-field>
+
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Country</mat-label>
+              <input matInput formControlName="country">
+              <!-- <mat-error>
+                <span>Please provide a valid email</span>
+              </mat-error> -->
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>

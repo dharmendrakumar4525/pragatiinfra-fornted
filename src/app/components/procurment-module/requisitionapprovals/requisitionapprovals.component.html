@@ -1,0 +1,162 @@
+<mat-toolbar style="height: 100px;background-color: #fff;">
+    <div style="margin-top: 40px;margin-left: 20px;">
+        <img src="./assets/images/reqapp.svg" >
+    </div>
+    <span style="font-family: 'Poppins';margin-top: 40px;font-style: normal;font-weight:600;font-size: 30px;color:#1E293B;margin-left: 10px;">Requisition Approvals</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button style="margin-right: 40px;">
+    <mat-icon style="margin-top: 40px;">notifications</mat-icon>
+    </button>
+   
+  </mat-toolbar>
+    <div><hr style="width: 1130px;border: 2px solid #C5C5C5;margin-left: 30px;"></div>
+    <div style="display: flex;flex-direction: row;font-family: 'Poppins';font-weight: 600;">
+      
+            <div style="margin-top: 20px;margin-left: 30px;display: flex;">
+               
+                <div ><img src="./assets/images/box.svg" ></div>
+                <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Purchase&nbsp;request</span>
+                <div ><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
+            </div>
+            <div style="margin-top: 20px;margin-left: 10px;display: flex;">
+                
+               <div> <img src="./assets/images/app.svg" ></div>
+                <span style="color: #233A61;margin-left: 5px;font-size: 14px;">Approvals</span>
+                <div ><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
+            </div>
+            <div style="margin-top: 20px;margin-left: 10px;display: flex;">
+              <div>  <img src="./assets/images/rc.svg" ></div>
+                <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Rate&nbsp;Comparative</span>
+                <div ><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
+            </div>
+            <div style="margin-top: 20px;margin-left: 10px;display: flex;">
+               <div> <img src="./assets/images/approval.svg" ></div>
+                <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Rate&nbsp;Approvals</span>
+                <div ><mat-divider style="width: 100px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
+            </div>
+            <div style="margin-top: 20px;margin-left: 10px;display: flex;">
+                <div><img src="./assets/images/po.svg" ></div>
+                <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Purchase&nbsp;orders</span>
+            </div>
+         </div>
+    
+
+         <mat-card class="topcard">
+            <form style="display: flex;flex-wrap: wrap;gap:40px;width:1000px">
+                <div style="display: flex;flex-direction: column;">
+            <label style="color: #4272BF;font-size: 14px;">Request title</label>
+            <input placeholder="Random" style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+        </div>
+        <div style="display: flex;flex-direction: column;margin-left: 100px;">
+            <label style="color: #4272BF;font-size: 14px;">Request date</label>
+            <input placeholder="" style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+        </div>
+        <div style="display: flex;flex-direction: column;margin-left: 100px;">
+            <label style="color: #4272BF;font-size: 14px;">Required by</label>
+            <input placeholder="date" style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+        </div>
+        <div style="display: flex;flex-direction: column;">
+            <label style="color: #4272BF;font-size: 14px;">Request no</label>
+            <input placeholder="223434" style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+        </div>
+        <div style="display: flex;flex-direction: column;margin-left: 100px;">
+            <label style="color: #4272BF;font-size: 14px;">Site name</label>
+            <input list="sitename" name="sitename" placeholder="Select site"  style="padding: 10px;width: 200px;border:1px solid #9F9F9F;border-radius: 6px;cursor: pointer;margin-top: 10px;font-family: 'Poppins';"/>
+            <datalist id="sitename">
+              <option value="pragti" >
+              <option value="infra">
+            </datalist>
+        </div>
+        <div style="display: flex;flex-direction: column;margin-left: 100px;">
+            <label style="color: #4272BF;font-size: 14px;">Local Purchase</label>
+            <div style="margin-top: 20px;">
+            <mat-checkbox color="primary">Yes</mat-checkbox>
+            <mat-checkbox style="margin-left: 30px;" color="primary">No</mat-checkbox>
+        </div>
+        </div>
+        </form>
+         </mat-card>
+
+       
+
+           
+                <div class="scroll-bar1" >
+                  <table style="direction: ltr !important;border-left: 2px solid #000 !important;">
+                  <tr>
+                  <th >S&nbsp;No</th>
+                  <th>Item</th>
+                 <th>Category</th>
+                 <th>Sub&nbsp;category</th>
+                 <th>Uom</th>
+                 <th>Quantity</th>
+                 <th>Intended&nbsp;end&nbsp;use</th>
+                 <th>Attachments</th>
+                 <th>Remarks</th>
+              </tr>
+                  
+                  
+                 
+                  <tbody>
+                      <tr  style="background-color: #F4F4F5;" *ngFor="let num of [1,2,3,]">
+                          <td style="text-align: center;">
+                         001
+                          </td>
+                          <td >
+                            <input list="browsers" name="myBrowser" placeholder="Select item"  style="padding: 10px;width: 150px;border:1px solid #9F9F9F;border-radius: 20px;cursor: pointer;background-color: Transparent !important;"/>
+                            <datalist id="browsers" >
+                              <option value="Chrome">
+                              <option value="Firefox">
+                            </datalist>
+                          </td>
+                          <td style="color: #000;">
+                          Auto&nbsp;Generated
+                          </td>
+                          <td style="color: #000;">
+                            Auto&nbsp;Generated
+                          </td> 
+                          <td >
+                            <input list="browsers" name="myBrowser" placeholder="Select"  style="padding: 10px;width: 150px;border:1px solid #9F9F9F;border-radius: 20px;cursor: pointer;background-color: Transparent !important;"/>
+                            <datalist id="browsers" >
+                              <option value="Chrome">
+                              <option value="Firefox">
+                            </datalist>
+                          </td>
+                          <td>
+                            <input list="browsers" name="myBrowser" placeholder="Enter"  style="padding: 10px;width: 150px;border:1px solid #9F9F9F;border-radius: 10px;cursor: pointer;background-color: Transparent !important;"/>
+                            <datalist id="browsers" >
+                              <option value="Chrome">
+                              <option value="Firefox">
+                            </datalist>
+                          </td>
+                          <td >
+                            <input placeholder="Enter" style="width:120px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;background-color: Transparent">
+                          </td>
+                          <td >
+                            <input placeholder="Enter/paste" style="width:120px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;background-color: Transparent">
+                          </td>
+                          <td >
+                            <input placeholder="Enter" style="width:120px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;background-color: Transparent">
+                          
+                          </td>
+                      </tr>
+                      
+                  </tbody>
+                </table>
+            </div> 
+            <div class="remarktab">
+                <label style="color: #3568BA;font-size: 15px;">Remarks</label><br>
+                <textarea placeholder="Please describe"></textarea>
+            </div>
+
+            <div style="display: flex;flex-direction: row;gap: 10px;float: right;position: relative;top:-150px;right:60px;">
+                <div><button style="padding: 8px;width: 120px;background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-family: 'Poppins';font-size: 14px;">Approve</button></div>
+                <div><button style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-family: 'Poppins';font-size: 14px;">Reject</button></div>
+                <div><button style="padding: 8px;width: 150px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-family: 'Poppins';font-size: 14px;">Revise request</button></div>
+            </div>
+            <div style="display: flex;gap:20px;margin-left: 40px;position: relative;top:-150px;;">
+                <button style="padding: 8px ;width: 120px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;font-size: 15px;color:#797979;font-family: 'Poppins';font-size: 14px;">  <img src="./assets/images/print.svg" class="imgstyle">  Print
+            </button>
+            <button style="padding: 8px ;width: 180px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;font-size: 15px;color:#797979;font-family: 'Poppins';font-size: 14px;">
+              <img src="./assets/images/pdf.svg" class="imgstyle">  Download PDF
+            </button>
+              </div>
