@@ -24,12 +24,12 @@ export class AddDataComponent implements OnInit {
     pan_number: new FormControl(''),
     attachments: new FormControl(''),
     address: new FormGroup({
-      street_address: new FormControl(),
-      street_address2: new FormControl(),
-      state: new FormControl(),
-      city: new FormControl(),
-      zip_code: new FormControl(),
-      country: new FormControl(),
+      street_address: new FormControl('', Validators.required),
+      street_address2: new FormControl('', Validators.required),
+      state: new FormControl('', Validators.required),
+      city: new FormControl('', Validators.required),
+      zip_code: new FormControl('', Validators.required),
+      country: new FormControl('', Validators.required),
     }),
     email: new FormControl('', [Validators.email, Validators.required]),
 
@@ -47,7 +47,14 @@ export class AddDataComponent implements OnInit {
         this.router.navigate(['organisation']);
       })
     }
+    else{
+      this.orgmasterForm.markAllAsTouched();
+    }
 
+  }
+
+  list() {
+    this.router.navigate(['organisation']);
   }
 
   ngOnInit(): void {

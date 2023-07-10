@@ -1,1 +1,78 @@
-<p>listing works!</p>
+<div class="section-wrapper">
+
+  <div class="section-header">
+    <div class="header-left">
+      <h2>Organisations Master</h2>
+    </div>
+    <div class="header-right">
+      <div class="buttons-containers">
+        <button mat-button class="submit-btn" (click)="add()">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">SN.</th>
+
+          <th scope="col">Locaton</th>
+          <th scope="col">Contact Person</th>
+          <th scope="col">Designation</th>
+          <th scope="col">Phone Number</th>
+          <th scope="col">Email</th>
+          <th scope="col">PAN Number</th>
+          <th scope="col">GST Number</th>
+          <th scope="col">Address </th>
+          <th scope="col">Action </th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of orgList;let i = index">
+          <th scope="row">{{i+1}}</th>
+          <td>{{item.location}}</td>
+          <td>{{item.contact_person}}</td>
+          <td>{{item.designation}}</td>
+          <td>{{item.dialcode}}{{item.phone_number}}</td>
+          <td>{{item.email}}</td>
+          <td>{{item.pan_number}}</td>
+          <td>{{item.gst_number}}</td>
+          <td>{{item.address.street_address + ' '
+            + item.address.street_address2 + ' '
+            + item.address.state + ' '
+            +item.address.city + ' '
+            +item.address.country}}</td>
+          <td>
+            <ul class="list-inline m-0">
+              <li class="list-inline-item">
+                <button class="btn btn-success btn-sm rounded-0" (click)="edit(item._id)" type="button"
+                  data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button>
+              </li>
+              <li class="list-inline-item">
+                <button class="btn btn-danger btn-sm rounded-0" type="button" (click)="delete(item._id)"
+                  data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <!-- <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td colspan="2">Larry the Bird</td>
+          <td>@twitter</td>
+        </tr> -->
+      </tbody>
+    </table>
+
+
+
+  </div>
+
+</div>

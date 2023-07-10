@@ -18,17 +18,17 @@ export class EditDataComponent implements OnInit {
     contact_person: new FormControl("", Validators.required),
     designation: new FormControl("", Validators.required),
     dialcode: new FormControl('+91'),
-    phone_number: new FormControl('', Validators.required),
+    phone_number: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]),
     gst_number: new FormControl('', Validators.required),
     pan_number: new FormControl(''),
     attachments: new FormControl(''),
     address: new FormGroup({
-      street_address: new FormControl(),
-      street_address2: new FormControl(),
-      state: new FormControl(),
-      city: new FormControl(),
-      zip_code: new FormControl(),
-      country: new FormControl(),
+      street_address: new FormControl('', Validators.required),
+      street_address2: new FormControl('', Validators.required),
+      state: new FormControl('', Validators.required),
+      city: new FormControl('', Validators.required),
+      zip_code: new FormControl('', [Validators.required, Validators.maxLength(6), Validators.minLength(6)]),
+      country: new FormControl('', Validators.required),
     }),
     email: new FormControl('', [Validators.email, Validators.required]),
     _id: new FormControl()
@@ -50,7 +50,7 @@ export class EditDataComponent implements OnInit {
         })
       }
       else {
-
+        this.list();
       }
     });
 
@@ -79,8 +79,6 @@ export class EditDataComponent implements OnInit {
       _id: data._id
 
     })
-    console.log("this.orgmasterForm.value", this.orgmasterForm.value);
-
   }
 
   saveData() {
@@ -90,6 +88,10 @@ export class EditDataComponent implements OnInit {
         this.router.navigate(['organisation']);
       })
     }
+    else {
+      this.orgmasterForm.markAllAsTouched();
+    }
+
 
   }
 

@@ -1,1 +1,116 @@
-<p>edit-data works!</p>
+<div class="section-wrapper">
+
+  <div class="section-header">
+    <div class="header-left">
+      <h2>Edit Item</h2>
+    </div>
+    <div class="header-right">
+      <div class="buttons-containers">
+        <button mat-button class="submit-btn" (click)="saveData()">Submit</button>
+        <button mat-button class="cancel-btn" (click)="list()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <form [formGroup]="editForm">
+      <div class="row">
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="item_name">
+            <mat-error *ngIf="editForm.controls.item_name.errors?.['required']">
+              this field is required.
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Item Number</mat-label>
+            <input matInput formControlName="item_number">
+            <mat-error *ngIf="editForm.controls.item_number.errors?.['required']">
+              this field is required.
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+
+
+          <mat-form-field>
+            <mat-label>Category</mat-label>
+            <mat-select matInput formControlName="category">
+              <mat-option *ngFor="let category of categoryList" [value]="category?._id">
+                {{category?.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="editForm.controls.category.errors?.['required']">
+              this field is required.
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+
+
+          <mat-form-field>
+            <mat-label>Sub Category</mat-label>
+            <mat-select matInput formControlName="sub_category">
+              <mat-option *ngFor="let subCategory of subCategoryList" [value]="subCategory?._id">
+                {{subCategory?.subcategory_name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="editForm.controls.sub_category.errors?.['required']">
+              this field is required.
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+        <div class="col-md-3">
+
+          <mat-form-field>
+            <mat-label>UOM</mat-label>
+            <mat-select matInput formControlName="uom">
+              <mat-option *ngFor="let uom of uomList" [value]="uom?._id">
+                {{uom?.uom_name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="editForm.controls.uom.errors?.['required']">
+              this field is required.
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+        <div class="col-md-3">
+
+          <mat-form-field>
+            <mat-label>GST</mat-label>
+            <mat-select matInput formControlName="gst">
+              <mat-option *ngFor="let gst of gstList" [value]="gst?._id">
+                {{gst?.gst_percentage}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="editForm.controls.gst.errors?.['required']">
+              this field is required.
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Specification</mat-label>
+            <input matInput formControlName="specification">
+            <mat-error *ngIf="editForm.controls.specification.errors?.['required']">
+              this field is required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>

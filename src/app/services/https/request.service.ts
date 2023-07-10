@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { HttpErrorResponse } from '@angular/common/http';
-import { throwError } from 'rxjs';
+import { forkJoin, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { isArray } from 'lodash';
 import { Response } from '@services/https/response.model';
@@ -146,6 +146,18 @@ export class RequestService {
   }
 
 
+  multipleRequests(URL: any, data: any) {
+    URL.map(obj=>{
+      console.log(obj);
+
+    })
+
+    return forkJoin(URL)
+      .pipe(
+        catchError(this.handleError.bind({ that: this, request: data })), // then handle the error
+
+      );
+  }
 
 }
 
