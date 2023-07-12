@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ORG_REQUEST_API } from '@env/api_path';
+import { SITE_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 
@@ -13,24 +13,22 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
 export class EditDataComponent implements OnInit {
 
 
-  orgmasterForm = new FormGroup({
+  editForm = new FormGroup({
     location: new FormControl('', Validators.required),
-    contact_person: new FormControl("", Validators.required),
-    designation: new FormControl("", Validators.required),
-    dialcode: new FormControl('+91'),
-    phone_number: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]),
-    gst_number: new FormControl('', Validators.required),
-    pan_number: new FormControl(''),
-    attachments: new FormControl(''),
+    site_name: new FormControl("", Validators.required),
+    code: new FormControl("", Validators.required),
+    store_manager: new FormControl("", Validators.required),
+    store_manager_phone_number_dialcode: new FormControl('+91'),
+    store_manager_phone_number: new FormControl('', Validators.required),
+    site_manager_email: new FormControl('', [Validators.email, Validators.required]),
     address: new FormGroup({
       street_address: new FormControl('', Validators.required),
       street_address2: new FormControl('', Validators.required),
       state: new FormControl('', Validators.required),
       city: new FormControl('', Validators.required),
-      zip_code: new FormControl('', [Validators.required, Validators.maxLength(6), Validators.minLength(6)]),
+      zip_code: new FormControl('', Validators.required),
       country: new FormControl('', Validators.required),
     }),
-    email: new FormControl('', [Validators.email, Validators.required]),
     _id: new FormControl()
   });
   constructor(
@@ -42,7 +40,7 @@ export class EditDataComponent implements OnInit {
       console.log(params) //log the entire params object
       console.log(params['id']);
       if (params['id']) {
-        this.httpService.GET(`${ORG_REQUEST_API}/detail`, { _id: params['id'] }).subscribe((res: any) => {
+        this.httpService.GET(`${SITE_API}/detail`, { _id: params['id'] }).subscribe((res: any) => {
           console.log(res);
           if (res) {
             this.patchValue(res.data);
@@ -58,15 +56,14 @@ export class EditDataComponent implements OnInit {
 
 
   patchValue(data: any) {
-    this.orgmasterForm.patchValue({
+    this.editForm.patchValue({
       location: data.location,
-      contact_person: data.contact_person,
-      designation: data.designation,
-      dialcode: data.dialcode,
-      phone_number: data.phone_number,
-      gst_number: data.gst_number,
-      pan_number: data.pan_number,
-      attachments: data.attachments,
+      site_name: data.site_name,
+      code: data.code,
+      store_manager: data.store_manager,
+      store_manager_phone_number_dialcode: '+91',
+      store_manager_phone_number: data.store_manager_phone_number,
+      site_manager_email: data.site_manager_email,
       address: {
         street_address: data.address.street_address,
         street_address2: data.address.street_address2,
@@ -75,28 +72,27 @@ export class EditDataComponent implements OnInit {
         zip_code: data.address.zip_code,
         country: data.address.country,
       },
-      email: data.email,
       _id: data._id
 
     })
   }
 
   saveData() {
-    if (this.orgmasterForm.valid) {
-      this.httpService.PUT(ORG_REQUEST_API, this.orgmasterForm.value).subscribe(res => {
-        this.snack.notify("Organisation data has been saved sucessfully.", 1);
-        this.router.navigate(['organisation']);
+    if (this.editForm.valid) {
+      this.httpService.PUT(SITE_API, this.editForm.value).subscribe(res => {
+        this.snack.notify("site data has been saved sucessfully.", 1);
+        this.router.navigate(['site']);
       })
     }
     else {
-      this.orgmasterForm.markAllAsTouched();
+      this.editForm.markAllAsTouched();
     }
 
 
   }
 
   list() {
-    this.router.navigate(['organisation']);
+    this.router.navigate(['site']);
   }
 
   ngOnInit(): void {

@@ -91,7 +91,7 @@ export const routes: Routes = [
 
 
   {
-    path: 'subb-category',
+    path: 'sub-category',
     loadChildren: () => import('../components/sub-category/sub-category.module')
       .then(mod => mod.SubCategoryModule),
     canActivate: [AuthGuard]

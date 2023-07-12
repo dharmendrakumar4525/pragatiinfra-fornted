@@ -18,27 +18,25 @@
           <th scope="col">SN.</th>
 
           <th scope="col">Locaton</th>
-          <th scope="col">Contact Person</th>
-          <th scope="col">Designation</th>
-          <th scope="col">Phone Number</th>
-          <th scope="col">Email</th>
-          <th scope="col">PAN Number</th>
-          <th scope="col">GST Number</th>
+          <th scope="col">Site Name</th>
+          <th scope="col">Code</th>
+          <th scope="col">Store Manager</th>
+          <th scope="col">Store Manager Number</th>
+          <th scope="col">Store Manager Email</th>
           <th scope="col">Address </th>
           <th scope="col">Action </th>
 
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of orgList;let i = index">
+        <tr *ngFor="let item of vendorList;let i = index">
           <th scope="row">{{i+1}}</th>
           <td>{{item.location}}</td>
-          <td>{{item.contact_person}}</td>
-          <td>{{item.designation}}</td>
-          <td>{{item.dialcode}}{{item.phone_number}}</td>
-          <td>{{item.email}}</td>
-          <td>{{item.pan_number}}</td>
-          <td>{{item.gst_number}}</td>
+          <td>{{item.site_name}}</td>
+          <td>{{item.code}}</td>
+          <td>{{item.store_manager}}</td>
+          <td>{{item.store_manager_phone_number}}</td>
+          <td>{{item.site_manager_email}}</td>
           <td>{{item.address.street_address + ' '
             + item.address.street_address2 + ' '
             + item.address.state + ' '
@@ -57,17 +55,7 @@
             </ul>
           </td>
         </tr>
-        <!-- <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td colspan="2">Larry the Bird</td>
-          <td>@twitter</td>
-        </tr> -->
+
       </tbody>
     </table>
 

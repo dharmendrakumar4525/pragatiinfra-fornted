@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ORG_REQUEST_API, PURCHASE_REQUEST_API } from '@env/api_path';
+import { SITE_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-data',
@@ -14,15 +13,14 @@ import * as moment from 'moment';
 export class AddDataComponent implements OnInit {
 
 
-  orgmasterForm = new FormGroup({
+  addForm = new FormGroup({
     location: new FormControl('', Validators.required),
-    contact_person: new FormControl("", Validators.required),
-    designation: new FormControl("", Validators.required),
-    dialcode: new FormControl('+91'),
-    phone_number: new FormControl('', Validators.required),
-    gst_number: new FormControl('', Validators.required),
-    pan_number: new FormControl(''),
-    attachments: new FormControl(''),
+    site_name: new FormControl("", Validators.required),
+    code: new FormControl("", Validators.required),
+    store_manager: new FormControl("", Validators.required),
+    store_manager_phone_number_dialcode: new FormControl('+91'),
+    store_manager_phone_number: new FormControl('', Validators.required),
+    site_manager_email: new FormControl('', [Validators.email, Validators.required]),
     address: new FormGroup({
       street_address: new FormControl('', Validators.required),
       street_address2: new FormControl('', Validators.required),
@@ -30,9 +28,7 @@ export class AddDataComponent implements OnInit {
       city: new FormControl('', Validators.required),
       zip_code: new FormControl('', Validators.required),
       country: new FormControl('', Validators.required),
-    }),
-    email: new FormControl('', [Validators.email, Validators.required]),
-
+    })
   });
   constructor(
     private router: Router,
@@ -41,20 +37,20 @@ export class AddDataComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   saveData() {
-    if (this.orgmasterForm.valid) {
-      this.httpService.POST(ORG_REQUEST_API, this.orgmasterForm.value).subscribe(res => {
+    if (this.addForm.valid) {
+      this.httpService.POST(SITE_API, this.addForm.value).subscribe(res => {
         this.snack.notify("Organisation data has been saved sucessfully.", 1);
-        this.router.navigate(['organisation']);
+        this.router.navigate(['site']);
       })
     }
-    else{
-      this.orgmasterForm.markAllAsTouched();
+    else {
+      this.addForm.markAllAsTouched();
     }
 
   }
 
   list() {
-    this.router.navigate(['organisation']);
+    this.router.navigate(['site']);
   }
 
   ngOnInit(): void {

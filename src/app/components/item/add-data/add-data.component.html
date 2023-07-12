@@ -41,7 +41,8 @@
           <mat-form-field>
             <mat-label>Category</mat-label>
             <mat-select matInput formControlName="category">
-              <mat-option *ngFor="let category of categoryList" [value]="category?._id">
+              <mat-option *ngFor="let category of categoryList" (onSelectionChange)="categoryChange( category._id)"
+                [value]="category?._id">
                 {{category?.name}}
               </mat-option>
             </mat-select>

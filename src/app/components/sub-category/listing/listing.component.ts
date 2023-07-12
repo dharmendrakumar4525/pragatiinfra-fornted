@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ORG_REQUEST_API } from '@env/api_path';
+import { CATEGORY_API, SUB_CATEGORY_API } from '@env/api_path';
+import { environment } from '@env/environment';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 
@@ -10,43 +12,53 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
   styleUrls: ['./listing.component.scss']
 })
 export class ListingComponent implements OnInit {
-  orgList: any = [];
+  subCategoryList: any = [];
+  categoryList: any;
   constructor(
     private router: Router,
     private httpService: RequestService,
     private snack: SnackbarService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private http: HttpClient
   ) {
     this.getList();
   }
 
   getList() {
-    this.httpService.GET(ORG_REQUEST_API, {}).subscribe(res => {
-      if (res && res.data) {
-        this.orgList = res.data;
+    const subCategory = this.http.get<any>(`${environment.api_path}${SUB_CATEGORY_API}`);
+    const category = this.http.get<any>(`${environment.api_path}${CATEGORY_API}`);
+
+    this.httpService.multipleRequests([subCategory, category], {}).subscribe(res => {
+      if (res) {
+        this.subCategoryList = res[0].data;
+        this.categoryList = res[1].data;
       }
     })
   }
 
   edit(id: any) {
-    let url: string = "organisation/edit/" + id
+    let url: string = "sub-category/edit/" + id
     console.log(url);
 
     this.router.navigateByUrl(url);
   }
 
-  add(){
-    let url: string = "organisation/add"
+  add() {
+    let url: string = "sub-category/add"
     this.router.navigateByUrl(url);
   }
 
   delete(id: any) {
-    this.httpService.DELETE(ORG_REQUEST_API, { _id: id }).subscribe(res => {
+    this.httpService.DELETE(SUB_CATEGORY_API, { _id: id }).subscribe(res => {
       if (res) {
-        this.snack.notify("Organisation record has been deleted sucessfully.", 1);
+        this.snack.notify("Sub Category record has been deleted sucessfully.", 1);
         this.getList();
       }
     })
+  }
+
+  getCategory(id) {
+    return this.categoryList.filter(obj => obj._id == id)[0]?.name
   }
 
   ngOnInit(): void {

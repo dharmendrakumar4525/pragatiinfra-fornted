@@ -17,6 +17,7 @@ export class EditDataComponent implements OnInit {
   uomList: any = [];
   subCategoryList: any = [];
   categoryList: any = [];
+  allSubCategoryList: any = [];
 
   editForm = new FormGroup({
     item_name: new FormControl('', Validators.required),
@@ -41,6 +42,7 @@ export class EditDataComponent implements OnInit {
     this.httpService.multipleRequests([uom, subCategory, category, gst], {}).subscribe(res => {
       this.uomList = res[0].data;
       this.subCategoryList = res[1].data;
+      this.allSubCategoryList = res[1].data;
       this.categoryList = res[2].data;
       this.gstList = res[3].data;
     })
@@ -94,6 +96,11 @@ export class EditDataComponent implements OnInit {
 
   list() {
     this.router.navigate(['item']);
+  }
+
+  categoryChange(value: any) {
+    this.subCategoryList = this.allSubCategoryList.filter(obj => obj.category == value)
+
   }
 
   ngOnInit(): void {

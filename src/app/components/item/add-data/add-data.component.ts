@@ -30,6 +30,7 @@ export class AddDataComponent implements OnInit {
     specification: new FormControl('', Validators.required),
 
   });
+  allSubCategoryList: any = [];
   constructor(
     private router: Router,
     private httpService: RequestService,
@@ -44,6 +45,8 @@ export class AddDataComponent implements OnInit {
     this.httpService.multipleRequests([uom, subCategory, category, gst], {}).subscribe(res => {
       this.uomList = res[0].data;
       this.subCategoryList = res[1].data;
+      this.allSubCategoryList = res[1].data;
+
       this.categoryList = res[2].data;
       this.gstList = res[3].data;
     })
@@ -66,6 +69,11 @@ export class AddDataComponent implements OnInit {
 
   list() {
     this.router.navigate(['item']);
+  }
+
+  categoryChange(value: any) {
+    this.subCategoryList = this.allSubCategoryList.filter(obj => obj.category == value)
+
   }
 
   ngOnInit(): void {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ORG_REQUEST_API } from '@env/api_path';
+import { SITE_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 
@@ -10,7 +10,7 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
   styleUrls: ['./listing.component.scss']
 })
 export class ListingComponent implements OnInit {
-  orgList: any = [];
+  siteList: any = [];
   constructor(
     private router: Router,
     private httpService: RequestService,
@@ -21,29 +21,29 @@ export class ListingComponent implements OnInit {
   }
 
   getList() {
-    this.httpService.GET(ORG_REQUEST_API, {}).subscribe(res => {
+    this.httpService.GET(SITE_API, {}).subscribe(res => {
       if (res && res.data) {
-        this.orgList = res.data;
+        this.siteList = res.data;
       }
     })
   }
 
   edit(id: any) {
-    let url: string = "organisation/edit/" + id
+    let url: string = "site/edit/" + id
     console.log(url);
 
     this.router.navigateByUrl(url);
   }
 
   add(){
-    let url: string = "organisation/add"
+    let url: string = "site/add"
     this.router.navigateByUrl(url);
   }
 
   delete(id: any) {
-    this.httpService.DELETE(ORG_REQUEST_API, { _id: id }).subscribe(res => {
+    this.httpService.DELETE(SITE_API, { _id: id }).subscribe(res => {
       if (res) {
-        this.snack.notify("Organisation record has been deleted sucessfully.", 1);
+        this.snack.notify("site record has been deleted sucessfully.", 1);
         this.getList();
       }
     })

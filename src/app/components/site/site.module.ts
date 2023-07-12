@@ -13,11 +13,11 @@ const routes: Routes = [
   },
 
   {
-    path: "list",
+    path: "",
     component: ListingComponent
   },
   {
-    path: "eidt/:id",
+    path: "edit/:id",
     component: EditDataComponent
   },
 ];
