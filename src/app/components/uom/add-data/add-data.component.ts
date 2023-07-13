@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { CATEGORY_API } from '@env/api_path';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router, } from '@angular/router';
+import { UOM_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
-import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-add-data',
@@ -14,8 +14,8 @@ import * as moment from 'moment';
 export class AddDataComponent implements OnInit {
 
   addForm = new FormGroup({
-    name: new FormControl('', Validators.required),
-    code: new FormControl('', Validators.required),
+    uom_name: new FormControl('', Validators.required),
+    unit: new FormControl('', Validators.required),
   });
 
   constructor(
@@ -25,9 +25,9 @@ export class AddDataComponent implements OnInit {
 
   saveData() {
     if (this.addForm.valid) {
-      this.httpService.POST(CATEGORY_API, this.addForm.value).subscribe(res => {
+      this.httpService.POST(UOM_API, this.addForm.value).subscribe(res => {
         this.snack.notify(" Data has been saved sucessfully.", 1);
-        this.router.navigate(['category']);
+        this.router.navigate(['uom']);
       })
     }
     else {
@@ -37,7 +37,7 @@ export class AddDataComponent implements OnInit {
   }
 
   list() {
-    this.router.navigate(['category']);
+    this.router.navigate(['uom']);
   }
 
   ngOnInit(): void {

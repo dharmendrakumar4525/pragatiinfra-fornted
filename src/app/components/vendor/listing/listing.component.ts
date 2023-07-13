@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ORG_REQUEST_API, VENDOR_API } from '@env/api_path';
+import { CATEGORY_API, ORG_REQUEST_API, VENDOR_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 
@@ -11,12 +11,15 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
 })
 export class ListingComponent implements OnInit {
   vendorList: any = [];
+  categoryList: any = [];
   constructor(
     private router: Router,
     private httpService: RequestService,
     private snack: SnackbarService,
-    private route: ActivatedRoute
   ) {
+    this.httpService.GET(CATEGORY_API, {}).subscribe(res => {
+      this.categoryList = res.data;
+    })
     this.getList();
   }
 
@@ -35,7 +38,7 @@ export class ListingComponent implements OnInit {
     this.router.navigateByUrl(url);
   }
 
-  add(){
+  add() {
     let url: string = "vendor/add"
     this.router.navigateByUrl(url);
   }
@@ -47,6 +50,10 @@ export class ListingComponent implements OnInit {
         this.getList();
       }
     })
+  }
+
+  getCategory(id: any) {
+    return this.categoryList.filter(ob => ob._id == id)[0]?.name;
   }
 
   ngOnInit(): void {

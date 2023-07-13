@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CATEGORY_API } from '@env/api_path';
+import { GST_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 
@@ -21,7 +21,7 @@ export class ListingComponent implements OnInit {
   }
 
   getList() {
-    this.httpService.GET(CATEGORY_API, {}).subscribe(res => {
+    this.httpService.GET(GST_API, {}).subscribe(res => {
       if (res && res.data) {
         this.categoryList = res.data;
       }
@@ -29,19 +29,19 @@ export class ListingComponent implements OnInit {
   }
 
   edit(id: any) {
-    let url: string = "category/edit/" + id
+    let url: string = "gst/edit/" + id
     console.log(url);
 
     this.router.navigateByUrl(url);
   }
 
   add(){
-    let url: string = "category/add"
+    let url: string = "gst/add"
     this.router.navigateByUrl(url);
   }
 
   delete(id: any) {
-    this.httpService.DELETE(CATEGORY_API, { _id: id }).subscribe(res => {
+    this.httpService.DELETE(GST_API, { _id: id }).subscribe(res => {
       if (res) {
         this.snack.notify(" record has been deleted sucessfully.", 1);
         this.getList();

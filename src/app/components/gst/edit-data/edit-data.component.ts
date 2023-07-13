@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CATEGORY_API } from '@env/api_path';
+import { GST_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 
@@ -14,8 +14,8 @@ export class EditDataComponent implements OnInit {
 
 
   editForm = new FormGroup({
-    name: new FormControl('', Validators.required),
-    code: new FormControl('', Validators.required),
+    gst_name: new FormControl('', Validators.required),
+    gst_percentage: new FormControl('', [Validators.required, Validators.max(33), Validators.min(0)]),
     _id: new FormControl()
   });
   constructor(
@@ -24,11 +24,8 @@ export class EditDataComponent implements OnInit {
     private snack: SnackbarService,
     private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
-      console.log(params) //log the entire params object
-      console.log(params['id']);
       if (params['id']) {
-        this.httpService.GET(`${CATEGORY_API}/detail`, { _id: params['id'] }).subscribe((res: any) => {
-          console.log(res);
+        this.httpService.GET(`${GST_API}/detail`, { _id: params['id'] }).subscribe((res: any) => {
           if (res) {
             this.patchValue(res.data);
           }
@@ -44,8 +41,8 @@ export class EditDataComponent implements OnInit {
 
   patchValue(data: any) {
     this.editForm.patchValue({
-      name: data.name,
-      code: data.code,
+      gst_name: data.gst_name,
+      gst_percentage: data.gst_percentage,
       _id: data._id
 
     })
@@ -53,9 +50,9 @@ export class EditDataComponent implements OnInit {
 
   saveData() {
     if (this.editForm.valid) {
-      this.httpService.PUT(CATEGORY_API, this.editForm.value).subscribe(res => {
+      this.httpService.PUT(GST_API, this.editForm.value).subscribe(res => {
         this.snack.notify("Data has been saved sucessfully.", 1);
-        this.router.navigate(['category']);
+        this.router.navigate(['gst']);
       })
     }
     else {
@@ -66,7 +63,7 @@ export class EditDataComponent implements OnInit {
   }
 
   list() {
-    this.router.navigate(['category']);
+    this.router.navigate(['gst']);
   }
 
   ngOnInit(): void {

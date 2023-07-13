@@ -1,8 +1,8 @@
-<!-- <div class="section-wrapper">
+<div class="section-wrapper">
 
   <div class="section-header">
     <div class="header-left">
-      <h2>Add Organisation</h2>
+      <h2>Add Vendor</h2>
     </div>
     <div class="header-right">
       <div class="buttons-containers">
@@ -30,7 +30,11 @@
         <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>Category</mat-label>
-            <input matInput formControlName="category">
+            <mat-select matInput formControlName="category" multiple>
+              <mat-option *ngFor="let category of categoryList" [value]="category._id">
+                {{category?.name}}
+              </mat-option>
+            </mat-select>
             <mat-error *ngIf="addForm.controls.category.errors?.['required']">
               this field is required.
             </mat-error>
@@ -63,9 +67,53 @@
         </div>
         <div class="col-md-3">
           <mat-form-field appearance="outline">
-            <mat-label>Store Manager Email</mat-label>
-            <input matInput formControlName="site_manager_email" type="email">
-            <mat-error *ngIf="addForm.controls.site_manager_email.errors?.['required']">
+            <mat-label>GST Number</mat-label>
+            <input matInput formControlName="gst_number">
+            <mat-error *ngIf="addForm.controls.gst_number.errors?.['required']">
+              this field is required.
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>PAN Number</mat-label>
+            <input matInput formControlName="pan_number">
+            <mat-error *ngIf="addForm.controls.pan_number.errors?.['required']">
+              this field is required.
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email">
+            <mat-error *ngIf="addForm.controls.email.errors?.['required']">
+              this field is required.
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Payment Terms</mat-label>
+            <input matInput formControlName="payment_terms" type="email">
+            <mat-error *ngIf="addForm.controls.payment_terms.errors?.['required']">
+              this field is required.
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Terms & Condition</mat-label>
+            <input matInput formControlName="terms_condition" type="email">
+            <mat-error *ngIf="addForm.controls.terms_condition.errors?.['required']">
               this field is required.
             </mat-error>
 
@@ -146,4 +194,4 @@
     </form>
   </div>
 
-</div> -->
+</div>

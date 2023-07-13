@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ORG_REQUEST_API } from '@env/api_path';
+import { CATEGORY_API, VENDOR_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 
@@ -13,39 +13,46 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
 export class EditDataComponent implements OnInit {
 
 
-  orgmasterForm = new FormGroup({
-    location: new FormControl('', Validators.required),
+  editForm = new FormGroup({
+    vendor_name: new FormControl("", Validators.required),
+    category: new FormControl([], Validators.required),
     contact_person: new FormControl("", Validators.required),
-    designation: new FormControl("", Validators.required),
     dialcode: new FormControl('+91'),
-    phone_number: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]),
+    phone_number: new FormControl('', Validators.required),
     gst_number: new FormControl('', Validators.required),
-    pan_number: new FormControl(''),
-    attachments: new FormControl(''),
+    pan_number: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    payment_terms: new FormControl('', Validators.required),
+    terms_condition: new FormControl('', Validators.required),
+
     address: new FormGroup({
       street_address: new FormControl('', Validators.required),
       street_address2: new FormControl('', Validators.required),
       state: new FormControl('', Validators.required),
       city: new FormControl('', Validators.required),
-      zip_code: new FormControl('', [Validators.required, Validators.maxLength(6), Validators.minLength(6)]),
+      zip_code: new FormControl('', Validators.required),
       country: new FormControl('', Validators.required),
     }),
-    email: new FormControl('', [Validators.email, Validators.required]),
     _id: new FormControl()
   });
+  categoryList: any;
   constructor(
     private router: Router,
     private httpService: RequestService,
     private snack: SnackbarService,
     private route: ActivatedRoute) {
+    this.httpService.GET(CATEGORY_API, {}).subscribe(res => {
+      this.categoryList = res.data;
+    })
+
     this.route.params.subscribe(params => {
       console.log(params) //log the entire params object
       console.log(params['id']);
       if (params['id']) {
-        this.httpService.GET(`${ORG_REQUEST_API}/detail`, { _id: params['id'] }).subscribe((res: any) => {
+        this.httpService.GET(`${VENDOR_API}/detail`, { _id: params['id'] }).subscribe((res: any) => {
           console.log(res);
           if (res) {
-            this.patchValue(res.data);
+            this.patchValue(res.data[0]);
           }
         })
       }
@@ -58,15 +65,17 @@ export class EditDataComponent implements OnInit {
 
 
   patchValue(data: any) {
-    this.orgmasterForm.patchValue({
-      location: data.location,
+    this.editForm.patchValue({
+      vendor_name: data.vendor_name,
+      category: data.category,
       contact_person: data.contact_person,
-      designation: data.designation,
       dialcode: data.dialcode,
-      phone_number: data.phone_number,
       gst_number: data.gst_number,
+      phone_number: data.phone_number,
       pan_number: data.pan_number,
-      attachments: data.attachments,
+      email: data.email,
+      payment_terms: data.payment_terms,
+      terms_condition: data.terms_condition,
       address: {
         street_address: data.address.street_address,
         street_address2: data.address.street_address2,
@@ -75,28 +84,27 @@ export class EditDataComponent implements OnInit {
         zip_code: data.address.zip_code,
         country: data.address.country,
       },
-      email: data.email,
       _id: data._id
 
     })
   }
 
   saveData() {
-    if (this.orgmasterForm.valid) {
-      this.httpService.PUT(ORG_REQUEST_API, this.orgmasterForm.value).subscribe(res => {
-        this.snack.notify("Organisation data has been saved sucessfully.", 1);
-        this.router.navigate(['organisation']);
+    if (this.editForm.valid) {
+      this.httpService.PUT(VENDOR_API, this.editForm.value).subscribe(res => {
+        this.snack.notify(" data has been saved sucessfully.", 1);
+        this.router.navigate(['vendor']);
       })
     }
     else {
-      this.orgmasterForm.markAllAsTouched();
+      this.editForm.markAllAsTouched();
     }
 
 
   }
 
   list() {
-    this.router.navigate(['organisation']);
+    this.router.navigate(['vendor']);
   }
 
   ngOnInit(): void {

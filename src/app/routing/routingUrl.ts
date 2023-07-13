@@ -121,6 +121,20 @@ export const routes: Routes = [
   },
 
   {
+    path: 'gst',
+    loadChildren: () => import('../components/gst/gst.module')
+      .then(mod => mod.GstModule),
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: 'uom',
+    loadChildren: () => import('../components/uom/uom.module')
+      .then(mod => mod.UomModule),
+    canActivate: [AuthGuard]
+  },
+
+  {
     path: '',
     redirectTo: 'dpr',
     pathMatch: 'prefix',

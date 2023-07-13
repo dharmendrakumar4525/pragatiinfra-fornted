@@ -2,7 +2,7 @@
 
   <div class="section-header">
     <div class="header-left">
-      <h2>Organisations Master</h2>
+      <h2>Vendor Master</h2>
     </div>
     <div class="header-right">
       <div class="buttons-containers">
@@ -16,13 +16,16 @@
       <thead>
         <tr>
           <th scope="col">SN.</th>
+          <th scope="col">Vendor Name</th>
+          <th scope="col">Category</th>
+          <th scope="col">Contact PErson</th>
+          <th scope="col">Phone Number</th>
+          <th scope="col">GST Number</th>
+          <th scope="col">PAN Number</th>
+          <th scope="col">Email</th>
+          <th scope="col">Payment Term </th>
+          <th scope="col">Term & Condtiion </th>
 
-          <th scope="col">Locaton</th>
-          <th scope="col">Site Name</th>
-          <th scope="col">Code</th>
-          <th scope="col">Store Manager</th>
-          <th scope="col">Store Manager Number</th>
-          <th scope="col">Store Manager Email</th>
           <th scope="col">Address </th>
           <th scope="col">Action </th>
 
@@ -31,12 +34,17 @@
       <tbody>
         <tr *ngFor="let item of vendorList;let i = index">
           <th scope="row">{{i+1}}</th>
-          <td>{{item.location}}</td>
-          <td>{{item.site_name}}</td>
-          <td>{{item.code}}</td>
-          <td>{{item.store_manager}}</td>
-          <td>{{item.store_manager_phone_number}}</td>
-          <td>{{item.site_manager_email}}</td>
+          <td>{{item.vendor_name}}</td>
+          <td><ng-container *ngFor="let id of item.category;let index=index">{{getCategory(id)}}
+              <ng-container *ngIf="index+1!=item.category.length">,</ng-container>
+            </ng-container></td>
+          <td>{{item.contact_person}}</td>
+          <td>{{item.phone_number}}</td>
+          <td>{{item.gst_number}}</td>
+          <td>{{item.pan_number}}</td>
+          <td>{{item.email}}</td>
+          <td>{{item.payment_terms}}</td>
+          <td>{{item.terms_condition}}</td>
           <td>{{item.address.street_address + ' '
             + item.address.street_address2 + ' '
             + item.address.state + ' '

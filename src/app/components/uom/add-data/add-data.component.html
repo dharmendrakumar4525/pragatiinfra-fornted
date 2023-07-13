@@ -2,7 +2,7 @@
 
   <div class="section-header">
     <div class="header-left">
-      <h2>Add Category</h2>
+      <h2>Add UOM</h2>
     </div>
     <div class="header-right">
       <div class="buttons-containers">
@@ -17,9 +17,9 @@
       <div class="row">
         <div class="col-md-3">
           <mat-form-field appearance="outline">
-            <mat-label>Category Name</mat-label>
-            <input matInput formControlName="name">
-            <mat-error *ngIf="addForm.controls.name.errors?.['required']">
+            <mat-label>UOM Name</mat-label>
+            <input matInput formControlName="uom_name">
+            <mat-error *ngIf="addForm.controls.uom_name.errors?.['required']">
               this field is required.
             </mat-error>
           </mat-form-field>
@@ -27,9 +27,9 @@
         </div>
         <div class="col-md-3">
           <mat-form-field appearance="outline">
-            <mat-label>Category Code</mat-label>
-            <input matInput formControlName="code">
-            <mat-error *ngIf="addForm.controls.code.errors?.['required']">
+            <mat-label>Code</mat-label>
+            <input matInput formControlName="unit">
+            <mat-error *ngIf="addForm.controls.unit.errors?.['required']">
               this field is required.
             </mat-error>
           </mat-form-field>

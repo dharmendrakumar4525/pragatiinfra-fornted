@@ -2,7 +2,7 @@
 
   <div class="section-header">
     <div class="header-left">
-      <h2>Add Organisation</h2>
+      <h2>Edit Vendor</h2>
     </div>
     <div class="header-right">
       <div class="buttons-containers">
@@ -13,35 +13,41 @@
   </div>
 
   <div class="section-body">
-    <form [formGroup]="orgmasterForm">
+    <form [formGroup]="editForm">
       <div class="row">
         <div class="col-md-3">
           <mat-form-field appearance="outline">
-            <mat-label>Location</mat-label>
-            <input matInput formControlName="location">
-            <mat-error *ngIf="orgmasterForm.controls.location.errors?.['required']">
+            <mat-label>Vendor Name</mat-label>
+            <input matInput formControlName="vendor_name">
+            <mat-error *ngIf="editForm.controls.vendor_name.errors?.['required']">
               this field is required.
             </mat-error>
 
           </mat-form-field>
 
         </div>
+
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Category</mat-label>
+            <mat-select matInput formControlName="category" multiple>
+              <mat-option *ngFor="let category of categoryList" [value]="category._id">
+                {{category?.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="editForm.controls.category.errors?.['required']">
+              this field is required.
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+
         <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>Contact Person</mat-label>
             <input matInput formControlName="contact_person">
-            <mat-error *ngIf="orgmasterForm.controls.contact_person.errors?.['required']">
-              this field is required.
-            </mat-error>
-
-          </mat-form-field>
-
-        </div>
-        <div class="col-md-3">
-          <mat-form-field appearance="outline">
-            <mat-label>Designation</mat-label>
-            <input matInput formControlName="designation">
-            <mat-error *ngIf="orgmasterForm.controls.designation.errors?.['required']">
+            <mat-error *ngIf="editForm.controls.contact_person.errors?.['required']">
               this field is required.
             </mat-error>
 
@@ -51,46 +57,71 @@
         <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>Phone Number</mat-label>
-            <input matInput formControlName="phone_number" type="number"  maxlength="10">
-            <mat-error *ngIf="orgmasterForm.controls.phone_number.errors?.['required']">
+            <input matInput formControlName="phone_number" type="number">
+            <mat-error *ngIf="editForm.controls.phone_number.errors?.['required']">
               this field is required.
             </mat-error>
 
           </mat-form-field>
 
         </div>
-
         <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>GST Number</mat-label>
             <input matInput formControlName="gst_number">
-            <mat-error *ngIf="orgmasterForm.controls.gst_number.errors?.['required']">
+            <mat-error *ngIf="editForm.controls.gst_number.errors?.['required']">
               this field is required.
             </mat-error>
+
           </mat-form-field>
 
         </div>
-
         <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>PAN Number</mat-label>
             <input matInput formControlName="pan_number">
-            <mat-error *ngIf="orgmasterForm.controls.pan_number.errors?.['required']">
+            <mat-error *ngIf="editForm.controls.pan_number.errors?.['required']">
               this field is required.
             </mat-error>
+
           </mat-form-field>
 
         </div>
-
         <div class="col-md-3">
           <mat-form-field appearance="outline">
-            <mat-label>Enter Email</mat-label>
-            <input matInput formControlName="email">
-            <mat-error *ngIf="orgmasterForm.controls.email.errors?.['required']">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email">
+            <mat-error *ngIf="editForm.controls.email.errors?.['required']">
               this field is required.
             </mat-error>
+
           </mat-form-field>
+
         </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Payment Terms</mat-label>
+            <input matInput formControlName="payment_terms" type="email">
+            <mat-error *ngIf="editForm.controls.payment_terms.errors?.['required']">
+              this field is required.
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Terms & Condition</mat-label>
+            <input matInput formControlName="terms_condition" type="email">
+            <mat-error *ngIf="editForm.controls.terms_condition.errors?.['required']">
+              this field is required.
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+
+
 
         <h4>Address</h4>
         <div formGroupName="address" class="row">
@@ -98,7 +129,7 @@
             <mat-form-field appearance="outline">
               <mat-label>Street Address</mat-label>
               <input matInput formControlName="street_address">
-              <mat-error *ngIf="orgmasterForm.get('address.street_address').errors?.['required']">
+              <mat-error *ngIf="editForm.get('address.street_address').errors?.['required']">
                 this field is required.
               </mat-error>
             </mat-form-field>
@@ -109,7 +140,7 @@
               <mat-label>Street Address 2</mat-label>
               <input matInput formControlName="street_address2">
               <mat-error *ngIf="
-              orgmasterForm.get('address.street_address2').errors?.['required']">
+              editForm.get('address.street_address2').errors?.['required']">
                 this field is required.
               </mat-error>
             </mat-form-field>
@@ -120,7 +151,7 @@
               <mat-label>State</mat-label>
               <input matInput formControlName="state">
               <mat-error *ngIf="
-              orgmasterForm.get('address.state').errors?.['required']">
+              editForm.get('address.state').errors?.['required']">
                 this field is required.
               </mat-error>
             </mat-form-field>
@@ -131,7 +162,7 @@
               <mat-label>City</mat-label>
               <input matInput formControlName="city">
               <mat-error *ngIf="
-              orgmasterForm.get('address.city').errors?.['required']">
+              editForm.get('address.city').errors?.['required']">
                 this field is required.
               </mat-error>
             </mat-form-field>
@@ -140,9 +171,9 @@
           <div class="col-md-3">
             <mat-form-field appearance="outline">
               <mat-label>Zip Code</mat-label>
-              <input matInput formControlName="zip_code" type="number"  maxlength="6">
+              <input matInput formControlName="zip_code" type="number" maxlength="6">
               <mat-error *ngIf="
-              orgmasterForm.get('address.zip_code').errors?.['required']">
+              editForm.get('address.zip_code').errors?.['required']">
                 this field is required.
               </mat-error>
             </mat-form-field>
@@ -153,7 +184,7 @@
               <mat-label>Country</mat-label>
               <input matInput formControlName="country">
               <mat-error *ngIf="
-              orgmasterForm.get('address.country').errors?.['required']">
+              editForm.get('address.country').errors?.['required']">
                 this field is required.
               </mat-error>
             </mat-form-field>

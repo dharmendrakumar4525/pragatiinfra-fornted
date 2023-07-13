@@ -2,7 +2,7 @@
 
   <div class="section-header">
     <div class="header-left">
-      <h2>Category Master</h2>
+      <h2>GST Master</h2>
     </div>
     <div class="header-right">
       <div class="buttons-containers">
@@ -17,8 +17,8 @@
         <tr>
           <th scope="col">SN.</th>
 
-          <th scope="col">Category Name</th>
-          <th scope="col">Category Code</th>
+          <th scope="col">GST Name</th>
+          <th scope="col">Percentage</th>
           <th scope="col">Action</th>
 
         </tr>
@@ -26,8 +26,8 @@
       <tbody>
         <tr *ngFor="let item of categoryList;let i = index">
           <th scope="row">{{i+1}}</th>
-          <td>{{item.name}}</td>
-          <td>{{item.code}}</td>
+          <td>{{item.gst_name}}</td>
+          <td>{{item.gst_percentage}}</td>
           <td>
             <ul class="list-inline m-0">
               <li class="list-inline-item">
