@@ -28,6 +28,7 @@
   background: #233a61;
   color: #fff;
 }
+
 .cancel-btn {
   background: #ccc;
 }
@@ -36,6 +37,64 @@
   padding: 20px 0 0 0;
 }
 
-mat-form-field{
+mat-form-field {
   display: block;
+}
+
+
+.pragati-table {
+  th {
+    background: #233A61;
+    color: #fff;
+    font-weight: normal;
+    font-size: 12px;
+    border: 0.5px solid #94A3B8;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  td {
+
+    border-left: 0.5px solid #94A3B8;
+    border-right: 0.5px solid #94A3B8;
+    font-weight: normal;
+    font-size: 12px;
+    background: #F4F4F5;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  tr {
+    &:nth-child(2n) {
+      td {
+        background: #D9DADE;
+      }
+    }
+  }
+
+
+  .action-btn-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+
+    a {
+      cursor: pointer;
+      padding: 5px 5px;
+
+      i {
+        color: #233a61;
+        opacity: 0.8;
+        font-size: 13px;
+      }
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+
+
+  }
+
 }

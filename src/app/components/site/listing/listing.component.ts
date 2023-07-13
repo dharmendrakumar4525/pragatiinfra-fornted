@@ -28,13 +28,6 @@ export class ListingComponent implements OnInit {
     })
   }
 
-  edit(id: any) {
-    let url: string = "site/edit/" + id
-    console.log(url);
-
-    this.router.navigateByUrl(url);
-  }
-
   add(){
     let url: string = "site/add"
     this.router.navigateByUrl(url);
