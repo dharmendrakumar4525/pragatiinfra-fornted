@@ -6,7 +6,18 @@
     </div>
     <div class="header-right">
       <div class="buttons-containers">
-        <button mat-button class="submit-btn" (click)="add()">Add</button>
+        <div class="filter-con">
+
+          <div dir="ltr" class="labeled-outlined-field-wrapper">
+            <mat-form-field class="full-width drop-down outline-filter-field hide-form-bottom-field" appearance="outline">                     
+              <input matInput placeholder="Search by site name"> 
+            </mat-form-field>
+        </div>
+
+
+        </div>        
+        <button mat-button class="submit-btn" (click)="add()">Add New</button>
+        <button mat-button class="other-btn" (click)="exportXlSX()">Export</button>
       </div>
     </div>
   </div>

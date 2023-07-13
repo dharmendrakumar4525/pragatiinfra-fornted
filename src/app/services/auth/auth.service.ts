@@ -264,7 +264,7 @@ export class AuthService {
   }
 
   getLocalStorage(key: any) {
-    let getData = this.localstorage.getCookies(key);
+    let getData:any = this.localstorage.getCookies(key);
 
     if (environment.encryption) {
       let encodedData = this.crypto.decode(getData, 1);

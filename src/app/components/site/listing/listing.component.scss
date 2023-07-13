@@ -27,10 +27,35 @@
 .submit-btn {
   background: #233a61;
   color: #fff;
+  font-size: 12px;
+  padding-left: 23px;
+    padding-right: 23px;
+
+    &:hover {
+      opacity: 0.7;
+    }
 }
 
 .cancel-btn {
   background: #ccc;
+  font-size: 12px;
+  padding-left: 23px;
+    padding-right: 23px;
+
+    &:hover {
+      opacity: 0.7;
+    }
+}
+.other-btn {
+  background: #525252;
+  color: #fff;
+  font-size: 12px;
+  padding-left: 23px;
+    padding-right: 23px;
+
+    &:hover {
+      opacity: 0.7;
+    }
 }
 
 .section-body {

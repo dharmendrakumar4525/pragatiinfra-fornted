@@ -104,7 +104,7 @@ import { InventoryComponent } from './Procurement/inventory/inventory.component'
 import { PrstatusComponent } from './Procurement/prstatus/prstatus.component';
 import { ModifyRemarksComponent } from './pages/modify-remarks/modify-remarks.component';
 import { CookieModule } from 'ngx-cookie';
-
+import { NgxLocalStorageModule } from 'ngx-localstorage';
 // FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 //   dayGridPlugin,
 //   interactionPlugin
@@ -115,6 +115,7 @@ import { CookieModule } from 'ngx-cookie';
   imports: [AppRoutingModule, BrowserModule, ReactiveFormsModule, HttpClientModule, FormsModule, CoreModule, SharedModule, CustomMaterialModule,
     FlexLayoutModule,
     FullCalendarModule,
+    NgxLocalStorageModule.forRoot(),
     CommonModule,
     CookieModule.withOptions(),
     NgCircleProgressModule.forRoot({
