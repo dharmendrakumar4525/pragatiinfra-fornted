@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UOM_API } from '@env/api_path';
+import { ExcelService } from '@services/export-excel/excel.service';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 
@@ -14,6 +15,7 @@ export class ListingComponent implements OnInit {
   constructor(
     private router: Router,
     private httpService: RequestService,
+    private excelService: ExcelService,
     private snack: SnackbarService,
     private route: ActivatedRoute
   ) {
@@ -35,7 +37,7 @@ export class ListingComponent implements OnInit {
     this.router.navigateByUrl(url);
   }
 
-  add(){
+  add() {
     let url: string = "uom/add"
     this.router.navigateByUrl(url);
   }
@@ -47,6 +49,20 @@ export class ListingComponent implements OnInit {
         this.getList();
       }
     })
+  }
+
+  async exportXlSX() {
+
+    let sheetHeaders = [
+      "UOM  Name",
+      "Code/Unit",
+    ];
+
+
+    let valueKey = ['uom_name', 'unit'];
+    let valueDataType = ['string', 'string'];
+    let sheetName: any = "UOM";
+    this.excelService.mapArrayToExcel(sheetName, sheetHeaders, valueKey, valueDataType, this.UOMList);
   }
 
   ngOnInit(): void {

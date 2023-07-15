@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CATEGORY_API, ORG_REQUEST_API, VENDOR_API } from '@env/api_path';
+import { ExcelService } from '@services/export-excel/excel.service';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 
@@ -15,6 +16,7 @@ export class ListingComponent implements OnInit {
   constructor(
     private router: Router,
     private httpService: RequestService,
+    private excelService: ExcelService,
     private snack: SnackbarService,
   ) {
     this.httpService.GET(CATEGORY_API, {}).subscribe(res => {
@@ -31,12 +33,6 @@ export class ListingComponent implements OnInit {
     })
   }
 
-  edit(id: any) {
-    let url: string = "vendor/edit/" + id
-    console.log(url);
-
-    this.router.navigateByUrl(url);
-  }
 
   add() {
     let url: string = "vendor/add"
@@ -52,8 +48,77 @@ export class ListingComponent implements OnInit {
     })
   }
 
-  getCategory(id: any) {
-    return this.categoryList.filter(ob => ob._id == id)[0]?.name;
+  getCategory(ids: any) {
+    // return this.categoryList.filter(ob => ob._id == id)[0]?.name;
+
+    var finalName = [];
+    this.categoryList.forEach((element: any) => {
+      console.log(ids);
+
+      if (ids.includes(element._id)) {
+        finalName.push(element.name);
+      }
+    });
+
+    return finalName.join(",");
+
+  }
+
+  async exportXlSX() {
+
+    let filterReport = this.vendorList.map((o: any) => {
+      o.vendor_phone_number = `${o.dialcode}-${o.phone_number}`;
+      let address = [];
+      if (o.address) {
+        if (o.address.street_address) {
+          address.push(o.address.street_address)
+        }
+        if (o.address.street_address2) {
+          address.push(o.address.street_address2)
+        }
+        if (o.address.city) {
+          address.push(o.address.city)
+        }
+        if (o.address.state) {
+          address.push(o.address.state)
+        }
+        if (o.address.country) {
+          address.push(o.address.country)
+        }
+        if (o.address.zip_code) {
+          address.push(o.address.zip_code)
+        }
+      }
+
+      o.address2 = address.join(", ");
+      return o;
+    })
+
+    let sheetHeaders = [
+      "Vendor Name",
+      "Category",
+      "Contact Person",
+      "Phone Number",
+      "GST Number",
+      "PAN Number",
+      "Email",
+      "Payment Term",
+      "Term & Condtiion",
+      "Address"
+    ];
+
+    let valueKey = ['vendor_name',
+      'categoryList',
+      'contact_person',
+      'vendor_phone_number',
+      'gst_number',
+      'pan_number',
+      'email',
+      'payment_terms',
+      , 'terms_condition', 'address2'];
+    let valueDataType = ['string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string'];
+    let sheetName: any = "sites";
+    this.excelService.mapArrayToExcel(sheetName, sheetHeaders, valueKey, valueDataType, filterReport);
   }
 
   ngOnInit(): void {

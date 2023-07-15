@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GST_API } from '@env/api_path';
+import { ExcelService } from '@services/export-excel/excel.service';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 
@@ -10,10 +11,11 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
   styleUrls: ['./listing.component.scss']
 })
 export class ListingComponent implements OnInit {
-  categoryList: any = [];
+  list: any = [];
   constructor(
     private router: Router,
     private httpService: RequestService,
+    private excelService: ExcelService,
     private snack: SnackbarService,
     private route: ActivatedRoute
   ) {
@@ -23,7 +25,7 @@ export class ListingComponent implements OnInit {
   getList() {
     this.httpService.GET(GST_API, {}).subscribe(res => {
       if (res && res.data) {
-        this.categoryList = res.data;
+        this.list = res.data;
       }
     })
   }
@@ -47,6 +49,18 @@ export class ListingComponent implements OnInit {
         this.getList();
       }
     })
+  }
+
+  async exportXlSX() {
+    let sheetHeaders = [
+      "Name",
+      "Percentage",
+    ];
+
+    let valueKey = ['gst_name', 'gst_percentage',];
+    let valueDataType = ['string', 'string',];
+    let sheetName: any = "GST";
+    this.excelService.mapArrayToExcel(sheetName, sheetHeaders, valueKey, valueDataType, this.list);
   }
 
   ngOnInit(): void {

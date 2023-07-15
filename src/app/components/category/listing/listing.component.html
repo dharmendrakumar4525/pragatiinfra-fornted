@@ -6,13 +6,14 @@
     </div>
     <div class="header-right">
       <div class="buttons-containers">
-        <button mat-button class="submit-btn" (click)="add()">Add</button>
+        <button mat-button class="submit-btn" (click)="add()">Add New</button>
+        <button mat-button class="other-btn" (click)="exportXlSX()">Export</button>
       </div>
     </div>
   </div>
 
   <div class="section-body">
-    <table class="table">
+    <table class="table  pragati-table">
       <thead>
         <tr>
           <th scope="col">SN.</th>
@@ -25,20 +26,16 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of categoryList;let i = index">
-          <th scope="row">{{i+1}}</th>
+          <td scope="row">{{i+1}}</td>
           <td>{{item.name}}</td>
           <td>{{item.code}}</td>
           <td>
-            <ul class="list-inline m-0">
-              <li class="list-inline-item">
-                <button class="btn btn-success btn-sm rounded-0" (click)="edit(item._id)" type="button"
-                  data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button>
-              </li>
-              <li class="list-inline-item">
-                <button class="btn btn-danger btn-sm rounded-0" type="button" (click)="delete(item._id)"
-                  data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
-              </li>
-            </ul>
+            <div class="action-btn-wrapper">
+              <a class="action-btn" [routerLink]="['/category/edit',item._id]" title="Edit"><i
+                  class="fa fa-edit"></i>
+              </a>
+              <a class="action-btn" (click)="delete(item._id)" title="Delete"><i class="fa fa-trash"></i></a>
+            </div>
           </td>
         </tr>
         <!-- <tr>

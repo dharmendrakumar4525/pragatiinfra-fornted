@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CATEGORY_API, SUB_CATEGORY_API } from '@env/api_path';
 import { environment } from '@env/environment';
+import { ExcelService } from '@services/export-excel/excel.service';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 
@@ -17,6 +18,7 @@ export class ListingComponent implements OnInit {
   constructor(
     private router: Router,
     private httpService: RequestService,
+    private excelService: ExcelService,
     private snack: SnackbarService,
     private route: ActivatedRoute,
     private http: HttpClient
@@ -36,13 +38,6 @@ export class ListingComponent implements OnInit {
     })
   }
 
-  edit(id: any) {
-    let url: string = "sub-category/edit/" + id
-    console.log(url);
-
-    this.router.navigateByUrl(url);
-  }
-
   add() {
     let url: string = "sub-category/add"
     this.router.navigateByUrl(url);
@@ -60,6 +55,25 @@ export class ListingComponent implements OnInit {
   getCategory(id) {
     return this.categoryList.filter(obj => obj._id == id)[0]?.name
   }
+
+  async exportXlSX() {
+
+    let filterReport = this.subCategoryList.map((o: any) => {
+      o.categoryName = this.getCategory(o.category)
+      return o;
+    })
+    let sheetHeaders = [
+      "Sub Category Name",
+      "Category Name",
+    ];
+
+
+    let valueKey = ['subcategory_name', 'categoryName'];
+    let valueDataType = ['string', 'string'];
+    let sheetName: any = "Sub Category";
+    this.excelService.mapArrayToExcel(sheetName, sheetHeaders, valueKey, valueDataType, filterReport);
+  }
+
 
   ngOnInit(): void {
   }

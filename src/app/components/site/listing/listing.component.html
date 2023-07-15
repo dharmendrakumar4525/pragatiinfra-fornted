@@ -9,13 +9,14 @@
         <div class="filter-con">
 
           <div dir="ltr" class="labeled-outlined-field-wrapper">
-            <mat-form-field class="full-width drop-down outline-filter-field hide-form-bottom-field" appearance="outline">                     
-              <input matInput placeholder="Search by site name"> 
+            <mat-form-field class="full-width drop-down outline-filter-field hide-form-bottom-field"
+              appearance="outline">
+              <input matInput placeholder="Search by site name">
             </mat-form-field>
+          </div>
+
+
         </div>
-
-
-        </div>        
         <button mat-button class="submit-btn" (click)="add()">Add New</button>
         <button mat-button class="other-btn" (click)="exportXlSX()">Export</button>
       </div>
@@ -58,9 +59,9 @@
             <div class="action-btn-wrapper">
               <a class="action-btn" [routerLink]="['/site/edit',item._id]" title="Edit"><i class="fa fa-edit"></i>
               </a>
-              <a class="action-btn" (click)="delete(item._id)"  title="Delete"><i class="fa fa-trash"></i></a>
+              <a class="action-btn" (click)="delete(item._id)" title="Delete"><i class="fa fa-trash"></i></a>
             </div>
-            
+
           </td>
         </tr>
         <!-- <tr>

@@ -6,19 +6,20 @@
     </div>
     <div class="header-right">
       <div class="buttons-containers">
-        <button mat-button class="submit-btn" (click)="add()">Add</button>
+        <button mat-button class="submit-btn" (click)="add()">Add New</button>
+        <button mat-button class="other-btn" (click)="exportXlSX()">Export</button>
       </div>
     </div>
   </div>
 
   <div class="section-body">
-    <table class="table">
+    <table class="table  pragati-table">
       <thead>
         <tr>
           <th scope="col">SN.</th>
           <th scope="col">Vendor Name</th>
           <th scope="col">Category</th>
-          <th scope="col">Contact PErson</th>
+          <th scope="col">Contact Person</th>
           <th scope="col">Phone Number</th>
           <th scope="col">GST Number</th>
           <th scope="col">PAN Number</th>
@@ -33,11 +34,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of vendorList;let i = index">
-          <th scope="row">{{i+1}}</th>
+          <td scope="row">{{i+1}}</td>
           <td>{{item.vendor_name}}</td>
-          <td><ng-container *ngFor="let id of item.category;let index=index">{{getCategory(id)}}
-              <ng-container *ngIf="index+1!=item.category.length">,</ng-container>
-            </ng-container></td>
+          <td>{{getCategory(item.category)}}</td>
           <td>{{item.contact_person}}</td>
           <td>{{item.phone_number}}</td>
           <td>{{item.gst_number}}</td>
@@ -51,16 +50,11 @@
             +item.address.city + ' '
             +item.address.country}}</td>
           <td>
-            <ul class="list-inline m-0">
-              <li class="list-inline-item">
-                <button class="btn btn-success btn-sm rounded-0" (click)="edit(item._id)" type="button"
-                  data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button>
-              </li>
-              <li class="list-inline-item">
-                <button class="btn btn-danger btn-sm rounded-0" type="button" (click)="delete(item._id)"
-                  data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
-              </li>
-            </ul>
+            <div class="action-btn-wrapper">
+              <a class="action-btn" [routerLink]="['/vendor/edit',item._id]" title="Edit"><i class="fa fa-edit"></i>
+              </a>
+              <a class="action-btn" (click)="delete(item._id)" title="Delete"><i class="fa fa-trash"></i></a>
+            </div>
           </td>
         </tr>
 

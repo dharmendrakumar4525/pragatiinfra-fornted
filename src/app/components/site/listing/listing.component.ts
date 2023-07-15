@@ -4,7 +4,6 @@ import { SITE_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { ExcelService } from '@services/export-excel/excel.service';
-import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-listing',
   templateUrl: './listing.component.html',
@@ -17,7 +16,6 @@ export class ListingComponent implements OnInit {
     private httpService: RequestService,
     private excelService: ExcelService,
     private snack: SnackbarService,
-    private route: ActivatedRoute,
   ) {
     this.getList();
   }
@@ -45,7 +43,7 @@ export class ListingComponent implements OnInit {
   }
 
 
-  async exportXlSX() {   
+  async exportXlSX() {
 
     let filterReport = this.siteList.map((o:any)=>{
       o.store_manager_number = `${o.store_manager_phone_number_dialcode}-${o.store_manager_phone_number}`;
@@ -70,7 +68,7 @@ export class ListingComponent implements OnInit {
           address.push(o.address.zip_code)
         }
       }
-   
+
       o.address2 = address.join(", ");
       return o;
     })
