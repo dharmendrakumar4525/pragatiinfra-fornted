@@ -8,6 +8,10 @@ export const SUB_CATEGORY_API = "/subcategory";
 export const SITE_API = "/site";
 export const GST_API = "/gst";
 export const UOM_API = "/uom";
+export const STRUCTURE_API = "/structure";
+export const LOCATION_API = "/location";
+export const ACTIVITY_API = "/activity";
+
 
 
 

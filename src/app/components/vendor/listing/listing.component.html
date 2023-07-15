@@ -6,6 +6,17 @@
     </div>
     <div class="header-right">
       <div class="buttons-containers">
+        <div class="filter-con">
+
+          <div dir="ltr" class="labeled-outlined-field-wrapper">
+            <mat-form-field class="full-width drop-down outline-filter-field hide-form-bottom-field"
+              appearance="outline">
+              <input matInput placeholder="Search by name" (input)="search($event)">
+            </mat-form-field>
+          </div>
+
+
+        </div>
         <button mat-button class="submit-btn" (click)="add()">Add New</button>
         <button mat-button class="other-btn" (click)="exportXlSX()">Export</button>
       </div>
@@ -36,7 +47,7 @@
         <tr *ngFor="let item of vendorList;let i = index">
           <td scope="row">{{i+1}}</td>
           <td>{{item.vendor_name}}</td>
-          <td>{{getCategory(item.category)}}</td>
+          <td>{{item.category}}</td>
           <td>{{item.contact_person}}</td>
           <td>{{item.phone_number}}</td>
           <td>{{item.gst_number}}</td>

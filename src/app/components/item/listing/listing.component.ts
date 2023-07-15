@@ -12,6 +12,7 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
 })
 export class ListingComponent implements OnInit {
   itemList: any = [];
+  list: any;
   constructor(
     private router: Router,
     private httpService: RequestService,
@@ -26,6 +27,7 @@ export class ListingComponent implements OnInit {
     this.httpService.GET(ITEM_API, {}).subscribe(res => {
       if (res && res.data) {
         this.itemList = res.data;
+        this.list = res.data;
       }
     })
   }
@@ -49,6 +51,15 @@ export class ListingComponent implements OnInit {
         this.getList();
       }
     })
+  }
+
+  search(event: any) {
+    if (event.target.value) {
+      this.itemList = this.list.filter(obj => obj.item_name.toLowerCase().includes(event.target.value.toLowerCase()))
+    }
+    else {
+      this.itemList = this.list;
+    }
   }
 
   async exportXlSX() {

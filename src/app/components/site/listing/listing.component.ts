@@ -11,6 +11,7 @@ import { ExcelService } from '@services/export-excel/excel.service';
 })
 export class ListingComponent implements OnInit {
   siteList: any = [];
+  list: any = [];
   constructor(
     private router: Router,
     private httpService: RequestService,
@@ -24,11 +25,13 @@ export class ListingComponent implements OnInit {
     this.httpService.GET(SITE_API, {}).subscribe(res => {
       if (res && res.data) {
         this.siteList = res.data;
+        this.list = res.data;
+
       }
     })
   }
 
-  add(){
+  add() {
     let url: string = "site/add"
     this.router.navigateByUrl(url);
   }
@@ -43,28 +46,37 @@ export class ListingComponent implements OnInit {
   }
 
 
+  search(event: any) {
+    if (event.target.value) {
+      this.siteList = this.list.filter(obj => obj.site_name.toLowerCase().includes(event.target.value.toLowerCase()))
+    }
+    else {
+      this.siteList = this.list;
+    }
+  }
+
   async exportXlSX() {
 
-    let filterReport = this.siteList.map((o:any)=>{
+    let filterReport = this.siteList.map((o: any) => {
       o.store_manager_number = `${o.store_manager_phone_number_dialcode}-${o.store_manager_phone_number}`;
       let address = [];
-      if(o.address){
-        if(o.address.street_address){
+      if (o.address) {
+        if (o.address.street_address) {
           address.push(o.address.street_address)
         }
-        if(o.address.street_address2){
+        if (o.address.street_address2) {
           address.push(o.address.street_address2)
         }
-        if(o.address.city){
+        if (o.address.city) {
           address.push(o.address.city)
         }
-        if(o.address.state){
+        if (o.address.state) {
           address.push(o.address.state)
         }
-        if(o.address.country){
+        if (o.address.country) {
           address.push(o.address.country)
         }
-        if(o.address.zip_code){
+        if (o.address.zip_code) {
           address.push(o.address.zip_code)
         }
       }
@@ -74,18 +86,18 @@ export class ListingComponent implements OnInit {
     })
 
     let sheetHeaders = [
-     "Locaton",
-     "Site Name	",
-     "Code",
-     "Store Manager	",
-     "Store Manager Number",
-     "Store Manager Email",
-     "Address"
+      "Locaton",
+      "Site Name	",
+      "Code",
+      "Store Manager	",
+      "Store Manager Number",
+      "Store Manager Email",
+      "Address"
     ];
 
-    let valueKey = ['location', 'site_name', 'code', 'store_manager', 'store_manager_number','site_manager_email', 'address2'];
+    let valueKey = ['location', 'site_name', 'code', 'store_manager', 'store_manager_number', 'site_manager_email', 'address2'];
     let valueDataType = ['string', 'string', 'string', 'string', 'string', 'string', 'string'];
-    let sheetName:any = "sites";
+    let sheetName: any = "sites";
     this.excelService.mapArrayToExcel(sheetName, sheetHeaders, valueKey, valueDataType, filterReport);
   }
 

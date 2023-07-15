@@ -12,6 +12,7 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
 })
 export class ListingComponent implements OnInit {
   UOMList: any = [];
+  list: any;
   constructor(
     private router: Router,
     private httpService: RequestService,
@@ -26,6 +27,7 @@ export class ListingComponent implements OnInit {
     this.httpService.GET(UOM_API, {}).subscribe(res => {
       if (res && res.data) {
         this.UOMList = res.data;
+        this.list = res.data;
       }
     })
   }
@@ -49,6 +51,15 @@ export class ListingComponent implements OnInit {
         this.getList();
       }
     })
+  }
+
+  search(event: any) {
+    if (event.target.value) {
+      this.UOMList = this.list.filter(obj => obj.uom_name.toLowerCase().includes(event.target.value.toLowerCase()))
+    }
+    else {
+      this.UOMList = this.list;
+    }
   }
 
   async exportXlSX() {

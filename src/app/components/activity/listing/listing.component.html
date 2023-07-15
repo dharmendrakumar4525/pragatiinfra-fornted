@@ -2,7 +2,7 @@
 
   <div class="section-header">
     <div class="header-left">
-      <h2>Sub-Category Master</h2>
+      <h2>Activity Master</h2>
     </div>
     <div class="header-right">
       <div class="buttons-containers">
@@ -28,28 +28,30 @@
       <thead>
         <tr>
           <th scope="col">SN.</th>
-
-          <th scope="col">Name</th>
-          <th scope="col">Category</th>
-          <th scope="col">Action </th>
+          <th scope="col">Activity Name</th>
+          <th scope="col">Action</th>
 
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of subCategoryList;let i = index">
-          <td scope="row">{{i+1}}</td>
-          <td>{{item.subcategory_name}}</td>
-          <td>{{getCategory(item.category)}}</td>
+        <ng-container *ngIf="activityList && activityList.length==0">
+          No data found
 
-          <td>
-            <div class="action-btn-wrapper">
-              <a class="action-btn" [routerLink]="['/sub-category/edit',item._id]" title="Edit"><i
-                  class="fa fa-edit"></i>
-              </a>
-              <a class="action-btn" (click)="delete(item._id)" title="Delete"><i class="fa fa-trash"></i></a>
-            </div>
-          </td>
-        </tr>
+        </ng-container>
+        <ng-container *ngIf="activityList && activityList.length>0">
+          <tr *ngFor="let item of activityList;let i = index">
+            <td scope="row">{{i+1}}</td>
+            <td>{{item.activity_name}}</td>
+            <td>
+              <div class="action-btn-wrapper">
+                <a class="action-btn" (click)="edit(item._id)" title="Edit"><i class="fa fa-edit"></i>
+                </a>
+                <a class="action-btn" (click)="delete(item._id)" title="Delete"><i class="fa fa-trash"></i></a>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+
         <!-- <tr>
           <th scope="row">2</th>
           <td>Jacob</td>

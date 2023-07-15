@@ -13,6 +13,7 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
 export class ListingComponent implements OnInit {
   vendorList: any = [];
   categoryList: any = [];
+  list: any = [];
   constructor(
     private router: Router,
     private httpService: RequestService,
@@ -29,6 +30,13 @@ export class ListingComponent implements OnInit {
     this.httpService.GET(VENDOR_API, {}).subscribe(res => {
       if (res && res.data) {
         this.vendorList = res.data;
+        this.vendorList.map((obj: any) => {
+          obj.category = this.getCategory(obj.category);
+          return obj;
+        }
+
+        )
+        this.list = res.data;
       }
     })
   }
@@ -53,8 +61,6 @@ export class ListingComponent implements OnInit {
 
     var finalName = [];
     this.categoryList.forEach((element: any) => {
-      console.log(ids);
-
       if (ids.includes(element._id)) {
         finalName.push(element.name);
       }
@@ -62,6 +68,15 @@ export class ListingComponent implements OnInit {
 
     return finalName.join(",");
 
+  }
+
+  search(event: any) {
+    if (event.target.value) {
+      this.vendorList = this.list.filter(obj => obj.vendor_name.toLowerCase().includes(event.target.value.toLowerCase()))
+    }
+    else {
+      this.vendorList = this.list;
+    }
   }
 
   async exportXlSX() {

@@ -12,6 +12,7 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
 })
 export class ListingComponent implements OnInit {
   list: any = [];
+  gstList: any = [];
   constructor(
     private router: Router,
     private httpService: RequestService,
@@ -26,6 +27,7 @@ export class ListingComponent implements OnInit {
     this.httpService.GET(GST_API, {}).subscribe(res => {
       if (res && res.data) {
         this.list = res.data;
+        this.gstList = res.data;
       }
     })
   }
@@ -37,7 +39,7 @@ export class ListingComponent implements OnInit {
     this.router.navigateByUrl(url);
   }
 
-  add(){
+  add() {
     let url: string = "gst/add"
     this.router.navigateByUrl(url);
   }
@@ -49,6 +51,15 @@ export class ListingComponent implements OnInit {
         this.getList();
       }
     })
+  }
+
+  search(event: any) {
+    if (event.target.value) {
+      this.list = this.gstList.filter(obj => obj.gst_name.toLowerCase().includes(event.target.value.toLowerCase()))
+    }
+    else {
+      this.list = this.gstList;
+    }
   }
 
   async exportXlSX() {

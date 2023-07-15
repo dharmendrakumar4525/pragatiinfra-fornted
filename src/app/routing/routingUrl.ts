@@ -135,6 +135,27 @@ export const routes: Routes = [
   },
 
   {
+    path: 'structure',
+    loadChildren: () => import('../components/structure/structure.module')
+      .then(mod => mod.StructureModule),
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: 'location',
+    loadChildren: () => import('../components/location/location.module')
+      .then(mod => mod.LocationModule),
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: 'activity',
+    loadChildren: () => import('../components/activity/activity.module')
+      .then(mod => mod.ActivityModule),
+    canActivate: [AuthGuard]
+  },
+
+  {
     path: '',
     redirectTo: 'dpr',
     pathMatch: 'prefix',

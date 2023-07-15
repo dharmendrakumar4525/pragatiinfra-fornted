@@ -1,0 +1,52 @@
+.section-wrapper {
+  padding: 0 15px 0 15px;
+
+  .section-header {
+    border-bottom: 2px solid #C5C5C5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+
+    .header-left {
+      h2 {
+        margin: 0;
+      }
+
+    }
+  }
+}
+
+.buttons-containers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.submit-btn {
+  background: #233a61;
+  color: #fff;
+}
+.cancel-btn {
+  background: #ccc;
+}
+
+.section-body {
+  padding: 20px 0 0 0;
+}
+
+mat-form-field{
+  display: block;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

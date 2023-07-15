@@ -1,0 +1,125 @@
+.section-wrapper {
+  padding: 0 15px 0 15px;
+
+  .section-header {
+    border-bottom: 2px solid #C5C5C5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+
+    .header-left {
+      h2 {
+        margin: 0;
+      }
+
+    }
+  }
+}
+
+.buttons-containers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.submit-btn {
+  background: #233a61;
+  color: #fff;
+  font-size: 12px;
+  padding-left: 23px;
+    padding-right: 23px;
+
+    &:hover {
+      opacity: 0.7;
+    }
+}
+
+.cancel-btn {
+  background: #ccc;
+  font-size: 12px;
+  padding-left: 23px;
+    padding-right: 23px;
+
+    &:hover {
+      opacity: 0.7;
+    }
+}
+.other-btn {
+  background: #525252;
+  color: #fff;
+  font-size: 12px;
+  padding-left: 23px;
+    padding-right: 23px;
+
+    &:hover {
+      opacity: 0.7;
+    }
+}
+
+.section-body {
+  padding: 20px 0 0 0;
+}
+
+mat-form-field {
+  display: block;
+}
+
+
+.pragati-table {
+  th {
+    background: #233A61;
+    color: #fff;
+    font-weight: normal;
+    font-size: 12px;
+    border: 0.5px solid #94A3B8;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  td {
+
+    border-left: 0.5px solid #94A3B8;
+    border-right: 0.5px solid #94A3B8;
+    font-weight: normal;
+    font-size: 12px;
+    background: #F4F4F5;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  tr {
+    &:nth-child(2n) {
+      td {
+        background: #D9DADE;
+      }
+    }
+  }
+
+
+  .action-btn-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+
+    a {
+      cursor: pointer;
+      padding: 5px 5px;
+
+      i {
+        color: #233a61;
+        opacity: 0.8;
+        font-size: 13px;
+      }
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+
+
+  }
+
+}
