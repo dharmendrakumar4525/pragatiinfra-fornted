@@ -1,49 +1,50 @@
-
-
-<form class="form-section" [formGroup]="projectForm" >
+<form class="form-section" [formGroup]="projectForm">
   <div *ngIf="showAddProject">
     <mat-toolbar style="background-color: #fff;">
       <mat-toolbar-row fxLayoutAlign="space-between center">
-          <div style="padding: 1rem;margin-top: 40px;">
-          <span style="color: #2E2E2E;font-size: 30px;font-family: 'Poppins';font-weight: 600;">Add New Project</span></div>
-         
-        </mat-toolbar-row>
-          
-        <mat-toolbar-row>
-          <hr style="width:100%">
-        </mat-toolbar-row>
+        <div style="padding: 1rem;margin-top: 40px;">
+          <span style="color: #2E2E2E;font-size: 30px;font-family: 'Poppins';font-weight: 600;">Add New Project</span>
+        </div>
+
+      </mat-toolbar-row>
+
+      <mat-toolbar-row>
+        <hr style="width:100%">
+      </mat-toolbar-row>
     </mat-toolbar>
-    <div  class="scroll-bar3" style="width: 98%;margin-left: 5px;">
-    <div style="position:relative;left: 10px;" fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
-      fxLayoutAlign="space-around center" fxLayoutGap="0px">
-      <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
-        <div class="custom-form-group">
-            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';">Project Name<span class="star">*</span></label>
+    <div class="scroll-bar3" style="width: 98%;margin-left: 5px;">
+      <div style="position:relative;left: 10px;" fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row"
+        fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="0px">
+        <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
+          <div class="custom-form-group">
+            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';">Project Name<span
+                class="star">*</span></label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput  placeholder="Enter Project Name" formControlName="projectName" style="font-family: 'Poppins';"
-                  >
-                  <mat-error *ngIf="projectName.invalid && ( projectName.dirty || projectName.touched )">
-                    <span>Please provide a valid project name</span>
-                  </mat-error>
+                <input matInput placeholder="Enter Project Name" formControlName="projectName"
+                  style="font-family: 'Poppins';">
+                <mat-error *ngIf="projectName.invalid && ( projectName.dirty || projectName.touched )">
+                  <span>Please provide a valid project name</span>
+                </mat-error>
                 <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
                   <span>Please provide a valid Profession Type</span>
                 </mat-error> -->
               </mat-form-field>
             </div>
           </div>
-       
-      </div>
-      <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
- 
-        <div class="custom-form-group" >
-            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> Project Date <span class="star">*</span>
+
+        </div>
+        <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
+
+          <div class="custom-form-group">
+            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> Project Date <span
+                class="star">*</span>
               <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
             </label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="startPicker" formControlName="projectDate" placeholder="Enter start date" style="font-family: 'Poppins';"
-                (click)="startPicker.open()"/>
+                <input matInput [matDatepicker]="startPicker" formControlName="projectDate"
+                  placeholder="Enter start date" style="font-family: 'Poppins';" (click)="startPicker.open()" />
                 <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                 <mat-datepicker #startPicker></mat-datepicker>
                 <mat-error *ngIf="projectDate.invalid && ( projectDate.dirty || projectDate.touched )">
@@ -55,99 +56,95 @@
               </mat-form-field>
             </div>
           </div>
-    
-      </div>
-      <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
-        <div class="custom-form-group">
-            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';">Location<span class="star">*</span></label>
+
+        </div>
+        <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
+          <div class="custom-form-group">
+            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';">Location<span
+                class="star">*</span></label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput  placeholder="Enter Location" formControlName="location" style="font-family: 'Poppins';"
-                  >
-                  <mat-error *ngIf="location.invalid && ( location.dirty || location.touched )">
-                    <span>Please provide a valid location</span>
-                  </mat-error>
+                <input matInput placeholder="Enter Location" formControlName="location" style="font-family: 'Poppins';">
+                <mat-error *ngIf="location.invalid && ( location.dirty || location.touched )">
+                  <span>Please provide a valid location</span>
+                </mat-error>
                 <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
                   <span>Please provide a valid Profession Type</span>
                 </mat-error> -->
               </mat-form-field>
             </div>
           </div>
-     
+
+        </div>
+
       </div>
-      
-    </div>
 
 
-    <div 
-   fxLayout="row wrap" 
-   fxLayout.lt-sm="column" 
-   fxLayoutGap="10px" 
-   fxLayoutAlign="flex-start"
-   style="margin-left: 5%;">
-    <div class="custom-form-group">
-      <label class="custom-label" style="color: #3568BA;">Project Image</label>
-      <div class="custom-form-control" fxLayout="row" fxLayoutAlign="center center" >
-          <div class="upload-file" dropzone fxLayout="column" fxLayoutAlign="center center" style="background-color: #fff;">
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutAlign="flex-start"
+        style="margin-left: 5%;">
+        <div class="custom-form-group">
+          <label class="custom-label" style="color: #3568BA;">Project Image</label>
+          <div class="custom-form-control" fxLayout="row" fxLayoutAlign="center center">
+            <div class="upload-file" dropzone fxLayout="column" fxLayoutAlign="center center"
+              style="background-color: #fff;">
               <img src="../../../assets/images/icons/upload-file.svg" class="mb-15" alt="upload-file">
               <h5 style="color: #3568BA;">Project Image</h5>
-              <input type="file" style="font-family: 'Poppins';" class="uploadImg"  id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)">
+              <input type="file" style="font-family: 'Poppins';" class="uploadImg" id="imageUpload"
+                accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)">
+            </div>
+            <div class="upload-file" style="margin-left: 20px;" *ngIf="imageUrl">
+
+              <img [src]="imageUrl" height="150px" width="200px">
+            </div>
           </div>
-          <div class="upload-file" style="margin-left: 20px;" *ngIf="imageUrl">
-    
-            <img [src]="imageUrl" height="150px" width="200px">
+
         </div>
-      </div>
-      
-  </div>
 
 
-    
-   
-    
-  </div><br>
 
-    <div style="margin-left: 10px;width:1100px" fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
-      fxLayoutAlign="space-around center" fxLayoutGap="0px">
-      <div fxLayout="column" fxFlex="92" fxFlexFill class="addform-50-column mobile_mb_0">
-        <mat-form-field class="example-chip-list" appearance="outline">
-          <mat-chip-list #chipList aria-label="Enter members" formControlName="members">
-            <mat-chip *ngFor="let tag of projectForm.controls['members'].value" [selectable]="selectable"
-                      [removable]="removable" (removed)="removeTag(tag)">
-              {{tag}}
-              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-            </mat-chip>
-            <input placeholder="Add project members" style="font-family: 'Poppins';"
-            #fruitInput
-                   [matChipInputFor]="chipList"
-                   [formControl]="fruitCtrl"
-                   [matAutocomplete]="auto"
-                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                   [matChipInputAddOnBlur]="addOnBlur"
-                   (matChipInputTokenEnd)="addTag($event)" ><i class="fa fa-plus" aria-hidden="true" style="margin-right:20px;margin-bottom: 10px;cursor: pointer;"></i>
-          </mat-chip-list>
-          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-            <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit.email">
-              {{fruit.email}}
-            </mat-option>
-          </mat-autocomplete>
+
+
+      </div><br>
+
+      <div style="margin-left: 10px;width:1100px" fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row"
+        fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="0px">
+        <div fxLayout="column" fxFlex="92" fxFlexFill class="addform-50-column mobile_mb_0">
+          <mat-form-field class="example-chip-list" appearance="outline">
+            <mat-chip-list #chipList aria-label="Enter members" formControlName="members">
+              <mat-chip *ngFor="let tag of projectForm.controls['members'].value" [selectable]="selectable"
+                [removable]="removable" (removed)="removeTag(tag)">
+                {{tag}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="Add project members" style="font-family: 'Poppins';" #fruitInput
+                [matChipInputFor]="chipList" [formControl]="fruitCtrl" [matAutocomplete]="auto"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                (matChipInputTokenEnd)="addTag($event)"><i class="fa fa-plus" aria-hidden="true"
+                style="margin-right:20px;margin-bottom: 10px;cursor: pointer;"></i>
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+              <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit.email">
+                {{fruit.email}}
+              </mat-option>
+            </mat-autocomplete>
           </mat-form-field>
-       
+
+        </div>
+
+
       </div>
-     
-      
-    </div>
-    <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
-    fxLayoutAlign="space-around center" fxLayoutGap="0px">
-    <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
-        <div class="custom-form-group">
-            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';margin-left: 10px;"> R0 Schedule Prepared date <span class="star">*</span>
+      <div fxLayout="row" fxLayout.lg="row" fxLayout.md="row" fxLayout.sm="row" fxLayout.xs="column"
+        fxLayoutAlign="space-around center" fxLayoutGap="0px">
+        <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
+          <div class="custom-form-group">
+            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';margin-left: 10px;"> R0
+              Schedule Prepared date <span class="star">*</span>
               <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
             </label>
             <div class="custom-form-control" style="margin-left: 10px;">
               <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="r0Picker" formControlName="r0Date" placeholder="Enter R0 Prepared date" style="font-family: 'Poppins';"
-                (click)="r0Picker.open()"/>
+                <input matInput [matDatepicker]="r0Picker" formControlName="r0Date" placeholder="Enter R0 Prepared date"
+                  style="font-family: 'Poppins';" (click)="r0Picker.open()" />
                 <mat-datepicker-toggle matSuffix [for]="r0Picker"></mat-datepicker-toggle>
                 <mat-datepicker #r0Picker></mat-datepicker>
                 <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
@@ -156,17 +153,18 @@
               </mat-form-field>
             </div>
           </div>
-     
-    </div>
-    <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
-        <div class="custom-form-group">
-            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> R1 Schedule Prepared date <span class="star">*</span>
+
+        </div>
+        <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
+          <div class="custom-form-group">
+            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> R1 Schedule Prepared date
+              <span class="star">*</span>
               <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
             </label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="r1Picker" formControlName="r1Date" placeholder="Enter R1 Prepared date" style="font-family: 'Poppins';"
-                (click)="r1Picker.open()"/>
+                <input matInput [matDatepicker]="r1Picker" formControlName="r1Date" placeholder="Enter R1 Prepared date"
+                  style="font-family: 'Poppins';" (click)="r1Picker.open()" />
                 <mat-datepicker-toggle matSuffix [for]="r1Picker"></mat-datepicker-toggle>
                 <mat-datepicker #r1Picker></mat-datepicker>
                 <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
@@ -175,17 +173,18 @@
               </mat-form-field>
             </div>
           </div>
-  
-    </div>
-    <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
-        <div class="custom-form-group">
-            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> R2 Schedule Prepared date <span class="star">*</span>
+
+        </div>
+        <div fxLayout="column" fxFlex="25" fxFlexFill class="addform-50-column mobile_mb_0">
+          <div class="custom-form-group">
+            <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> R2 Schedule Prepared date
+              <span class="star">*</span>
               <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
             </label>
             <div class="custom-form-control">
               <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="r2Picker" formControlName="r2Date" placeholder="Enter R2 Prepared date" style="font-family: 'Poppins';"
-                (click)="r2Picker.open()"/>
+                <input matInput [matDatepicker]="r2Picker" formControlName="r2Date" placeholder="Enter R2 Prepared date"
+                  style="font-family: 'Poppins';" (click)="r2Picker.open()" />
                 <mat-datepicker-toggle matSuffix [for]="r2Picker"></mat-datepicker-toggle>
                 <mat-datepicker #r2Picker></mat-datepicker>
                 <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
@@ -194,171 +193,247 @@
               </mat-form-field>
             </div>
           </div>
-   
+
+        </div>
+
+      </div>
+      <div *ngIf="addPro">
+
+        <!-- <mat-card id="card" style="text-align: center;cursor: pointer;" (click)="displayMater()">
+          <mat-card-title>
+
+          </mat-card-title>
+
+          <mat-card-content>
+
+
+            <img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png" />
+            <div style="color: #3568BA;font-family: 'Poppins';">add activity with sub activity</div>
+
+          </mat-card-content>
+        </mat-card> -->
+       
+
+        <a class="add-location-btn" (click)="addLocations('location','','')">
+          Add Locations
+        </a>
+
+        <div class="locations-data-container">
+
+          <div class="location-container" *ngFor="let locationItem of locationsList">
+
+            <div class="location-list">
+              <div class="info-section">               
+                  <mat-icon>keyboard_arrow_right</mat-icon>
+               
+                <span class="location-name">
+                    {{locationItem.location_name}}
+                </span>
+              </div>
+              <a class="list-action-btn">
+                <mat-icon (click)="addLocations('structure',locationItem,'')" matTooltip="Add structure">add</mat-icon>
+                <mat-icon (click)="deleteLocations('location',locationItem,'','')" style="color: #e74f4f;" matTooltip="Delete location">delete</mat-icon>
+              </a>
+            </div>
+
+            <ng-container *ngFor="let structureItem of locationItem.structures">
+              <div class="structure-list">
+                <div class="info-section">               
+                    <mat-icon>keyboard_arrow_right</mat-icon>                 
+                  <span class="structure-name">
+                   {{structureItem.structure_name}}
+                  </span>
+                </div>
+                <a class="list-action-btn">
+                  <mat-icon (click)="addLocations('activity',locationItem,structureItem)" matTooltip="Add activity">add</mat-icon>
+                  <mat-icon (click)="deleteLocations('structure',locationItem,structureItem,'')" style="color: #e74f4f;" matTooltip="Delete structure">delete</mat-icon>
+                </a>
+              </div>
+
+
+
+
+              <div class="activity-list" *ngFor="let activityItem of structureItem.activities">
+                <div class="info-section">                   
+                  <span class="Item-name">
+                   {{activityItem.activity_name}}
+                  </span>
+                </div>
+                <a class="list-action-btn">
+                  <mat-icon  (click)="deleteLocations('activity',locationItem,structureItem,activityItem)" style="color: #e74f4f;" matTooltip="Delete activity">delete</mat-icon>
+                </a>
+              </div>
+
+            </ng-container>
+            
+
+            <!-- <div class="structure-list">
+              <div class="info-section">               
+                  <mat-icon>keyboard_arrow_right</mat-icon>
+               
+                <span class="structure-name">
+                  structure 1
+                </span>
+              </div>
+              <a class="list-action-btn">
+                <mat-icon matTooltip="Add activity">add</mat-icon>
+                <mat-icon style="color: #e74f4f;" matTooltip="Delete structure">delete</mat-icon>
+              </a>
+            </div>
+
+
+            <div class="activity-list">
+              <div class="info-section">               
+                  <mat-icon>keyboard_arrow_right</mat-icon>
+               
+                <span class="activity-name">
+                  activity 1
+                </span>
+              </div>
+              <a class="list-action-btn">
+                <mat-icon style="color: #e74f4f;" matTooltip="Delete activity">delete</mat-icon>
+              </a>
+            </div> -->
+         
+
+
+          </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
     </div>
-    
   </div>
-  <div 
-  fxLayout="row wrap" 
-  fxLayout.lt-sm="column" 
-  fxLayoutGap="10px" 
-  fxLayoutAlign="flex-start"
-  style="margin-left: 5%;" *ngIf="addPro">
-  
-  <mat-card id="card" style="text-align: center;cursor: pointer;" (click)="displayMater()">
-	<mat-card-title>
-		
-	</mat-card-title>
-
-	<mat-card-content>
-
-		
-		<img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
-        <div style="color: #3568BA;font-family: 'Poppins';">add activity with sub activity</div>
-
-	</mat-card-content>
-  </mat-card>
-  
-  </div>
-</div>
-</div>
-<br>
+  <br>
 
   <div style="margin-left: 100px;margin-bottom: 100px;" *ngIf="showAddProject">
-  <button  style="background-color: #233A61;color:#fff;width:150px;padding: 7px;font-family: 'Poppins';border: none;" *ngIf="addPro"  (click)="addProject()">Submit</button>
-  <button  style="background-color: #233A61;color:#fff;width:150px;padding: 7px;font-family: 'Poppins';border: none;" *ngIf="!addPro" (click)="editProject()"> Submit</button>
+    <button style="background-color: #233A61;color:#fff;width:150px;padding: 7px;font-family: 'Poppins';border: none;"
+      *ngIf="addPro" (click)="addProject()">Submit</button>
 
-</div> 
+    <button style="background-color: #233A61;color:#fff;width:150px;padding: 7px;font-family: 'Poppins';border: none;"
+      *ngIf="!addPro" (click)="editProject()"> Submit</button>
 
-<div *ngIf="showMaster" >
-  <mat-toolbar style="background-color: #fff;height: 100px;">
-    <mat-toolbar-row fxLayoutAlign="space-between center">
-        <div >
-        <span >Master Data</span></div>
+  </div>
+
+  <div *ngIf="showMaster">
+    <mat-toolbar style="background-color: #fff;height: 100px;">
+      <mat-toolbar-row fxLayoutAlign="space-between center">
+        <div>
+          <span>Master Data</span>
+        </div>
         <div>
           <button mat-raised-button *ngIf="!projectId" (click)="dispalyProject()">Go Back</button>
           <!-- <button style="padding: 5px;width: 100px;margin-top: 60px;">Go Back  </button> -->
-      
 
-      </div>
+
+        </div>
       </mat-toolbar-row>
-        
+
       <mat-toolbar-row>
         <hr style="width:100%;">
       </mat-toolbar-row>
-  </mat-toolbar>
-<div  class="scroll-bar2" style="width: 93%;">
-<div class="gapset"
-   fxLayout="row wrap" 
-   fxLayout.lt-sm="column" 
-   fxLayoutGap="10px" 
-   fxLayoutAlign="flex-start"
-   style="margin-left: 5px;" >
+    </mat-toolbar>
+    <div class="scroll-bar2" style="width: 93%;">
+      <div class="gapset" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutAlign="flex-start"
+        style="margin-left: 5px;">
 
-   <ng-container *ngFor="let task of tasks;let i = index" >
-    <mat-card id="card" fxFlex="0 1 calc(33.3% - 32px)"
-    fxFlex.lt-md="0 1 calc(50% - 32px)"
-    fxFlex.lt-sm="100%" >
-        <mat-card-title style="color: #3568BA;font-size: 20px;font-weight:400;font-style: normal;">
-            {{task.taskName}}
-            
-        </mat-card-title>
-        <hr class="horizontal">
-    
-        <mat-card-content>
-          <button mat-raised-button (click)="addSubTask(task.taskId)" style="color: #3568BA;">+ add sub activity</button>
+        <ng-container *ngFor="let task of tasks;let i = index">
+          <mat-card id="card" fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
+            <mat-card-title style="color: #3568BA;font-size: 20px;font-weight:400;font-style: normal;">
+              {{task.taskName}}
 
-            <!-- <button > </button> -->
-            <br> <br>
-            <form class="Search-form" style="width:80%;">
-             
-              <span matPrefix > </span>
-              <input type="text" matInput [(ngModel)]="subTaskName[i]" placeholder="Search" name= "search" >
-              <button matSuffix mat-button style="bottom: 45px;left:180px"><mat-icon >search</mat-icon></button>
-             
-             
+            </mat-card-title>
+            <hr class="horizontal">
+
+            <mat-card-content>
+              <button mat-raised-button (click)="addSubTask(task.taskId)" style="color: #3568BA;">+ add sub
+                activity</button>
+
+              <!-- <button > </button> -->
+              <br> <br>
+              <form class="Search-form" style="width:80%;">
+
+                <span matPrefix> </span>
+                <input type="text" matInput [(ngModel)]="subTaskName[i]" placeholder="Search" name="search">
+                <button matSuffix mat-button style="bottom: 45px;left:180px"><mat-icon>search</mat-icon></button>
+
+
               </form>
-            <!-- <span *ngFor="let subTask of task?.result">
-            <span>{{subTask?.subTaskName}}</span>
-        </span> -->
-        <div class="scroll-bar1" fxLayout="column">
-        <li *ngFor="let item of task?.result | subActivitySearchFilter:subTaskName[i]" style="list-style-type:none;">
-      <input type="checkbox" [checked]="getSelection(item,task)" (change)="changeHandler(item,task)">
-      <label>{{item?.subTaskName}}</label>
-      
-    </li></div>
-    <!-- <button (click)="save()">save </button> -->
-            <!-- <img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
-            <div>add activity with sub activity</div> -->
-    
-        </mat-card-content>
-     
-      </mat-card>
-      
-   </ng-container>
 
-</div>
-<br>
-<div 
-   fxLayout="row wrap" 
-   fxLayout.lt-sm="column" 
-   fxLayoutGap="10px" 
-   fxLayoutAlign="flex-start"
-   style="margin-left: 5%;">
+              <div class="scroll-bar1" fxLayout="column">
+                <li *ngFor="let item of task?.result | subActivitySearchFilter:subTaskName[i]"
+                  style="list-style-type:none;">
+                  <input type="checkbox" [checked]="getSelection(item,task)" (change)="changeHandler(item,task)">
+                  <label>{{item?.subTaskName}}</label>
 
-   <ng-container >
-    <mat-card id="card" fxFlex="0 1 calc(33.3% - 32px)"
-    fxFlex.lt-md="0 1 calc(50% - 32px)"
-    fxFlex.lt-sm="100%" style="text-align: center;" (click)="addTask()">
-        <mat-card-title>
-            
-            
-        </mat-card-title>
-        
-    
-        <mat-card-content>
-          <img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png"/>
-        <div style="color: #3568BA;">add activity</div>
-    
-        </mat-card-content>
-      </mat-card>
-      
-   </ng-container>
+                </li>
+              </div>
 
-</div>
-</div>
-<br>
-<div 
-   fxLayout="row wrap" 
-   fxLayout.lt-sm="column" 
-   fxLayoutGap="10px" 
-   fxLayoutAlign="flex-start"
-   style="margin-left: 5%;">
-   <button mat-raised-button (click)="addProject()" style="background-color: #233A61;color: #fff;left: 10px;width:130px;top: 30px;margin-bottom: 20px;font-family: 'Poppins';cursor: pointer;;">Submit</button><br>
-</div>
+
+            </mat-card-content>
+
+          </mat-card>
+
+        </ng-container>
+
+      </div>
+      <br>
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutAlign="flex-start"
+        style="margin-left: 5%;">
+
+        <ng-container>
+          <mat-card id="card" fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%"
+            style="text-align: center;" (click)="addTask()">
+            <mat-card-title>
+
+
+            </mat-card-title>
+
+
+            <mat-card-content>
+              <img src="https://img.icons8.com/material-outlined/24/null/plus-math--v1.png" />
+              <div style="color: #3568BA;">add activity</div>
+
+            </mat-card-content>
+          </mat-card>
+
+        </ng-container>
+
+      </div>
+    </div>
+    <br>
+    <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutAlign="flex-start"
+      style="margin-left: 5%;">
+      <button mat-raised-button (click)="addProject()"
+        style="background-color: #233A61;color: #fff;left: 10px;width:130px;top: 30px;margin-bottom: 20px;font-family: 'Poppins';cursor: pointer;;">Submit</button><br>
+    </div>
 
 
 
-</div>
+  </div>
 </form>
 
 
 
-     
 
-                
-                  
-                
-                 
-               
-                  <!-- membershipPlan -->
-         
-               
-            
 
-            
-            
-            
-          
-        
-    
+
+
+
+
+
+<!-- membershipPlan -->

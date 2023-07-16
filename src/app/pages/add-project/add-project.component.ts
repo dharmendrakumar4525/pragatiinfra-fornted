@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, NgForm, FormControl } from '@angular/forms';
-import { MatChipInputEvent} from '@angular/material/chips';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTasksComponent } from '../add-tasks/add-tasks.component';
 import { TaskService } from '@services/task.service';
@@ -12,23 +12,24 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { UsersService } from '@services/users.service';
 import { DataAnalysisService } from '@services/data-analysis.service';
+import { LocationPopupComponent } from '@component/project/location-popup/location-popup.component'
 export interface Fruit {
   name: string;
 }
 export interface MatchData {
-  id:string
+  id: string
 }
 @Component({
   selector: 'app-add-project',
   templateUrl: './add-project.component.html',
-  styleUrls: ['./add-project.component.css']
+  styleUrls: ['./add-project.component.scss']
 })
 export class AddProjectComponent implements OnInit {
-  showMaster:boolean = false
-  showAddProject:boolean = true
+  showMaster: boolean = false
+  showAddProject: boolean = true
   visible = true;
   selectable = true;
   removable = true;
@@ -36,130 +37,121 @@ export class AddProjectComponent implements OnInit {
   selection: any[] = [];
   imageUrl = null
   subTaskName = [];
-  aa:boolean=false;
+  aa: boolean = false;
   allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
-  users:any;
-  projectNameVal:any;
-  addPro:boolean = true;
+  users: any;
+  projectNameVal: any;
+  addPro: boolean = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  
-  
+
+
   projectForm: FormGroup = this._fb.group({
-   projectName: [null, [Validators.required]],
-   projectDate: [null, [Validators.required]],
-   location: [null,[Validators.required]],
-   r0Date: [null],
-   r1Date: [null],
-   r2Date: [null],
-   members: [[]]
-  
+    projectName: [null, [Validators.required]],
+    projectDate: [null, [Validators.required]],
+    location: [null, [Validators.required]],
+    r0Date: [null],
+    r1Date: [null],
+    r2Date: [null],
+    members: [[]]
+
 
   });
-  tasks:any;
-  projectId:any;
-  tasksData:any;
-  permissions:any;
-  projectsPermissions:any
+  tasks: any;
+  projectId: any;
+  tasksData: any;
+  permissions: any;
+  projectsPermissions: any
   fruitCtrl = new FormControl();
   filteredFruits: Observable<any>;
-  @ViewChild('fruitInput', {static: false}) fruitInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
-  project:any;
-  
-  constructor(private _fb: FormBuilder, private dataAnalysis:DataAnalysisService, private toast: ToastService, private _dialog: MatDialog,private taskService: TaskService,
-    private projectService: AddProjectService, private userService: UsersService,private activeRoute: ActivatedRoute, private router:Router) { }
-    @HostListener('document:click', ['$event'])
-    documentClick(event: any): void {
-      //console.log("jjjjjjjjjjjjjj")
-      if(!this.projectsPermissions?.isSelected){
-        this.router.navigate(['/'])
+  @ViewChild('fruitInput', { static: false }) fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
+  project: any;
 
-      }
-      //this.utilitiesService.documentClickedTarget.next(event.target)
+  locationsList:Array<any> = [
+    {
+        "location_name": "Locattion1",
+        "location_id": "64b2e6ac89f8321b40063bea",
+        "structures": [
+            {
+                "structure_name": "Structure1",
+                "structure_id": "64b2e0c189f8321b40063bd4",
+                "activities": [
+                    {
+                        "activity_name": "Activity3",
+                        "activity_id": "64b3f785737f0133984d2830"
+                    },
+                    {
+                        "activity_name": "Activity2",
+                        "activity_id": "64b3f77f737f0133984d282d"
+                    }
+                ]
+            },
+            {
+                "structure_name": "Structure2",
+                "structure_id": "64b3f75f737f0133984d2820"
+            },
+            {
+                "structure_name": "Structure3",
+                "structure_id": "64b3f763737f0133984d2823"
+            }
+        ]
+    },
+    {
+        "location_name": "location2",
+        "location_id": "64b3f6b6737f0133984d280d",
+        "structures": [
+            {
+                "structure_name": "Structure4",
+                "structure_id": "64b3f767737f0133984d2826",
+                "activities": [
+                    {
+                        "activity_name": "Activity5",
+                        "activity_id": "64b3f78f737f0133984d2836"
+                    },
+                    {
+                        "activity_name": "Activity4",
+                        "activity_id": "64b3f789737f0133984d2833"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "location_name": "Location3",
+        "location_id": "64b3f6db737f0133984d2813"
     }
-  ngOnInit(): void {
-    this.permissions = JSON.parse(localStorage.getItem('loginData'))
-    console.log(this.permissions)
-    this.projectsPermissions = this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[0]
-    if(!this.projectsPermissions?.isSelected){
-      const dialogRef = this._dialog.open(NoPermissionsComponent, {
-        width: '30%',
-        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-        data: "you don't have permissions to add project"
-      });
-      //return;
+];
+
+  constructor(
+    private _fb: FormBuilder,
+    private dialog: MatDialog,
+    private dataAnalysis: DataAnalysisService, private toast: ToastService, private _dialog: MatDialog, private taskService: TaskService,
+    private projectService: AddProjectService, private userService: UsersService, private activeRoute: ActivatedRoute, private router: Router) { }
+
+
+
+  @HostListener('document:click', ['$event'])
+  documentClick(event: any): void {
+    //console.log("jjjjjjjjjjjjjj")
+    if (!this.projectsPermissions?.isSelected) {
+      this.router.navigate(['/'])
+
     }
-    //this.progressPermissionsEdit = this.permissions.permissions[0].ParentChildchecklist[1].childList[0]
-    //console.log(this.progressPermissionsView)
-    //console.log(this.progressPermissionsEdit)
-    this.activeRoute.params.subscribe((params:any) => {
-      console.log(params.id)
-      this.projectId = params.id
-      this.projectNameVal = params.name
-      
-      if(this.projectId == undefined){
-        this.projectId = null
-      }
-      if(this.projectName == undefined){
-        this.projectNameVal = null
-      }
-
-      if(this.projectId && this.projectNameVal){
-        this.dataAnalysis.getProjectById(this.projectId).subscribe(data=>{
-          this.project = data
-          this.projectForm.patchValue(this.project)
-          if(this.project.imageUrl){
-            this.imageUrl = this.project.imageUrl
-          }else{
-            this.imageUrl = null
-          }
-      })
-      
-      
-        this.showMaster = false;
-    this.showAddProject  = true;
-    this.addPro = false;
-      }else if(this.projectId){
-        this.showMaster = true;
-    this.showAddProject  = false;
-      }
-    });
-
-      this.taskService.getTasks().subscribe(data=>{
-        //this.spinner.hide()
-        this.tasks = data
-        console.log(this.tasks)
-      })
-    
-      this.taskService.getOnlyTasks().subscribe(data=>{
-        this.tasksData = data
-        console.log(this.tasksData)
-      })
-
-      this.userService.getUserss().subscribe(data=>{
-        this.users = data
-        console.log(this.users)
-        this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
-          startWith(null),
-          map((fruit: any | null) => fruit ? this._filter(fruit) : this.users.slice()));
-        //console.log(this.tasksData)
-      })
-
-
-      
+    //this.utilitiesService.documentClickedTarget.next(event.target)
   }
 
-  get courseIds() { 
-    return this.projectForm.get('courseIds');
-}
 
-addTag(event: MatChipInputEvent): void {
+  get courseIds() {
+    return this.projectForm.get('courseIds');
+  }
+
+  addTag(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
 
     // Add our fruit
     if ((value || '').trim()) {
-     // this.tags.push({name: value.trim()});
+      // this.tags.push({name: value.trim()});
       // this.courseIds.value.push(value);
       this.projectForm.controls['members'].setValue([...this.projectForm.controls['members'].value, value.trim()]);
       this.projectForm.controls['members'].updateValueAndValidity();
@@ -197,19 +189,19 @@ addTag(event: MatChipInputEvent): void {
     dialogRef.afterClosed().subscribe(status => {
       console.log(status);
       if (status === 'yes') {
-        this.taskService.getTasks().subscribe(data=>{
+        this.taskService.getTasks().subscribe(data => {
           //this.spinner.hide()
           this.tasks = data
           console.log(this.tasks)
         })
-       // this.filterSubject.next(this.filterForm.value);
+        // this.filterSubject.next(this.filterForm.value);
       }
       if (status === 'no') {
       }
     })
   }
 
-  addSubTask(taskId:any){
+  addSubTask(taskId: any) {
     const dialogRef = this._dialog.open(AddSubTasksComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -218,26 +210,26 @@ addTag(event: MatChipInputEvent): void {
     dialogRef.afterClosed().subscribe(status => {
       console.log(status);
       if (status === 'yes') {
-        this.taskService.getTasks().subscribe(data=>{
+        this.taskService.getTasks().subscribe(data => {
           //this.spinner.hide()
           this.tasks = data
           console.log(this.tasks)
         })
-       // this.filterSubject.next(this.filterForm.value);
+        // this.filterSubject.next(this.filterForm.value);
       }
       if (status === 'no') {
       }
     })
   }
-  getSelection(item:any,task:any) {
+  getSelection(item: any, task: any) {
     return this.selection.findIndex(s => s._id === item._id) !== -1;
   }
 
-  changeHandler(item: any, task:any) {
+  changeHandler(item: any, task: any) {
     item.taskName = task.taskName
     const id = item._id;
-    
-   // console.log(task)
+
+    // console.log(task)
 
     const index = this.selection.findIndex(u => u._id === id);
     if (index === -1) {
@@ -255,9 +247,9 @@ addTag(event: MatChipInputEvent): void {
     console.log(this.selection);
   }
 
-  addProject(){
+  addProject() {
 
-    if(!this.projectsPermissions?.isSelected){
+    if (!this.projectsPermissions?.isSelected) {
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
         panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -267,7 +259,7 @@ addTag(event: MatChipInputEvent): void {
     }
 
     //let hh = []
-    if(!this.projectId){
+    if (!this.projectId) {
       if (this.projectForm.invalid) {
         this.toast.openSnackBar(
           'Enter Valid Details'
@@ -288,77 +280,77 @@ addTag(event: MatChipInputEvent): void {
       //   return;
       // }
       this.projectService.addProject(this.projectForm.value).subscribe(
-  
+
         {
-          next: (data: any) =>  {
+          next: (data: any) => {
             console.log(data)
             // this.spinner.hide()
-             
-             this.toast.openSnackBar('Project Added Successfully');
-             this.router.navigate(['/view-project/data-analysis',data._id]);
-            
+
+            this.toast.openSnackBar('Project Added Successfully');
+            this.router.navigate(['/view-project/data-analysis', data._id]);
+
           },
           error: (err) => {
             // this.spinner.hide()
-             this.toast.openSnackBar('Something went wrong, please try again later');
+            this.toast.openSnackBar('Something went wrong, please try again later');
             // console.log(err) 
-    
+
             // this.errorData = err
-    
-            
-    
+
+
+
           }
         }
-    
+
       )
-    }else{
+    } else {
       let selSectionsData = this.selection
       this.projectService.updateActivitiesToProject(selSectionsData, this.projectId).subscribe(
-  
+
         {
-          next: (data: any) =>  {
+          next: (data: any) => {
             console.log(data)
             // this.spinner.hide()
-             
-             this.toast.openSnackBar(' Updated Successfully');
-             this.router.navigate(['/view-project/progress-sheet',this.projectId]);
-            
+
+            this.toast.openSnackBar(' Updated Successfully');
+            this.router.navigate(['/view-project/progress-sheet', this.projectId]);
+
           },
           error: (err) => {
             // this.spinner.hide()
-             this.toast.openSnackBar('Something went wrong, please try again later');
+            this.toast.openSnackBar('Something went wrong, please try again later');
             // console.log(err) 
-    
+
             // this.errorData = err
-    
-            
-    
+
+
+
           }
         }
-    
+
       )
-    //  // console.log(this.selection);
-    //   //console.log(this.tasksData)
-    //   for(let one of this.selection){
-    //     //console.log(one)
-    //     for(let single of this.tasksData){
-    //       if(single.taskId === one.taskId){
+      //  // console.log(this.selection);
+      //   //console.log(this.tasksData)
+      //   for(let one of this.selection){
+      //     //console.log(one)
+      //     for(let single of this.tasksData){
+      //       if(single.taskId === one.taskId){
 
-    //       }else{
-    //         hh.push(one)
-            
+      //       }else{
+      //         hh.push(one)
 
-    //       }
-    //     }
-    //     console.log(hh)
-    //   }
+
+      //       }
+      //     }
+      //     console.log(hh)
+      //   }
     }
- 
+
 
   }
 
 
-  editProject(){
+  editProject() {
     if (this.projectForm.invalid) {
       this.toast.openSnackBar(
         'Enter Valid Details'
@@ -381,30 +373,30 @@ addTag(event: MatChipInputEvent): void {
     this.projectService.updateProject(this.projectForm.value, this.projectId).subscribe(
 
       {
-        next: (data: any) =>  {
+        next: (data: any) => {
           console.log(data)
           // this.spinner.hide()
-           
-           this.toast.openSnackBar('Project Updated Successfully');
-           this.router.navigate(['/view-project/data-analysis',data._id]);
-          
+
+          this.toast.openSnackBar('Project Updated Successfully');
+          this.router.navigate(['/view-project/data-analysis', data._id]);
+
         },
         error: (err) => {
           // this.spinner.hide()
-           this.toast.openSnackBar('Something went wrong, please try again later');
+          this.toast.openSnackBar('Something went wrong, please try again later');
           // console.log(err) 
-  
+
           // this.errorData = err
-  
-          
-  
+
+
+
         }
       }
-  
+
     )
   }
 
-  uploadFile(event:any) {
+  uploadFile(event: any) {
     let reader = new FileReader(); // HTML5 FileReader API
     let file = event.target.files[0];
     if (event.target.files && event.target.files[0]) {
@@ -424,13 +416,13 @@ addTag(event: MatChipInputEvent): void {
       //this.cd.markForCheck();        
     }
   }
-  displayMater(){
+  displayMater() {
     this.showMaster = true;
-    this.showAddProject  = false
+    this.showAddProject = false
   }
-  dispalyProject(){
+  dispalyProject() {
     this.showMaster = false;
-    this.showAddProject  = true
+    this.showAddProject = true
   }
 
   get projectName(): AbstractControl {
@@ -445,9 +437,9 @@ addTag(event: MatChipInputEvent): void {
   }
 
 
-  onKeyUp(ev,id){
+  onKeyUp(ev, id) {
 
-    console.log(ev.target.value,id)
+    console.log(ev.target.value, id)
 
     let dataMatched = this.tasks.filter((product) => {
       return product.result.some((prod) => {
@@ -461,8 +453,8 @@ addTag(event: MatChipInputEvent): void {
 
   }
 
-  setIndex(ii){
-    this.aa=ii;
+  setIndex(ii) {
+    this.aa = ii;
     console.log
   }
   selected(event: MatAutocompleteSelectedEvent): void {
@@ -474,7 +466,7 @@ addTag(event: MatChipInputEvent): void {
 
     // Add our fruit
     if ((value || '').trim()) {
-     // this.tags.push({name: value.trim()});
+      // this.tags.push({name: value.trim()});
       // this.courseIds.value.push(value);
       this.projectForm.controls['members'].setValue([...this.projectForm.controls['members'].value, value.trim()]);
       this.projectForm.controls['members'].updateValueAndValidity();
@@ -507,5 +499,166 @@ addTag(event: MatChipInputEvent): void {
     const filterValue = value.toLowerCase();
 
     return this.users.filter(fruit => fruit.email.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+
+
+
+  addLocations(type,locationObj,structuresObj) {
+    const dialogPopup = this.dialog.open(LocationPopupComponent, {
+      data: {
+        type: type
+      }
+    });
+    dialogPopup.afterClosed().subscribe((result: any) => {
+      console.log('result', result)
+
+      if (result && result['option'] === 1) {
+        if(type == 'location'){
+          this.locationsList = [...this.locationsList, ...result.data.locations];
+        }
+
+        if(type == 'structure'){
+          this.locationsList = this.locationsList.map((o:any)=>{
+              if(o.location_id == locationObj.location_id){
+                if(!o.structures){
+                  o.structures = [];
+                }
+                o.structures = [...o.structures, ...result.data.structures];
+              }
+              return o;
+          })
+        }
+
+        if(type == 'activity'){
+          this.locationsList = this.locationsList.map((o:any)=>{
+              if(o.location_id == locationObj.location_id){
+
+                o.structures = o.structures.map((childObj:any)=>{
+                  if(childObj.structure_id == structuresObj.structure_id){
+                    if(!childObj.activities){
+                      childObj.activities = [];
+                    }
+                    childObj.activities = [...childObj.activities, ...result.data.activities];
+                  }
+                  return childObj;
+                })
+              }
+              return o;
+          })
+        }
+
+
+        console.log('this.locationsList ', this.locationsList )
+
+      }
+    });
+  }
+
+
+
+  deleteLocations(type,locationObj,structuresObj,activityObj){
+    if(type == 'location'){
+      this.locationsList =  this.locationsList.filter((o:any)=>o.location_id != locationObj.location_id);
+    }
+
+    if(type == 'structure'){
+      this.locationsList = this.locationsList.map((o:any)=>{
+          if(o.location_id == locationObj.location_id){
+            o.structures = o.structures.filter((childObj:any)=>childObj.structure_id != structuresObj.structure_id);
+          }
+          return o;
+      })
+    }
+
+    if(type == 'activity'){
+      this.locationsList = this.locationsList.map((o:any)=>{
+          if(o.location_id == locationObj.location_id){
+            o.structures = o.structures.map((childObj:any)=>{
+              if(childObj.structure_id == structuresObj.structure_id){
+                childObj.activities = childObj.activities.filter((aObj:any)=>aObj.activity_id != activityObj.activity_id);               
+              }
+              return childObj;
+            })
+          }
+          return o;
+      })
+    }
+  }
+
+
+
+
+  ngOnInit(): void {
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+
+    this.projectsPermissions = this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[0]
+
+    if (!this.projectsPermissions?.isSelected) {
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to add project"
+      });
+      //return;
+    }
+    //this.progressPermissionsEdit = this.permissions.permissions[0].ParentChildchecklist[1].childList[0]
+    //console.log(this.progressPermissionsView)
+    //console.log(this.progressPermissionsEdit)
+    this.activeRoute.params.subscribe((params: any) => {
+      console.log(params.id)
+      this.projectId = params.id
+      this.projectNameVal = params.name
+
+      if (this.projectId == undefined) {
+        this.projectId = null
+      }
+      if (this.projectName == undefined) {
+        this.projectNameVal = null
+      }
+
+      if (this.projectId && this.projectNameVal) {
+        this.dataAnalysis.getProjectById(this.projectId).subscribe(data => {
+          this.project = data
+          this.projectForm.patchValue(this.project)
+          if (this.project.imageUrl) {
+            this.imageUrl = this.project.imageUrl
+          } else {
+            this.imageUrl = null
+          }
+        })
+
+
+        this.showMaster = false;
+        this.showAddProject = true;
+        this.addPro = false;
+      } else if (this.projectId) {
+        this.showMaster = true;
+        this.showAddProject = false;
+      }
+    });
+
+    this.taskService.getTasks().subscribe(data => {
+      //this.spinner.hide()
+      this.tasks = data
+      console.log(this.tasks)
+    })
+
+    this.taskService.getOnlyTasks().subscribe(data => {
+      this.tasksData = data
+      console.log(this.tasksData)
+    })
+
+    this.userService.getUserss().subscribe(data => {
+      this.users = data
+      console.log(this.users)
+      this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+        startWith(null),
+        map((fruit: any | null) => fruit ? this._filter(fruit) : this.users.slice()));
+      //console.log(this.tasksData)
+    })
+
+
+
   }
 }

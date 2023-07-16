@@ -1,0 +1,130 @@
+.mat-dialog-title {
+    border-bottom: 0;
+    padding: 14px;
+    background: #f3f3f3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    text-transform: capitalize;
+    color: #28313b;
+}
+
+ 
+.mat-dialog-content-cstm {
+    padding-bottom: 26px;
+}
+
+.submit-btn {
+    background: #233a61;
+    color: #fff;
+  }
+  .cancel-btn {
+    background: #ccc;
+  }
+
+.space-btn {
+    margin: 0 5px;
+}
+
+.mat-dialog-content {
+    margin: 0 0 0px 0;
+    padding: 0 15px;
+}
+
+
+.fi-form-field {
+    margin-bottom: 10px;
+
+    .form-field-label {
+        min-width: 160px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 11px;
+        line-height: 14px;
+        text-transform: uppercase;
+        color: #787878;
+        margin-bottom: 6px;
+    }
+
+   
+}
+
+:host ::ng-deep .mat-form-field.full-border{
+     
+    .mat-form-field-flex {
+    
+    
+        font-weight: 400;
+        line-height: 1;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        height: 36px;
+        border-radius: 0.25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+
+    &:hover{
+         
+        .mat-form-field-flex {
+            border: 1px solid #333;
+        }
+    }
+
+    &.mat-form-field-invalid{
+         
+        .mat-form-field-flex {
+            border: 1px solid #f44336;
+        }
+    }
+     
+    .mat-form-field-underline {
+        display: none;
+    }
+     
+    .mat-form-field-infix {
+        padding: 7px 5px 8px 5px !important;
+    }
+}
+
+.mat-radio-button {
+    margin: 0 5px;
+}
+
+
+.mat-form-field {
+    min-width: 210px;
+    width: 100%;
+    display: block;
+}
+
+.btn {
+    min-width: 100px;
+    margin: 0 5px;
+}
+.full-width{
+    width: 100%;
+}
+
+.close-icon{
+
+        background-repeat: no-repeat;
+        display: inline-block;
+        fill: currentColor;
+        height: 13px;
+        width: 0px;
+        margin-top: -5px;
+        cursor: pointer;
+
+}
+form{
+    width: 500px;
+    max-width: 100% !important;
+}
+
+

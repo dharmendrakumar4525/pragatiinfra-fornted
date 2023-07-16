@@ -105,6 +105,8 @@ import { PrstatusComponent } from './Procurement/prstatus/prstatus.component';
 import { ModifyRemarksComponent } from './pages/modify-remarks/modify-remarks.component';
 import { CookieModule } from 'ngx-cookie';
 import { NgxLocalStorageModule } from 'ngx-localstorage';
+import {LocationPopupModule} from '@component/project/location-popup/location-popup.module'
+import { MatTooltipModule } from '@angular/material/tooltip';
 // FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 //   dayGridPlugin,
 //   interactionPlugin
@@ -115,6 +117,7 @@ import { NgxLocalStorageModule } from 'ngx-localstorage';
   imports: [AppRoutingModule, BrowserModule, ReactiveFormsModule, HttpClientModule, FormsModule, CoreModule, SharedModule, CustomMaterialModule,
     FlexLayoutModule,
     FullCalendarModule,
+    MatTooltipModule,
     NgxLocalStorageModule.forRoot(),
     CommonModule,
     CookieModule.withOptions(),
@@ -139,6 +142,7 @@ import { NgxLocalStorageModule } from 'ngx-localstorage';
 
     }),
     BrowserAnimationsModule,
+    LocationPopupModule
   ],
   declarations: [AppComponent, HomeComponent, SearchPipe, SubActivitySearchPipe, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent, LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,
     ForgotpasswordComponent, NewRoleComponent, NewPermissionComponent, AddDataComponent, ManagePermissionsComponent, CreatenewpasswordComponent, NoPermissionsComponent, RoleEditComponent, UserEditComponent, UsersDeleteMultipleComponent, RolesDeleteMultipleComponent, AboutUsComponent, MasteruserComponent, MasterCreateuserComponent, InnerAddMemberComponent, EditActivityComponent, EditSubActivityComponent, TaskDeleteMulActivityComponent, DeleteMulSubActivityComponent, SubActivitiesComponent, EditSubActivitiesComponent, AddSubActivitiesComponent, SitemasterComponent,
