@@ -279,6 +279,8 @@ export class AddProjectComponent implements OnInit {
       //   );
       //   return;
       // }
+        // }
+    this.projectForm.value['locations'] = this.locationsList
       this.projectService.addProject(this.projectForm.value).subscribe(
 
         {
@@ -369,7 +371,7 @@ export class AddProjectComponent implements OnInit {
     //     'Please upload project image'
     //   );
     //   return;
-    // }
+  
     this.projectService.updateProject(this.projectForm.value, this.projectId).subscribe(
 
       {
