@@ -1,292 +1,250 @@
-
-<mat-toolbar style="background-color: #fff !important;" >
+<mat-toolbar style="background-color: #fff !important;">
   <mat-toolbar-row fxLayoutAlign="space-between center">
-      <div style="padding: 1rem;margin-top: 110px;">
-        <form [formGroup]="projectNameForm">
-          <select style="padding: 10px;width:300px;border: none;font-size: 30px;font-weight: 600;font-family: 'Poppins';" (change)="onChangeProject($event)" formControlName="_id">
-            <option *ngFor=" let one of projectsList" [value]="one._id">
-              <!-- <span >{{one?.projectName}}</span></option></select>   -->
-        <h1 style="background-color: #2E2E2E;font-size: 200px;font-weight: 400;font-style: normal;font-family: 'Poppins';">{{one?.projectName}}</h1></option></select>
+    <div style="padding: 1rem;margin-top: 110px;">
+      <form [formGroup]="projectNameForm">
+        <select style="padding: 10px;width:300px;border: none;font-size: 30px;font-weight: 600;font-family: 'Poppins';"
+          (change)="onChangeProject($event)" formControlName="_id">
+          <option *ngFor=" let one of projectsList" [value]="one._id">
+            <!-- <span >{{one?.projectName}}</span></option></select>   -->
+            <h1
+              style="background-color: #2E2E2E;font-size: 200px;font-weight: 400;font-style: normal;font-family: 'Poppins';">
+              {{one?.projectName}}</h1>
+          </option>
+        </select>
       </form>
-    <span style="font-size: 10px;position: relative;bottom: 40px;left:320px;font-family: 'Poppins';font-weight: bold;"><img src=".\assets\images\ontrack.svg">&nbsp;  On Track</span></div>
-      <div>
-          <button mat-button style="background-color:#fff;padding: 1px 1px;width: 150px;margin-top: 50px;margin-left: 430px;position: relative;border: 1px solid #97989D;border-radius: 5px;color: #97989D;font-family: 'Poppins';" [routerLink]="['/add-project']">Add Project +  </button>
-          </div>
-          <div>
-          <button  mat-button style="background-color:#fff;padding: 1px 1px;width: 150px;margin-top: 50px;border: 1px solid #97989D;border-radius: 5px;color: #97989D;font-family: 'Poppins';" (click)="addMember()"> <mat-icon style="font-size: medium;position: relative;right:-10px;">group_add</mat-icon>
-              Add Member </button>
-              
-<button mat-button [matMenuTriggerFor]="menu" ><mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" style="margin-left:-10px">notifications</mat-icon></button>
-<mat-menu #menu="matMenu">
-  <div style="height: 450px;margin-top: 20px;">
-  <div class="scroll-bar2" fxLayout="column">
-    <div fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
-      <div mat-card-avatar class="example-header-image"></div>
-      
-      <div  class="notification-container">
-        <div class="content">{{data.description}}
-          <div class="time" style="color: #BBBBBB;">{{data.time}}</div><br>
-        </div>
+      <span
+        style="font-size: 10px;position: relative;bottom: 40px;left:320px;font-family: 'Poppins';font-weight: bold;"><img
+          src=".\assets\images\ontrack.svg">&nbsp; On Track</span>
     </div>
-  
-  </div><br>
-  <!-- <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,]">
-    <div mat-card-avatar class="example-header-image"></div>
-    <div >
-      <div class="content" style="margin-left: 10px;"><b>Kate: .</b>
-        <div class="time">1 hour ago</div>
-      </div>
-  </div>
+    <div>
+      <button mat-button
+        style="background-color:#fff;padding: 1px 1px;width: 150px;margin-top: 50px;margin-left: 430px;position: relative;border: 1px solid #97989D;border-radius: 5px;color: #97989D;font-family: 'Poppins';"
+        [routerLink]="['/add-project']">Add Project + </button>
+    </div>
+    <div>
+      <button mat-button
+        style="background-color:#fff;padding: 1px 1px;width: 150px;margin-top: 50px;border: 1px solid #97989D;border-radius: 5px;color: #97989D;font-family: 'Poppins';"
+        (click)="addMember()"> <mat-icon style="font-size: medium;position: relative;right:-10px;">group_add</mat-icon>
+        Add Member </button>
 
-</div> -->
+      <button mat-button [matMenuTriggerFor]="menu"><mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn"
+          style="margin-left:-10px">notifications</mat-icon></button>
+      <mat-menu #menu="matMenu">
+        <div style="height: 450px;margin-top: 20px;">
+          <div class="scroll-bar2" fxLayout="column">
+            <div fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
+              <div mat-card-avatar class="example-header-image"></div>
 
+              <div class="notification-container">
+                <div class="content">{{data.description}}
+                  <div class="time" style="color: #BBBBBB;">{{data.time}}</div><br>
+                </div>
+              </div>
+
+            </div><br>
+
+
+          </div>
+        </div>
+      </mat-menu>
+
+    </div>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row>
+    <hr style="width:100%">
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div>
+  <ul class="toptext" style="background-color: #fff !important;list-style: none;">
+    <li style="border-right: 1px solid #D9D9D9;padding-right: 10px;"><a style="color: #000;" [routerLink]="['/dpr']"
+        routerLinkActive="active-link"><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i> <span
+          style="color:#97989D;">&nbsp;Projects</span></a></li>
+    <li style="border-right: 1px solid #D9D9D9;padding-right: 20px;"><a style="color: #000;"
+        [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
+        [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i>
+        <span style="color:#97989D;">&nbsp;Data-Analysis</span></a></li>
+    <li style="border-right: 1px solid #D9D9D9; padding-right: 20px;"><a style="color: #000;"
+        [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"><i
+          class="fa fa-edit" aria-hidden="true" style="color:#233A61;"></i> <span
+          style="color:#233A61">&nbsp;Progress-sheet</span></a></li>
+    <li><a style="color: #000;" [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"><i
+          class="fa fa-edit" aria-hidden="true" style="color:#97989D;"></i><span
+          style="color:#97989D;">&nbsp;Calender</span></a></li>
+  </ul>
 </div>
-</div>
-</mat-menu>  
 
-      </div>
-    </mat-toolbar-row>
-      
-    <mat-toolbar-row>
-      <hr style="width:100%">
-    </mat-toolbar-row>
-    </mat-toolbar>
+<br>
 
-    <div >
-      <ul class="toptext"  style="background-color: #fff !important;list-style: none;">
-        <li style="border-right: 1px solid #D9D9D9;padding-right: 10px;"><a style="color: #000;" [routerLink]="['/dpr']" routerLinkActive="active-link"
-          ><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i> <span style="color:#97989D;">&nbsp;Projects</span></a></li>
-        <li style="border-right: 1px solid #D9D9D9;padding-right: 20px;"><a style="color: #000;" [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
-          [routerLinkActiveOptions]="{exact: true}" ><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i> <span style="color:#97989D;" >&nbsp;Data-Analysis</span></a></li>
-        <li style="border-right: 1px solid #D9D9D9; padding-right: 20px;"><a  style="color: #000;" [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
-           ><i class="fa fa-edit" aria-hidden="true" style="color:#233A61;"></i> <span style="color:#233A61">&nbsp;Progress-sheet</span></a></li>
-        <li><a style="color: #000;" [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"
-           ><i class="fa fa-edit" aria-hidden="true" style="color:#97989D;"></i><span style="color:#97989D;">&nbsp;Calender</span></a></li>
-      </ul>
-   </div>
-   <!-- <div>
-    <input list="browsers" name="myBrowser" placeholder="Calendar History"  style="padding: 10px;width: 150px;border:1px solid #9F9F9F;border-radius: 5px;cursor: pointer;background-color: Transparent !important;font-family: 'Poppins';float: right;margin-top: -30px;margin-right: 80px;"/>
-    <datalist id="browsers" >
-      <option value="Calendar1">
-      <option value="Calendar2">
-    </datalist>
-   </div> -->
-   <br>
-   
 <div style="background-color: #fff !important;margin-top: 20px;margin-left: 50px;">
   <h3 style="font-family: 'Poppins';">Project progress monitoring sheets(PPMS)</h3>
 </div>
 
-<body >
+<body>
   <div class="scroll-bar1" style="width: 93%;">
     <table *ngIf="progressPermissionsView?.isSelected; else noView" style="direction: ltr !important;">
-   
 
-    <tr>
-    <th>Description <i class="fa fa-plus" aria-hidden="true" style="cursor: pointer;font-size: small;float: right;position: relative;left:15px" [routerLink]="['/add-project',projectId]"></i></th>
-    <th>R1&nbsp;End&nbsp;Date</th>
-   <th>R2&nbsp;End&nbsp;Date</th>
-   <th>R3&nbsp;End&nbsp;Date</th>
-   <th>Actual&nbsp;Revised&nbsp;Start&nbsp;Date</th>
-   <th>Working&nbsp;Days&nbsp;Revised</th>
-   <th>Baseline&nbsp;Start&nbsp;Date</th>
-   <th>Baseline&nbsp;End&nbsp;Date</th>
-   <th>Base&nbsp;Line&nbsp;Working&nbsp;Days</th>
-   <th>Target&nbsp;Till&nbsp;Date&nbsp;as&nbsp;per&nbsp;Baseline</th>
-   <th>No&nbsp;of&nbsp;Days&nbsp;Balance&nbsp;as&nbsp;per&nbsp;Baseline</th>
-   <th>Daily&nbsp;Asking&nbsp;Rate&nbsp;as&nbsp;per&nbsp;Baseline</th>
-   <th>UOM</th>
-   <th>Total</th>
-   <th>Cumulative&nbsp;Completed</th>
-   <th>Target&nbsp;Till&nbsp;Date&nbsp;as&nbsp;per&nbsp;Revised&nbsp;End&nbsp;Date</th>
-   <th>No&nbsp;of&nbsp;Days&nbsp;Balance&nbsp;as&nbsp;per&nbsp;revised&nbsp;dates</th>
-   <th>Daily&nbsp;Asking&nbsp;Rate&nbsp;as&nbsp;per&nbsp;Revised&nbsp;End&nbsp;Date</th>
-   <th>Activity&nbsp;Balance&nbsp;(%)</th>
-   <th>Total</th>
-   <th>Remarks</th>
-   <!-- <th>30&nbsp;-&nbsp;April</th>
-   <th>29&nbsp;-&nbsp;April</th>
-   <th>28&nbsp;-&nbsp;April</th>
-   <th>27&nbsp;-&nbsp;April</th>
-   <th>26&nbsp;-&nbsp;April</th>
-   <th>25&nbsp;-&nbsp;April</th>
-   <th>24&nbsp;-&nbsp;April</th>
-   <th>23&nbsp;-&nbsp;April</th>
-   <th>22&nbsp;-&nbsp;April</th>
-   <th>21&nbsp;-&nbsp;April</th>
-   <th>20&nbsp;-&nbsp;April</th>
-   <th>19&nbsp;-&nbsp;April</th>
-   <th>18&nbsp;-&nbsp;April</th>
-   <th>17&nbsp;-&nbsp;April</th>
-   <th>16&nbsp;-&nbsp;April</th>
-   <th>15&nbsp;-&nbsp;April</th>
-   <th>14&nbsp;-&nbsp;April</th>
-   <th>13&nbsp;-&nbsp;April</th>
-   <th>12&nbsp;-&nbsp;April</th>
-   <th>11&nbsp;-&nbsp;April</th>
-   <th>10&nbsp;-&nbsp;April</th>
-   <th>09&nbsp;-&nbsp;April</th>
-   <th>08&nbsp;-&nbsp;April</th>
-   <th>07&nbsp;-&nbsp;April</th>
-   <th>06&nbsp;-&nbsp;April</th>
-   <th>05&nbsp;-&nbsp;April</th>
-   <th>04&nbsp;-&nbsp;April</th>
-   <th>03&nbsp;-&nbsp;April</th>
-   <th>02&nbsp;-&nbsp;April</th>
-   <th>01&nbsp;-&nbsp;April</th> -->
- 
-</tr>
-    
-    
-   
-    <tbody *ngFor= " let project of projectsData ">
-        <tr  style="color:#233A61 !important;font-weight: bolder ;">
-            <td><div class="activityalign">
-              <div style="width:120px;">{{project.name}} </div> 
-              <div>
-                <mat-icon [routerLink]="['/add-project',projectId]" style="margin-top: 10px;"  >add</mat-icon>
-              <mat-icon style="margin-top: 10px;"  (click)="deleteTask(project)" >delete</mat-icon>
+
+      <tr>
+        <th>Description </th>
+        <th>R1&nbsp;End&nbsp;Date</th>
+        <th>R2&nbsp;End&nbsp;Date</th>
+        <th>R3&nbsp;End&nbsp;Date</th>
+        <th>Actual&nbsp;Revised&nbsp;Start&nbsp;Date</th>
+        <th>Working&nbsp;Days&nbsp;Revised</th>
+        <th>Baseline&nbsp;Start&nbsp;Date</th>
+        <th>Baseline&nbsp;End&nbsp;Date</th>
+        <th>Base&nbsp;Line&nbsp;Working&nbsp;Days</th>
+        <th>Target&nbsp;Till&nbsp;Date&nbsp;as&nbsp;per&nbsp;Baseline</th>
+        <th>No&nbsp;of&nbsp;Days&nbsp;Balance&nbsp;as&nbsp;per&nbsp;Baseline</th>
+        <th>Daily&nbsp;Asking&nbsp;Rate&nbsp;as&nbsp;per&nbsp;Baseline</th>
+        <th>UOM</th>
+        <th>Total</th>
+        <th>Cumulative&nbsp;Completed</th>
+        <th>Target&nbsp;Till&nbsp;Date&nbsp;as&nbsp;per&nbsp;Revised&nbsp;End&nbsp;Date</th>
+        <th>No&nbsp;of&nbsp;Days&nbsp;Balance&nbsp;as&nbsp;per&nbsp;revised&nbsp;dates</th>
+        <th>Daily&nbsp;Asking&nbsp;Rate&nbsp;as&nbsp;per&nbsp;Revised&nbsp;End&nbsp;Date</th>
+        <th>Activity&nbsp;Balance&nbsp;(%)</th>
+        <th>Total</th>
+        <th>Remarks</th>
+
+      </tr>
+
+      <tbody>
+
+        <ng-container *ngFor=" let locationItem of projectLocationsList ">
+
+          <tr style="color:#233A61 !important;font-weight: bolder ;">
+            <td>
+              <div class="activityalign">
+                <div style="width:120px;">{{locationItem.location_name}} </div>
+                <!-- <div>
+                  <mat-icon [routerLink]="['/add-project',projectId]" style="margin-top: 10px;">add</mat-icon>
+                  <mat-icon style="margin-top: 10px;" (click)="deleteTask(project)">delete</mat-icon>
+                </div> -->
+
               </div>
-              
-            </div></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
 
-            <td ></td>
-            <td ></td>
-            <td ></td>
+            <td></td>
+            <td></td>
+            <td></td>
 
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            
-            <!-- <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
-            <td ></td> -->
-            
-        
-        </tr>
-        
-        <tr *ngFor="let subTask of project.result" style="font-size: 10px;" >
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
 
-          <td style="color:#595b5d;"> 
-            <div class="descriptionalign">
-               <mat-icon (click)="addData(subTask)">edit</mat-icon>
-               <!-- <mat-icon style="margin-left: -15px;">delete</mat-icon> -->
-            <div style="width: 200px;" >{{subTask.subTaskName}}</div>
-            <!-- <i class="fa fa-calendar" aria-hidden="true" [routerLink]="['/view-project/calender',projectId]"></i>&nbsp;&nbsp;&nbsp; -->
-            <mat-icon style="margin-top: 10px;" (click)="delete(subTask)">delete</mat-icon>
-            
-          </div></td>
-          <td >{{subTask?.r1EndDate | date}}</td>
-          <td >{{subTask?.r2EndDate | date}}</td>
-          <td >{{subTask?.r3EndDate | date}}</td>
-          <td >{{subTask?.actualRevisedStartDate | date}}</td>
-          <td >{{subTask?.workingDaysRevised}}</td>
-          <td >{{subTask?.baseLineStartDate| date}}</td>
-          <td >{{subTask?.baseLineEndDate | date}}</td>
-           <td >{{subTask?.baseLineWorkingDays}}</td>
-           <td>
-            <span *ngIf="(subTask?.dailyCumulativeTotal == subTask?.total) && subTask?.dailyCumulativeTotal">Completed</span>
-            <span *ngIf="subTask?.dailyCumulativeTotal !== subTask?.total">{{subTask?.dailyCumulativeTotal}}</span>
-            <!-- <span *ngIf="subTask?.actualRevisedStartDate == subTask?.baseLineEndDate">{{subTask?.actualRevisedStartDate}}</span>
-            <span *ngIf="subTask?.actualRevisedStartDate == subTask?.baseLineStartDate">{{subTask?.actualRevisedStartDate}}</span> -->
-           </td>
-           <td>{{subTask?.noofDaysBalanceasperbaseLine}}</td>
-           <td>{{subTask?.dailyAskingRateasperbaseLine}}</td>
-          <td >{{subTask?.uom}}</td>
-          <td >{{subTask?.total}}</td>
-          <td>{{subTask?.dailyCumulativeTotal}}</td>
-          <td>
-            <span *ngIf="(subTask?.dailyCumulativeTotal == subTask?.total) && subTask?.dailyCumulativeTotal">Completed</span>
-            <span *ngIf="subTask?.dailyCumulativeTotal !== subTask?.total">{{subTask?.dailyCumulativeTotal}}</span>
-          
-          </td>
-          <td>{{subTask?.noofDaysBalanceasperrevisedEnddate}}</td>
-          <td>{{subTask?.dailyAskingRateasperRevisedEndDate}}</td>
-          <td>{{(100-(100 * subTask.dailyCumulativeTotal) / subTask.total).toFixed(0)}}</td>
-          <td >{{subTask?.dailyCumulativeTotal}}</td>
-          <td ><button mat-button style="background-color: #233A61;color:#fff;margin-bottom: 5px;margin-top: 5px;margin-left: 8px;font-family: 'Poppins';" (click)="addremarks(subTask)">View remarks</button></td>
-          <!-- <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td>
-          <td ></td> -->
-          
-        </tr>
-    </tbody>
+          <ng-container *ngFor="let structureItem of locationItem.structures">
+
+            <tr style="color:#233A61 !important;font-weight: bolder ;">
+              <td>
+                <div class="activityalign structureAlign">
+                  <div style="width:120px;">{{structureItem.structure_name}} </div>
+                  <!-- <div>
+                  <mat-icon [routerLink]="['/add-project',projectId]" style="margin-top: 10px;">add</mat-icon>
+                  <mat-icon style="margin-top: 10px;" (click)="deleteTask(project)">delete</mat-icon>
+                </div> -->
+
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+
+              <td></td>
+              <td></td>
+              <td></td>
+
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <tr *ngFor="let activityItem of structureItem.activities" style="font-size: 10px;">
+
+              <td style="color:#595b5d;">
+                <div class="descriptionalign activityAlign">
+                  <mat-icon (click)="addData(activityItem)">edit</mat-icon>
+                  <div style="width: 200px;">{{activityItem.activity_name}}</div>
+    
+                </div>
+              </td>
+              <td>{{activityItem?.r1EndDate | date}}</td>
+              <td>{{activityItem?.r2EndDate | date}}</td>
+              <td>{{activityItem?.r3EndDate | date}}</td>
+              <td>{{activityItem?.actualRevisedStartDate | date}}</td>
+              <td>{{activityItem?.workingDaysRevised}}</td>
+              <td>{{activityItem?.baseLineStartDate| date}}</td>
+              <td>{{activityItem?.baseLineEndDate | date}}</td>
+              <td>{{activityItem?.baseLineWorkingDays}}</td>
+              <td>
+                <span
+                  *ngIf="(activityItem?.dailyCumulativeTotal == activityItem?.total) && activityItem?.dailyCumulativeTotal">Completed</span>
+                <span *ngIf="activityItem?.dailyCumulativeTotal !== activityItem?.total">{{activityItem?.dailyCumulativeTotal}}</span>
+    
+              </td>
+              <td>{{activityItem?.noofDaysBalanceasperbaseLine}}</td>
+              <td>{{activityItem?.dailyAskingRateasperbaseLine}}</td>
+              <td>{{activityItem?.uom}}</td>
+              <td>{{activityItem?.total}}</td>
+              <td>{{activityItem?.dailyCumulativeTotal}}</td>
+              <td>
+                <span
+                  *ngIf="(activityItem?.dailyCumulativeTotal == activityItem?.total) && activityItem?.dailyCumulativeTotal">Completed</span>
+                <span *ngIf="activityItem?.dailyCumulativeTotal !== activityItem?.total">{{activityItem?.dailyCumulativeTotal}}</span>
+    
+              </td>
+              <td>{{activityItem?.noofDaysBalanceasperrevisedEnddate}}</td>
+              <td>{{activityItem?.dailyAskingRateasperRevisedEndDate}}</td>
+              <td>{{(100-(100 * activityItem.dailyCumulativeTotal) / activityItem.total).toFixed(0)}}</td>
+              <td>{{activityItem?.dailyCumulativeTotal}}</td>
+              <td><button mat-button
+                  style="background-color: #233A61;color:#fff;margin-bottom: 5px;margin-top: 5px;margin-left: 8px;font-family: 'Poppins';"
+                  (click)="addremarks(activityItem)">View remarks</button></td>
+    
+    
+            </tr>
+
+          </ng-container>
+
+        </ng-container>
+
+
+
+     
+      </tbody>
 
     </table>
     <ng-template #noView>
       <h3>you don't have permissions to view Progress sheet</h3>
     </ng-template>
-    
+
   </div>
 </body>
-
-
-

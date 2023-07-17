@@ -50,6 +50,9 @@ export class AddDataComponent implements OnInit {
     private datePipe: DatePipe
    // private toast: ToastService
   ) {
+
+
+    console.log('data1111111111', data)
     this.minFromDate = new Date();
     this.maxFromDate = new Date();
 
