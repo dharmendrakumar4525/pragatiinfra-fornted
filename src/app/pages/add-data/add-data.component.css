@@ -16,3 +16,7 @@ ng-select{
     justify-content: space-around;
 
 }
+
+.mat-form-field {
+    display: block;
+}

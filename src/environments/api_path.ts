@@ -11,6 +11,7 @@ export const UOM_API = "/uom";
 export const STRUCTURE_API = "/structure";
 export const LOCATION_API = "/location";
 export const ACTIVITY_API = "/activity";
+export const PROJECT_API = "/projects";
 
 
 

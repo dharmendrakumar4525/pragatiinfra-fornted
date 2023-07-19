@@ -15,6 +15,10 @@ import { AddRemarksComponent } from '../add-remarks/add-remarks.component';
 import { ToastService } from '@services/toast.service';
 import { InnerAddMemberComponent } from '../inner-add-member/inner-add-member.component';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
+import { PROJECT_API } from '@env/api_path';
+import { RequestService } from '@services/https/request.service';
+import { SnackbarService } from '@services/snackbar/snackbar.service';
+import {isEmpty} from 'lodash';
 
 
 export interface PeriodicElement {
@@ -52,139 +56,7 @@ export class ProgressSheetComponent implements OnInit {
   projectNameForm: FormGroup = this._fb.group({
     _id: [null],
   });
-  //     {
-  //         "_id": "63c6aa45a1593c88fae7b09b",
-  //         "taskName": "Boundarywall",
-  //         "projectId": "63c6aa44a1593c88fae7b099",
-  //         "taskId": "63be3548941e8f5b1b1f0928",
-  //         "createdAt": "2023-01-17T14:01:41.032Z",
-  //         "__v": 0,
-  //         "result": [
-  //             {
-  //                 "_id": "63c6aa45a1593c88fae7b09e",
-  //                 "subTaskName": "cement",
-  //                 "taskId": "63be3548941e8f5b1b1f0928",
-  //                 "__v": 0
-  //             },
-  //             {
-  //                 "_id": "63c6aa45a1593c88fae7b09f",
-  //                 "subTaskName": "evacuation",
-  //                 "taskId": "63be3548941e8f5b1b1f0928",
-  //                 "__v": 0
-  //             }
-  //         ]
-  //     },
-  // //     {
-  // //         "_id": "63c6aa45a1593c88fae7b09c",
-  // //         "taskName": "Warehouse",
-  // //         "projectId": "63c6aa44a1593c88fae7b099",
-  // //         "taskId": "63be66c7e2063a320960a7ec",
-  // //         "createdAt": "2023-01-17T14:01:41.032Z",
-  // //         "__v": 0,
-  // //         "result": [
-  // //             {
-  // //                 "_id": "63c6aa45a1593c88fae7b0a0",
-  // //                 "subTaskName": "Iron",
-  // //                 "taskId": "63be66c7e2063a320960a7ec",
-  // //                 "__v": 0
-  // //             },
-  // //             {
-  // //                 "_id": "63c6aa45a1593c88fae7b0a1",
-  // //                 "subTaskName": "tiebeam",
-  // //                 "taskId": "63be66c7e2063a320960a7ec",
-  // //                 "__v": 0
-  // //             }
-  // //         ]
-  // //     },
-  // //     {
-  // //       "_id": "63c6aa45a1593c88fae7b09b",
-  // //       "taskName": "Boundarywall",
-  // //       "projectId": "63c6aa44a1593c88fae7b099",
-  // //       "taskId": "63be3548941e8f5b1b1f0928",
-  // //       "createdAt": "2023-01-17T14:01:41.032Z",
-  // //       "__v": 0,
-  // //       "result": [
-  // //           {
-  // //               "_id": "63c6aa45a1593c88fae7b09e",
-  // //               "subTaskName": "cement",
-  // //               "taskId": "63be3548941e8f5b1b1f0928",
-  // //               "__v": 0
-  // //           },
-  // //           {
-  // //               "_id": "63c6aa45a1593c88fae7b09f",
-  // //               "subTaskName": "evacuation",
-  // //               "taskId": "63be3548941e8f5b1b1f0928",
-  // //               "__v": 0
-  // //           }
-  // //       ]
-  // //   },
-  // //   {
-  // //       "_id": "63c6aa45a1593c88fae7b09c",
-  // //       "taskName": "Warehouse",
-  // //       "projectId": "63c6aa44a1593c88fae7b099",
-  // //       "taskId": "63be66c7e2063a320960a7ec",
-  // //       "createdAt": "2023-01-17T14:01:41.032Z",
-  // //       "__v": 0,
-  // //       "result": [
-  // //           {
-  // //               "_id": "63c6aa45a1593c88fae7b0a0",
-  // //               "subTaskName": "Iron",
-  // //               "taskId": "63be66c7e2063a320960a7ec",
-  // //               "__v": 0
-  // //           },
-  // //           {
-  // //               "_id": "63c6aa45a1593c88fae7b0a1",
-  // //               "subTaskName": "tiebeam",
-  // //               "taskId": "63be66c7e2063a320960a7ec",
-  // //               "__v": 0
-  // //           }
-  // //       ]
-  // //   },
-  // //   {
-  // //       "_id": "63c6aa45a1593c88fae7b09b",
-  // //       "taskName": "Boundarywall",
-  // //       "projectId": "63c6aa44a1593c88fae7b099",
-  // //       "taskId": "63be3548941e8f5b1b1f0928",
-  // //       "createdAt": "2023-01-17T14:01:41.032Z",
-  // //       "__v": 0,
-  // //       "result": [
-  // //           {
-  // //               "_id": "63c6aa45a1593c88fae7b09e",
-  // //               "subTaskName": "cement",
-  // //               "taskId": "63be3548941e8f5b1b1f0928",
-  // //               "__v": 0
-  // //           },
-  // //           {
-  // //               "_id": "63c6aa45a1593c88fae7b09f",
-  // //               "subTaskName": "evacuation",
-  // //               "taskId": "63be3548941e8f5b1b1f0928",
-  // //               "__v": 0
-  // //           }
-  // //       ]
-  // //   },
-  // //   {
-  // //       "_id": "63c6aa45a1593c88fae7b09c",
-  // //       "taskName": "Warehouse",
-  // //       "projectId": "63c6aa44a1593c88fae7b099",
-  // //       "taskId": "63be66c7e2063a320960a7ec",
-  // //       "createdAt": "2023-01-17T14:01:41.032Z",
-  // //       "__v": 0,
-  // //       "result": [
-  // //           {
-  // //               "_id": "63c6aa45a1593c88fae7b0a0",
-  // //               "subTaskName": "Iron",
-  // //               "taskId": "63be66c7e2063a320960a7ec",
-  // //               "__v": 0
-  // //           },
-  // //           {
-  // //               "_id": "63c6aa45a1593c88fae7b0a1",
-  // //               "subTaskName": "tiebeam",
-  // //               "taskId": "63be66c7e2063a320960a7ec",
-  // //               "__v": 0
-  // //           }
-  // //       ]
-  // //   }
-  //    ]
+ 
   project: any;
   permissions: any
   progressPermissionsView: any;
@@ -192,7 +64,10 @@ export class ProgressSheetComponent implements OnInit {
   recentActivities: any
   projectsList: any;
   remarksPermissions: any;
-  constructor(private activeRoute: ActivatedRoute, private toast: ToastService, private router: Router, private projectService: AddProjectService, private _fb: FormBuilder, private recentActivityService: RecentActivityService, private _dialog: MatDialog, private progressSheetService: ProgressSheetService, private taskService: TaskService, public dialog: MatDialog, private dataAnalysis: DataAnalysisService,) { }
+  constructor(
+    private httpService: RequestService,
+    private snack: SnackbarService,
+    private activeRoute: ActivatedRoute, private toast: ToastService, private router: Router, private projectService: AddProjectService, private _fb: FormBuilder, private recentActivityService: RecentActivityService, private _dialog: MatDialog, private progressSheetService: ProgressSheetService, private taskService: TaskService, public dialog: MatDialog, private dataAnalysis: DataAnalysisService,) { }
 
   projectLocationsList: Array<any> = [];
 
@@ -281,9 +156,38 @@ export class ProgressSheetComponent implements OnInit {
       console.log(status);
 
       this.projectLocationsList[locationIndex];
+
       console.log(this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex]);
+
       this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal = this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal ? this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal : 0;
       this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex] = { ...this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex], ...status };
+
+
+
+
+      console.log('this.projectLocationsList',this.projectLocationsList )
+
+      let requestedData:any = {
+        _id:this.project._id,
+        locations:this.projectLocationsList
+      }
+
+      this.httpService.PUT(PROJECT_API, requestedData).subscribe((res:any) => {
+        this.snack.notify("Data has been saved sucessfully.", 1);
+      }, (err) => {
+        if (err.errors && !isEmpty(err.errors)) {
+          let errMessage = '<ul>';
+          for (let e in err.errors) {
+            let objData = err.errors[e];
+            errMessage += `<li>${objData[0]}</li>`;
+          }
+          errMessage += '</ul>';
+          this.snack.notifyHtml(errMessage, 2);
+        } else {
+          this.snack.notify(err.message, 2);
+        }
+      })
+
 
       // let activityName = this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].activity_name;
 

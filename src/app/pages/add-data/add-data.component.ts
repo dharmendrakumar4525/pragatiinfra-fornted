@@ -7,6 +7,7 @@ import { ProgressSheetService } from '@services/progress-sheet.service';
 import { FormControl } from '@angular/forms';
 import { MatDatepickerInputEvent } from "@angular/material/datepicker";
 import { DatePipe } from '@angular/common';
+import * as moment from 'moment-timezone'
 
 @Component({
   selector: 'app-add-data',
@@ -31,7 +32,7 @@ export class AddDataComponent implements OnInit {
     base_line_start_date: [null, [Validators.required]],
     base_line_end_date: [null, [Validators.required]],
     uom: [null, [Validators.required]],
-    total: [null, [Validators.required]],
+    quantity: [null, [Validators.required]],
     addRevisesDates: this._fb.array([]),
 
   });
@@ -227,8 +228,15 @@ export class AddDataComponent implements OnInit {
       workingDaysRevised;
       var oneDay = 1000 * 60 * 60 * 24;
       console.log(oneDay);
-      var difference_ms = Math.abs(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate.getTime() - this.itemForm.value.actual_revised_start_date.getTime())
-      var diffValue = Math.round(difference_ms / oneDay);
+
+      let lastRevisedData = this.itemForm.value.addRevisesDates[this.itemForm.value.addRevisesDates.length-1]['revisedDate'];
+      console.log('lastRevisedData', lastRevisedData, moment(lastRevisedData).format('YYYY-MM-DD'))
+      console.log('this.itemForm.value.actual_revised_start_date', this.itemForm.value.actual_revised_start_date, )
+
+
+      let  lastRevisedDataMoment = moment(lastRevisedData);
+      var actualRevisedSartDateMoment = moment(this.itemForm.value.actual_revised_start_date);    
+      let diffValue =  lastRevisedDataMoment.diff(actualRevisedSartDateMoment, 'days');
       workingDaysRevised = diffValue
 
 
