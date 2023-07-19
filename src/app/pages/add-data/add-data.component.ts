@@ -27,28 +27,27 @@ export class AddDataComponent implements OnInit {
   // endDate = new FormControl(new Date());
 
   itemForm: FormGroup = this._fb.group({
-    actualRevisedStartDate:[new Date()],
-    baseLineStartDate:[null, [Validators.required]],
-    baseLineEndDate:[null, [Validators.required]],
-    uom:[null, [Validators.required]],
-    total:[null, [Validators.required]],
-    addRevisesDates: this._fb.array([this.getBlocks()]),
+    actual_revised_start_date: [],
+    base_line_start_date: [null, [Validators.required]],
+    base_line_end_date: [null, [Validators.required]],
+    uom: [null, [Validators.required]],
+    total: [null, [Validators.required]],
+    addRevisesDates: this._fb.array([]),
 
   });
-  uomData = ['Bag','Sq.m.','Cu.m.','Litre','No.','Kg','g','Quintal','meters','c.m.']
-  permissions :any;
+  uomData = ['Bag', 'Sq.m.', 'Cu.m.', 'Litre', 'No.', 'Kg', 'g', 'Quintal', 'meters', 'c.m.']
+  permissions: any;
+  AddreviseDateLength: any = 0;
   // baseStartDate:any;
 
 
   constructor(
     private dialogRef: MatDialogRef<AddDataComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private taskService: TaskService,
     private _fb: FormBuilder,
     private toast: ToastService,
-    private progressSheetService:ProgressSheetService,
-    private datePipe: DatePipe
-   // private toast: ToastService
+    private progressSheetService: ProgressSheetService,
+    // private toast: ToastService
   ) {
 
 
@@ -64,7 +63,7 @@ export class AddDataComponent implements OnInit {
 
 
 
-  myFilter = (d: Date ): boolean => {
+  myFilter = (d: Date): boolean => {
     const today = new Date(this.maxFromDate);
     // return true if the selected date is greater than or equal to today
     return d > today;
@@ -97,32 +96,27 @@ export class AddDataComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.data.addRevisesDates){
-      this.data.addRevisesDates.forEach(single=>{
-           this.plusBlocks();
-       })
-   } else {
-     this.plusBlocks();
-   }
+    if (this.data.addRevisesDates) {
+      this.data.addRevisesDates.forEach(single => {
+        this.plusBlocks();
+      })
+    } else {
+      this.plusBlocks();
+    }
     this.itemForm.patchValue(this.data)
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     // console.log(this.permissions)
-    if(this.permissions.user.role === 'superadmin'){
-    this.itemForm.get('actualRevisedStartDate').clearValidators()
-    this.itemForm.updateValueAndValidity()
+    if (this.permissions.user.role === 'superadmin') {
+      this.itemForm.get('actual_revised_start_date').clearValidators()
+      this.itemForm.updateValueAndValidity()
     }
-    console.log(this.itemForm.get('actualRevisedStartDate'));
+    console.log(this.itemForm.get('actual_revised_start_date'));
   }
 
   closeDialog(status: string) {
     this.dialogRef.close(status)
-    // this.dialogRef.close(status);
-    // document.getElementsByClassName("animate__animated")[0].classList.remove("animate__fadeInDown")
-    // document.getElementsByClassName("animate__animated")[0].classList.add("animate__fadeOutUp");
-    //setTimeout(() => { this.dialogRef.close(status); }, 1000);
   }
 
-  // addTask(){
 
 
 
@@ -132,21 +126,17 @@ export class AddDataComponent implements OnInit {
       revisedDate: [null]
     })
   }
-  // setStartDate(){
-  //   this.baseStartDate = this.itemForm.get('baseLineStartDate').value;
-  // }
-
 
   get actualRevisedStartDate(): AbstractControl {
-    return this.itemForm.get('actualRevisedStartDate');
+    return this.itemForm.get('actual_revised_start_date');
   }
 
   get baseLineStartDate(): AbstractControl {
-    return this.itemForm.get('baseLineStartDate');
+    return this.itemForm.get('base_line_start_date');
   }
 
   get baseLineEndDate(): AbstractControl {
-    return this.itemForm.get('baseLineEndDate');
+    return this.itemForm.get('base_line_end_date');
   }
 
   get uom(): AbstractControl {
@@ -159,9 +149,13 @@ export class AddDataComponent implements OnInit {
 
   plusBlocks() {
     this.addRevisesDates.push(this.getBlocks());
+    let size = this.itemForm.value.addRevisesDates;
+    // console.log("size", size);
+    this.AddreviseDateLength = size.length;
+
   }
 
-  minusBlocks(i: number){
+  minusBlocks(i: number) {
     this.addRevisesDates.removeAt(i);
   }
 
@@ -169,8 +163,7 @@ export class AddDataComponent implements OnInit {
     return this.itemForm.get('addRevisesDates') as FormArray;
   }
 
-  AddData(){
-    //console.log(this.itemForm.value.addRevisesDates);
+  AddData() {
     var array = this.itemForm.value.addRevisesDates;
     var isDatesOrdered = true;
     for (var i = 1; i < array.length; i++) {
@@ -186,22 +179,17 @@ export class AddDataComponent implements OnInit {
       this.toast.openSnackBar('Enter Valid Revised Date');
       return;
     }
-    // if (isDatesOrdered) {
-    //   console.log("Dates are ordered correctly in the array.");
-    // } else {
-    //   this.toast.openSnackBar(
-    //     'Enter Valid Revised  Date'
-    //   );
-    //   return;
-    // }
-    if(this.itemForm.value.actualRevisedStartDate <= this.itemForm.value.baseLineStartDate){
-      this.toast.openSnackBar(
-        'Enter Valid Date'
-      );
-      return;
+    if (this.itemForm.value.actual_revised_start_date) {
+      if (this.itemForm.value.actual_revised_start_date <= this.itemForm.value.base_line_start_date ) {
+        this.toast.openSnackBar(
+          'Enter Valid Date'
+        );
+        return;
+      }
     }
 
-    if(this.itemForm.value.baseLineEndDate <= this.itemForm.value.baseLineStartDate && this.itemForm.value.baseLineEndDate <= this.itemForm.value.actualRevisedStartDate){
+
+    if (this.itemForm.value.base_line_end_date <= this.itemForm.value.base_line_start_date) {
       this.toast.openSnackBar(
         'Enter Valid Date '
       );
@@ -210,118 +198,84 @@ export class AddDataComponent implements OnInit {
 
 
     if (this.itemForm.invalid) {
-
       this.toast.openSnackBar(
         'Enter Valid Details'
       );
-      //this.clearForm = true;
-      //this.clearForm = true;
       this.itemForm.markAllAsTouched();
       return;
     }
-    if(this.permissions.user.role != 'superadmin' ){
+    if (this.permissions.user.role != 'superadmin') {
       if (!this.itemForm.value.addRevisesDates.length) {
         this.toast.openSnackBar(
           'Please add Atleast one revised end date'
         );
-        //this.clearForm = true;
-        //this.clearForm = true;
-        //this.itemForm.markAllAsTouched();
         return;
       }
-
     }
-
-
-    let workingDaysRevised ;
-    // console.log(this.itemForm.value)
-
-
-      var oneDay=1000 * 60 * 60 * 24;
-      console.log(oneDay);
-      var difference_ms = Math.abs(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate.getTime() - this.itemForm.value.actualRevisedStartDate.getTime())
-      var diffValue = Math.round(difference_ms / oneDay);
-      //console.log(diffValue)
-       workingDaysRevised = diffValue
-
-
-
-
-    // console.log(this.itemForm.value)
-    var oneDaybaseLine=1000 * 60 * 60 * 24;
-    var difference_msbaseLine = Math.abs(new Date(this.itemForm.value.baseLineEndDate).getTime() - new Date(this.itemForm.value.baseLineStartDate).getTime())
+    var workingDaysRevised: any;
+    var baseLineWorkingDays: any;
+    var noofDaysBalanceasperrevisedEnddate: any;
+    var noofDaysBalanceasperbaseLine: any;
+    var dailyAskingRateasperRevisedEndDate: any;
+    var dailyAskingRateasperbaseLine: any;
+    var oneDaybaseLine = 1000 * 60 * 60 * 24;
+    var difference_msbaseLine = Math.abs(new Date(this.itemForm.value.base_line_end_date).getTime() - new Date(this.itemForm.value.base_line_start_date).getTime())
     var diffValuebaseLine = Math.round(difference_msbaseLine / oneDaybaseLine);
-    //console.log(diffValue)
-    let baseLineWorkingDays = diffValuebaseLine + 1
-    let noofDaysBalanceasperrevisedEnddate;
-    let noofDaysBalanceasperbaseLine;
+    baseLineWorkingDays = diffValuebaseLine + 1
+    dailyAskingRateasperbaseLine = Math.ceil(this.itemForm.value.total / baseLineWorkingDays)
+    if (this.itemForm.value.addRevisesDates && this.itemForm.value.addRevisesDates.length > 0) {
+      workingDaysRevised;
+      var oneDay = 1000 * 60 * 60 * 24;
+      console.log(oneDay);
+      var difference_ms = Math.abs(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate.getTime() - this.itemForm.value.actual_revised_start_date.getTime())
+      var diffValue = Math.round(difference_ms / oneDay);
+      workingDaysRevised = diffValue
 
-      var oneDaynoofDaysBalanc=1000 * 60 * 60 * 24;
+
+      noofDaysBalanceasperrevisedEnddate;
+      noofDaysBalanceasperbaseLine;
+
+      var oneDaynoofDaysBalanc = 1000 * 60 * 60 * 24;
       var difference_msnoofDaysBalance = Math.abs(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate.getTime() - new Date().getTime())
       var diffValuenoofDaysBalance = Math.round(difference_msnoofDaysBalance / oneDaynoofDaysBalanc);
-      //console.log(diffValue)
-       noofDaysBalanceasperrevisedEnddate = diffValuenoofDaysBalance + 1
-       noofDaysBalanceasperbaseLine = diffValuenoofDaysBalance + 1
-      //  console.log(noofDaysBalanceasperbaseLine)
+      noofDaysBalanceasperrevisedEnddate = diffValuenoofDaysBalance + 1
+      noofDaysBalanceasperbaseLine = diffValuenoofDaysBalance + 1
+      dailyAskingRateasperRevisedEndDate = Math.ceil(this.itemForm.value.total / workingDaysRevised)
 
+    }
+    this.itemForm.value.workingDaysRevised = workingDaysRevised
+    this.itemForm.value.baseLineWorkingDays = baseLineWorkingDays
+    this.itemForm.value.noofDaysBalanceasperrevisedEnddate = noofDaysBalanceasperrevisedEnddate
+    this.itemForm.value.dailyAskingRateasperRevisedEndDate = dailyAskingRateasperRevisedEndDate
+    this.itemForm.value.dailyAskingRateasperbaseLine = dailyAskingRateasperbaseLine
+    this.itemForm.value.noofDaysBalanceasperbaseLine = noofDaysBalanceasperbaseLine
 
-    // console.log(this.itemForm.value)
+    if (this.itemForm.value.addRevisesDates.length == 1) {
+      this.itemForm.value.r1EndDate = this.itemForm.value.addRevisesDates[0].revisedDate
+      this.itemForm.value.r2EndDate = null
+      this.itemForm.value.r3EndDate = null
+    } else if (this.itemForm.value.addRevisesDates.length == 2) {
+      this.itemForm.value.r1EndDate = this.itemForm.value.addRevisesDates[0].revisedDate;
+      this.itemForm.value.r2EndDate = this.itemForm.value.addRevisesDates[1].revisedDate;
+      this.itemForm.value.r3EndDate = null;
+    } else if (this.itemForm.value.addRevisesDates.length == 3) {
+      this.itemForm.value.r1EndDate = this.itemForm.value.addRevisesDates[0].revisedDate;
+      this.itemForm.value.r2EndDate = this.itemForm.value.addRevisesDates[1].revisedDate;
+      this.itemForm.value.r3EndDate = this.itemForm.value.addRevisesDates[2].revisedDate;
+    }
+    // this.progressSheetService.addSubActivityData(this.itemForm.value, this.data._id).subscribe(
+    //   {
+    //     next: (data: any) => {
+    //       this.toast.openSnackBar("Activity Data Added Successfully");
+    //       this.closeDialog('yes');
+    //     },
+    //     error: (err) => {
+    //       this.toast.openSnackBar("Something went wrong. Unable to Add Activity Data");
+    //     }
+    //   }
 
-   let dailyAskingRateasperRevisedEndDate = Math.ceil(this.itemForm.value.total/workingDaysRevised)
-  //  console.log(dailyAskingRateasperRevisedEndDate)
-
-   let dailyAskingRateasperbaseLine = Math.ceil(this.itemForm.value.total/baseLineWorkingDays)
-  //  console.log(dailyAskingRateasperbaseLine)
-
-   this.itemForm.value.workingDaysRevised = workingDaysRevised
-   this.itemForm.value.baseLineWorkingDays = baseLineWorkingDays
-   this.itemForm.value.noofDaysBalanceasperrevisedEnddate = noofDaysBalanceasperrevisedEnddate
-   this.itemForm.value.dailyAskingRateasperRevisedEndDate = dailyAskingRateasperRevisedEndDate
-   this.itemForm.value.dailyAskingRateasperbaseLine = dailyAskingRateasperbaseLine
-   this.itemForm.value.noofDaysBalanceasperbaseLine = noofDaysBalanceasperbaseLine
-
-   if(this.itemForm.value.addRevisesDates.length == 1){
-    this.itemForm.value.r1EndDate = this.itemForm.value.addRevisesDates[0].revisedDate
-    this.itemForm.value.r2EndDate = null
-    this.itemForm.value.r3EndDate = null
-   }else if(this.itemForm.value.addRevisesDates.length == 2){
-    this.itemForm.value.r1EndDate = this.itemForm.value.addRevisesDates[0].revisedDate
-    this.itemForm.value.r2EndDate = this.itemForm.value.addRevisesDates[1].revisedDate
-    this.itemForm.value.r3EndDate = null
-   }else if(this.itemForm.value.addRevisesDates.length == 3){
-    this.itemForm.value.r1EndDate = this.itemForm.value.addRevisesDates[0].revisedDate
-    this.itemForm.value.r2EndDate = this.itemForm.value.addRevisesDates[1].revisedDate
-    this.itemForm.value.r3EndDate = this.itemForm.value.addRevisesDates[2].revisedDate
-
-   }
-   console.log(this.itemForm.value);
-
-        this.progressSheetService.addSubActivityData(this.itemForm.value,this.data._id).subscribe(
-
-      {
-        next: (data: any) =>  {
-          // console.log(data)
-          this.toast.openSnackBar("Activity Data Added Successfully");
-      this.closeDialog('yes');
-          // this.spinner.hide()
-          // this.router.navigate(['/usersList']);
-          // this.toast.openSnackBar('User Added Successfully');
-
-        },
-        error: (err) => {
-          this.toast.openSnackBar("Something went wrong. Unable to Add Activity Data");
-          // this.spinner.hide()
-          // this.toast.openSnackBar('Something went wrong, please try again later');
-          // console.log(err)
-
-          // this.errorData = err
-
-
-
-        }
-      }
-
-    )
+    // )
+    this.dialogRef.close(this.itemForm.value);
 
 
   }

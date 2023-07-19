@@ -36,7 +36,7 @@
               </div>
 
               <div style="margin-bottom: -50px;">
-                <button type="button" mat-button class="global-btn save-btn" (click)="minusBlocks(i)" *ngIf="i>0">
+                <button type="button" mat-button class="global-btn save-btn" (click)="minusBlocks(i)">
                   <span style="margin-top: -50px;color: #233A61;"> - Remove </span>
                 </button>
               </div>
@@ -57,27 +57,7 @@
 
     <div class="Actual-align">
 
-      <div class="custom-form-group">
-        <label class="custom-label" for="" style="color: #233A61;font-weight: bold;"> Actual Revised Start Date <span
-            class="star">*</span>
-          <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
-        </label>
-        <div class="custom-form-control">
-          <mat-form-field appearance="outline">
-            <input matInput [matDatepicker]="actualRevisedStartDate" formControlName="actualRevisedStartDate"
-              placeholder="Enter actual Revised Date" (click)="actualRevisedStartDate.open()" [min]="minToDate"
-              [max]="maxToDate" (dateInput)="toDateChange('input', $event)" />
-            <mat-datepicker-toggle matSuffix [for]="actualRevisedStartDate"></mat-datepicker-toggle>
-            <mat-datepicker #actualRevisedStartDate></mat-datepicker>
-            <!-- <mat-error *ngIf="actualRevisedStartDate.invalid">
-            <span > actualRevisedStartDate is required </span>
-          </mat-error> -->
-            <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
-            <span *ngIf="startDate.hasError('required')"> Start date is required </span>
-          </mat-error> -->
-          </mat-form-field>
-        </div>
-      </div>
+
       <div class="custom-form-group">
         <label class="custom-label" for="" style="color: #233A61;font-weight: bold;"> Base Line Start Date <span
             class="star">*</span>
@@ -85,7 +65,7 @@
         </label>
         <div class="custom-form-control">
           <mat-form-field appearance="outline">
-            <input matInput [matDatepicker]="baseLineStartDate" formControlName="baseLineStartDate"
+            <input matInput [matDatepicker]="baseLineStartDate" formControlName="base_line_start_date"
               placeholder="Enter base Line Start Date" (click)="baseLineStartDate.open()"
               (dateInput)="fromDateChange('input', $event)" />
 
@@ -109,7 +89,7 @@
         </label>
         <div class="custom-form-control">
           <mat-form-field appearance="outline">
-            <input matInput [matDatepicker]="baseLineEndDate" formControlName="baseLineEndDate"
+            <input matInput [matDatepicker]="baseLineEndDate" formControlName="base_line_end_date"
               placeholder="Enter base Line End Date" (click)="baseLineEndDate.open()" [min]="minToDate"
               [max]="maxToDate" (dateInput)="toDateChange('input', $event)" />
             <mat-datepicker-toggle matSuffix [for]="baseLineEndDate"></mat-datepicker-toggle>
@@ -120,6 +100,21 @@
             <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
               <span *ngIf="startDate.hasError('required')"> Start date is required </span>
             </mat-error> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="custom-form-group">
+        <label class="custom-label" for="" style="color: #233A61;font-weight: bold;"> Actual Revised Start Date <span
+            class="star">*</span>
+          <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
+        </label>
+        <div class="custom-form-control">
+          <mat-form-field appearance="outline">
+            <input matInput [matDatepicker]="actualRevisedStartDate" formControlName="actual_revised_start_date"
+              placeholder="Enter actual Revised Date" (click)="actualRevisedStartDate.open()" [min]="minToDate"
+              [max]="maxToDate" (dateInput)="toDateChange('input', $event)" />
+            <mat-datepicker-toggle matSuffix [for]="actualRevisedStartDate"></mat-datepicker-toggle>
+            <mat-datepicker #actualRevisedStartDate></mat-datepicker>
           </mat-form-field>
         </div>
       </div>
@@ -176,7 +171,7 @@
           style="background-color: #233A61;color: #fff;padding: 1px 40px;margin-left: 30px;font-family: 'Poppins';">submit</button>
       </div>
       <div style="margin-left: 20px;">
-        <button type="button" class="global-btn save-btn" (click)="plusBlocks()"
+        <button type="button" class="global-btn save-btn" (click)="plusBlocks()" *ngIf="AddreviseDateLength<3"
           style="border: 1px solid #94A3B8;border-radius: 5px;background-color: #fff;padding: 10px 10px;color:#233A61">
           <span style="font-family: 'Poppins';"> + Add Revised End Date</span>
         </button>

@@ -58,12 +58,12 @@
     <div style="display: flex;flex-wrap: wrap;gap:40px;width:1000px">
       <div style="display: flex;flex-direction: column;">
         <label style="color: #4272BF;font-size: 14px;">Request title <span class="star">*</span></label>
-        <input placeholder="Enter title" formControlName="requestTitle"
+        <input placeholder="Enter title" formControlName="title"
           style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
       </div>
       <div style="display: flex;flex-direction: column;margin-left: 100px;">
         <label style="color: #4272BF;font-size: 14px;">Request date</label>
-        <input placeholder="Auto generate" formControlName="requestDate" [readonly]="true"
+        <input placeholder="Auto generate" formControlName="date" [readonly]="true"
           style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
 
       </div>
@@ -74,7 +74,7 @@
         </label>
         <div class="custom-form-control">
           <mat-form-field appearance="outline">
-            <input matInput [matDatepicker]="requiredByStartDate" formControlName="requiredBy"
+            <input matInput [matDatepicker]="requiredByStartDate" formControlName="expected_delivery_date"
               placeholder="Enter base Line Start Date" (click)="requiredByStartDate.open()" />
             <mat-datepicker-toggle matSuffix [for]="requiredByStartDate"></mat-datepicker-toggle>
             <mat-datepicker #requiredByStartDate></mat-datepicker>
@@ -87,16 +87,16 @@
 
       <div style="display: flex;flex-direction: column;">
         <label style="color: #4272BF;font-size: 14px;">Purchase request no </label>
-        <input placeholder="Auto generate" formControlName="purchaseRequestNumber" readonly
+        <input placeholder="Auto generate" formControlName="purchase_request_number" readonly
           style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
       </div>
       <div style="display: flex;flex-direction: column;margin-left: 100px;">
         <label style="color: #4272BF;font-size: 14px;">Site name <span class="star">*</span></label>
 
-        <mat-select id="sitename" placeholder="Select site" formControlName="siteName"
+        <mat-select id="site" placeholder="Select site" formControlName="site"
           style="padding: 10px;width: 200px;border:1px solid #9F9F9F;border-radius: 6px;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
           <mat-option [value]="item._id" *ngFor="let item of siteList">
-            {{item.siteName}}
+            {{item.site_name}}
           </mat-option>
 
         </mat-select>
@@ -104,7 +104,7 @@
       <div style="display: flex;flex-direction: column;margin-left: 100px;">
         <label style="color: #4272BF;">Local Purchase <span class="star">*</span></label>
         <mat-radio-group aria-labelledby="example-radio-group-label" color="primary" class="example-radio-group"
-          formControlName="localPurchase">
+          formControlName="local_purchase">
           <mat-radio-button class="example-radio-button" [value]="'yes'">
             Yes
           </mat-radio-button>
@@ -132,105 +132,56 @@
         <th>Sub&nbsp;category</th>
         <th>Uom*</th>
         <th>Quantity*</th>
-        <!-- <th>Intended&nbsp;end&nbsp;use</th> -->
         <th>Attachments</th>
         <th>Remarks</th>
+        <th>Action</th>
       </tr>
 
 
 
       <tbody>
-        <!-- <tr style="background-color: #F4F4F5;" *ngFor="let num of [1,2,3,]">
-          <td style="text-align: center;">
-            001
-          </td>
-          <td>
-            <input list="browsers" name="myBrowser" placeholder="Select item"
-              style="padding: 10px;width: 150px;border:1px solid #9F9F9F;border-radius: 20px;cursor: pointer;background-color: Transparent !important;" />
-            <datalist id="browsers">
-              <option value="Chrome">
-              <option value="Firefox">
-            </datalist>
-          </td>
-          <td style="color: #000;">
-            Auto&nbsp;Generated
-          </td>
-          <td style="color: #000;">
-            Auto&nbsp;Generated
-          </td>
-          <td>
-            <input list="browsers" name="myBrowser" placeholder="Select"
-              style="padding: 10px;width: 150px;border:1px solid #9F9F9F;border-radius: 20px;cursor: pointer;background-color: Transparent !important;" />
-            <datalist id="browsers">
-              <option value="Chrome">
-              <option value="Firefox">
-            </datalist>
-          </td>
-          <td>
-            <input list="browsers" name="myBrowser" placeholder="Enter"
-              style="padding: 10px;width: 150px;border:1px solid #9F9F9F;border-radius: 10px;cursor: pointer;background-color: Transparent !important;" />
-            <datalist id="browsers">
-              <option value="Chrome">
-              <option value="Firefox">
-            </datalist>
-          </td>
-          <td>
-            <input placeholder="Enter"
-             class="pr-form-field">
-          </td>
-          <td>
-            <input placeholder="Enter/paste"
-             class="pr-form-field">
-          </td>
-          <td>
-            <input placeholder="Enter"
-             class="pr-form-field">
-
-          </td>
-        </tr> -->
-
-
-        <tr style="background-color: #F4F4F5;" formArrayName="items"
+         <tr style="background-color: #F4F4F5;" formArrayName="items"
           *ngFor="let item of purchaseRequestForm.get('items')['controls']; let i = index;">
           <td style="text-align: center;">
             {{i+1}}
           </td>
           <ng-container [formGroupName]="i">
             <td>
-              <mat-select id="itemName" placeholder="Select site" formControlName="itemId"
-              class="select-form-field">
-                <mat-option [value]="item._id" *ngFor="let item of siteList">
-                  {{item.siteName}}
+              <mat-select id="itemName" placeholder="Select site" formControlName="item_id" class="select-form-field"
+                (selectionChange)="selectedItem($event,i)">
+                <mat-option [value]="item._id" *ngFor="let item of itemList">
+                  {{item.item_name}}
                 </mat-option>
 
               </mat-select>
             </td>
             <td style="color: #000;">
-              Auto&nbsp;Generated
+              {{item.get('category')?.value}}
             </td>
             <td style="color: #000;">
-              Auto&nbsp;Generated
+              {{item.get('subCategory')?.value}}
             </td>
             <td>
-              <mat-select id="itemName" placeholder="Select site" formControlName="uom"
-                class="select-form-field">
-                <mat-option [value]="item._id" *ngFor="let item of siteList">
-                  {{item.siteName}}
+              <mat-select id="itemName" placeholder="Select site" formControlName="uom" class="select-form-field">
+                <mat-option [value]="item._id" *ngFor="let item of uomList">
+                  {{item.unit}}
                 </mat-option>
 
               </mat-select>
             </td>
             <td>
-              <input placeholder="Enter" formControlName="qty" type="tel"
-               class="pr-form-field">
+              <input placeholder="Enter" formControlName="qty" type="number" class="pr-form-field">
             </td>
             <td>
-              <input placeholder="Enter" formControlName="attachment" type="file"
-               class="pr-form-field">
+              <input placeholder="Enter" formControlName="attachment" type="file" class="pr-form-field">
             </td>
             <td>
-              <input placeholder="Enter" formControlName="remark"
-               class="pr-form-field">
+              <input placeholder="Enter" formControlName="remark" class="pr-form-field">
+            </td>
+            <td>
+              <div class="action-btn-wrapper">
+                <a class="action-btn" (click)="delete(i)" *ngIf="i>0" title="Delete"><i class="fa fa-trash"></i></a>
+              </div>
             </td>
           </ng-container>
         </tr>

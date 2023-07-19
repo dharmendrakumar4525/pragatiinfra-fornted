@@ -29,14 +29,6 @@ export class AddRemarksComponent implements OnInit {
     dialogRef.afterClosed().subscribe(status => {
       console.log(status);
       if (status === 'yes') {
-        // this.roleService.getRoles().subscribe(data=>{
-        //   //this.spinner.hide()
-        //   this.roles = data
-        //   this.dataSource = new MatTableDataSource(this.roles);
-        //   this.dataSource.paginator = this.paginator;
-        //   console.log(this.roles)
-        // })
-       // this.filterSubject.next(this.filterForm.value);
       }
       if (status === 'no') {
       }

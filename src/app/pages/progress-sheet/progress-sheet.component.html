@@ -17,14 +17,11 @@
           src=".\assets\images\ontrack.svg">&nbsp; On Track</span>
     </div>
     <div>
-      <button mat-button
-        style="background-color:#fff;padding: 1px 1px;width: 150px;margin-top: 50px;margin-left: 430px;position: relative;border: 1px solid #97989D;border-radius: 5px;color: #97989D;font-family: 'Poppins';"
-        [routerLink]="['/add-project']">Add Project + </button>
+      <button mat-button class="button" [routerLink]="['/add-project']">Add Project + </button>
     </div>
     <div>
-      <button mat-button
-        style="background-color:#fff;padding: 1px 1px;width: 150px;margin-top: 50px;border: 1px solid #97989D;border-radius: 5px;color: #97989D;font-family: 'Poppins';"
-        (click)="addMember()"> <mat-icon style="font-size: medium;position: relative;right:-10px;">group_add</mat-icon>
+      <button mat-button class="button" (click)="addMember()"> <mat-icon
+          style="font-size: medium;position: relative;right:-10px;">group_add</mat-icon>
         Add Member </button>
 
       <button mat-button [matMenuTriggerFor]="menu"><mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn"
@@ -81,6 +78,10 @@
   <h3 style="font-family: 'Poppins';">Project progress monitoring sheets(PPMS)</h3>
 </div>
 
+<!-- <button (click)="addLocation()" class="button">
+  Add Location
+</button> -->
+
 <body>
   <div class="scroll-bar1" style="width: 93%;">
     <table *ngIf="progressPermissionsView?.isSelected; else noView" style="direction: ltr !important;">
@@ -113,17 +114,12 @@
 
       <tbody>
 
-        <ng-container *ngFor=" let locationItem of projectLocationsList ">
+        <ng-container *ngFor=" let locationItem of projectLocationsList;let locationIndex=index ">
 
           <tr style="color:#233A61 !important;font-weight: bolder ;">
             <td>
               <div class="activityalign">
                 <div style="width:120px;">{{locationItem.location_name}} </div>
-                <!-- <div>
-                  <mat-icon [routerLink]="['/add-project',projectId]" style="margin-top: 10px;">add</mat-icon>
-                  <mat-icon style="margin-top: 10px;" (click)="deleteTask(project)">delete</mat-icon>
-                </div> -->
-
               </div>
             </td>
             <td></td>
@@ -150,17 +146,12 @@
             <td></td>
           </tr>
 
-          <ng-container *ngFor="let structureItem of locationItem.structures">
+          <ng-container *ngFor="let structureItem of locationItem.structures;let structureIndex=index">
 
             <tr style="color:#233A61 !important;font-weight: bolder ;">
               <td>
                 <div class="activityalign structureAlign">
                   <div style="width:120px;">{{structureItem.structure_name}} </div>
-                  <!-- <div>
-                  <mat-icon [routerLink]="['/add-project',projectId]" style="margin-top: 10px;">add</mat-icon>
-                  <mat-icon style="margin-top: 10px;" (click)="deleteTask(project)">delete</mat-icon>
-                </div> -->
-
                 </div>
               </td>
               <td></td>
@@ -187,28 +178,29 @@
               <td></td>
             </tr>
 
-            <tr *ngFor="let activityItem of structureItem.activities" style="font-size: 10px;">
+            <tr *ngFor="let activityItem of structureItem.activities,let activityIndex=index" style="font-size: 10px;">
 
               <td style="color:#595b5d;">
                 <div class="descriptionalign activityAlign">
-                  <mat-icon (click)="addData(activityItem)">edit</mat-icon>
+                  <mat-icon (click)="addData(activityItem,locationIndex,structureIndex,activityIndex)">edit</mat-icon>
                   <div style="width: 200px;">{{activityItem.activity_name}}</div>
-    
+
                 </div>
               </td>
               <td>{{activityItem?.r1EndDate | date}}</td>
               <td>{{activityItem?.r2EndDate | date}}</td>
               <td>{{activityItem?.r3EndDate | date}}</td>
-              <td>{{activityItem?.actualRevisedStartDate | date}}</td>
+              <td>{{activityItem?.actual_revised_start_date | date}}</td>
               <td>{{activityItem?.workingDaysRevised}}</td>
-              <td>{{activityItem?.baseLineStartDate| date}}</td>
-              <td>{{activityItem?.baseLineEndDate | date}}</td>
+              <td>{{activityItem?.base_line_start_date| date}}</td>
+              <td>{{activityItem?.base_line_end_date | date}}</td>
               <td>{{activityItem?.baseLineWorkingDays}}</td>
               <td>
                 <span
                   *ngIf="(activityItem?.dailyCumulativeTotal == activityItem?.total) && activityItem?.dailyCumulativeTotal">Completed</span>
-                <span *ngIf="activityItem?.dailyCumulativeTotal !== activityItem?.total">{{activityItem?.dailyCumulativeTotal}}</span>
-    
+                <span
+                  *ngIf="activityItem?.dailyCumulativeTotal !== activityItem?.total">{{activityItem?.dailyCumulativeTotal}}</span>
+
               </td>
               <td>{{activityItem?.noofDaysBalanceasperbaseLine}}</td>
               <td>{{activityItem?.dailyAskingRateasperbaseLine}}</td>
@@ -218,8 +210,9 @@
               <td>
                 <span
                   *ngIf="(activityItem?.dailyCumulativeTotal == activityItem?.total) && activityItem?.dailyCumulativeTotal">Completed</span>
-                <span *ngIf="activityItem?.dailyCumulativeTotal !== activityItem?.total">{{activityItem?.dailyCumulativeTotal}}</span>
-    
+                <span
+                  *ngIf="activityItem?.dailyCumulativeTotal !== activityItem?.total">{{activityItem?.dailyCumulativeTotal}}</span>
+
               </td>
               <td>{{activityItem?.noofDaysBalanceasperrevisedEnddate}}</td>
               <td>{{activityItem?.dailyAskingRateasperRevisedEndDate}}</td>
@@ -228,8 +221,8 @@
               <td><button mat-button
                   style="background-color: #233A61;color:#fff;margin-bottom: 5px;margin-top: 5px;margin-left: 8px;font-family: 'Poppins';"
                   (click)="addremarks(activityItem)">View remarks</button></td>
-    
-    
+
+
             </tr>
 
           </ng-container>
@@ -238,7 +231,7 @@
 
 
 
-     
+
       </tbody>
 
     </table>

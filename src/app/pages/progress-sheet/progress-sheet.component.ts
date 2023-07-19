@@ -183,8 +183,8 @@ export class ProgressSheetComponent implements OnInit {
   // //               "__v": 0
   // //           }
   // //       ]
-  // //   } 
-  //    ] 
+  // //   }
+  //    ]
   project: any;
   permissions: any
   progressPermissionsView: any;
@@ -198,12 +198,9 @@ export class ProgressSheetComponent implements OnInit {
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
-    console.log(this.permissions)
-    this.progressPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[1]?.childList[1]
-    this.progressPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[1]?.childList[0]
-    this.remarksPermissions = this.permissions.permissions[0]?.ParentChildchecklist[2]?.childList[2]
-    console.log(this.progressPermissionsView)
-    console.log(this.progressPermissionsEdit)
+    this.progressPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[1]?.childList[1];
+    this.progressPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[1]?.childList[0];
+    this.remarksPermissions = this.permissions.permissions[0]?.ParentChildchecklist[2]?.childList[2];
     this.activeRoute.params.subscribe((params: any) => {
       console.log(params.id)
       this.projectId = params.id
@@ -216,7 +213,7 @@ export class ProgressSheetComponent implements OnInit {
 
         this.projectLocationsList = this.project.locations;
       })
-    
+
       // this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data => {
       //   this.activesData = data
       //   console.log(this.activesData)
@@ -265,7 +262,7 @@ export class ProgressSheetComponent implements OnInit {
   }
 
 
-  addData(subTask) {
+  addData(subTask, locationIndex, structureIndex, activityIndex) {
     if (!this.progressPermissionsEdit?.isSelected) {
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
@@ -276,54 +273,61 @@ export class ProgressSheetComponent implements OnInit {
       return;
     }
     const dialogRef = this._dialog.open(AddDataComponent, {
-      width: '60%',
+      // width: '60%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
       data: subTask
     });
     dialogRef.afterClosed().subscribe(status => {
       console.log(status);
-      if (status === 'yes') {
-        this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data => {
-          this.activesData = data
-          console.log(this.activesData)
-          this.activesData.forEach(obj => {
-            //this.grandTotal += obj['discAmount'];
-            //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
-            //console.log(this.grandTotal);
-            const arr = this.projectsData.filter(ele => ele['name'] === obj['taskName']);
-            if (arr.length === 0) {
-              this.projectsData.push(
-                { 'name': obj['taskName'] });
-            }
-          });
 
-          this.projectsData.forEach(obj => {
-            const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
-            obj['result'] = uniqData;
+      this.projectLocationsList[locationIndex];
+      console.log(this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex]);
+      this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal = this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal ? this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal : 0;
+      this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex] = { ...this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex], ...status };
 
-          });
-          console.log(this.projectsData);
+      // let activityName = this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].activity_name;
+
+      // let activityID = this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].activity_name;
+      // let id = this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].activity_name;
+
+      // status._id=id;
+      // status.
 
 
+      // if (status === 'yes') {
+      //   this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data => {
+      //     this.activesData = data
+      //     console.log(this.activesData)
+      //     this.activesData.forEach(obj => {
+      //       //this.grandTotal += obj['discAmount'];
+      //       //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
+      //       //console.log(this.grandTotal);
+      //       const arr = this.projectsData.filter(ele => ele['name'] === obj['taskName']);
+      //       if (arr.length === 0) {
+      //         this.projectsData.push(
+      //           { 'name': obj['taskName'] });
+      //       }
+      //     });
+
+      //     this.projectsData.forEach(obj => {
+      //       const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
+      //       obj['result'] = uniqData;
+
+      //     });
+      //     console.log(this.projectsData);
 
 
 
-        })
-      }
-      if (status === 'no') {
-      }
+
+
+      //   })
+      // }
+      // if (status === 'no') {
+      // }
     })
   }
+
   addMember() {
-    if (!this.memberAddPermissions?.isSelected) {
-      // const dialogRef = this._dialog.open(NoPermissionsComponent, {
-      //   width: '30%',
-      //   panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-      //   data: "you don't have permissions to add member"
-      //   //data: supply
-      // });
-      // return;
-    }
     const dialogRef = this._dialog.open(InnerAddMemberComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -337,21 +341,12 @@ export class ProgressSheetComponent implements OnInit {
           this.members = this.project.members
           console.log(this.project)
         })
-        // this.projectService.getProjects().subscribe(data=>{
-        //   //this.spinner.hide()
-        //   this.projects = data
-        //   console.log(this.projects)
-        //   for(let single of this.projects){
-        //     this.members.push(...single.members)
-        //   }
-        //   console.log(this.members)
-        // })
-        // this.filterSubject.next(this.filterForm.value);
       }
       if (status === 'no') {
       }
     })
   }
+
   onChangeProject(ev) {
     this.router.navigate(['/view-project/progress-sheet', ev.target.value]);
   }
@@ -371,10 +366,6 @@ export class ProgressSheetComponent implements OnInit {
       data: { reDate: subTask.remarks, id: subTask._id }
     });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    //   // this.animal = result;
-    // });
   }
 
 
@@ -391,9 +382,6 @@ export class ProgressSheetComponent implements OnInit {
             this.activesData = data
             console.log(this.activesData)
             this.activesData.forEach(obj => {
-              //this.grandTotal += obj['discAmount'];
-              //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
-              //console.log(this.grandTotal);
               const arr = this.projectsData.filter(ele => ele['name'] === obj['taskName']);
               if (arr.length === 0) {
                 this.projectsData.push(
@@ -406,19 +394,7 @@ export class ProgressSheetComponent implements OnInit {
               obj['result'] = uniqData;
 
             });
-            console.log(this.projectsData);
-
-
-
           })
-          // this.userService.getUserss().subscribe(data=>{
-          //   //this.spinner.hide()
-          //   this.users = data
-          //   this.usersLen = this.users.length
-          //   this.dataSource = new MatTableDataSource(this.users);
-          //   this.dataSource.paginator = this.paginator;
-          //   //console.log(this.roles)
-          // })
 
         },
         error: (err) => {
@@ -441,30 +417,19 @@ export class ProgressSheetComponent implements OnInit {
           console.log(data)
           this.toast.openSnackBar("activity deleted Successfully");
           window.location.reload();
-          // this.router.routeReuseStrategy.shouldReuseRoute = () => false
-          // this.router.navigate([this.router.url])
-
-
-          // this.userService.getUserss().subscribe(data=>{
-          //   //this.spinner.hide()
-          //   this.users = data
-          //   this.usersLen = this.users.length
-          //   this.dataSource = new MatTableDataSource(this.users);
-          //   this.dataSource.paginator = this.paginator;
-          //   //console.log(this.roles)
-          // })
 
         },
         error: (err) => {
           this.toast.openSnackBar("Something went wrong. Unable to delete Activity");
-
-
-
-
         }
       }
 
     )
+  }
+
+  addLocation() {
+    this.project._id;
+
   }
 }
 

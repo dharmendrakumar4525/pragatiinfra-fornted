@@ -147,11 +147,6 @@ export class RequestService {
 
 
   multipleRequests(URL: any, data: any) {
-    URL.map(obj=>{
-      console.log(obj);
-
-    })
-
     return forkJoin(URL)
       .pipe(
         catchError(this.handleError.bind({ that: this, request: data })), // then handle the error
