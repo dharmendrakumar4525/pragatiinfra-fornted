@@ -176,6 +176,7 @@
 
                 <td *ngIf="formatDate(subTask.actualRevisedStartDate) == dateForTotal" style="width:100px">
                   {{subTask.activity_name}}</td>
+                  
                 <td *ngIf="formatDate(subTask.actualRevisedStartDate) == dateForTotal">
                   <form role="form" (submit)="onBid($event, subTask, name.value,subTask._id)"
                     *ngIf="subTask.dateStr == dateForTotal">
