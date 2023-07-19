@@ -1,296 +1,268 @@
-
 <mat-toolbar style="background-color: #fff !important;">
-  <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" >
-      <div style="padding: 1rem;margin-top: 110px;">
-        <form [formGroup]="projectNameForm">
-          <select style="padding: 10px;width:300px;border: none;font-size: 30px;font-weight: 600;font-family: 'Poppins';" (change)="onChangeProject($event)" formControlName="_id">
-            <option *ngFor=" let one of projectsList" [value]="one._id">
-              
-        <span>{{one?.projectName}}</span></option></select>
+  <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+    <div style="padding: 1rem;margin-top: 110px;">
+      <form [formGroup]="projectNameForm">
+        <select style="padding: 10px;width:300px;border: none;font-size: 30px;font-weight: 600;font-family: 'Poppins';"
+          (change)="onChangeProject($event)" formControlName="_id">
+          <option *ngFor=" let one of projectsList" [value]="one._id">
+
+            <span>{{one?.projectName}}</span>
+          </option>
+        </select>
       </form>
-<span style="font-size: 10px;left: 320px;position: relative;bottom:40px;font-family: 'Poppins';font-weight: bold;"> <img src=".\assets\images\ontrack.svg">&nbsp; On Track</span> 
-</div>
-<div style="margin-left: 100px;font-size: small;position: relative;margin-top: 90px;">
-<button mat-button (click)="backToCalender()" *ngIf="showCalData" style="color:#97989D;font-family: 'Poppins';"><img src=".\assets\images\back.svg" style="margin-bottom: 5px;"><!--<i class="fa fa-undo" aria-hidden="true"></i> -->&nbsp;Back to Calender</button></div>       
-    </mat-toolbar-row>
-      
-    <mat-toolbar-row>
-      <hr style="width:100%">
-    </mat-toolbar-row>
+      <span
+        style="font-size: 10px;left: 320px;position: relative;bottom:40px;font-family: 'Poppins';font-weight: bold;">
+        <img src=".\assets\images\ontrack.svg">&nbsp; On Track</span>
+    </div>
+    <div style="margin-left: 100px;font-size: small;position: relative;margin-top: 90px;">
+      <button mat-button (click)="backToCalender()" *ngIf="showCalData"
+        style="color:#97989D;font-family: 'Poppins';"><img src=".\assets\images\back.svg"
+          style="margin-bottom: 5px;"><!--<i class="fa fa-undo" aria-hidden="true"></i> -->&nbsp;Back to
+        Calender</button>
+    </div>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row>
+    <hr style="width:100%">
+  </mat-toolbar-row>
 </mat-toolbar>
-<div class="toptext" >
+<div class="toptext">
   <ul style="list-style: none;">
-  
-    <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/dpr']" routerLinkActive="active-link"
-      ><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i><span style="color:#97989D;">&nbsp;Projects</span></a></li>
-     
-    <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
-      [routerLinkActiveOptions]="{exact: true}"  style="color:#97989D;"><i class="fa fa-eye" aria-hidden="true"></i> <span style="color:#97989D;">&nbsp;Data-Analysis</span></a></li>
-      
-    <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"
-       ><i class="fa fa-edit" aria-hidden="true" style="color:#97989D;"></i><span style="color:#97989D;">&nbsp;Progress-sheet</span> </a></li>
-       
-    <li><a [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"
-       ><i class="fa fa-edit" aria-hidden="true" style="color:#233A61"></i> <span style="color:#233A61">&nbsp;Calender</span></a></li>
-    
+
+    <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/dpr']" routerLinkActive="active-link"><i
+          class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i><span
+          style="color:#97989D;">&nbsp;Projects</span></a></li>
+
+    <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/view-project/data-analysis',projectId]"
+        routerLinkActive="active-link-active" [routerLinkActiveOptions]="{exact: true}" style="color:#97989D;"><i
+          class="fa fa-eye" aria-hidden="true"></i> <span style="color:#97989D;">&nbsp;Data-Analysis</span></a></li>
+
+    <li style="border-right: 1px solid #D9D9D9;"><a [routerLink]="['/view-project/progress-sheet',projectId]"
+        routerLinkActive="active-link-active"><i class="fa fa-edit" aria-hidden="true" style="color:#97989D;"></i><span
+          style="color:#97989D;">&nbsp;Progress-sheet</span> </a></li>
+
+    <li><a [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"><i class="fa fa-edit"
+          aria-hidden="true" style="color:#233A61"></i> <span style="color:#233A61">&nbsp;Calender</span></a></li>
+
   </ul>
-  
+
 
 </div><br>
 
 <mat-grid-list cols="3" rowHeight="700px" *ngIf="!showCalData">
-    <mat-grid-tile colspan="2" >
-    
-      <div style="margin-right:10px;"  >
-    
-      <div class="calender custom_calender" style="border-radius:5px;border-collapse: collapse;border: 2px solid lightgrey;margin-top: 70px;margin-bottom: 50px;width:700px;">
-        <mat-calendar  [dateClass]="dateClass()"  [selected]="selectedDateNew" (selectedChange)="onSelect($event)"></mat-calendar>
-      </div>
-   
-  
-      </div>
- 
-    </mat-grid-tile>
+  <mat-grid-tile colspan="2">
 
-    <mat-grid-tile >
-      <div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right"  style="height: 93vh;" >
-        <mat-card  fxLayout="column" fxLayoutAlign="left" style="height: 93vh;width:350px;background-color: #FAFAFA; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);">
-          <div class="scroll-bar2" fxLayout="column">
+    <div style="margin-right:10px;">
+
+      <div class="calender custom_calender"
+        style="border-radius:5px;border-collapse: collapse;border: 2px solid lightgrey;margin-top: 70px;margin-bottom: 50px;width:700px;">
+        <mat-calendar [dateClass]="dateClass()" [selected]="selectedDateNew"
+          (selectedChange)="onSelect($event)"></mat-calendar>
+      </div>
+
+
+    </div>
+
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <div class="top_container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="right" style="height: 93vh;">
+      <mat-card fxLayout="column" fxLayoutAlign="left"
+        style="height: 93vh;width:350px;background-color: #FAFAFA; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);">
+        <div class="scroll-bar2" fxLayout="column">
           <mat-card-header>
-        
-            <mat-card-title style="color: #1E293B;font-size: 14;margin-left: -10px;font-family: 'Poppins';font-weight: bold;"> About &nbsp;&nbsp; <i class="fa fa-edit" (click)="addAboutUs()" style="cursor: pointer;"  aria-hidden="true"></i></mat-card-title>
-        
+
+            <mat-card-title
+              style="color: #1E293B;font-size: 14;margin-left: -10px;font-family: 'Poppins';font-weight: bold;"> About
+              &nbsp;&nbsp; <i class="fa fa-edit" (click)="addAboutUs()" style="cursor: pointer;"
+                aria-hidden="true"></i></mat-card-title>
+
           </mat-card-header> <br>
-      
+
           <mat-card-content>
             <p style="font-family: 'Poppins';">{{aboutUs?.description}}</p>
           </mat-card-content>
-           
-            <mat-card-subtitle><i style="color: #1E293B;font-family: 'Poppins';font-weight: bold;">Members</i></mat-card-subtitle>
-      
-            <div class="aboutcard-spaceset" fxFlex="row" fxLayoutAlign="start"  style="height: 55px;" *ngFor="let data of members">
-              <div  style="margin-top:10px" mat-card-avatar class="example-header-image"></div>
-              <div style="margin-top:10px">
-                <button mat-button  style="font-size: 14px;font-weight: 300;font-family: 'Poppins';">{{data.split('@')[0]}}</button>
-               
+
+          <mat-card-subtitle><i
+              style="color: #1E293B;font-family: 'Poppins';font-weight: bold;">Members</i></mat-card-subtitle>
+
+          <div class="aboutcard-spaceset" fxFlex="row" fxLayoutAlign="start" style="height: 55px;"
+            *ngFor="let data of members">
+            <div style="margin-top:10px" mat-card-avatar class="example-header-image"></div>
+            <div style="margin-top:10px">
+              <button mat-button
+                style="font-size: 14px;font-weight: 300;font-family: 'Poppins';">{{data.split('@')[0]}}</button>
+
+            </div>
           </div>
-        </div>
-      
-        
+
+
         </div>
         <mat-card-actions style="margin-top: 40px;">
-          <button mat-button  (click)="addMember()" style="font-family: 'Poppins';font-weight: bold;">Add members +</button> 
+          <button mat-button (click)="addMember()" style="font-family: 'Poppins';font-weight: bold;">Add members
+            +</button>
         </mat-card-actions>
-        </mat-card>
-      
-      </div>
-      
-    </mat-grid-tile>
-
-    <mat-grid-tile colspan="3"  >
-      <mat-card  style="width: 90%;height: 400px;margin:10px 0px;background-color: #FAFAFA;margin-top:-200px;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);" >
-        
-        <div >
-          <div class="scroll-bar"  >
-            <!-- <div class="columnLayout" fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities"  style="border-right: 2px solid #E5E5E5;margin-right: 7 00px;"  >
-              <div mat-card-avatar class="example-header-image"></div>
-            <div   >
-              <div class="content">{{data.description}}
-                <div class="time" style="color: #BBBBBB;">{{data.time}}</div><br>
-               
-              </div>
-               
-          </div><br>
-        
-          </div>    -->
-          <!-- <div class="v-line"></div>  -->
-          <div style="font-size: 15px;font-weight: bold;margin-bottom: 20px;margin-left: 40px;font-family: 'Poppins';">Notifications</div>
-          <div class="columnLayout" style="display: inline-block;" >
-            <div  *ngFor="let data of recentActivities" >
-              <div class="parent">
-               <div class="child"> 
-                <img src="https://material.angular.io/assets/img/examples/shiba1.jpg" style="width: 30px;height: 30px;border-radius: 15px;">
-              </div>
-               <div class="child" style="font-family: 'Poppins';">
-               {{data.description}}<br>
-               <div style="color: #BBBBBB;font-family: 'Poppins';">{{data.time}}</div>
-               </div>
-            </div>
-              
-            </div>
-                </div>
-    </div>
-     </div>
-     
       </mat-card>
-  
-    </mat-grid-tile>
-  </mat-grid-list> 
- 
-<!-- <mat-grid-tile  >
 
-    <div class="top_container" fxLayout="column" fxLayoutGap="10px"  style="height: 70vh;margin-right: 50px;" >
-      <mat-card style="width: 230px;height: 400px;margin:10px 0px;"  >
-        <div class="scroll-bar" fxLayout="column">
-        <mat-card-header>
-      
-          <mat-card-title> About &nbsp; <i class="fa fa-edit" style="cursor: pointer;"  aria-hidden="true"></i></mat-card-title>
-      
-        </mat-card-header>
-    
-        <mat-card-content>
-          <p>asasadsdas</p></mat-card-content>
-         
-          <mat-card-subtitle>Members</mat-card-subtitle>
-        
-   <div  fxFlex="row" fxLayoutAlign="start" >
-    <div  style="margin-top:10px" mat-card-avatar class="example-header-image"></div>
-    <div style="margin-top:10px">
-      <button mat-button >user1</button>
-     
-</div>
-</div>
-
-</div>
-<mat-card-actions>
-<button mat-button >Addmembers+</button> 
-</mat-card-actions>
-
-  </mat-card>
-
-</div>
-
-  </mat-grid-tile>>-->
-
-  <!-- <full-calendar [options]="calendarOptions"></full-calendar> -->
-  <!-- <full-calendar
-  [options]="calendarOptions"
-  [events]="eventsPromise | async"
-></full-calendar> -->
-<!-- <full-calendar (dateClick)="handleDateClick($event)" [options]="calendarOptions" [plugins]="calendarPlugins"></full-calendar> -->
-<!-- <full-calendar [options]="calendarOptions"></full-calendar> -->
-
-  <!-- <div class='app'>
-
-
-
-    <div class='app-calendar' >
-      <full-calendar
-        #calendar
-        defaultView="dayGridMonth"
-        [header]="{
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth'
-        }"
-        [plugins]="calendarPlugins"
-        [weekends]="calendarWeekends"
-        (dateClick)="handleDateClick($event)"
-      ></full-calendar>
     </div>
-  
-  </div> -->
-  
 
-  <mat-grid-list cols="4" rowHeight="400px" style="margin-top: 70px;margin-top: 10px;" *ngIf="showCalData" >
-      <mat-grid-tile colspan="3" rowspan="2"  >
-         
-          <mat-card style="width: 95%; height: 99%;">
-              <div >
-              <mat-toolbar fxLayout="column" style="margin-bottom: 10px; background-color: #233A61;color: #fff;">
-                  <h2 style="font-size: xx-large;margin-right: 800px;margin-top: 10px;">{{getDay}}</h2>
-                    <div style="margin-right: 650px;margin-bottom: 50px;position: absolute;"><h4 style="font-size: small">{{getMonth}}<br>{{getWeekName}} {{getYear}}</h4></div><br>  
-              </mat-toolbar>
+  </mat-grid-tile>
+
+  <mat-grid-tile colspan="3">
+    <mat-card
+      style="width: 90%;height: 400px;margin:10px 0px;background-color: #FAFAFA;margin-top:-200px;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
+
+      <div>
+        <div class="scroll-bar">
+     
+          <div style="font-size: 15px;font-weight: bold;margin-bottom: 20px;margin-left: 40px;font-family: 'Poppins';">
+            Notifications</div>
+          <div class="columnLayout" style="display: inline-block;">
+            <div *ngFor="let data of recentActivities">
+              <div class="parent">
+                <div class="child">
+                  <img src="https://material.angular.io/assets/img/examples/shiba1.jpg"
+                    style="width: 30px;height: 30px;border-radius: 15px;">
+                </div>
+                <div class="child" style="font-family: 'Poppins';">
+                  {{data.description}}<br>
+                  <div style="color: #BBBBBB;font-family: 'Poppins';">{{data.time}}</div>
+                </div>
+              </div>
+
+            </div>
           </div>
-          
-          <div class="scroll-bar1" style="width: 100%;">
-      <table>
+        </div>
+      </div>
+
+    </mat-card>
+
+  </mat-grid-tile>
+</mat-grid-list>
+
+
+
+<mat-grid-list cols="4" rowHeight="400px" style="margin-top: 70px;margin-top: 10px;" *ngIf="showCalData">
+  <mat-grid-tile colspan="3" rowspan="2">
+
+    <mat-card style="width: 95%; height: 99%;">
+      <div>
+        <mat-toolbar fxLayout="column" style="margin-bottom: 10px; background-color: #233A61;color: #fff;">
+          <h2 style="    margin-top: 14px;">{{valueAddedDate | date:'dd MMM, YYYY'}}   <small>({{getWeekName}})</small>   </h2>
+        </mat-toolbar>
+      </div>
+
+      <div class="scroll-bar1" style="width: 100%;">
+        <table>
 
           <thead>
-              <th style="width:200px">Description</th>
-              <th style="width: 200px;">Quantity used</th>
-              <th style="width: 500px;">Remarks</th>
-            </thead>
-            
-              <tbody *ngFor= " let project of projectsData " >
-               
-                  <tr  style="font-size: 15px;border: 1px solid #94A3B8;">
-                      <td style="border-right: none;font-weight: 600;background-color: #fff;">{{project.name}}</td>
-                      <!-- <td style="background-color:#94A3B8;border: none;"></td>
-                      <td style="background-color: #94A3B8;border: none;"></td> -->
-                  </tr>
-                  
-                  <tr *ngFor="let subTask of project.result" style="background-color: #F4F4F5;" >
-                   
-                    <td *ngIf="formatDate(subTask.actualRevisedStartDate) == dateForTotal" style="width:100px">{{subTask.subTaskName}}</td>
-                    <td *ngIf="formatDate(subTask.actualRevisedStartDate) == dateForTotal">
-                    <form role="form" (submit)="onBid($event, subTask, name.value,subTask._id)" *ngIf="subTask.dateStr == dateForTotal">
-                      <input type="number" [value]="subTask.previousValue" [readonly]="!calenderPermissions?.isSelected" class="calenderForm" style="border:1px solid #97989D;padding: 10px 0px;width:80px !important;text-align: center;background-color: transparent;" #name  min={{subTask.value}} value={{subTask.value}}>
-                      <button type="submit" style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;top:-1px;left:20px ">Add</button>
+            <th style="width:200px">Description</th>
+            <th style="width: 200px;">Quantity used</th>
+            <th style="width: 500px;">Remarks</th>
+          </thead>
+
+          <tbody *ngFor=" let locationItem of projectLocationsList">
+
+            <tr style="font-size: 15px;border: 1px solid #94A3B8;">
+              <td style="border-right: none;font-weight: 600;background-color: #fff;">{{locationItem.location_name}}</td>              
+            </tr>
+
+            <ng-container *ngFor="let structureItem of locationItem.structures;let structureIndex=index">
+              <tr style="font-size: 15px;border: 1px solid #94A3B8;">
+                <td style="border-right: none;font-weight: 600;background-color: #fff;">{{structureItem.structure_name}}</td>              
+              </tr>
+
+              <tr *ngFor="let subTask of structureItem.activities" style="background-color: #F4F4F5;">
+
+                <td *ngIf="formatDate(subTask.actualRevisedStartDate) == dateForTotal" style="width:100px">
+                  {{subTask.activity_name}}</td>
+                <td *ngIf="formatDate(subTask.actualRevisedStartDate) == dateForTotal">
+                  <form role="form" (submit)="onBid($event, subTask, name.value,subTask._id)"
+                    *ngIf="subTask.dateStr == dateForTotal">
+                    <input type="number" [value]="subTask.previousValue" [readonly]="!calenderPermissions?.isSelected"
+                      class="calenderForm"
+                      style="border:1px solid #97989D;padding: 10px 0px;width:80px !important;text-align: center;background-color: transparent;"
+                      #name min={{subTask.value}} value={{subTask.value}}>
+                    <button type="submit"
+                      style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;top:-1px;left:20px ">Add</button>
                   </form>
-                  <form role="form" (submit)="onBid($event, subTask, name.value,subTask._id)" *ngIf="subTask.dateStr !== dateForTotal">
-                    <input type="number"  [value]="subTask.previousValue" [readonly]="!calenderPermissions?.isSelected" class="calenderForm" style="border:1px solid #97989D;padding: 10px 0px;width:80px !important;text-align: center;background-color: transparent;" #name  min={{subTask.value}} value={{subTask.value}}>
-                    <button type="submit" style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;top:-1px;left:20px ">Add</button>
-                </form>
-                  </td>
-                    <td *ngIf="formatDate(subTask.actualRevisedStartDate) == dateForTotal">
-                      <form role="form" (submit)="remarksData($event, subTask, remark.value,subTask._id)">
-                      <textarea type="text" [readonly]="!remarksPermissions?.isSelected" style="border:1px solid #97989D;padding: 10px 10px;width:350px;font-family: 'Poppins';background-color: transparent;" #remark  name="remarkValue"></textarea>
-                      <button style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;bottom:20px;left:20px ">Add</button>
-                    </form>
-                    </td>
-                 
-                  </tr>
-            </tbody>
+                  <form role="form" (submit)="onBid($event, subTask, name.value,subTask._id)"
+                    *ngIf="subTask.dateStr !== dateForTotal">
+                    <input type="number" [value]="subTask.previousValue" [readonly]="!calenderPermissions?.isSelected"
+                      class="calenderForm"
+                      style="border:1px solid #97989D;padding: 10px 0px;width:80px !important;text-align: center;background-color: transparent;"
+                      #name min={{subTask.value}} value={{subTask.value}}>
+                    <button type="submit"
+                      style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;top:-1px;left:20px ">Add</button>
+                  </form>
+                </td>
+                <td *ngIf="formatDate(subTask.actualRevisedStartDate) == dateForTotal">
+                  <form role="form" (submit)="remarksData($event, subTask, remark.value,subTask._id)">
+                    <textarea type="text" [readonly]="!remarksPermissions?.isSelected"
+                      style="border:1px solid #97989D;padding: 10px 10px;width:350px;font-family: 'Poppins';background-color: transparent;"
+                      #remark name="remarkValue"></textarea>
+                    <button
+                      style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;bottom:20px;left:20px ">Add</button>
+                  </form>
+                </td>
+  
+              </tr>
+
+            </ng-container>
+
+           
+          </tbody>
 
         </table>
-        </div>
-       
-          <script>
-            let answer = document.getElementById("myP").contentEditable;
-           
-            </script>
-          
-      
-          </mat-card>
-     
-              
-        
-      </mat-grid-tile>
+      </div>
 
-      <mat-grid-tile >
-          <mat-card style="width: 250px;height: 350px;margin:10px 0px">
-          <div class = "calendar-wrapper" style="height: 200px;">
-              <mat-calendar #calendar   [(selected)]="selectedDate" (selectedChange)="onSelectDate($event)">
-              </mat-calendar>
+      <script>
+        let answer = document.getElementById("myP").contentEditable;
+
+      </script>
+
+
+    </mat-card>
+
+
+
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-card style="width: 250px;height: 350px;margin:10px 0px">
+      <div class="calendar-wrapper" style="height: 200px;">
+        <mat-calendar #calendar [(selected)]="selectedDate" (selectedChange)="onSelectDate($event)">
+        </mat-calendar>
+      </div>
+    </mat-card>
+  </mat-grid-tile>
+
+
+
+
+  <mat-grid-tile>
+    <mat-card
+      style="width: 250px;height: 350px;margin:10px 0px;background-color: #FAFAFA;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
+      <div>
+        <div class="scroll-bar" fxLayout="column">
+          <span
+            style="font-size: 15px;font-weight: bold;text-align: left;margin-bottom: 20px;margin-left: 30px;font-family: 'Poppins';">Notifications</span>
+          <div fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities">
+            <div mat-card-avatar class="example-header-image"></div>
+            <div>
+              <div class="content" style="font-family: 'Poppins';">{{data.description}}
+                <div class="time" style="color: #BBBBBB;font-family: 'Poppins';">{{data.time}}</div><br>
               </div>
-              </mat-card>
-      </mat-grid-tile>
-
-      
-     
-
-      <mat-grid-tile >
-          <mat-card style="width: 250px;height: 350px;margin:10px 0px;background-color: #FAFAFA;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
-              <div>
-                <div class="scroll-bar" fxLayout="column">
-                  <span style="font-size: 15px;font-weight: bold;text-align: left;margin-bottom: 20px;margin-left: 30px;font-family: 'Poppins';">Notifications</span>
-                  <div  fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities">
-                    <div mat-card-avatar class="example-header-image"></div>
-                  <div >
-                    <div class="content" style="font-family: 'Poppins';">{{data.description}}
-                      <div class="time" style="color: #BBBBBB;font-family: 'Poppins';">{{data.time}}</div><br>
-                    </div>
-                </div><br>
-                </div>
+            </div><br>
           </div>
-           </div>
-            </mat-card>
-      </mat-grid-tile>
-    <!-- <mat-grid-tile colspan="4" >
+        </div>
+      </div>
+    </mat-card>
+  </mat-grid-tile>
+  <!-- <mat-grid-tile colspan="4" >
       <mat-card style="width:150px;margin-right: 980px;margin-bottom: 300px;box-shadow: none;">
         <button style="width:150px;padding: 10px;background-color: #233A61;color: #fff;">Submit</button> 
       </mat-card>
     </mat-grid-tile> -->
 
-  </mat-grid-list>
+</mat-grid-list>
