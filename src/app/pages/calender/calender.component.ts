@@ -17,7 +17,10 @@ import { AboutUsComponent } from '../about-us/about-us.component';
 import { InnerAddMemberComponent } from '../inner-add-member/inner-add-member.component';
 import { DataAnalysisService } from '@services/data-analysis.service';
 import { MatCalendar, MatCalendarCellClassFunction } from '@angular/material/datepicker';
-
+import { PROJECT_ACTIVITY_DATA_API, PROJECT_ACTIVITY_DATA_DETAIL_API } from '@env/api_path';
+import { RequestService } from '@services/https/request.service';
+import { SnackbarService } from '@services/snackbar/snackbar.service';
+import {isEmpty} from 'lodash';
 
 
 
@@ -76,7 +79,15 @@ export class CalenderComponent implements OnInit {
   remarksPermissions: any;
   projectLocationsList: Array<any> = [];
 
-  constructor(private activeRoute: ActivatedRoute, private router: Router, private _fb: FormBuilder, private dataAnalysis: DataAnalysisService, private projectService: AddProjectService, private recentActivityService: RecentActivityService, private _dialog: MatDialog, private progressSheetService: ProgressSheetService, private toast: ToastService, private calenderService: CalenderService) { }
+
+
+  getAllActivityData: Array<any> = [];
+
+  dataByActivityId:Array<any> = [];
+
+  constructor(
+    private httpService: RequestService,
+    private snack: SnackbarService,private activeRoute: ActivatedRoute, private router: Router, private _fb: FormBuilder, private dataAnalysis: DataAnalysisService, private projectService: AddProjectService, private recentActivityService: RecentActivityService, private _dialog: MatDialog, private progressSheetService: ProgressSheetService, private toast: ToastService, private calenderService: CalenderService) { }
 
 
 
@@ -408,6 +419,91 @@ export class CalenderComponent implements OnInit {
 
 
 
+  
+saveActivityData(activityId:any,activity_ref_id:any,structure_id:any,structure_ref_id:any,location_id:any,location_ref_id:any,quantity:any,remark:any){
+
+   let requestedData:any = {
+    project_id:this.projectId,
+    activity_id:activityId,
+    activity_ref_id:activity_ref_id,
+    structure_id:structure_id,
+    structure_ref_id:structure_ref_id,
+    location_id:location_id,
+    location_ref_id:location_ref_id,
+    date:moment(this.valueAddedDate).format('YYYY-MM-DD')   
+  }
+
+  if(quantity) {
+    requestedData['daily_quantity'] = quantity;
+  }
+
+  if(remark) {
+    requestedData['remark'] = remark;
+  }
+ 
+
+  console.log('requestedData', requestedData)
+
+  this.httpService.POST(PROJECT_ACTIVITY_DATA_API, requestedData).subscribe((res:any) => {
+
+
+  }, (err) => {
+    if (err.errors && !isEmpty(err.errors)) {
+      let errMessage = '<ul>';
+      for (let e in err.errors) {
+        let objData = err.errors[e];
+        errMessage += `<li>${objData[0]}</li>`;
+      }
+      errMessage += '</ul>';
+      this.snack.notifyHtml(errMessage, 2);
+    } else {
+      this.snack.notify(err.message, 2);
+    }
+  })
+}
+
+
+
+
+
+getActivityData(){
+  let requestedData:any = {
+    project_id:this.projectId
+  }
+  this.httpService.GET(PROJECT_ACTIVITY_DATA_API, requestedData).subscribe((res:any) => {
+
+    this.getAllActivityData = res.data;
+
+  }, (err) => {
+    if (err.errors && !isEmpty(err.errors)) {
+      let errMessage = '<ul>';
+      for (let e in err.errors) {
+        let objData = err.errors[e];
+        errMessage += `<li>${objData[0]}</li>`;
+      }
+      errMessage += '</ul>';
+      this.snack.notifyHtml(errMessage, 2);
+    } else {
+      this.snack.notify(err.message, 2);
+    }
+  })
+}
+
+
+
+
+  mapActivityById(){
+
+    if(this.getAllActivityData && this.getAllActivityData.length>0){
+      this.getAllActivityData.map(((o:any)=>{
+
+      }))
+    }
+
+  }
+
+
+
   ngOnInit(): void {
 
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
@@ -430,6 +526,8 @@ export class CalenderComponent implements OnInit {
     this.activeRoute.params.subscribe((params: any) => {
       console.log(params.id)
       this.projectId = params.id
+
+      this.getActivityData();
 
       this.calenderService.getProjectById(this.projectId).subscribe(data => {
         this.project = data
