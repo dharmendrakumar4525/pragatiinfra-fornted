@@ -108,6 +108,8 @@ export class CalenderComponent implements OnInit {
 
     this.dateForTotal = moment(this.valueAddedDate).format('yyyy-MM-D')
 
+    this.mapActivityById();
+
   }
 
   dateClass() {
@@ -414,7 +416,7 @@ export class CalenderComponent implements OnInit {
     this.dateForTotal = moment(this.valueAddedDate).format('D MMM, YYYY')
     console.log(this.dateForTotal)
 
-    //this.dateForTotal = selDateForTotal
+    this.mapActivityById();
   }
 
 
@@ -493,11 +495,23 @@ getActivityData(){
 
 
   mapActivityById(){
-
+    this.dataByActivityId = [];
     if(this.getAllActivityData && this.getAllActivityData.length>0){
       this.getAllActivityData.map(((o:any)=>{
+          let incomingDate:any = moment(o.date).format('DD-MM-YYYY');
+          let selectedDate:any = moment(this.valueAddedDate).format('DD-MM-YYYY');
+    
+          if(incomingDate == selectedDate){
+            this.dataByActivityId[o.activity_ref_id] = {
+              daily_quantity:o.daily_quantity,
+              remark:o.remark
+            }
+          }
+
+          return o;
 
       }))
+
     }
 
   }

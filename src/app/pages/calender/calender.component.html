@@ -181,6 +181,7 @@
                   <form role="form" (submit)="saveActivityData(subTask.activity_id,subTask._id,structureItem.structure_id,structureItem._id,locationItem.location_id,locationItem._id,quantityId.value,'')">
                     <input type="number"
                       class="calenderForm"
+                      [value]="(dataByActivityId && dataByActivityId[subTask._id] && dataByActivityId[subTask._id]['daily_quantity'])?dataByActivityId[subTask._id]['daily_quantity']:0"
                       style="border:1px solid #97989D;padding: 10px 0px;width:80px !important;text-align: center;background-color: transparent;"
                       #quantityId >
                     <button type="submit"
@@ -191,7 +192,8 @@
                 </td>
                 <td>
                   <form role="form" (submit)="saveActivityData(subTask.activity_id,subTask._id,structureItem.structure_id,structureItem._id,locationItem.location_id,locationItem._id,'',remarkId.value)">
-                    <textarea type="text" [readonly]="!remarksPermissions?.isSelected"
+                    <textarea type="text" 
+                    [value]="(dataByActivityId && dataByActivityId[subTask._id] && dataByActivityId[subTask._id]['remark'])?dataByActivityId[subTask._id]['remark']:0"
                       style="border:1px solid #97989D;padding: 10px 10px;width:350px;font-family: 'Poppins';background-color: transparent;"
                       #remarkId name="remarkValue"></textarea>
                     <button
