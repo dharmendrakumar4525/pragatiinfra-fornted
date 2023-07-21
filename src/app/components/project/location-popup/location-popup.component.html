@@ -1,58 +1,66 @@
+<div mat-dialog-title class="mat-dialog-title">
+
+  <div class="row full-width">
+    <div class="col-md-9">
+
+      <ng-container *ngIf="type == 'location'">
+        Location
+      </ng-container>
+      <ng-container *ngIf="type == 'structure'">
+        Structure
+      </ng-container>
+      <ng-container *ngIf="type == 'activity'">
+        Activity
+      </ng-container>
 
 
-    <div mat-dialog-title class="mat-dialog-title">
-
-        <div class="row full-width">
-            <div class="col-md-9">
-
-                <ng-container *ngIf="type == 'location'">
-                    Location
-                </ng-container>
-                <ng-container *ngIf="type == 'structure'">
-                    Structure
-                </ng-container>
-                <ng-container *ngIf="type == 'activity'">
-                    Activity
-                </ng-container>
-                
-                
-            </div>
-            <div class="col-md-3">
-                <mat-icon class="float-end close-icon" (click)="onNoClick()">close</mat-icon>
-            </div>
-        </div>
     </div>
-    <div mat-dialog-content class="mat-dialog-content-cstm">
-
-        <ng-container *ngIf="type == 'location'">
-            <div class="list-data" *ngFor="let item of listData">
-                <mat-checkbox (change)="onSelectLocation($event,item)" [checked]="selectedLocations.includes(item._id)">{{item.location_name}}</mat-checkbox>
-            </div>            
-        </ng-container>
-        <ng-container *ngIf="type == 'structure'">
-            <div class="list-data" *ngFor="let item of listData">
-                <mat-checkbox (change)="onSelectStructure($event,item)" [checked]="selectedStructuresArray.includes(item._id)">{{item.structure_name}}</mat-checkbox>
-            </div>            
-        </ng-container>
-        <ng-container *ngIf="type == 'activity'">
-            <div class="list-data" *ngFor="let item of listData">
-                <mat-checkbox (change)="onSelectActivity($event,item)" [checked]="selectedActivityArray.includes(item._id)">{{item.activity_name}}</mat-checkbox>
-            </div>            
-        </ng-container>
-        
-       
-      
+    <div class="col-md-3">
+      <mat-icon class="float-end close-icon" (click)="onNoClick()">close</mat-icon>
     </div>
+  </div>
+</div>
+<div mat-dialog-content class="mat-dialog-content-cstm">
 
-    <div style="text-align: center;margin-bottom: 15px; padding: 0 10px;">
+  <ng-container *ngIf="type == 'location'">
+    <div class="list-data" *ngFor="let item of listData">
+      <ng-container *ngIf="!(idArray.includes(item._id))">
+        <mat-checkbox (change)="onSelectLocation($event,item)" [checked]="selectedLocations.includes(item._id)">{{item.location_name}}</mat-checkbox>
+      </ng-container>
 
-   
-
-        <button mat-raised-button class="cancel-btn space-btn" cdkFocusInitial (click)="onNoClick()">
-            <span> Cancel</span>
-          </button>
-        
-          <button mat-raised-button class="space-btn theme-btn-color" color="primary" (click)="onYesClick()">
-            <span>Submit</span>
-          </button>
     </div>
+  </ng-container>
+  <ng-container *ngIf="type == 'structure'">
+    <div class="list-data" *ngFor="let item of listData">
+      <ng-container *ngIf="!(idArray.includes(item._id))">
+        <mat-checkbox (change)="onSelectStructure($event,item)"
+          [checked]="selectedStructuresArray.includes(item._id)">{{item.structure_name}}</mat-checkbox>
+      </ng-container>
+
+    </div>
+  </ng-container>
+  <ng-container *ngIf="type == 'activity'">
+    <div class="list-data" *ngFor="let item of listData">
+      <ng-container *ngIf="!(idArray.includes(item._id))">
+        <mat-checkbox (change)="onSelectActivity($event,item)"
+          [checked]="selectedActivityArray.includes(item._id)">{{item.activity_name}}</mat-checkbox>
+      </ng-container>
+    </div>
+  </ng-container>
+
+
+
+</div>
+
+<div style="text-align: center;margin-bottom: 15px; padding: 0 10px;">
+
+
+
+  <button mat-raised-button class="cancel-btn space-btn" cdkFocusInitial (click)="onNoClick()">
+    <span> Cancel</span>
+  </button>
+
+  <button mat-raised-button class="space-btn theme-btn-color" color="primary" (click)="onYesClick()">
+    <span>Submit</span>
+  </button>
+</div>

@@ -12,20 +12,15 @@ import * as moment from 'moment-timezone'
 @Component({
   selector: 'app-add-data',
   templateUrl: './add-data.component.html',
-  styleUrls: ['./add-data.component.css'],
+  styleUrls: ['./add-data.component.scss'],
   providers: [DatePipe]
 })
 export class AddDataComponent implements OnInit {
-  minFromDate: Date;
-  maxFromDate: Date | null;
-  minToDate: Date | null;
-  maxToDate: Date;
+
 
   yesterday = new Date();
   tommorrow = new Date();
 
-  // startDate = new FormControl(new Date(2023, 3, 1));
-  // endDate = new FormControl(new Date());
 
   itemForm: FormGroup = this._fb.group({
     actual_revised_start_date: [],
@@ -38,8 +33,8 @@ export class AddDataComponent implements OnInit {
   });
   uomData = ['Bag', 'Sq.m.', 'Cu.m.', 'Litre', 'No.', 'Kg', 'g', 'Quintal', 'meters', 'c.m.']
   permissions: any;
-  AddreviseDateLength: any = 0;
-  // baseStartDate:any;
+  reviseMinDateArray: any = [];
+  baseLineEndMinDate: any;
 
 
   constructor(
@@ -47,85 +42,86 @@ export class AddDataComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _fb: FormBuilder,
     private toast: ToastService,
-    private progressSheetService: ProgressSheetService,
-    // private toast: ToastService
   ) {
-
-
-    console.log('data1111111111', data)
-    this.minFromDate = new Date();
-    this.maxFromDate = new Date();
-
-    this.minToDate = new Date();
-    this.maxToDate = new Date();
-
-    this.yesterday.setDate(this.yesterday.getDate() - 0);
-  }
-
-
-
-  myFilter = (d: Date): boolean => {
-    const today = new Date(this.maxFromDate);
-    // return true if the selected date is greater than or equal to today
-    return d > today;
-
-  }
-
-  fromDateChange(type: string, event: MatDatepickerInputEvent<Date>) {
-    // console.log(`${type}: ${event.value}`);
-    this.minToDate = event.value;
-
-    if (event.value !== null) {
-      this.maxToDate = new Date(
-        event!.value.getFullYear(),
-        event!.value.getMonth(),
-        event!.value.getDate() + 1000
-      );
-    }
-  }
-
-  toDateChange(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.maxFromDate = event.value;
-
-    if (event.value !== null) {
-      this.minFromDate = new Date(
-        event!.value.getFullYear(),
-        event!.value.getMonth(),
-        event!.value.getDate() - 100
-      );
-    }
+    this.reviseMinDateArray = [];
   }
 
   ngOnInit(): void {
     if (this.data.addRevisesDates) {
       this.data.addRevisesDates.forEach(single => {
-        this.plusBlocks();
+        this.addBlocks(single);
       })
-    } else {
-      this.plusBlocks();
     }
-    this.itemForm.patchValue(this.data)
+    if (this.data) {
+      this.baseLineEndMinDate = new Date(this.data.base_line_start_date);
+      if (this.data.actual_revised_start_date) {
+        this.reviseMinDateArray.push(new Date(this.data.actual_revised_start_date));
+      }
+      if (this.data.addRevisesDates && this.data.addRevisesDates.length > 0) {
+        this.data.addRevisesDates.forEach((element, index) => {
+          this.reviseMinDateArray.push(new Date(element.revisedDate));
+        });
+      }
+    }
+
+    this.itemForm.patchValue({
+      ...this.data
+    })
+    if (this.data.addRevisesDates) {
+
+    }
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     // console.log(this.permissions)
     if (this.permissions.user.role === 'superadmin') {
       this.itemForm.get('actual_revised_start_date').clearValidators()
       this.itemForm.updateValueAndValidity()
     }
-    console.log(this.itemForm.get('actual_revised_start_date'));
   }
 
-  closeDialog(status: string) {
-    this.dialogRef.close(status)
+  baseLineStartDateChange(value: any) {
+    this.baseLineEndMinDate = new Date(value);
+    console.log(new Date(this.itemForm.value.base_line_end_date).getTime() > new Date(this.itemForm.value.base_line_end_date).getTime());
+    console.log(new Date(this.itemForm.value.base_line_end_date).getTime());
+
+    if (this.itemForm.value.base_line_end_date && new Date(this.itemForm.value.base_line_end_date).getTime() < new Date(this.itemForm.value.base_line_start_date).getTime()) {
+      this.itemForm.patchValue({
+        base_line_end_date: null,
+      })
+    }
+    if (this.itemForm.value.actual_revised_start_date && new Date(this.itemForm.value.actual_revised_start_date).getTime() < new Date(this.itemForm.value.base_line_start_date).getTime()) {
+      this.itemForm.patchValue({
+        actual_revised_start_date: null
+      })
+    }
+
   }
 
+  ActualReviseStartDateChange(value) {
+    this.reviseMinDateArray[0] = (new Date(value));
+    console.log(this.reviseMinDateArray);
 
+  }
 
+  ActualReviseEndDateChange(value, i) {
+    console.log(value, i);
 
+  }
 
-  getBlocks() {
-    return this._fb.group({
-      revisedDate: [null]
-    })
+  closeDialog() {
+    this.dialogRef.close({ type: 0, data: "" })
+  }
+
+  getBlocks(value?: any) {
+    if (value) {
+      return this._fb.group({
+        revisedDate: [value]
+      })
+    }
+    else {
+      return this._fb.group({
+        revisedDate: [null, Validators.required]
+      })
+    }
   }
 
   get actualRevisedStartDate(): AbstractControl {
@@ -150,9 +146,11 @@ export class AddDataComponent implements OnInit {
 
   plusBlocks() {
     this.addRevisesDates.push(this.getBlocks());
-    let size = this.itemForm.value.addRevisesDates;
-    // console.log("size", size);
-    this.AddreviseDateLength = size.length;
+
+  }
+
+  addBlocks(value) {
+    this.addRevisesDates.push(this.getBlocks(value.revisedDate));
 
   }
 
@@ -181,7 +179,7 @@ export class AddDataComponent implements OnInit {
       return;
     }
     if (this.itemForm.value.actual_revised_start_date) {
-      if (this.itemForm.value.actual_revised_start_date <= this.itemForm.value.base_line_start_date ) {
+      if (this.itemForm.value.actual_revised_start_date <= this.itemForm.value.base_line_start_date) {
         this.toast.openSnackBar(
           'Enter Valid Date'
         );
@@ -229,22 +227,21 @@ export class AddDataComponent implements OnInit {
       var oneDay = 1000 * 60 * 60 * 24;
       console.log(oneDay);
 
-      let lastRevisedData = this.itemForm.value.addRevisesDates[this.itemForm.value.addRevisesDates.length-1]['revisedDate'];
-      console.log('lastRevisedData', lastRevisedData, moment(lastRevisedData).format('YYYY-MM-DD'))
-      console.log('this.itemForm.value.actual_revised_start_date', this.itemForm.value.actual_revised_start_date, )
+      let lastRevisedData = this.itemForm.value.addRevisesDates[this.itemForm.value.addRevisesDates.length - 1]['revisedDate'];
 
 
-      let  lastRevisedDataMoment = moment(lastRevisedData);
-      var actualRevisedSartDateMoment = moment(this.itemForm.value.actual_revised_start_date);    
-      let diffValue =  lastRevisedDataMoment.diff(actualRevisedSartDateMoment, 'days');
+      let lastRevisedDataMoment = moment(lastRevisedData);
+      var actualRevisedSartDateMoment = moment(this.itemForm.value.actual_revised_start_date);
+      let diffValue = lastRevisedDataMoment.diff(actualRevisedSartDateMoment, 'days');
       workingDaysRevised = diffValue
 
 
       noofDaysBalanceasperrevisedEnddate;
       noofDaysBalanceasperbaseLine;
+      console.log(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate);
 
       var oneDaynoofDaysBalanc = 1000 * 60 * 60 * 24;
-      var difference_msnoofDaysBalance = Math.abs(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate.getTime() - new Date().getTime())
+      var difference_msnoofDaysBalance = Math.abs(new Date(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate).getTime() - new Date().getTime())
       var diffValuenoofDaysBalance = Math.round(difference_msnoofDaysBalance / oneDaynoofDaysBalanc);
       noofDaysBalanceasperrevisedEnddate = diffValuenoofDaysBalance + 1
       noofDaysBalanceasperbaseLine = diffValuenoofDaysBalance + 1
@@ -271,19 +268,8 @@ export class AddDataComponent implements OnInit {
       this.itemForm.value.r2EndDate = this.itemForm.value.addRevisesDates[1].revisedDate;
       this.itemForm.value.r3EndDate = this.itemForm.value.addRevisesDates[2].revisedDate;
     }
-    // this.progressSheetService.addSubActivityData(this.itemForm.value, this.data._id).subscribe(
-    //   {
-    //     next: (data: any) => {
-    //       this.toast.openSnackBar("Activity Data Added Successfully");
-    //       this.closeDialog('yes');
-    //     },
-    //     error: (err) => {
-    //       this.toast.openSnackBar("Something went wrong. Unable to Add Activity Data");
-    //     }
-    //   }
 
-    // )
-    this.dialogRef.close(this.itemForm.value);
+    this.dialogRef.close({ data: this.itemForm.value, type: 1 });
 
 
   }

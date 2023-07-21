@@ -1,0 +1,39 @@
+<div mat-dialog-title class="mat-dialog-title">
+
+  <div class="row full-width">
+    <div class="col-md-9">
+      <ng-container>
+        Confirm
+      </ng-container>
+
+
+    </div>
+    <div class="col-md-3">
+      <mat-icon class="float-end close-icon" (click)="onNoClick()">close</mat-icon>
+    </div>
+  </div>
+</div>
+<div mat-dialog-content class="mat-dialog-content-cstm">
+
+  <ng-container>
+    <div class="list-data">
+      Are you sure you want to delete this record ?
+    </div>
+  </ng-container>
+
+
+
+</div>
+
+<div style="text-align: center;margin-bottom: 15px; padding: 0 10px;">
+
+
+
+  <button mat-raised-button class="cancel-btn space-btn" cdkFocusInitial (click)="onNoClick()">
+    <span> Cancel</span>
+  </button>
+
+  <button mat-raised-button class="space-btn theme-btn-color" color="primary" (click)="onYesClick()">
+    <span>Confirm</span>
+  </button>
+</div>

@@ -3,7 +3,7 @@
     <div>
       <h2 style="margin-left: 20px;margin-top: 10px;">{{data.subTaskName}}</h2>
     </div>
-    <div style="margin-right: 10px;cursor: pointer;" (click)="closeDialog('no')">Back to Chart</div>
+    <div style="margin-right: 10px;cursor: pointer;" (click)="closeDialog()">Back to Chart</div>
   </div>
 
   <form class="form-section" [formGroup]="itemForm">
@@ -20,7 +20,7 @@
             <mat-form-field appearance="outline">
               <input matInput [matDatepicker]="baseLineStartDate" formControlName="base_line_start_date"
                 placeholder="Enter base Line Start Date" (click)="baseLineStartDate.open()"
-                (dateInput)="fromDateChange('input', $event)" />
+                (dateChange)="baseLineStartDateChange($event.value)" />
 
               <mat-datepicker-toggle matSuffix [for]="baseLineStartDate"></mat-datepicker-toggle>
               <mat-datepicker #baseLineStartDate></mat-datepicker>
@@ -45,16 +45,9 @@
           <div class="custom-form-control">
             <mat-form-field appearance="outline">
               <input matInput [matDatepicker]="baseLineEndDate" formControlName="base_line_end_date"
-                placeholder="Enter base Line End Date" (click)="baseLineEndDate.open()" [min]="minToDate"
-                [max]="maxToDate" (dateInput)="toDateChange('input', $event)" />
+                placeholder="Enter base Line End Date" (click)="baseLineEndDate.open()" [min]="baseLineEndMinDate" />
               <mat-datepicker-toggle matSuffix [for]="baseLineEndDate"></mat-datepicker-toggle>
               <mat-datepicker #baseLineEndDate></mat-datepicker>
-              <!-- <mat-error *ngIf="baseLineEndDate.invalid && ( baseLineEndDate.dirty || baseLineEndDate.touched )">
-                  <span>Please provide a valid Base Line End Date</span>
-                </mat-error> -->
-              <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
-                <span *ngIf="startDate.hasError('required')"> Start date is required </span>
-              </mat-error> -->
             </mat-form-field>
           </div>
         </div>
@@ -64,15 +57,13 @@
 
 
         <div class="custom-form-group">
-          <label class="custom-label" for="" style="color: #233A61;font-weight: bold;"> Actual Revised Start Date <span
-              class="star">*</span>
-            <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
+          <label class="custom-label" for="" style="color: #233A61;font-weight: bold;"> Actual Revised Start Date
           </label>
           <div class="custom-form-control">
             <mat-form-field appearance="outline">
               <input matInput [matDatepicker]="actualRevisedStartDate" formControlName="actual_revised_start_date"
-                placeholder="Enter actual Revised Date" (click)="actualRevisedStartDate.open()" [min]="minToDate"
-                [max]="maxToDate" (dateInput)="toDateChange('input', $event)" />
+                placeholder="Enter actual Revised Date" (click)="actualRevisedStartDate.open()"
+                [min]="baseLineEndMinDate" (dateChange)="ActualReviseStartDateChange($event.value)" />
               <mat-datepicker-toggle matSuffix [for]="actualRevisedStartDate"></mat-datepicker-toggle>
               <mat-datepicker #actualRevisedStartDate></mat-datepicker>
             </mat-form-field>
@@ -83,24 +74,14 @@
 
       <div class="col-md-6">
         <div class="custom-form-group">
-          <label class="custom-label" for=""> UOM <span
-              class="star">*</span>
-            <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
+          <label class="custom-label" for="" style="position: relative;color: #233A61;font-weight: bold;"> UOM
+            <span class="star">*</span>
           </label>
           <div class="custom-form-control" style="position: relative;">
-  
-            <mat-form-field appearance="outline" >
+
+            <mat-form-field appearance="outline">
               <mat-select placeholder=" uom" formControlName="uom">
                 <mat-option *ngFor="let single of uomData" [value]="single">{{single}}</mat-option>
-  
-  
-                <!-- <mat-error *ngIf="uom.invalid && ( uom.dirty || uom.touched )">
-                      <span>Please provide a valid Uom</span>
-                    </mat-error> -->
-                <!-- <mat-error *ngIf="title.invalid && ( title.dirty || title.touched )">
-                    <span>Please provide a valid Profession Type</span>
-                  </mat-error> -->
-  
               </mat-select>
             </mat-form-field>
           </div>
@@ -111,13 +92,12 @@
 
       <div class="col-md-6">
         <div class="custom-form-group">
-          <label class="custom-label" for=""
-            style="position: relative;color: #233A61;font-weight: bold;"> Quantity <span
-              class="star">*</span>
+          <label class="custom-label" for="" style="position: relative;color: #233A61;font-weight: bold;"> Quantity
+            <span class="star">*</span>
             <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
           </label>
           <div class="custom-form-control" style="position: relative;">
-            <mat-form-field appearance="outline" >
+            <mat-form-field appearance="outline">
               <input matInput type="number" placeholder="Enter total" formControlName="quantity">
               <!-- <mat-error *ngIf="total.invalid && ( total.dirty || total.touched )">
                       <span>Please provide a valid Total</span>
@@ -128,52 +108,58 @@
             </mat-form-field>
           </div>
         </div>
-        
+
       </div>
 
-     
-     
+
+
     </div>
 
 
-    <div formArrayName="addRevisesDates">
-      <div class="row" *ngFor="let single of addRevisesDates.controls; let i = index" [formGroupName]="i">
+    <div class="row" formArrayName="addRevisesDates">
 
-        <div class="col-md-4">
+      <div class="col-md-4" *ngFor="let single of addRevisesDates.controls; let i = index" [formGroupName]="i">
+
+        <div>
           <div class="custom-form-group">
-            <label class="custom-label" for=""
-              style="color: #233A61;font-weight: bold;">R{{i+1}} End Date <span
+            <label class="custom-label" for="" style="color: #233A61;font-weight: bold;">R{{i+1}} End Date <span
                 class="star">*</span>
-            </label><br>
-            <div class="custom-form-control" fxLayout="row">
-              <mat-form-field appearance="outline" >
+            </label>
+
+            <a class="action-btn" (click)="minusBlocks(i)" title="Delete"><i class="fa fa-trash"></i></a>
+            <br>
+            <div class="custom-form-control" >
+              <mat-form-field appearance="outline">
                 <input matInput [matDatepicker]="startPicker" formControlName="revisedDate"
-                  placeholder="Enter Revised Date" (click)="startPicker.open()" [matDatepickerFilter]="myFilter" />
+                  (dateChange)="ActualReviseEndDateChange($event.value,i)" placeholder="Enter Revised Date"
+                  (click)="startPicker.open()" [min]="reviseMinDateArray[i]" />
                 <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                 <mat-datepicker #startPicker></mat-datepicker>
-              
+
               </mat-form-field>
 
-              <button type="button" mat-button class="global-btn save-btn" (click)="minusBlocks(i)">
+              <!-- <button type="button" mat-button class="global-btn save-btn" (click)="minusBlocks(i)">
                 <span style="margin-top: -50px;color: #233A61;"> - Remove </span>
-              </button>
+              </button> -->
+
             </div>
-          
+
           </div>
-        </div>        
-        
+        </div>
+
       </div>
     </div>
 
 
-    <div class="row" >
+    <div class="row">
       <div class="col-md-2"><button mat-button (click)="AddData()"
-        style="background-color: #233A61;color: #fff;padding: 1px 40px;font-family: 'Poppins';">submit</button></div>
+          style="background-color: #233A61;color: #fff;padding: 1px 40px;font-family: 'Poppins';">submit</button></div>
       <div class="col-md-3">
-        <button type="button" class="global-btn save-btn" (click)="plusBlocks()" *ngIf="AddreviseDateLength<3"
-        style="border: 1px solid #94A3B8;border-radius: 5px;background-color: #fff;padding: 10px 10px;color:#233A61">
-        <span style="font-family: 'Poppins';"> + Add Revised End Date</span>
-      </button>
+        <button type="button" class="global-btn save-btn" (click)="plusBlocks()"
+          *ngIf="itemForm.value.addRevisesDates.length<3"
+          style="border: 1px solid #94A3B8;border-radius: 5px;background-color: #fff;padding: 10px 10px;color:#233A61">
+          <span style="font-family: 'Poppins';"> + Add Revised End Date</span>
+        </button>
       </div>
     </div>
 

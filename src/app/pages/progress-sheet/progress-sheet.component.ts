@@ -7,40 +7,21 @@ import { DataAnalysisService } from '@services/data-analysis.service';
 import { RecentActivityService } from '@services/recent-activity.service';
 import { TaskService } from '@services/task.service';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
-import * as moment from 'moment';
-//import { FormBuilder } from '@angular/forms';
-import { FormControl, FormArray, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { AddProjectService } from '@services/add-project.service';
 import { AddRemarksComponent } from '../add-remarks/add-remarks.component';
 import { ToastService } from '@services/toast.service';
 import { InnerAddMemberComponent } from '../inner-add-member/inner-add-member.component';
-import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { PROJECT_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
-import {isEmpty} from 'lodash';
-
-
-export interface PeriodicElement {
-  Description: string;
-  R2EndDate: string;
-  R1EndDate: string;
-  WorkingdaysRevised: string;
-  BaselineStartDate: string;
-  BaselineEndDate: string;
-  baseLineWorkingDays: string;
-  UOM: string;
-  Total: string
-}
-export interface GroupBy {
-  initial: string;
-  isGroupBy: boolean;
-}
+import { isEmpty } from 'lodash';
+import { LocationPopupComponent } from '@component/project/location-popup/location-popup.component';
 
 @Component({
   selector: 'app-progress-sheet',
   templateUrl: './progress-sheet.component.html',
-  styleUrls: ['./progress-sheet.component.css'],
+  styleUrls: ['./progress-sheet.component.scss'],
 
 })
 export class ProgressSheetComponent implements OnInit {
@@ -56,7 +37,7 @@ export class ProgressSheetComponent implements OnInit {
   projectNameForm: FormGroup = this._fb.group({
     _id: [null],
   });
- 
+
   project: any;
   permissions: any
   progressPermissionsView: any;
@@ -89,51 +70,8 @@ export class ProgressSheetComponent implements OnInit {
         this.projectLocationsList = this.project.locations;
       })
 
-      // this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data => {
-      //   this.activesData = data
-      //   console.log(this.activesData)
-      //   this.activesData.forEach(obj => {
-      //     const arr = this.projectsData.filter(ele => ele['name'] === obj['taskName']);
-      //     if (arr.length === 0) {
-      //       this.projectsData.push(
-      //         { 'name': obj['taskName'] });
-      //     }
-      //   });
-
-      //   this.projectsData.forEach(obj => {
-      //     const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
-      //     obj['result'] = uniqData;
-
-      //   });
-      //   console.log(this.projectsData);
-      // })
-
 
     });
-
-    // this.recentActivityService.getRecentAtivities().subscribe(data => {
-    //   this.recentActivities = data
-    //   for (let single of this.recentActivities) {
-    //     single.time = moment(single.createdAt).fromNow()
-    //   }
-    //   this.recentActivitiesLen = this.recentActivities.length
-
-    // });
-
-    // this.projectService.getProjects().subscribe(data => {
-
-    //   this.projectsList = data;
-    // });
-
-  }
-
-
-  displayedColumns = ['Description', 'R2EndDate', 'R1EndDate', 'WorkingdaysRevised', 'BaselineStartDate',
-    'BaselineEndDate', 'UOM', 'Total'];
-  dataSource = ELEMENT_DATA;
-
-  isGroup(index, item): boolean {
-    return item.isGroupBy;
   }
 
 
@@ -153,81 +91,37 @@ export class ProgressSheetComponent implements OnInit {
       data: subTask
     });
     dialogRef.afterClosed().subscribe(status => {
-      console.log(status);
+      console.log(status.data);
 
-      this.projectLocationsList[locationIndex];
+      if (status && status.type && status.type == 1) {
+        this.projectLocationsList[locationIndex];
 
-      console.log(this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex]);
+        console.log(this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex]);
 
-      this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal = this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal ? this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal : 0;
-      this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex] = { ...this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex], ...status };
+        this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal = this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal ? this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal : 0;
+        this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex] = { ...this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex], ...status.data };
+        let requestedData: any = {
+          _id: this.project._id,
+          locations: this.projectLocationsList
+        }
 
-
-
-
-      console.log('this.projectLocationsList',this.projectLocationsList )
-
-      let requestedData:any = {
-        _id:this.project._id,
-        locations:this.projectLocationsList
+        this.httpService.PUT(PROJECT_API, requestedData).subscribe((res: any) => {
+          this.snack.notify("Data has been saved sucessfully.", 1);
+        }, (err) => {
+          if (err.errors && !isEmpty(err.errors)) {
+            let errMessage = '<ul>';
+            for (let e in err.errors) {
+              let objData = err.errors[e];
+              errMessage += `<li>${objData[0]}</li>`;
+            }
+            errMessage += '</ul>';
+            this.snack.notifyHtml(errMessage, 2);
+          } else {
+            this.snack.notify(err.message, 2);
+          }
+        })
       }
 
-      this.httpService.PUT(PROJECT_API, requestedData).subscribe((res:any) => {
-        this.snack.notify("Data has been saved sucessfully.", 1);
-      }, (err) => {
-        if (err.errors && !isEmpty(err.errors)) {
-          let errMessage = '<ul>';
-          for (let e in err.errors) {
-            let objData = err.errors[e];
-            errMessage += `<li>${objData[0]}</li>`;
-          }
-          errMessage += '</ul>';
-          this.snack.notifyHtml(errMessage, 2);
-        } else {
-          this.snack.notify(err.message, 2);
-        }
-      })
-
-
-      // let activityName = this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].activity_name;
-
-      // let activityID = this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].activity_name;
-      // let id = this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].activity_name;
-
-      // status._id=id;
-      // status.
-
-
-      // if (status === 'yes') {
-      //   this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data => {
-      //     this.activesData = data
-      //     console.log(this.activesData)
-      //     this.activesData.forEach(obj => {
-      //       //this.grandTotal += obj['discAmount'];
-      //       //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
-      //       //console.log(this.grandTotal);
-      //       const arr = this.projectsData.filter(ele => ele['name'] === obj['taskName']);
-      //       if (arr.length === 0) {
-      //         this.projectsData.push(
-      //           { 'name': obj['taskName'] });
-      //       }
-      //     });
-
-      //     this.projectsData.forEach(obj => {
-      //       const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
-      //       obj['result'] = uniqData;
-
-      //     });
-      //     console.log(this.projectsData);
-
-
-
-
-
-      //   })
-      // }
-      // if (status === 'no') {
-      // }
     })
   }
 
@@ -254,6 +148,7 @@ export class ProgressSheetComponent implements OnInit {
   onChangeProject(ev) {
     this.router.navigate(['/view-project/progress-sheet', ev.target.value]);
   }
+
 
 
   addremarks(subTask): void {
@@ -333,48 +228,98 @@ export class ProgressSheetComponent implements OnInit {
 
   addLocation() {
     this.project._id;
+    const dialogPopup = this.dialog.open(LocationPopupComponent, {
+      data: {
+        type: 'location',
+        currentRecords: this.projectLocationsList
+      }
+    });
+    dialogPopup.afterClosed().subscribe((result: any) => {
+      console.log('result', result)
+
+      if (result && result['option'] === 1) {
+        this.projectLocationsList = [...this.projectLocationsList, ...result.data.locations];
+        this.updateRecords();
+      }
+    });
+  }
+
+  deleteLocation(locationIndex) {
+
+    this.projectLocationsList = this.projectLocationsList.slice(locationIndex + 1);
+    console.log(this.projectLocationsList);
+    this.updateRecords();
 
   }
+
+  addStructure(locationIndex) {
+    const dialogPopup = this.dialog.open(LocationPopupComponent, {
+      data: {
+        type: 'structure',
+        currentRecords: this.projectLocationsList[locationIndex].structures
+      }
+    });
+
+    dialogPopup.afterClosed().subscribe((result: any) => {
+      console.log('result', result)
+
+      if (result && result['option'] === 1) {
+        this.projectLocationsList[locationIndex].structures = [...this.projectLocationsList[locationIndex].structures, ...result.data.structures];
+        this.updateRecords();
+      }
+    });
+  }
+
+
+  deleteStructure(locationIndex, structureIndex) {
+    this.projectLocationsList[locationIndex].structures = this.projectLocationsList[locationIndex].structures.slice(structureIndex + 1);
+    console.log(this.projectLocationsList);
+    this.updateRecords();
+  }
+
+  addActivity(locationIndex, structureIndex) {
+    const dialogPopup = this.dialog.open(LocationPopupComponent, {
+      data: {
+        type: 'activity',
+        currentRecords: this.projectLocationsList[locationIndex].structures[structureIndex].activities
+      }
+    });
+    dialogPopup.afterClosed().subscribe((result: any) => {
+      console.log('result', result)
+
+      if (result && result['option'] === 1) {
+        this.projectLocationsList[locationIndex].structures[structureIndex].activities = [... this.projectLocationsList[locationIndex].structures[structureIndex].activities, ...result.data.activities];
+        this.updateRecords();
+      }
+    });
+  }
+
+  deleteActivity(locationIndex, structureIndex, activityIndex) {
+    this.projectLocationsList[locationIndex].structures[structureIndex].activities = this.projectLocationsList[locationIndex].structures[structureIndex].activities.slice(activityIndex + 1);
+    console.log(this.projectLocationsList);
+    this.updateRecords();
+  }
+
+  updateRecords() {
+    let requestedData: any = {
+      _id: this.project._id,
+      locations: this.projectLocationsList
+    }
+
+    this.httpService.PUT(PROJECT_API, requestedData).subscribe((res: any) => {
+      this.snack.notify("Data has been saved sucessfully.", 1);
+    }, (err) => {
+      if (err.errors && !isEmpty(err.errors)) {
+        let errMessage = '<ul>';
+        for (let e in err.errors) {
+          let objData = err.errors[e];
+          errMessage += `<li>${objData[0]}</li>`;
+        }
+        errMessage += '</ul>';
+        this.snack.notifyHtml(errMessage, 2);
+      } else {
+        this.snack.notify(err.message, 2);
+      }
+    })
+  }
 }
-
-
-
-const ELEMENT_DATA: (PeriodicElement | GroupBy)[] = [
-
-  { initial: 'Boundarywall', isGroupBy: true },
-  {
-    Description: 'Cement', R2EndDate: 'jan 16', R1EndDate: 'feb 1', WorkingdaysRevised: 'mar1', BaselineStartDate: 'mar2',
-    BaselineEndDate: 'mar 3', baseLineWorkingDays: 'mar 3', UOM: 'sqm', Total: '100'
-  },
-  {
-    Description: 'Evacuation', R2EndDate: 'jan 16', R1EndDate: 'feb 1', WorkingdaysRevised: 'mar1', BaselineStartDate: 'mar2',
-    BaselineEndDate: 'mar 3', baseLineWorkingDays: 'mar 3', UOM: 'sqm', Total: '100'
-  },
-  {
-    Description: 'Cement', R2EndDate: 'jan 16', R1EndDate: 'feb 1', WorkingdaysRevised: 'mar1', BaselineStartDate: 'mar2',
-    BaselineEndDate: 'mar 3', baseLineWorkingDays: 'mar 3', UOM: 'sqm', Total: '100'
-  },
-  { initial: 'Warehouse', isGroupBy: true },
-  {
-    Description: 'ironrod', R2EndDate: 'jan 16', R1EndDate: 'feb 1', WorkingdaysRevised: 'mar1', BaselineStartDate: 'mar2',
-    BaselineEndDate: 'mar 3', baseLineWorkingDays: 'mar 3', UOM: 'sqm', Total: '100'
-  },
-  {
-    Description: 'ironrod', R2EndDate: 'jan 16', R1EndDate: 'feb 1', WorkingdaysRevised: 'mar1', BaselineStartDate: 'mar2',
-    BaselineEndDate: 'mar 3', baseLineWorkingDays: 'mar 3', UOM: 'sqm', Total: '100'
-  },
-  {
-    Description: 'floorbeam', R2EndDate: 'jan 16', R1EndDate: 'feb 1', WorkingdaysRevised: 'mar1', BaselineStartDate: 'mar2',
-    BaselineEndDate: 'mar 3', baseLineWorkingDays: 'mar 3', UOM: 'sqm', Total: '100'
-  },
-  { initial: 'watertank', isGroupBy: true },
-  {
-    Description: 'iron ', R2EndDate: 'jan 16', R1EndDate: 'feb 1', WorkingdaysRevised: 'mar1', BaselineStartDate: 'mar2',
-    BaselineEndDate: 'mar 3', baseLineWorkingDays: 'mar 3', UOM: 'sqm', Total: '100'
-  },
-  {
-    Description: 'iron', R2EndDate: 'jan 16', R1EndDate: 'feb 1', WorkingdaysRevised: 'mar1', BaselineStartDate: 'mar2',
-    BaselineEndDate: 'mar 3', baseLineWorkingDays: 'mar 3', UOM: 'sqm', Total: '100'
-  },
-
-];

@@ -3,8 +3,6 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dial
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { LOCATION_API, ACTIVITY_API, STRUCTURE_API } from '@env/api_path';
-import { isEmpty } from 'lodash';
-
 
 @Component({
   selector: 'app-location-popup',
@@ -24,16 +22,37 @@ export class LocationPopupComponent implements OnInit {
 
   selectedActivity = [];
   selectedActivityArray = [];
-
+  currentRecords: any;
+  idArray: any = [];
   constructor(
     private snack: SnackbarService,
     private request: RequestService,
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<LocationPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-      console.log('data', data)
     this.type = this.data.type;
-    this.parentItem = this.data.parentItem
+    this.parentItem = this.data.parentItem;
+    this.currentRecords = this.data?.currentRecords;
+
+    if (this.currentRecords) {
+      console.log(this.currentRecords);
+
+      if (this.type == 'location') {
+        console.log(this.currentRecords);
+
+        this.currentRecords.map(object => this.idArray.push(object.location_id));
+        console.log(this.idArray);
+
+      }
+      if (this.type == 'structure') {
+        this.currentRecords.map(object => this.idArray.push(object.structure_id));
+      }
+
+      if (this.type == 'activity') {
+        this.currentRecords.map(object => this.idArray.push(object.activity_id));
+
+      }
+    }
   }
 
 
@@ -81,16 +100,14 @@ export class LocationPopupComponent implements OnInit {
 
 
   onSelectLocation(event: any, itemObj: any) {
-    console.log('event', event.checked)
-    console.log('event', itemObj)
-
     if (event.checked) {
       let checkIndex = this.selectedLocations.includes(itemObj._id);
       if (!checkIndex) {
         this.selectedLocations.push(itemObj._id);
         this.selectedLocationsArray.push({
           location_name: itemObj.location_name,
-          location_id: itemObj._id
+          location_id: itemObj._id,
+          structures: []
         })
       }
     } else {
@@ -98,22 +115,18 @@ export class LocationPopupComponent implements OnInit {
       this.selectedLocations.splice(checkIndex, 1);
       this.selectedLocationsArray = this.selectedLocationsArray.filter((o: any) => o.location_id != itemObj._id);
     }
-    console.log('this.selectedLocations', this.selectedLocations)
-    console.log('this.selectedLocationsArray', this.selectedLocationsArray)
   }
 
 
   onSelectStructure(event: any, itemObj: any) {
-    console.log('event', event.checked)
-    console.log('event', itemObj)
-
     if (event.checked) {
       let checkIndex = this.selectedStructures.includes(itemObj._id);
       if (!checkIndex) {
         this.selectedStructures.push(itemObj._id);
         this.selectedStructuresArray.push({
           structure_name: itemObj.structure_name,
-          structure_id: itemObj._id
+          structure_id: itemObj._id,
+          activities: []
         })
       }
     } else {
@@ -121,14 +134,9 @@ export class LocationPopupComponent implements OnInit {
       this.selectedStructures.splice(checkIndex, 1);
       this.selectedStructuresArray = this.selectedStructuresArray.filter((o: any) => o.Structure_id != itemObj._id);
     }
-    console.log('this.selectedStructures', this.selectedStructures)
-    console.log('this.selectedStructuresArray', this.selectedStructuresArray)
   }
 
   onSelectActivity(event: any, itemObj: any) {
-    console.log('event', event.checked)
-    console.log('event', itemObj)
-
     if (event.checked) {
       let checkIndex = this.selectedActivity.includes(itemObj._id);
       if (!checkIndex) {
