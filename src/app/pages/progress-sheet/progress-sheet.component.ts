@@ -17,6 +17,7 @@ import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
 import { LocationPopupComponent } from '@component/project/location-popup/location-popup.component';
+import { ConfirmationPopupComponent } from '@component/project/confirmation-popup/confirmation-popup.component';
 
 @Component({
   selector: 'app-progress-sheet',
@@ -151,7 +152,7 @@ export class ProgressSheetComponent implements OnInit {
 
 
 
-  addremarks(subTask): void {
+  addremarks(activity): void {
     if (!this.remarksPermissions?.isSelected) {
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
@@ -162,69 +163,12 @@ export class ProgressSheetComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(AddRemarksComponent, {
       width: '500px',
-      data: { reDate: subTask.remarks, id: subTask._id }
+      data: { id: activity._id }
     });
 
   }
 
 
-
-  delete(subTask) {
-    this.progressSheetService.deleteSubTask(subTask._id).subscribe(
-
-      {
-        next: (data: any) => {
-          console.log(data)
-          this.toast.openSnackBar("sub activity deleted Successfully");
-
-          this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data => {
-            this.activesData = data
-            console.log(this.activesData)
-            this.activesData.forEach(obj => {
-              const arr = this.projectsData.filter(ele => ele['name'] === obj['taskName']);
-              if (arr.length === 0) {
-                this.projectsData.push(
-                  { 'name': obj['taskName'] });
-              }
-            });
-
-            this.projectsData.forEach(obj => {
-              const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
-              obj['result'] = uniqData;
-
-            });
-          })
-
-        },
-        error: (err) => {
-          this.toast.openSnackBar("Something went wrong. Unable to delete SubActivity");
-
-
-
-
-        }
-      }
-
-    )
-  }
-
-  deleteTask(task) {
-    this.progressSheetService.deleteTaskName(task.name).subscribe(
-
-      {
-        next: (data: any) => {
-          console.log(data)
-          this.toast.openSnackBar("activity deleted Successfully");
-          window.location.reload();
-
-        },
-        error: (err) => {
-          this.toast.openSnackBar("Something went wrong. Unable to delete Activity");
-        }
-      }
-
-    )
-  }
 
   addLocation() {
     this.project._id;
@@ -235,7 +179,6 @@ export class ProgressSheetComponent implements OnInit {
       }
     });
     dialogPopup.afterClosed().subscribe((result: any) => {
-      console.log('result', result)
 
       if (result && result['option'] === 1) {
         this.projectLocationsList = [...this.projectLocationsList, ...result.data.locations];
@@ -245,10 +188,17 @@ export class ProgressSheetComponent implements OnInit {
   }
 
   deleteLocation(locationIndex) {
+    const dialogPopup = this.dialog.open(ConfirmationPopupComponent, {
+    });
+    dialogPopup.afterClosed().subscribe((result: any) => {
 
-    this.projectLocationsList = this.projectLocationsList.slice(locationIndex + 1);
-    console.log(this.projectLocationsList);
-    this.updateRecords();
+      if (result && result['option'] === 1) {
+        this.projectLocationsList.splice(locationIndex, 1);
+        console.log(this.projectLocationsList);
+        this.updateRecords();
+      }
+    });
+
 
   }
 
@@ -261,7 +211,6 @@ export class ProgressSheetComponent implements OnInit {
     });
 
     dialogPopup.afterClosed().subscribe((result: any) => {
-      console.log('result', result)
 
       if (result && result['option'] === 1) {
         this.projectLocationsList[locationIndex].structures = [...this.projectLocationsList[locationIndex].structures, ...result.data.structures];
@@ -272,9 +221,17 @@ export class ProgressSheetComponent implements OnInit {
 
 
   deleteStructure(locationIndex, structureIndex) {
-    this.projectLocationsList[locationIndex].structures = this.projectLocationsList[locationIndex].structures.slice(structureIndex + 1);
-    console.log(this.projectLocationsList);
-    this.updateRecords();
+    const dialogPopup = this.dialog.open(ConfirmationPopupComponent, {
+    });
+    dialogPopup.afterClosed().subscribe((result: any) => {
+
+      if (result && result['option'] === 1) {
+        this.projectLocationsList[locationIndex].structures.splice(structureIndex, 1);
+        console.log(this.projectLocationsList);
+        this.updateRecords();
+      }
+    });
+
   }
 
   addActivity(locationIndex, structureIndex) {
@@ -285,7 +242,6 @@ export class ProgressSheetComponent implements OnInit {
       }
     });
     dialogPopup.afterClosed().subscribe((result: any) => {
-      console.log('result', result)
 
       if (result && result['option'] === 1) {
         this.projectLocationsList[locationIndex].structures[structureIndex].activities = [... this.projectLocationsList[locationIndex].structures[structureIndex].activities, ...result.data.activities];
@@ -295,9 +251,17 @@ export class ProgressSheetComponent implements OnInit {
   }
 
   deleteActivity(locationIndex, structureIndex, activityIndex) {
-    this.projectLocationsList[locationIndex].structures[structureIndex].activities = this.projectLocationsList[locationIndex].structures[structureIndex].activities.slice(activityIndex + 1);
-    console.log(this.projectLocationsList);
-    this.updateRecords();
+    const dialogPopup = this.dialog.open(ConfirmationPopupComponent, {
+    });
+    dialogPopup.afterClosed().subscribe((result: any) => {
+
+      if (result && result['option'] === 1) {
+        this.projectLocationsList[locationIndex].structures[structureIndex].activities.splice(activityIndex, 1);
+        console.log(this.projectLocationsList);
+        this.updateRecords();
+      }
+    });
+
   }
 
   updateRecords() {

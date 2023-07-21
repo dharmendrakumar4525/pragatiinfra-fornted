@@ -1,8 +1,11 @@
+import { isEmpty } from 'lodash';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TaskService } from '@services/task.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl, NgForm } from '@angular/forms';
-import { ToastService } from '@services/toast.service';
+import { RequestService } from '@services/https/request.service';
+import { PROJECT_ACTIVITY_DATA_API, PROJECT_ACTIVITY_REMARK_DATA_API } from '@env/api_path';
+import { SnackbarService } from '@services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-modify-remarks',
@@ -12,10 +15,10 @@ import { ToastService } from '@services/toast.service';
 export class ModifyRemarksComponent implements OnInit {
 
   remarkForm: FormGroup = this._fb.group({
-    
+
     remark: [null, [Validators.required]],
     date: [null],
-    
+
 
 
   });
@@ -23,67 +26,46 @@ export class ModifyRemarksComponent implements OnInit {
     private dialogRef: MatDialogRef<ModifyRemarksComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private taskService: TaskService,
+
+    private snack: SnackbarService,
+    private httpService: RequestService,
     private _fb: FormBuilder,
-    private toast: ToastService
-   // private toast: ToastService
+    // private toast: ToastService
   ) { }
 
   ngOnInit(): void {
     this.remarkForm.patchValue({
-      remark:this.data.selectedData.remark,
-      date:this.data.selectedData.date,
-      
+      remark: this.data.selectedData.remark,
+      date: this.data.selectedData.date,
+
     })
   }
 
   closeDialog(status: string) {
-    this.dialogRef.close(status)
-    // this.dialogRef.close(status);
-    // document.getElementsByClassName("animate__animated")[0].classList.remove("animate__fadeInDown")
-    // document.getElementsByClassName("animate__animated")[0].classList.add("animate__fadeOutUp"); 
-    //setTimeout(() => { this.dialogRef.close(status); }, 1000);
+    this.dialogRef.close({ data: {}, type: 2 })
+
   }
 
-  addTask(){
-    if (this.remarkForm.invalid) {
-      // this.toast.openSnackBar(
-      //   'Enter Valid Details'
-      // );
-      //this.clearForm = true;
-      //this.clearForm = true;
-      this.remarkForm.markAllAsTouched();  
-      return;
-    }
-    console.log(this.remarkForm.value)
-    this.data.allData.splice(this.data.index,1,this.remarkForm.value)
-    console.log(this.data.allData)
-    this.taskService.modityRemarks(this.data.allData,this.data.id).subscribe(
+  addTask() {
+    this.httpService.PUT(PROJECT_ACTIVITY_DATA_API, { _id: this.data.selectedData._id, remark: this.remarkForm.value.remark }).subscribe({
+      next: (res: any) => {
+        console.log("res", res);
 
-      {
-        next: (data: any) =>  {
-          console.log(data)
-          this.toast.openSnackBar("Remark Updated Successfully");
-      this.closeDialog('yes');
-          // this.spinner.hide()
-          // this.router.navigate(['/usersList']);
-          // this.toast.openSnackBar('User Added Successfully');
-          
-        },
-        error: (err) => {
-          //console.log(err)
-          //this.toast.openSnackBar("this Remark is already exits");
-          // this.spinner.hide()
-           this.toast.openSnackBar('Something went wrong, please try again later');
-          // console.log(err) 
-  
-          // this.errorData = err
-  
-          
-  
+        this.dialogRef.close({ data: res.data, type: 1 });
+      }, error: (err) => {
+        if (err.errors && !isEmpty(err.errors)) {
+          let errMessage = '<ul>';
+          for (let e in err.errors) {
+            let objData = err.errors[e];
+            errMessage += `<li>${objData[0]}</li>`;
+          }
+          errMessage += '</ul>';
+          this.snack.notifyHtml(errMessage, 2);
+        } else {
+          this.snack.notify(err.message, 2);
         }
       }
-  
-    )
+    })
   }
 
   get remark(): AbstractControl {

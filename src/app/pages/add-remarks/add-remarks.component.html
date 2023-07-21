@@ -1,32 +1,38 @@
+<div mat-dialog-title class="mat-dialog-title">
 
-<div class="card" style="text-align: center;">
-	<mat-card-title>
-		Remarks
-	</mat-card-title>
-    <br/>
-	<br/>
+  <div class="row full-width">
+    <div class="col-md-9">
 
-	<mat-card-content>
+      Remarks
+
+    </div>
+    <div class="col-md-3">
+      <mat-icon class="float-end close-icon" (click)="onNoClick()">close</mat-icon>
+    </div>
+  </div>
+</div>
+<div mat-dialog-content class="mat-dialog-content-cstm">
 
 
-		<table>
-			<tr>
-			  <th>Date</th>
-			  <th>Remark</th>
-			  <th>Actions</th>
 
-			  
-			</tr>
-			<tr *ngFor="let remark of data.reDate; let i=index">
-				<td>{{remark?.date | date}}</td>
-				<td>{{remark?.remark}}</td>
-				<button style="margin-top: 10px;border-radius: 2px;border:1px solid #94A3B8;background: transparent;background-color: #233A61; color: #fff;" (click)="modifyRemarks(remark,i)" >modify</button>
-			</tr>
-		
-			
-		  </table>
-       
+  <table style="width: 100%;">
+    <tr>
+      <th>Date</th>
+      <th>Remark</th>
+      <th>Actions</th>
 
-		
-	</mat-card-content>
+
+    </tr>
+    <tr *ngFor="let remark of remarksArray; let i=index">
+      <td>{{remark?.date | date}}</td>
+      <td>{{remark?.remark}}</td>
+      <td>
+        <mat-icon (click)="modifyRemarks(remark,i)">edit</mat-icon>
+      </td>
+      <!-- <button style="margin-top: 10px;border-radius: 2px;border:1px solid #94A3B8;background: transparent;background-color: #233A61; color: #fff;" (click)="modifyRemarks(remark,i)" >modify</button> -->
+    </tr>
+
+
+  </table>
+
 </div>
