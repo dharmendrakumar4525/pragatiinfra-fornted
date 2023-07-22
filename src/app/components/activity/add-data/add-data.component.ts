@@ -5,7 +5,7 @@ import { Router, } from '@angular/router';
 import { ACTIVITY_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
-
+import { isEmpty } from 'lodash';
 @Component({
   selector: 'app-add-data',
   templateUrl: './add-data.component.html',
@@ -28,6 +28,19 @@ export class AddDataComponent implements OnInit {
         if (res) {
           this.patchValue(res.data);
         }
+      }, (err) => {
+        if (err.errors && !isEmpty(err.errors)) {
+          let errMessage = '<ul>';
+          for (let e in err.errors) {
+            let objData = err.errors[e];
+            errMessage += `<li>${objData[0]}</li>`;
+          }
+          errMessage += '</ul>';
+          this.snack.notifyHtml(errMessage, 2);
+        } else {
+          this.snack.notify(err.message, 2);
+        }
+
       })
     }
 
@@ -46,6 +59,19 @@ export class AddDataComponent implements OnInit {
       this.httpService.POST(ACTIVITY_API, { activity_name: this.addForm.value.activity_name }).subscribe(res => {
         this.snack.notify(" Data has been saved sucessfully.", 1);
         this.dialogRef.close({ option: 1, data: this.data });
+
+      }, (err) => {
+        if (err.errors && !isEmpty(err.errors)) {
+          let errMessage = '<ul>';
+          for (let e in err.errors) {
+            let objData = err.errors[e];
+            errMessage += `<li>${objData[0]}</li>`;
+          }
+          errMessage += '</ul>';
+          this.snack.notifyHtml(errMessage, 2);
+        } else {
+          this.snack.notify(err.message, 2);
+        }
 
       })
     }

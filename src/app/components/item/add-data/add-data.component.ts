@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CATEGORY_API, GST_API, ITEM_API, PURCHASE_REQUEST_API, SUB_CATEGORY_API, UOM_API } from '@env/api_path';
+import { CATEGORY_API, GST_API, ITEM_API, SUB_CATEGORY_API, UOM_API } from '@env/api_path';
 import { environment } from '@env/environment';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
-
+import { isEmpty } from 'lodash';
 @Component({
   selector: 'app-add-data',
   templateUrl: './add-data.component.html',
@@ -46,9 +46,21 @@ export class AddDataComponent implements OnInit {
       this.uomList = res[0].data;
       this.subCategoryList = res[1].data;
       this.allSubCategoryList = res[1].data;
-
       this.categoryList = res[2].data;
       this.gstList = res[3].data;
+    }, (err) => {
+      if (err.errors && !isEmpty(err.errors)) {
+        let errMessage = '<ul>';
+        for (let e in err.errors) {
+          let objData = err.errors[e];
+          errMessage += `<li>${objData[0]}</li>`;
+        }
+        errMessage += '</ul>';
+        this.snack.notifyHtml(errMessage, 2);
+      } else {
+        this.snack.notify(err.message, 2);
+      }
+
     })
 
 
@@ -59,6 +71,19 @@ export class AddDataComponent implements OnInit {
       this.httpService.POST(ITEM_API, this.addForm.value).subscribe(res => {
         this.snack.notify("Data has been saved sucessfully.", 1);
         this.router.navigate(['item']);
+      }, (err) => {
+        if (err.errors && !isEmpty(err.errors)) {
+          let errMessage = '<ul>';
+          for (let e in err.errors) {
+            let objData = err.errors[e];
+            errMessage += `<li>${objData[0]}</li>`;
+          }
+          errMessage += '</ul>';
+          this.snack.notifyHtml(errMessage, 2);
+        } else {
+          this.snack.notify(err.message, 2);
+        }
+
       })
     }
     else {

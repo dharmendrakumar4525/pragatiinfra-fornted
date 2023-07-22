@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ORG_REQUEST_API, PURCHASE_REQUEST_API } from '@env/api_path';
+import { ORG_REQUEST_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
-import * as moment from 'moment';
 
+import { isEmpty } from 'lodash';
 @Component({
   selector: 'app-add-data',
   templateUrl: './add-data.component.html',
@@ -45,9 +45,22 @@ export class AddDataComponent implements OnInit {
       this.httpService.POST(ORG_REQUEST_API, this.orgmasterForm.value).subscribe(res => {
         this.snack.notify("Organisation data has been saved sucessfully.", 1);
         this.router.navigate(['organisation']);
+      }, (err) => {
+        if (err.errors && !isEmpty(err.errors)) {
+          let errMessage = '<ul>';
+          for (let e in err.errors) {
+            let objData = err.errors[e];
+            errMessage += `<li>${objData[0]}</li>`;
+          }
+          errMessage += '</ul>';
+          this.snack.notifyHtml(errMessage, 2);
+        } else {
+          this.snack.notify(err.message, 2);
+        }
+
       })
     }
-    else{
+    else {
       this.orgmasterForm.markAllAsTouched();
     }
 

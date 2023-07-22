@@ -6,7 +6,7 @@ import { ExcelService } from '@services/export-excel/excel.service';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { AddDataComponent } from '../add-data/add-data.component';
-
+import { isEmpty } from 'lodash';
 @Component({
   selector: 'app-listing',
   templateUrl: './listing.component.html',
@@ -31,6 +31,19 @@ export class ListingComponent implements OnInit {
         this.activityList = res.data;
         this.list = res.data;
       }
+    }, (err) => {
+      if (err.errors && !isEmpty(err.errors)) {
+        let errMessage = '<ul>';
+        for (let e in err.errors) {
+          let objData = err.errors[e];
+          errMessage += `<li>${objData[0]}</li>`;
+        }
+        errMessage += '</ul>';
+        this.snack.notifyHtml(errMessage, 2);
+      } else {
+        this.snack.notify(err.message, 2);
+      }
+
     })
   }
 
@@ -65,6 +78,19 @@ export class ListingComponent implements OnInit {
         this.snack.notify(" record has been deleted sucessfully.", 1);
         this.getList();
       }
+    }, (err) => {
+      if (err.errors && !isEmpty(err.errors)) {
+        let errMessage = '<ul>';
+        for (let e in err.errors) {
+          let objData = err.errors[e];
+          errMessage += `<li>${objData[0]}</li>`;
+        }
+        errMessage += '</ul>';
+        this.snack.notifyHtml(errMessage, 2);
+      } else {
+        this.snack.notify(err.message, 2);
+      }
+
     })
   }
 

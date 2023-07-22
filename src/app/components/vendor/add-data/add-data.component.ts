@@ -5,7 +5,7 @@ import { CATEGORY_API, VENDOR_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 
-
+import { isEmpty } from 'lodash';
 @Component({
   selector: 'app-add-data',
   templateUrl: './add-data.component.html',
@@ -43,6 +43,19 @@ export class AddDataComponent implements OnInit {
     private snack: SnackbarService,) {
     this.httpService.GET(CATEGORY_API, {}).subscribe(res => {
       this.categoryList = res.data;
+    }, (err) => {
+      if (err.errors && !isEmpty(err.errors)) {
+        let errMessage = '<ul>';
+        for (let e in err.errors) {
+          let objData = err.errors[e];
+          errMessage += `<li>${objData[0]}</li>`;
+        }
+        errMessage += '</ul>';
+        this.snack.notifyHtml(errMessage, 2);
+      } else {
+        this.snack.notify(err.message, 2);
+      }
+
     })
   }
 
@@ -51,6 +64,19 @@ export class AddDataComponent implements OnInit {
       this.httpService.POST(VENDOR_API, this.addForm.value).subscribe(res => {
         this.snack.notify(" Data has been saved sucessfully.", 1);
         this.router.navigate(['vendor']);
+      }, (err) => {
+        if (err.errors && !isEmpty(err.errors)) {
+          let errMessage = '<ul>';
+          for (let e in err.errors) {
+            let objData = err.errors[e];
+            errMessage += `<li>${objData[0]}</li>`;
+          }
+          errMessage += '</ul>';
+          this.snack.notifyHtml(errMessage, 2);
+        } else {
+          this.snack.notify(err.message, 2);
+        }
+
       })
     }
     else {
