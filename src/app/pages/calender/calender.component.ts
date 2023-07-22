@@ -89,7 +89,7 @@ export class CalenderComponent implements OnInit {
 
   constructor(
     private httpService: RequestService,
-    private snack: SnackbarService, private activeRoute: ActivatedRoute, private router: Router, private _fb: FormBuilder, private dataAnalysis: DataAnalysisService, private projectService: AddProjectService, private recentActivityService: RecentActivityService, private _dialog: MatDialog, private progressSheetService: ProgressSheetService, private toast: ToastService, private calenderService: CalenderService) { }
+    private snack: SnackbarService, private activeRoute: ActivatedRoute, private router: Router, private _fb: FormBuilder, private dataAnalysis: DataAnalysisService, private projectService: AddProjectService, private recentActivityService: RecentActivityService, private _dialog: MatDialog,  private calenderService: CalenderService) { }
 
 
 
@@ -122,158 +122,6 @@ export class CalenderComponent implements OnInit {
       return highlightDate ? 'special-date' : '';
     };
   }
-
-  onBid(e, player, value, id) {
-
-    console.log(player)
-
-    if (player.total <= 0) {
-      this.toast.openSnackBar('Please add total in progress sheet');
-      return;
-    }
-
-    if ((player.dailyCumulativeTotal + Number(value)) > player.total) {
-      if (player.dateStr == this.dateForTotal) {
-
-        if (((player.dailyCumulativeTotal - Number(player.previousValue)) + Number(value)) > player.total) {
-          this.toast.openSnackBar('Value should not be greater then total');
-          return;
-        }
-
-      } else {
-        this.toast.openSnackBar('Value should not be greater then total');
-        return;
-      }
-
-    }
-
-    if (!this.calenderPermissions?.isSelected) {
-      const dialogRef = this._dialog.open(NoPermissionsComponent, {
-        width: '30%',
-        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-        data: "you don't have permissions to add data throught calender"
-      });
-      return;
-    }
-
-    let selDateForTotal = moment(this.valueAddedDate).format('D MMM, YYYY')
-    this.dateForTotal = selDateForTotal
-    //for(let one of player.remarks){
-
-    let tDate = moment(player.totalDate).format('D MMM, YYYY')
-    //}
-
-    console.log(player.remarks)
-    //console.log(selDate)
-
-    player.cumTotal = value; //<-----this will add new property to your existing object with input value.
-    console.log(player);
-    player.addedDate = this.valueAddedDate
-    player.dateStr = selDateForTotal
-    player.projectId = this.projectId
-    console.log(id);
-
-    if (selDateForTotal == tDate) {
-      this.calenderService.cumutaleTotalUpdate(player, id).subscribe(
-
-        {
-          next: (data: any) => {
-            console.log(data)
-
-            this.toast.openSnackBar('Data updated successfully');
-            this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data => {
-              this.activesData = data
-              console.log(this.activesData)
-              this.activesData.forEach(obj => {
-                //this.grandTotal += obj['discAmount'];
-                //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
-                //console.log(this.grandTotal);
-                const arr = this.projectsData.filter(ele => ele['name'] === obj['taskName']);
-                if (arr.length === 0) {
-                  this.projectsData.push(
-                    { 'name': obj['taskName'] });
-                }
-              });
-
-              this.projectsData.forEach(obj => {
-                const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
-                obj['result'] = uniqData;
-
-              });
-              console.log(this.projectsData);
-
-
-
-            })
-            //player.value=null
-            //this.router.navigate(['/users']);
-
-
-          },
-          error: (err) => {
-            this.toast.openSnackBar("Something went wrong. Unable to Update");
-
-
-
-
-          }
-        }
-
-      )
-      //this.toast.openSnackBar('You already added total on this date ');
-      //return;
-    } else {
-      this.calenderService.cumutaleTotalData(player, id).subscribe(
-
-        {
-          next: (data: any) => {
-            console.log(data)
-
-            this.toast.openSnackBar('Data updated successfully');
-            this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data => {
-              this.activesData = data
-
-              this.activesData.forEach(obj => {
-                //this.grandTotal += obj['discAmount'];
-                //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
-                //console.log(this.grandTotal);
-                const arr = this.projectsData.filter(ele => ele['name'] === obj['taskName']);
-                if (arr.length === 0) {
-                  this.projectsData.push(
-                    { 'name': obj['taskName'] });
-                }
-              });
-
-              this.projectsData.forEach(obj => {
-                const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
-                obj['result'] = uniqData;
-
-              });
-              console.log(this.projectsData);
-
-
-
-            })
-            //player.value=null
-            //this.router.navigate(['/users']);
-
-
-          },
-          error: (err) => {
-            this.toast.openSnackBar("Something went wrong. Unable to Update");
-
-
-
-
-          }
-        }
-
-      )
-    }
-
-
-
-  }
   addAboutUs() {
     const dialogRef = this._dialog.open(AboutUsComponent, {
       width: '30%',
@@ -285,22 +133,10 @@ export class CalenderComponent implements OnInit {
       if (status === 'yes') {
 
         this.projectService.getAboutUs().subscribe(data => {
-          //this.spinner.hide()
           this.about = data
-          this.aboutUs = this.about[0]
-
-          //this.aboutUsLen = this.aboutUs.length
-          // if(this.aboutUsLen){
-          //   this.aboutUsForm.patchValue(this.aboutUs[0])
-          // }
-          // console.log(this.aboutUsLen)
+          this.aboutUs = this.about[0]         
         });
-        // this.taskService.getTasks().subscribe(data=>{
-        //   //this.spinner.hide()
-        //   this.tasks = data
-        //   console.log(this.tasks)
-        // })
-        // this.filterSubject.next(this.filterForm.value);
+       
       }
       if (status === 'no') {
       }
@@ -328,18 +164,8 @@ export class CalenderComponent implements OnInit {
         this.dataAnalysis.getProjectById(this.projectId).subscribe(data => {
           this.project = data
           this.members = this.project.members
-          console.log(this.project)
         })
-        // this.projectService.getProjects().subscribe(data=>{
-        //   //this.spinner.hide()
-        //   this.projects = data
-        //   console.log(this.projects)
-        //   for(let single of this.projects){
-        //     this.members.push(...single.members)
-        //   }
-        //   console.log(this.members)
-        // })
-        // this.filterSubject.next(this.filterForm.value);
+       
       }
       if (status === 'no') {
       }
@@ -349,64 +175,7 @@ export class CalenderComponent implements OnInit {
   onChangeProject(ev) {
     this.router.navigate(['/view-project/calender', ev.target.value]);
   }
-  remarksData(e, player, remark, id) {
-
-    if (!this.remarksPermissions?.isSelected) {
-      const dialogRef = this._dialog.open(NoPermissionsComponent, {
-        width: '30%',
-        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-        data: "you don't have permissions to add remarks calender"
-      });
-      return;
-    }
-    var selDate = moment(this.valueAddedDate).format('D MMM, YYYY')
-    for (let one of player.remarks) {
-
-      one.dateFormat = moment(one.date).format('D MMM, YYYY')
-    }
-
-    console.log(player.remarks)
-    console.log(selDate)
-
-    let matchedData = player.remarks.filter(ele => {
-      return ele.dateFormat == selDate
-    })
-
-    if (!matchedData.length) {
-      let remarkObj = { remark: remark, date: this.valueAddedDate }
-      player.remarks.push(remarkObj);
-    } else {
-      this.toast.openSnackBar('You already added remarks on this date ');
-      return;
-    }
-
-    //<-----this will add new property to your existing object with input value.
-    console.log(player);
-    player.addedDate = this.valueAddedDate
-    player.projectId = this.projectId
-    console.log(id);
-    this.calenderService.addRemarks(player, id).subscribe(
-
-      {
-        next: (data: any) => {
-          console.log(data)
-
-          this.toast.openSnackBar('Remark updated successfully');
-          //.value=null
-          // this.remarkValue = ''
-          //this.router.navigate(['/users']);
-
-
-        },
-        error: (err) => {
-          this.toast.openSnackBar("Something went wrong. Unable to Update");
-
-        }
-      }
-
-    )
-  }
-
+ 
   onSelectDate(event) {
     console.log(event);
     this.valueAddedDate = event
@@ -548,13 +317,15 @@ export class CalenderComponent implements OnInit {
         this.snack.notify('It cannot be greater than total quantity.',2);
         return;
       }
-      requestedData['daily_quantity'] = quantity;
+      requestedData['daily_quantity'] = Number(quantity);
     }
 
     if (remark) {
       requestedData['remark'] = remark;
     }
     this.httpService.POST(PROJECT_ACTIVITY_DATA_API, requestedData).subscribe((res: any) => {
+
+      this.getProjectsDetail();
 
       if (quantity) {
         this.snack.notify("Quantity has been updated.",1);
@@ -565,7 +336,7 @@ export class CalenderComponent implements OnInit {
       }
 
       this.dataByActivityId[activity_ref_id] = {
-        daily_quantity: quantity,
+        daily_quantity: Number(quantity),
         remark: remark
       }
 
@@ -576,7 +347,7 @@ export class CalenderComponent implements OnInit {
       if(res && res.data && res.data.type && res.data.type == 'update'){
         this.getAllActivityData = this.getAllActivityData.map((o:any)=>{
           if(o._id == res.data.data._id){
-            o.daily_quantity = res.data.data.daily_quantity;
+            o.daily_quantity = Number(res.data.data.daily_quantity);
             o.remark = res.data.data.remark;
           }
           return o;
@@ -599,6 +370,32 @@ export class CalenderComponent implements OnInit {
     })
   }
 
+  getProjectsDetail(){
+
+    this.calenderService.getProjectById(this.projectId).subscribe(data => {
+      this.project = data;
+
+      this.projectNameForm.patchValue({
+        _id: this.project._id
+      })
+      this.members = this.project.members
+
+      this.projectLocationsList = this.project.locations;
+
+      this.projectLocationsList.map((o: any) => {
+        if (o.structures && o.structures.length > 0) {
+          o.structures.map((o1: any) => {
+            if (o1.activities && o1.activities.length > 0) {
+              o1.activities.map((o2: any) => {
+                this.projectActivityAssociatedArray[o2._id] = o2;
+              })
+            }
+          })
+        }
+      });
+    })
+  }
+
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
@@ -613,36 +410,8 @@ export class CalenderComponent implements OnInit {
     this.activeRoute.params.subscribe((params: any) => {
 
       this.projectId = params.id;
+      this.getProjectsDetail();
       this.getActivityData();
-
-      this.calenderService.getProjectById(this.projectId).subscribe(data => {
-        this.project = data;
-
-        this.projectNameForm.patchValue({
-          _id: this.project._id
-        })
-        this.members = this.project.members
-
-        this.projectLocationsList = this.project.locations;
-
-        this.projectLocationsList.map((o: any) => {
-          if (o.structures && o.structures.length > 0) {
-            o.structures.map((o1: any) => {
-              if (o1.activities && o1.activities.length > 0) {
-                o1.activities.map((o2: any) => {
-                  this.projectActivityAssociatedArray[o2._id] = o2;
-                })
-              }
-            })
-          }
-        })
-
-
-
-        console.log('this.projectActivityAssociatedArray',this.projectActivityAssociatedArray )
-
-
-      })
     });
 
     this.recentActivityService.getRecentAtivities().subscribe(data => {

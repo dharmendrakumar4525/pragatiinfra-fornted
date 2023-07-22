@@ -179,6 +179,7 @@
                   
                 <td  [ngClass]="{'disabled-field':!activityEnabled[subTask._id]}">
                   <form role="form" (submit)="saveActivityData(subTask.activity_id,subTask._id,structureItem.structure_id,structureItem._id,locationItem.location_id,locationItem._id,quantityId.value,'',subTask)">
+                 
                     <input type="number"
                       class="calenderForm"
                       [value]="(dataByActivityId && dataByActivityId[subTask._id] && dataByActivityId[subTask._id]['daily_quantity'])?dataByActivityId[subTask._id]['daily_quantity']:0"
