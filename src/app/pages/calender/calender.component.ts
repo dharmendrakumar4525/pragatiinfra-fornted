@@ -20,7 +20,7 @@ import { MatCalendar, MatCalendarCellClassFunction } from '@angular/material/dat
 import { PROJECT_ACTIVITY_DATA_API, PROJECT_ACTIVITY_DATA_DETAIL_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
-import {isEmpty} from 'lodash';
+import { isEmpty } from 'lodash';
 
 
 
@@ -78,16 +78,18 @@ export class CalenderComponent implements OnInit {
   memberAddPermissions: any;
   remarksPermissions: any;
   projectLocationsList: Array<any> = [];
+  projectActivityAssociatedArray: Array<any> = [];
+  activityEnabled: Array<any> = [];
 
 
 
   getAllActivityData: Array<any> = [];
 
-  dataByActivityId:Array<any> = [];
+  dataByActivityId: Array<any> = [];
 
   constructor(
     private httpService: RequestService,
-    private snack: SnackbarService,private activeRoute: ActivatedRoute, private router: Router, private _fb: FormBuilder, private dataAnalysis: DataAnalysisService, private projectService: AddProjectService, private recentActivityService: RecentActivityService, private _dialog: MatDialog, private progressSheetService: ProgressSheetService, private toast: ToastService, private calenderService: CalenderService) { }
+    private snack: SnackbarService, private activeRoute: ActivatedRoute, private router: Router, private _fb: FormBuilder, private dataAnalysis: DataAnalysisService, private projectService: AddProjectService, private recentActivityService: RecentActivityService, private _dialog: MatDialog, private progressSheetService: ProgressSheetService, private toast: ToastService, private calenderService: CalenderService) { }
 
 
 
@@ -421,104 +423,164 @@ export class CalenderComponent implements OnInit {
 
 
 
-  
-saveActivityData(activityId:any,activity_ref_id:any,structure_id:any,structure_ref_id:any,location_id:any,location_ref_id:any,quantity:any,remark:any){
 
-   let requestedData:any = {
-    project_id:this.projectId,
-    activity_id:activityId,
-    activity_ref_id:activity_ref_id,
-    structure_id:structure_id,
-    structure_ref_id:structure_ref_id,
-    location_id:location_id,
-    location_ref_id:location_ref_id,
-    date:moment(this.valueAddedDate).format('YYYY-MM-DD')   
-  }
+  saveActivityData(activityId: any, activity_ref_id: any, structure_id: any, structure_ref_id: any, location_id: any, location_ref_id: any, quantity: any, remark: any) {
 
-  if(quantity) {
-    requestedData['daily_quantity'] = quantity;
-  }
-
-  if(remark) {
-    requestedData['remark'] = remark;
-  }
- 
-
-  console.log('requestedData', requestedData)
-
-  this.httpService.POST(PROJECT_ACTIVITY_DATA_API, requestedData).subscribe((res:any) => {
-
-
-  }, (err) => {
-    if (err.errors && !isEmpty(err.errors)) {
-      let errMessage = '<ul>';
-      for (let e in err.errors) {
-        let objData = err.errors[e];
-        errMessage += `<li>${objData[0]}</li>`;
-      }
-      errMessage += '</ul>';
-      this.snack.notifyHtml(errMessage, 2);
-    } else {
-      this.snack.notify(err.message, 2);
+    let requestedData: any = {
+      project_id: this.projectId,
+      activity_id: activityId,
+      activity_ref_id: activity_ref_id,
+      structure_id: structure_id,
+      structure_ref_id: structure_ref_id,
+      location_id: location_id,
+      location_ref_id: location_ref_id,
+      date: moment(this.valueAddedDate).format('YYYY-MM-DD')
     }
-  })
-}
 
-
-
-
-
-getActivityData(){
-  let requestedData:any = {
-    project_id:this.projectId
-  }
-  this.httpService.GET(PROJECT_ACTIVITY_DATA_API, requestedData).subscribe((res:any) => {
-
-    this.getAllActivityData = res.data;
-
-  }, (err) => {
-    if (err.errors && !isEmpty(err.errors)) {
-      let errMessage = '<ul>';
-      for (let e in err.errors) {
-        let objData = err.errors[e];
-        errMessage += `<li>${objData[0]}</li>`;
-      }
-      errMessage += '</ul>';
-      this.snack.notifyHtml(errMessage, 2);
-    } else {
-      this.snack.notify(err.message, 2);
+    if (quantity) {
+      requestedData['daily_quantity'] = quantity;
     }
-  })
-}
+
+    if (remark) {
+      requestedData['remark'] = remark;
+    }
+
+
+    console.log('requestedData', requestedData)
+
+    this.httpService.POST(PROJECT_ACTIVITY_DATA_API, requestedData).subscribe((res: any) => {
+
+
+    }, (err) => {
+      if (err.errors && !isEmpty(err.errors)) {
+        let errMessage = '<ul>';
+        for (let e in err.errors) {
+          let objData = err.errors[e];
+          errMessage += `<li>${objData[0]}</li>`;
+        }
+        errMessage += '</ul>';
+        this.snack.notifyHtml(errMessage, 2);
+      } else {
+        this.snack.notify(err.message, 2);
+      }
+    })
+  }
 
 
 
 
-  mapActivityById(){
+
+  getActivityData() {
+    let requestedData: any = {
+      project_id: this.projectId
+    }
+    this.httpService.GET(PROJECT_ACTIVITY_DATA_API, requestedData).subscribe((res: any) => {
+
+      this.getAllActivityData = res.data;
+
+    }, (err) => {
+      if (err.errors && !isEmpty(err.errors)) {
+        let errMessage = '<ul>';
+        for (let e in err.errors) {
+          let objData = err.errors[e];
+          errMessage += `<li>${objData[0]}</li>`;
+        }
+        errMessage += '</ul>';
+        this.snack.notifyHtml(errMessage, 2);
+      } else {
+        this.snack.notify(err.message, 2);
+      }
+    })
+  }
+
+
+
+
+  mapActivityById() {
     this.dataByActivityId = [];
-    if(this.getAllActivityData && this.getAllActivityData.length>0){
-      this.getAllActivityData.map(((o:any)=>{
-          let incomingDate:any = moment(o.date).format('DD-MM-YYYY');
-          let selectedDate:any = moment(this.valueAddedDate).format('DD-MM-YYYY');
-    
-          if(incomingDate == selectedDate){
-            this.dataByActivityId[o.activity_ref_id] = {
-              daily_quantity:o.daily_quantity,
-              remark:o.remark
-            }
+    if (this.getAllActivityData && this.getAllActivityData.length > 0) {
+      this.getAllActivityData.map(((o: any) => {
+        let incomingDate: any = moment(o.date).format('DD-MM-YYYY');
+        let selectedDate: any = moment(this.valueAddedDate).format('DD-MM-YYYY');
+
+        if (incomingDate == selectedDate) {
+          this.dataByActivityId[o.activity_ref_id] = {
+            daily_quantity: o.daily_quantity,
+            remark: o.remark
+          }
+        }
+
+        let activitData = this.projectActivityAssociatedArray[o.activity_ref_id];
+
+        let startDate:any = moment(activitData.base_line_start_date).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
+        let endDate:any = moment(activitData.base_line_end_date).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
+
+        if(activitData.actual_revised_start_date){
+            startDate = moment(activitData.actual_revised_start_date).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
+        }
+        
+        /* if r1/r2/r3 */
+        if(activitData.addRevisesDates && activitData.addRevisesDates.length > 0){
+          endDate = moment(activitData.addRevisesDates[0]['revisedDate']).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
+
+          let rDates:any = [];
+
+          let r1 = moment(activitData.addRevisesDates).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
+          rDates.push(r1);
+
+          if(activitData.addRevisesDates[1]){
+            let r2 = moment(activitData.addRevisesDates[1].addRevisesDates).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
+            rDates.push(r2);
           }
 
-          return o;
+          if(activitData.addRevisesDates[2]){
+            let r3 = moment(activitData.addRevisesDates[2].addRevisesDates).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
+            rDates.push(r3);
+          }
+          let sortedDate = rDates.sort((a,b)=>b-a);
+          endDate = moment(sortedDate).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
+        } 
+
+
+        let calendarSelectedDate = moment(this.valueAddedDate).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
+
+        
+        console.log('name',activitData.activity_name )
+        console.log('startDate',startDate )
+        console.log('calendarSelectedDate',calendarSelectedDate )
+        console.log('endDate',endDate )
+        if(startDate <= calendarSelectedDate <= endDate){
+          this.activityEnabled[o.activity_ref_id] = true;
+          o.enabled = true
+        } else {
+          this.activityEnabled[o.activity_ref_id] = false;
+          o.enabled = false
+        }
+
+
+
+
+
+        return o;
 
       }))
 
     }
+
+
+
+    console.log('this.getAllActivityData', this.getAllActivityData)
 
   }
 
 
 
   ngOnInit(): void {
+
+    var m1 = moment().set({hour:0,minute:0,second:0,millisecond:0}).valueOf()
+    console.log('m1', m1)
+    var m2 = moment().valueOf();
+    console.log('m2', m2)
 
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     //console.log(this.permissions)
@@ -544,13 +606,33 @@ getActivityData(){
       this.getActivityData();
 
       this.calenderService.getProjectById(this.projectId).subscribe(data => {
+        console.log('getProjectById', data)
         this.project = data
+
         this.projectNameForm.patchValue({
           _id: this.project._id
         })
         this.members = this.project.members
 
-       this.projectLocationsList = this.project.locations;
+        this.projectLocationsList = this.project.locations;
+
+        this.projectLocationsList.map((o: any) => {
+          if (o.structures && o.structures.length > 0) {
+            o.structures.map((o1: any) => {
+              if (o1.activities && o1.activities.length > 0) {
+                o1.activities.map((o2: any) => {
+                  this.projectActivityAssociatedArray[o2._id] = o2;
+                })
+              }
+            })
+          }
+        })
+
+
+
+        console.log('this.projectActivityAssociatedArray',this.projectActivityAssociatedArray )
+
+
       })
 
       // this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data => {

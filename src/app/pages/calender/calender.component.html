@@ -175,7 +175,7 @@
               <tr *ngFor="let subTask of structureItem.activities" style="background-color: #F4F4F5;">
 
                 <td style="width:100px">
-                  {{subTask.activity_name}}</td>
+                  {{subTask.activity_name}} = {{activityEnabled[subTask._id]}}</td>
                   
                 <td>
                   <form role="form" (submit)="saveActivityData(subTask.activity_id,subTask._id,structureItem.structure_id,structureItem._id,locationItem.location_id,locationItem._id,quantityId.value,'')">
