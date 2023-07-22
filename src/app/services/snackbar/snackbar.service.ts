@@ -32,7 +32,7 @@ export class SnackbarService {
       
     }
     this.snackBar.open(msg, 'X', {
-      duration: 40000000000000,
+      duration: 4000,
       verticalPosition: 'top',
       horizontalPosition: 'end',
       panelClass: ['snackStyle',className,this.directionClass]
@@ -56,7 +56,7 @@ export class SnackbarService {
       
     }
     this.snackBar.openFromComponent(SnackbarComponent, {
-      duration: 40000000000000,
+      duration: 4000,
       verticalPosition: 'top',
       horizontalPosition: 'end',
       data: html,

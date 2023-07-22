@@ -194,7 +194,7 @@
                 <td  [ngClass]="{'disabled-field':!activityEnabled[subTask._id]}">
                   <form role="form" (submit)="saveActivityData(subTask.activity_id,subTask._id,structureItem.structure_id,structureItem._id,locationItem.location_id,locationItem._id,'',remarkId.value)">
                     <textarea type="text" 
-                    [value]="(dataByActivityId && dataByActivityId[subTask._id] && dataByActivityId[subTask._id]['remark'])?dataByActivityId[subTask._id]['remark']:0"
+                    [value]="(dataByActivityId && dataByActivityId[subTask._id] && dataByActivityId[subTask._id]['remark'])?dataByActivityId[subTask._id]['remark']:''"
                       style="border:1px solid #97989D;padding: 10px 10px;width:350px;font-family: 'Poppins';background-color: transparent;"
                       #remarkId name="remarkValue" [readonly]="(activityEnabled[subTask._id]?false:true)"></textarea>
                     <button
