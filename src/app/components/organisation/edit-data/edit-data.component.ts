@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ORG_REQUEST_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
-
+import { isEmpty } from 'lodash';
 @Component({
   selector: 'app-edit-data',
   templateUrl: './edit-data.component.html',
@@ -47,6 +47,19 @@ export class EditDataComponent implements OnInit {
           if (res) {
             this.patchValue(res.data);
           }
+        }, (err) => {
+          if (err.errors && !isEmpty(err.errors)) {
+            let errMessage = '<ul>';
+            for (let e in err.errors) {
+              let objData = err.errors[e];
+              errMessage += `<li>${objData[0]}</li>`;
+            }
+            errMessage += '</ul>';
+            this.snack.notifyHtml(errMessage, 2);
+          } else {
+            this.snack.notify(err.message, 2);
+          }
+
         })
       }
       else {
@@ -86,6 +99,19 @@ export class EditDataComponent implements OnInit {
       this.httpService.PUT(ORG_REQUEST_API, this.orgmasterForm.value).subscribe(res => {
         this.snack.notify("Organisation data has been saved sucessfully.", 1);
         this.router.navigate(['organisation']);
+      }, (err) => {
+        if (err.errors && !isEmpty(err.errors)) {
+          let errMessage = '<ul>';
+          for (let e in err.errors) {
+            let objData = err.errors[e];
+            errMessage += `<li>${objData[0]}</li>`;
+          }
+          errMessage += '</ul>';
+          this.snack.notifyHtml(errMessage, 2);
+        } else {
+          this.snack.notify(err.message, 2);
+        }
+
       })
     }
     else {

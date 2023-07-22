@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CATEGORY_API, VENDOR_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
-
+import { isEmpty } from 'lodash';
 @Component({
   selector: 'app-edit-data',
   templateUrl: './edit-data.component.html',
@@ -43,6 +43,19 @@ export class EditDataComponent implements OnInit {
     private route: ActivatedRoute) {
     this.httpService.GET(CATEGORY_API, {}).subscribe(res => {
       this.categoryList = res.data;
+    }, (err) => {
+      if (err.errors && !isEmpty(err.errors)) {
+        let errMessage = '<ul>';
+        for (let e in err.errors) {
+          let objData = err.errors[e];
+          errMessage += `<li>${objData[0]}</li>`;
+        }
+        errMessage += '</ul>';
+        this.snack.notifyHtml(errMessage, 2);
+      } else {
+        this.snack.notify(err.message, 2);
+      }
+
     })
 
     this.route.params.subscribe(params => {
@@ -54,6 +67,19 @@ export class EditDataComponent implements OnInit {
           if (res) {
             this.patchValue(res.data[0]);
           }
+        }, (err) => {
+          if (err.errors && !isEmpty(err.errors)) {
+            let errMessage = '<ul>';
+            for (let e in err.errors) {
+              let objData = err.errors[e];
+              errMessage += `<li>${objData[0]}</li>`;
+            }
+            errMessage += '</ul>';
+            this.snack.notifyHtml(errMessage, 2);
+          } else {
+            this.snack.notify(err.message, 2);
+          }
+
         })
       }
       else {
@@ -94,6 +120,19 @@ export class EditDataComponent implements OnInit {
       this.httpService.PUT(VENDOR_API, this.editForm.value).subscribe(res => {
         this.snack.notify(" data has been saved sucessfully.", 1);
         this.router.navigate(['vendor']);
+      }, (err) => {
+        if (err.errors && !isEmpty(err.errors)) {
+          let errMessage = '<ul>';
+          for (let e in err.errors) {
+            let objData = err.errors[e];
+            errMessage += `<li>${objData[0]}</li>`;
+          }
+          errMessage += '</ul>';
+          this.snack.notifyHtml(errMessage, 2);
+        } else {
+          this.snack.notify(err.message, 2);
+        }
+
       })
     }
     else {

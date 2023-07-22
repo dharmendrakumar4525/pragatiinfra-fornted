@@ -8,7 +8,7 @@ import { FormControl } from '@angular/forms';
 import { MatDatepickerInputEvent } from "@angular/material/datepicker";
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment-timezone'
-
+import { isEmpty } from 'lodash';
 @Component({
   selector: 'app-add-data',
   templateUrl: './add-data.component.html',
@@ -104,7 +104,7 @@ export class AddDataComponent implements OnInit {
 
   ActualReviseEndDateChange(value, i) {
     console.log(value, i);
-
+    this.reviseMinDateArray[i + 1] = (new Date(value));
   }
 
   closeDialog() {
@@ -156,6 +156,11 @@ export class AddDataComponent implements OnInit {
 
   minusBlocks(i: number) {
     this.addRevisesDates.removeAt(i);
+    // this.reviseMinDateArray[i+1]=null;
+    if (this.reviseMinDateArray && this.reviseMinDateArray.length > 0) {
+      this.reviseMinDateArray.splice(i + 1, 1);
+
+    }
   }
 
   get addRevisesDates(): FormArray {
