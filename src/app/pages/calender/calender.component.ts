@@ -311,12 +311,12 @@ export class CalenderComponent implements OnInit {
 
     if (quantity) {  
 
-      let totalQuantity = ((this.dataByActivityId && this.dataByActivityId[activity_ref_id] && this.dataByActivityId[activity_ref_id]['daily_quantity'])?this.dataByActivityId[activity_ref_id]['daily_quantity']:0) + subTaskObj.quantity - subTaskObj.dailyCumulativeTotal;
+      // let totalQuantity = ((this.dataByActivityId && this.dataByActivityId[activity_ref_id] && this.dataByActivityId[activity_ref_id]['daily_quantity'])?this.dataByActivityId[activity_ref_id]['daily_quantity']:0) + subTaskObj.quantity - subTaskObj.dailyCumulativeTotal;
       
-      if(quantity>totalQuantity){
-        this.snack.notify('It cannot be greater than total quantity.',2);
-        return;
-      }
+      // if(quantity>totalQuantity){
+      //   this.snack.notify('It cannot be greater than total quantity.',2);
+      //   return;
+      // }
       requestedData['daily_quantity'] = Number(quantity);
     }
 
