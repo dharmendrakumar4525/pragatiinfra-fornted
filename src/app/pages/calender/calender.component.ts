@@ -111,6 +111,7 @@ export class CalenderComponent implements OnInit {
     this.dateForTotal = moment(this.valueAddedDate).format('yyyy-MM-D')
 
     this.mapActivityById();
+    this.dateValidations();
 
   }
 
@@ -407,7 +408,6 @@ export class CalenderComponent implements OnInit {
   }
 
   onSelectDate(event) {
-    //this.showCalData = true
     console.log(event);
     this.valueAddedDate = event
     this.getWeekName = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"][new Date(this.valueAddedDate).getDay()]
@@ -416,67 +416,9 @@ export class CalenderComponent implements OnInit {
     this.getDay = new Date(this.valueAddedDate).getDate()
 
     this.dateForTotal = moment(this.valueAddedDate).format('D MMM, YYYY')
-    console.log(this.dateForTotal)
-
     this.mapActivityById();
+    this.dateValidations();
   }
-
-
-
-
-  saveActivityData(activityId: any, activity_ref_id: any, structure_id: any, structure_ref_id: any, location_id: any, location_ref_id: any, quantity: any, remark: any) {
-
-
-    if(!this.activityEnabled[activity_ref_id]){
-        this.snack.notify("You are not allowed to edit this field",2);
-    }
-
-    let requestedData: any = {
-      project_id: this.projectId,
-      activity_id: activityId,
-      activity_ref_id: activity_ref_id,
-      structure_id: structure_id,
-      structure_ref_id: structure_ref_id,
-      location_id: location_id,
-      location_ref_id: location_ref_id,
-      date: moment(this.valueAddedDate).format('YYYY-MM-DD')
-    }
-
-    if (quantity) {
-      requestedData['daily_quantity'] = quantity;
-    }
-
-    if (remark) {
-      requestedData['remark'] = remark;
-    }
-    this.httpService.POST(PROJECT_ACTIVITY_DATA_API, requestedData).subscribe((res: any) => {
-
-      if (quantity) {
-        this.snack.notify("Quantity has been updated.",1);
-      }
-  
-      if (remark) {
-        this.snack.notify("Remark has been updated.",1);
-      }
-
-      
-    }, (err) => {
-      if (err.errors && !isEmpty(err.errors)) {
-        let errMessage = '<ul>';
-        for (let e in err.errors) {
-          let objData = err.errors[e];
-          errMessage += `<li>${objData[0]}</li>`;
-        }
-        errMessage += '</ul>';
-        this.snack.notifyHtml(errMessage, 2);
-      } else {
-        this.snack.notify(err.message, 2);
-      }
-    })
-  }
-
-
-
 
 
   getActivityData() {
@@ -484,7 +426,6 @@ export class CalenderComponent implements OnInit {
       project_id: this.projectId
     }
     this.httpService.GET(PROJECT_ACTIVITY_DATA_API, requestedData).subscribe((res: any) => {
-
       this.getAllActivityData = res.data;
 
     }, (err) => {
@@ -507,10 +448,14 @@ export class CalenderComponent implements OnInit {
 
   mapActivityById() {
     this.dataByActivityId = [];
+
     if (this.getAllActivityData && this.getAllActivityData.length > 0) {
-      this.getAllActivityData.map(((o: any) => {
+
+      this.getAllActivityData.map((o: any) => {
+
         let incomingDate: any = moment(o.date).format('DD-MM-YYYY');
         let selectedDate: any = moment(this.valueAddedDate).format('DD-MM-YYYY');
+     
 
         if (incomingDate == selectedDate) {
           this.dataByActivityId[o.activity_ref_id] = {
@@ -518,8 +463,19 @@ export class CalenderComponent implements OnInit {
             remark: o.remark
           }
         }
+        return o;
+      });
+      
+    }
+  }
 
-        let activitData = this.projectActivityAssociatedArray[o.activity_ref_id];
+
+  dateValidations(){
+    if(this.projectActivityAssociatedArray && Object.keys(this.projectActivityAssociatedArray) && Object.keys(this.projectActivityAssociatedArray).length>0){
+
+      Object.keys(this.projectActivityAssociatedArray).map((o:any)=>{
+
+        let activitData = this.projectActivityAssociatedArray[o];
 
         let startDate:any = moment(activitData.base_line_start_date).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
         let endDate:any = moment(activitData.base_line_end_date).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
@@ -553,55 +509,114 @@ export class CalenderComponent implements OnInit {
         let calendarSelectedDate = moment(this.valueAddedDate).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
 
         if(startDate <= calendarSelectedDate && calendarSelectedDate <= endDate){
-          this.activityEnabled[o.activity_ref_id] = true;
-          o.enabled = true
+          this.activityEnabled[o] = true;       
         } else {
-          this.activityEnabled[o.activity_ref_id] = false;
-          o.enabled = false
+          this.activityEnabled[o] = false;         
         }
-        return o;
-
-      }))
-
+      })
     }
-
   }
 
 
 
+
+  
+
+  async saveActivityData(activityId: any, activity_ref_id: any, structure_id: any, structure_ref_id: any, location_id: any, location_ref_id: any, quantity: any, remark: any,subTaskObj) {
+
+
+    if(!this.activityEnabled[activity_ref_id]){
+        this.snack.notify("You are not allowed to edit this field",2);
+    }
+
+    let requestedData: any = {
+      project_id: this.projectId,
+      activity_id: activityId,
+      activity_ref_id: activity_ref_id,
+      structure_id: structure_id,
+      structure_ref_id: structure_ref_id,
+      location_id: location_id,
+      location_ref_id: location_ref_id,
+      date: moment(this.valueAddedDate).format('YYYY-MM-DD')
+    }
+
+    if (quantity) {  
+
+      let totalQuantity = ((this.dataByActivityId && this.dataByActivityId[activity_ref_id] && this.dataByActivityId[activity_ref_id]['daily_quantity'])?this.dataByActivityId[activity_ref_id]['daily_quantity']:0) + subTaskObj.quantity - subTaskObj.dailyCumulativeTotal;
+      
+      if(quantity>totalQuantity){
+        this.snack.notify('It cannot be greater than total quantity.',2);
+        return;
+      }
+      requestedData['daily_quantity'] = quantity;
+    }
+
+    if (remark) {
+      requestedData['remark'] = remark;
+    }
+    this.httpService.POST(PROJECT_ACTIVITY_DATA_API, requestedData).subscribe((res: any) => {
+
+      if (quantity) {
+        this.snack.notify("Quantity has been updated.",1);
+      }
+  
+      if (remark) {
+        this.snack.notify("Remark has been updated.",1);
+      }
+
+      this.dataByActivityId[activity_ref_id] = {
+        daily_quantity: quantity,
+        remark: remark
+      }
+
+      if(res && res.data && res.data.type && res.data.type == 'add'){
+        this.getAllActivityData.push(res.data.data);   
+      }
+
+      if(res && res.data && res.data.type && res.data.type == 'update'){
+        this.getAllActivityData = this.getAllActivityData.map((o:any)=>{
+          if(o._id == res.data.data._id){
+            o.daily_quantity = res.data.data.daily_quantity;
+            o.remark = res.data.data.remark;
+          }
+          return o;
+        })
+      }
+
+      
+    }, (err) => {
+      if (err.errors && !isEmpty(err.errors)) {
+        let errMessage = '<ul>';
+        for (let e in err.errors) {
+          let objData = err.errors[e];
+          errMessage += `<li>${objData[0]}</li>`;
+        }
+        errMessage += '</ul>';
+        this.snack.notifyHtml(errMessage, 2);
+      } else {
+        this.snack.notify(err.message, 2);
+      }
+    })
+  }
+
+
   ngOnInit(): void {
-
-    var m1 = moment().set({hour:0,minute:0,second:0,millisecond:0}).valueOf()
-    console.log('m1', m1)
-    var m2 = moment().valueOf();
-    console.log('m2', m2)
-
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
-    //console.log(this.permissions)
-    //this.projectsViewPermissions = this.permissions.permissions[0].ParentChildchecklist[0].childList[1]
     this.memberAddPermissions = this.permissions.permissions[0]?.ParentChildchecklist[5]?.childList[0]
 
-    //this.getDay = new Date().getMonth()
-
-
-
-
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
-    console.log(this.permissions)
     this.calenderPermissions = this.permissions.permissions[0]?.ParentChildchecklist[2]?.childList[0]
     this.remarksPermissions = this.permissions.permissions[0]?.ParentChildchecklist[2]?.childList[2]
 
 
 
     this.activeRoute.params.subscribe((params: any) => {
-      console.log(params.id)
-      this.projectId = params.id
 
+      this.projectId = params.id;
       this.getActivityData();
 
       this.calenderService.getProjectById(this.projectId).subscribe(data => {
-        console.log('getProjectById', data)
-        this.project = data
+        this.project = data;
 
         this.projectNameForm.patchValue({
           _id: this.project._id
@@ -628,30 +643,6 @@ export class CalenderComponent implements OnInit {
 
 
       })
-
-      // this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data => {
-      //   this.activesData = data
-      //   console.log(this.activesData)
-      //   this.activesData.forEach(obj => {
-      //     //this.grandTotal += obj['discAmount'];
-      //     //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
-      //     //console.log(this.grandTotal);
-      //     const arr = this.projectsData.filter(ele => ele['name'] === obj['taskName']);
-      //     if (arr.length === 0) {
-      //       this.projectsData.push(
-      //         { 'name': obj['taskName'] });
-      //     }
-      //   });
-
-      //   this.projectsData.forEach(obj => {
-      //     const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
-      //     obj['result'] = uniqData;
-      //   });
-
-      //   console.log(this.projectsData);
-
-      // })
-
     });
 
     this.recentActivityService.getRecentAtivities().subscribe(data => {
@@ -662,18 +653,10 @@ export class CalenderComponent implements OnInit {
 
     });
     this.projectService.getAboutUs().subscribe(data => {
-      //this.spinner.hide()
       this.about = data
-      this.aboutUs = this.about[0]
-
-      //this.aboutUsLen = this.aboutUs.length
-      // if(this.aboutUsLen){
-      //   this.aboutUsForm.patchValue(this.aboutUs[0])
-      // }
-      // console.log(this.aboutUsLen)
+      this.aboutUs = this.about[0];
     });
     this.projectService.getProjects().subscribe(data => {
-      //this.spinner.hide()
       this.projectsList = data;
     });
   }

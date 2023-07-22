@@ -178,12 +178,17 @@
                   {{subTask.activity_name}}</td>
                   
                 <td  [ngClass]="{'disabled-field':!activityEnabled[subTask._id]}">
-                  <form role="form" (submit)="saveActivityData(subTask.activity_id,subTask._id,structureItem.structure_id,structureItem._id,locationItem.location_id,locationItem._id,quantityId.value,'')">
+                  <form role="form" (submit)="saveActivityData(subTask.activity_id,subTask._id,structureItem.structure_id,structureItem._id,locationItem.location_id,locationItem._id,quantityId.value,'',subTask)">
                     <input type="number"
                       class="calenderForm"
                       [value]="(dataByActivityId && dataByActivityId[subTask._id] && dataByActivityId[subTask._id]['daily_quantity'])?dataByActivityId[subTask._id]['daily_quantity']:0"
                       style="border:1px solid #97989D;padding: 10px 0px;width:80px !important;text-align: center;background-color: transparent;"
-                      #quantityId  [readonly]="(activityEnabled[subTask._id]?false:true)">
+                      #quantityId  
+                      [readonly]="(activityEnabled[subTask._id]?false:true)"
+                      min="0"
+                      [max]="((dataByActivityId && dataByActivityId[subTask._id] && dataByActivityId[subTask._id]['daily_quantity'])?dataByActivityId[subTask._id]['daily_quantity']:0) + (subTask.quantity - subTask.dailyCumulativeTotal)"
+                      >
+                    
                     <button type="submit" 
                       [disabled]="(activityEnabled[subTask._id]?false:true)"
                       style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;top:-1px;left:20px ">Add</button>
@@ -192,7 +197,7 @@
                  
                 </td>
                 <td  [ngClass]="{'disabled-field':!activityEnabled[subTask._id]}">
-                  <form role="form" (submit)="saveActivityData(subTask.activity_id,subTask._id,structureItem.structure_id,structureItem._id,locationItem.location_id,locationItem._id,'',remarkId.value)">
+                  <form role="form" (submit)="saveActivityData(subTask.activity_id,subTask._id,structureItem.structure_id,structureItem._id,locationItem.location_id,locationItem._id,'',remarkId.value,subTask)">
                     <textarea type="text" 
                     [value]="(dataByActivityId && dataByActivityId[subTask._id] && dataByActivityId[subTask._id]['remark'])?dataByActivityId[subTask._id]['remark']:''"
                       style="border:1px solid #97989D;padding: 10px 10px;width:350px;font-family: 'Poppins';background-color: transparent;"
