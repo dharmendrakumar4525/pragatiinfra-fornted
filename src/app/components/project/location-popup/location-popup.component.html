@@ -20,12 +20,13 @@
     </div>
   </div>
 </div>
-<div mat-dialog-content class="mat-dialog-content-cstm">
+<div mat-dialog-content class="mat-dialog-content-cstm" style="width: 100%;">
 
   <ng-container *ngIf="type == 'location'">
     <div class="list-data" *ngFor="let item of listData">
       <ng-container *ngIf="!(idArray.includes(item._id))">
-        <mat-checkbox (change)="onSelectLocation($event,item)" [checked]="selectedLocations.includes(item._id)">{{item.location_name}}</mat-checkbox>
+        <mat-checkbox (change)="onSelectLocation($event,item)"
+          [checked]="selectedLocations.includes(item._id)">{{item.location_name}}</mat-checkbox>
       </ng-container>
 
     </div>

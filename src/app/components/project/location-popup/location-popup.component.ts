@@ -35,11 +35,8 @@ export class LocationPopupComponent implements OnInit {
     this.currentRecords = this.data?.currentRecords;
 
     if (this.currentRecords) {
-      console.log(this.currentRecords);
 
       if (this.type == 'location') {
-        console.log(this.currentRecords);
-
         this.currentRecords.map(object => this.idArray.push(object.location_id));
         console.log(this.idArray);
 
