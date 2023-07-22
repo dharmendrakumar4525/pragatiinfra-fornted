@@ -67,9 +67,7 @@ export class AddProjectComponent implements OnInit {
   @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
   project: any;
 
-  locationsList: Array<any> = [
-
-  ];
+  locationsList: Array<any> = []
 
   constructor(
     private _fb: FormBuilder,

@@ -30,17 +30,13 @@
     padding: 10px;
 
   } */
-mat-icon {
-  font-size: medium;
-  margin-right: 10px;
-  align-items: center;
-}
 
 .toptext {
   display: flex !important;
   margin-left: 20px;
   color: black !important;
 }
+
 .toptext li {
   margin: 0 20px;
 }
@@ -49,43 +45,46 @@ table {
   font-family: "Poppins", sans-serif !important;
   border-collapse: collapse;
   width: 100%;
-  /* height: 100vh; */
   font-size: 12px;
   margin-left: 10px;
   margin-bottom: 20px;
   margin-right: 20px;
 }
+
 th {
   background-color: #233a61;
   border: 1px solid #94a3b8;
   text-align: left;
-  padding: 10px 40px !important;
-  width: 1000px !important;
+  padding: 10px 20px !important;
   color: white;
   font-weight: 300;
   font-size: 15px;
   font-style: normal;
+  white-space: nowrap;
 }
 
 td {
   border: 1px solid #94a3b8;
   text-align: center;
-  padding: 4px;
+  padding: 15px 20px;
   color: #233a61;
   font-style: normal;
   font-size: 14px;
 
   /* width:100px; */
 }
+
 tr:nth-child(even) {
   background-color: #f4f4f5 !important;
 }
+
 .descriptionalign {
   display: flex !important;
   align-items: center !important;
   text-align: left !important;
   justify-content: flex-start !important;
 }
+
 .activityalign {
   display: flex;
   justify-content: space-between;
@@ -97,6 +96,7 @@ tr:nth-child(even) {
 .example-card {
   max-width: 400px;
 }
+
 .example-header-image {
   background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
   background-size: cover;
@@ -115,15 +115,18 @@ tr:nth-child(even) {
   width: 7px;
   height: 7px;
 }
+
 ::-webkit-scrollbar-track {
   border: 1px solid lightgrey;
   border-radius: 5px;
   background-color: lightgrey;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #1e293b;
   border-radius: 5px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: lightblue;
 }
@@ -132,6 +135,7 @@ tr:nth-child(even) {
   max-width: none !important;
   margin-right: 20px;
 }
+
 .notification-container {
   width: 500px;
   margin-top: 10px;
@@ -149,15 +153,18 @@ tr:nth-child(even) {
   width: 7px;
   height: 7px;
 }
+
 ::-webkit-scrollbar-track {
   border: 1px solid lightgrey;
   border-radius: 5px;
   background-color: lightgrey;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #1e293b;
   border-radius: 5px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: lightblue;
 }
@@ -165,6 +172,7 @@ tr:nth-child(even) {
 ::ng-deep.mat-menu-panel {
   max-width: none !important;
 }
+
 .notification-container {
   width: 200px;
   margin-left: 10px;
@@ -173,6 +181,7 @@ tr:nth-child(even) {
 .structureAlign {
   margin-left: 10px;
 }
+
 .activityAlign {
   margin-left: 20px;
 }
@@ -188,4 +197,59 @@ tr:nth-child(even) {
   border-radius: 5px;
   color: #97989d;
   font-family: "Poppins";
+}
+
+
+
+.section-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 250px;
+  word-break: break-all;
+
+  mat-icon {
+    font-size: 19px;
+    width: 20px;
+    height: 20px;
+    line-height: 22px;
+    cursor: pointer;
+
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+
+  .right-cont {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+}
+
+.remark-btn {
+  background-color: #233A61;
+  color: #fff;
+  font-family: Poppins;
+  padding: 10px 10px !important;
+  line-height: 1;
+  font-size: 14px;
+}
+
+.location-name {
+  font-weight: 700;
+}
+
+.structure_name {
+  font-weight: normal;
+  color: #333;
+  margin-left: 20px;
+}
+
+.activity_name {
+  color: #888;
+  margin-left: 40px;
 }

@@ -27,7 +27,7 @@ export class PsMinTableDatePipe implements PipeTransform {
 
 
       var minDate: any = new Date(Math.min.apply(null, dateArray));
-      minDate = moment(minDate).format("MMM Do YY");
+      minDate = moment(minDate).format("MMM DD, YYYY");
 
 
       return minDate;

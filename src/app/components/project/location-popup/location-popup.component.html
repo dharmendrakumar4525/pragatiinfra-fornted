@@ -28,7 +28,11 @@
         <mat-checkbox (change)="onSelectLocation($event,item)"
           [checked]="selectedLocations.includes(item._id)">{{item.location_name}}</mat-checkbox>
       </ng-container>
+    </div>
 
+
+    <div class="no-data-found" *ngIf="idArray && idArray.length>0 && idArray.length == listData.length">
+      We couldn't find any locations, or it appears that you have already added all possible locations.
     </div>
   </ng-container>
   <ng-container *ngIf="type == 'structure'">
@@ -39,6 +43,10 @@
       </ng-container>
 
     </div>
+
+    <div class="no-data-found" *ngIf="idArray && idArray.length>0 && idArray.length == listData.length">
+      We couldn't find any structures, or it appears that you have already added all possible structures.
+    </div>
   </ng-container>
   <ng-container *ngIf="type == 'activity'">
     <div class="list-data" *ngFor="let item of listData">
@@ -47,13 +55,17 @@
           [checked]="selectedActivityArray.includes(item._id)">{{item.activity_name}}</mat-checkbox>
       </ng-container>
     </div>
+
+    <div class="no-data-found" *ngIf="idArray && idArray.length>0 && idArray.length == listData.length">
+      We couldn't find any activity, or it appears that you have already added all possible activities.
+    </div>
   </ng-container>
 
 
 
 </div>
 
-<div style="text-align: center;margin-bottom: 15px; padding: 0 10px;">
+<div style="text-align: center;margin-bottom: 15px; padding: 0 10px;    margin-top: 20px;" *ngIf="!(idArray && idArray.length>0 && idArray.length == listData.length)">
 
 
 

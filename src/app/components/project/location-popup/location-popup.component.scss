@@ -11,6 +11,7 @@
     line-height: 16px;
     text-transform: capitalize;
     color: #28313b;
+    width: 350px;
 }
 
  
@@ -128,3 +129,8 @@ form{
 }
 
 
+
+.no-data-found {
+    margin: 10px 0 32px 0;
+    max-width: 350px;
+}

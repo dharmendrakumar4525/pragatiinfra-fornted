@@ -13,7 +13,7 @@
       </form> -->
       <span
         style="font-size: 10px;position: relative;bottom: 40px;left:320px;font-family: 'Poppins';font-weight: bold;"><img
-          src=".\assets\images\ontrack.svg">&nbsp; On Track</span>
+          src=".\assets\images\ontrack.svg">  On Track</span>
     </div>
     <div>
       <button mat-button class="button" [routerLink]="['/add-project']">Add Project + </button>
@@ -56,18 +56,18 @@
   <ul class="toptext" style="background-color: #fff !important;list-style: none;">
     <li style="border-right: 1px solid #D9D9D9;padding-right: 10px;"><a style="color: #000;" [routerLink]="['/dpr']"
         routerLinkActive="active-link"><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i> <span
-          style="color:#97989D;">&nbsp;Projects</span></a></li>
+          style="color:#97989D;"> Projects</span></a></li>
     <li style="border-right: 1px solid #D9D9D9;padding-right: 20px;"><a style="color: #000;"
         [routerLink]="['/view-project/data-analysis',projectId]" routerLinkActive="active-link-active"
         [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i>
-        <span style="color:#97989D;">&nbsp;Data-Analysis</span></a></li>
+        <span style="color:#97989D;"> Data-Analysis</span></a></li>
     <li style="border-right: 1px solid #D9D9D9; padding-right: 20px;"><a style="color: #000;"
         [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"><i
           class="fa fa-edit" aria-hidden="true" style="color:#233A61;"></i> <span
-          style="color:#233A61">&nbsp;Progress-sheet</span></a></li>
+          style="color:#233A61"> Progress-sheet</span></a></li>
     <li><a style="color: #000;" [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"><i
           class="fa fa-edit" aria-hidden="true" style="color:#97989D;"></i><span
-          style="color:#97989D;">&nbsp;Calender</span></a></li>
+          style="color:#97989D;"> Calender</span></a></li>
   </ul>
 </div>
 
@@ -88,25 +88,31 @@
 
       <tr>
 
-        <th>Description <mat-icon style="margin-top: 10px;" (click)="addLocation()">add</mat-icon></th>
-        <th>R1&nbsp;End&nbsp;Date</th>
-        <th>R2&nbsp;End&nbsp;Date</th>
-        <th>R3&nbsp;End&nbsp;Date</th>
-        <th>Actual&nbsp;Revised&nbsp;Start&nbsp;Date</th>
-        <th>Working&nbsp;Days&nbsp;Revised</th>
-        <th>Baseline&nbsp;Start&nbsp;Date</th>
-        <th>Baseline&nbsp;End&nbsp;Date</th>
-        <th>Base&nbsp;Line&nbsp;Working&nbsp;Days</th>
-        <th>Target&nbsp;Till&nbsp;Date&nbsp;as&nbsp;per&nbsp;Baseline</th>
-        <th>No&nbsp;of&nbsp;Days&nbsp;Balance&nbsp;as&nbsp;per&nbsp;Baseline</th>
-        <th>Daily&nbsp;Asking&nbsp;Rate&nbsp;as&nbsp;per&nbsp;Baseline</th>
+        <th>
+          <div class="section-container">
+            <div class="left-cont">Description</div>
+            <div class="right-cont"><mat-icon matTooltip="Add location" (click)="addLocation()">add</mat-icon></div>
+          </div>
+        </th>          
+           
+        <th>R1 End Date</th>
+        <th>R2 End Date</th>
+        <th>R3 End Date</th>
+        <th>Actual Revised Start Date</th>
+        <th>Working Days Revised</th>
+        <th>Baseline Start Date</th>
+        <th>Baseline End Date</th>
+        <th>Base Line Working Days</th>
+        <th>Target Till Date as per Baseline</th>
+        <th>No of Days Balance as per Baseline</th>
+        <th>Daily Asking Rate as per Baseline</th>
         <th>UOM</th>
         <th>Total Quantity</th>
-        <th>Cumulative&nbsp;Completed</th>
-        <th>Target&nbsp;Till&nbsp;Date&nbsp;as&nbsp;per&nbsp;Revised&nbsp;End&nbsp;Date</th>
-        <th>No&nbsp;of&nbsp;Days&nbsp;Balance&nbsp;as&nbsp;per&nbsp;revised&nbsp;dates</th>
-        <th>Daily&nbsp;Asking&nbsp;Rate&nbsp;as&nbsp;per&nbsp;Revised&nbsp;End&nbsp;Date</th>
-        <th>Activity&nbsp;Balance&nbsp;(%)</th>
+        <th>Cumulative Completed</th>
+        <th>Target Till Date as per Revised End Date</th>
+        <th>No of Days Balance as per revised dates</th>
+        <th>Daily Asking Rate as per Revised End Date</th>
+        <th>Activity Balance (%)</th>
         <th>Total</th>
         <th>Remarks</th>
 
@@ -118,16 +124,14 @@
 
           <tr style="color:#233A61 !important;font-weight: bolder ;">
             <td>
-              <div class="activityalign">
-                <div style="width:120px;">{{locationItem.location_name}}
 
-                  <div>
-                    <mat-icon style="margin-top: 10px;" (click)="addStructure(locationIndex)">add</mat-icon>
-
-                    <mat-icon style="margin-top: 10px;" (click)="deleteLocation(locationIndex)">delete</mat-icon>
-                  </div>
+              <div class="section-container">
+                <div class="left-cont location-name">{{locationItem.location_name}}</div>
+                <div class="right-cont">
+                  <mat-icon matTooltip="Add structure"  (click)="addStructure(locationIndex)">add</mat-icon>
+                  <mat-icon matTooltip="Delete location" (click)="deleteLocation(locationIndex)">delete</mat-icon>
                 </div>
-              </div>
+              </div> 
             </td>
             <td></td>
             <td></td>
@@ -157,16 +161,14 @@
 
             <tr style="color:#233A61 !important;font-weight: bolder ;">
               <td>
-                <div class="activityalign structureAlign">
-                  <div style="width:120px;">{{structureItem.structure_name}}
-                    <div>
-                      <mat-icon (click)="addActivity(locationIndex,structureIndex)">add</mat-icon>
-                      <mat-icon style="margin-top: 10px;"
-                        (click)="deleteStructure(locationIndex,structureIndex)">delete</mat-icon>
-                    </div>
 
+                <div class="section-container">
+                  <div class="left-cont structure_name"> {{structureItem.structure_name}}  </div>
+                  <div class="right-cont">
+                      <mat-icon matTooltip="Add activity" (click)="addActivity(locationIndex,structureIndex)">add</mat-icon>
+                      <mat-icon  matTooltip="Delete structure" (click)="deleteStructure(locationIndex,structureIndex)">delete</mat-icon>
                   </div>
-                </div>
+                </div> 
               </td>
               <td></td>
               <td></td>
@@ -195,18 +197,14 @@
             <tr *ngFor="let activityItem of structureItem.activities,let activityIndex=index" style="font-size: 10px;">
 
               <td style="color:#595b5d;">
-                <div class="descriptionalign activityAlign" style="width: 200px;">
-                  <div>
-                    <mat-icon (click)="addData(activityItem,locationIndex,structureIndex,activityIndex)">edit</mat-icon>
-                  </div>
-                  <div>{{activityItem.activity_name}}
-                    <div>
 
-                      <mat-icon (click)="deleteActivity(locationIndex,structureIndex,activityIndex)">delete</mat-icon>
-                    </div>
+                <div class="section-container">
+                  <div class="left-cont activity_name"> {{activityItem.activity_name}} </div>
+                  <div class="right-cont">
+                    <mat-icon  matTooltip="Edit activity" (click)="addData(activityItem,locationIndex,structureIndex,activityIndex)">edit</mat-icon>
+                    <mat-icon matTooltip="Delete activity" (click)="deleteActivity(locationIndex,structureIndex,activityIndex)">delete</mat-icon>
                   </div>
-
-                </div>
+                </div>    
               </td>
               <td>{{activityItem?.r1EndDate | date}}</td>
               <td>{{activityItem?.r2EndDate | date}}</td>
@@ -240,7 +238,7 @@
               <td>{{(100-(100 * activityItem.dailyCumulativeTotal) / activityItem.total).toFixed(0)}}</td>
               <td>{{activityItem?.dailyCumulativeTotal}}</td>
               <td><button mat-button
-                  style="background-color: #233A61;color:#fff;margin-bottom: 5px;margin-top: 5px;margin-left: 8px;font-family: 'Poppins';"
+                  class="remark-btn"
                   (click)="addremarks(activityItem)">View remarks</button></td>
 
 
