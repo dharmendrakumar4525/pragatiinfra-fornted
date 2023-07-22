@@ -67,77 +67,21 @@ export class AddProjectComponent implements OnInit {
   @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
   project: any;
 
-  locationsList:Array<any> = [
-    {
-        "location_name": "Locattion1",
-        "location_id": "64b2e6ac89f8321b40063bea",
-        "structures": [
-            {
-                "structure_name": "Structure1",
-                "structure_id": "64b2e0c189f8321b40063bd4",
-                "activities": [
-                    {
-                        "activity_name": "Activity3",
-                        "activity_id": "64b3f785737f0133984d2830"
-                    },
-                    {
-                        "activity_name": "Activity2",
-                        "activity_id": "64b3f77f737f0133984d282d"
-                    }
-                ]
-            },
-            {
-                "structure_name": "Structure2",
-                "structure_id": "64b3f75f737f0133984d2820"
-            },
-            {
-                "structure_name": "Structure3",
-                "structure_id": "64b3f763737f0133984d2823"
-            }
-        ]
-    },
-    {
-        "location_name": "location2",
-        "location_id": "64b3f6b6737f0133984d280d",
-        "structures": [
-            {
-                "structure_name": "Structure4",
-                "structure_id": "64b3f767737f0133984d2826",
-                "activities": [
-                    {
-                        "activity_name": "Activity5",
-                        "activity_id": "64b3f78f737f0133984d2836"
-                    },
-                    {
-                        "activity_name": "Activity4",
-                        "activity_id": "64b3f789737f0133984d2833"
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "location_name": "Location3",
-        "location_id": "64b3f6db737f0133984d2813"
-    }
-];
+  locationsList: Array<any> = [
+
+  ];
 
   constructor(
     private _fb: FormBuilder,
     private dialog: MatDialog,
     private dataAnalysis: DataAnalysisService, private toast: ToastService, private _dialog: MatDialog, private taskService: TaskService,
     private projectService: AddProjectService, private userService: UsersService, private activeRoute: ActivatedRoute, private router: Router) { }
-
-
-
   @HostListener('document:click', ['$event'])
   documentClick(event: any): void {
-    //console.log("jjjjjjjjjjjjjj")
     if (!this.projectsPermissions?.isSelected) {
       this.router.navigate(['/'])
 
     }
-    //this.utilitiesService.documentClickedTarget.next(event.target)
   }
 
 
@@ -279,8 +223,8 @@ export class AddProjectComponent implements OnInit {
       //   );
       //   return;
       // }
-        // }
-    this.projectForm.value['locations'] = this.locationsList
+      // }
+      this.projectForm.value['locations'] = this.locationsList
       this.projectService.addProject(this.projectForm.value).subscribe(
 
         {
@@ -295,7 +239,7 @@ export class AddProjectComponent implements OnInit {
           error: (err) => {
             // this.spinner.hide()
             this.toast.openSnackBar('Something went wrong, please try again later');
-            // console.log(err) 
+            // console.log(err)
 
             // this.errorData = err
 
@@ -321,7 +265,7 @@ export class AddProjectComponent implements OnInit {
           error: (err) => {
             // this.spinner.hide()
             this.toast.openSnackBar('Something went wrong, please try again later');
-            // console.log(err) 
+            // console.log(err)
 
             // this.errorData = err
 
@@ -371,7 +315,7 @@ export class AddProjectComponent implements OnInit {
     //     'Please upload project image'
     //   );
     //   return;
-  
+
     this.projectService.updateProject(this.projectForm.value, this.projectId).subscribe(
 
       {
@@ -386,7 +330,7 @@ export class AddProjectComponent implements OnInit {
         error: (err) => {
           // this.spinner.hide()
           this.toast.openSnackBar('Something went wrong, please try again later');
-          // console.log(err) 
+          // console.log(err)
 
           // this.errorData = err
 
@@ -415,7 +359,7 @@ export class AddProjectComponent implements OnInit {
         //this.removeUpload = true;
       }
       // ChangeDetectorRef since file is loading outside the zone
-      //this.cd.markForCheck();        
+      //this.cd.markForCheck();
     }
   }
   displayMater() {
@@ -506,52 +450,65 @@ export class AddProjectComponent implements OnInit {
 
 
 
-  addLocations(type,locationObj,structuresObj) {
+  addLocations(type, locationObj, structuresObj) {
+    console.log(locationObj, structuresObj);
+    let array = [];
+    if (type == 'location') {
+      array = this.locationsList;
+    }
+    if (type == 'structure') {
+      array = locationObj.structures;
+    }
+    if (type == 'activity') {
+      array = structuresObj.activities;
+    }
+
     const dialogPopup = this.dialog.open(LocationPopupComponent, {
       data: {
-        type: type
+        type: type,
+        currentRecords: array
       }
     });
     dialogPopup.afterClosed().subscribe((result: any) => {
       console.log('result', result)
 
       if (result && result['option'] === 1) {
-        if(type == 'location'){
+        if (type == 'location') {
           this.locationsList = [...this.locationsList, ...result.data.locations];
         }
 
-        if(type == 'structure'){
-          this.locationsList = this.locationsList.map((o:any)=>{
-              if(o.location_id == locationObj.location_id){
-                if(!o.structures){
-                  o.structures = [];
-                }
-                o.structures = [...o.structures, ...result.data.structures];
+        if (type == 'structure') {
+          this.locationsList = this.locationsList.map((o: any) => {
+            if (o.location_id == locationObj.location_id) {
+              if (!o.structures) {
+                o.structures = [];
               }
-              return o;
+              o.structures = [...o.structures, ...result.data.structures];
+            }
+            return o;
           })
         }
 
-        if(type == 'activity'){
-          this.locationsList = this.locationsList.map((o:any)=>{
-              if(o.location_id == locationObj.location_id){
+        if (type == 'activity') {
+          this.locationsList = this.locationsList.map((o: any) => {
+            if (o.location_id == locationObj.location_id) {
 
-                o.structures = o.structures.map((childObj:any)=>{
-                  if(childObj.structure_id == structuresObj.structure_id){
-                    if(!childObj.activities){
-                      childObj.activities = [];
-                    }
-                    childObj.activities = [...childObj.activities, ...result.data.activities];
+              o.structures = o.structures.map((childObj: any) => {
+                if (childObj.structure_id == structuresObj.structure_id) {
+                  if (!childObj.activities) {
+                    childObj.activities = [];
                   }
-                  return childObj;
-                })
-              }
-              return o;
+                  childObj.activities = [...childObj.activities, ...result.data.activities];
+                }
+                return childObj;
+              })
+            }
+            return o;
           })
         }
 
 
-        console.log('this.locationsList ', this.locationsList )
+        console.log('this.locationsList ', this.locationsList)
 
       }
     });
@@ -559,31 +516,31 @@ export class AddProjectComponent implements OnInit {
 
 
 
-  deleteLocations(type,locationObj,structuresObj,activityObj){
-    if(type == 'location'){
-      this.locationsList =  this.locationsList.filter((o:any)=>o.location_id != locationObj.location_id);
+  deleteLocations(type, locationObj, structuresObj, activityObj) {
+    if (type == 'location') {
+      this.locationsList = this.locationsList.filter((o: any) => o.location_id != locationObj.location_id);
     }
 
-    if(type == 'structure'){
-      this.locationsList = this.locationsList.map((o:any)=>{
-          if(o.location_id == locationObj.location_id){
-            o.structures = o.structures.filter((childObj:any)=>childObj.structure_id != structuresObj.structure_id);
-          }
-          return o;
+    if (type == 'structure') {
+      this.locationsList = this.locationsList.map((o: any) => {
+        if (o.location_id == locationObj.location_id) {
+          o.structures = o.structures.filter((childObj: any) => childObj.structure_id != structuresObj.structure_id);
+        }
+        return o;
       })
     }
 
-    if(type == 'activity'){
-      this.locationsList = this.locationsList.map((o:any)=>{
-          if(o.location_id == locationObj.location_id){
-            o.structures = o.structures.map((childObj:any)=>{
-              if(childObj.structure_id == structuresObj.structure_id){
-                childObj.activities = childObj.activities.filter((aObj:any)=>aObj.activity_id != activityObj.activity_id);               
-              }
-              return childObj;
-            })
-          }
-          return o;
+    if (type == 'activity') {
+      this.locationsList = this.locationsList.map((o: any) => {
+        if (o.location_id == locationObj.location_id) {
+          o.structures = o.structures.map((childObj: any) => {
+            if (childObj.structure_id == structuresObj.structure_id) {
+              childObj.activities = childObj.activities.filter((aObj: any) => aObj.activity_id != activityObj.activity_id);
+            }
+            return childObj;
+          })
+        }
+        return o;
       })
     }
   }
