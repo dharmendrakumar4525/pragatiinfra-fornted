@@ -21,6 +21,29 @@ body {
   background: $background;
 }
 
+
+.snack-success {
+  background: #44b444;
+}
+
+.snack-error {
+  background: #f33333;
+}
+
+.snackStyle {
+  color: #fff;
+}
+
+.snackStyle ul {
+  margin: 0;
+  padding: 0px 10px 0px 20px;
+  color: #fff;
+}
+
+.snackStyle li {
+  padding: 1px 0 1px 0;
+}
+
 a {
   color: $font-color;
   font-weight: 400;

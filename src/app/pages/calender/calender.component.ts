@@ -426,6 +426,11 @@ export class CalenderComponent implements OnInit {
 
   saveActivityData(activityId: any, activity_ref_id: any, structure_id: any, structure_ref_id: any, location_id: any, location_ref_id: any, quantity: any, remark: any) {
 
+
+    if(!this.activityEnabled[activity_ref_id]){
+        this.snack.notify("You are not allowed to edit this field",2);
+    }
+
     let requestedData: any = {
       project_id: this.projectId,
       activity_id: activityId,
@@ -444,13 +449,17 @@ export class CalenderComponent implements OnInit {
     if (remark) {
       requestedData['remark'] = remark;
     }
-
-
-    console.log('requestedData', requestedData)
-
     this.httpService.POST(PROJECT_ACTIVITY_DATA_API, requestedData).subscribe((res: any) => {
 
+      if (quantity) {
+        this.snack.notify("Quantity has been updated.",1);
+      }
+  
+      if (remark) {
+        this.snack.notify("Remark has been updated.",1);
+      }
 
+      
     }, (err) => {
       if (err.errors && !isEmpty(err.errors)) {
         let errMessage = '<ul>';
@@ -525,51 +534,36 @@ export class CalenderComponent implements OnInit {
 
           let rDates:any = [];
 
-          let r1 = moment(activitData.addRevisesDates).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
+          let r1 = moment(activitData.addRevisesDates[0]['revisedDate']).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
           rDates.push(r1);
 
           if(activitData.addRevisesDates[1]){
-            let r2 = moment(activitData.addRevisesDates[1].addRevisesDates).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
+            let r2 = moment(activitData.addRevisesDates[1]['revisedDate']).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
             rDates.push(r2);
           }
 
           if(activitData.addRevisesDates[2]){
-            let r3 = moment(activitData.addRevisesDates[2].addRevisesDates).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
+            let r3 = moment(activitData.addRevisesDates[2]['revisedDate']).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
             rDates.push(r3);
           }
           let sortedDate = rDates.sort((a,b)=>b-a);
-          endDate = moment(sortedDate).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
+          endDate = moment(sortedDate[0]).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
         } 
-
 
         let calendarSelectedDate = moment(this.valueAddedDate).set({hour:0,minute:0,second:0,millisecond:0}).valueOf();
 
-        
-        console.log('name',activitData.activity_name )
-        console.log('startDate',startDate )
-        console.log('calendarSelectedDate',calendarSelectedDate )
-        console.log('endDate',endDate )
-        if(startDate <= calendarSelectedDate <= endDate){
+        if(startDate <= calendarSelectedDate && calendarSelectedDate <= endDate){
           this.activityEnabled[o.activity_ref_id] = true;
           o.enabled = true
         } else {
           this.activityEnabled[o.activity_ref_id] = false;
           o.enabled = false
         }
-
-
-
-
-
         return o;
 
       }))
 
     }
-
-
-
-    console.log('this.getAllActivityData', this.getAllActivityData)
 
   }
 

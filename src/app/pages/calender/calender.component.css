@@ -180,3 +180,12 @@ background: lightblue;
     /* height: 100px; */
     
   }
+
+
+  td.disabled-field {
+    opacity: 0.5 !important;
+}
+
+input[readonly],button[disabled],textarea[readonly] {
+  cursor: not-allowed  !important;
+}
