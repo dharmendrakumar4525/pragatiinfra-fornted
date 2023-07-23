@@ -14,7 +14,7 @@
     width: 350px;
 }
 
- 
+
 .mat-dialog-content-cstm {
     padding-bottom: 26px;
 }
@@ -51,14 +51,14 @@
         margin-bottom: 6px;
     }
 
-   
+
 }
 
 :host ::ng-deep .mat-form-field.full-border{
-     
+
     .mat-form-field-flex {
-    
-    
+
+
         font-weight: 400;
         line-height: 1;
         color: #495057;
@@ -71,23 +71,23 @@
     }
 
     &:hover{
-         
+
         .mat-form-field-flex {
             border: 1px solid #333;
         }
     }
 
     &.mat-form-field-invalid{
-         
+
         .mat-form-field-flex {
             border: 1px solid #f44336;
         }
     }
-     
+
     .mat-form-field-underline {
         display: none;
     }
-     
+
     .mat-form-field-infix {
         padding: 7px 5px 8px 5px !important;
     }
@@ -133,4 +133,8 @@ form{
 .no-data-found {
     margin: 10px 0 32px 0;
     max-width: 350px;
+}
+
+.theme-btn-color{
+  margin-left: 15px;
 }

@@ -33,7 +33,7 @@
 
 .toptext {
   display: flex !important;
-  margin-left: 20px;
+  margin-left: 30px;
   color: black !important;
 }
 
@@ -191,15 +191,13 @@ tr:nth-child(even) {
   padding: 1px 1px;
   width: 150px;
   margin-top: 50px;
-  margin-left: 430px;
+  margin-left: 20px;
   position: relative;
   border: 1px solid #97989d;
   border-radius: 5px;
   color: #97989d;
   font-family: "Poppins";
 }
-
-
 
 .section-container {
   display: flex;
@@ -215,12 +213,10 @@ tr:nth-child(even) {
     line-height: 22px;
     cursor: pointer;
 
-
     &:hover {
       opacity: 0.7;
     }
   }
-
 
   .right-cont {
     display: inline-flex;
@@ -231,7 +227,7 @@ tr:nth-child(even) {
 }
 
 .remark-btn {
-  background-color: #233A61;
+  background-color: #233a61;
   color: #fff;
   font-family: Poppins;
   padding: 10px 10px !important;
@@ -252,4 +248,10 @@ tr:nth-child(even) {
 .activity_name {
   color: #888;
   margin-left: 40px;
+}
+
+.on-track {
+  margin: 0 0 0 25px;
+  font-size: 12px;
+  font-weight: 600;
 }

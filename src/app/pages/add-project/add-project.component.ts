@@ -28,6 +28,12 @@ export interface MatchData {
   styleUrls: ['./add-project.component.scss']
 })
 export class AddProjectComponent implements OnInit {
+  @HostListener('document:click', ['$event'])
+  documentClick(event: any): void {
+    if (!this.projectsPermissions?.isSelected) {
+      this.router.navigate(['/'])
+    }
+  }
   showMaster: boolean = false
   showAddProject: boolean = true
   visible = true;
@@ -38,7 +44,6 @@ export class AddProjectComponent implements OnInit {
   imageUrl = null
   subTaskName = [];
   aa: boolean = false;
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
   users: any;
   projectNameVal: any;
   addPro: boolean = true;
@@ -74,13 +79,6 @@ export class AddProjectComponent implements OnInit {
     private dialog: MatDialog,
     private dataAnalysis: DataAnalysisService, private toast: ToastService, private _dialog: MatDialog, private taskService: TaskService,
     private projectService: AddProjectService, private userService: UsersService, private activeRoute: ActivatedRoute, private router: Router) { }
-  @HostListener('document:click', ['$event'])
-  documentClick(event: any): void {
-    if (!this.projectsPermissions?.isSelected) {
-      this.router.navigate(['/'])
-
-    }
-  }
 
 
   get courseIds() {
@@ -91,16 +89,10 @@ export class AddProjectComponent implements OnInit {
     const input = event.input;
     const value = event.value;
 
-    // Add our fruit
     if ((value || '').trim()) {
-      // this.tags.push({name: value.trim()});
-      // this.courseIds.value.push(value);
       this.projectForm.controls['members'].setValue([...this.projectForm.controls['members'].value, value.trim()]);
       this.projectForm.controls['members'].updateValueAndValidity();
-      // this.courseIds.updateValueAndValidity();
     }
-
-    // Reset the input value
     if (input) {
       input.value = '';
     }
@@ -114,13 +106,7 @@ export class AddProjectComponent implements OnInit {
       this.projectForm.controls['members'].updateValueAndValidity();
     }
   }
-  // remove(fruit: Fruit): void {
-  //   const index = this.tags.indexOf(fruit);
 
-  //   if (index >= 0) {
-  //     this.tags.splice(index, 1);
-  //   }
-  // }
 
   addTask() {
     const dialogRef = this._dialog.open(AddTasksComponent, {
@@ -206,22 +192,11 @@ export class AddProjectComponent implements OnInit {
         this.toast.openSnackBar(
           'Enter Valid Details'
         );
-        //this.clearForm = true;
-        //this.clearForm = true;
         this.projectForm.markAllAsTouched();
         return;
       }
-      console.log(this.selection);
-      console.log(this.projectForm.value);
       this.projectForm.value.sections = this.selection
       this.projectForm.value.imageUrl = this.imageUrl
-      // if(!this.projectForm.value.imageUrl){
-      //   this.toast.openSnackBar(
-      //     'Please upload project image'
-      //   );
-      //   return;
-      // }
-      // }
       this.projectForm.value['locations'] = this.locationsList
       this.projectService.addProject(this.projectForm.value).subscribe(
 
@@ -235,11 +210,7 @@ export class AddProjectComponent implements OnInit {
 
           },
           error: (err) => {
-            // this.spinner.hide()
             this.toast.openSnackBar('Something went wrong, please try again later');
-            // console.log(err)
-
-            // this.errorData = err
 
 
 
@@ -261,33 +232,10 @@ export class AddProjectComponent implements OnInit {
 
           },
           error: (err) => {
-            // this.spinner.hide()
             this.toast.openSnackBar('Something went wrong, please try again later');
-            // console.log(err)
-
-            // this.errorData = err
-
-
-
           }
         }
-
       )
-      //  // console.log(this.selection);
-      //   //console.log(this.tasksData)
-      //   for(let one of this.selection){
-      //     //console.log(one)
-      //     for(let single of this.tasksData){
-      //       if(single.taskId === one.taskId){
-
-      //       }else{
-      //         hh.push(one)
-
-
-      //       }
-      //     }
-      //     console.log(hh)
-      //   }
     }
 
 
@@ -299,41 +247,21 @@ export class AddProjectComponent implements OnInit {
       this.toast.openSnackBar(
         'Enter Valid Details'
       );
-      //this.clearForm = true;
-      //this.clearForm = true;
       this.projectForm.markAllAsTouched();
       return;
     }
-    // console.log(this.selection);
-    // console.log(this.projectForm.value);
-    // this.projectForm.value.sections = this.selection
-    this.projectForm.value.imageUrl = this.imageUrl
-    // if(!this.projectForm.value.imageUrl){
-    //   this.toast.openSnackBar(
-    //     'Please upload project image'
-    //   );
-    //   return;
-
+    this.projectForm.value.imageUrl = this.imageUrl;
     this.projectService.updateProject(this.projectForm.value, this.projectId).subscribe(
 
       {
         next: (data: any) => {
           console.log(data)
-          // this.spinner.hide()
-
           this.toast.openSnackBar('Project Updated Successfully');
-          this.router.navigate(['/view-project/data-analysis', data._id]);
+          this.router.navigate([`/view-project/data-analysis/${data._id}`]);
 
         },
         error: (err) => {
-          // this.spinner.hide()
           this.toast.openSnackBar('Something went wrong, please try again later');
-          // console.log(err)
-
-          // this.errorData = err
-
-
-
         }
       }
 
@@ -345,19 +273,9 @@ export class AddProjectComponent implements OnInit {
     let file = event.target.files[0];
     if (event.target.files && event.target.files[0]) {
       reader.readAsDataURL(file);
-
-      // When file uploads set it to file formcontrol
       reader.onload = () => {
         this.imageUrl = reader.result;
-        console.log(this.imageUrl)
-        // this.registrationForm.patchValue({
-        //   file: reader.result
-        // });
-        //this.editFile = false;
-        //this.removeUpload = true;
       }
-      // ChangeDetectorRef since file is loading outside the zone
-      //this.cd.markForCheck();
     }
   }
   displayMater() {
@@ -403,40 +321,15 @@ export class AddProjectComponent implements OnInit {
   }
   selected(event: MatAutocompleteSelectedEvent): void {
 
-
-
-    //const input = event.input;
     const value = event.option.viewValue;
 
-    // Add our fruit
     if ((value || '').trim()) {
-      // this.tags.push({name: value.trim()});
-      // this.courseIds.value.push(value);
       this.projectForm.controls['members'].setValue([...this.projectForm.controls['members'].value, value.trim()]);
       this.projectForm.controls['members'].updateValueAndValidity();
-      // this.courseIds.updateValueAndValidity();
     }
 
-    // Reset the input value
-    // if (input) {
-    //   input.value = '';
-    // }
-
-
-
-
-
-
-
-    // this.projectForm.controls['members'].setValue([...this.projectForm.controls['members'].value]);
-    // this.projectForm.controls['members'].updateValueAndValidity();
-    // this.projectForm.controls['members'].setValue(event.option.viewValue);
-    // this.projectForm.controls['members'].updateValueAndValidity();
     this.fruitInput.nativeElement.value = '';
     this.fruitCtrl.setValue(null);
-    //this.fruits.push(event.option.viewValue);
-    // this.fruitInput.nativeElement.value = '';
-    // this.fruitCtrl.setValue(null);
   }
 
   private _filter(value: string): string[] {
@@ -557,11 +450,7 @@ export class AddProjectComponent implements OnInit {
         panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
         data: "you don't have permissions to add project"
       });
-      //return;
     }
-    //this.progressPermissionsEdit = this.permissions.permissions[0].ParentChildchecklist[1].childList[0]
-    //console.log(this.progressPermissionsView)
-    //console.log(this.progressPermissionsEdit)
     this.activeRoute.params.subscribe((params: any) => {
       console.log(params.id)
       this.projectId = params.id
@@ -576,7 +465,9 @@ export class AddProjectComponent implements OnInit {
 
       if (this.projectId && this.projectNameVal) {
         this.dataAnalysis.getProjectById(this.projectId).subscribe(data => {
-          this.project = data
+          this.project = data;
+          console.log("data", data);
+
           this.projectForm.patchValue(this.project)
           if (this.project.imageUrl) {
             this.imageUrl = this.project.imageUrl
@@ -584,8 +475,6 @@ export class AddProjectComponent implements OnInit {
             this.imageUrl = null
           }
         })
-
-
         this.showMaster = false;
         this.showAddProject = true;
         this.addPro = false;
@@ -595,16 +484,16 @@ export class AddProjectComponent implements OnInit {
       }
     });
 
-    this.taskService.getTasks().subscribe(data => {
-      //this.spinner.hide()
-      this.tasks = data
-      console.log(this.tasks)
-    })
+    // this.taskService.getTasks().subscribe(data => {
+    //   //this.spinner.hide()
+    //   this.tasks = data
+    //   console.log(this.tasks)
+    // })
 
-    this.taskService.getOnlyTasks().subscribe(data => {
-      this.tasksData = data
-      console.log(this.tasksData)
-    })
+    // this.taskService.getOnlyTasks().subscribe(data => {
+    //   this.tasksData = data
+    //   console.log(this.tasksData)
+    // })
 
     this.userService.getUserss().subscribe(data => {
       this.users = data

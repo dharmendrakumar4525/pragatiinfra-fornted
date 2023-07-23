@@ -88,7 +88,48 @@
           </div>
         </div>
       </div>
+
+
+
       <div class="col-md-4">
+        <div class="custom-form-group">
+          <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> R1 Schedule Prepared date
+            <span class="star">*</span>
+            <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
+          </label>
+          <div class="custom-form-control">
+            <mat-form-field appearance="outline">
+              <input matInput [matDatepicker]="r1Picker" formControlName="r1Date" placeholder="Enter R1 Prepared date"
+                style="font-family: 'Poppins';" (click)="r1Picker.open()" />
+              <mat-datepicker-toggle matSuffix [for]="r1Picker"></mat-datepicker-toggle>
+              <mat-datepicker #r1Picker></mat-datepicker>
+              <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
+                <span *ngIf="startDate.hasError('required')"> Start date is required </span>
+              </mat-error> -->
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="custom-form-group">
+          <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> R2 Schedule Prepared date
+            <span class="star">*</span>
+            <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
+          </label>
+          <div class="custom-form-control">
+            <mat-form-field appearance="outline">
+              <input matInput [matDatepicker]="r2Picker" formControlName="r2Date" placeholder="Enter R2 Prepared date"
+                style="font-family: 'Poppins';" (click)="r2Picker.open()" />
+              <mat-datepicker-toggle matSuffix [for]="r2Picker"></mat-datepicker-toggle>
+              <mat-datepicker #r2Picker></mat-datepicker>
+              <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
+                <span *ngIf="startDate.hasError('required')"> Start date is required </span>
+              </mat-error> -->
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
         <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';">Project Members<span
           class="star">*</span></label>
 
@@ -113,47 +154,7 @@
           </mat-form-field>
 
       </div>
-      
-
       <div class="col-md-4">
-        <div class="custom-form-group">
-          <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> R1 Schedule Prepared date
-            <span class="star">*</span>
-            <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
-          </label>
-          <div class="custom-form-control">
-            <mat-form-field appearance="outline">
-              <input matInput [matDatepicker]="r1Picker" formControlName="r1Date" placeholder="Enter R1 Prepared date"
-                style="font-family: 'Poppins';" (click)="r1Picker.open()" />
-              <mat-datepicker-toggle matSuffix [for]="r1Picker"></mat-datepicker-toggle>
-              <mat-datepicker #r1Picker></mat-datepicker>
-              <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
-                <span *ngIf="startDate.hasError('required')"> Start date is required </span>
-              </mat-error> -->
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="custom-form-group">
-          <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> R2 Schedule Prepared date
-            <span class="star">*</span>
-            <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
-          </label>
-          <div class="custom-form-control">
-            <mat-form-field appearance="outline">
-              <input matInput [matDatepicker]="r2Picker" formControlName="r2Date" placeholder="Enter R2 Prepared date"
-                style="font-family: 'Poppins';" (click)="r2Picker.open()" />
-              <mat-datepicker-toggle matSuffix [for]="r2Picker"></mat-datepicker-toggle>
-              <mat-datepicker #r2Picker></mat-datepicker>
-              <!-- <mat-error *ngIf="startDate.invalid && ( startDate.dirty || startDate.touched )">
-                <span *ngIf="startDate.hasError('required')"> Start date is required </span>
-              </mat-error> -->
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
         <div class="custom-form-group">
           <label class="custom-label" style="color: #3568BA;">Project Image</label>
           <div class="custom-form-control" fxLayout="row" fxLayoutAlign="center center">
@@ -251,9 +252,9 @@
         <!-- <div class="location-container" *ngFor="let locationItem of locationsList">
 
           <div class="location-list">
-            <div class="info-section">               
+            <div class="info-section">
                 <mat-icon>keyboard_arrow_right</mat-icon>
-             
+
               <span class="location-name">
                   {{locationItem.location_name}}
               </span>
@@ -266,8 +267,8 @@
 
           <ng-container *ngFor="let structureItem of locationItem.structures">
             <div class="structure-list">
-              <div class="info-section">               
-                  <mat-icon>keyboard_arrow_right</mat-icon>                 
+              <div class="info-section">
+                  <mat-icon>keyboard_arrow_right</mat-icon>
                 <span class="structure-name">
                  {{structureItem.structure_name}}
                 </span>
@@ -282,7 +283,7 @@
 
 
             <div class="activity-list" *ngFor="let activityItem of structureItem.activities">
-              <div class="info-section">                   
+              <div class="info-section">
                 <span class="Item-name">
                  {{activityItem.activity_name}}
                 </span>

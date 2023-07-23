@@ -17,32 +17,60 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   openSidebar: boolean = false;
   link_name = "";
   obj = [];
-  masterManagementObj = [{
-    link_name: "Site Master",
-    link: "/site",
-    img: './assets/images/icons/Buser.svg',
-  }, {
-    link_name: "Vendor Master",
-    link: "/vendor",
-    img: './assets/images/icons/Broles.svg',
-  }, {
-    link_name: "Category Manager",
-    link: "/category",
-    img: './assets/images/icons/Bpermission.svg',
-  },
-  {
-    link_name: "Sub Category Manager",
-    link: '/sub-category',
-    icon: "bx bx-collection",
-    img: './assets/images/icons/Bactivity.svg',
-  },
+  masterManagementObj = [
+    {
+      link_name: "Activity Master",
+      link: "/activity",
+      img: './assets/images/icons/Buser.svg',
+    },
+    {
+      link_name: "GST Master",
+      link: "/gst",
+      img: './assets/images/icons/Buser.svg',
+    },
+    {
+      link_name: "Item Master",
+      link: "/item",
+      img: './assets/images/icons/Buser.svg',
+    },
+    {
+      link_name: "Location Master",
+      link: "/location",
+      img: './assets/images/icons/Buser.svg',
+    },
+    {
+      link_name: "Site Master",
+      link: "/site",
+      img: './assets/images/icons/Buser.svg',
+    },
+    {
+      link_name: "Structure Master",
+      link: "/structure",
+      img: './assets/images/icons/Buser.svg',
+    },
 
-  {
-    link_name: "UOM Manager",
-    link: '/uom',
-    icon: "bx bx-collection",
-    img: './assets/images/icons/Bsubactivity.svg',
-  },
+    {
+      link_name: "Vendor Master",
+      link: "/vendor",
+      img: './assets/images/icons/Broles.svg',
+    }, {
+      link_name: "Category Manager",
+      link: "/category",
+      img: './assets/images/icons/Bpermission.svg',
+    },
+    {
+      link_name: "Sub Category Manager",
+      link: '/sub-category',
+      icon: "bx bx-collection",
+      img: './assets/images/icons/Bactivity.svg',
+    },
+
+    {
+      link_name: "UOM Manager",
+      link: '/uom',
+      icon: "bx bx-collection",
+      img: './assets/images/icons/Bsubactivity.svg',
+    },
   ]
   menuSidebar = [
     {
@@ -98,7 +126,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       sub_menu: [
 
       ]
-    } 
+    }
 
   ]
 
@@ -182,12 +210,12 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
         //img:'../../../assets/images/icons/activity.svg',
       },
       ]
-    } 
+    }
 
   ]
 
 
-  openMenu:Array<any> = [];
+  openMenu: Array<any> = [];
 
 
 
@@ -246,15 +274,15 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
 
 
-  addSubItems(item,index:any) {
+  addSubItems(item, index: any) {
     console.log(item)
     if (!item?.sub_menu) {
       this.router.navigate([item.link]);
     } else {
 
-      this.openSidebar = !this.openSidebar  
-      
-      this.openMenu[index] = !this.openMenu[index];      
+      this.openSidebar = !this.openSidebar
+
+      this.openMenu[index] = !this.openMenu[index];
 
     }
 
