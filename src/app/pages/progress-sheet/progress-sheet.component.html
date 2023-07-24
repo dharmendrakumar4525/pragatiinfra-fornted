@@ -68,10 +68,6 @@
   <h3 style="font-family: 'Poppins';">Project progress monitoring sheets(PPMS)</h3>
 </div>
 
-<!-- <button (click)="addLocation()" class="button">
-  Add Location
-</button> -->
-
 <body>
   <div class="scroll-bar1" style="width: 93%;">
     <table *ngIf="progressPermissionsView?.isSelected; else noView" style="direction: ltr !important;">
@@ -124,13 +120,13 @@
                 </div>
               </div>
             </td>
+            <td>{{locationItem.structures | psMinTableDate:'location':'r1EndDate':'max'}}</td>
+            <td>{{locationItem.structures | psMinTableDate:'location':'r2EndDate':'max'}}</td>
+            <td>{{locationItem.structures | psMinTableDate:'location':'r3EndDate':'max'}}</td>
+            <td>{{locationItem.structures | psMinTableDate:'location':'actual_revised_start_date':'min'}}</td>
             <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>{{locationItem.structures | psMinTableDate:'location':'base_line_start_date'}}</td>
-            <td></td>
+            <td>{{locationItem.structures | psMinTableDate:'location':'base_line_start_date':'min'}}</td>
+            <td>{{locationItem.structures | psMinTableDate:'location':'base_line_end_date':'max'}}</td>
             <td></td>
 
             <td></td>
@@ -163,13 +159,14 @@
                   </div>
                 </div>
               </td>
+
+              <td>{{structureItem.activities | psMinTableDate:'structure':'r1EndDate':'max'}}</td>
+              <td>{{structureItem.activities | psMinTableDate:'structure':'r2EndDate':'max'}}</td>
+              <td>{{structureItem.activities | psMinTableDate:'structure':'r3EndDate':'max'}}</td>
+              <td>{{structureItem.activities | psMinTableDate:'structure':'actual_revised_start_date':'min'}}</td>
               <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>{{structureItem.activities | psMinTableDate:'structure':'base_line_start_date'}}</td>
-              <td></td>
+              <td>{{structureItem.activities | psMinTableDate:'structure':'base_line_start_date':'min'}}</td>
+              <td>{{structureItem.activities | psMinTableDate:'structure':'base_line_end_date':'max'}}</td>
               <td></td>
 
               <td></td>

@@ -2,7 +2,8 @@
 
 
   <div *ngIf="showAddProject">
-    <div style="padding: 1rem;margin-top: 40px;border-bottom: 1px solid #ccc;padding-bottom: 20px;    margin-bottom: 15px">
+    <div
+      style="padding: 1rem;margin-top: 40px;border-bottom: 1px solid #ccc;padding-bottom: 20px;    margin-bottom: 15px">
       <span style="color: #2E2E2E;font-size: 30px;font-family: 'Poppins';font-weight: 600;">Add New Project</span>
     </div>
 
@@ -36,8 +37,8 @@
           </label>
           <div class="custom-form-control">
             <mat-form-field appearance="outline">
-              <input matInput [matDatepicker]="startPicker" formControlName="projectDate"
-                placeholder="Enter start date" style="font-family: 'Poppins';" (click)="startPicker.open()" />
+              <input matInput [matDatepicker]="startPicker" formControlName="projectDate" placeholder="Enter start date"
+                style="font-family: 'Poppins';" (click)="startPicker.open()" />
               <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
               <mat-datepicker #startPicker></mat-datepicker>
               <mat-error *ngIf="projectDate.invalid && ( projectDate.dirty || projectDate.touched )">
@@ -53,7 +54,7 @@
 
       <div class="col-md-4">
         <div class="custom-form-group">
-          <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';">Location<span
+          <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';">Project Location<span
               class="star">*</span></label>
           <div class="custom-form-control">
             <mat-form-field appearance="outline">
@@ -72,7 +73,7 @@
       <div class="col-md-4">
         <div class="custom-form-group">
           <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> R0
-            Schedule Prepared date <span class="star">*</span>
+            Schedule Prepared date
             <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
           </label>
           <div class="custom-form-control">
@@ -94,7 +95,7 @@
       <div class="col-md-4">
         <div class="custom-form-group">
           <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> R1 Schedule Prepared date
-            <span class="star">*</span>
+
             <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
           </label>
           <div class="custom-form-control">
@@ -113,8 +114,7 @@
       <div class="col-md-4">
         <div class="custom-form-group">
           <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';"> R2 Schedule Prepared date
-            <span class="star">*</span>
-            <!-- <span class="custom-hint">(Hint: Enter {{ sentenceCase('name') }} )</span> -->
+
           </label>
           <div class="custom-form-control">
             <mat-form-field appearance="outline">
@@ -131,27 +131,27 @@
       </div>
       <div class="col-md-8">
         <label class="custom-label" for="" style="color: #3568BA;font-family: 'Poppins';">Project Members<span
-          class="star">*</span></label>
+            class="star">*</span></label>
 
-          <mat-form-field class="example-chip-list" appearance="outline">
-            <mat-chip-list #chipList aria-label="Enter members" formControlName="members">
-              <mat-chip *ngFor="let tag of projectForm.controls['members'].value" [selectable]="selectable"
-                [removable]="removable" (removed)="removeTag(tag)">
-                {{tag}}
-                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-              </mat-chip>
-              <input placeholder="Add project members" style="font-family: 'Poppins';" #fruitInput
-                [matChipInputFor]="chipList" [formControl]="fruitCtrl" [matAutocomplete]="auto"
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                (matChipInputTokenEnd)="addTag($event)"><i class="fa fa-plus" aria-hidden="true"
-                style="margin-right:20px;margin-bottom: 10px;cursor: pointer;"></i>
-            </mat-chip-list>
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-              <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit.email">
-                {{fruit.email}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
+        <mat-form-field class="example-chip-list" appearance="outline">
+          <mat-chip-list #chipList aria-label="Enter members" formControlName="members">
+            <mat-chip *ngFor="let tag of projectForm.controls['members'].value" [selectable]="selectable"
+              [removable]="removable" (removed)="removeTag(tag)">
+              {{tag}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Add project members" style="font-family: 'Poppins';" #fruitInput
+              [matChipInputFor]="chipList" [formControl]="fruitCtrl" [matAutocomplete]="auto"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="addTag($event)"><i class="fa fa-plus" aria-hidden="true"
+              style="margin-right:20px;margin-bottom: 10px;cursor: pointer;"></i>
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit.email">
+              {{fruit.email}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
 
       </div>
       <div class="col-md-4">
@@ -162,8 +162,9 @@
               style="background-color: #fff;">
               <img src="../../../assets/images/icons/upload-file.svg" class="mb-15" alt="upload-file">
               <h5 style="color: #3568BA;">Project Image</h5>
-              <input type="file" style="font-family: Poppins;position: absolute;top: 0;left: 0;width: 100%;height: 100%;opacity: 0;" class="uploadImg" id="imageUpload"
-                accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)">
+              <input type="file"
+                style="font-family: Poppins;position: absolute;top: 0;left: 0;width: 100%;height: 100%;opacity: 0;"
+                class="uploadImg" id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)">
             </div>
             <div class="upload-file" style="margin-left: 20px;" *ngIf="imageUrl">
 
