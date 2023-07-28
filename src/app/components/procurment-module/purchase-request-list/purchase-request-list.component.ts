@@ -5,7 +5,6 @@ import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { Router } from '@angular/router';
 import { isEmpty } from 'lodash';
-import * as moment from 'moment';
 @Component({
   selector: 'app-purchase-request-list',
   templateUrl: './purchase-request-list.component.html',
@@ -23,24 +22,21 @@ export class PurchaseRequestListComponent implements OnInit {
   }
 
   getList() {
-    this.httpService.GET(PURCHASE_REQUEST_API, "").subscribe((resp: any) => {
-      console.log("--------->", resp);
-      this.purchaseList = resp.data;
-
-      this.snack.notify("Purchase requrest has been created.", 1);
-
-
-    }, (err) => {
-      if (err.errors && !isEmpty(err.errors)) {
-        let errMessage = '<ul>';
-        for (let e in err.errors) {
-          let objData = err.errors[e];
-          errMessage += `<li>${objData[0]}</li>`;
+    this.httpService.GET(PURCHASE_REQUEST_API, "").subscribe({
+      next: (resp: any) => {
+        this.purchaseList = resp.data;
+      }, error: (err) => {
+        if (err.errors && !isEmpty(err.errors)) {
+          let errMessage = '<ul>';
+          for (let e in err.errors) {
+            let objData = err.errors[e];
+            errMessage += `<li>${objData[0]}</li>`;
+          }
+          errMessage += '</ul>';
+          this.snack.notifyHtml(errMessage, 2);
+        } else {
+          this.snack.notify(err.message, 2);
         }
-        errMessage += '</ul>';
-        this.snack.notifyHtml(errMessage, 2);
-      } else {
-        this.snack.notify(err.message, 2);
       }
     });
   }
@@ -55,7 +51,6 @@ export class PurchaseRequestListComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
 
 
 }

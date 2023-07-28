@@ -146,12 +146,12 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       img: '../../../assets/images/icons/dmr.svg',
     },
 
-    // {
-    //   link_name: "Procurements",
-    //   link: '/procurement',
-    //   icon: "bx bx-collection",
-    //   img: '../../../assets/images/icons/procure.svg',
-    // },
+    {
+      link_name: "Procurements",
+      link: '/procurement',
+      icon: "bx bx-collection",
+      img: '../../../assets/images/icons/procure.svg',
+    },
 
     {
       link_name: "Master Management",
