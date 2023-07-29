@@ -27,7 +27,6 @@ export class PsMinTableDatePipe implements PipeTransform {
       var date: any;
       if (order == 'min' && dateArray.length > 0) date = new Date(Math.min.apply(null, dateArray));
       if (order == 'max' && dateArray.length > 0) date = new Date(Math.max.apply(null, dateArray));
-
       if (dateArray.length > 0) date = moment(date).format("MMM DD, YYYY");
 
 
