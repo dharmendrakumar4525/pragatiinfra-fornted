@@ -20,7 +20,7 @@ export class PurchaseRequestComponent implements OnInit {
   id: any;
   siteList: any;
   load = false;
-  items: FormArray;
+  items: FormArray | any = [];
   uomList: any;
   itemList: any;
   constructor(
@@ -39,12 +39,14 @@ export class PurchaseRequestComponent implements OnInit {
     site: new FormControl('', Validators.required),
     local_purchase: new FormControl('yes', Validators.required),
     remarks: new FormControl(''),
-    items: this.formBuilder.array([this.createItemArrayForm()]),
+    items: this.formBuilder.array([]),
   });
 
 
 
   createItemArrayForm() {
+    // this.items = this.purchaseRequestForm.get('items') as FormArray;
+
     return new FormGroup({
       item_id: new FormControl('', Validators.required),
       qty: new FormControl('', Validators.required),
@@ -55,7 +57,6 @@ export class PurchaseRequestComponent implements OnInit {
       uom: new FormControl(null, Validators.required),
 
     })
-
   }
 
   onSubmit() {
@@ -144,5 +145,6 @@ export class PurchaseRequestComponent implements OnInit {
 
   ngOnInit(): void {
     this.getList();
+    this.addItem();
   }
 }
