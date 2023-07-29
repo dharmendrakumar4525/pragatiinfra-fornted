@@ -259,8 +259,12 @@ export class AddDataComponent implements OnInit {
     this.itemForm.value.dailyAskingRateasperRevisedEndDate = dailyAskingRateasperRevisedEndDate
     this.itemForm.value.dailyAskingRateasperbaseLine = dailyAskingRateasperbaseLine
     this.itemForm.value.noofDaysBalanceasperbaseLine = noofDaysBalanceasperbaseLine
-
-    if (this.itemForm.value.addRevisesDates.length == 1) {
+    if (this.itemForm.value.addRevisesDates.length == 0) {
+      this.itemForm.value.r1EndDate = null
+      this.itemForm.value.r2EndDate = null
+      this.itemForm.value.r3EndDate = null
+    }
+    else if (this.itemForm.value.addRevisesDates.length == 1) {
       this.itemForm.value.r1EndDate = this.itemForm.value.addRevisesDates[0].revisedDate
       this.itemForm.value.r2EndDate = null
       this.itemForm.value.r3EndDate = null

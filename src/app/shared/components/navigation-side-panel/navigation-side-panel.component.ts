@@ -148,9 +148,21 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
     {
       link_name: "Procurements",
-      link: '/procurement',
+      link: null,
       icon: "bx bx-collection",
       img: '../../../assets/images/icons/procure.svg',
+      sub_menu:[
+        {
+          link_name: "Add Procurement",
+          link: "/procurement",
+          img: './assets/images/icons/Buser.svg',
+        },
+        {
+          link_name: "Procurements List",
+          link: "/procurement/prList",
+          img: './assets/images/icons/Buser.svg',
+        }       
+      ]
     },
 
     {

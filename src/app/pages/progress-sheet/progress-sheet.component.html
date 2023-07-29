@@ -160,7 +160,11 @@
                 </div>
               </td>
 
-              <td>{{structureItem.activities | psMinTableDate:'structure':'r1EndDate':'max'}}</td>
+              <td>
+                <ng-container >
+                  {{structureItem.activities | psMinTableDate:'structure':'r1EndDate':'max'}}
+                </ng-container>
+              </td>
               <td>{{structureItem.activities | psMinTableDate:'structure':'r2EndDate':'max'}}</td>
               <td>{{structureItem.activities | psMinTableDate:'structure':'r3EndDate':'max'}}</td>
               <td>{{structureItem.activities | psMinTableDate:'structure':'actual_revised_start_date':'min'}}</td>

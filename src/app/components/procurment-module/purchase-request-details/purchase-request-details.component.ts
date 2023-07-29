@@ -165,7 +165,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
 
   updateRequest(status: any) {
     this.httpService.PUT(PURCHASE_REQUEST_API, { _id: this.details._id, status: status, remarks: this.purchaseRequestForm.value.remarks }).subscribe(res => {
-      this.router.navigate(['procurement/prList'])
+      this.router.navigate(['/procurement/prList'])
     })
   }
 
@@ -177,7 +177,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
             this.details = res.data[0];
             this.patchData(res.data[0]);
           }, error: (error) => {
-            this.router.navigate(['procurement/prList'])
+            this.router.navigate(['/procurement/prList'])
           }
         })
       }
