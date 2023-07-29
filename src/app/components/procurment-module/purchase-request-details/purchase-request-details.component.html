@@ -57,15 +57,19 @@
   <mat-card class="topcard">
     <div style="display: flex;flex-wrap: wrap;gap:40px;width:1000px">
       <div style="display: flex;flex-direction: column;">
-        <label style="color: #4272BF;font-size: 14px;">Request title <span class="star">*</span></label>
-        <input placeholder="Enter title" formControlName="title"
+        <label style="color: #4272BF;font-size: 14px;">Request title </label>
+        <input placeholder="Enter title" formControlName="title" [readonly]="true"
           style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
       </div>
       <div style="display: flex;flex-direction: column;margin-left: 100px;">
         <label style="color: #4272BF;font-size: 14px;">Request date</label>
-        <input placeholder="Auto generate" formControlName="date" [readonly]="true"
-          style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+        <mat-form-field appearance="outline">
+          <input matInput [matDatepicker]="date" [readonly]="true" formControlName="date"
+            placeholder="Auto generate Request Date" />
+          <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+          <mat-datepicker #date></mat-datepicker>
 
+        </mat-form-field>
       </div>
 
       <div class="custom-form-group">
@@ -74,8 +78,8 @@
         </label>
         <div class="custom-form-control">
           <mat-form-field appearance="outline">
-            <input matInput [matDatepicker]="requiredByStartDate" formControlName="expected_delivery_date"
-              placeholder="Enter base Line Start Date" (click)="requiredByStartDate.open()" />
+            <input matInput [matDatepicker]="requiredByStartDate" [readonly]="true"
+              formControlName="expected_delivery_date" placeholder="Enter base Line Start Date" />
             <mat-datepicker-toggle matSuffix [for]="requiredByStartDate"></mat-datepicker-toggle>
             <mat-datepicker #requiredByStartDate></mat-datepicker>
 
@@ -94,7 +98,8 @@
         <label style="color: #4272BF;font-size: 14px;">Site name <span class="star">*</span></label>
 
         <mat-select id="site" placeholder="Select site" formControlName="site"
-          style="padding: 10px;width: 200px;border:1px solid #9F9F9F;border-radius: 6px;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+          style="padding: 10px;width: 200px;border:1px solid #9F9F9F;border-radius: 6px;cursor: pointer;margin-top: 10px;font-family: 'Poppins';"
+          [disabled]="true">
           <mat-option [value]="item._id" *ngFor="let item of siteList">
             {{item.site_name}}
           </mat-option>
@@ -103,19 +108,15 @@
       </div>
       <div style="display: flex;flex-direction: column;margin-left: 100px;">
         <label style="color: #4272BF;">Local Purchase <span class="star">*</span></label>
-        <!-- <mat-radio-group aria-labelledby="example-radio-group-label" color="primary" class="example-radio-group"
-          formControlName="local_purchase">
+        <mat-radio-group aria-labelledby="example-radio-group-label" color="primary" class="example-radio-group"
+          formControlName="local_purchase" [disabled]="true">
           <mat-radio-button class="example-radio-button" [value]="'yes'">
             Yes
           </mat-radio-button>
           <mat-radio-button class="example-radio-button" [value]="'no'">
             No
           </mat-radio-button>
-        </mat-radio-group> -->
-        <!-- <div style="margin-top: 20px;">
-          <mat-checkbox color="primary">Yes</mat-checkbox>
-          <mat-checkbox style="margin-left: 30px;" color="primary">No</mat-checkbox>
-        </div> -->
+        </mat-radio-group>
       </div>
     </div>
   </mat-card>
@@ -132,63 +133,63 @@
         <th>Sub&nbsp;category</th>
         <th>Uom*</th>
         <th>Quantity*</th>
-        <th>Attachments</th>
+        <!-- <th>Attachments</th> -->
         <th>Remarks</th>
       </tr>
 
 
 
       <tbody>
-        <tr style="background-color: #F4F4F5;" formArrayName="items"
-          *ngFor="let item of purchaseRequestForm.get('items')['controls']; let i = index;">
+        <tr style="background-color: #F4F4F5;" *ngFor="let item of details?.items; let i = index;">
           <td style="text-align: center;">
             {{i+1}}
           </td>
-          <ng-container [formGroupName]="i">
-            <td>
-              <mat-select id="itemName" placeholder="Select site" formControlName="item_id" class="select-form-field">
-                <mat-option [value]="item._id" *ngFor="let item of itemList">
-                  {{item.item_name}}
-                </mat-option>
+          <td>
+            {{getItemName(item.item_id)}}
 
-              </mat-select>
-            </td>
-            <td style="color: #000;">
-              {{item.get('category')?.value}}
-            </td>
-            <td style="color: #000;">
-              {{item.get('subCategory')?.value}}
-            </td>
-            <td>
-              <mat-select id="itemName" placeholder="Select site" formControlName="uom" class="select-form-field">
-                <mat-option [value]="item._id" *ngFor="let item of uomList">
-                  {{item.unit}}
-                </mat-option>
+          </td>
+          <td style="color: #000;">
+            {{item.categoryDetail.name}}
+          </td>
+          <td style="color: #000;">
+            {{item.subCategoryDetail.subcategory_name}}
+          </td>
+          <td>
+            {{item.uomDetail.uom_name}}
+          </td>
 
-              </mat-select>
-            </td>
-            <td>
-              <input placeholder="Enter" formControlName="qty" type="number" class="pr-form-field">
-            </td>
-            <td>
-              <input placeholder="Enter" formControlName="attachment" type="file" class="pr-form-field">
-            </td>
-            <td>
-              <input placeholder="Enter" formControlName="remark" class="pr-form-field">
-            </td>
-          </ng-container>
+          <td>
+            {{item.qty}}
+          </td>
+          <!-- <td>
+            <input placeholder="Enter" formControlName="attachment" type="file" class="pr-form-field">
+          </td> -->
+          <td>
+            {{item.remark}}
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
+  <div class="row">
+    Remarks
+    <textarea name="" id="" cols="30" rows="10" formControlName="remarks"></textarea>
 
+  </div>
+  <div class="row">
+    <div>
+      <button (click)="updateRequest('approved')"
+        style="padding: 8px;width: 120px;background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-size: 14px;font-family: 'Poppins';">Approved</button>
+    </div>
+    <div>
+      <button (click)="updateRequest('rejected')"
+        style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">Rejected</button>
+    </div>
+    <div>
+      <button (click)="updateRequest('revise')"
+        style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">Revise
+        request</button>
+    </div>
 
-  <div style="display: flex;flex-direction: row;gap: 10px;float: right;position: relative;top:-120px;right:60px">
-    <div><button
-        style="padding: 8px;width: 120px;background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-size: 14px;font-family: 'Poppins';">Submit</button>
-    </div>
-    <div><button
-        style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">Clear</button>
-    </div>
   </div>
 </form>

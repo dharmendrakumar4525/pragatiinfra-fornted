@@ -75,7 +75,7 @@
         <div class="custom-form-control">
           <mat-form-field appearance="outline">
             <input matInput [matDatepicker]="requiredByStartDate" formControlName="expected_delivery_date"
-              placeholder="Enter base Line Start Date" (click)="requiredByStartDate.open()" />
+              placeholder="Enter base Line Start Date" [min]="requredByMinDate" (click)="requiredByStartDate.open()" />
             <mat-datepicker-toggle matSuffix [for]="requiredByStartDate"></mat-datepicker-toggle>
             <mat-datepicker #requiredByStartDate></mat-datepicker>
 
@@ -140,7 +140,7 @@
 
 
       <tbody>
-         <tr style="background-color: #F4F4F5;" formArrayName="items"
+        <tr style="background-color: #F4F4F5;" formArrayName="items"
           *ngFor="let item of purchaseRequestForm.get('items')['controls']; let i = index;">
           <td style="text-align: center;">
             {{i+1}}
@@ -162,7 +162,7 @@
               {{item.get('subCategory')?.value}}
             </td>
             <td>
-              <mat-select id="itemName" placeholder="Select site" formControlName="uom" class="select-form-field">
+              <mat-select id="itemName" placeholder="Select UOM" formControlName="uom" class="select-form-field">
                 <mat-option [value]="item._id" *ngFor="let item of uomList">
                   {{item.unit}}
                 </mat-option>
@@ -170,7 +170,7 @@
               </mat-select>
             </td>
             <td>
-              <input placeholder="Enter" formControlName="qty" type="number" class="pr-form-field">
+              <input type="text" placeholder="Enter" digitOnly formControlName="qty"  class="pr-form-field">
             </td>
             <td>
               <input placeholder="Enter" formControlName="attachment" type="file" class="pr-form-field">

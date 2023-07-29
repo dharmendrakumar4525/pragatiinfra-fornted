@@ -23,8 +23,8 @@ export class PurchaseRequestDetailsComponent implements OnInit {
   items: FormArray;
   purchaseRequestForm = new FormGroup({
     title: new FormControl('', Validators.required),
-    date: new FormControl(moment().format('DD-MM-YYYY'), Validators.required),
-    expected_delivery_date: new FormControl(moment().add(1, 'days').format('DD-MM-YYYY'), Validators.required),
+    date: new FormControl('', Validators.required),
+    expected_delivery_date: new FormControl('', Validators.required),
     purchase_request_number: new FormControl(''),
     site: new FormControl('', Validators.required),
     local_purchase: new FormControl('', Validators.required),
@@ -34,6 +34,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
   });
   uomList: any;
   itemList: any;
+  details: any = {};
 
   constructor(
     private router: Router,
@@ -44,16 +45,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
     private http: HttpClient
   ) {
     this.getList();
-    this.route.params.subscribe(params => {
-      console.log(params) //log the entire params object
-      console.log(params['id']);
-      if (params['id']) {
-        this.httpService.GET(`${PURCHASE_REQUEST_API}/detail`, { _id: params['id'] }).subscribe(res => {
-          console.log(res);
-          this.patchData(res.data[0]);
-        })
-      }
-    });
+
 
   }
 
@@ -68,7 +60,6 @@ export class PurchaseRequestDetailsComponent implements OnInit {
         this.itemList = res[1].data;
         this.siteList = res[2].data;
       }
-
     })
   }
 
@@ -76,19 +67,12 @@ export class PurchaseRequestDetailsComponent implements OnInit {
     this.purchaseRequestForm.patchValue({
       title: data.title,
       date: data.date,
-      expected_delivery_date: data.date,
+      expected_delivery_date: data.expected_delivery_date,
       purchase_request_number: data.purchase_request_number,
       site: data.site,
       local_purchase: data.local_purchase,
       remarks: data.remarks,
     });
-
-    if (data.items && data.items.length > 0) {
-      data.items.map((item: any) => {
-        this.addItems(item);
-      })
-    }
-
   }
 
 
@@ -175,11 +159,28 @@ export class PurchaseRequestDetailsComponent implements OnInit {
     })
   }
 
+  getItemName(id: any) {
+    return this.itemList.filter(obj => obj._id == id)[0].item_name;
+  }
 
-
-
+  updateRequest(status: any) {
+    this.httpService.PUT(PURCHASE_REQUEST_API, { _id: this.details._id, status: status, remarks: this.purchaseRequestForm.value.remarks }).subscribe(res => {
+      this.router.navigate(['procurement/prList'])
+    })
+  }
 
   ngOnInit(): void {
-    this.getSiteList();
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.httpService.GET(`${PURCHASE_REQUEST_API}/detail`, { _id: params['id'] }).subscribe({
+          next: res => {
+            this.details = res.data[0];
+            this.patchData(res.data[0]);
+          }, error: (error) => {
+            this.router.navigate(['procurement/prList'])
+          }
+        })
+      }
+    });
   }
 }

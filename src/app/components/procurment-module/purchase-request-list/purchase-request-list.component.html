@@ -87,7 +87,8 @@
         <hr style="border: 1px solid #D9D9D9;height: 30px;">
         <td style="color: #4272BF;width:800px;text-align: left;padding: 10px;">Site &nbsp; {{obj.siteData.site_name}}
         </td>
-        <td style="background-color: #233A61;color:#fff;width:150px" (click)="viewDetails(obj._id)">View&nbsp;details
+        <td style="background-color: #233A61;color:#fff;width:150px" [routerLink]="['/procurement',obj._id]">
+          View&nbsp;details
         </td>
         <td style="width: 100px;"><mat-icon>
             arrow_forward_ios

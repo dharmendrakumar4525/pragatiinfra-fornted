@@ -13,7 +13,7 @@ export const environment = {
   app_name:"pragati-infra-local",
   encryption: false,
   environmentType:'local',
-  api_path: 'http://localhost:3000/pragati-infra/api/web',
+  api_path: 'https://pr.avidusinteractive.com/api/web',
   cookiesOptions: {
     storeUnencoded: true,
     sameSite: 'Strict',
