@@ -24,7 +24,7 @@ const routes: Routes = [
     component: PurchaseRequestDetailsComponent
   },
   {
-    path: "revised/:id",
+    path: "revise/:id",
     component: RevisePurchaseRequestComponent
   },
 

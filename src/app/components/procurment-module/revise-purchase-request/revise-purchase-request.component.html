@@ -63,8 +63,22 @@
       </div>
       <div style="display: flex;flex-direction: column;margin-left: 100px;">
         <label style="color: #4272BF;font-size: 14px;">Request date</label>
-        <input placeholder="Auto generate" formControlName="date" [readonly]="true"
-          style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+
+        <!-- <input matInput [matDatepicker]="date" [readonly]="true" formControlName="date"
+            placeholder="Auto generate Request Date" (click)="date.open()"  style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';"/>
+          <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+          <mat-datepicker #date></mat-datepicker> -->
+          <div class="custom-form-control">
+            <mat-form-field appearance="outline">
+              <input matInput [matDatepicker]="date" formControlName="date"
+                placeholder="Enter base Line Start Date" [min]="requredByMinDate" (click)="date.open()" />
+              <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+              <mat-datepicker #date></mat-datepicker>
+
+            </mat-form-field>
+          </div>
+        <!-- <input placeholder="Auto generate" formControlName="date" [readonly]="true"
+          style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';"> -->
 
       </div>
 

@@ -12,17 +12,18 @@ import { isEmpty } from 'lodash';
 })
 export class PurchaseRequestListComponent implements OnInit {
   purchaseList: any;
-
+  filter_by = "status";
+  filter_value = "pending";
+  requestType = "new";
   constructor(private router: Router,
     private httpService: RequestService,
     private snack: SnackbarService,
-    private formBuilder: FormBuilder
   ) {
-    this.getList();
+    this.getList({ filter_by: this.filter_by, filter_value: this.filter_value });
   }
 
-  getList() {
-    this.httpService.GET(PURCHASE_REQUEST_API, "").subscribe({
+  getList(filterObj: any) {
+    this.httpService.GET(PURCHASE_REQUEST_API, filterObj).subscribe({
       next: (resp: any) => {
         this.purchaseList = resp.data;
       }, error: (err) => {
@@ -41,16 +42,23 @@ export class PurchaseRequestListComponent implements OnInit {
     });
   }
 
-  viewDetails(prId) {
-    let url: string = "procurement/" + prId
-    this.router.navigateByUrl(url);
-
-
-  }
-
   ngOnInit(): void {
 
   }
 
+  changeRequestType(type: any) {
+    this.requestType = type;
+
+    if (type == 'new') {
+      this.filter_value = 'pending';
+
+      this.getList({ filter_by: this.filter_by, filter_value: this.filter_value });
+    }
+    else {
+      this.filter_value = 'revise';
+      this.getList({ filter_by: this.filter_by, filter_value: this.filter_value });
+
+    }
+  }
 
 }

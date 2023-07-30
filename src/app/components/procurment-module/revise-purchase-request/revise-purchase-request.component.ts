@@ -75,7 +75,7 @@ export class RevisePurchaseRequestComponent implements OnInit {
     requestData['date'] = moment(requestData.date, 'DD-MM-YYYY').toDate()
     requestData['expected_delivery_date'] = new Date(requestData.expected_delivery_date)
     this.load = true;
-    this.httpService.POST(PURCHASE_REQUEST_API, requestData).subscribe({
+    this.httpService.PUT(PURCHASE_REQUEST_API, requestData).subscribe({
       next: (resp: any) => {
         this.load = false;
         this.snack.notify("Purchase requrest has been created.", 1);

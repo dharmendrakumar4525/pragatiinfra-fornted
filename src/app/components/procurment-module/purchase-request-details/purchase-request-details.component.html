@@ -51,7 +51,7 @@
   <div class="innerreq">Revised request</div>
 </div>
 
-<form (ngSubmit)="onSubmit()" [formGroup]="purchaseRequestForm">
+<form  [formGroup]="purchaseRequestForm">
 
 
   <mat-card class="topcard">
@@ -79,7 +79,7 @@
         <div class="custom-form-control">
           <mat-form-field appearance="outline">
             <input matInput [matDatepicker]="requiredByStartDate" [readonly]="true"
-              formControlName="expected_delivery_date" placeholder="Enter base Line Start Date" />
+              formControlName="expected_delivery_date" placeholder="Enter Required by" />
             <mat-datepicker-toggle matSuffix [for]="requiredByStartDate"></mat-datepicker-toggle>
             <mat-datepicker #requiredByStartDate></mat-datepicker>
 

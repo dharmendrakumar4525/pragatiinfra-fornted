@@ -114,44 +114,6 @@ export class PurchaseRequestDetailsComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-    if (this.load) {
-      return
-    }
-
-    if (!this.purchaseRequestForm.valid) {
-      return;
-    }
-
-    let requestData: any = this.purchaseRequestForm.value;
-    requestData['requestDate'] = moment(requestData.requestDate, 'DD-MM-YYYY').toDate()
-    requestData['requiredBy'] = new Date(requestData.requiredBy)
-
-    console.log('requestData', requestData)
-
-    this.load = true;
-    this.httpService.POST(PURCHASE_REQUEST_API, requestData).subscribe((resp: any) => {
-      this.load = false;
-      this.snack.notify("Purchase requrest has been created.", 1);
-
-      this.router.navigate(['/prstatus'])
-
-    }, (err) => {
-      this.load = false;
-      if (err.errors && !isEmpty(err.errors)) {
-        let errMessage = '<ul>';
-        for (let e in err.errors) {
-          let objData = err.errors[e];
-          errMessage += `<li>${objData[0]}</li>`;
-        }
-        errMessage += '</ul>';
-        this.snack.notifyHtml(errMessage, 2);
-      } else {
-        this.snack.notify(err.message, 2);
-      }
-    });
-  }
-
 
   getSiteList() {
     this.httpService.GET(GET_SITE_API, {}).subscribe(res => {

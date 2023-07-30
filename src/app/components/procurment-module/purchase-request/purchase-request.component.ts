@@ -15,7 +15,25 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./purchase-request.component.scss']
 })
 export class PurchaseRequestComponent implements OnInit {
-
+  statusOption = new FormControl('pending');
+  statusList = [
+    {
+      value: 'pending',
+      label: 'Pending'
+    },
+    {
+      value: 'approved',
+      label: 'Approved'
+    },
+    {
+      value: 'rejected',
+      label: 'Rejected'
+    },
+    {
+      value: 'revise',
+      label: 'Revise'
+    },
+  ]
   requredByMinDate = new Date();
   id: any;
   siteList: any;
@@ -23,6 +41,9 @@ export class PurchaseRequestComponent implements OnInit {
   items: FormArray | any = [];
   uomList: any;
   itemList: any;
+  option = 1;
+  purchaseList: any;
+  filter_by = "status";
   constructor(
     private router: Router,
     private httpService: RequestService,
@@ -42,22 +63,6 @@ export class PurchaseRequestComponent implements OnInit {
     items: this.formBuilder.array([]),
   });
 
-
-
-  createItemArrayForm() {
-    // this.items = this.purchaseRequestForm.get('items') as FormArray;
-
-    return new FormGroup({
-      item_id: new FormControl('', Validators.required),
-      qty: new FormControl('', Validators.required),
-      category: new FormControl(null),
-      subCategory: new FormControl(null),
-      attachment: new FormControl(null),
-      remark: new FormControl(null),
-      uom: new FormControl(null, Validators.required),
-
-    })
-  }
 
   onSubmit() {
     if (this.load) {
@@ -141,6 +146,31 @@ export class PurchaseRequestComponent implements OnInit {
   delete(i) {
     const remove = this.purchaseRequestForm.get('items') as FormArray;;
     remove.removeAt(i);
+  }
+
+  onStatusChange(item) {
+    this.getPurchaseList({ filter_by: this.filter_by, filter_value: item.value })
+
+  }
+
+  getPurchaseList(filterObj: any) {
+    this.httpService.GET(PURCHASE_REQUEST_API, filterObj).subscribe({
+      next: (resp: any) => {
+        this.purchaseList = resp.data;
+      }, error: (err) => {
+        if (err.errors && !isEmpty(err.errors)) {
+          let errMessage = '<ul>';
+          for (let e in err.errors) {
+            let objData = err.errors[e];
+            errMessage += `<li>${objData[0]}</li>`;
+          }
+          errMessage += '</ul>';
+          this.snack.notifyHtml(errMessage, 2);
+        } else {
+          this.snack.notify(err.message, 2);
+        }
+      }
+    });
   }
 
   ngOnInit(): void {
