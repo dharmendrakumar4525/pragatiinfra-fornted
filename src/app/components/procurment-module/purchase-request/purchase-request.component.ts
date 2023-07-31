@@ -81,7 +81,7 @@ export class PurchaseRequestComponent implements OnInit {
       next: (resp: any) => {
         this.load = false;
         this.snack.notify("Purchase requrest has been created.", 1);
-        this.router.navigate(['procurement/prList'])
+        this.router.navigate(['procurement/prlist'])
 
       }, error: (err) => {
         this.load = false;

@@ -68,15 +68,16 @@
             placeholder="Auto generate Request Date" (click)="date.open()"  style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';"/>
           <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
           <mat-datepicker #date></mat-datepicker> -->
-          <div class="custom-form-control">
-            <mat-form-field appearance="outline">
-              <input matInput [matDatepicker]="date" formControlName="date"
-                placeholder="Enter base Line Start Date" [min]="requredByMinDate" (click)="date.open()" />
-              <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
-              <mat-datepicker #date></mat-datepicker>
+        <div class="custom-form-control">
+          <mat-form-field appearance="outline">
+            <!-- [min]="requredByMinDate" -->
+            <input matInput [matDatepicker]="date" formControlName="date" placeholder="Enter base Line Start Date"
+               (click)="date.open()" />
+            <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+            <mat-datepicker #date></mat-datepicker>
 
-            </mat-form-field>
-          </div>
+          </mat-form-field>
+        </div>
         <!-- <input placeholder="Auto generate" formControlName="date" [readonly]="true"
           style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';"> -->
 
@@ -184,7 +185,7 @@
               </mat-select>
             </td>
             <td>
-              <input type="text" placeholder="Enter" digitOnly formControlName="qty"  class="pr-form-field">
+              <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
             </td>
             <td>
               <input placeholder="Enter" formControlName="attachment" type="file" class="pr-form-field">
@@ -203,8 +204,7 @@
     </table>
   </div>
 
-  <div
-    style="display: flex;flex-direction: row;gap: 40px;margin-left:60px;margin-bottom:100px;top: -50px;position: relative;">
+  <div style="display: flex;flex-direction: row;gap: 40px;margin-left:60px;top: -50px;position: relative;">
     <div>
       <button
         style="padding: 8px ;width: 120px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';"
@@ -214,12 +214,26 @@
     </div>
 
   </div>
-  <div style="display: flex;flex-direction: row;gap: 10px;float: right;position: relative;top:-120px;right:60px">
+  <div class="row text-area-section">
+
+    <label style="color: #4272BF;font-size: 14px;">Remarks </label>
+    <textarea name="" id="" cols="30" rows="10" formControlName="remarks"></textarea>
+
+  </div>
+
+  <div class="row button-list">
+
+    <button
+      style="padding: 8px;width: auto;background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-size: 14px;font-family: 'Poppins';">Update
+      Material Request</button>
+
+  </div>
+  <!-- <div style="display: flex;flex-direction: row;gap: 10px;float: right;position: relative;top:-120px;right:60px">
     <div><button
         style="padding: 8px;width: 120px;background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-size: 14px;font-family: 'Poppins';">Submit</button>
     </div>
     <div><button
         style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">Clear</button>
     </div>
-  </div>
+  </div> -->
 </form>

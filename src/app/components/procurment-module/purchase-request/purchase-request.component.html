@@ -262,20 +262,20 @@
           <td style="color: #4272BF;width:800px;text-align: left;padding: 10px;">Site &nbsp; {{obj.siteData.site_name}}
           </td>
           <td style="background-color: #233A61;color:#fff;width:150px;cursor: pointer;"
-            [routerLink]="['/procurement',obj._id]" *ngIf="obj.status=='pending'">
+            [routerLink]="['/procurement/details',obj._id]" *ngIf="obj.status=='pending'">
             <ng-container >View&nbsp;details</ng-container>
           </td>
           <td *ngIf="obj.status=='approved'" style="background-color: #1bc47d;color:#fff;width:150px;cursor: pointer;"
-            [routerLink]="['/procurement',obj._id]">
+            [routerLink]="['/procurement/details',obj._id]">
             <ng-container >Approved ticket</ng-container>
           </td>
           <td *ngIf="obj.status=='rejected'" style="background-color: #f24e1e;color:#fff;width:150px;cursor: pointer;"
-            [routerLink]="['/procurement',obj._id]">
+            [routerLink]="['/procurement/details',obj._id]">
             <ng-container >Rejected</ng-container>
           </td>
           <td style="background-color: #ff9900b0;color:#fff;width:150px;cursor: pointer;"
             [routerLink]="['/procurement/revise',obj._id]" *ngIf="obj.status=='revise'">
-            <ng-container >Revised</ng-container>
+            <ng-container >Revise</ng-container>
           </td>
           <td style="width: 100px;"><mat-icon>
               arrow_forward_ios
