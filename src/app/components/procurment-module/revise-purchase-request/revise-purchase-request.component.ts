@@ -73,13 +73,14 @@ export class RevisePurchaseRequestComponent implements OnInit {
 
     let requestData: any = this.purchaseRequestForm.value;
     requestData['date'] = moment(requestData.date, 'DD-MM-YYYY').toDate()
-    requestData['expected_delivery_date'] = new Date(requestData.expected_delivery_date)
+    requestData['expected_delivery_date'] = new Date(requestData.expected_delivery_date);
+    requestData['status'] = 'revised';
     this.load = true;
     this.httpService.PUT(PURCHASE_REQUEST_API, requestData).subscribe({
       next: (resp: any) => {
         this.load = false;
-        this.snack.notify("Purchase requrest has been created.", 1);
-        this.router.navigate(['procurement/prList'])
+        this.snack.notify("Record has been updated.", 1);
+        this.router.navigate(['/procurement/prlist'])
 
       }, error: (err) => {
         this.load = false;
@@ -113,10 +114,7 @@ export class RevisePurchaseRequestComponent implements OnInit {
     })
   }
 
-  addItem(): void {
-    this.items = this.purchaseRequestForm.get('items') as FormArray;
-    this.items.push(this.createItem());
-  }
+
 
   selectedItem(event: any, i: any) {
     let category = this.itemList.filter(obj => obj._id == event.value)[0]?.categoryDetail.name;
@@ -137,6 +135,18 @@ export class RevisePurchaseRequestComponent implements OnInit {
         attachment: new FormControl(item.attachment),
         remark: new FormControl(item.remark, Validators.required),
         uom: new FormControl(item.uomDetail._id, Validators.required),
+
+      })
+    }
+    else {
+      return new FormGroup({
+        item_id: new FormControl('', Validators.required),
+        qty: new FormControl('', Validators.required),
+        category: new FormControl(''),
+        subCategory: new FormControl(''),
+        attachment: new FormControl(),
+        remark: new FormControl('', Validators.required),
+        uom: new FormControl('', Validators.required),
 
       })
     }
@@ -166,6 +176,13 @@ export class RevisePurchaseRequestComponent implements OnInit {
       })
     }
 
+    this.purchaseRequestForm.controls.remarks.disable();
+
+  }
+
+  addItem(): void {
+    this.items = this.purchaseRequestForm.get('items') as FormArray;
+    this.items.push(this.createItem());
   }
 
   addItems(item: any): void {

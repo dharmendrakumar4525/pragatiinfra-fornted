@@ -55,7 +55,7 @@ export class PurchaseRequestListComponent implements OnInit {
       this.getList({ filter_by: this.filter_by, filter_value: this.filter_value });
     }
     else {
-      this.filter_value = 'revise';
+      this.filter_value = 'revised';
       this.getList({ filter_by: this.filter_by, filter_value: this.filter_value });
 
     }

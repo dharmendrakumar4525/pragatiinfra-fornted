@@ -8,6 +8,7 @@ import { CustomMaterialModule } from 'app/ang-material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PurchaseRequestListComponent } from './purchase-request-list/purchase-request-list.component';
 import { RevisePurchaseRequestComponent } from './revise-purchase-request/revise-purchase-request.component';
+import { UpdatePrStatusComponent } from './update-pr-status/update-pr-status.component';
 
 const routes: Routes = [
   {
@@ -16,12 +17,16 @@ const routes: Routes = [
   },
 
   {
-    path: "prList",
+    path: "prlist",
     component: PurchaseRequestListComponent
   },
   {
-    path: ":id",
+    path: "details/:id",
     component: PurchaseRequestDetailsComponent
+  },
+  {
+    path: "update/:id",
+    component: UpdatePrStatusComponent
   },
   {
     path: "revise/:id",
@@ -32,7 +37,7 @@ const routes: Routes = [
 
 
 @NgModule({
-  declarations: [PurchaseRequestComponent, PurchaseRequestDetailsComponent, PurchaseRequestListComponent, RevisePurchaseRequestComponent],
+  declarations: [PurchaseRequestComponent, PurchaseRequestDetailsComponent, PurchaseRequestListComponent, RevisePurchaseRequestComponent, UpdatePrStatusComponent],
   imports: [
     CustomMaterialModule,
     CommonModule,

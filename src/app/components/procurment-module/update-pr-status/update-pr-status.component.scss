@@ -118,7 +118,7 @@ tr:nth-child(even) {
   border-radius: 6px;
   border: 1px solid #9f9f9f;
   cursor: pointer;
-  background: none;
+  background-color: "Transparent";
 }
 
 .select-form-field {
@@ -152,15 +152,15 @@ tr:nth-child(even) {
   }
 }
 
-.text-area-section{
-  width: 1334px;
-  height: auto;
-  margin-left: 30px;
-}
-
 .button-list{
   display: inline-flex;
   margin: 15px 30px 20px 0;
   float: right;
   gap: 10px;
+}
+
+.text-area-section{
+  width: 1334px;
+  height: auto;
+  margin-left: 30px;
 }

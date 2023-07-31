@@ -70,7 +70,7 @@
     <span [ngClass]="[requestType=='new' ? 'active' : 'inactive']" style="cursor: pointer;"
       (click)="changeRequestType('new')">New&nbsp;request&nbsp;|</span>
     <span [ngClass]="[ requestType=='revise' ? 'active' : 'inactive']" style="cursor: pointer;"
-      (click)="changeRequestType('revise')">&nbsp;Revise&nbsp;request</span>
+      (click)="changeRequestType('revise')">&nbsp;Revised&nbsp;request</span>
   </div>
 </div>
 
@@ -89,8 +89,9 @@
         <hr style="border: 1px solid #D9D9D9;height: 30px;">
         <td style="color: #4272BF;width:800px;text-align: left;padding: 10px;">Site &nbsp; {{obj.siteData.site_name}}
         </td>
-        <td style="background-color: #233A61;color:#fff;width:150px;cursor: pointer;"
-          [routerLink]="['/procurement',obj._id]">
+        <td style="color:#fff;width:150px;cursor: pointer;"
+          [ngStyle]="{'background-color':(requestType=='new') ? '#233A61' : '#1abcfe' }"
+          [routerLink]="['/procurement/update',obj._id]">
           View&nbsp;details
         </td>
         <td style="width: 100px;"><mat-icon>

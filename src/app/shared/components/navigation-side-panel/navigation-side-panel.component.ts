@@ -159,9 +159,9 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
         },
         {
           link_name: "Procurements List",
-          link: "/procurement/prList",
+          link: "/procurement/prlist",
           img: './assets/images/icons/Buser.svg',
-        }       
+        }
       ]
     },
 

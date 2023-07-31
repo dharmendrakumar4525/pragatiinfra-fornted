@@ -3,17 +3,16 @@ import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@ang
 import { PURCHASE_REQUEST_API, GET_SITE_API, ITEM_API, UOM_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
-
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 
 @Component({
-  selector: 'app-purchase-request-details',
-  templateUrl: './purchase-request-details.component.html',
-  styleUrls: ['./purchase-request-details.component.scss']
+  selector: 'app-update-pr-status',
+  templateUrl: './update-pr-status.component.html',
+  styleUrls: ['./update-pr-status.component.scss']
 })
-export class PurchaseRequestDetailsComponent implements OnInit {
+export class UpdatePrStatusComponent implements OnInit {
 
 
   id: any;
@@ -27,7 +26,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
     purchase_request_number: new FormControl(''),
     site: new FormControl('', Validators.required),
     local_purchase: new FormControl('', Validators.required),
-    remarks: new FormControl('', []),
+    remarks: new FormControl(''),
     items: this.formBuilder.array([]),
     _id: new FormControl()
   });
@@ -72,8 +71,6 @@ export class PurchaseRequestDetailsComponent implements OnInit {
       local_purchase: data.local_purchase,
       remarks: data.remarks,
     });
-
-    this.purchaseRequestForm.controls['remarks'].disable();
   }
 
 
@@ -123,7 +120,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
   }
 
   getItemName(id: any) {
-    return this.itemList.filter(obj => obj._id == id)[0].item_name;
+    if (this.itemList && id) return this.itemList.filter(obj => obj._id == id)[0].item_name;
   }
 
   updateRequest(status: any) {
@@ -146,4 +143,5 @@ export class PurchaseRequestDetailsComponent implements OnInit {
       }
     });
   }
+
 }
