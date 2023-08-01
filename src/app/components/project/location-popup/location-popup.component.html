@@ -7,10 +7,10 @@
         Location
       </ng-container>
       <ng-container *ngIf="type == 'structure'">
-        Structure
+        Activity
       </ng-container>
       <ng-container *ngIf="type == 'activity'">
-        Activity
+        Sub Activity
       </ng-container>
 
 
@@ -25,7 +25,7 @@
   <ng-container *ngIf="type == 'location'">
     <div class="list-data" *ngFor="let item of listData">
       <ng-container *ngIf="!(idArray.includes(item._id))">
-        <mat-checkbox (change)="onSelectLocation($event,item)"
+        <mat-checkbox (change)="onSelectLocation($event,item)" color="primary"
           [checked]="selectedLocations.includes(item._id)">{{item.location_name}}</mat-checkbox>
       </ng-container>
     </div>
@@ -38,26 +38,26 @@
   <ng-container *ngIf="type == 'structure'">
     <div class="list-data" *ngFor="let item of listData">
       <ng-container *ngIf="!(idArray.includes(item._id))">
-        <mat-checkbox (change)="onSelectStructure($event,item)"
+        <mat-checkbox (change)="onSelectStructure($event,item)" color="primary"
           [checked]="selectedStructuresArray.includes(item._id)">{{item.structure_name}}</mat-checkbox>
       </ng-container>
 
     </div>
 
     <div class="no-data-found" *ngIf="idArray && idArray.length>0 && idArray.length == listData.length">
-      We couldn't find any structures, or it appears that you have already added all possible structures.
+      We couldn't find any activites, or it appears that you have already added all possible activites.
     </div>
   </ng-container>
   <ng-container *ngIf="type == 'activity'">
     <div class="list-data" *ngFor="let item of listData">
       <ng-container *ngIf="!(idArray.includes(item._id))">
-        <mat-checkbox (change)="onSelectActivity($event,item)"
+        <mat-checkbox (change)="onSelectActivity($event,item)" color="primary"
           [checked]="selectedActivityArray.includes(item._id)">{{item.activity_name}}</mat-checkbox>
       </ng-container>
     </div>
 
     <div class="no-data-found" *ngIf="idArray && idArray.length>0 && idArray.length == listData.length">
-      We couldn't find any activity, or it appears that you have already added all possible activities.
+      We couldn't find any sub activity, or it appears that you have already added all possible sub activities.
     </div>
   </ng-container>
 

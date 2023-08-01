@@ -9,6 +9,11 @@ import { MatDatepickerInputEvent } from "@angular/material/datepicker";
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment-timezone'
 import { isEmpty } from 'lodash';
+import { Router, ActivatedRoute } from '@angular/router';
+import { UOM_API } from '@env/api_path';
+import { ExcelService } from '@services/export-excel/excel.service';
+import { RequestService } from '@services/https/request.service';
+import { SnackbarService } from '@services/snackbar/snackbar.service';
 @Component({
   selector: 'app-add-data',
   templateUrl: './add-data.component.html',
@@ -35,6 +40,8 @@ export class AddDataComponent implements OnInit {
   permissions: any;
   reviseMinDateArray: any = [];
   baseLineEndMinDate: any;
+  UOMList: any;
+  list: any;
 
 
   constructor(
@@ -42,8 +49,14 @@ export class AddDataComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _fb: FormBuilder,
     private toast: ToastService,
+    private router: Router,
+    private httpService: RequestService,
+    private excelService: ExcelService,
+    private snack: SnackbarService,
+    private route: ActivatedRoute
   ) {
     this.reviseMinDateArray = [];
+    this.getUOMList();
   }
 
   ngOnInit(): void {
@@ -76,6 +89,28 @@ export class AddDataComponent implements OnInit {
       this.itemForm.get('actual_revised_start_date').clearValidators()
       this.itemForm.updateValueAndValidity()
     }
+  }
+
+  getUOMList() {
+    this.httpService.GET(UOM_API, {}).subscribe(res => {
+      if (res && res.data) {
+        this.UOMList = res.data;
+        this.list = res.data;
+      }
+    }, (err) => {
+      if (err.errors && !isEmpty(err.errors)) {
+        let errMessage = '<ul>';
+        for (let e in err.errors) {
+          let objData = err.errors[e];
+          errMessage += `<li>${objData[0]}</li>`;
+        }
+        errMessage += '</ul>';
+        this.snack.notifyHtml(errMessage, 2);
+      } else {
+        this.snack.notify(err.message, 2);
+      }
+
+    })
   }
 
   baseLineStartDateChange(value: any) {
