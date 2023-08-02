@@ -19,9 +19,25 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   obj = [];
   masterManagementObj = [
     {
+      link_name: "Location Master",
+      link: "/location",
+      img: './assets/images/icons/Buser.svg',
+    },
+    {
+      link_name: "Structure Master",
+      link: "/structure",
+      img: './assets/images/icons/Buser.svg',
+    },
+    {
       link_name: "Activity Master",
       link: "/activity",
       img: './assets/images/icons/Buser.svg',
+    },
+    {
+      link_name: "UOM Manager",
+      link: '/uom',
+      icon: "bx bx-collection",
+      img: './assets/images/icons/Bsubactivity.svg',
     },
     {
       link_name: "GST Master",
@@ -33,22 +49,12 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       link: "/item",
       img: './assets/images/icons/Buser.svg',
     },
-    {
-      link_name: "Location Master",
-      link: "/location",
-      img: './assets/images/icons/Buser.svg',
-    },
+    
     {
       link_name: "Site Master",
       link: "/site",
       img: './assets/images/icons/Buser.svg',
     },
-    {
-      link_name: "Structure Master",
-      link: "/structure",
-      img: './assets/images/icons/Buser.svg',
-    },
-
     {
       link_name: "Vendor Master",
       link: "/vendor",
@@ -65,12 +71,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       img: './assets/images/icons/Bactivity.svg',
     },
 
-    {
-      link_name: "UOM Manager",
-      link: '/uom',
-      icon: "bx bx-collection",
-      img: './assets/images/icons/Bsubactivity.svg',
-    },
+    
   ]
   menuSidebar = [
     {
@@ -147,6 +148,15 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
     },
 
     {
+      link_name: "Master Management",
+      link: null,
+      icon: "bx bx-collection",
+      img: '../../../assets/images/icons/usercirlceadd.svg',
+      sub_menu: [
+        ...this.masterManagementObj
+      ]
+    },
+    {
       link_name: "Procurements",
       link: null,
       icon: "bx bx-collection",
@@ -164,17 +174,6 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
         }
       ]
     },
-
-    {
-      link_name: "Master Management",
-      link: null,
-      icon: "bx bx-collection",
-      img: '../../../assets/images/icons/usercirlceadd.svg',
-      sub_menu: [
-        ...this.masterManagementObj
-      ]
-    },
-
     {
       link_name: "Inventory",
       link: '/inventory',
@@ -207,20 +206,20 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
         link: "/manage-permissions",
         img: '../../../assets/images/icons/Bpermission.svg',
       },
-      {
-        link_name: "Activities",
-        link: '/activities',
-        icon: "bx bx-collection",
-        img: '../../../assets/images/icons/Bactivity.svg',
-      },
+      // {
+      //   link_name: "Activities",
+      //   link: '/activities',
+      //   icon: "bx bx-collection",
+      //   img: '../../../assets/images/icons/Bactivity.svg',
+      // },
 
-      {
-        link_name: "sub Activities",
-        link: '/sub-activities',
-        icon: "bx bx-collection",
-        img: '../../../assets/images/icons/Bsubactivity.svg',
-        //img:'../../../assets/images/icons/activity.svg',
-      },
+      // {
+      //   link_name: "sub Activities",
+      //   link: '/sub-activities',
+      //   icon: "bx bx-collection",
+      //   img: '../../../assets/images/icons/Bsubactivity.svg',
+      //   //img:'../../../assets/images/icons/activity.svg',
+      // },
       ]
     }
 

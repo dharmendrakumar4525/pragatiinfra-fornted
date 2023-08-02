@@ -6,7 +6,23 @@
   height: 60vh;
   overflow: auto;
 }
-
+td:first-child{
+  position: sticky;
+  left: 0;
+  background-color: #fff;
+  z-index: 1;
+  
+}
+th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background-color: #233a61;
+}
+tbody tr:nth-child(even) td:first-child {
+  background-color: #f2f2f2;
+  
+}
 /* table {
     width: 100%;
     height: 100vh;
@@ -43,7 +59,8 @@
 
 table {
   font-family: "Poppins", sans-serif !important;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   width: 100%;
   font-size: 12px;
   margin-left: 10px;
