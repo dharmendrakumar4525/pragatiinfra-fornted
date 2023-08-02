@@ -101,12 +101,12 @@
       </tr>
       <tbody>
         <ng-container *ngFor=" let locationItem of projectLocationsList;let locationIndex=index ">
-          <tr style="color:#233A61 !important;font-weight: bolder ;background-color: #6983af">
-            <td>
+          <tr style="color:#233A61 !important;font-weight: bolder ;background-color: #aaa">
+            <td class="location-first-td">
               <div class="section-container">
-                <div class="left-cont location-name">{{locationItem.location_name}}</div>
+                <div class="left-cont location-name" style="font-size: 16px;">{{locationItem.location_name}}</div>
                 <div class="right-cont">
-                  <mat-icon matTooltip="Add structure" (click)="addStructure(locationIndex)">add</mat-icon>
+                  <mat-icon matTooltip="Add Activity" (click)="addStructure(locationIndex)">add</mat-icon>
                   <mat-icon matTooltip="Delete location" (click)="deleteLocation(locationIndex)">delete</mat-icon>
                 </div>
               </div>
@@ -134,14 +134,14 @@
           </tr>
 
           <ng-container *ngFor="let structureItem of locationItem.structures;let structureIndex=index">
-            <tr style="color:#233A61 !important; font-weight: bolder">
-              <td>
+            <tr style="color:#233A61 !important; font-weight: bolder;background-color: #ddd;">
+              <td class="structure-first-td">
                 <div class="section-container">
                   <div class="left-cont structure_name"> {{structureItem.structure_name}} </div>
                   <div class="right-cont">
-                    <mat-icon matTooltip="Add activity"
+                    <mat-icon matTooltip="Add sub activity"
                       (click)="addActivity(locationIndex,structureIndex)">add</mat-icon>
-                    <mat-icon matTooltip="Delete structure"
+                    <mat-icon matTooltip="Delete Activity"
                       (click)="deleteStructure(locationIndex,structureIndex)">delete</mat-icon>
                   </div>
                 </div>
@@ -173,13 +173,13 @@
             </tr>
 
             <tr *ngFor="let activityItem of structureItem.activities,let activityIndex=index" style="font-size: 10px;">
-              <td style="color:#595b5d;">
+              <td style="color:#595b5d;" class="activity-first-td">
                 <div class="section-container">
-                  <div class="left-cont activity_name"> {{activityItem.activity_name}} </div>
+                  <div class="left-cont activity_name" style="font-size: 12px;"> {{activityItem.activity_name}} </div>
                   <div class="right-cont">
-                    <mat-icon matTooltip="Edit activity"
+                    <mat-icon matTooltip="Edit sub activity"
                       (click)="addData(activityItem,locationIndex,structureIndex,activityIndex)">edit</mat-icon>
-                    <mat-icon matTooltip="Delete activity"
+                    <mat-icon matTooltip="Delete sub activity"
                       (click)="deleteActivity(locationIndex,structureIndex,activityIndex)">delete</mat-icon>
                   </div>
                 </div>
