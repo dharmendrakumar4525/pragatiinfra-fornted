@@ -71,17 +71,13 @@
 <body>
   <div class="scroll-bar1" style="width: 93%;">
     <table *ngIf="progressPermissionsView?.isSelected; else noView" style="direction: ltr !important;">
-
-
       <tr>
-
         <th>
           <div class="section-container">
             <div class="left-cont">Description</div>
             <div class="right-cont"><mat-icon matTooltip="Add location" (click)="addLocation()">add</mat-icon></div>
           </div>
         </th>
-
         <th>R1 End Date</th>
         <th>R2 End Date</th>
         <th>R3 End Date</th>
@@ -102,16 +98,11 @@
         <th>Activity Balance (%)</th>
         <th>Total</th>
         <th>Remarks</th>
-
       </tr>
-
       <tbody>
-
         <ng-container *ngFor=" let locationItem of projectLocationsList;let locationIndex=index ">
-
-          <tr style="color:#233A61 !important;font-weight: bolder ;">
+          <tr style="color:#233A61 !important;font-weight: bolder ;background-color: #6983af">
             <td>
-
               <div class="section-container">
                 <div class="left-cont location-name">{{locationItem.location_name}}</div>
                 <div class="right-cont">
@@ -128,11 +119,9 @@
             <td>{{locationItem.structures | psMinTableDate:'location':'base_line_start_date':'min'}}</td>
             <td>{{locationItem.structures | psMinTableDate:'location':'base_line_end_date':'max'}}</td>
             <td></td>
-
             <td></td>
             <td></td>
             <td></td>
-
             <td></td>
             <td></td>
             <td></td>
@@ -145,10 +134,8 @@
           </tr>
 
           <ng-container *ngFor="let structureItem of locationItem.structures;let structureIndex=index">
-
-            <tr style="color:#233A61 !important;font-weight: bolder ;">
+            <tr style="color:#233A61 !important; font-weight: bolder">
               <td>
-
                 <div class="section-container">
                   <div class="left-cont structure_name"> {{structureItem.structure_name}} </div>
                   <div class="right-cont">
@@ -159,9 +146,8 @@
                   </div>
                 </div>
               </td>
-
               <td>
-                <ng-container >
+                <ng-container>
                   {{structureItem.activities | psMinTableDate:'structure':'r1EndDate':'max'}}
                 </ng-container>
               </td>
@@ -172,11 +158,9 @@
               <td>{{structureItem.activities | psMinTableDate:'structure':'base_line_start_date':'min'}}</td>
               <td>{{structureItem.activities | psMinTableDate:'structure':'base_line_end_date':'max'}}</td>
               <td></td>
-
               <td></td>
               <td></td>
               <td></td>
-
               <td></td>
               <td></td>
               <td></td>
@@ -189,9 +173,7 @@
             </tr>
 
             <tr *ngFor="let activityItem of structureItem.activities,let activityIndex=index" style="font-size: 10px;">
-
               <td style="color:#595b5d;">
-
                 <div class="section-container">
                   <div class="left-cont activity_name"> {{activityItem.activity_name}} </div>
                   <div class="right-cont">

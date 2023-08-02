@@ -81,7 +81,7 @@
 
             <mat-form-field appearance="outline">
               <mat-select placeholder=" uom" formControlName="uom">
-                <mat-option *ngFor="let single of uomData" [value]="single">{{single}}</mat-option>
+                <mat-option *ngFor="let single of UOMList" [value]="single.unit">{{single.unit}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>

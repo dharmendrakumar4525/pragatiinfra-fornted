@@ -198,7 +198,7 @@
               </mat-panel-title>
               <mat-panel-description>
                 <mat-icon (click)="addLocations('structure',locationItem,'');$event.stopPropagation()"
-                  matTooltip="Add structure">add</mat-icon>
+                  matTooltip="Add Activity">add</mat-icon>
                 <mat-icon (click)="deleteLocations('location',locationItem,'','');$event.stopPropagation()"
                   class="delete-button" matTooltip="Delete location">delete</mat-icon>
               </mat-panel-description>
@@ -214,10 +214,10 @@
                 </mat-panel-title>
                 <mat-panel-description>
                   <mat-icon (click)="addLocations('activity',locationItem,structureItem);$event.stopPropagation()"
-                    matTooltip="Add activity">add</mat-icon>
+                    matTooltip="Add sub activity">add</mat-icon>
                   <mat-icon
                     (click)="deleteLocations('structure',locationItem,structureItem,'');$event.stopPropagation()"
-                    class="delete-button" matTooltip="Delete structure">delete</mat-icon>
+                    class="delete-button" matTooltip="Delete activity">delete</mat-icon>
                 </mat-panel-description>
               </mat-expansion-panel-header>
 
@@ -233,7 +233,7 @@
                 <a class="list-action-btn">
                   <mat-icon
                     (click)="deleteLocations('activity',locationItem,structureItem,activityItem);$event.stopPropagation()"
-                    class="delete-button" matTooltip="Delete activity">delete</mat-icon>
+                    class="delete-button" matTooltip="Delete sub activity">delete</mat-icon>
                 </a>
               </div>
 

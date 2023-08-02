@@ -19,6 +19,8 @@
     <tr>
       <th>Date</th>
       <th>Remark</th>
+      <th>Quantity</th>
+
       <th>Actions</th>
 
 
@@ -26,6 +28,7 @@
     <tr *ngFor="let remark of remarksArray; let i=index">
       <td>{{remark?.date | date}}</td>
       <td>{{remark?.remark}}</td>
+      <td>{{remark?.daily_quantity}}</td>
       <td>
         <mat-icon (click)="modifyRemarks(remark,i)">edit</mat-icon>
       </td>
