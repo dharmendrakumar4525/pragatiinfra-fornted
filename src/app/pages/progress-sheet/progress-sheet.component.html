@@ -104,6 +104,7 @@
           <tr style="color:#233A61 !important;font-weight: bolder ;background-color: #aaa">
             <td class="location-first-td">
               <div class="section-container">
+                <a class="toggle-location" id="location-{{locationItem._id}}" (click)="toggleActivity(locationItem._id)"><img src="./assets/images/arrow.svg" alt=""></a>
                 <div class="left-cont location-name" style="font-size: 16px;">{{locationItem.location_name}}</div>
                 <div class="right-cont">
                   <mat-icon matTooltip="Add Activity" (click)="addStructure(locationIndex)">add</mat-icon>
@@ -134,9 +135,10 @@
           </tr>
 
           <ng-container *ngFor="let structureItem of locationItem.structures;let structureIndex=index">
-            <tr style="color:#233A61 !important; font-weight: bolder;background-color: #ddd;">
+            <tr style="color:#233A61 !important; font-weight: bolder;background-color: #ddd;" class="location-{{locationItem._id}}">
               <td class="structure-first-td">
                 <div class="section-container">
+                  <a class="toggle-structure" id="structure-{{structureItem._id}}" (click)="toggleStructure(structureItem._id)"><img src="./assets/images/arrow.svg" alt=""></a>
                   <div class="left-cont structure_name"> {{structureItem.structure_name}} </div>
                   <div class="right-cont">
                     <mat-icon matTooltip="Add sub activity"
@@ -172,7 +174,7 @@
               <td></td>
             </tr>
 
-            <tr *ngFor="let activityItem of structureItem.activities,let activityIndex=index" style="font-size: 10px;">
+            <tr *ngFor="let activityItem of structureItem.activities,let activityIndex=index" style="font-size: 10px;" class="location-{{locationItem._id}} structure-{{structureItem._id}}">
               <td style="color:#595b5d;" class="activity-first-td">
                 <div class="section-container">
                   <div class="left-cont activity_name" style="font-size: 12px;"> {{activityItem.activity_name}} </div>
