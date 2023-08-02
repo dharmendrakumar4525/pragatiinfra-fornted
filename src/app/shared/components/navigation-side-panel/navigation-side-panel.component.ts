@@ -19,17 +19,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   obj = [];
   masterManagementObj = [
     {
-      link_name: "Location Master",
-      link: "/location",
-      img: './assets/images/icons/Buser.svg',
-    },
-    {
-      link_name: "Structure Master",
-      link: "/structure",
-      img: './assets/images/icons/Buser.svg',
-    },
-    {
-      link_name: "Activity Master",
+      link_name: "Sub Activity Master",
       link: "/activity",
       img: './assets/images/icons/Buser.svg',
     },
@@ -55,6 +45,12 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       link: "/site",
       img: './assets/images/icons/Buser.svg',
     },
+    {
+      link_name: "Activity Master",
+      link: "/structure",
+      img: './assets/images/icons/Buser.svg',
+    },
+
     {
       link_name: "Vendor Master",
       link: "/vendor",
