@@ -18,6 +18,7 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
 import { LocationPopupComponent } from '@component/project/location-popup/location-popup.component';
 import { ConfirmationPopupComponent } from '@component/project/confirmation-popup/confirmation-popup.component';
+declare var $:any;
 
 @Component({
   selector: 'app-progress-sheet',
@@ -70,9 +71,30 @@ export class ProgressSheetComponent implements OnInit {
 
         this.projectLocationsList = this.project.locations;
       })
-
-
     });
+
+
+  
+  
+
+
+  //   $('body').on('click','.toggle-location',function(){
+  //     console.log(11)
+  //     let getClassName = $(this).attr('id');
+     
+  //     if($(this).hasClass('collapsed')){
+  //       $(this).removeClass('collapsed');
+  //     } else {
+  //       $(this).addClass('collapsed');
+  //     }
+    
+
+  //     // $(`.${getClassName}`).addClass('cl-hide');
+  
+  //     // $(`.${getClassName}`).addClass('cl-hide');
+  
+  
+  // })
   }
 
 
@@ -286,5 +308,31 @@ export class ProgressSheetComponent implements OnInit {
         this.snack.notify(err.message, 2);
       }
     })
+  }
+
+
+
+  toggleActivity(id){
+
+    if($(`#location-${id}`).hasClass('collapsed')){
+      $(`#location-${id}`).removeClass('collapsed');
+      $(`.location-${id}`).removeClass('cl-hide');
+      $(`.toggle-structure`).removeClass('collapsed');
+
+    } else {
+      $(`#location-${id}`).addClass('collapsed');
+      $(`.location-${id}`).addClass('cl-hide');
+    }
+  }
+
+  toggleStructure(id){
+
+    if($(`#structure-${id}`).hasClass('collapsed')){
+      $(`#structure-${id}`).removeClass('collapsed');
+      $(`.structure-${id}`).removeClass('cl-hide');
+    } else {
+      $(`#structure-${id}`).addClass('collapsed');
+      $(`.structure-${id}`).addClass('cl-hide');
+    }
   }
 }
