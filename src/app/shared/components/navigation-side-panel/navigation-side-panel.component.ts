@@ -5,7 +5,6 @@ import { takeUntil } from 'rxjs/operators';
 import { UsersService } from '@services/users.service';
 import { SidePanelService, SidePanelState } from '../../../core';
 import { NavigationLink } from './navigation-link.model';
-
 @Component({
   selector: 'app-navigation-side-panel',
   templateUrl: './navigation-side-panel.component.html',
@@ -235,6 +234,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   permissions: any;
   rolePermissionsView: any;
   userPermissionsView: any;
+  public sideNavOpen;
   constructor(private _sidePanelService: SidePanelService, private router: Router, private userService: UsersService) {
     this._subscriptionsSubject$ = new Subject<void>();
   }
@@ -242,10 +242,9 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
-
+    this.sideNavOpen=false;
     this.rolePermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[4]
     this.userPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[4]?.childList[4]
-
     this._sidePanelService.panelStateChanges
       .pipe(takeUntil(this._subscriptionsSubject$))
       .subscribe((state: SidePanelState) => (this.currentPanelState = state));
@@ -277,6 +276,19 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
     } else {
       this._sidePanelService.changeState(SidePanelState.COLLAPSE);
     }
+  }
+  public isCollapse():void{
+    // console.log("hi sameer");
+    this.sideNavOpen=!this.sideNavOpen;
+    // console.log(this.SidePanelCollapse);
+    if(this.sideNavOpen)
+    {
+      this._sidePanelService.changeState(SidePanelState.OPEN);
+    }
+    else{
+      this._sidePanelService.changeState(SidePanelState.CLOSE);
+    }
+    
   }
 
 

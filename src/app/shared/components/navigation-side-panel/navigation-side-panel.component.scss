@@ -4,6 +4,41 @@ $nav-panel-active: darken(#38495F, 2%);
 $link-unvisted: #82ff80;
 $text-color-brand: #FFFFFF;
 
+#hamburger{
+  width: 3em;
+  margin-right: 1em;
+  margin-left: 3px;
+  margin-top: 10px;
+}
+#hamburger:hover{
+  cursor: pointer;  
+}
+.hideHamburger{
+  display: none;
+}
+
+#collapse{
+  width: 2.5em;
+  float: right;
+  margin-right: 2em;
+}
+#collapse:hover{
+  width: 3em;
+  transition: 0.06s ease-out;
+  cursor: pointer;
+}
+.side-panel-close{
+  
+  overflow-x: hidden;
+  white-space:nowrap;  
+}
+.hide{
+  display: none;
+}
+
+form{
+  display: node;
+}
 .navigation-panel {
   background: $nav-panel-background;
   overflow: hidden;
@@ -11,7 +46,7 @@ $text-color-brand: #FFFFFF;
 
   .navigation-panel-brand {
     height: 75px;
-    line-height: 75px;
+    
     padding-left: 2rem;
 
     color: $text-color-brand;

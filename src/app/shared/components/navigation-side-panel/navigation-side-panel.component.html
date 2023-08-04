@@ -1,4 +1,4 @@
-<div class="navigation-panel">
+<div class="navigation-panel" [ngClass]="{'side-panel-close':!sideNavOpen}">
   <!-- <br> <br>
   <div class="user-profile">
     <img class="avatar"
@@ -6,20 +6,24 @@
       alt="Ash" />
     <div class="username">{{permissions?.user?.name}}</div>
   </div>-->
-  <br> 
-
-  <div style="margin-top: 20px;margin-left: 30px;">
+  <div  [ngClass]="{'hideHamburger':sideNavOpen}">
+    <img src="..\..\..\assets\images\hamburger-menu.svg" id="hamburger" (click)="isCollapse()">
+  </div>
+  <br>
+  <div style="margin-top: 20px;margin-left: 30px;" [ngClass]="{'hide':!sideNavOpen}">
     <img src=".\assets\images\logo3.svg">
+    <img src=".\assets\images\left-arrow.svg" id="collapse" (click)="isCollapse()" >
   </div>
 
-  <form class="Search-form" style="width:80%;margin-left: 20px;">
-    <span matPrefix> </span>
+  <form class="Search-form" style="width:80%;margin-left: 20px;" [ngClass]="{'hide':!sideNavOpen}">
+    <span matPrefix> 
     <input type="text" placeholder="Search" name="search" [(ngModel)]="link_name">
     <button style="bottom: 35px;left:200px;position: relative;background-color: #233A61;border: none;"><i
         class="fa fa-search" aria-hidden="true" style="color: #97989D;"></i></button>
+      </span>
   </form>
 
-  <ul class="navigation-panel-menu" *ngIf="links && links.length > 0">
+  <ul class="navigation-panel-menu" *ngIf="links && links.length > 0" [ngClass]="{'hide':!sideNavOpen}">
     <div class="scroll-bar2" width="10%">
 
 

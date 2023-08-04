@@ -11,7 +11,7 @@ export class SidePanelService {
   public panelStateChanges: Observable<SidePanelState>;
 
   constructor() {
-    this._panelState = SidePanelState.OPEN;
+    this._panelState = SidePanelState.CLOSE;
     this._panelStateSource = new BehaviorSubject<SidePanelState>(this._panelState);
     this.panelStateChanges = this._panelStateSource.asObservable();
   }

@@ -20,7 +20,7 @@ export class DashboardLayoutComponent implements OnInit {
 
   constructor(private _sidePanelService: SidePanelService) {
     this._subscriptionsSubject$ = new Subject<void>();
-    this.configuration = new DashboardLayoutConfiguration(SidePanelPosition.LEFT, SidePanelState.OPEN);
+    this.configuration = new DashboardLayoutConfiguration(SidePanelPosition.LEFT, SidePanelState.CLOSE);
     this._sidePanelService.changeState(this.configuration.initialSidePanelState)
   }
 
@@ -32,17 +32,17 @@ export class DashboardLayoutComponent implements OnInit {
       .subscribe((state: SidePanelState) => this.currentPanelState = state);
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event:any) {
-    // @@@ May have to rethink
-    const width: number = window.innerWidth;
-    if (width < 768) 
-      this._sidePanelService.changeState(SidePanelState.CLOSE);
-    else if (width < 991)
-      this._sidePanelService.changeState(SidePanelState.COLLAPSE);
-    else
-      this._sidePanelService.changeState(SidePanelState.OPEN);
-  }
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event:any) {
+  //   // @@@ May have to rethink
+  //   const width: number = window.innerWidth;
+  //   if (width < 768) 
+  //     this._sidePanelService.changeState(SidePanelState.CLOSE);
+  //   else if (width < 991)
+  //     this._sidePanelService.changeState(SidePanelState.COLLAPSE);
+  //   else
+  //     this._sidePanelService.changeState(SidePanelState.OPEN);
+  // }
   
   ngOnDestroy(): void {
     this._subscriptionsSubject$.next();
