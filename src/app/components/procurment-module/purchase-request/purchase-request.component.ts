@@ -81,7 +81,9 @@ export class PurchaseRequestComponent implements OnInit {
       next: (resp: any) => {
         this.load = false;
         this.snack.notify("Purchase requrest has been created.", 1);
-        this.router.navigate(['procurement/prlist'])
+        // this.router.navigate(['procurement/prlist'])
+        this.option=2;
+        this.getPurchaseList({ filter_by: this.filter_by, filter_value: this.statusOption.value })
 
       }, error: (err) => {
         this.load = false;
@@ -123,9 +125,12 @@ export class PurchaseRequestComponent implements OnInit {
   selectedItem(event: any, i: any) {
     let category = this.itemList.filter(obj => obj._id == event.value)[0]?.categoryDetail.name;
     let subCategory = this.itemList.filter(obj => obj._id == event.value)[0]?.subCategoryDetail.subcategory_name;
+    let uom = this.itemList.filter(obj => obj._id == event.value)[0]?.uomDetail.uom_name;
+
     this.items.at(i).patchValue({
       category: category,
       subCategory: subCategory,
+      uom:uom
     });
   }
 
@@ -137,7 +142,7 @@ export class PurchaseRequestComponent implements OnInit {
       subCategory: new FormControl(null),
       attachment: new FormControl(''),
       remark: new FormControl(''),
-      uom: new FormControl('', Validators.required),
+      uom: new FormControl(''),
 
     });
   }

@@ -45,8 +45,8 @@
 </div>
 
 <div class="requests">
-  <div class="createreq" [ngClass]="[option==1 ? 'createreq' : 'innerreq']" (click)="option=1">Create request</div>
-  <div class="innerreq" [ngClass]="[option==2? 'createreq' : 'innerreq']"
+  <div [ngClass]="[option==1 ? 'createreq' : 'innerreq']" (click)="option=1">Create request</div>
+  <div [ngClass]="[option==2? 'createreq' : 'innerreq']"
     (click)="option=2;getPurchaseList({ filter_by: filter_by, filter_value: statusOption.value })"> Request list
   </div>
   <!-- <div class="innerreq">Rejected request</div>
@@ -135,7 +135,7 @@
           <th>Sub&nbsp;category</th>
           <th>Uom*</th>
           <th>Quantity*</th>
-          <th>Attachments</th>
+          <!-- <th>Attachments</th> -->
           <th>Remarks</th>
           <th>Action</th>
         </tr>
@@ -165,19 +165,20 @@
                 {{item.get('subCategory')?.value}}
               </td>
               <td>
-                <mat-select id="itemName" placeholder="Select UOM" formControlName="uom" class="select-form-field">
+                {{item.get('uom')?.value}}
+                <!-- <mat-select id="itemName" placeholder="Select UOM" formControlName="uom" class="select-form-field">
                   <mat-option [value]="item._id" *ngFor="let item of uomList">
                     {{item.unit}}
                   </mat-option>
 
-                </mat-select>
+                </mat-select> -->
               </td>
               <td>
                 <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
               </td>
-              <td>
+              <!-- <td>
                 <input placeholder="Enter" formControlName="attachment" type="file" class="pr-form-field">
-              </td>
+              </td> -->
               <td>
                 <input placeholder="Enter" formControlName="remark" class="pr-form-field">
               </td>
@@ -263,19 +264,19 @@
           </td>
           <td style="background-color: #233A61;color:#fff;width:150px;cursor: pointer;"
             [routerLink]="['/procurement/details',obj._id]" *ngIf="obj.status=='pending'">
-            <ng-container >View&nbsp;details</ng-container>
+            <ng-container>View&nbsp;details</ng-container>
           </td>
           <td *ngIf="obj.status=='approved'" style="background-color: #1bc47d;color:#fff;width:150px;cursor: pointer;"
             [routerLink]="['/procurement/details',obj._id]">
-            <ng-container >Approved ticket</ng-container>
+            <ng-container>Approved ticket</ng-container>
           </td>
           <td *ngIf="obj.status=='rejected'" style="background-color: #f24e1e;color:#fff;width:150px;cursor: pointer;"
             [routerLink]="['/procurement/details',obj._id]">
-            <ng-container >Rejected</ng-container>
+            <ng-container>Rejected</ng-container>
           </td>
           <td style="background-color: #ff9900b0;color:#fff;width:150px;cursor: pointer;"
             [routerLink]="['/procurement/revise',obj._id]" *ngIf="obj.status=='revise'">
-            <ng-container >Revise</ng-container>
+            <ng-container>Revise</ng-container>
           </td>
           <td style="width: 100px;"><mat-icon>
               arrow_forward_ios
