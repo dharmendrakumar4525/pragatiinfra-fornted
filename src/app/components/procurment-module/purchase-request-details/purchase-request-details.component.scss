@@ -81,13 +81,12 @@ td {
 tr:nth-child(even) {
   background-color: #e5e6eb !important;
 }
-form{
+form {
   padding: 10px 20px 10px 20px;
 }
 
 .scroll-bar1 {
   margin-top: 50px;
-  overflow: auto;
 }
 
 ::-webkit-scrollbar {
@@ -145,24 +144,21 @@ form{
       opacity: 0.7;
     }
   }
-
-
-
 }
 
-.button-list{
+.button-list {
   display: inline-flex;
   margin: 15px 0 20px 0;
   float: right;
   gap: 10px;
 }
 
-.text-area-section{
+.text-area-section {
   width: 100%;
   height: auto;
   margin: 30px 0 0 0;
-  
-  textarea{
+
+  textarea {
     display: block;
     width: 100%;
   }
@@ -172,6 +168,17 @@ form{
   width: 31%;
 }
 
-.mat-form-field{
+.mat-form-field {
   display: block;
+}
+
+.pending {
+  padding: 8px;
+  width: 120px;
+  background-color: #ccc;
+  color: #333;
+  font-size: 14px;
+  font-family: Poppins;
+  height: 50px;
+  border: none;
 }

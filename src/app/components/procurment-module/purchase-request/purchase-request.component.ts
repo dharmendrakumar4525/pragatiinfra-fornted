@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-purchase-request',
@@ -42,8 +43,9 @@ export class PurchaseRequestComponent implements OnInit {
   uomList: any;
   itemList: any;
   option = 1;
-  purchaseList: any;
+  purchaseList: any = [];
   filter_by = "status";
+  originalPurchaseList: any = [];
   constructor(
     private router: Router,
     private httpService: RequestService,
@@ -82,7 +84,7 @@ export class PurchaseRequestComponent implements OnInit {
         this.load = false;
         this.snack.notify("Purchase requrest has been created.", 1);
         // this.router.navigate(['procurement/prlist'])
-        this.option=2;
+        this.option = 2;
         this.getPurchaseList({ filter_by: this.filter_by, filter_value: this.statusOption.value })
 
       }, error: (err) => {
@@ -130,7 +132,7 @@ export class PurchaseRequestComponent implements OnInit {
     this.items.at(i).patchValue({
       category: category,
       subCategory: subCategory,
-      uom:uom
+      uom: uom
     });
   }
 
@@ -161,6 +163,7 @@ export class PurchaseRequestComponent implements OnInit {
   getPurchaseList(filterObj: any) {
     this.httpService.GET(PURCHASE_REQUEST_API, filterObj).subscribe({
       next: (resp: any) => {
+        this.originalPurchaseList = resp.data;
         this.purchaseList = resp.data;
       }, error: (err) => {
         if (err.errors && !isEmpty(err.errors)) {
@@ -177,6 +180,41 @@ export class PurchaseRequestComponent implements OnInit {
       }
     });
   }
+
+  dateFilter(event: MatDatepickerInputEvent<Date>) {
+    if (this.originalPurchaseList && this.originalPurchaseList.length > 0) {
+      if (event.value) {
+        this.purchaseList = this.originalPurchaseList.filter(obj => new Date(obj.date) == new Date(event.value))
+      }
+      else {
+        this.purchaseList = this.originalPurchaseList;
+      }
+    }
+  }
+
+  search(event: any, type?: any) {
+    if (this.originalPurchaseList && this.originalPurchaseList.length > 0) {
+      if (type == 'site') {
+        if (event.target.value) {
+          this.purchaseList = this.originalPurchaseList.filter(obj => obj.siteData.site_name.toLowerCase().includes(event.target.value.toLowerCase()))
+        }
+        else {
+          this.purchaseList = this.originalPurchaseList;
+        }
+      }
+      else {
+        if (event.target.value) {
+          this.purchaseList = this.originalPurchaseList.filter(obj => obj.title.toLowerCase().includes(event.target.value.toLowerCase()))
+        }
+        else {
+          this.purchaseList = this.originalPurchaseList;
+        }
+      }
+    }
+
+  }
+
+
 
   ngOnInit(): void {
     this.getList();

@@ -17,7 +17,7 @@ mat-toolbar {
   margin-left: 30px;
   font-size: 14px;
 
-  div{
+  div {
     height: 40px;
     width: 250px;
     font-family: "Poppins";
@@ -29,15 +29,14 @@ mat-toolbar {
     justify-content: center;
     cursor: pointer;
     flex: 1;
-    &:hover{
-      background: rgba(0,0,0,0.2);
+    &:hover {
+      background: rgba(0, 0, 0, 0.2);
     }
 
-    &.active{
+    &.active {
       background-color: #233a61 !important;
       color: #fff;
     }
-   
   }
 }
 
@@ -61,11 +60,11 @@ table.items-table {
   margin-right: 20px;
   margin-top: 8px;
 }
-.items-table{
+.items-table {
   th {
     background-color: #233a61;
     border: 1px solid #94a3b8;
-  
+
     text-align: left;
     padding: 10px 40px !important;
     width: 1000px !important;
@@ -74,10 +73,10 @@ table.items-table {
     font-size: 14px;
     font-style: normal;
   }
-  
+
   td {
     border: 1px solid #94a3b8;
-  
+
     text-align: left;
     padding: 20px;
     color: #233a61;
@@ -90,7 +89,6 @@ table.items-table {
     background-color: #e5e6eb !important;
   }
 }
-
 
 .scroll-bar1 {
   height: auto;
@@ -158,8 +156,7 @@ table.items-table {
   }
 }
 
-
-.r-list{
+.r-list {
   border-collapse: separate;
   border-spacing: 0 25px;
   tr {
@@ -167,16 +164,13 @@ table.items-table {
   }
 }
 
-
-
 .viewdetail-btn {
-  background-color: #233A61;
+  background-color: #233a61;
   color: #fff;
   /* width: 150px; */
   cursor: pointer;
   text-align: center;
-  padding: 9px 31px;
-  border-radius: 4px;
+  padding: 18px 25px;
 }
 
 .no-record-found {
@@ -187,7 +181,15 @@ table.items-table {
   align-items: center;
   justify-content: center;
 
-  img{
+  img {
     width: 188px;
   }
+}
+
+ .mat-radio-button .mat-radio-label {
+  margin-right: 5px !important;
+}
+
+.flex-div {
+  width: 31%;
 }

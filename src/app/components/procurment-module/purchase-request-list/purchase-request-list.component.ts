@@ -5,16 +5,18 @@ import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { Router } from '@angular/router';
 import { isEmpty } from 'lodash';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 @Component({
   selector: 'app-purchase-request-list',
   templateUrl: './purchase-request-list.component.html',
-  styleUrls: ['./purchase-request-list.component.css']
+  styleUrls: ['./purchase-request-list.component.scss']
 })
 export class PurchaseRequestListComponent implements OnInit {
   purchaseList: any;
   filter_by = "status";
   filter_value = "pending";
   requestType = "new";
+  originalPurchaseList: any = [];
   constructor(private router: Router,
     private httpService: RequestService,
     private snack: SnackbarService,
@@ -25,6 +27,7 @@ export class PurchaseRequestListComponent implements OnInit {
   getList(filterObj: any) {
     this.httpService.GET(PURCHASE_REQUEST_API, filterObj).subscribe({
       next: (resp: any) => {
+        this.originalPurchaseList = resp.data;
         this.purchaseList = resp.data;
       }, error: (err) => {
         if (err.errors && !isEmpty(err.errors)) {
@@ -42,7 +45,37 @@ export class PurchaseRequestListComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+
+  dateFilter(event: MatDatepickerInputEvent<Date>) {
+    if (this.originalPurchaseList && this.originalPurchaseList.length > 0) {
+      if (event.value) {
+        this.purchaseList = this.originalPurchaseList.filter(obj => new Date(obj.date) == new Date(event.value))
+      }
+      else {
+        this.purchaseList = this.originalPurchaseList;
+      }
+    }
+  }
+
+  search(event: any, type?: any) {
+    if (this.originalPurchaseList && this.originalPurchaseList.length > 0) {
+      if (type == 'site') {
+        if (event.target.value) {
+          this.purchaseList = this.originalPurchaseList.filter(obj => obj.siteData.site_name.toLowerCase().includes(event.target.value.toLowerCase()))
+        }
+        else {
+          this.purchaseList = this.originalPurchaseList;
+        }
+      }
+      else {
+        if (event.target.value) {
+          this.purchaseList = this.originalPurchaseList.filter(obj => obj.title.toLowerCase().includes(event.target.value.toLowerCase()))
+        }
+        else {
+          this.purchaseList = this.originalPurchaseList;
+        }
+      }
+    }
 
   }
 
@@ -59,6 +92,11 @@ export class PurchaseRequestListComponent implements OnInit {
       this.getList({ filter_by: this.filter_by, filter_value: this.filter_value });
 
     }
+  }
+
+
+  ngOnInit(): void {
+
   }
 
 }

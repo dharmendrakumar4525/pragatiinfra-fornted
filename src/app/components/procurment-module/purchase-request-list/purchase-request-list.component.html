@@ -48,14 +48,15 @@
   <div style="margin-left: 40px;width:100%;margin-top: 30px;">
     <mat-form-field appearance="outline" class="searchbar">
       <mat-icon matSuffix>search</mat-icon>
-      <input matInput type="search" placeholder="search title" class="search-input">
+      <input matInput type="search" placeholder="search title" class="search-input" (input)="search($event,'title')">
 
     </mat-form-field>
   </div>
   <div style=" margin-right: 600px;margin-top: 30px;display: flex;gap:10px">
     <div style="margin-top: 15px;color: #94A3B8;margin-left: 30px;"> <span>Filter&nbsp;by</span></div>
     <div> <mat-form-field appearance="outline" class="datebar">
-        <input matInput [matDatepicker]="startPicker" placeholder="Date" (click)="startPicker.open()" />
+        <input matInput [matDatepicker]="startPicker" placeholder="Date" (dateChange)="dateFilter( $event)"
+          (click)="startPicker.open()" />
         <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
         <mat-datepicker #startPicker></mat-datepicker>
       </mat-form-field></div>
@@ -63,7 +64,7 @@
   <div style="margin-top: 30px;display: flex;position: relative;right:570px;gap:10px">
     <div style="margin-top: 15px;color: #94A3B8;margin-left: -10px;"> <span>Filter&nbsp;by</span></div>
     <div> <mat-form-field appearance="outline" class="datebar">
-        <input matInput placeholder="Site" />
+        <input matInput placeholder="Site" (input)="search($event,'site')" />
       </mat-form-field></div>
   </div>
   <div style="margin-top: 50px;position: relative;right:520px;">
@@ -100,4 +101,9 @@
       </tr>
     </tbody>
   </table>
+  <div class="no-record-found" *ngIf="!(purchaseList && purchaseList.length>0)">
+    <img src="./assets/images/inbox_empty.png" alt="">
+    <span> No record found</span>
+  </div>
+
 </div>
