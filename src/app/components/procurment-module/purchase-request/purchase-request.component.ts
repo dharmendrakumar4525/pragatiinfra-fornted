@@ -83,7 +83,8 @@ export class PurchaseRequestComponent implements OnInit {
       next: (resp: any) => {
         this.load = false;
         this.snack.notify("Purchase requrest has been created.", 1);
-        // this.router.navigate(['procurement/prlist'])
+        this.purchaseRequestForm.reset();
+        this.purchaseRequestForm.markAsUntouched();
         this.option = 2;
         this.getPurchaseList({ filter_by: this.filter_by, filter_value: this.statusOption.value })
 
