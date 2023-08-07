@@ -45,8 +45,8 @@
 </div>
 
 <div class="requests">
-  <div class="createreq" [ngClass]="[option==1 ? 'createreq' : 'innerreq']" (click)="option=1">Create request</div>
-  <div class="innerreq" [ngClass]="[option==2? 'createreq' : 'innerreq']"
+  <div [ngClass]="{'active':option==1}" (click)="option=1">Create request</div>
+  <div [ngClass]="{'active':option==2}"
     (click)="option=2;getPurchaseList({ filter_by: filter_by, filter_value: statusOption.value })"> Request list
   </div>
   <!-- <div class="innerreq">Rejected request</div>
@@ -58,27 +58,33 @@
 
 
     <mat-card class="topcard">
-      <div style="display: flex;flex-wrap: wrap;gap:40px;width:1000px">
-        <div style="display: flex;flex-direction: column;">
+      <div style="display: flex;flex-wrap: wrap;gap:10px; max-width: 100%;">
+        <div class="flex-div" style="display: flex;flex-direction: column">
           <label style="color: #4272BF;font-size: 14px;">Request title <span class="star">*</span></label>
           <input placeholder="Enter title" formControlName="title"
-            style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+            style="width:75%;padding:10px;border-radius: 6px;border:1px solid #ccc;cursor: pointer;margin-top: 3px;font-family: 'Poppins'; height: 50px;">
         </div>
-        <div style="display: flex;flex-direction: column;margin-left: 100px;">
+        <div class="flex-div custom-form-group">
           <label style="color: #4272BF;font-size: 14px;">Request date</label>
-          <input placeholder="Auto generate" formControlName="date" [readonly]="true"
-            style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+          <div class="custom-form-control">
+            <mat-form-field appearance="outline">
+              <input matInput  formControlName="date" [readonly]="true"
+                placeholder="Enter Required by date" />
+              <mat-datepicker-toggle matSuffix></mat-datepicker-toggle>
+              <mat-datepicker ></mat-datepicker>
 
+            </mat-form-field>
+          </div>
         </div>
 
-        <div class="custom-form-group">
+        <div class="flex-div custom-form-group" style="margin-right: 45px;">
           <label class="custom-label" for="" style="color: #4272BF;font-size: 14px;"> Required by <span
               class="star">*</span>
           </label>
           <div class="custom-form-control">
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" >
               <input matInput [matDatepicker]="requiredByStartDate" formControlName="expected_delivery_date"
-                placeholder="Enter Required by date" [min]="requredByMinDate" (click)="requiredByStartDate.open()" />
+                placeholder="Enter Required by date" style="width: 100%;" [min]="requredByMinDate" (click)="requiredByStartDate.open()" />
               <mat-datepicker-toggle matSuffix [for]="requiredByStartDate"></mat-datepicker-toggle>
               <mat-datepicker #requiredByStartDate></mat-datepicker>
 
@@ -88,23 +94,23 @@
 
 
 
-        <div style="display: flex;flex-direction: column;">
+        <!-- <div style="display: flex;flex-direction: column;">
           <label style="color: #4272BF;font-size: 14px;">Purchase request no </label>
           <input placeholder="Auto generate" formControlName="purchase_request_number" readonly
             style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
-        </div>
-        <div style="display: flex;flex-direction: column;margin-left: 100px;">
+        </div> -->
+        <div class="flex-div" style="display: flex;flex-direction: column;">
           <label style="color: #4272BF;font-size: 14px;">Site name <span class="star">*</span></label>
 
           <mat-select id="site" placeholder="Select site" formControlName="site"
-            style="padding: 10px;width: 200px;border:1px solid #9F9F9F;border-radius: 6px;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+            style="padding: 10px;width: 75%;border:1px solid #ccc;border-radius: 6px;cursor: pointer;font-family: 'Poppins';">
             <mat-option [value]="item._id" *ngFor="let item of siteList">
               {{item.site_name}}
             </mat-option>
 
           </mat-select>
         </div>
-        <div style="display: flex;flex-direction: column;margin-left: 100px;">
+        <div class="flex-div" style="display: flex;flex-direction: column;">
           <label style="color: #4272BF;">Local Purchase <span class="star">*</span></label>
           <mat-radio-group aria-labelledby="example-radio-group-label" color="primary" class="example-radio-group"
             formControlName="local_purchase">
@@ -127,7 +133,7 @@
 
 
     <div class="scroll-bar1">
-      <table style="direction: ltr !important;border-left: 2px solid #000 !important;">
+      <table class="items-table" style="direction: ltr !important;border-left: 2px solid #000 !important;">
         <tr>
           <th>S&nbsp;No</th>
           <th>Item*</th>
@@ -135,7 +141,7 @@
           <th>Sub&nbsp;category</th>
           <th>Uom*</th>
           <th>Quantity*</th>
-          <th>Attachments</th>
+          <!-- <th>Attachments</th> -->
           <th>Remarks</th>
           <th>Action</th>
         </tr>
@@ -165,19 +171,20 @@
                 {{item.get('subCategory')?.value}}
               </td>
               <td>
-                <mat-select id="itemName" placeholder="Select UOM" formControlName="uom" class="select-form-field">
+                {{item.get('uom')?.value}}
+                <!-- <mat-select id="itemName" placeholder="Select UOM" formControlName="uom" class="select-form-field">
                   <mat-option [value]="item._id" *ngFor="let item of uomList">
                     {{item.unit}}
                   </mat-option>
 
-                </mat-select>
+                </mat-select> -->
               </td>
               <td>
                 <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
               </td>
-              <td>
+              <!-- <td>
                 <input placeholder="Enter" formControlName="attachment" type="file" class="pr-form-field">
-              </td>
+              </td> -->
               <td>
                 <input placeholder="Enter" formControlName="remark" class="pr-form-field">
               </td>
@@ -193,7 +200,7 @@
     </div>
 
     <div
-      style="display: flex;flex-direction: row;gap: 40px;margin-left:60px;margin-bottom:100px;top: -50px;position: relative;">
+      style="display: flex;flex-direction: row;gap: 40px;margin-left:60px;margin-bottom:100px;margin-top:100px;top: -50px;position: relative;">
       <div>
         <button
           style="padding: 8px ;width: 120px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';"
@@ -216,66 +223,92 @@
 
 <ng-container *ngIf="option==2">
 
-  <div style="display: flex;flex-direction: row;gap:10px">
-    <div style="margin-left: 40px;width:100%;margin-top: 30px;">
+  <div style="display: flex;flex-direction: row;gap:10px;    margin: 0 27px;">
+    <div>
+      <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter by title </span></div>
       <mat-form-field appearance="outline" class="searchbar">
         <mat-icon matSuffix>search</mat-icon>
-        <input matInput type="search" placeholder="search title" class="search-input">
+        <input matInput type="search" placeholder="search title" class="search-input" (input)="search($event,'title')">
 
       </mat-form-field>
     </div>
-    <div style=" margin-right: 600px;margin-top: 30px;display: flex;gap:10px">
-      <div style="margin-top: 15px;color: #94A3B8;margin-left: 30px;"> <span>Filter&nbsp;by</span></div>
+
+    <div>
+      <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter by date</span></div>
       <div> <mat-form-field appearance="outline" class="datebar">
-          <input matInput [matDatepicker]="startPicker" placeholder="Date" (click)="startPicker.open()" />
+          <input matInput [matDatepicker]="startPicker" placeholder="Date" (dateChange)="dateFilter( $event)"
+            (click)="startPicker.open()" />
           <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
           <mat-datepicker #startPicker></mat-datepicker>
         </mat-form-field></div>
     </div>
-    <div style="margin-top: 30px;display: flex;position: relative;right:570px;gap:10px">
-      <div style="margin-top: 15px;color: #94A3B8;margin-left: -10px;"> <span>Filter&nbsp;by</span></div>
+
+    <div>
+
+      <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter by site</span></div>
       <div> <mat-form-field appearance="outline" class="datebar">
-          <input matInput placeholder="Site" />
+          <input matInput placeholder="Site" (input)="search($event,'site')" />
         </mat-form-field></div>
     </div>
 
 
-    <mat-select placeholder="Select Option" [formControl]="statusOption" (selectionChange)="onStatusChange($event)"
-      style="margin-top: 50px;position: relative;right:520px;">
-      <mat-option [value]="item.value" *ngFor="let item of statusList">{{item.label}}</mat-option>
-    </mat-select>
+    <div class="custom-form-group">
+
+      <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter by Status</span></div>
+      <div class="custom-form-control" style="position: relative;">
+
+        <mat-form-field appearance="outline">
+          <mat-select [formControl]="statusOption" (selectionChange)="onStatusChange($event)">
+            <mat-option [value]="item.value" *ngFor="let item of statusList">{{item.label}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
   </div>
 
 
   <div class="scroll-bar1" style="width: 93%;">
-    <table style="direction: ltr !important;margin-top: -20px;">
+    <table style="direction: ltr !important;margin-top: -20px;" class="r-list">
 
 
 
       <tbody>
         <tr *ngFor="let obj of purchaseList">
-          <td style="color: #4272BF;width:300px;text-align: left;padding: 10px;">Request&nbsp;no&nbsp;
+          <td style="color: #4272BF;width:300px;text-align: left;padding: 18px;">Request&nbsp;no:
             {{obj.purchase_request_number}}</td>
-          <hr style="border: 1px solid #D9D9D9;height: 30px;">
-          <td style="color: #4272BF;width:200px;">Title &nbsp; {{obj.title}}</td>
-          <hr style="border: 1px solid #D9D9D9;height: 30px;">
-          <td style="color: #4272BF;width:800px;text-align: left;padding: 10px;">Site &nbsp; {{obj.siteData.site_name}}
+
+          <td style="color: #4272BF;width:200px;">Title: {{obj.title}}</td>
+
+          <td style="color: #4272BF;width:800px;text-align: left;padding: 18px;">Site: {{obj.siteData.site_name}}
           </td>
-          <td style="background-color: #233A61;color:#fff;width:150px;cursor: pointer;"
-            [routerLink]="['/procurement/details',obj._id]" *ngIf="obj.status=='pending'">
-            <ng-container >View&nbsp;details</ng-container>
+          <td *ngIf="obj.status=='pending'" style="width: 20%;
+          text-align: right;">
+            <a class="viewdetail-btn" [routerLink]="['/procurement/details',obj._id]">
+              View&nbsp;details
+            </a>
           </td>
-          <td *ngIf="obj.status=='approved'" style="background-color: #1bc47d;color:#fff;width:150px;cursor: pointer;"
-            [routerLink]="['/procurement/details',obj._id]">
-            <ng-container >Approved ticket</ng-container>
+          <td *ngIf="obj.status=='approved'" style="width: 20%;
+          text-align: right;">
+
+            <a class="viewdetail-btn" [routerLink]="['/procurement/details',obj._id]"
+              style="background-color: #54AA52;color:#fff;">
+              Approved ticket
+            </a>
           </td>
-          <td *ngIf="obj.status=='rejected'" style="background-color: #f24e1e;color:#fff;width:150px;cursor: pointer;"
-            [routerLink]="['/procurement/details',obj._id]">
-            <ng-container >Rejected</ng-container>
+          <td *ngIf="obj.status=='rejected'" style="width: 20%;
+          text-align: right;">
+            <a class="viewdetail-btn" [routerLink]="['/procurement/details',obj._id]"
+              style="background-color: #C7323B;color:#fff;">
+              Rejected
+            </a>
           </td>
-          <td style="background-color: #ff9900b0;color:#fff;width:150px;cursor: pointer;"
-            [routerLink]="['/procurement/revise',obj._id]" *ngIf="obj.status=='revise'">
-            <ng-container >Revise</ng-container>
+          <td *ngIf="obj.status=='revise'" style="width: 20%;
+          text-align: right;">
+            <a class="viewdetail-btn" [routerLink]="['/procurement/revise',obj._id]"
+              style="background-color: #ECD172;color:#fff;">
+              Revise
+            </a>
           </td>
           <td style="width: 100px;"><mat-icon>
               arrow_forward_ios
@@ -283,5 +316,15 @@
         </tr>
       </tbody>
     </table>
+
+
+    <div class="no-record-found" *ngIf="!(purchaseList && purchaseList.length>0)">
+      <img src="./assets/images/inbox_empty.png" alt="">
+      <span> No record found</span>
+    </div>
+
+
+
+
   </div>
 </ng-container>

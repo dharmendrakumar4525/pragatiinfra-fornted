@@ -1,18 +1,18 @@
 <mat-toolbar style="height: 100px;background-color: #fff;">
-  <div style="margin-top: 40px;margin-left: 20px;">
-    <img src="./assets/images/preq.svg">
+  <div style="margin-left: 20px;">
+    <img src="./assets/images/preq.svg" style="width: 30px;">
   </div>
   <span
-    style="font-family: 'Poppins';margin-top: 40px;font-style: normal;font-weight:600;font-size: 30px;color:#1E293B;margin-left: 10px;">Purchase
-    request </span>
+    style="font-family: 'Poppins';font-style: normal;font-weight:600;font-size: 22px;color:#1E293B;margin-left: 10px;">Summary
+  </span>
   <span class="example-spacer"></span>
-  <button mat-icon-button style="margin-right: 40px;">
-    <mat-icon style="margin-top: 40px;">notifications</mat-icon>
+  <button mat-icon-button>
+    <mat-icon>notifications</mat-icon>
   </button>
 
 </mat-toolbar>
 <div>
-  <hr style="width: 1130px;border: 2px solid #C5C5C5;margin-left: 30px;">
+  <hr style="width: 100%;border: 2px solid #C5C5C5;">
 </div>
 <div style="display: flex;flex-direction: row;font-family: 'Poppins';font-weight: 600;">
 
@@ -44,35 +44,36 @@
   </div>
 </div>
 
-<div class="requests">
+<!-- <div class="requests">
   <div class="createreq">Create request</div>
   <div class="innerreq">Approved request</div>
   <div class="innerreq">Rejected request</div>
   <div class="innerreq">Revised request</div>
-</div>
+</div> -->
 
 <form [formGroup]="purchaseRequestForm">
 
 
   <mat-card class="topcard">
-    <div style="display: flex;flex-wrap: wrap;gap:40px;width:1000px">
-      <div style="display: flex;flex-direction: column;">
+    <div style="display: flex;flex-wrap: wrap;gap:10px; max-width: 100%;">
+
+      <div class="flex-div" style="display: flex;flex-direction: column;">
         <label style="color: #4272BF;font-size: 14px;">Request title </label>
         <input placeholder="Enter title" formControlName="title" [readonly]="true"
-          style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+          style="width:100%;padding:10px;border-radius: 6px;border:1px solid #ccc;cursor: pointer;margin-top: 3px;font-family: 'Poppins';    height: 50px;">
       </div>
-      <div style="display: flex;flex-direction: column;margin-left: 100px;">
+
+      <div class="flex-div" style="display: flex;flex-direction: column;">
         <label style="color: #4272BF;font-size: 14px;">Request date</label>
         <mat-form-field appearance="outline">
           <input matInput [matDatepicker]="date" [readonly]="true" formControlName="date"
             placeholder="Auto generate Request Date" />
           <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
           <mat-datepicker #date></mat-datepicker>
-
         </mat-form-field>
       </div>
 
-      <div class="custom-form-group">
+      <div class="flex-div custom-form-group">
         <label class="custom-label" for="" style="color: #4272BF;font-size: 14px;"> Required by <span
             class="star">*</span>
         </label>
@@ -89,16 +90,17 @@
 
 
 
-      <div style="display: flex;flex-direction: column;">
+      <div class="flex-div" style="display: flex;flex-direction: column;">
         <label style="color: #4272BF;font-size: 14px;">Purchase request no </label>
         <input placeholder="Auto generate" formControlName="purchase_request_number" readonly
-          style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+          style="width:100%;padding:10px;border-radius: 6px;border:1px solid #ccc;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
       </div>
-      <div style="display: flex;flex-direction: column;margin-left: 100px;">
+
+      <div class="flex-div" style="display: flex;flex-direction: column;">
         <label style="color: #4272BF;font-size: 14px;">Site name <span class="star">*</span></label>
 
         <mat-select id="site" placeholder="Select site" formControlName="site"
-          style="padding: 10px;width: 200px;border:1px solid #9F9F9F;border-radius: 6px;cursor: pointer;margin-top: 10px;font-family: 'Poppins';"
+          style="padding: 10px;width: 100;border:1px solid #ccc;border-radius: 6px;cursor: pointer;margin-top: 10px;font-family: 'Poppins';"
           [disabled]="true">
           <mat-option [value]="item._id" *ngFor="let item of siteList">
             {{item.site_name}}
@@ -106,8 +108,9 @@
 
         </mat-select>
       </div>
-      <div style="display: flex;flex-direction: column;margin-left: 100px;">
-        <label style="color: #4272BF;">Local Purchase <span class="star">*</span></label>
+
+      <div class="flex-div" style="display: flex;flex-direction: column;align-items: center;">
+        <label style="color: #4272BF;    margin-bottom: 10px;">Local Purchase <span class="star">*</span></label>
         <mat-radio-group aria-labelledby="example-radio-group-label" color="primary" class="example-radio-group"
           formControlName="local_purchase" [disabled]="true">
           <mat-radio-button class="example-radio-button" [value]="'yes'">
@@ -171,18 +174,22 @@
       </tbody>
     </table>
   </div>
-  <div class="row text-area-section">
+  <div class="text-area-section">
 
     <label style="color: #4272BF;font-size: 14px;">Remarks </label>
-    <textarea name="" id="" cols="30" rows="10" formControlName="remarks"></textarea>
+    <textarea name="" id="" cols="30" rows="5" formControlName="remarks"></textarea>
 
   </div>
-  <div class="row button-list">
+  <div class=" button-list">
+
+    <button *ngIf="details.status=='pending'"
+      class="pending">Pending</button>
+
 
     <button *ngIf="details.status=='approved'"
-      style="padding: 8px;width: 120px;background-color: #1bc47d;color: #fff;border-radius: 5px;border-color: lightgrey;font-size: 14px;font-family: 'Poppins';">Approved</button>
+      style="padding: 8px;width: 120px;background-color: #35B568;color: #fff;border-radius: 5px;border-color: lightgrey;font-size: 14px;font-family: 'Poppins';">Approved</button>
 
     <button *ngIf="details.status=='rejected'"
-      style="padding: 8px;width: 120px;background-color: #da3b3b;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">Rejected</button>
+      style="padding: 8px;width: 120px;background-color: #C7323B;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">Rejected</button>
   </div>
 </form>

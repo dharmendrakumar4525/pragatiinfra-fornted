@@ -56,7 +56,7 @@ export class RevisePurchaseRequestComponent implements OnInit {
       subCategory: new FormControl(null),
       attachment: new FormControl(null),
       remark: new FormControl(null),
-      uom: new FormControl(null, Validators.required),
+      uom: new FormControl(null),
 
     })
 
@@ -80,7 +80,7 @@ export class RevisePurchaseRequestComponent implements OnInit {
       next: (resp: any) => {
         this.load = false;
         this.snack.notify("Record has been updated.", 1);
-        this.router.navigate(['/procurement/prlist'])
+        this.router.navigate(['/procurement'])
 
       }, error: (err) => {
         this.load = false;
@@ -119,9 +119,12 @@ export class RevisePurchaseRequestComponent implements OnInit {
   selectedItem(event: any, i: any) {
     let category = this.itemList.filter(obj => obj._id == event.value)[0]?.categoryDetail.name;
     let subCategory = this.itemList.filter(obj => obj._id == event.value)[0]?.subCategoryDetail.subcategory_name;
+    let uom = this.itemList.filter(obj => obj._id == event.value)[0]?.uomDetail.uom_name;
+
     this.items.at(i).patchValue({
       category: category,
       subCategory: subCategory,
+      uom: uom
     });
   }
 
@@ -133,8 +136,8 @@ export class RevisePurchaseRequestComponent implements OnInit {
         category: new FormControl(item.categoryDetail.name),
         subCategory: new FormControl(item.subCategoryDetail.subcategory_name),
         attachment: new FormControl(item.attachment),
-        remark: new FormControl(item.remark, Validators.required),
-        uom: new FormControl(item.uomDetail._id, Validators.required),
+        remark: new FormControl(item.remark),
+        uom: new FormControl(item.uomDetail.uom_name),
 
       })
     }
@@ -145,8 +148,8 @@ export class RevisePurchaseRequestComponent implements OnInit {
         category: new FormControl(''),
         subCategory: new FormControl(''),
         attachment: new FormControl(),
-        remark: new FormControl('', Validators.required),
-        uom: new FormControl('', Validators.required),
+        remark: new FormControl(''),
+        uom: new FormControl(''),
 
       })
     }
@@ -196,8 +199,6 @@ export class RevisePurchaseRequestComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      console.log(params) //log the entire params object
-      console.log(params['id']);
       if (params['id']) {
         this.httpService.GET(`${PURCHASE_REQUEST_API}/detail`, { _id: params['id'] }).subscribe(res => {
           this.patchData(res.data[0]);

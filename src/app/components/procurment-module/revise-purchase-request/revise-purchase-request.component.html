@@ -3,7 +3,7 @@
     <img src="./assets/images/preq.svg">
   </div>
   <span
-    style="font-family: 'Poppins';margin-top: 40px;font-style: normal;font-weight:600;font-size: 30px;color:#1E293B;margin-left: 10px;">Purchase
+    style="font-family: 'Poppins';margin-top: 40px;font-style: normal;font-weight:600;font-size: 30px;color:#1E293B;margin-left: 10px;">Revise purchase
     request </span>
   <span class="example-spacer"></span>
   <button mat-icon-button style="margin-right: 40px;">
@@ -147,7 +147,7 @@
         <th>Sub&nbsp;category</th>
         <th>Uom*</th>
         <th>Quantity*</th>
-        <th>Attachments</th>
+        <!-- <th>Attachments</th> -->
         <th>Remarks</th>
         <th>Action</th>
       </tr>
@@ -177,19 +177,20 @@
               {{item.get('subCategory')?.value}}
             </td>
             <td>
-              <mat-select id="itemName" placeholder="Select UOM" formControlName="uom" class="select-form-field">
+              {{item.get('uom')?.value}}
+              <!-- <mat-select id="itemName" placeholder="Select UOM" formControlName="uom" class="select-form-field">
                 <mat-option [value]="item._id" *ngFor="let item of uomList">
                   {{item.unit}}
                 </mat-option>
 
-              </mat-select>
+              </mat-select> -->
             </td>
             <td>
               <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
             </td>
-            <td>
+            <!-- <td>
               <input placeholder="Enter" formControlName="attachment" type="file" class="pr-form-field">
-            </td>
+            </td> -->
             <td>
               <input placeholder="Enter" formControlName="remark" class="pr-form-field">
             </td>

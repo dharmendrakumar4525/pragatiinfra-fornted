@@ -91,3 +91,16 @@ tr:nth-child(even) {
 ::-webkit-scrollbar-thumb:hover {
   background: lightblue;
 }
+
+.no-record-found {
+  text-align: center;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 188px;
+  }
+}
