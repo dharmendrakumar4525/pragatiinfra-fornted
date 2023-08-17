@@ -104,7 +104,8 @@
           <tr style="color:#233A61 !important;font-weight: bolder ;background-color: #aaa">
             <td class="location-first-td">
               <div class="section-container">
-                <a class="toggle-location" id="location-{{locationItem._id}}" (click)="toggleActivity(locationItem._id)"><img src="./assets/images/arrow.svg" alt=""></a>
+                <a class="toggle-location" id="location-{{locationItem._id}}"
+                  (click)="toggleActivity(locationItem._id)"><img src="./assets/images/arrow.svg" alt=""></a>
                 <div class="left-cont location-name" style="font-size: 16px;">{{locationItem.location_name}}</div>
                 <div class="right-cont">
                   <mat-icon matTooltip="Add Activity" (click)="addStructure(locationIndex)">add</mat-icon>
@@ -135,10 +136,12 @@
           </tr>
 
           <ng-container *ngFor="let structureItem of locationItem.structures;let structureIndex=index">
-            <tr style="color:#233A61 !important; font-weight: bolder;background-color: #ddd;" class="location-{{locationItem._id}}">
+            <tr style="color:#233A61 !important; font-weight: bolder;background-color: #ddd;"
+              class="location-{{locationItem._id}}">
               <td class="structure-first-td">
                 <div class="section-container">
-                  <a class="toggle-structure" id="structure-{{structureItem._id}}" (click)="toggleStructure(structureItem._id)"><img src="./assets/images/arrow.svg" alt=""></a>
+                  <a class="toggle-structure" id="structure-{{structureItem._id}}"
+                    (click)="toggleStructure(structureItem._id)"><img src="./assets/images/arrow.svg" alt=""></a>
                   <div class="left-cont structure_name"> {{structureItem.structure_name}} </div>
                   <div class="right-cont">
                     <mat-icon matTooltip="Add sub activity"
@@ -174,7 +177,8 @@
               <td></td>
             </tr>
 
-            <tr *ngFor="let activityItem of structureItem.activities,let activityIndex=index" style="font-size: 10px;" class="location-{{locationItem._id}} structure-{{structureItem._id}}">
+            <tr *ngFor="let activityItem of structureItem.activities,let activityIndex=index" style="font-size: 10px;"
+              class="location-{{locationItem._id}} structure-{{structureItem._id}}">
               <td style="color:#595b5d;" class="activity-first-td">
                 <div class="section-container">
                   <div class="left-cont activity_name" style="font-size: 12px;"> {{activityItem.activity_name}} </div>
@@ -200,7 +204,7 @@
               <td>{{activityItem?.baseLineWorkingDays}}</td>
               <td>
                 <ng-container *ngIf="activityItem?.base_line_start_date!=null">
-                  {{TargetTillDateAsPerBaseline(activityItem,locationIndex,structureIndex,activityIndex)}}{{countTargetTillDateAsPerBaseline.get(locationIndex+''+structureIndex+''+activityIndex)}}
+                  {{TargetTillDateAsPerBaseline(activityItem,locationIndex,structureIndex,activityIndex)}}
                 </ng-container>
               </td>
               <td>{{activityItem?.noofDaysBalanceasperbaseLine}}</td>
@@ -218,7 +222,7 @@
               </td>
               <td>
                 <span *ngIf="activityItem?.actual_revised_start_date!=null && activityItem?.r1EndDate!=null">
-                  {{TargetTillDateAsPerRevisedEndDate(activityItem,locationIndex,structureIndex,activityIndex)}}{{countTargetTillDateAsPerRevisedEndDate.get(locationIndex+''+structureIndex+''+activityIndex)}}
+                  {{TargetTillDateAsPerRevisedEndDate(activityItem,locationIndex,structureIndex,activityIndex)}}
                 </span>
               </td>
               <td>{{activityItem?.noofDaysBalanceasperrevisedEnddate}}</td>
@@ -226,7 +230,7 @@
               <td>
                 <ng-container *ngIf="activityItem?.quantity>0">
                   {{(((activityItem?.quantity-activityItem?.dailyCumulativeTotal)/activityItem?.quantity)*100).toFixed(0)}}%
-                </ng-container>  
+                </ng-container>
               </td>
               <!-- <td>{{(100-(100 * activityItem.dailyCumulativeTotal) / activityItem.total).toFixed(0)}}</td> -->
               <td>
