@@ -190,33 +190,50 @@
               <td>{{activityItem?.r2EndDate | date}}</td>
               <td>{{activityItem?.r3EndDate | date}}</td>
               <td>{{activityItem?.actual_revised_start_date | date}}</td>
-              <td>{{activityItem?.workingDaysRevised}}</td>
+              <td>
+                <span
+                  *ngIf="activityItem?.actual_revised_start_date!=null && activityItem?.r1EndDate!=null">{{activityItem?.workingDaysRevised}}
+                </span>
+              </td>
               <td>{{activityItem?.base_line_start_date| date}}</td>
               <td>{{activityItem?.base_line_end_date | date}}</td>
               <td>{{activityItem?.baseLineWorkingDays}}</td>
               <td>
-                <span
-                  *ngIf="(activityItem?.dailyCumulativeTotal == activityItem?.total) && activityItem?.dailyCumulativeTotal">Completed</span>
-                <span
-                  *ngIf="activityItem?.dailyCumulativeTotal !== activityItem?.total">{{activityItem?.dailyCumulativeTotal}}</span>
-
+                <ng-container *ngIf="activityItem?.base_line_start_date!=null">
+                  {{TargetTillDateAsPerBaseline(activityItem,locationIndex,structureIndex,activityIndex)}}{{countTargetTillDateAsPerBaseline.get(locationIndex+''+structureIndex+''+activityIndex)}}
+                </ng-container>
               </td>
               <td>{{activityItem?.noofDaysBalanceasperbaseLine}}</td>
               <td>{{activityItem?.dailyAskingRateasperbaseLine}}</td>
               <td>{{activityItem?.uom}}</td>
-              <td>{{activityItem?.quantity}}</td>
-              <td>{{activityItem?.dailyCumulativeTotal}}</td>
               <td>
-                <span
-                  *ngIf="(activityItem?.dailyCumulativeTotal == activityItem?.total) && activityItem?.dailyCumulativeTotal">Completed</span>
-                <span
-                  *ngIf="activityItem?.dailyCumulativeTotal !== activityItem?.total">{{activityItem?.dailyCumulativeTotal}}</span>
-
+                <ng-container *ngIf="activityItem?.base_line_start_date!=null">
+                  {{activityItem?.quantity}}
+                </ng-container>
+              </td>
+              <td>
+                <ng-container *ngIf="activityItem?.base_line_start_date!=null">
+                  {{activityItem?.dailyCumulativeTotal}}
+                </ng-container>
+              </td>
+              <td>
+                <span *ngIf="activityItem?.actual_revised_start_date!=null && activityItem?.r1EndDate!=null">
+                  {{TargetTillDateAsPerRevisedEndDate(activityItem,locationIndex,structureIndex,activityIndex)}}{{countTargetTillDateAsPerRevisedEndDate.get(locationIndex+''+structureIndex+''+activityIndex)}}
+                </span>
               </td>
               <td>{{activityItem?.noofDaysBalanceasperrevisedEnddate}}</td>
               <td>{{activityItem?.dailyAskingRateasperRevisedEndDate}}</td>
-              <td>{{(100-(100 * activityItem.dailyCumulativeTotal) / activityItem.total).toFixed(0)}}</td>
-              <td>{{activityItem?.dailyCumulativeTotal}}</td>
+              <td>
+                <ng-container *ngIf="activityItem?.quantity>0">
+                  {{(((activityItem?.quantity-activityItem?.dailyCumulativeTotal)/activityItem?.quantity)*100).toFixed(0)}}%
+                </ng-container>  
+              </td>
+              <!-- <td>{{(100-(100 * activityItem.dailyCumulativeTotal) / activityItem.total).toFixed(0)}}</td> -->
+              <td>
+                <ng-container *ngIf="activityItem?.base_line_start_date!=null">
+                  {{activityItem?.dailyCumulativeTotal}}
+                </ng-container>
+              </td>
               <td><button mat-button class="remark-btn" (click)="addremarks(activityItem)">View remarks</button></td>
 
 
