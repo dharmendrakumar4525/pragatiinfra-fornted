@@ -42,8 +42,6 @@ export class ProgressSheetComponent implements OnInit {
   });
   currentDate: any;
   project: any;
-  countTargetTillDateAsPerBaseline: Map<string, any> = new Map();
-  countTargetTillDateAsPerRevisedEndDate: Map<string, any> = new Map();
   permissions: any
   progressPermissionsView: any;
   progressPermissionsEdit: any
@@ -318,7 +316,7 @@ export class ProgressSheetComponent implements OnInit {
     }
   }
 
-  TargetTillDateAsPerBaseline(activityItem, locationIndex, structureIndex, activityIndex) {
+  TargetTillDateAsPerBaseline(activityItem) {
     if (activityItem?.base_line_start_date == null)
       return;
 
@@ -339,7 +337,7 @@ export class ProgressSheetComponent implements OnInit {
     return temp;
   }
 
-  TargetTillDateAsPerRevisedEndDate(activityItem, locationIndex, structureIndex, activityIndex) {
+  TargetTillDateAsPerRevisedEndDate(activityItem) {
     if (activityItem?.actual_revised_start_date == null || activityItem.addRevisesDates.length <= 0)
       return;
     let temp: any;
@@ -356,8 +354,6 @@ export class ProgressSheetComponent implements OnInit {
       var RevisedLineWorkingDays = moment(this.currentDate).diff(Revisedbase_line_start_date, 'days');
       temp = activityItem.dailyAskingRateasperRevisedEndDate * (RevisedLineWorkingDays + 1);
     }
-    let str = locationIndex + '' + structureIndex + '' + activityIndex;
-    this.countTargetTillDateAsPerRevisedEndDate.set(str, temp);
     return temp;
   }
 }

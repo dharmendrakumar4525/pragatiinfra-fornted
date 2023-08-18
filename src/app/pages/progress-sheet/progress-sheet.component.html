@@ -204,7 +204,7 @@
               <td>{{activityItem?.baseLineWorkingDays}}</td>
               <td>
                 <ng-container *ngIf="activityItem?.base_line_start_date!=null">
-                  {{TargetTillDateAsPerBaseline(activityItem,locationIndex,structureIndex,activityIndex)}}
+                  {{TargetTillDateAsPerBaseline(activityItem)}}
                 </ng-container>
               </td>
               <td>{{activityItem?.noofDaysBalanceasperbaseLine}}</td>
@@ -222,7 +222,7 @@
               </td>
               <td>
                 <span *ngIf="activityItem?.actual_revised_start_date!=null && activityItem?.r1EndDate!=null">
-                  {{TargetTillDateAsPerRevisedEndDate(activityItem,locationIndex,structureIndex,activityIndex)}}
+                  {{TargetTillDateAsPerRevisedEndDate(activityItem)}}
                 </span>
               </td>
               <td>{{activityItem?.noofDaysBalanceasperrevisedEnddate}}</td>
