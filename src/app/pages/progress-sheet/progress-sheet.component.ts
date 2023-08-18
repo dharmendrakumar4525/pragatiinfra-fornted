@@ -19,7 +19,7 @@ import { isEmpty } from 'lodash';
 import { LocationPopupComponent } from '@component/project/location-popup/location-popup.component';
 import { ConfirmationPopupComponent } from '@component/project/confirmation-popup/confirmation-popup.component';
 import * as moment from 'moment';
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'app-progress-sheet',
@@ -40,10 +40,8 @@ export class ProgressSheetComponent implements OnInit {
   projectNameForm: FormGroup = this._fb.group({
     _id: [null],
   });
-  currentDate:any;
+  currentDate: any;
   project: any;
-  countTargetTillDateAsPerBaseline: Map<string, any> = new Map();
-  countTargetTillDateAsPerRevisedEndDate:Map<string, any> = new Map();
   permissions: any
   progressPermissionsView: any;
   progressPermissionsEdit: any
@@ -53,10 +51,9 @@ export class ProgressSheetComponent implements OnInit {
   constructor(
     private httpService: RequestService,
     private snack: SnackbarService,
-    private activeRoute: ActivatedRoute, private toast: ToastService, private router: Router, private projectService: AddProjectService, private _fb: FormBuilder, private recentActivityService: RecentActivityService, private _dialog: MatDialog, private progressSheetService: ProgressSheetService, private taskService: TaskService, public dialog: MatDialog, private dataAnalysis: DataAnalysisService,) 
-    { 
-      this.currentDate = moment().startOf('day');
-    }
+    private activeRoute: ActivatedRoute, private toast: ToastService, private router: Router, private projectService: AddProjectService, private _fb: FormBuilder, private recentActivityService: RecentActivityService, private _dialog: MatDialog, private progressSheetService: ProgressSheetService, private taskService: TaskService, public dialog: MatDialog, private dataAnalysis: DataAnalysisService,) {
+    this.currentDate = moment().startOf('day');
+  }
 
   projectLocationsList: Array<any> = [];
 
@@ -78,29 +75,6 @@ export class ProgressSheetComponent implements OnInit {
         this.projectLocationsList = this.project.locations;
       })
     });
-
-
-  
-  
-
-
-  //   $('body').on('click','.toggle-location',function(){
-  //     console.log(11)
-  //     let getClassName = $(this).attr('id');
-     
-  //     if($(this).hasClass('collapsed')){
-  //       $(this).removeClass('collapsed');
-  //     } else {
-  //       $(this).addClass('collapsed');
-  //     }
-    
-
-  //     // $(`.${getClassName}`).addClass('cl-hide');
-  
-  //     // $(`.${getClassName}`).addClass('cl-hide');
-  
-  
-  // })
   }
 
 
@@ -128,8 +102,8 @@ export class ProgressSheetComponent implements OnInit {
 
         this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal = this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal ? this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal : 0;
         this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex] = { ...this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex], ...status.data };
-        this.TargetTillDateAsPerBaseline(this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex],locationIndex,structureIndex,activityIndex);
-        this.TargetTillDateAsPerRevisedEndDate(this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex],locationIndex,structureIndex,activityIndex);
+        // this.TargetTillDateAsPerBaseline(this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex],locationIndex,structureIndex,activityIndex);
+        // this.TargetTillDateAsPerRevisedEndDate(this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex],locationIndex,structureIndex,activityIndex);
         let requestedData: any = {
           _id: this.project._id,
           locations: this.projectLocationsList
@@ -318,9 +292,9 @@ export class ProgressSheetComponent implements OnInit {
 
 
 
-  toggleActivity(id){
+  toggleActivity(id) {
 
-    if($(`#location-${id}`).hasClass('collapsed')){
+    if ($(`#location-${id}`).hasClass('collapsed')) {
       $(`#location-${id}`).removeClass('collapsed');
       $(`.location-${id}`).removeClass('cl-hide');
       $(`.toggle-structure`).removeClass('collapsed');
@@ -331,9 +305,9 @@ export class ProgressSheetComponent implements OnInit {
     }
   }
 
-  toggleStructure(id){
+  toggleStructure(id) {
 
-    if($(`#structure-${id}`).hasClass('collapsed')){
+    if ($(`#structure-${id}`).hasClass('collapsed')) {
       $(`#structure-${id}`).removeClass('collapsed');
       $(`.structure-${id}`).removeClass('cl-hide');
     } else {
@@ -341,45 +315,45 @@ export class ProgressSheetComponent implements OnInit {
       $(`.structure-${id}`).addClass('cl-hide');
     }
   }
-  TargetTillDateAsPerBaseline(activityItem,locationIndex,structureIndex,activityIndex){
-    if(activityItem?.base_line_start_date==null)
+
+  TargetTillDateAsPerBaseline(activityItem) {
+    if (activityItem?.base_line_start_date == null)
       return;
-    
-    let temp:any;
+
+    let temp: any;
     let base_line_start_date = moment(activityItem?.base_line_start_date).startOf('day');
-    let base_line_end_date=moment(activityItem?.base_line_end_date).startOf('day');
-    
-    if(activityItem?.dailyCumulativeTotal == activityItem?.quantity)
-      temp="Completed";
-    else if(this.currentDate<base_line_start_date){
-        temp=0;
-    }else if(this.currentDate >=base_line_end_date)
-      temp=activityItem?.quantity;
-    else if(this.currentDate >= base_line_start_date){
-      var baseLineWorkingDays = moment(this.currentDate).diff(base_line_start_date,'days');
-      temp= activityItem.dailyAskingRateasperbaseLine*(baseLineWorkingDays+1);
-    } 
-    let str=locationIndex+''+structureIndex+''+activityIndex;
-    this.countTargetTillDateAsPerBaseline.set(str,temp);
+    let base_line_end_date = moment(activityItem?.base_line_end_date).startOf('day');
+
+    if (activityItem?.dailyCumulativeTotal == activityItem?.quantity)
+      temp = "Completed";
+    else if (this.currentDate < base_line_start_date) {
+      temp = 0;
+    } else if (this.currentDate >= base_line_end_date)
+      temp = activityItem?.quantity;
+    else if (this.currentDate >= base_line_start_date) {
+      var baseLineWorkingDays = moment(this.currentDate).diff(base_line_start_date, 'days');
+      temp = activityItem.dailyAskingRateasperbaseLine * (baseLineWorkingDays + 1);
+    }
+    return temp;
   }
-  TargetTillDateAsPerRevisedEndDate(activityItem,locationIndex,structureIndex,activityIndex){
-    if(activityItem?.actual_revised_start_date==null || activityItem.addRevisesDates.length <= 0)
+
+  TargetTillDateAsPerRevisedEndDate(activityItem) {
+    if (activityItem?.actual_revised_start_date == null || activityItem.addRevisesDates.length <= 0)
       return;
-    let temp:any;
+    let temp: any;
     let Revisedbase_line_start_date = moment(activityItem?.actual_revised_start_date).startOf('day');
-    let R_end_date=moment(activityItem?.addRevisesDates[activityItem.addRevisesDates.length - 1]['revisedDate']).startOf('day');
-    
-    if(activityItem?.dailyCumulativeTotal == activityItem?.quantity)
-      temp="Completed";
-    else if(this.currentDate<Revisedbase_line_start_date){
-        temp=0;
-    }else if(this.currentDate >=R_end_date)
-      temp=activityItem?.quantity;
-    else if(this.currentDate >= Revisedbase_line_start_date){
-      var RevisedLineWorkingDays = moment(this.currentDate).diff(Revisedbase_line_start_date,'days');
-      temp= activityItem.dailyAskingRateasperRevisedEndDate*(RevisedLineWorkingDays+1);
-    } 
-    let str=locationIndex+''+structureIndex+''+activityIndex;
-    this.countTargetTillDateAsPerRevisedEndDate.set(str,temp);
+    let R_end_date = moment(activityItem?.addRevisesDates[activityItem.addRevisesDates.length - 1]['revisedDate']).startOf('day');
+
+    if (activityItem?.dailyCumulativeTotal == activityItem?.quantity)
+      temp = "Completed";
+    else if (this.currentDate < Revisedbase_line_start_date) {
+      temp = 0;
+    } else if (this.currentDate >= R_end_date)
+      temp = activityItem?.quantity;
+    else if (this.currentDate >= Revisedbase_line_start_date) {
+      var RevisedLineWorkingDays = moment(this.currentDate).diff(Revisedbase_line_start_date, 'days');
+      temp = activityItem.dailyAskingRateasperRevisedEndDate * (RevisedLineWorkingDays + 1);
+    }
+    return temp;
   }
 }
