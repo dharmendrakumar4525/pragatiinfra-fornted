@@ -92,6 +92,7 @@
         <th>UOM</th>
         <th>Total Quantity</th>
         <th>Cumulative Completed</th>
+        <th>Current Daily Asking Rate</th>
         <th>Target Till Date as per Revised End Date</th>
         <th>No of Days Balance as per revised dates</th>
         <th>Daily Asking Rate as per Revised End Date</th>
@@ -120,6 +121,7 @@
             <td></td>
             <td>{{locationItem.structures | psMinTableDate:'location':'base_line_start_date':'min'}}</td>
             <td>{{locationItem.structures | psMinTableDate:'location':'base_line_end_date':'max'}}</td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -162,6 +164,7 @@
               <td></td>
               <td>{{structureItem.activities | psMinTableDate:'structure':'base_line_start_date':'min'}}</td>
               <td>{{structureItem.activities | psMinTableDate:'structure':'base_line_end_date':'max'}}</td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -220,6 +223,7 @@
                   {{activityItem?.dailyCumulativeTotal}}
                 </ng-container>
               </td>
+              <td>{{CurrentDailyAskingRate(activityItem)}} </td>
               <td>
                 <span *ngIf="activityItem?.actual_revised_start_date!=null && activityItem?.r1EndDate!=null">
                   {{TargetTillDateAsPerRevisedEndDate(activityItem)}}
