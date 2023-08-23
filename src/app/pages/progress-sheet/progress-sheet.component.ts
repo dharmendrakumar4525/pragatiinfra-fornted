@@ -366,11 +366,11 @@ export class ProgressSheetComponent implements OnInit {
       temp = "Completed";
     else if (this.currentDate < base_line_start_date) {
       temp = 0;
-    } else if (this.currentDate >= base_line_end_date)
+    } else if (this.currentDate > base_line_end_date)
       temp = activityItem?.quantity;
     else if (this.currentDate >= base_line_start_date) {
       var baseLineWorkingDays = moment(this.currentDate).diff(base_line_start_date, 'days');
-      temp = activityItem.dailyAskingRateasperbaseLine * (baseLineWorkingDays + 1);
+      temp = Math.ceil((activityItem.quantity*baseLineWorkingDays)/activityItem.baseLineWorkingDays);
     }
     return temp;
   }
@@ -386,11 +386,11 @@ export class ProgressSheetComponent implements OnInit {
       temp = "Completed";
     else if (this.currentDate < Revisedbase_line_start_date) {
       temp = 0;
-    } else if (this.currentDate >= R_end_date)
+    } else if (this.currentDate > R_end_date)
       temp = activityItem?.quantity;
     else if (this.currentDate >= Revisedbase_line_start_date) {
       var RevisedLineWorkingDays = moment(this.currentDate).diff(Revisedbase_line_start_date, 'days');
-      temp = activityItem.dailyAskingRateasperRevisedEndDate * (RevisedLineWorkingDays + 1);
+      temp = Math.ceil((activityItem.quantity*RevisedLineWorkingDays)/activityItem.workingDaysRevised);
     }
     return temp;
   }
