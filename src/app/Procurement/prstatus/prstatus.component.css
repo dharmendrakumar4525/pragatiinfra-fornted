@@ -41,7 +41,9 @@ th{
   font-weight: 100;
   font-size: 14px;
   font-style: normal;
-
+  position: sticky;
+  top: 0;
+ 
   
 
 }
@@ -96,5 +98,4 @@ background: lightblue;
 }
 .imgstyle{
   position: relative;
-  top:5px;
 }

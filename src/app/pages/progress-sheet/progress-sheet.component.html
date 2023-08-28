@@ -11,7 +11,7 @@
       <button mat-button class="button" [routerLink]="['/add-project']">Add Project + </button>
 
       <button mat-button class="button" (click)="addMember()"> <mat-icon
-          style="font-size: medium;position: relative;right:-10px;">group_add</mat-icon>
+          style="font-size: medium;margin-top: 5px;right:-10px;">group_add</mat-icon>
         Add Member </button>
 
       <button mat-button [matMenuTriggerFor]="menu"><mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn"
@@ -55,7 +55,7 @@
     <li style="border-right: 1px solid #D9D9D9; padding-right: 20px;"><a style="color: #000;"
         [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"><i
           class="fa fa-edit" aria-hidden="true" style="color:#233A61;"></i> <span style="color:#233A61">
-          Progress-sheet</span></a></li>
+          Progress-Sheet</span></a></li>
     <li><a style="color: #000;" [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"><i
           class="fa fa-edit" aria-hidden="true" style="color:#97989D;"></i><span style="color:#97989D;">
           Calender</span></a></li>
@@ -65,7 +65,7 @@
 <br>
 
 <div style="background-color: #fff !important;margin-top: 20px;margin-left: 50px;">
-  <h3 style="font-family: 'Poppins';">Project progress monitoring sheets(PPMS)</h3>
+  <h3 style="font-family: 'Poppins';">Project Progress Monitoring Sheets(PPMS)</h3>
 </div>
 
 <body>
@@ -86,16 +86,16 @@
         <th>Baseline Start Date</th>
         <th>Baseline End Date</th>
         <th>Base Line Working Days</th>
-        <th>Target Till Date as per Baseline</th>
-        <th>No of Days Balance as per Baseline</th>
-        <th>Daily Asking Rate as per Baseline</th>
+        <th>Target Till Date As Per Baseline</th>
+        <th>No of Days Balance As Per Baseline</th>
+        <th>Daily Asking Rate As Per Baseline</th>
         <th>UOM</th>
         <th>Total Quantity</th>
         <th>Cumulative Completed</th>
         <th>Current Daily Asking Rate</th>
-        <th>Target Till Date as per Revised End Date</th>
-        <th>No of Days Balance as per revised dates</th>
-        <th>Daily Asking Rate as per Revised End Date</th>
+        <th>Target Till Date As Per Revised End Date</th>
+        <th>No of Days Balance As Per Revised Dates</th>
+        <th>Daily Asking Rate As Per Revised End Date</th>
         <th>Activity Balance (%)</th>
         <th>Total</th>
         <th>Remarks</th>
@@ -242,7 +242,7 @@
                   {{activityItem?.dailyCumulativeTotal}}
                 </ng-container>
               </td>
-              <td><button mat-button class="remark-btn" (click)="addremarks(activityItem)">View remarks</button></td>
+              <td><button mat-button class="remark-btn" (click)="addremarks(activityItem)">View Remarks</button></td>
 
 
             </tr>
@@ -258,7 +258,7 @@
 
     </table>
     <ng-template #noView>
-      <h3>you don't have permissions to view Progress sheet</h3>
+      <h3>You don't have permissions to view Progress sheet</h3>
     </ng-template>
 
   </div>

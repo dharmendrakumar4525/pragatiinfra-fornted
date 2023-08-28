@@ -15,7 +15,7 @@
     <img src=".\assets\images\left-arrow.svg" id="collapse" (click)="isCollapse()" >
   </div>
 
-  <form class="Search-form" style="width:80%;margin-left: 20px;" [ngClass]="{'hide':!sideNavOpen}">
+  <form class="Search-form" style="width:80%;margin-left: 20px; margin-top: 20px;" [ngClass]="{'hide':!sideNavOpen}">
     <span matPrefix> 
     <input type="text" placeholder="Search" name="search" [(ngModel)]="link_name">
     <button style="bottom: 35px;left:200px;position: relative;background-color: #233A61;border: none;"><i
@@ -28,11 +28,11 @@
 
 
 
-      <li *ngFor="let item of sidebarMenu;let i = index" class="sidebar" #itemEl routerLinkActive="active">
+      <li *ngFor="let item of sidebarMenu;let i = index" class="sidebar" #itemEl routerLinkActive="active" >
         <div class="dropdown-title">
           <a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="addSubItems(item,i)">
             <div class="allignSvg">
-              <img [src]="item.img">
+              <img [src]="item.img" style="width: 22px;height: 22px;">
               &nbsp;&nbsp;&nbsp;&nbsp;
               <span class="link_name">{{ caseconverter(item.link_name) }} <span><mat-icon
                     *ngIf="item.sub_menu && item.sub_menu.length>0"
@@ -41,9 +41,9 @@
           </a>
         </div>
         <ul class="sub-menu" [ngClass]="{'open-submenu':openMenu[i]}">
-          <li *ngFor="let item_sub of item.sub_menu" routerLinkActive="active">
+          <li *ngFor="let item_sub of item.sub_menu" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <a [routerLink]="[item_sub.link]">
-              <div class="allignSvg">              
+              <div class="allignSvg" style="margin-left:0.5em;">              
                 {{item_sub.link_name | lowercase}}
               </div>
             </a>
