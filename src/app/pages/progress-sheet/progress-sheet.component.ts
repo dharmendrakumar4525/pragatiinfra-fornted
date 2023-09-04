@@ -337,7 +337,7 @@ export class ProgressSheetComponent implements OnInit {
     }
     let base_line_end_date = moment(activityItem?.base_line_end_date).startOf('day');
     if(activityItem.addRevisesDates.length <= 0){
-        if(previousDate>base_line_end_date){
+        if(previousDate>=base_line_end_date){
             temp=activityItem?.quantity-activityItem?.dailyCumulativeTotal;
         }else if(Startdate>previousDate){
           temp=0;
@@ -347,7 +347,7 @@ export class ProgressSheetComponent implements OnInit {
     }else{
       let R_end_date = moment(activityItem?.addRevisesDates[activityItem.addRevisesDates.length - 1]['revisedDate']).startOf('day');
     
-      if(previousDate>R_end_date){
+      if(previousDate>=R_end_date){
         temp=activityItem?.quantity-activityItem?.dailyCumulativeTotal;
       }else if(Startdate>previousDate){
         temp=0;
@@ -430,5 +430,24 @@ export class ProgressSheetComponent implements OnInit {
           this.elem.msRequestFullscreen();
         }
       }
-   
+
+      private updateDataAndRefreshUI() {
+        // Perform your calculations and update the data here
+        // After updating the data, trigger change detection to update the UI
+        for (let locationIndex = 0; locationIndex < this.projectLocationsList.length; locationIndex++) {
+          
+          let locationItem = this.projectLocationsList[locationIndex];
+          
+          for (let structureIndex = 0; structureIndex < locationItem.structures.length; structureIndex++) {
+            
+            let structureItem = locationItem.structures[structureIndex];
+            
+            for (let activityIndex = 0; activityIndex < structureItem.activities.length; activityIndex++) {
+              let activityItem = structureItem.activities[activityIndex];
+
+
+        }
+      }
+    }
+  }
 }
