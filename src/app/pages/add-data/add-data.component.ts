@@ -277,7 +277,7 @@ export class AddDataComponent implements OnInit {
       var diffValuenoofDaysBalance = Math.abs(moment(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate).diff(moment(this.currentDate),'days'))
 
       if(this.itemForm.value.actual_revised_start_date!=null){
-        if(moment(this.itemForm.value.actual_revised_start_date).startOf('day')>moment(this.currentDate).startOf('day')){
+        if(moment(this.itemForm.value.actual_revised_start_date).startOf('day')>=moment(this.currentDate).startOf('day')){
           noofDaysBalanceasperrevisedEnddate =moment(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate).diff(moment(this.itemForm.value.actual_revised_start_date),'days')+1;
         }else if(moment(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate).startOf('day') >= moment(this.currentDate).startOf('day')){
           noofDaysBalanceasperrevisedEnddate = diffValuenoofDaysBalance+1;
@@ -291,9 +291,9 @@ export class AddDataComponent implements OnInit {
     }
 
 
-    if(moment(this.itemForm.value.base_line_start_date).startOf('day')>moment(this.currentDate).startOf('day')){
+    if(moment(this.itemForm.value.base_line_start_date).startOf('day')>=moment(this.currentDate).startOf('day')){
       noofDaysBalanceasperbaseLine=baseLineWorkingDays;
-    }else if(moment(this.itemForm.value.base_line_end_date).startOf('day')>moment(this.currentDate).startOf('day')){
+    }else if(moment(this.itemForm.value.base_line_end_date).startOf('day')>=moment(this.currentDate).startOf('day')){
       noofDaysBalanceasperbaseLine=moment(this.itemForm.value.base_line_end_date).diff( moment(this.currentDate).startOf('day'),'days')+1;
     }else {
       noofDaysBalanceasperbaseLine=0;
