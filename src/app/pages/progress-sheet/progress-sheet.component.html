@@ -64,12 +64,15 @@
 
 <br>
 
-<div style="background-color: #fff !important;margin-top: 20px;margin-left: 50px;">
-  <h3 style="font-family: 'Poppins';">Project Progress Monitoring Sheets(PPMS)</h3>
+<div style="background-color: #fff !important;">
+  <h3 style="display: flex;align-items: center;flex-wrap: nowrap;
+  justify-content: space-between;margin-bottom: auto;"><span style="font-family: 'Poppins'; margin-left: 48px;">Project Progress Monitoring Sheets(PPMS)</span>
+    <button mat-button class="button"  (click)="openFullscreen()" style="bottom: 37px;margin-right:6%;">Full Screen View </button></h3>
+  
 </div>
 
-<body>
-  <div class="scroll-bar1" style="width: 93%;">
+<body [ngClass]="{'fullscreen-component': isFullScreen}">
+  <div class="scroll-bar1" >
     <table *ngIf="progressPermissionsView?.isSelected; else noView" style="direction: ltr !important;">
       <tr>
         <th>
