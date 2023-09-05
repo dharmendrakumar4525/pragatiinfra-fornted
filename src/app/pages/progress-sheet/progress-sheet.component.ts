@@ -356,25 +356,58 @@ export class ProgressSheetComponent implements OnInit {
       }
     }
     return temp;
+  }
+  NoOfDaysBalanceAsPerBaseline(activityItem){
+    if (activityItem?.base_line_start_date == null)
+    return;
 
+    let noofDaysBalanceasperbaseLine: any;
+    let diffValuebaseLine = moment(activityItem.base_line_end_date).diff( moment(activityItem.base_line_start_date),'days')
+    let baseLineWorkingDays = diffValuebaseLine + 1;
 
-    
+    if(moment(activityItem.base_line_start_date).startOf('day')>=moment(this.currentDate).startOf('day')){
+      noofDaysBalanceasperbaseLine=baseLineWorkingDays;
+    }else if(moment(activityItem.base_line_end_date).startOf('day')>=moment(this.currentDate).startOf('day')){
+      noofDaysBalanceasperbaseLine=moment(activityItem.base_line_end_date).diff( moment(this.currentDate).startOf('day'),'days')+1;
+    }else {
+      noofDaysBalanceasperbaseLine=0;
+    }
+    return noofDaysBalanceasperbaseLine;
+  }
+  NoOfDaysBalanceAsPerRevisedDates(activityItem)
+  {
+    if(activityItem.addRevisesDates==null || activityItem.addRevisesDates.length==0)
+      return;
+    let startDate=activityItem.base_line_start_date;
+    if(activityItem.actual_revised_start_date!=null)
+      startDate=activityItem.actual_revised_start_date;
+    let noofDaysBalanceasperrevisedEnddate:any;
+    let diffValuenoofDaysBalance = Math.abs(moment(activityItem.addRevisesDates.slice(-1)[0].revisedDate).diff(moment(this.currentDate),'days'))
+    if(moment(startDate).startOf('day')>=moment(this.currentDate).startOf('day')){
+      noofDaysBalanceasperrevisedEnddate =moment(activityItem.addRevisesDates.slice(-1)[0].revisedDate).diff(moment(startDate),'days')+1;
+    }else if(moment(activityItem.addRevisesDates.slice(-1)[0].revisedDate).startOf('day') >= moment(this.currentDate).startOf('day')){
+      noofDaysBalanceasperrevisedEnddate = diffValuenoofDaysBalance+1;
+    }else{
+      noofDaysBalanceasperrevisedEnddate=0;
+    }
+    return noofDaysBalanceasperrevisedEnddate;
   }
   TargetTillDateAsPerBaseline(activityItem) {
     if (activityItem?.base_line_start_date == null)
       return;
-
+    let previousDate = this.currentDate.clone().subtract(1, 'days');
+    previousDate=moment(previousDate).startOf('day');
     let temp: any;
     let base_line_start_date = moment(activityItem?.base_line_start_date).startOf('day');
     let base_line_end_date = moment(activityItem?.base_line_end_date).startOf('day');
 
     if (activityItem?.dailyCumulativeTotal == activityItem?.quantity)
       temp = "Completed";
-    else if (this.currentDate < base_line_start_date) {
+    else if (previousDate < base_line_start_date) {
       temp = 0;
-    } else if (this.currentDate > base_line_end_date)
+    } else if (previousDate >= base_line_end_date)
       temp = activityItem?.quantity;
-    else if (this.currentDate >= base_line_start_date) {
+    else if (previousDate >= base_line_start_date) {
       var baseLineWorkingDays = moment(this.currentDate).diff(base_line_start_date, 'days');
       temp = Math.ceil((activityItem.quantity*baseLineWorkingDays)/activityItem.baseLineWorkingDays);
     }
@@ -382,24 +415,30 @@ export class ProgressSheetComponent implements OnInit {
   }
 
   TargetTillDateAsPerRevisedEndDate(activityItem) {
-    if (activityItem?.actual_revised_start_date == null || activityItem.addRevisesDates.length <= 0)
+    if (activityItem.addRevisesDates.length <= 0)
       return;
+    let StartDate=activityItem?.base_line_start_date;
+    if(activityItem?.actual_revised_start_date != null)
+      StartDate=activityItem?.actual_revised_start_date;
     let temp: any;
-    let Revisedbase_line_start_date = moment(activityItem?.actual_revised_start_date).startOf('day');
+    let Revisedbase_line_start_date = moment(StartDate).startOf('day');
     let R_end_date = moment(activityItem?.addRevisesDates[activityItem.addRevisesDates.length - 1]['revisedDate']).startOf('day');
-
+    let previousDate = this.currentDate.clone().subtract(1, 'days');
+    previousDate=moment(previousDate).startOf('day');
     if (activityItem?.dailyCumulativeTotal == activityItem?.quantity)
       temp = "Completed";
-    else if (this.currentDate < Revisedbase_line_start_date) {
+    else if (previousDate < Revisedbase_line_start_date) {
       temp = 0;
-    } else if (this.currentDate > R_end_date)
+    } else if (previousDate >= R_end_date)
       temp = activityItem?.quantity;
-    else if (this.currentDate >= Revisedbase_line_start_date) {
+    else if (previousDate >= Revisedbase_line_start_date) {
       var RevisedLineWorkingDays = moment(this.currentDate).diff(Revisedbase_line_start_date, 'days');
       temp = Math.ceil((activityItem.quantity*RevisedLineWorkingDays)/activityItem.workingDaysRevised);
     }
     return temp;
   }
+
+  //Progress Monitoring Sheets full screen view
   @HostListener('document:fullscreenchange', ['$event'])
   @HostListener('document:webkitfullscreenchange', ['$event'])
   @HostListener('document:mozfullscreenchange', ['$event'])
@@ -430,24 +469,4 @@ export class ProgressSheetComponent implements OnInit {
           this.elem.msRequestFullscreen();
         }
       }
-
-      private updateDataAndRefreshUI() {
-        // Perform your calculations and update the data here
-        // After updating the data, trigger change detection to update the UI
-        for (let locationIndex = 0; locationIndex < this.projectLocationsList.length; locationIndex++) {
-          
-          let locationItem = this.projectLocationsList[locationIndex];
-          
-          for (let structureIndex = 0; structureIndex < locationItem.structures.length; structureIndex++) {
-            
-            let structureItem = locationItem.structures[structureIndex];
-            
-            for (let activityIndex = 0; activityIndex < structureItem.activities.length; activityIndex++) {
-              let activityItem = structureItem.activities[activityIndex];
-
-
-        }
-      }
-    }
-  }
 }

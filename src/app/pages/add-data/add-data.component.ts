@@ -254,8 +254,8 @@ export class AddDataComponent implements OnInit {
     }
     var workingDaysRevised: any;
     var baseLineWorkingDays: any;
-    var noofDaysBalanceasperrevisedEnddate: any;
-    var noofDaysBalanceasperbaseLine: any;
+    //var noofDaysBalanceasperrevisedEnddate: any;
+    //var noofDaysBalanceasperbaseLine: any;
     var dailyAskingRateasperRevisedEndDate: any;
     var dailyAskingRateasperbaseLine: any;
     var diffValuebaseLine = moment(this.itemForm.value.base_line_end_date).diff( moment(this.itemForm.value.base_line_start_date),'days')
@@ -272,44 +272,56 @@ export class AddDataComponent implements OnInit {
       
       // noofDaysBalanceasperrevisedEnddate;
       // noofDaysBalanceasperbaseLine;
-      console.log(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate);
+      //console.log(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate);
 
-      var diffValuenoofDaysBalance = Math.abs(moment(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate).diff(moment(this.currentDate),'days'))
+      //var diffValuenoofDaysBalance = Math.abs(moment(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate).diff(moment(this.currentDate),'days'))
 
-      if(this.itemForm.value.actual_revised_start_date!=null){
-        if(moment(this.itemForm.value.actual_revised_start_date).startOf('day')>=moment(this.currentDate).startOf('day')){
-          noofDaysBalanceasperrevisedEnddate =moment(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate).diff(moment(this.itemForm.value.actual_revised_start_date),'days')+1;
-        }else if(moment(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate).startOf('day') >= moment(this.currentDate).startOf('day')){
-          noofDaysBalanceasperrevisedEnddate = diffValuenoofDaysBalance+1;
-        }else{
-          noofDaysBalanceasperrevisedEnddate=0;
-        }
-      }
+      // if(this.itemForm.value.actual_revised_start_date!=null){
+      //   if(moment(this.itemForm.value.actual_revised_start_date).startOf('day')>=moment(this.currentDate).startOf('day')){
+      //     noofDaysBalanceasperrevisedEnddate =moment(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate).diff(moment(this.itemForm.value.actual_revised_start_date),'days')+1;
+      //   }else if(moment(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate).startOf('day') >= moment(this.currentDate).startOf('day')){
+      //     noofDaysBalanceasperrevisedEnddate = diffValuenoofDaysBalance+1;
+      //   }else{
+      //     noofDaysBalanceasperrevisedEnddate=0;
+      //   }
+      // }
       // noofDaysBalanceasperbaseLine = diffValuenoofDaysBalance + 1
+
+      //daily Asking Rate as per Revised End Date
       if(this.itemForm.value.actual_revised_start_date!=null)
         dailyAskingRateasperRevisedEndDate = Math.ceil(this.itemForm.value.quantity / (workingDaysRevised))
-    }
+      else{
+        dailyAskingRateasperRevisedEndDate=Math.ceil(this.itemForm.value.quantity / (lastRevisedDataMoment.diff(this.itemForm.value.base_line_start_date , 'days')+1))
+      }
 
-
-    if(moment(this.itemForm.value.base_line_start_date).startOf('day')>=moment(this.currentDate).startOf('day')){
-      noofDaysBalanceasperbaseLine=baseLineWorkingDays;
-    }else if(moment(this.itemForm.value.base_line_end_date).startOf('day')>=moment(this.currentDate).startOf('day')){
-      noofDaysBalanceasperbaseLine=moment(this.itemForm.value.base_line_end_date).diff( moment(this.currentDate).startOf('day'),'days')+1;
-    }else {
-      noofDaysBalanceasperbaseLine=0;
-    }
-
-    if(this.itemForm.value.actual_revised_start_date!=null){
-      if(workingDaysRevised>1)
-        this.itemForm.value.workingDaysRevised = workingDaysRevised;
-      else
+      //working Days Revised
+      if(this.itemForm.value.actual_revised_start_date!=null){
         this.itemForm.value.workingDaysRevised = 0;
+        if(workingDaysRevised>1)
+          this.itemForm.value.workingDaysRevised = workingDaysRevised;
+      }else{
+        this.itemForm.value.workingDaysRevised = 0;
+        let baseLineWorkingDaysRevisedAsPerEndDate=1+lastRevisedDataMoment.diff(moment(this.itemForm.value.base_line_start_date),'days');
+        if(baseLineWorkingDaysRevisedAsPerEndDate>1)
+          this.itemForm.value.workingDaysRevised = baseLineWorkingDaysRevisedAsPerEndDate;
+      }
     }
+
+
+    // if(moment(this.itemForm.value.base_line_start_date).startOf('day')>=moment(this.currentDate).startOf('day')){
+    //   noofDaysBalanceasperbaseLine=baseLineWorkingDays;
+    // }else if(moment(this.itemForm.value.base_line_end_date).startOf('day')>=moment(this.currentDate).startOf('day')){
+    //   noofDaysBalanceasperbaseLine=moment(this.itemForm.value.base_line_end_date).diff( moment(this.currentDate).startOf('day'),'days')+1;
+    // }else {
+    //   noofDaysBalanceasperbaseLine=0;
+    // }
+
+   
     this.itemForm.value.baseLineWorkingDays = baseLineWorkingDays
-    this.itemForm.value.noofDaysBalanceasperrevisedEnddate = noofDaysBalanceasperrevisedEnddate
+   //this.itemForm.value.noofDaysBalanceasperrevisedEnddate = noofDaysBalanceasperrevisedEnddate
     this.itemForm.value.dailyAskingRateasperRevisedEndDate = dailyAskingRateasperRevisedEndDate
     this.itemForm.value.dailyAskingRateasperbaseLine = dailyAskingRateasperbaseLine
-    this.itemForm.value.noofDaysBalanceasperbaseLine = noofDaysBalanceasperbaseLine
+    //this.itemForm.value.noofDaysBalanceasperbaseLine = noofDaysBalanceasperbaseLine
     if (this.itemForm.value.addRevisesDates.length == 0) {
       this.itemForm.value.r1EndDate = null
       this.itemForm.value.r2EndDate = null
@@ -330,10 +342,5 @@ export class AddDataComponent implements OnInit {
     }
 
     this.dialogRef.close({ data: this.itemForm.value, type: 1 });
-
-
   }
-
-
-
 }
