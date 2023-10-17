@@ -4,11 +4,10 @@
         <div style="padding: 1rem;margin-top: 60px;">
         <span style="font-size:30px;font-family: 'Poppins';font-weight: 600;">Pragati Infra</span></div>
         <div>
-            <button mat-button style="padding: 1px 12px;width: 150px;margin-top: 50px;margin-left: 700px;position: relative;background-color: #fff;color: #97989D;border:1px solid #97989D;font-family: 'Poppins';" [routerLink]="['/add-project']">Add Project +  </button>
-            </div>
-            <div>
+            <button mat-button style="padding: 1px 12px;width: 150px;margin-top: 50px;position: relative;background-color: #fff;color: #97989D;border:1px solid #97989D;font-family: 'Poppins';" [routerLink]="['/add-project']">Add Project +  </button>
+           
                 <button mat-button [matMenuTriggerFor]="menu">
-        <mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" style="margin-top:50px;margin-right: 20px;">notifications</mat-icon>
+        <mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" style="margin-right: 20px;">notifications</mat-icon>
     </button>
     <mat-menu #menu="matMenu" >
 
@@ -45,10 +44,11 @@
       <div>
       <div style="height: 150px;width:50%; float: left;font-family: 'Poppins';">
 
-   <div class="userdiv"> <h3>Users</h3> 
+   <div class="userdiv"> 
+    <h3 style="font-weight: 600;">Users</h3> 
     <div > <h3 style="margin-bottom: 100px;font-family: 'Poppins';">Show Entries 
       <mat-card>
-        <mat-card-content style="position: absolute;bottom:10px">{{usersLen}}</mat-card-content>
+        <mat-card-content style="position: absolute;bottom: 2px;right: 12px;">{{usersLen}}</mat-card-content>
       </mat-card>   
     </h3>  
          
@@ -57,8 +57,8 @@
 </div>
 
 <div  class="right" style="height: 150px;width:50%">
-<div><button (click)="addUser()" style="width: 150px;padding: 10px;margin-left: 400px;cursor: pointer;color: #818181;border:1px solid #97989D;background-color: #fff;border-radius: 5px;font-family: 'Poppins';">Create User</button></div>
-<div style="margin-left: 290px;margin-top: 10px;cursor: pointer;font-family: 'Poppins';">
+<div><button (click)="addUser()" style="width: 150px;padding: 10px;margin-left: 60%;cursor: pointer;color: #818181;border:1px solid #97989D;background-color: #fff;border-radius: 5px;font-family: 'Poppins';">Create User</button></div>
+<div style="margin-left: 45%;margin-top: 10px;cursor: pointer;font-family: 'Poppins';">
    
     <mat-form-field class="example-full-width" appearance="outline">
       <mat-icon matSuffix>search</mat-icon>

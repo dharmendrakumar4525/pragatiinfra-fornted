@@ -19,7 +19,7 @@
   .left-column {
     @include sticky();
     top: 0;
-    transition: flex-basis 0.3s;
+    transition: flex-basis 0.3s,border-radius 0.3s ease;
     overflow: hidden;
 
     &.open {

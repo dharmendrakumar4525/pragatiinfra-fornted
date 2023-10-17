@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddDataComponent } from 'app/pages/add-data/add-data.component';
@@ -19,6 +19,9 @@ import { isEmpty } from 'lodash';
 import { LocationPopupComponent } from '@component/project/location-popup/location-popup.component';
 import { ConfirmationPopupComponent } from '@component/project/confirmation-popup/confirmation-popup.component';
 import * as moment from 'moment';
+import {ElementRef, Renderer2 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject } from '@angular/core';
 declare var $: any;
 
 @Component({
@@ -40,6 +43,7 @@ export class ProgressSheetComponent implements OnInit {
   projectNameForm: FormGroup = this._fb.group({
     _id: [null],
   });
+  elem: any; isFullScreen: boolean;
   currentDate: any;
   project: any;
   permissions: any
@@ -49,9 +53,10 @@ export class ProgressSheetComponent implements OnInit {
   projectsList: any;
   remarksPermissions: any;
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private httpService: RequestService,
     private snack: SnackbarService,
-    private activeRoute: ActivatedRoute, private toast: ToastService, private router: Router, private projectService: AddProjectService, private _fb: FormBuilder, private recentActivityService: RecentActivityService, private _dialog: MatDialog, private progressSheetService: ProgressSheetService, private taskService: TaskService, public dialog: MatDialog, private dataAnalysis: DataAnalysisService,) {
+    private activeRoute: ActivatedRoute, private toast: ToastService, private router: Router, private projectService: AddProjectService, private _fb: FormBuilder, private recentActivityService: RecentActivityService, private _dialog: MatDialog, private progressSheetService: ProgressSheetService, private taskService: TaskService, public dialog: MatDialog, private dataAnalysis: DataAnalysisService,private renderer: Renderer2, private el: ElementRef) {
     this.currentDate = moment().startOf('day');
   }
 
@@ -75,6 +80,8 @@ export class ProgressSheetComponent implements OnInit {
         this.projectLocationsList = this.project.locations;
       })
     });
+    this.chkScreenMode();
+    this.elem = this.document.getElementsByTagName('body')[0];
   }
 
 
@@ -87,7 +94,7 @@ export class ProgressSheetComponent implements OnInit {
         //data: supply
       });
       return;
-    }
+    } 
     const dialogRef = this._dialog.open(AddDataComponent, {
       // width: '60%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -98,12 +105,8 @@ export class ProgressSheetComponent implements OnInit {
 
       if (status && status.type && status.type == 1) {
         this.projectLocationsList[locationIndex];
-        // console.log(this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex]);
-
         this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal = this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal ? this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal : 0;
         this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex] = { ...this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex], ...status.data };
-        // this.TargetTillDateAsPerBaseline(this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex],locationIndex,structureIndex,activityIndex);
-        // this.TargetTillDateAsPerRevisedEndDate(this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex],locationIndex,structureIndex,activityIndex);
         let requestedData: any = {
           _id: this.project._id,
           locations: this.projectLocationsList
@@ -315,45 +318,155 @@ export class ProgressSheetComponent implements OnInit {
       $(`.structure-${id}`).addClass('cl-hide');
     }
   }
+  CurrentDailyAskingRate(activityItem){
+    if(activityItem?.base_line_start_date == null)
+      return;
 
+    if (activityItem?.dailyCumulativeTotal >= activityItem?.quantity)
+      return 0;
+
+    let temp: any;
+    let Startdate: any;
+    let previousDate:any;
+    previousDate = this.currentDate.clone().subtract(1, 'days');
+    previousDate=moment(previousDate).startOf('day');
+    Startdate=moment(activityItem?.base_line_start_date).startOf('day');
+
+    if(activityItem?.actual_revised_start_date!=null){
+      Startdate=moment(activityItem?.actual_revised_start_date).startOf('day');
+    }
+    let base_line_end_date = moment(activityItem?.base_line_end_date).startOf('day');
+    if(activityItem.addRevisesDates.length <= 0){
+        if(previousDate>=base_line_end_date){
+            temp=activityItem?.quantity-activityItem?.dailyCumulativeTotal;
+        }else if(Startdate>previousDate){
+          temp=0;
+        }else{
+          temp=Math.ceil((activityItem?.quantity-activityItem?.dailyCumulativeTotal)/( moment(base_line_end_date).diff(previousDate, 'days')));
+        }
+    }else{
+      let R_end_date = moment(activityItem?.addRevisesDates[activityItem.addRevisesDates.length - 1]['revisedDate']).startOf('day');
+    
+      if(previousDate>=R_end_date){
+        temp=activityItem?.quantity-activityItem?.dailyCumulativeTotal;
+      }else if(Startdate>previousDate){
+        temp=0;
+      }else{
+        temp=Math.ceil((activityItem?.quantity-activityItem?.dailyCumulativeTotal)/( moment(R_end_date).diff(previousDate, 'days')))
+      }
+    }
+    return temp;
+  }
+  NoOfDaysBalanceAsPerBaseline(activityItem){
+    if (activityItem?.base_line_start_date == null)
+    return;
+
+    let noofDaysBalanceasperbaseLine: any;
+    let diffValuebaseLine = moment(activityItem.base_line_end_date).diff( moment(activityItem.base_line_start_date),'days')
+    let baseLineWorkingDays = diffValuebaseLine + 1;
+
+    if(moment(activityItem.base_line_start_date).startOf('day')>=moment(this.currentDate).startOf('day')){
+      noofDaysBalanceasperbaseLine=baseLineWorkingDays;
+    }else if(moment(activityItem.base_line_end_date).startOf('day')>=moment(this.currentDate).startOf('day')){
+      noofDaysBalanceasperbaseLine=moment(activityItem.base_line_end_date).diff( moment(this.currentDate).startOf('day'),'days')+1;
+    }else {
+      noofDaysBalanceasperbaseLine=0;
+    }
+    return noofDaysBalanceasperbaseLine;
+  }
+  NoOfDaysBalanceAsPerRevisedDates(activityItem)
+  {
+    if(activityItem.addRevisesDates==null || activityItem.addRevisesDates.length==0)
+      return;
+    let startDate=activityItem.base_line_start_date;
+    if(activityItem.actual_revised_start_date!=null)
+      startDate=activityItem.actual_revised_start_date;
+    let noofDaysBalanceasperrevisedEnddate:any;
+    let diffValuenoofDaysBalance = Math.abs(moment(activityItem.addRevisesDates.slice(-1)[0].revisedDate).diff(moment(this.currentDate),'days'))
+    if(moment(startDate).startOf('day')>=moment(this.currentDate).startOf('day')){
+      noofDaysBalanceasperrevisedEnddate =moment(activityItem.addRevisesDates.slice(-1)[0].revisedDate).diff(moment(startDate),'days')+1;
+    }else if(moment(activityItem.addRevisesDates.slice(-1)[0].revisedDate).startOf('day') >= moment(this.currentDate).startOf('day')){
+      noofDaysBalanceasperrevisedEnddate = diffValuenoofDaysBalance+1;
+    }else{
+      noofDaysBalanceasperrevisedEnddate=0;
+    }
+    return noofDaysBalanceasperrevisedEnddate;
+  }
   TargetTillDateAsPerBaseline(activityItem) {
     if (activityItem?.base_line_start_date == null)
       return;
-
+    let previousDate = this.currentDate.clone().subtract(1, 'days');
+    previousDate=moment(previousDate).startOf('day');
     let temp: any;
     let base_line_start_date = moment(activityItem?.base_line_start_date).startOf('day');
     let base_line_end_date = moment(activityItem?.base_line_end_date).startOf('day');
 
     if (activityItem?.dailyCumulativeTotal == activityItem?.quantity)
       temp = "Completed";
-    else if (this.currentDate < base_line_start_date) {
+    else if (previousDate < base_line_start_date) {
       temp = 0;
-    } else if (this.currentDate >= base_line_end_date)
+    } else if (previousDate >= base_line_end_date)
       temp = activityItem?.quantity;
-    else if (this.currentDate >= base_line_start_date) {
+    else if (previousDate >= base_line_start_date) {
       var baseLineWorkingDays = moment(this.currentDate).diff(base_line_start_date, 'days');
-      temp = activityItem.dailyAskingRateasperbaseLine * (baseLineWorkingDays + 1);
+      temp = Math.ceil((activityItem.quantity*baseLineWorkingDays)/activityItem.baseLineWorkingDays);
     }
     return temp;
   }
 
   TargetTillDateAsPerRevisedEndDate(activityItem) {
-    if (activityItem?.actual_revised_start_date == null || activityItem.addRevisesDates.length <= 0)
+    if (activityItem.addRevisesDates.length <= 0)
       return;
+    let StartDate=activityItem?.base_line_start_date;
+    if(activityItem?.actual_revised_start_date != null)
+      StartDate=activityItem?.actual_revised_start_date;
     let temp: any;
-    let Revisedbase_line_start_date = moment(activityItem?.actual_revised_start_date).startOf('day');
+    let Revisedbase_line_start_date = moment(StartDate).startOf('day');
     let R_end_date = moment(activityItem?.addRevisesDates[activityItem.addRevisesDates.length - 1]['revisedDate']).startOf('day');
-
+    let previousDate = this.currentDate.clone().subtract(1, 'days');
+    previousDate=moment(previousDate).startOf('day');
     if (activityItem?.dailyCumulativeTotal == activityItem?.quantity)
       temp = "Completed";
-    else if (this.currentDate < Revisedbase_line_start_date) {
+    else if (previousDate < Revisedbase_line_start_date) {
       temp = 0;
-    } else if (this.currentDate >= R_end_date)
+    } else if (previousDate >= R_end_date)
       temp = activityItem?.quantity;
-    else if (this.currentDate >= Revisedbase_line_start_date) {
+    else if (previousDate >= Revisedbase_line_start_date) {
       var RevisedLineWorkingDays = moment(this.currentDate).diff(Revisedbase_line_start_date, 'days');
-      temp = activityItem.dailyAskingRateasperRevisedEndDate * (RevisedLineWorkingDays + 1);
+      temp = Math.ceil((activityItem.quantity*RevisedLineWorkingDays)/activityItem.workingDaysRevised);
     }
     return temp;
   }
+
+  //Progress Monitoring Sheets full screen view
+  @HostListener('document:fullscreenchange', ['$event'])
+  @HostListener('document:webkitfullscreenchange', ['$event'])
+  @HostListener('document:mozfullscreenchange', ['$event'])
+  @HostListener('document:MSFullscreenChange', ['$event'])
+    fullscreenmodes(event){
+      this.chkScreenMode();
+    }
+    chkScreenMode(){
+      if(document.fullscreenElement){
+        //fullscreen
+        this.isFullScreen = true;
+      }else{
+        //not in full screen
+        this.isFullScreen = false;
+      }
+    }
+    openFullscreen() {
+        if (this.elem.requestFullscreen) {
+          this.elem.requestFullscreen();
+        } else if (this.elem.mozRequestFullScreen) {
+          /* Firefox */
+          this.elem.mozRequestFullScreen();
+        } else if (this.elem.webkitRequestFullscreen) {
+          /* Chrome, Safari and Opera */
+          this.elem.webkitRequestFullscreen();
+        } else if (this.elem.msRequestFullscreen) {
+          /* IE/Edge */
+          this.elem.msRequestFullscreen();
+        }
+      }
 }

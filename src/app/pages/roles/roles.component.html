@@ -4,10 +4,9 @@
         <div style="padding: 1rem;margin-top: 60px;">
         <span style="font-size:30px;font-family: 'Poppins';font-weight: 600;">Pragati Infra</span></div>
         <div>
-            <button mat-button style="padding: 1px 12px;width: 150px;margin-top: 50px;margin-left: 700px;position: relative;background-color: #fff;color: #97989D;border: 1px solid #97989D;font-family: 'Poppins';" [routerLink]="['/add-project']">Add Project +  </button>
-            </div>
-            <div>
-       <button mat-button [matMenuTriggerFor]="menu"> <mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" style="margin-top:50px">notifications</mat-icon></button>
+            <button mat-button style="padding: 1px 12px;width: 150px;margin-top: 50px;position: relative;background-color: #fff;color: #97989D;border: 1px solid #97989D;font-family: 'Poppins';" [routerLink]="['/add-project']">Add Project +  </button>
+       
+       <button mat-button [matMenuTriggerFor]="menu"> <mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" >notifications</mat-icon></button>
        <mat-menu #menu="matMenu" >
         <div class="scroll-bar1" fxLayout="column" style="height: 500px;">
           <div fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
@@ -40,8 +39,9 @@
       </mat-toolbar>
 
       <mat-grid-list   cols="4" rowHeight="2:1">
-        <mat-grid-tile colspan="2" >
-            <div style="margin-right: 350px;margin-bottom: 50px;font-family: 'Poppins';"><h3>Roles</h3> 
+        <mat-grid-tile colspan="1" >
+            <div style="margin-bottom: 50px;font-family: 'Poppins';">
+              <h3 style="font-weight: 600;">Roles</h3>
                 <div > <button mat-button class="leftbtns" (click)="exporter.exportTable('json')" style="font-family: 'Poppins';">copy</button> &nbsp;    
                     <button mat-button class="leftbtns" (click)="exporter.exportTable('xlsx', {fileName:'roles', sheet: 'sheet_name', Props: {Author: 'Pragatiinfra'}})" style="font-family: 'Poppins';">Excel</button>   &nbsp;
                     <!-- <button mat-button class="leftbtns" (click)="exporter.exportTable('csv')">Csv</button>  &nbsp; -->
@@ -54,14 +54,14 @@
             </div>
         </mat-grid-tile>
 
-        <mat-grid-tile colspan="2" >
+        <mat-grid-tile colspan="3" >
             
 
     <div>
         <button mat-button style="width: 150px;padding: 1px;margin-left: 400px;background-color: #fff;color: #97989D;border: 1px solid #97989D;font-family: 'Poppins';" (click)="addRole()" >New Role</button>
     <div style="margin-left: 290px;margin-top: 10px;">
        
-        <mat-form-field class="example-full-width" appearance="outline">
+        <mat-form-field class="example-full-width" style="width: 130%;" appearance="outline">
           <mat-icon matSuffix>search</mat-icon>
         <input matInput (keyup)="applyFilter($event)" placeholder="Search" style="font-family: 'Poppins';">
         </mat-form-field>

@@ -267,14 +267,28 @@ export class AddProjectComponent implements OnInit {
 
     )
   }
-
+  errorMessage: string | null = null; // Initialize errorMessage to null
   uploadFile(event: any) {
     let reader = new FileReader(); // HTML5 FileReader API
     let file = event.target.files[0];
     if (event.target.files && event.target.files[0]) {
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.imageUrl = reader.result;
+      // Check file type
+      const allowedFileTypes = ['image/jpeg', 'image/png', 'image/gif'];
+      if (allowedFileTypes.includes(file.type)) {
+        // Check file size
+        const maxSizeInBytes = 5 * 1024 * 1024; // 5 MB
+        if (file.size <= maxSizeInBytes) {
+          // File type and size are within the limits
+          reader.readAsDataURL(file);
+          reader.onload = () => {
+            this.imageUrl = reader.result;
+            this.errorMessage = null; // Clear any previous error message
+          }
+        } else {
+          this.errorMessage = 'File size exceeds the maximum limit (5 MB).';
+        }
+      } else {
+        this.errorMessage = 'Invalid file type. Please upload a JPEG, PNG, or GIF file.';
       }
     }
   }

@@ -11,7 +11,7 @@
       <button mat-button class="button" [routerLink]="['/add-project']">Add Project + </button>
 
       <button mat-button class="button" (click)="addMember()"> <mat-icon
-          style="font-size: medium;position: relative;right:-10px;">group_add</mat-icon>
+          style="font-size: medium;margin-top: 5px;right:-10px;">group_add</mat-icon>
         Add Member </button>
 
       <button mat-button [matMenuTriggerFor]="menu"><mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn"
@@ -55,7 +55,7 @@
     <li style="border-right: 1px solid #D9D9D9; padding-right: 20px;"><a style="color: #000;"
         [routerLink]="['/view-project/progress-sheet',projectId]" routerLinkActive="active-link-active"><i
           class="fa fa-edit" aria-hidden="true" style="color:#233A61;"></i> <span style="color:#233A61">
-          Progress-sheet</span></a></li>
+          Progress-Sheet</span></a></li>
     <li><a style="color: #000;" [routerLink]="['/view-project/calender',projectId]" routerLinkActive="active-link"><i
           class="fa fa-edit" aria-hidden="true" style="color:#97989D;"></i><span style="color:#97989D;">
           Calender</span></a></li>
@@ -64,38 +64,42 @@
 
 <br>
 
-<div style="background-color: #fff !important;margin-top: 20px;margin-left: 50px;">
-  <h3 style="font-family: 'Poppins';">Project progress monitoring sheets(PPMS)</h3>
+<div style="background-color: #fff !important;">
+  <h3 style="display: flex;align-items: center;flex-wrap: nowrap;
+  justify-content: space-between;margin-bottom: auto;"><span style="font-family: 'Poppins'; margin-left: 48px;">Project Progress Monitoring Sheets(PPMS)</span>
+    <button mat-button class="button"  (click)="openFullscreen()" style="bottom: 37px;margin-right:6%;">Full Screen View </button></h3>
+  
 </div>
 
-<body>
-  <div class="scroll-bar1" style="width: 93%;">
+<body [ngClass]="{'fullscreen-component': isFullScreen}">
+  <div class="scroll-bar1" >
     <table *ngIf="progressPermissionsView?.isSelected; else noView" style="direction: ltr !important;">
       <tr>
         <th>
           <div class="section-container">
-            <div class="left-cont">Description</div>
+            <div class="left-cont" style="margin-left: 34%;">Description</div>
             <div class="right-cont"><mat-icon matTooltip="Add location" (click)="addLocation()">add</mat-icon></div>
           </div>
-        </th>
+        </th> 
         <th>R1 End Date</th>
         <th>R2 End Date</th>
         <th>R3 End Date</th>
-        <th>Actual Revised Start Date</th>
-        <th>Working Days Revised</th>
-        <th>Baseline Start Date</th>
-        <th>Baseline End Date</th>
-        <th>Base Line Working Days</th>
-        <th>Target Till Date as per Baseline</th>
-        <th>No of Days Balance as per Baseline</th>
-        <th>Daily Asking Rate as per Baseline</th>
+        <th>Actual Revised <div>Start Date</div> </th>
+        <th>Working Days<div>Revised</div> </th>
+        <th>Baseline <div>Start Date</div></th>
+        <th>Baseline <div>End Date</div></th>
+        <th>Base Line<div> Working Days</div></th>
+        <th>Target Till Date <div> As Per</div> Baseline</th>
+        <th>No of Days <div> Balance</div> As Per Baseline</th>
+        <th>Daily Asking <div>Rate</div>  As Per Baseline</th>
         <th>UOM</th>
-        <th>Total Quantity</th>
-        <th>Cumulative Completed</th>
-        <th>Target Till Date as per Revised End Date</th>
-        <th>No of Days Balance as per revised dates</th>
-        <th>Daily Asking Rate as per Revised End Date</th>
-        <th>Activity Balance (%)</th>
+        <th>Total <div> Quantity</div></th>
+        <th>Cumulative <div> Completed</div></th>
+        <th>Current Daily <div> Asking Rate</div></th>
+        <th>Target Till Date <div>As Per Revised</div> End Date</th>
+        <th>No of Days <div>Balance As Per</div> Revised Dates</th>
+        <th>Daily Asking Rate<div>As Per Revised</div> End Date</th>
+        <th>Activity <div>Balance (%)</div></th>
         <th>Total</th>
         <th>Remarks</th>
       </tr>
@@ -120,6 +124,7 @@
             <td></td>
             <td>{{locationItem.structures | psMinTableDate:'location':'base_line_start_date':'min'}}</td>
             <td>{{locationItem.structures | psMinTableDate:'location':'base_line_end_date':'max'}}</td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -175,6 +180,7 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
 
             <tr *ngFor="let activityItem of structureItem.activities,let activityIndex=index" style="font-size: 10px;"
@@ -196,7 +202,7 @@
               <td>{{activityItem?.actual_revised_start_date | date}}</td>
               <td>
                 <span
-                  *ngIf="activityItem?.actual_revised_start_date!=null && activityItem?.r1EndDate!=null">{{activityItem?.workingDaysRevised}}
+                  *ngIf="activityItem?.r1EndDate!=null">{{activityItem?.workingDaysRevised}}
                 </span>
               </td>
               <td>{{activityItem?.base_line_start_date| date}}</td>
@@ -207,25 +213,26 @@
                   {{TargetTillDateAsPerBaseline(activityItem)}}
                 </ng-container>
               </td>
-              <td>{{activityItem?.noofDaysBalanceasperbaseLine}}</td>
+              <td>{{NoOfDaysBalanceAsPerBaseline(activityItem)}}</td>
               <td>{{activityItem?.dailyAskingRateasperbaseLine}}</td>
               <td>{{activityItem?.uom}}</td>
               <td>
                 <ng-container *ngIf="activityItem?.base_line_start_date!=null">
                   {{activityItem?.quantity}}
                 </ng-container>
-              </td>
+              </td> 
               <td>
                 <ng-container *ngIf="activityItem?.base_line_start_date!=null">
                   {{activityItem?.dailyCumulativeTotal}}
                 </ng-container>
               </td>
+              <td>{{CurrentDailyAskingRate(activityItem)}} </td>
               <td>
-                <span *ngIf="activityItem?.actual_revised_start_date!=null && activityItem?.r1EndDate!=null">
+                <span *ngIf="activityItem?.r1EndDate!=null">
                   {{TargetTillDateAsPerRevisedEndDate(activityItem)}}
                 </span>
               </td>
-              <td>{{activityItem?.noofDaysBalanceasperrevisedEnddate}}</td>
+              <td>{{NoOfDaysBalanceAsPerRevisedDates(activityItem)}}</td>
               <td>{{activityItem?.dailyAskingRateasperRevisedEndDate}}</td>
               <td>
                 <ng-container *ngIf="activityItem?.quantity>0">
@@ -238,7 +245,7 @@
                   {{activityItem?.dailyCumulativeTotal}}
                 </ng-container>
               </td>
-              <td><button mat-button class="remark-btn" (click)="addremarks(activityItem)">View remarks</button></td>
+              <td><button mat-button class="remark-btn" (click)="addremarks(activityItem)">View Remarks</button></td>
 
 
             </tr>
@@ -254,7 +261,7 @@
 
     </table>
     <ng-template #noView>
-      <h3>you don't have permissions to view Progress sheet</h3>
+      <h3>You don't have permissions to view Progress sheet</h3>
     </ng-template>
 
   </div>

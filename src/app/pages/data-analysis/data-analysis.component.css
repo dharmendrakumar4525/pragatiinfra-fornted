@@ -230,4 +230,7 @@ background: lightblue;
   display: flex;
   flex: none !important;
 }
+.icon:hover{
+  cursor: pointer;
+}
 
