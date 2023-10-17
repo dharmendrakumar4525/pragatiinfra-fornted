@@ -290,3 +290,10 @@ input[type=text] {
 .mat-form-field{
    display: block;
 }
+
+.error-message {
+   margin-top: 5px;
+   color: red;
+   font-size: 12px;
+   text-align: center;
+}
