@@ -5,9 +5,6 @@ import { SidePanelState, DashboardLayoutConfiguration, SidePanelPosition } from 
 import { AuthGuard } from '@services//auth.guard';
 import { UsersService } from '@services//users.service';
 import { NavigationLink } from '../shared';
-import { USER_PERMISSION_API } from '@env/api_path';
-import { AuthService } from '@services/auth/auth.service';
-import { RequestService } from '@services/https/request.service';
 
 @Component({
   selector: 'my-app',
@@ -18,18 +15,8 @@ export class AppComponent implements OnInit {
   public configuration: DashboardLayoutConfiguration;
   public links: NavigationLink[];
   menuSidebar:any;
-  showDashboard:boolean;
-  currentUser:any
-  constructor(
-    private userService:UsersService,
-    private auth:AuthService,
-    private httpService: RequestService,
-     private router:Router, private authGuard:AuthGuard) {
-
-      this.currentUser = this.auth.getUser();
-      console.log('this.currentUser', this.currentUser)
-
-
+  showDashboard:boolean
+  constructor(private userService:UsersService, private router:Router, private authGuard:AuthGuard) {
     this.configuration = new DashboardLayoutConfiguration(
       SidePanelPosition.LEFT, 
       SidePanelState.OPEN
@@ -71,17 +58,6 @@ export class AppComponent implements OnInit {
     ]
   }
 
-  getSiteList() {
-    this.httpService.GET(USER_PERMISSION_API, {user_id:this.currentUser._id}).subscribe((res:any) => {
-      // this.siteList = res;
-      if(res.data && res.data['module_permissions']){
-        this.auth.setPermission(res.data['module_permissions']);
-        this.auth.setModules(res.data['modules']);
-      }
-      
-    })
-  }
-
   ngOnInit(): void {
 
     this.userService.data.subscribe(data => {
@@ -111,13 +87,6 @@ export class AppComponent implements OnInit {
       this.showDashboard = false
       this.router.navigate(['/login']);
     }
-
-    if(this.currentUser && this.currentUser._id){
-      this.getSiteList();
-    }
     
   }
-  
-
-
 }

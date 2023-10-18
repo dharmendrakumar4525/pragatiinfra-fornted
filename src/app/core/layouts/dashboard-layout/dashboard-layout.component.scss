@@ -1,52 +1,52 @@
 @mixin sticky {
-  position: -webkit-sticky;
-  position: sticky;
+    position: -webkit-sticky;
+    position: sticky;
 }
 
 .container1 {
-display: flex;
-flex-direction: row;
-height: 100vh;
-
-&.panel-position-left {
-  flex-direction: row;
-}
-
-&.panel-position-right {
-  flex-direction: row-reverse;
-}
-
-.left-column {
-  @include sticky();
-  top: 0;
-  transition: flex-basis 0.3s,border-radius 0.3s ease;
-  overflow: hidden;
-
-  &.open {
-    flex: 0 0 290px;
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
-  }
-
-  &.close {
-    flex: 0 0 50px;
-  }
-
-  &.collapse {
-    flex: 0 0 75px;
-  }
-}
-
-.right-column {
   display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  overflow-y: auto;
+  flex-direction: row;
+  height: 100vh;
 
-  .navigation-bar {
+  &.panel-position-left {
+    flex-direction: row;
+  }
+
+  &.panel-position-right {
+    flex-direction: row-reverse;
+  }
+
+  .left-column {
     @include sticky();
     top: 0;
-    z-index: 100;
+    transition: flex-basis 0.3s,border-radius 0.3s ease;
+    overflow: hidden;
+
+    &.open {
+      flex: 0 0 290px;
+      border-top-right-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+
+    &.close {
+      flex: 0 0 50px;
+    }
+
+    &.collapse {
+      flex: 0 0 75px;
+    }
   }
-}
+
+  .right-column {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-y: auto;
+
+    .navigation-bar {
+      @include sticky();
+      top: 0;
+      z-index: 100;
+    }
+  }
 }

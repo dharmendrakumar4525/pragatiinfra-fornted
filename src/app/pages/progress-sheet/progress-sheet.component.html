@@ -68,7 +68,7 @@
   <h3 style="display: flex;align-items: center;flex-wrap: nowrap;
   justify-content: space-between;margin-bottom: auto;"><span style="font-family: 'Poppins'; margin-left: 48px;">Project Progress Monitoring Sheets(PPMS)</span>
     <button mat-button class="button"  (click)="openFullscreen()" style="bottom: 37px;margin-right:6%;">Full Screen View </button></h3>
-
+  
 </div>
 
 <body [ngClass]="{'fullscreen-component': isFullScreen}">
@@ -80,7 +80,7 @@
             <div class="left-cont" style="margin-left: 34%;">Description</div>
             <div class="right-cont"><mat-icon matTooltip="Add location" (click)="addLocation()">add</mat-icon></div>
           </div>
-        </th>
+        </th> 
         <th>R1 End Date</th>
         <th>R2 End Date</th>
         <th>R3 End Date</th>
@@ -220,7 +220,7 @@
                 <ng-container *ngIf="activityItem?.base_line_start_date!=null">
                   {{activityItem?.quantity}}
                 </ng-container>
-              </td>
+              </td> 
               <td>
                 <ng-container *ngIf="activityItem?.base_line_start_date!=null">
                   {{activityItem?.dailyCumulativeTotal}}

@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SITE_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
-import { UsersService } from '@services/users.service';
 import { isEmpty } from 'lodash';
 @Component({
   selector: 'app-edit-data',
@@ -32,22 +31,11 @@ export class EditDataComponent implements OnInit {
     }),
     _id: new FormControl()
   });
-  users: any = [];
   constructor(
     private router: Router,
     private httpService: RequestService,
     private snack: SnackbarService,
-    private route: ActivatedRoute,
-    private userService: UsersService,) {
-    this.userService.getUserss().subscribe(data => {
-      this.users = data;
-      this.getDetails();
-    })
-
-
-  }
-
-  getDetails() {
+    private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       console.log(params) //log the entire params object
       console.log(params['id']);
@@ -76,36 +64,26 @@ export class EditDataComponent implements OnInit {
         this.list();
       }
     });
+
   }
 
 
   patchValue(data: any) {
-    console.log("this.users", this.users);
-
-    let user = this.users.filter(res => {
-      console.log(res);
-
-      if (res.phone == data.store_manager_phone_number) {
-        console.log(res);
-
-        return res;
-      }
-    });
     this.editForm.patchValue({
-      location: data.location ? data.location : '',
-      site_name: data.site_name ? data.site_name : '',
-      code: data.code ? data.code : '',
-      store_manager: user[0] && user[0].name ? user[0].name : (data.store_manager ? data.store_manager : ''),
+      location: data.location,
+      site_name: data.site_name,
+      code: data.code,
+      store_manager: data.store_manager,
       store_manager_phone_number_dialcode: '+91',
-      store_manager_phone_number: data.store_manager_phone_number ? data.store_manager_phone_number : '',
-      site_manager_email: data.site_manager_email ? data.site_manager_email : '',
+      store_manager_phone_number: data.store_manager_phone_number,
+      site_manager_email: data.site_manager_email,
       address: {
-        street_address: data.address.street_address ? data.address.street_address : '',
-        street_address2: data.address.street_address2 ? data.address.street_address2 : '',
-        state: data.address.state ? data.address.state : '',
-        city: data.address.city ? data.address.city : '',
-        zip_code: data.address.zip_code ? data.address.zip_code : '',
-        country: data.address.country ? data.address.country : '',
+        street_address: data.address.street_address,
+        street_address2: data.address.street_address2,
+        state: data.address.state,
+        city: data.address.city,
+        zip_code: data.address.zip_code,
+        country: data.address.country,
       },
       _id: data._id
 
@@ -141,15 +119,6 @@ export class EditDataComponent implements OnInit {
 
   list() {
     this.router.navigate(['site']);
-  }
-
-  manageChange(event) {
-    let user = this.users.filter(res => res._id == event);
-    this.editForm.patchValue({
-      store_manager_phone_number: user[0].phone,
-      site_manager_email: user[0].email
-
-    })
   }
 
   ngOnInit(): void {
