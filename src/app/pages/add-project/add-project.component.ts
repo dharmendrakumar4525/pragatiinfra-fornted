@@ -276,7 +276,7 @@ export class AddProjectComponent implements OnInit {
       const allowedFileTypes = ['image/jpeg', 'image/png', 'image/gif'];
       if (allowedFileTypes.includes(file.type)) {
         // Check file size
-        const maxSizeInBytes = 20 * 1024; // 20kb
+        const maxSizeInBytes = 5 * 1024 * 1024; // 5 MB
         if (file.size <= maxSizeInBytes) {
           // File type and size are within the limits
           reader.readAsDataURL(file);
@@ -285,7 +285,7 @@ export class AddProjectComponent implements OnInit {
             this.errorMessage = null; // Clear any previous error message
           }
         } else {
-          this.errorMessage = 'File size exceeds the maximum limit (20 KB).';
+          this.errorMessage = 'File size exceeds the maximum limit (5 MB).';
         }
       } else {
         this.errorMessage = 'Invalid file type. Please upload a JPEG, PNG, or GIF file.';
