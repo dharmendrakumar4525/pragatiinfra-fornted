@@ -122,8 +122,12 @@ export class PurchaseRequestDetailsComponent implements OnInit {
     })
   }
 
+
   getItemName(id: any) {
-    return this.itemList.filter(obj => obj._id == id)[0].item_name;
+    if(this.itemList && this.itemList.length>0){
+
+      return this.itemList.filter(obj => obj._id == id)[0].item_name;
+    }
   }
 
   updateRequest(status: any) {

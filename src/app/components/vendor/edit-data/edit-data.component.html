@@ -1,4 +1,4 @@
-<div class="section-wrapper">
+<!-- <div class="section-wrapper">
 
   <div class="section-header">
     <div class="header-left">
@@ -190,6 +190,211 @@
             </mat-form-field>
           </div>
         </div>
+      </div>
+    </form>
+  </div>
+
+</div> -->
+
+
+<div class="section-wrapper">
+
+  <div class="section-header">
+    <div class="header-left">
+      <h2>Edit Vendor</h2>
+    </div>
+    <div class="header-right">
+      <div class="buttons-containers">
+        <button mat-button class="submit-btn" (click)="saveData()">Submit</button>
+        <button mat-button class="cancel-btn" (click)="list()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <form [formGroup]="editForm">
+      <div class="row">
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Vendor Name</mat-label>
+            <input matInput formControlName="vendor_name">
+            <mat-error *ngIf="editForm.controls.vendor_name.errors?.['required']">
+              this field is required.
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Category</mat-label>
+            <mat-select matInput formControlName="category" multiple>
+              <mat-option *ngFor="let category of categoryList" [value]="category._id">
+                {{category?.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="editForm.controls.category.errors?.['required']">
+              this field is required.
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Contact Person</mat-label>
+            <input matInput formControlName="contact_person">
+            <mat-error *ngIf="editForm.controls.contact_person.errors?.['required']">
+              this field is required.
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Phone Number</mat-label>
+            <input matInput formControlName="phone_number" type="number">
+            <mat-error *ngIf="editForm.controls.phone_number.errors?.['required']">
+              this field is required.
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>GST Number</mat-label>
+            <input matInput formControlName="gst_number">
+            <mat-error *ngIf="editForm.controls.gst_number.errors?.['required']">
+              this field is required.
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>PAN Number</mat-label>
+            <input matInput formControlName="pan_number">
+            <mat-error *ngIf="editForm.controls.pan_number.errors?.['required']">
+              this field is required.
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email">
+            <mat-error *ngIf="editForm.controls.email.errors?.['required']">
+              this field is required.
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+
+
+
+
+
+        <h4>Address</h4>
+        <div formGroupName="address" class="row">
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Street Address</mat-label>
+              <input matInput formControlName="street_address">
+              <mat-error *ngIf="editForm.get('address.street_address').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Street Address 2</mat-label>
+              <input matInput formControlName="street_address2">
+              <mat-error *ngIf="
+              editForm.get('address.street_address2').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>State</mat-label>
+              <input matInput formControlName="state">
+              <mat-error *ngIf="
+              editForm.get('address.state').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>City</mat-label>
+              <input matInput formControlName="city">
+              <mat-error *ngIf="
+              editForm.get('address.city').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Zip Code</mat-label>
+              <input matInput formControlName="zip_code" type="number" maxlength="6">
+              <mat-error *ngIf="
+              editForm.get('address.zip_code').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Country</mat-label>
+              <input matInput formControlName="country">
+              <mat-error *ngIf="
+              editForm.get('address.country').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Terms & Condition</mat-label>
+              <textarea matInput formControlName="terms_condition" rows="5" cols="40" style="height: 200px;"></textarea>
+              <mat-error *ngIf="editForm.controls.terms_condition.errors?.['required']">
+                this field is required.
+              </mat-error>
+
+            </mat-form-field>
+
+          </div>
+
+          <div class="col-md-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Payment Terms</mat-label>
+              <textarea matInput formControlName="payment_terms" rows="5" cols="40" style="height: 200px;"></textarea>
+              <mat-error *ngIf="editForm.controls.payment_terms.errors?.['required']">
+                this field is required.
+              </mat-error>
+
+            </mat-form-field>
+
+          </div>
+        </div>
+
       </div>
     </form>
   </div>

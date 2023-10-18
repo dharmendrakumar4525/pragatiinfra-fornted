@@ -74,6 +74,26 @@ export const routes: Routes = [
       .then(mod => mod.ProcurmentModuleModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'rate-comparative',
+    loadChildren: () => import('./../components/rate-comparative/rate-comparative.module')
+      .then(mod => mod.RateComparativeModule),
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: 'rate-approval',
+    loadChildren: () => import('./../components/rate-approval/rate-approval.module')
+      .then(mod => mod.RateApprovalModule),
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: 'purchase-order',
+    loadChildren: () => import('./../components/purchase-order/purchase-order.module')
+      .then(mod => mod.PurchaseOrderModule),
+    // canActivate: [AuthGuard]
+  },
 
   {
     path: 'site',
@@ -256,7 +276,7 @@ export const routes: Routes = [
   { path: 'vendorscomparativeapproved', component: VendorscomparativeapprovedComponent, canActivate: [AuthGuard] },
   { path: 'vendorscomparativerejected', component: VendorscomparativerejectedComponent, canActivate: [AuthGuard] },
   { path: 'vendorscomparativerevised', component: VendorscomparativerevisedComponent, canActivate: [AuthGuard] },
-  { path: 'rateapprovals', component: RateapprovalsComponent, canActivate: [AuthGuard] },
+  { path: 'rateapprovals/:id', component: RateapprovalsComponent, canActivate: [AuthGuard] },
   { path: 'rateapprovalsummary', component: RateapprovalsummaryComponent, canActivate: [AuthGuard] },
   { path: 'rejectedratessummary', component: RejectedratessummaryComponent, canActivate: [AuthGuard] },
   { path: 'pendingrates', component: PendingratesComponent, canActivate: [AuthGuard] },

@@ -98,28 +98,8 @@
           </mat-form-field>
 
         </div>
-        <div class="col-md-3">
-          <mat-form-field appearance="outline">
-            <mat-label>Payment Terms</mat-label>
-            <input matInput formControlName="payment_terms" type="email">
-            <mat-error *ngIf="addForm.controls.payment_terms.errors?.['required']">
-              this field is required.
-            </mat-error>
 
-          </mat-form-field>
 
-        </div>
-        <div class="col-md-3">
-          <mat-form-field appearance="outline">
-            <mat-label>Terms & Condition</mat-label>
-            <input matInput formControlName="terms_condition" type="email">
-            <mat-error *ngIf="addForm.controls.terms_condition.errors?.['required']">
-              this field is required.
-            </mat-error>
-
-          </mat-form-field>
-
-        </div>
 
 
 
@@ -190,6 +170,32 @@
             </mat-form-field>
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Terms & Condition</mat-label>
+              <textarea matInput formControlName="terms_condition" rows="5" cols="40" style="height: 200px;"></textarea>
+              <mat-error *ngIf="addForm.controls.terms_condition.errors?.['required']">
+                this field is required.
+              </mat-error>
+
+            </mat-form-field>
+
+          </div>
+
+          <div class="col-md-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Payment Terms</mat-label>
+              <textarea matInput formControlName="payment_terms" rows="5" cols="40" style="height: 200px;"></textarea>
+              <mat-error *ngIf="addForm.controls.payment_terms.errors?.['required']">
+                this field is required.
+              </mat-error>
+
+            </mat-form-field>
+
+          </div>
+        </div>
+
       </div>
     </form>
   </div>

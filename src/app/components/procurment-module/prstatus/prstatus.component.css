@@ -3,27 +3,25 @@
   }
   ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
     padding: .6em;
-    width:250px; 
+    width:250px;
   }
   .searchbar {
     width:350px;
     border-radius: 20px;
     font-family: 'Poppins';
  }
- 
+
 .datebar{
-  
+
      width:150px;
      border-radius: 20px;
      font-family: 'Poppins';
-   
+
  }
-    
+
 table {
   font-family: 'Poppins', sans-serif !important;
   border-collapse: collapse;
-  width: 98%;
-  /* height: 100vh; */
   font-size: 14px;
   margin-left: 20px;
   margin-bottom: 20px;
@@ -42,14 +40,14 @@ th{
   font-size: 14px;
   font-style: normal;
 
-  
+
 
 }
 
 td {
-  
+
   border: 1px solid #94A3B8;
-  
+
   text-align: center;
   padding: 10px ;
   color: #233A61;
@@ -57,7 +55,7 @@ td {
   font-size: 14px;
   font-family: 'Poppins';
 /* width:100px; */
-  
+
 
 }
 tr:nth-child(even) {
@@ -65,8 +63,8 @@ tr:nth-child(even) {
 }
 
 .scroll-bar1{
-      
- 
+
+
   height: 600px;
   width:90%;
   margin-bottom: 100px;
@@ -74,7 +72,7 @@ tr:nth-child(even) {
   margin-top: 50px;
   overflow: auto;
  direction: rtl;
- 
+
 
   }
 

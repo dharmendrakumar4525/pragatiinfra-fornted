@@ -1,0 +1,153 @@
+<div>
+  <div fxLayout="row" fxLayoutAlign="space-between center"
+    style="background-color:#233A61 ;color:white;height:50px ; margin-bottom: 20px;">
+    <div>
+      <h2 style="margin-left: 20px;margin-top: 10px;">Billing Details</h2>
+    </div>
+    <div style="margin-right: 10px;cursor: pointer;" (click)="closeDialog()"><span class="material-icons">close</span>
+    </div>
+  </div>
+
+  <form class="form-section" [formGroup]="addForm">
+
+    <div class="row" formGroupName="address">
+      <div class="col-md-4">
+        <div class="custom-form-group">
+          <div class="custom-form-control" style="position: relative;">
+            <mat-form-field appearance="outline">
+              <mat-label>Company Name</mat-label>
+              <input matInput formControlName="company_name">
+              <mat-error *ngIf="addForm.get('address.company_name').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="custom-form-group">
+          <div class="custom-form-control" style="position: relative;">
+            <mat-form-field appearance="outline">
+              <mat-label>GST</mat-label>
+              <input matInput formControlName="gst_number">
+              <mat-error *ngIf="addForm.get('address.gst_number').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="custom-form-group">
+          <div class="custom-form-control" style="position: relative;">
+            <mat-form-field appearance="outline">
+              <mat-label>PAN Number</mat-label>
+              <input type="tel" matInput formControlName="pan_card">
+              <mat-error *ngIf="addForm.get('address.pan_card').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="custom-form-group">
+          <div class="custom-form-control" style="position: relative;">
+            <mat-form-field appearance="outline">
+              <mat-label>Street Address</mat-label>
+              <input matInput formControlName="street_address">
+              <mat-error *ngIf="addForm.get('address.street_address').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="custom-form-group">
+          <div class="custom-form-control" style="position: relative;">
+            <mat-form-field appearance="outline">
+              <mat-label>Street Address 2</mat-label>
+              <input matInput formControlName="street_address2">
+              <mat-error *ngIf="
+                      addForm.get('address.street_address2').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-4">
+        <div class="custom-form-group">
+          <div class="custom-form-control" style="position: relative;">
+            <mat-form-field appearance="outline">
+              <mat-label>State</mat-label>
+              <input matInput formControlName="state">
+              <mat-error *ngIf="
+                      addForm.get('address.state').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-4">
+        <div class="custom-form-group">
+          <div class="custom-form-control" style="position: relative;">
+            <mat-form-field appearance="outline">
+              <mat-label>City</mat-label>
+              <input matInput formControlName="city">
+              <mat-error *ngIf="
+                      addForm.get('address.city').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-4">
+        <div class="custom-form-group">
+          <div class="custom-form-control" style="position: relative;">
+            <mat-form-field appearance="outline">
+              <mat-label>Zip Code</mat-label>
+              <input matInput formControlName="zip_code" type="number" maxlength="6">
+              <mat-error *ngIf="
+                      addForm.get('address.zip_code').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-4">
+        <div class="custom-form-group">
+          <div class="custom-form-control" style="position: relative;">
+            <mat-form-field appearance="outline">
+              <mat-label>Country</mat-label>
+              <input matInput formControlName="country">
+              <mat-error *ngIf="
+                      addForm.get('address.country').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-2"><button mat-button (click)="addAddress()"
+          style="background-color: #233A61;color: #fff;padding: 1px 40px;font-family: 'Poppins';">Update</button></div>
+      <div class="col-md-2"><button mat-button (click)="closeDialog()"
+          style="background-color: #fff;color: #233A61;padding: 1px 40px;font-family: 'Poppins';border: 1px solid #233A61;">Close</button>
+      </div>
+    </div>
+  </form>
+
+</div>

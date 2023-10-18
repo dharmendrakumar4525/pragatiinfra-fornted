@@ -1,0 +1,261 @@
+mat-toolbar {
+  height: 100px;
+  background-color: #fff;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.requests {
+  height: 40px;
+  width: 1140px;
+  background-color: #d9d9d9;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 30px;
+  font-size: 14px;
+}
+
+.innerreq {
+  color: #233a61;
+  font-family: "Poppins";
+  font-weight: 600;
+  font-style: normal;
+  font-size: 14px;
+}
+
+.createreq {
+  background-color: #233a61;
+  color: #fff;
+  height: 40px;
+  width: 250px;
+  margin-left: -80px;
+  font-family: "Poppins";
+  font-weight: 600;
+  font-style: normal;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topcard {
+  width: 100%;
+  height: auto;
+  font-family: "Poppins";
+  box-shadow: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+table {
+  font-family: "Poppins", sans-serif !important;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  margin-top: 8px;
+}
+
+th {
+  background-color: #233a61;
+  border: 1px solid #94a3b8;
+  text-align: left;
+  padding: 10px 40px !important;
+  color: white;
+  font-weight: 100;
+  font-size: 14px;
+  font-style: normal;
+}
+
+td {
+  border: 1px solid #94a3b8;
+
+  text-align: left;
+  padding: 20px;
+  color: #233a61;
+  font-style: normal;
+  font-size: 14px;
+  font-family: "Poppins";
+  /* width:100px; */
+}
+
+tr:nth-child(even) {
+  background-color: #e5e6eb !important;
+}
+
+form {
+  padding: 10px 20px 10px 20px;
+}
+
+.scroll-bar1 {
+  margin-top: 50px;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  background-color: lightgrey;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: lightblue;
+}
+
+.pr-form-field {
+  width: 120px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #9f9f9f;
+  cursor: pointer;
+  background-color: "Transparent";
+}
+
+.select-form-field {
+  padding: 10px;
+  width: 150px;
+  border: 1px solid #9f9f9f;
+  border-radius: 20px;
+  cursor: pointer;
+  background-color: "Transparent " !important;
+}
+
+.action-btn-wrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+
+  a {
+    cursor: pointer;
+    padding: 5px 5px;
+
+    i {
+      color: #233a61;
+      opacity: 0.8;
+      font-size: 13px;
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+.button-list {
+  display: inline-flex;
+  margin: 15px 0 20px 0;
+  float: right;
+  gap: 10px;
+}
+
+.text-area-section {
+  width: 100%;
+  height: auto;
+  margin: 30px 0 0 0;
+
+  textarea {
+    display: block;
+    width: 100%;
+  }
+}
+
+.flex-div {
+  width: 31%;
+}
+
+.mat-form-field {
+  display: block;
+}
+
+.pending {
+  padding: 8px;
+  width: 120px;
+  background-color: #ccc;
+  color: #333;
+  font-size: 14px;
+  font-family: Poppins;
+  height: 50px;
+  border: none;
+}
+
+
+.p-btns {
+  background: #233a61;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+
+.p-btns-button {
+  background: #233a61;
+  border: 1px solid #233a61;
+  padding: 7px 40px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #fff;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+
+.vendor-wapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+
+  .vendor-name-cl {
+    padding: 6px 15px;
+    background: #233a61;
+    color: #fff;
+  }
+
+  .vendor-value-cont {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #073B4C0D;
+    padding: 6px 15px;
+    margin-bottom: 10px;
+    gap: 10px;
+
+    input {
+      width: 80px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      padding: 5px 5px;
+      outline: none;
+    }
+  }
+
+  .vendor-value-label {
+    min-width: 144px;
+  }
+}
+
+input[readonly="true"],input[readonly],.mat-select-disabled {
+  opacity: 0.6;
+}

@@ -113,6 +113,7 @@ export class RequestService {
   }
 
   PUT(URL: any, request: any) {
+    console.log(request);
 
     URL = `${environment.api_path}${URL}`;
     return this.http.put<Response>(URL, request).pipe(
@@ -152,6 +153,25 @@ export class RequestService {
         catchError(this.handleError.bind({ that: this, request: data })), // then handle the error
 
       );
+  }
+
+
+
+  GETPDF(URL: any, data: any) {
+    URL = `${environment.api_base_path}/${URL}`;  
+
+    if(data.isFile){
+      return this.http.post(URL,data)
+      .pipe(
+        catchError(this.handleError.bind({ that: this, request: data }))
+      );
+    } else {
+      return this.http.post(URL,data,{ responseType: 'arraybuffer' })
+      .pipe(
+        catchError(this.handleError.bind({ that: this, request: data }))
+      );
+    }
+    
   }
 
 }

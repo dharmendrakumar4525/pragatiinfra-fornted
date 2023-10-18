@@ -1,70 +1,65 @@
-
 <mat-toolbar style="height: 100px;background-color: #fff;">
-    <div style="margin-top: 40px;margin-left: 20px;">
-        <img src="./assets/images/inventory.svg" >
-    </div>
-    <span style="font-family: 'Poppins';margin-top: 40px;font-style: normal;font-weight:600;font-size: 30px;color:#1E293B;margin-left: 10px;">Inventory</span>
-    <span class="example-spacer"></span>
-    <button mat-icon-button style="margin-right: 40px;">
+  <div style="margin-top: 40px;margin-left: 20px;">
+    <img src="./assets/images/inventory.svg">
+  </div>
+  <span
+    style="font-family: 'Poppins';margin-top: 40px;font-style: normal;font-weight:600;font-size: 30px;color:#1E293B;margin-left: 10px;">Inventory</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button style="margin-right: 40px;">
     <mat-icon style="margin-top: 40px;">notifications</mat-icon>
-    </button>
-   
-  </mat-toolbar>
-  <div><hr style="width: 94%;border: 2px solid #C5C5C5;margin-left: 12px;"></div>
-  <!-- <div>
+  </button>
+
+</mat-toolbar>
+<div>
+  <hr style="width: 94%;border: 2px solid #C5C5C5;margin-left: 12px;">
+</div>
+<!-- <div>
     <form class="searchbar">
         <input type="text"  matInput placeholder="Search" name= "search" >
         <button  style="bottom: -20px;left:-40px;position: relative;background-color: #fff;border: none;"><i class="fa fa-search" aria-hidden="true" style="color: #97989D;"></i></button>
     </form>
-       
-       
+
+
     </div> -->
-    <div style="margin-left: 35px;width:95%;margin-top: 30px;">
-      <mat-form-field appearance="outline" class="searchbar">
-          <mat-icon matSuffix>search</mat-icon>
-          <input matInput type="search" placeholder="Search Title" class="search-input">
-         
-      </mat-form-field>
-      </div>
-    <div class="scroll-bar1" >
-        <table  style="direction: ltr !important;">
-       
-    
-        <tr>
-        <th >Item&nbsp;Type</th>
-        <th>Request&nbsp;No.</th>
-       <th>Purchased&nbsp;Quantity</th>
-       <th>Location</th>
-       <th>Used&nbsp;Material</th>
-       <th>Inventory</th>
-     
+<div style="margin-left: 35px;width:95%;margin-top: 30px;">
+  <mat-form-field appearance="outline" class="searchbar">
+    <mat-icon matSuffix>Search</mat-icon>
+    <input matInput type="search" (input)="filterRecords($event)" placeholder="search by title" class="search-input">
+
+  </mat-form-field>
+</div>
+<div class="scroll-bar1">
+  <table style="direction: ltr !important;">
+
+
+    <tr>
+      <th>Item&nbsp;Type</th>
+      <th>Request&nbsp;No.</th>
+      <th>Purchased&nbsp;Quantity</th>
+      <th>Vendor&nbsp;Name</th>
+      <th>Location</th>
+
+      <th>Status</th>
+
     </tr>
-        
-        
-       
-        <tbody *ngFor= " let num of [1,2,3,4,5,6] ">
-            <tr>
-                <td >Cement</td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
 
-            </tr>
-            
-            <tr  style="font-size: 10px;" >
-    
-              <td >Evacuation </td>
-              <td ></td>
-              <td ></td>
-              <td ></td>
-              <td ></td>
-              <td ></td>
-           
-              
-            </tr>
-        </tbody>
-    </table>
-     </div>
 
+
+    <tbody>
+      <tr *ngFor=" let obj of poArray">
+        <td>{{obj.items.item_name}}</td>
+        <td>{{obj.po_number}}</td>
+        <td>{{obj.items.vendors[0].quantity}}</td>
+        <td>{{obj.vendor_detail.vendor_name}}</td>
+        <td>
+          {{obj.delivery_address.street_address}},{{obj.delivery_address.street_address2}},{{obj.delivery_address.city}},{{obj.delivery_address.state}},{{obj.delivery_address.country}},{{obj.delivery_address.zip_code}}
+        </td>
+
+        <td>{{obj.status | titlecase }}</td>
+
+      </tr>
+
+
+    </tbody>
+  </table>
+</div>
