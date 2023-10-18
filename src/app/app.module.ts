@@ -110,12 +110,22 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ConfirmationPopupModule } from '@component/project/confirmation-popup/confirmation-popup.module';
 import { MinTableDateModule } from '@pipe/min-table-date/min-table-date.module';
 import { DirectiveModule } from './shared/directives/directive.module';
+import { JwtModule } from "@auth0/angular-jwt";
 
-
+export function tokenGetter() {
+  return 'TOKNE';
+}
 
 @NgModule({
   imports: [AppRoutingModule, BrowserModule, ReactiveFormsModule, HttpClientModule, FormsModule, CoreModule, SharedModule, CustomMaterialModule,
     FlexLayoutModule,
+    JwtModule.forRoot({
+      config: {
+          tokenGetter: tokenGetter,
+          allowedDomains: ['localhost:4200/'],
+          disallowedRoutes: ['']
+      }
+  }),
     FullCalendarModule,
     MatTooltipModule,
     NgxLocalStorageModule.forRoot(),

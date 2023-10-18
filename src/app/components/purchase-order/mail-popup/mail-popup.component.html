@@ -1,0 +1,36 @@
+<div mat-dialog-title class="mat-dialog-title">
+
+  <div class="row full-width">
+    <div class="col-md-9">
+      Emails
+    </div>
+    <div class="col-md-3">
+      <mat-icon class="float-end close-icon" (click)="cancel()">close</mat-icon>
+    </div>
+  </div>
+</div>
+<div mat-dialog-content class="mat-dialog-content-cstm">
+  <div class="esign-container">
+    <mat-form-field class="example-chip-list">
+      <mat-chip-list #chipList aria-label="Fruit selection">
+        <mat-chip *ngFor="let mail of mailArray;let i= index" [selectable]="selectable" [removable]="removable"
+          (removed)="remove(mail)">
+          {{mail}}
+          <mat-icon matChipRemove *ngIf="removable && i+1!=1">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="New emails..." [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list>
+
+    </mat-form-field>
+    <div *ngIf="mailArray.length==0 " style="color: red;">please enter the email </div>
+  </div>
+
+
+</div>
+
+<div style="text-align: center;margin-bottom:15px;">
+  <button type="button" id="continueButtonId" class="button-primary button-spacer theme-btn" (click)="sendMail()"
+    aria-label="Continue">Send Mails</button>
+</div>
