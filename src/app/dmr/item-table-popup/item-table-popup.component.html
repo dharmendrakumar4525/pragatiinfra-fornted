@@ -1,0 +1,30 @@
+
+<body>
+    <div class="scroll-bar1" style="    margin-top: 30px;">
+      <table style="direction: ltr !important;">
+        <tr>
+          <th>Item No</th> 
+          <th> Item Name </th>
+          <th> UOM </th>
+         
+          <th>PO Quantity</th>
+          <th>Recived Quantity</th>
+          <th> Remarks</th>
+        </tr>
+        <tbody >
+            <tr *ngFor="let list of itemList.items;let itemIndex=index;">
+                <td>{{itemIndex+1}}</td>
+                <td>{{list.item_name}}</td>
+                <td>{{list.uom.uom_name}}</td>
+                <td>{{list.qty}}</td>
+                <td>{{itemList.dmritem[itemIndex].Recivedqty}}</td>
+                <td>{{list.remark}}</td>
+            </tr>
+        </tbody>			 												
+      </table>
+    </div>
+  </body>
+  <div     style="text-align: center" >
+    <button  class="mat_step8per_next global-btn" type="button" style="margin-left: 20px;padding: 10px;width:100px;margin-top: -10px;border-radius: 5px;border: 1px solid #97989D;background-color: #fff;cursor: pointer;font-family: 'Poppins';background-color: #233A61;color:#fff" (click)="closeDialog()">Back
+    </button>
+  </div>

@@ -15,6 +15,9 @@ export const PROJECT_API = "/projects";
 export const PROJECT_ACTIVITY_DATA_API = "/project/activity_data";
 export const PROJECT_ACTIVITY_REMARK_DATA_API = "/project/activity_data/remarks";
 export const PROJECT_ACTIVITY_DATA_DETAIL_API = "/project/activity_data/detail";
+export const DMRPURCHASE_ORDER_API= "/dmr_purchase_order";
+export const DmrEntryList= "/dmr_list";
+export const CREATE_DMR_ENTRY= "/dmr_entry";
 
 
 

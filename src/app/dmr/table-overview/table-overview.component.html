@@ -1,0 +1,232 @@
+<mat-toolbar style="height: 100px;background-color: #fff; justify-content: space-between;">
+    
+    <div style="margin-top: 40px;margin-left: 20px;">
+    <img src="./assets/images/preq.svg">
+    <span
+    style="font-family: 'Poppins';margin-top: 40px;font-style: normal;font-weight:600;font-size: 30px;color:#1E293B;margin-left: 10px;"> Table Overview</span>
+    <span class="example-spacer"></span>
+    </div>
+    
+
+    <div>
+        <button mat-button [matMenuTriggerFor]="menu"> <mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" >notifications</mat-icon></button>
+        <mat-menu #menu="matMenu" >
+         <div class="scroll-bar1" fxLayout="column" style="height: 500px;">
+           <div fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
+             <div mat-card-avatar class="example-header-image"></div>
+             <div  class="notification-container">
+               <div class="content">{{data.description}}
+                 <div class="time" style="color: #BBBBBB;">{{data.time}}</div><br>
+               </div>
+           </div>
+         
+         </div>
+         <!-- <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,]">
+           <div mat-card-avatar class="example-header-image"></div>
+           <div >
+             <div class="content" style="margin-left: 10px;"><b>Kate: .</b>
+               <div class="time">1 hour ago</div>
+             </div>
+         </div>
+       
+       </div> -->
+   
+    </div>
+       </mat-menu>
+    </div>
+
+</mat-toolbar>
+<div>
+<hr style="width: 96%;border: 2px solid #C5C5C5;margin-left: 30px;">
+</div>
+<div>
+<ul class="toptext" style="background-color: #fff !important;list-style: none;">
+    <li style="border-right: 1px solid #D9D9D9;padding-right: 10px;"><a style="color: #000;" [routerLink]="['/dmr']"
+        routerLinkActive="active-link"><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i> <span
+        style="color:#97989D"> Material Record Sheet</span></a></li>
+    <li style="border-right: 1px solid #D9D9D9;padding-right: 20px;"><a style="color: #000;"
+        [routerLink]="['/dmr/tableoverview']" routerLinkActive="active-link-active"
+        [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-eye" aria-hidden="true" style="color:#233A61;"></i>
+        <span style="color:#233A61;"> Table Overview</span></a></li>
+</ul>
+</div>
+<div style="display: flex;flex-direction: row;gap: 20px;
+margin-right: 6vw;
+margin-top: -37px;
+justify-content: flex-end;">
+  <div>
+    <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By DMR No. </span></div>
+    <mat-form-field appearance="outline" class="searchbar">
+      <mat-icon matSuffix>search</mat-icon>
+      <input matInput type="search" placeholder="Enter DMR No." class="search-input" (input)="search($event,'DMRNo')">
+
+    </mat-form-field>
+  </div>
+
+  <div>
+    <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By date</span></div>
+    <div> <mat-form-field appearance="outline" class="datebar">
+        <input matInput [matDatepicker]="startPicker" placeholder="Date" (dateChange)="dateFilter( $event)"
+          (click)="startPicker.open()" />
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field></div>
+  </div>
+
+  <!-- <div>
+    <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By Location</span></div>
+    <div> <mat-form-field appearance="outline" class="datebar">
+        <input matInput placeholder="Location" (input)="search($event,'location')" />
+      </mat-form-field>
+    </div>
+  </div>  -->
+  
+</div>
+<body>
+    <div class="scroll-bar1">
+      <table style="direction: ltr !important;">
+        <tr>
+          <th>
+            <!-- <div class="section-container">
+              <div class="left-cont" style="margin-left: 34%;">DMR No.</div>
+            </div>  -->
+            DMR No.
+          </th> 
+          <th>Gate Register Entry</th>
+          <th>PR Title</th>
+          <th>PR No.</th>
+          <th>Site</th>
+          <th>Invoice Date</th>
+          <th>Vendor Name</th>
+          <th>Invoice No.</th>
+          <th>Challan No.</th>
+          <th>Vehicle No. </th>
+          <th>PO No.</th>
+          <th>PO Amount</th>
+          <th>Invoice Amount</th>
+          <!-- <th>Site <div>Remarks</div></th> -->
+          
+          
+          <th>Date Of Receiving <div>Docs At HO</div></th>
+          <th>Date Of Doc Submission <div>To Account</div></th>
+          <th>Remark by Audit</th>
+          <th>Payment Status</th>
+          <th>UTR No.</th>
+          <th>Accounts Remark</th>
+        </tr>
+        <tbody [formGroup]="myGroup" *ngIf="dmrEntryList && dmrEntryList.length>0">
+          <tr formArrayName="dmr"
+          *ngFor="let list of dmrEntryList; let i = index;">
+          <ng-container [formGroupName]="i">
+            <td>
+              <div class="section-container">
+                <div class="left-cont" style="margin-left: 34%;">{{list.DMR_No}}</div>
+                <div class="right-cont"><mat-icon matTooltip="View Materials" (click)="viewMaterials(list)">add</mat-icon></div>
+              </div>
+              
+            </td>
+            <td>{{list.GateRegisterEntry}}</td>
+            <td>{{list.title}}</td>
+            <td>{{list.PRNumber}}</td>
+            <td>{{list.Site}}</td>
+            <td>{{list.dmrdate}}</td>
+            <td>{{list.vendor_detail.vendor_name}}</td>
+            <td>{{list.InvoiceNumber }}</td>
+            <td>{{list.ChallanNumber}}</td>
+            <td>{{list.VehicleNumber}}</td>
+            <td>{{list.PONumber}}</td>
+            <td></td>
+            <td>{{list.TotalAmount}}</td>
+            <!-- <td></td> -->
+            
+            <td>
+              <div *ngIf="!list?.DateOfReceivingDocsAtHO; else noHORecivingDate">
+              <div  class="custom-form-control" >
+                <mat-form-field appearance="outline" style="    margin-bottom: -31px;">
+                  <input matInput [matDatepicker]="requiredByStartDate" formControlName="DateOfReceivingDocsAtHO"
+                    placeholder="Select Date" (click)="requiredByStartDate.open()" />
+                  <mat-datepicker-toggle matSuffix [for]="requiredByStartDate"></mat-datepicker-toggle>
+                  <mat-datepicker #requiredByStartDate></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <button type="submit" (click)="updateDmr(myGroup.get('dmr').get(i.toString()).get('DateOfReceivingDocsAtHO').value,i,'DateOfReceivingDocsAtHO')" style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;top:-1px;">Add</button>
+              </div>
+              <ng-template #noHORecivingDate> 
+                {{list?.DateOfReceivingDocsAtHO | date:'dd MMM y' }}
+              </ng-template>
+            </td>
+            <td>
+              <div *ngIf="!list?.DateOfDocSubmissionToAccount; else noDateOfDocSubmissionToAccount">
+                <div  class="custom-form-control">
+                  <mat-form-field appearance="outline" style="    margin-bottom: -31px;">
+                    <input matInput [matDatepicker]="DateOfDocSubmissionToAccount" formControlName="DateOfDocSubmissionToAccount"
+                      placeholder="Select Date" (click)="DateOfDocSubmissionToAccount.open()" />
+                    <mat-datepicker-toggle matSuffix [for]="DateOfDocSubmissionToAccount"></mat-datepicker-toggle>
+                    <mat-datepicker #DateOfDocSubmissionToAccount></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <button type="submit" (click)="updateDmr(myGroup.get('dmr').get(i.toString()).get('DateOfDocSubmissionToAccount').value,i,'DateOfDocSubmissionToAccount')"style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;top:-1px;">Add</button>
+              </div>
+              <ng-template #noDateOfDocSubmissionToAccount> 
+                {{list?.DateOfDocSubmissionToAccount | date:'dd MMM y' }}
+              </ng-template>
+            </td>
+            <td>
+              <div *ngIf="!list?.RemarkByAudit; else noRemarkByAudit">
+                <div  class="custom-form-control">
+                  <textarea type="text" formControlName="RemarkByAudit"
+                  style="border:1px solid #97989D;padding: 10px 10px;width:300px;font-family: 'Poppins';background-color: transparent;margin-bottom: -20px;"
+                  #remarkId name="remarkValue" ></textarea>
+                </div>
+                <button type="submit" (click)="updateDmr(myGroup.get('dmr').get(i.toString()).get('RemarkByAudit').value,i,'RemarkByAudit')" style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;top:-1px;">Add</button>
+              </div>
+              <ng-template #noRemarkByAudit> 
+                {{list?.RemarkByAudit}}
+              </ng-template>
+            </td>
+            <td>
+              <div *ngIf="!list?.PaymentStatus; else noPaymentStatus">
+                <div  class="custom-form-control">
+                  <input type="text" formControlName="PaymentStatus"
+                  style="border:1px solid #97989D;padding: 10px 10px;width:150px;font-family: 'Poppins';background-color: transparent;margin-bottom: -20px;"
+                  #remarkId name="remarkValue" >
+                </div>
+                <button type="submit" (click)="updateDmr(myGroup.get('dmr').get(i.toString()).get('PaymentStatus').value,i,'PaymentStatus')" style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;top:-1px;">Add</button>
+              </div>
+              <ng-template #noPaymentStatus> 
+                {{list?.PaymentStatus}}
+              </ng-template>
+            </td>
+            <td>
+              <div *ngIf="!list?.UTR_No; else NoUTR_No">
+                <div  class="custom-form-control">
+                  <input type="text" formControlName="UTR_No"
+                  style="border:1px solid #97989D;padding: 10px 10px;width:150px;font-family: 'Poppins';background-color: transparent;margin-bottom: -20px;"
+                  #remarkId name="remarkValue" >
+                </div>
+                <button (click)="updateDmr(myGroup.get('dmr').get(i.toString()).get('UTR_No').value,i,'UTR_No')" type="submit" style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;top:-1px;">Add</button>
+              </div>
+              <ng-template #NoUTR_No> 
+                {{list?.UTR_No}}
+              </ng-template>
+            </td>
+            <td>
+              <div *ngIf="!list?.AccountsRemark; else noAccountsRemark">
+                <div  class="custom-form-control">
+                  <textarea type="text" formControlName="AccountsRemark"
+                  style="border:1px solid #97989D;padding: 10px 10px;width:300px;font-family: 'Poppins';background-color: transparent;margin-bottom: -20px;"
+                  #remarkId name="remarkValue" ></textarea>
+                </div>
+                <button type="submit" (click)="updateDmr(myGroup.get('dmr').get(i.toString()).get('AccountsRemark').value,i,'AccountsRemark')" style="border: none;cursor: pointer;background-color: #233A61;color:#fff;border-radius: 3px;padding:5px 10px;font-family: 'Poppins';position: relative;top:-1px;">Add</button>
+              </div>
+              <ng-template #noAccountsRemark> 
+                {{list?.AccountsRemark}}
+              </ng-template>
+            </td>
+          </ng-container>
+          </tr>
+        </tbody>
+        				 												
+      </table>
+    </div>
+  </body>

@@ -143,7 +143,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
     },
     {
       link_name: "dmr",
-      link: null,
+      link: '/dmr',
       icon: "bx bx-collection",
       img: '../../../assets/images/icons/dmr.svg',
     },

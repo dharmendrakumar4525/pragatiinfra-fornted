@@ -1,0 +1,170 @@
+<mat-toolbar style="height: 100px;background-color: #fff; justify-content: space-between;">
+    
+        <div style="margin-top: 40px;margin-left: 20px;">
+        <img src="./assets/images/preq.svg">
+        <span
+        style="font-family: 'Poppins';margin-top: 40px;font-style: normal;font-weight:600;font-size: 30px;color:#1E293B;margin-left: 10px;">Material Record Sheet</span>
+        <span class="example-spacer"></span>
+        </div>
+        
+    
+        <div>
+            <button mat-button [matMenuTriggerFor]="menu"> <mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" >notifications</mat-icon></button>
+            <mat-menu #menu="matMenu" >
+             <div class="scroll-bar1" fxLayout="column" style="height: 500px;">
+               <div fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
+                 <div mat-card-avatar class="example-header-image"></div>
+                 <div  class="notification-container">
+                   <div class="content">{{data.description}}
+                     <div class="time" style="color: #BBBBBB;">{{data.time}}</div><br>
+                   </div>
+               </div>
+             
+             </div>
+             <!-- <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,]">
+               <div mat-card-avatar class="example-header-image"></div>
+               <div >
+                 <div class="content" style="margin-left: 10px;"><b>Kate: .</b>
+                   <div class="time">1 hour ago</div>
+                 </div>
+             </div>
+           
+           </div> -->
+       
+        </div>
+           </mat-menu>
+        </div>
+  
+  </mat-toolbar>
+  <div>
+    <hr style="width: 96%;border: 2px solid #C5C5C5;margin-left: 30px;">
+  </div>
+  <div>
+    <ul class="toptext" style="background-color: #fff !important;list-style: none;">
+        <li style="border-right: 1px solid #D9D9D9;padding-right: 10px;"><a style="color: #000;" [routerLink]="['/dmr']"
+            routerLinkActive="active-link"><i class="fa fa-eye" aria-hidden="true" style="color:#233A61"></i> <span
+            style="color:#233A61"> Material Record Sheet</span></a></li>
+        <li style="border-right: 1px solid #D9D9D9;padding-right: 20px;"><a style="color: #000;"
+            [routerLink]="['/dmr/tableoverview']" routerLinkActive="active-link-active"
+            [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i>
+            <span style="color:#97989D;"> Table Overview</span></a></li>
+    </ul>
+  </div>
+  <div style="display: flex;flex-direction: row;gap:10px;    margin: 0 27px;">
+    <div>
+      <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By title </span></div>
+      <mat-form-field appearance="outline" class="searchbar">
+        <mat-icon matSuffix>search</mat-icon>
+        <input matInput type="search" placeholder="search title" class="search-input" (input)="search($event,'title')">
+
+      </mat-form-field>
+    </div>
+
+    <div>
+      <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By date</span></div>
+      <div> <mat-form-field appearance="outline" class="datebar">
+          <input matInput [matDatepicker]="startPicker" placeholder="Date" (dateChange)="dateFilter( $event)"
+            (click)="startPicker.open()" />
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field></div>
+    </div>
+
+    <div>
+
+      <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By Location</span></div>
+      <div> <mat-form-field appearance="outline" class="datebar">
+          <input matInput placeholder="Location" (input)="search($event,'location')" />
+        </mat-form-field></div>
+    </div> 
+    <div>
+
+      <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By Vendor Name</span></div>
+      <div> <mat-form-field appearance="outline" class="datebar">
+          <input matInput placeholder="Enter Name" (input)="search($event,'vendorName')" />
+        </mat-form-field></div>
+    </div> 
+    <div>
+
+      <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By PO No.</span></div>
+      <div> <mat-form-field appearance="outline" class="datebar">
+          <input matInput placeholder="Enter PO No." (input)="search($event,'po')" />
+        </mat-form-field></div>
+    </div> 
+
+    <div class="custom-form-group">
+
+      <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter by Status</span></div>
+      <div class="custom-form-control" style="position: relative;">
+
+        <mat-form-field appearance="outline">
+          <mat-select [formControl]="statusOption" (selectionChange)="onStatusChange($event)">
+            <mat-option [value]="item.value" *ngFor="let item of statusList">{{item.label}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+  </div>
+  
+    <div class="scroll-bar1" style="width: 93%;">
+      <table style="direction: ltr !important;margin-top: -20px;" class="r-list">
+  
+  
+  
+        <tbody *ngIf="ApprovedpurchaseOrderList.length>0 && this.PurchaseRequestList.length>0 && this.RateApprovalList.length>0">
+          <tr *ngFor="let obj of ApprovedpurchaseOrderList">
+            <td style="color: #4272BF;text-wrap: nowrap;
+            width: fit-content;text-align: left;padding: 18px;">Date: <span style="color: #233a61;font-weight: 600;">{{ obj.date | date:'dd MMM y' }}</span> </td>
+  
+            <td style="color: #4272BF;text-wrap: nowrap;
+            width: fit-content;text-align: left;padding: 18px;">PR No: <span style="color: #233a61;font-weight: 600;">{{getRateApprovalById(obj.rate_approval_id).purchase_request_number}}</span> </td>
+  
+
+            <td style="color: #4272BF;text-wrap: nowrap;
+            width: fit-content;text-align: left;padding: 18px;">PO No: <span style="color: #233a61;font-weight: 600;">{{obj.po_number}}</span> </td>
+  
+            <td style="color: #4272BF;text-wrap: nowrap;
+    width: fit-content;text-align: left;padding: 18px;">Location: <span style="color: #233a61;font-weight: 600;">{{getLocationById(obj.site)}}</span></td>
+            
+            <td style="color: #4272BF;text-wrap: nowrap;
+            width: fit-content;text-align: left;padding: 18px;">Handel By: <span style="color: #233a61;font-weight: 600;">{{getRateApprovalById(obj.rate_approval_id).handle_by}}</span></td>
+                    
+            <td style="color: #4272BF;width:200px;text-align: left;padding: 18px;">Title: <span style="color: #233a61;font-weight: 600;">{{obj.title}}</span></td>
+            
+            <td style="color: #4272BF;width:200px;text-align: left;padding: 18px;">Vendor Name: <span style="color: #233a61;font-weight: 600;">{{obj.vendor_detail.vendor_name}}</span></td>
+            
+            
+            
+            <td *ngIf="obj.status=='pending'" >
+              <div  style="background-color: #ff0000; border-radius: 10px;color: #fff;text-align: center;padding: 18px 15px;" >
+                Pending
+              </div>
+            </td>
+            <td *ngIf="obj.status=='partial'" >
+              <div  style="text-wrap: nowrap;background-color: #FFFF00;border-radius: 10px;color: #233a61;text-align: center;padding: 18px 15px;" >
+                Partial Delivered
+              </div>
+            </td>
+            <td *ngIf="obj.status=='completed'" style="width: 20%;
+            text-align: left;padding: 18px;">
+              <div style="background-color: #008000;border-radius: 10px;color: #fff;text-align: center;padding: 18px 15px;" >
+                Closed
+              </div>
+            </td>
+
+
+            
+            <td  *ngIf="obj.status!='completed'" style="text-wrap: nowrap;">
+              <a class="viewdetail-btn" [routerLink]="['dmrform/',obj._id]">
+                Create/Modified DMR
+              </a>
+            </td>
+            <td *ngIf="obj.status!='completed'"><mat-icon>
+                arrow_forward_ios
+              </mat-icon></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  

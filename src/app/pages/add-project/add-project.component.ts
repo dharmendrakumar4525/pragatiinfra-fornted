@@ -282,6 +282,8 @@ export class AddProjectComponent implements OnInit {
           reader.readAsDataURL(file);
           reader.onload = () => {
             this.imageUrl = reader.result;
+            console.log(this.imageUrl)
+            
             this.errorMessage = null; // Clear any previous error message
           }
         } else {

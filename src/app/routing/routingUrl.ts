@@ -66,6 +66,9 @@ import { RejectedpomComponent } from '../Procurement/Purchaseorder/rejectedpom/r
 import { PomcreatorEsignComponent } from '../Procurement/Purchaseorder/pomcreator-esign/pomcreator-esign.component';
 import { InventoryComponent } from '../Procurement/inventory/inventory.component';
 import { PrstatusComponent } from '../Procurement/prstatus/prstatus.component';
+import { MaterialRecordSheetComponent} from '../dmr/material-record-sheet/material-record-sheet.component';
+import {DMRFormComponent} from '../dmr/dmr-form/dmr-form.component';
+import {TableOverviewComponent} from '../dmr/table-overview/table-overview.component';
 
 export const routes: Routes = [
   {
@@ -292,6 +295,17 @@ export const routes: Routes = [
       //{path: 'forgotpassword', component: ForgotpasswordComponent},
 
 
+    ]
+  },
+  {
+    path: 'dmr',
+    component: ViewProjectComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: '', component: MaterialRecordSheetComponent, canActivate: [AuthGuard] },
+      { path: 'dmrform/:id', component: DMRFormComponent, canActivate: [AuthGuard] },
+      { path: 'tableoverview', component: TableOverviewComponent, canActivate: [AuthGuard] },
+    
     ]
   },
   {
