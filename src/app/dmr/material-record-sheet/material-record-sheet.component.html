@@ -48,10 +48,37 @@
             [routerLink]="['/dmr/tableoverview']" routerLinkActive="active-link-active"
             [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i>
             <span style="color:#97989D;"> Table Overview</span></a></li>
+        <li style="border-right: 1px solid #D9D9D9;padding-right: 20px;"><a style="color: #000;"
+          [routerLink]="['/dmr/finaldmr']" routerLinkActive="active-link-active"
+          [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i>
+          <span style="color:#97989D;"> Final DMR</span></a></li>   
     </ul>
   </div>
-  <div style="display: flex;flex-direction: row;gap:10px;    margin: 0 27px;">
-    <div>
+  <div>
+    <hr style="width: 96%;border: 2px solid #C5C5C5;margin-left: 30px;">
+  </div>
+  <div style="display: flex;flex-direction: row;gap:20px;    margin: 0 27px;">
+
+    <div >
+      <div style="margin-top: 15px;color: #94A3B8;"><span>Filter By </span></div>
+      <select [(ngModel)]="selectedOption" style="color:#97989D;font-size: medium;width: 200px;padding:10px;border-radius: 6px;border:1px solid #ccc;cursor: pointer;margin-top: 3px;font-family: 'Poppins'; height: 50px;">
+        <option value="FilterBytitle">Title</option>
+        <option value="FilterBydate">Date </option>
+        <option value="FilterByLocation">Location</option>
+        <option value="FilterByVendorName">Vendor Name </option>
+        <option value="FilterByPONo">PO Number </option>
+      </select>
+    </div>
+
+    <!-- <div *ngIf="dmrForm.get('userChoice').value === 'ChallanNumber'" class="flex-div" style="display: flex;flex-direction: column">
+      <label style="color: #4272BF;font-size: 14px;">Challan Number <span class="star">*</span></label>
+      <input placeholder="Enter Details" formControlName="ChallanNumber"
+        style="font-size: medium;width:75%;padding:10px;border-radius: 6px;border:1px solid #ccc;cursor: pointer;margin-top: 3px;font-family: 'Poppins'; height: 50px;">
+        <mat-error *ngIf="dmrForm.get('ChallanNumber').invalid && ( dmrForm.get('ChallanNumber').dirty || dmrForm.get('ChallanNumber').touched )">
+          <span>Please provide a valid Challan Number</span>
+        </mat-error>
+      </div> -->
+    <div *ngIf="selectedOption === 'FilterBytitle'">
       <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By title </span></div>
       <mat-form-field appearance="outline" class="searchbar">
         <mat-icon matSuffix>search</mat-icon>
@@ -60,7 +87,7 @@
       </mat-form-field>
     </div>
 
-    <div>
+    <div *ngIf="selectedOption === 'FilterBydate'">
       <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By date</span></div>
       <div> <mat-form-field appearance="outline" class="datebar">
           <input matInput [matDatepicker]="startPicker" placeholder="Date" (dateChange)="dateFilter( $event)"
@@ -70,21 +97,21 @@
         </mat-form-field></div>
     </div>
 
-    <div>
+    <div *ngIf="selectedOption === 'FilterByLocation'">
 
       <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By Location</span></div>
       <div> <mat-form-field appearance="outline" class="datebar">
           <input matInput placeholder="Location" (input)="search($event,'location')" />
         </mat-form-field></div>
     </div> 
-    <div>
+    <div *ngIf="selectedOption === 'FilterByVendorName'">
 
       <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By Vendor Name</span></div>
       <div> <mat-form-field appearance="outline" class="datebar">
           <input matInput placeholder="Enter Name" (input)="search($event,'vendorName')" />
         </mat-form-field></div>
     </div> 
-    <div>
+    <div *ngIf="selectedOption === 'FilterByPONo'">
 
       <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By PO No.</span></div>
       <div> <mat-form-field appearance="outline" class="datebar">
@@ -107,7 +134,7 @@
 
   </div>
   
-    <div class="scroll-bar1" style="width: 93%;">
+    <div class="scroll-bar1" style="width: 100%;">
       <table style="direction: ltr !important;margin-top: -20px;" class="r-list">
   
   

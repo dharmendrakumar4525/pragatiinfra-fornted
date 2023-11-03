@@ -42,6 +42,7 @@ export class MaterialRecordSheetComponent implements OnInit {
   RateApprovalList:any=[];
   selectedDate: Date ;
   Objdate: Date ; 
+  selectedOption:String="FilterBytitle";
   dataReadySubject = new BehaviorSubject<boolean>(false);
   constructor(
     private recentActivityService: RecentActivityService,

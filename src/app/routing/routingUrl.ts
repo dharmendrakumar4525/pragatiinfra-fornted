@@ -69,6 +69,7 @@ import { PrstatusComponent } from '../Procurement/prstatus/prstatus.component';
 import { MaterialRecordSheetComponent} from '../dmr/material-record-sheet/material-record-sheet.component';
 import {DMRFormComponent} from '../dmr/dmr-form/dmr-form.component';
 import {TableOverviewComponent} from '../dmr/table-overview/table-overview.component';
+import {FinalDmrComponent} from '../dmr/final-dmr/final-dmr.component';
 
 export const routes: Routes = [
   {
@@ -305,6 +306,7 @@ export const routes: Routes = [
       { path: '', component: MaterialRecordSheetComponent, canActivate: [AuthGuard] },
       { path: 'dmrform/:id', component: DMRFormComponent, canActivate: [AuthGuard] },
       { path: 'tableoverview', component: TableOverviewComponent, canActivate: [AuthGuard] },
+      { path: 'finaldmr', component: FinalDmrComponent, canActivate: [AuthGuard] },
     
     ]
   },

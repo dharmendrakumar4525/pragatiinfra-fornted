@@ -1,0 +1,146 @@
+<mat-toolbar style="height: 100px;background-color: #fff; justify-content: space-between;">
+    
+    <div style="margin-top: 40px;margin-left: 20px;">
+    <img src="./assets/images/preq.svg">
+    <span
+    style="font-family: 'Poppins';margin-top: 40px;font-style: normal;font-weight:600;font-size: 30px;color:#1E293B;margin-left: 10px;"> Final DMR</span>
+    <span class="example-spacer"></span>
+    </div>
+    
+
+    <div>
+        <button mat-button [matMenuTriggerFor]="menu"> <mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" >notifications</mat-icon></button>
+        <mat-menu #menu="matMenu" >
+         <div class="scroll-bar1" fxLayout="column" style="height: 500px;">
+           <div fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
+             <div mat-card-avatar class="example-header-image"></div>
+             <div  class="notification-container">
+               <div class="content">{{data.description}}
+                 <div class="time" style="color: #BBBBBB;">{{data.time}}</div><br>
+               </div>
+           </div>
+         
+         </div>
+         <!-- <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,]">
+           <div mat-card-avatar class="example-header-image"></div>
+           <div >
+             <div class="content" style="margin-left: 10px;"><b>Kate: .</b>
+               <div class="time">1 hour ago</div>
+             </div>
+         </div>
+       
+       </div> -->
+   
+    </div>
+       </mat-menu>
+    </div>
+
+</mat-toolbar>
+<div>
+<hr style="width: 96%;border: 2px solid #C5C5C5;margin-left: 30px;">
+</div>
+<div>
+<ul class="toptext" style="background-color: #fff !important;list-style: none;">
+    <li style="border-right: 1px solid #D9D9D9;padding-right: 10px;"><a style="color: #000;" [routerLink]="['/dmr']"
+        routerLinkActive="active-link"><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i> <span
+        style="color:#97989D"> Material Record Sheet</span></a></li>
+    <li style="border-right: 1px solid #D9D9D9;padding-right: 20px;"><a style="color: #000;"
+        [routerLink]="['/dmr/tableoverview']" routerLinkActive="active-link-active"
+        [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i>
+        <span style="color:#97989D;"> Table Overview </span></a></li>
+    <li style="border-right: 1px solid #D9D9D9;padding-right: 20px;"><a style="color: #000;"
+        [routerLink]="['/dmr/finaldmr']" routerLinkActive="active-link-active"
+        [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-eye" aria-hidden="true" style="color:#233A61;"></i>
+        <span style="color:#233A61;"> Final DMR </span></a></li>
+      
+</ul>
+</div>
+<div>
+  <hr style="width: 96%;border: 2px solid #C5C5C5;margin-left: 30px;">
+</div>
+<div style="display: flex;flex-direction: row;gap: 20px;padding-left:50px ;">
+  <div>
+    <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By DMR ID </span></div>
+    <mat-form-field appearance="outline" class="searchbar">
+      <mat-icon matSuffix>search</mat-icon>
+      <input matInput type="search" placeholder="Enter DMR ID" class="search-input" (input)="search($event,'DMRID')">
+
+    </mat-form-field>
+  </div>
+
+  <!-- <div>
+    <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By date</span></div>
+    <div> <mat-form-field appearance="outline" class="datebar">
+        <input matInput [matDatepicker]="startPicker" placeholder="Date" (dateChange)="dateFilter( $event)"
+          (click)="startPicker.open()" />
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field></div>
+  </div> -->
+
+  <!-- <div>
+    <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By Location</span></div>
+    <div> <mat-form-field appearance="outline" class="datebar">
+        <input matInput placeholder="Location" (input)="search($event,'location')" />
+      </mat-form-field>
+    </div>
+  </div>  -->
+  
+</div>
+<body>
+    <div class="scroll-bar1">
+        <table style="direction: ltr !important;">
+            <tr>
+                <th>DMR ID</th>
+                <th>PR Title</th>
+                <th>PR No.</th>
+                <th>DMR Date</th>
+                <th>Vendor Name</th>
+                <th>Invoice No.</th>
+                <!-- <th>Challan No.</th> -->
+                <th>Vehicle No. </th>
+                <th>PO No.</th>
+                <th>PO Amount</th>
+                <th>Invoice Amount</th>
+                <!-- <th>Site <div>Remarks</div></th> -->
+                
+                
+                <th>Date Of Receiving <div>Docs At HO</div></th>
+                <th>Date Of Doc Submission <div>To Account</div></th>
+                <th>Remark by Audit</th>
+                <th>Payment Status</th>
+                <th>UTR No.</th>
+                <th>Accounts Remark</th>
+                <th>Download/View Invoice</th>
+            </tr>
+            <ng-container *ngIf="finalDmrList && finalDmrList.length>0">
+                <tbody *ngFor="let Item of finalDmrList;">
+                    <tr >
+                        <td>{{Item.PONumber}}/DMR</td>
+                        <td>{{Item.title}}</td>
+                        <td>{{Item.PRNumber}}</td>
+                        <td>{{Item?.dmrdate  }}</td>
+                        <td>{{Item.VendorName}}</td>
+                        <td>{{Item.InvoiceNumber}}</td>
+                        <td>{{Item.VehicleNumber}}</td>
+                        <td>{{Item.PONumber}}</td>
+                        <td>{{Item.vendors_total[0].total_amount}}</td>
+                        <td>{{Item.TotalAmount}}</td>
+                        <td>{{Item.DateOfReceivingDocsAtHO| date:'dd MMM y'}}</td>
+                        <td>{{Item.DateOfDocSubmissionToAccount| date:'dd MMM y'}}</td>
+                        <td>{{Item.RemarkByAudit}}</td>
+                        <td>{{Item.PaymentStatus}}</td>
+                        <td>{{Item.UTR_No}}</td>
+                        <td>{{Item.AccountsRemark}}</td>
+                        <td>
+                            <button type="submit" style="background-color: #233A61;color: #fff; border-radius: 10px;width: -webkit-fill-available;height: 45px;"(click)="downloadFile(Item?.DMR_No,Item)" >Download Invoice</button>
+                        </td>
+
+                        
+                        
+                    </tr>
+                </tbody>
+            </ng-container>
+        </table>
+    </div>
+</body>

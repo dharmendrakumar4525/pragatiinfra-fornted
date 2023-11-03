@@ -187,6 +187,8 @@ export class DMRFormComponent implements OnInit{
     //combining the form data with its corresponding PO
     const combinedData = { ...this.dmrForm.value, ...this.purchaseOrderList};
     combinedData.PurchaseId=this.PurchaseId;
+    combinedData.status="pending"
+    combinedData.InvoiceOrChallanDoc=this.imageUrl
     console.log(combinedData);
 
     //creating the new dmr
@@ -234,7 +236,7 @@ export class DMRFormComponent implements OnInit{
         if(dataReady){
             //console.log("hi sameer"+this.dmrForm.get('InvoiceQuantity').value)
             let dmrsize=this.DmrEntryList.length+1
-            this.dmrForm.get('DMR_No').setValue(this.purchaseOrderList[0].po_number+"/DMR"+dmrsize)
+            this.dmrForm.get('DMR_No').setValue(this.purchaseOrderList[0].po_number+"/DMR/"+dmrsize)
             this.dmrForm.get('PONumber').setValue(this.purchaseOrderList[0].po_number)
             this.dmrForm.get('FinalDeliveryDate').setValue(moment(this.purchaseOrderList[0].due_date).format('DD-MM-YYYY'))
             this.dmrForm.get('NameOfOrg').setValue(this.purchaseOrderList[0].billing_address.company_name)
