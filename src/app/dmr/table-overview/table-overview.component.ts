@@ -30,6 +30,7 @@ export class TableOverviewComponent implements OnInit {
   selectedDate: Date ;
   Objdate: Date ;
   site:any=[];
+  selectedOption:String="FilterByDmrId"
   constructor(private recentActivityService: RecentActivityService,
     private httpService:RequestService,
     private snack:SnackbarService,
@@ -132,15 +133,71 @@ export class TableOverviewComponent implements OnInit {
           this.dmrPoList = this.OriginaldmrPoList;
         }
       }
-      // else if (type == 'location') {
-      //   if (event.target.value) {
-      //     this.dmrEntryList = this.OriginaldmrEntryList.filter(obj => this.getLocationById(obj.site).toLowerCase().includes(event.target.value.toLowerCase()))
-      //   }
-      //   else {
-      //     this.dmrEntryList = this.OriginaldmrEntryList;
-      //   }
-      // }
+      else if (type == 'GateRegisterEntry') {
+        if (event.target.value) {
+          this.dmrEntryList = this.OriginaldmrEntryList.filter(obj => obj.GateRegisterEntry.toLowerCase().includes(event.target.value.toLowerCase()))
+          this.dmrPoList = this.getUniqueValues(this.dmrEntryList, 'PONumber');
+        }
+        else {
+          this.dmrEntryList = this.OriginaldmrEntryList;
+          this.dmrPoList = this.OriginaldmrPoList;
+        }
+      }
+      else if (type == 'prTitle') {
+        if (event.target.value) {
+          this.dmrEntryList = this.OriginaldmrEntryList.filter(obj => obj.title.toLowerCase().includes(event.target.value.toLowerCase()))
+          this.dmrPoList = this.getUniqueValues(this.dmrEntryList, 'PONumber');
+        }
+        else {
+          this.dmrEntryList = this.OriginaldmrEntryList;
+          this.dmrPoList = this.OriginaldmrPoList;
+        }
+      }
+      else if (type == 'prNumber') {
+        if (event.target.value) {
+          this.dmrEntryList = this.OriginaldmrEntryList.filter(obj => obj.PRNumber.toLowerCase().includes(event.target.value.toLowerCase()))
+          this.dmrPoList = this.getUniqueValues(this.dmrEntryList, 'PONumber');
+        }
+        else {
+          this.dmrEntryList = this.OriginaldmrEntryList;
+          this.dmrPoList = this.OriginaldmrPoList;
+        }
+      }
+      else if (type == 'site') {
+        if (event.target.value) {
+          this.dmrEntryList = this.OriginaldmrEntryList.filter(obj => obj.Site.toLowerCase().includes(event.target.value.toLowerCase()))
+          this.dmrPoList = this.getUniqueValues(this.dmrEntryList, 'PONumber');
+        }
+        else {
+          this.dmrEntryList = this.OriginaldmrEntryList;
+          this.dmrPoList = this.OriginaldmrPoList;
+        }
+      }
+      else if (type == 'vendorName') {
+        if (event.target.value) {
+          this.dmrEntryList = this.OriginaldmrEntryList.filter(obj => obj.VendorName.toLowerCase().includes(event.target.value.toLowerCase()))
+          this.dmrPoList = this.getUniqueValues(this.dmrEntryList, 'PONumber');
+        }
+        else {
+          this.dmrEntryList = this.OriginaldmrEntryList;
+          this.dmrPoList = this.OriginaldmrPoList;
+        }
+      }
+      else if (type == 'PONumber') {
+        if (event.target.value) {
+          this.dmrEntryList = this.OriginaldmrEntryList.filter(obj => obj.PONumber.toLowerCase().includes(event.target.value.toLowerCase()))
+          this.dmrPoList = this.getUniqueValues(this.dmrEntryList, 'PONumber');
+        }
+        else {
+          this.dmrEntryList = this.OriginaldmrEntryList;
+          this.dmrPoList = this.OriginaldmrPoList;
+        }
+      }
     }    
+  }
+  clearSearchField(){
+    this.dmrEntryList = this.OriginaldmrEntryList;
+    this.dmrPoList = this.OriginaldmrPoList;
   }
   dateFilter(event: MatDatepickerInputEvent<Date>) {
     if (this.OriginaldmrEntryList && this.OriginaldmrEntryList.length > 0) {
@@ -157,7 +214,7 @@ export class TableOverviewComponent implements OnInit {
 
             // Create a Date object using the parsed values
             this.Objdate = new Date(year, month, day);
-            console.log(this.Objdate);
+            //console.log(this.Objdate);
          }
           // this.Objdate=new Date(obj.dmrdate)
           // console.log(typeof(obj.dmrdate));
@@ -165,9 +222,11 @@ export class TableOverviewComponent implements OnInit {
           const formattedDate2 = new Date(this.Objdate.getFullYear(), this.Objdate.getMonth(), this.Objdate.getDate());
           return formattedDate1.getTime() === formattedDate2.getTime();
         });
+        this.dmrPoList = this.getUniqueValues(this.dmrEntryList, 'PONumber');
       }
       else {
         this.dmrEntryList = this.OriginaldmrEntryList;
+        this.dmrPoList = this.OriginaldmrPoList;
       }
     }
   }

@@ -59,32 +59,80 @@
 </div>
 <div style="display: flex;flex-direction: row;gap: 20px;padding-left: 50px;">
   <div>
-    <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By DMR ID </span></div>
+    <div style="margin-top: 15px;color: #94A3B8;"><span>Filter By </span></div>
+        <select [(ngModel)]="selectedOption" (ngModelChange)="clearSearchField()" style="color:#97989D;font-size: medium;width: 200px;padding:10px;border-radius: 6px;border:1px solid #ccc;cursor: pointer;margin-top: 3px;font-family: 'Poppins'; height: 50px;">
+          <option value="FilterByDmrId">DMR ID</option>
+          <option value="FilterByGateRegisterEntry">Gate Register Entry</option>
+          <option value="FilterByPRTitle">PR Title </option>
+          <option value="FilterByPRNo">PR Number </option>
+          <option value="FilterBySite">Site</option>
+          <option value="FilterByDmrdate">DMR Date </option>
+          <option value="FilterByVendorName">Vendor Name </option>
+          <option value="FilterByPONumber">PO Number</option>
+        </select>
+  </div>
+  <div *ngIf="selectedOption === 'FilterByDmrId'">
+    <div style="margin-top: 15px;color: #94A3B8;"> <span>DMR ID </span></div>
     <mat-form-field appearance="outline" class="searchbar">
       <mat-icon matSuffix>search</mat-icon>
       <input matInput type="search" placeholder="Enter DMR ID" class="search-input" (input)="search($event,'DMRNo')">
 
     </mat-form-field>
   </div>
+  <div *ngIf="selectedOption === 'FilterByGateRegisterEntry'">
+    <div style="margin-top: 15px;color: #94A3B8;"> <span>Gate Register Entry </span></div>
+    <mat-form-field appearance="outline" class="searchbar">
+      <mat-icon matSuffix>search</mat-icon>
+      <input matInput type="search" placeholder="search Gate Register Entry" class="search-input" (input)="search($event,'GateRegisterEntry')" >
 
-  <!-- <div>
-    <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By date</span></div>
+    </mat-form-field>
+  </div>
+  <div *ngIf="selectedOption === 'FilterByPRTitle'">
+
+    <div style="margin-top: 15px;color: #94A3B8;"> <span>PR Title</span></div>
     <div> <mat-form-field appearance="outline" class="datebar">
-        <input matInput [matDatepicker]="startPicker" placeholder="Date" (dateChange)="dateFilter( $event)"
+        <input #locationSearchInput matInput placeholder="Search PR Title" (input)="search($event,'prTitle')" />
+      </mat-form-field></div>
+  </div> 
+  <div *ngIf="selectedOption === 'FilterByPRNo'">
+
+    <div style="margin-top: 15px;color: #94A3B8;"> <span>PR No</span></div>
+    <div> <mat-form-field appearance="outline" class="datebar">
+        <input #locationSearchInput matInput placeholder="Search PR No" (input)="search($event,'prNumber')" />
+      </mat-form-field></div>
+  </div> 
+  <div *ngIf="selectedOption === 'FilterBySite'">
+
+    <div style="margin-top: 15px;color: #94A3B8;"> <span>Site</span></div>
+    <div> <mat-form-field appearance="outline" class="datebar">
+        <input #locationSearchInput matInput placeholder="Search Site" (input)="search($event,'site')" />
+      </mat-form-field></div>
+  </div> 
+  <div *ngIf="selectedOption === 'FilterByDmrdate'">
+    <div style="margin-top: 15px;color: #94A3B8;"> <span>Date</span></div>
+    <div> <mat-form-field appearance="outline" class="datebar">
+        <input #dateSearchInput matInput [matDatepicker]="startPicker" placeholder="Date" (dateChange)="dateFilter( $event)"
           (click)="startPicker.open()" />
         <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
         <mat-datepicker #startPicker></mat-datepicker>
       </mat-form-field></div>
-  </div> -->
+  </div>
 
-  <!-- <div>
-    <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By Location</span></div>
-    <div> <mat-form-field appearance="outline" class="datebar">
-        <input matInput placeholder="Location" (input)="search($event,'location')" />
-      </mat-form-field>
-    </div>
-  </div>  -->
   
+  <div *ngIf="selectedOption === 'FilterByVendorName'">
+
+    <div style="margin-top: 15px;color: #94A3B8;"> <span>Vendor Name</span></div>
+    <div> <mat-form-field appearance="outline" class="datebar">
+        <input #vendorSearchInput matInput placeholder="Enter Name" (input)="search($event,'vendorName')" />
+      </mat-form-field></div>
+  </div> 
+  <div *ngIf="selectedOption === 'FilterByPONumber'">
+
+    <div style="margin-top: 15px;color: #94A3B8;"> <span>PO No.</span></div>
+    <div> <mat-form-field appearance="outline" class="datebar">
+        <input #poSearchInput matInput placeholder="Enter PO No." (input)="search($event,'PONumber')" />
+      </mat-form-field></div>
+  </div> 
 </div>
 <body>
     <div class="scroll-bar1">
@@ -105,7 +153,7 @@
           <th>Invoice No.</th>
           <th>Challan No.</th>
           <th>Vehicle No. </th>
-          <th>PO No.</th>
+          <th>PO No</th>
           <th>PO Amount</th>
           <th>Invoice Amount</th>
           <!-- <th>Site <div>Remarks</div></th> -->

@@ -113,7 +113,7 @@
 </div> -->
       <div class="flex-div" style="display: flex; flex-direction: column">
         <label style="color: #4272BF; font-size: 14px;">Choose: <span class="star">*</span></label>
-        <select (change)="setValidation()" formControlName="userChoice" style="color:#97989D;font-size: medium;width:75%;padding:10px;border-radius: 6px;border:1px solid #ccc;cursor: pointer;margin-top: 3px;font-family: 'Poppins'; height: 50px;">
+        <select (change)="setValidation()" (ngModelChange)="clearSearchField()" formControlName="userChoice" style="color:#97989D;font-size: medium;width:75%;padding:10px;border-radius: 6px;border:1px solid #ccc;cursor: pointer;margin-top: 3px;font-family: 'Poppins'; height: 50px;">
           <option value="ChallanNumber">Challan Number</option>
           <option value="InvoiceNumber">Invoice Number</option>
         </select>

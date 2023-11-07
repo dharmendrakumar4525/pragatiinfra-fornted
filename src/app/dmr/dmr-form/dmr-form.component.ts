@@ -13,6 +13,8 @@ import { DmrService } from '@services/dmr.service';
 import { forkJoin } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import {SITE_API} from '@env/api_path';
+import { catchError, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 @Component({
   selector: 'app-dmr-form',
   templateUrl: './dmr-form.component.html',
@@ -187,36 +189,37 @@ export class DMRFormComponent implements OnInit{
     //combining the form data with its corresponding PO
     const combinedData = { ...this.dmrForm.value, ...this.purchaseOrderList};
     combinedData.PurchaseId=this.PurchaseId;
-    combinedData.status="pending"
+    delete combinedData['status'];
+    // combinedData.status="pending"
     combinedData.InvoiceOrChallanDoc=this.imageUrl
     console.log(combinedData);
 
-    //creating the new dmr
-    this.httpService.POST(CREATE_DMR_ENTRY,combinedData).subscribe(res => {
-      //console.log(res);
+   // Creating a new DMR entry
+  this.httpService.POST(CREATE_DMR_ENTRY, combinedData).pipe(
+    switchMap((res) => {
       if (res) {
-        console.log(res)
-        //updating the DMR PO
-        this.httpService.PUT(DMRPURCHASE_ORDER_API, this.purchaseOrderList).subscribe(res => {
-          console.log(res);
-         },(err) => {
-           if (err.errors && !isEmpty(err.errors)) {
-             let errMessage = '<ul>';
-             for (let e in err.errors) {
-               let objData = err.errors[e];
-               errMessage += `<li>${objData[0]}</li>`;
-             }
-             errMessage += '</ul>';
-             this.snack.notifyHtml(errMessage, 2);
-           } else {
-             this.snack.notify(err.message, 2);
-           }
-     
-         })
-        this.toast.openSnackBar("DMR Created Successfully");
-        this.router.navigate(['/dmr/tableoverview']);
+        // Updating the DMR purchase order
+        return this.httpService.PUT(DMRPURCHASE_ORDER_API, this.purchaseOrderList);
       }
-    },(err) => {
+      return of(null);
+    }),
+    catchError((err) => {
+      let errorMessage = 'An error occurred while processing the request.';
+      if (err.errors && !isEmpty(err.errors)) {
+        errorMessage = '<ul>';
+        for (const e in err.errors) {
+          const objData = err.errors[e];
+          errorMessage += `<li>${objData[0]}</li>`;
+        }
+        errorMessage += '</ul>';
+      }
+      this.snack.notifyHtml(errorMessage, 2);
+      return of(null);
+      })).subscribe(
+        () => {
+        this.toast.openSnackBar('DMR Created Successfully');
+        this.router.navigate(['/dmr/tableoverview']);
+      }),(err) => {
       if (err.errors && !isEmpty(err.errors)) {
         let errMessage = '<ul>';
         for (let e in err.errors) {
@@ -228,8 +231,7 @@ export class DMRFormComponent implements OnInit{
       } else {
         this.snack.notify(err.message, 2);
       }
-    })
-
+    }
   }
   once(){
     this.dataReadySubject.subscribe((dataReady) => {
@@ -271,7 +273,14 @@ export class DMRFormComponent implements OnInit{
           }
     })
   }
-
+  clearSearchField()
+  {
+      if(this.dmrForm.get('userChoice').value=="ChallanNumber")
+        this.dmrForm.get('InvoiceNumber').setValue('');
+      else
+        this.dmrForm.get('ChallanNumber').setValue('');
+      
+  }
   setValidation(){
     this.dmrForm.get('userChoice').valueChanges
     .pipe(

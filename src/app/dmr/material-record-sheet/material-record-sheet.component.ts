@@ -191,6 +191,22 @@ export class MaterialRecordSheetComponent implements OnInit {
           this.ApprovedpurchaseOrderList = this.OriginalApprovedpurchaseOrderList;
         }
       }
+      else if(type=='pr'){
+        if (event.target.value) {
+          this.ApprovedpurchaseOrderList = this.OriginalApprovedpurchaseOrderList.filter(obj =>(this.getRateApprovalById(obj.rate_approval_id).purchase_request_number).toLowerCase().includes(event.target.value.toLowerCase()))
+        }
+        else {
+          this.ApprovedpurchaseOrderList = this.OriginalApprovedpurchaseOrderList;
+        }
+      }
+      else if(type=='handelBy'){
+        if (event.target.value) {
+          this.ApprovedpurchaseOrderList = this.OriginalApprovedpurchaseOrderList.filter(obj =>(this.getRateApprovalById(obj.rate_approval_id).handle_by).toLowerCase().includes(event.target.value.toLowerCase()))
+        }
+        else {
+          this.ApprovedpurchaseOrderList = this.OriginalApprovedpurchaseOrderList;
+        }
+      }
       
     }
 
@@ -213,6 +229,9 @@ export class MaterialRecordSheetComponent implements OnInit {
         this.ApprovedpurchaseOrderList = this.OriginalApprovedpurchaseOrderList;
       }
     }
+  }
+  clearSearchField(){
+    this.ApprovedpurchaseOrderList = this.OriginalApprovedpurchaseOrderList;
   }
   
 
