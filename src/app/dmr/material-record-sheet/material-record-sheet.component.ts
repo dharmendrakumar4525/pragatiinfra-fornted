@@ -10,6 +10,7 @@ import {SITE_API} from '@env/api_path';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DmrService } from '@services/dmr.service';
 import { BehaviorSubject, forkJoin } from 'rxjs';
+import { ToastService } from '@services/toast.service';
 @Component({
   selector: 'app-material-record-sheet',
   templateUrl: './material-record-sheet.component.html',
@@ -44,18 +45,27 @@ export class MaterialRecordSheetComponent implements OnInit {
   Objdate: Date ; 
   selectedOption:String="FilterBytitle";
   dataReadySubject = new BehaviorSubject<boolean>(false);
+  permissions:any;
+  DMRPermissionsView:any;
+  DMRPermissionsEdit:any;
   constructor(
     private recentActivityService: RecentActivityService,
     private httpService:RequestService,
     private snack:SnackbarService,
-    private dmrService:DmrService
+    private dmrService:DmrService,
+    private toast:ToastService,
     ) { 
       this.GetApprovedpurchaseOrderList({ filter_by: this.filter_by, filter_value: "pending" });
       this.getAllLocation();
     }
 
   ngOnInit(): void {
-     // Define your observables
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    
+    this.DMRPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[15]?.childList[1];
+    this.DMRPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[15]?.childList[0];
+    //console.log(this.DMRPermissionsView)
+  // Define your observables
   const recentActivities$ = this.recentActivityService.getRecentAtivities();
   const PurchaseRequestList$ = this.dmrService.getPurchaseRequestList();
   const RateApprovalList$ = this.dmrService.GetRateApprovalList();
@@ -210,6 +220,11 @@ export class MaterialRecordSheetComponent implements OnInit {
       
     }
 
+  }
+  showSnackbar() {
+    if (!this.DMRPermissionsEdit.isSelected) {
+      this.toast.openSnackBar('Access to DMR editing is restricted for your account.');
+    }
   }
   dateFilter(event: MatDatepickerInputEvent<Date>) {
     if (this.OriginalApprovedpurchaseOrderList && this.OriginalApprovedpurchaseOrderList.length > 0) {

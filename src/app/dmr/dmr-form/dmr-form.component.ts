@@ -32,6 +32,9 @@ export class DMRFormComponent implements OnInit{
   PurchaseRequestList:any=[];
   RateApprovalList:any=[];
   site:any;
+  DMRPermissionsView:any;
+  permissions:any;
+
   userChoice: string="ChallanNumber"; // This variable will hold the user's choice
   constructor(private recentActivityService: RecentActivityService,
     private httpService:RequestService,
@@ -72,6 +75,9 @@ export class DMRFormComponent implements OnInit{
     }
   
   ngOnInit(): void {
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    this.DMRPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[15]?.childList[1];
+    
    // Define your observables
   const recentActivities$ = this.recentActivityService.getRecentAtivities();
   const purchaseOrderList$ = this.dmrService.GetpurchaseOrderList();

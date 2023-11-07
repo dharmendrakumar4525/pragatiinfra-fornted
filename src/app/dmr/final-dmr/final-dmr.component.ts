@@ -17,6 +17,8 @@ export class FinalDmrComponent implements OnInit {
   selectedOption:String="FilterByDmrId"
   selectedDate: Date ;
   Objdate: Date ;
+  permissions:any;
+  DMRPermissionsView:any;
   constructor(
     private recentActivityService: RecentActivityService,
     private dmrServide:DmrService,
@@ -44,6 +46,8 @@ export class FinalDmrComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    this.DMRPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[15]?.childList[1];
   }
   search(event: any, type?: any) {
     if (this.OriginalfinalDmrList && this.OriginalfinalDmrList.length > 0) {

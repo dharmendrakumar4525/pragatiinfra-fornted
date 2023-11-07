@@ -47,8 +47,8 @@
           style="color:#97989D"> Back</span></a></li>
   </ul>
 </div> -->
-
-<form [formGroup]="dmrForm">
+<ng-container *ngIf="DMRPermissionsView?.isSelected; else noView">
+  <form [formGroup]="dmrForm">
 
 
   <mat-card class="topcard">
@@ -265,3 +265,7 @@
     
   </div>
 </form>
+</ng-container>
+<ng-template #noView>
+  <h3 style="text-align: center; font-size: 20px; font-weight: 10px;">You don't have permissions to view DMR</h3>
+</ng-template>

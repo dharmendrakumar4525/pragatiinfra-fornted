@@ -39,141 +39,146 @@
 <div>
 <hr style="width: 96%;border: 2px solid #C5C5C5;margin-left: 30px;">
 </div>
-<div>
-<ul class="toptext" style="background-color: #fff !important;list-style: none;">
-    <li style="border-right: 1px solid #D9D9D9;padding-right: 10px;"><a style="color: #000;" [routerLink]="['/dmr']"
-        routerLinkActive="active-link"><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i> <span
-        style="color:#97989D"> Material Record Sheet</span></a></li>
-    <li style="border-right: 1px solid #D9D9D9;padding-right: 20px;"><a style="color: #000;"
-        [routerLink]="['/dmr/tableoverview']" routerLinkActive="active-link-active"
-        [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i>
-        <span style="color:#97989D;"> Table Overview </span></a></li>
-    <li style="border-right: 1px solid #D9D9D9;padding-right: 20px;"><a style="color: #000;"
-        [routerLink]="['/dmr/finaldmr']" routerLinkActive="active-link-active"
-        [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-eye" aria-hidden="true" style="color:#233A61;"></i>
-        <span style="color:#233A61;"> Final DMR </span></a></li>
-      
-</ul>
-</div>
-<div>
-  <hr style="width: 96%;border: 2px solid #C5C5C5;margin-left: 30px;">
-</div>
-<div style="display: flex;flex-direction: row;gap: 20px;padding-left:50px ;">
-  
+<ng-container *ngIf="DMRPermissionsView?.isSelected; else noView">
   <div>
-    <div style="margin-top: 15px;color: #94A3B8;"><span>Filter By </span></div>
-        <select [(ngModel)]="selectedOption" (ngModelChange)="clearSearchField()" style="color:#97989D;font-size: medium;width: 200px;padding:10px;border-radius: 6px;border:1px solid #ccc;cursor: pointer;margin-top: 3px;font-family: 'Poppins'; height: 50px;">
-          <option value="FilterByDmrId">DMR ID</option>
-          <option value="FilterByPRTitle">PR Title </option>
-          <option value="FilterByPRNo">PR Number </option>
-          <option value="FilterByDmrdate">DMR Date </option>
-          <option value="FilterByVendorName">Vendor Name </option>
-          <option value="FilterByPONumber">PO Number</option>
-        </select>
+  <ul class="toptext" style="background-color: #fff !important;list-style: none;">
+      <li style="border-right: 1px solid #D9D9D9;padding-right: 10px;"><a style="color: #000;" [routerLink]="['/dmr']"
+          routerLinkActive="active-link"><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i> <span
+          style="color:#97989D"> Material Record Sheet</span></a></li>
+      <li style="border-right: 1px solid #D9D9D9;padding-right: 20px;"><a style="color: #000;"
+          [routerLink]="['/dmr/tableoverview']" routerLinkActive="active-link-active"
+          [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-eye" aria-hidden="true" style="color:#97989D;"></i>
+          <span style="color:#97989D;"> Table Overview </span></a></li>
+      <li style="border-right: 1px solid #D9D9D9;padding-right: 20px;"><a style="color: #000;"
+          [routerLink]="['/dmr/finaldmr']" routerLinkActive="active-link-active"
+          [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-eye" aria-hidden="true" style="color:#233A61;"></i>
+          <span style="color:#233A61;"> Final DMR </span></a></li>
+        
+  </ul>
   </div>
-  
-  <div *ngIf="selectedOption =='FilterByDmrId'">
-    <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By DMR ID </span></div>
-    <mat-form-field appearance="outline" class="searchbar">
-      <mat-icon matSuffix>search</mat-icon>
-      <input matInput type="search" placeholder="Enter DMR ID" class="search-input" (input)="search($event,'DMRID')">
-    </mat-form-field>
+  <div>
+    <hr style="width: 96%;border: 2px solid #C5C5C5;margin-left: 30px;">
   </div>
-  <div *ngIf="selectedOption === 'FilterByPRTitle'">
-
-    <div style="margin-top: 15px;color: #94A3B8;"> <span>PR Title</span></div>
-    <div> <mat-form-field appearance="outline" class="datebar">
-        <input #locationSearchInput matInput placeholder="Search PR Title" (input)="search($event,'prTitle')" />
-      </mat-form-field></div>
-  </div> 
-  <div *ngIf="selectedOption === 'FilterByDmrdate'">
-    <div style="margin-top: 15px;color: #94A3B8;"> <span>Date</span></div>
-    <div> <mat-form-field appearance="outline" class="datebar">
-        <input #dateSearchInput matInput [matDatepicker]="startPicker" placeholder="Date" (dateChange)="dateFilter( $event)"
-          (click)="startPicker.open()" />
-        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-        <mat-datepicker #startPicker></mat-datepicker>
-      </mat-form-field></div>
-  </div>
-  <div *ngIf="selectedOption === 'FilterByPRNo'">
-
-    <div style="margin-top: 15px;color: #94A3B8;"> <span>PR No</span></div>
-    <div> <mat-form-field appearance="outline" class="datebar">
-        <input #locationSearchInput matInput placeholder="Search PR No" (input)="search($event,'prNumber')" />
-      </mat-form-field></div>
-  </div> 
- 
-  
-  <div *ngIf="selectedOption === 'FilterByVendorName'">
-
-    <div style="margin-top: 15px;color: #94A3B8;"> <span>Vendor Name</span></div>
-    <div> <mat-form-field appearance="outline" class="datebar">
-        <input #vendorSearchInput matInput placeholder="Enter Name" (input)="search($event,'vendorName')" />
-      </mat-form-field></div>
-  </div> 
-  <div *ngIf="selectedOption === 'FilterByPONumber'">
-
-    <div style="margin-top: 15px;color: #94A3B8;"> <span>PO No.</span></div>
-    <div> <mat-form-field appearance="outline" class="datebar">
-        <input #poSearchInput matInput placeholder="Enter PO No." (input)="search($event,'PONumber')" />
-      </mat-form-field></div>
-  </div> 
-
-</div>
-<body>
-    <div class="scroll-bar1">
-        <table style="direction: ltr !important;">
-            <tr>
-                <th>DMR ID</th>
-                <th>PR Title</th>
-                <th>PR No.</th>
-                <th>DMR Date</th>
-                <th>Vendor Name</th>
-                <th>Invoice No.</th>
-                <!-- <th>Challan No.</th> -->
-                <th>Vehicle No. </th>
-                <th>PO No.</th>
-                <th>PO Amount</th>
-                <th>Invoice Amount</th>
-                <!-- <th>Site <div>Remarks</div></th> -->
-                
-                
-                <th>Date Of Receiving <div>Docs At HO</div></th>
-                <th>Date Of Doc Submission <div>To Account</div></th>
-                <th>Remark by Audit</th>
-                <th>Payment Status</th>
-                <th>UTR No.</th>
-                <th>Accounts Remark</th>
-                <th>Download/View Invoice</th>
-            </tr>
-            <ng-container *ngIf="finalDmrList && finalDmrList.length>0">
-                <tbody *ngFor="let Item of finalDmrList;">
-                    <tr >
-                        <td>{{Item.PONumber}}/DMR</td>
-                        <td>{{Item.title}}</td>
-                        <td>{{Item.PRNumber}}</td>
-                        <td>{{Item?.dmrdate  }}</td>
-                        <td>{{Item.VendorName}}</td>
-                        <td>{{Item.InvoiceNumber}}</td>
-                        <td>{{Item.VehicleNumber}}</td>
-                        <td>{{Item.PONumber}}</td>
-                        <td>{{Item.vendors_total[0].total_amount}}</td>
-                        <td>{{Item.TotalAmount}}</td>
-                        <td>{{Item.DateOfReceivingDocsAtHO| date:'dd MMM y'}}</td>
-                        <td>{{Item.DateOfDocSubmissionToAccount| date:'dd MMM y'}}</td>
-                        <td>{{Item.RemarkByAudit}}</td>
-                        <td>{{Item.PaymentStatus}}</td>
-                        <td>{{Item.UTR_No}}</td>
-                        <td>{{Item.AccountsRemark}}</td>
-                        <td>
-                            <button type="submit" style="background-color: #233A61;color: #fff; border-radius: 10px;width: -webkit-fill-available;height: 45px;"(click)="downloadFile(Item?.DMR_No,Item)" >Download Invoice</button>
-                        </td>
-
-                        
-                        
-                    </tr>
-                </tbody>
-            </ng-container>
-        </table>
+  <div style="display: flex;flex-direction: row;gap: 20px;padding-left:50px ;">
+    
+    <div>
+      <div style="margin-top: 15px;color: #94A3B8;"><span>Filter By </span></div>
+          <select [(ngModel)]="selectedOption" (ngModelChange)="clearSearchField()" style="color:#97989D;font-size: medium;width: 200px;padding:10px;border-radius: 6px;border:1px solid #ccc;cursor: pointer;margin-top: 3px;font-family: 'Poppins'; height: 50px;">
+            <option value="FilterByDmrId">DMR ID</option>
+            <option value="FilterByPRTitle">PR Title </option>
+            <option value="FilterByPRNo">PR Number </option>
+            <option value="FilterByDmrdate">DMR Date </option>
+            <option value="FilterByVendorName">Vendor Name </option>
+            <option value="FilterByPONumber">PO Number</option>
+          </select>
     </div>
-</body>
+    
+    <div *ngIf="selectedOption =='FilterByDmrId'">
+      <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter By DMR ID </span></div>
+      <mat-form-field appearance="outline" class="searchbar">
+        <mat-icon matSuffix>search</mat-icon>
+        <input matInput type="search" placeholder="Enter DMR ID" class="search-input" (input)="search($event,'DMRID')">
+      </mat-form-field>
+    </div>
+    <div *ngIf="selectedOption === 'FilterByPRTitle'">
+
+      <div style="margin-top: 15px;color: #94A3B8;"> <span>PR Title</span></div>
+      <div> <mat-form-field appearance="outline" class="datebar">
+          <input #locationSearchInput matInput placeholder="Search PR Title" (input)="search($event,'prTitle')" />
+        </mat-form-field></div>
+    </div> 
+    <div *ngIf="selectedOption === 'FilterByDmrdate'">
+      <div style="margin-top: 15px;color: #94A3B8;"> <span>Date</span></div>
+      <div> <mat-form-field appearance="outline" class="datebar">
+          <input #dateSearchInput matInput [matDatepicker]="startPicker" placeholder="Date" (dateChange)="dateFilter( $event)"
+            (click)="startPicker.open()" />
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field></div>
+    </div>
+    <div *ngIf="selectedOption === 'FilterByPRNo'">
+
+      <div style="margin-top: 15px;color: #94A3B8;"> <span>PR No</span></div>
+      <div> <mat-form-field appearance="outline" class="datebar">
+          <input #locationSearchInput matInput placeholder="Search PR No" (input)="search($event,'prNumber')" />
+        </mat-form-field></div>
+    </div> 
+  
+    
+    <div *ngIf="selectedOption === 'FilterByVendorName'">
+
+      <div style="margin-top: 15px;color: #94A3B8;"> <span>Vendor Name</span></div>
+      <div> <mat-form-field appearance="outline" class="datebar">
+          <input #vendorSearchInput matInput placeholder="Enter Name" (input)="search($event,'vendorName')" />
+        </mat-form-field></div>
+    </div> 
+    <div *ngIf="selectedOption === 'FilterByPONumber'">
+
+      <div style="margin-top: 15px;color: #94A3B8;"> <span>PO No.</span></div>
+      <div> <mat-form-field appearance="outline" class="datebar">
+          <input #poSearchInput matInput placeholder="Enter PO No." (input)="search($event,'PONumber')" />
+        </mat-form-field></div>
+    </div> 
+
+  </div>
+  <body>
+      <div class="scroll-bar1">
+          <table style="direction: ltr !important;">
+              <tr>
+                  <th>DMR ID</th>
+                  <th>PR Title</th>
+                  <th>PR No.</th>
+                  <th>DMR Date</th>
+                  <th>Vendor Name</th>
+                  <th>Invoice No.</th>
+                  <!-- <th>Challan No.</th> -->
+                  <th>Vehicle No. </th>
+                  <th>PO No.</th>
+                  <th>PO Amount</th>
+                  <th>Invoice Amount</th>
+                  <!-- <th>Site <div>Remarks</div></th> -->
+                  
+                  
+                  <th>Date Of Receiving <div>Docs At HO</div></th>
+                  <th>Date Of Doc Submission <div>To Account</div></th>
+                  <th>Remark by Audit</th>
+                  <th>Payment Status</th>
+                  <th>UTR No.</th>
+                  <th>Accounts Remark</th>
+                  <th>Download/View Invoice</th>
+              </tr>
+              <ng-container *ngIf="finalDmrList && finalDmrList.length>0">
+                  <tbody *ngFor="let Item of finalDmrList;">
+                      <tr >
+                          <td>{{Item.PONumber}}/DMR</td>
+                          <td>{{Item.title}}</td>
+                          <td>{{Item.PRNumber}}</td>
+                          <td>{{Item?.dmrdate  }}</td>
+                          <td>{{Item.VendorName}}</td>
+                          <td>{{Item.InvoiceNumber}}</td>
+                          <td>{{Item.VehicleNumber}}</td>
+                          <td>{{Item.PONumber}}</td>
+                          <td>{{Item.vendors_total[0].total_amount}}</td>
+                          <td>{{Item.TotalAmount}}</td>
+                          <td>{{Item.DateOfReceivingDocsAtHO| date:'dd MMM y'}}</td>
+                          <td>{{Item.DateOfDocSubmissionToAccount| date:'dd MMM y'}}</td>
+                          <td>{{Item.RemarkByAudit}}</td>
+                          <td>{{Item.PaymentStatus}}</td>
+                          <td>{{Item.UTR_No}}</td>
+                          <td>{{Item.AccountsRemark}}</td>
+                          <td>
+                              <button type="submit" style="background-color: #233A61;color: #fff; border-radius: 10px;width: -webkit-fill-available;height: 45px;"(click)="downloadFile(Item?.DMR_No,Item)" >Download Invoice</button>
+                          </td>
+
+                          
+                          
+                      </tr>
+                  </tbody>
+              </ng-container>
+          </table>
+      </div>
+  </body>
+</ng-container>
+<ng-template #noView>
+  <h3 style="text-align: center; font-size: 20px; font-weight: 10px;">You don't have permissions to view DMR</h3>
+</ng-template>

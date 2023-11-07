@@ -31,6 +31,9 @@ export class TableOverviewComponent implements OnInit {
   Objdate: Date ;
   site:any=[];
   selectedOption:String="FilterByDmrId"
+  permissions:any;
+  DMRPermissionsView:any;
+  DMRPermissionsEdit:any;
   constructor(private recentActivityService: RecentActivityService,
     private httpService:RequestService,
     private snack:SnackbarService,
@@ -75,7 +78,11 @@ export class TableOverviewComponent implements OnInit {
       return uniqueValues;
     }
   ngOnInit(): void {
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
     
+    this.DMRPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[15]?.childList[1];
+    this.DMRPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[15]?.childList[0];
+    console.log(this.DMRPermissionsView)
   }
   myGroup = this.formBuilder.group({
     dmr: this.formBuilder.array([this.formBuilder.array([])]),
@@ -242,6 +249,10 @@ export class TableOverviewComponent implements OnInit {
   {
     if(!Data)
       return
+    if (!this.DMRPermissionsEdit.isSelected) {
+      this.toast.openSnackBar('Access to DMR editing is restricted for your account.');
+      return;
+    }
     var flag=false;
     if(type==="DateOfReceivingDocsAtHO")
     {
