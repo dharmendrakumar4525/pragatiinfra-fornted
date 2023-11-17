@@ -30,9 +30,24 @@
         <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>Category</mat-label>
-            <mat-select matInput formControlName="category" multiple>
+            <mat-select matInput formControlName="category" multiple (selectionChange)="getSubCategory()"> 
               <mat-option *ngFor="let category of categoryList" [value]="category._id">
                 {{category?.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="editForm.controls.category.errors?.['required']">
+              this field is required.
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Sub Category</mat-label>
+            <mat-select matInput formControlName="SubCategory" multiple>
+              <mat-option *ngFor="let subCategory of subCategoryList" [value]="subCategory._id">
+                {{subCategory?.subcategory_name}}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="editForm.controls.category.errors?.['required']">
@@ -57,7 +72,7 @@
         <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>Phone Number</mat-label>
-            <input matInput formControlName="phone_number" type="number">
+            <input matInput formControlName="phone_number">
             <mat-error *ngIf="editForm.controls.phone_number.errors?.['required']">
               this field is required.
             </mat-error>
