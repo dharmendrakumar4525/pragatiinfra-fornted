@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { UsersService } from '@services/users.service';
 import { SidePanelService, SidePanelState } from '../../../core';
 import { NavigationLink } from './navigation-link.model';
+import { AuthService } from '@services/auth/auth.service';
 @Component({
   selector: 'app-navigation-side-panel',
   templateUrl: './navigation-side-panel.component.html',
@@ -76,59 +77,63 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       link: '/uom',
       icon: "bx bx-collection",
       img: './assets/images/icons/Bsubactivity.svg',
+      module_name: ''
     },
     {
       link_name: "GST Master",
       link: "/gst",
       img: './assets/images/icons/Buser.svg',
+      module_name: ''
     },
     {
       link_name: "Item Master",
       link: "/item",
       img: './assets/images/icons/Buser.svg',
+      module_name: ''
     },
-
     {
       link_name: "Site Master",
       link: "/site",
       img: './assets/images/icons/Buser.svg',
-
       module_name: ''
     },
     {
       link_name: "Vendor Master",
       link: "/vendor",
       img: './assets/images/icons/Broles.svg',
-
       module_name: ''
     }, 
     {
       link_name: "Category Manager",
       link: "/category",
       img: './assets/images/icons/Bpermission.svg',
+      module_name: ''
     },
     {
       link_name: "Sub Category Manager",
       link: '/sub-category',
       icon: "bx bx-collection",
       img: './assets/images/icons/Bactivity.svg',
+      module_name: ''
     },
   ]
+  sidebarMenu = [];
 
-
-  sidebarMenu = [
+  sidebarAllMenu = [
     {
       link_name: "dpr",
       link: '/dpr',
       icon: "bx bx-collection",
       img: '../../../assets/images/icons/dpr.svg',
+      module_name: ''
 
     },
     {
       link_name: "dmr",
-      link: '/dmr',
+      link: null,
       icon: "bx bx-collection",
       img: '../../../assets/images/icons/dmr.svg',
+      module_name: ''
     },
 
     {
@@ -150,11 +155,13 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
         ...this.ProcurementObj
       ]
     },
+    
     {
       link_name: "Inventory",
       link: '/inventory',
       icon: "bx bx-collection",
       img: '../../../assets/images/icons/Inventory.svg',
+      module_name: 'Inventory'
     },
 
     {
@@ -162,6 +169,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       link: '/prstatus',
       icon: "bx bx-collection",
       img: '../../../assets/images/icons/PR.svg',
+      module_name: ''
     },
 
     {
@@ -173,29 +181,18 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
         link_name: "Users",
         link: "/users",
         img: '../../../assets/images/icons/Buser.svg',
+        module_name: 'users'
       }, {
         link_name: "Roles",
         link: "/roles",
         img: '../../../assets/images/icons/Broles.svg',
+        module_name: 'roles'
       }, {
         link_name: "manage Permissions",
         link: "/manage-permissions",
         img: '../../../assets/images/icons/Bpermission.svg',
-      },
-      // {
-      //   link_name: "Activities",
-      //   link: '/activities',
-      //   icon: "bx bx-collection",
-      //   img: '../../../assets/images/icons/Bactivity.svg',
-      // },
-
-      // {
-      //   link_name: "sub Activities",
-      //   link: '/sub-activities',
-      //   icon: "bx bx-collection",
-      //   img: '../../../assets/images/icons/Bsubactivity.svg',
-      //   //img:'../../../assets/images/icons/activity.svg',
-      // },
+        module_name: 'roles'
+      }
       ]
     }
 
@@ -203,7 +200,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
 
   openMenu: Array<any> = [];
-
+  modulesPermissions = [];
 
 
 
@@ -216,14 +213,50 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   rolePermissionsView: any;
   userPermissionsView: any;
   public sideNavOpen;
-  constructor(private _sidePanelService: SidePanelService, private router: Router, private userService: UsersService) {
+  constructor(private _sidePanelService: SidePanelService, private router: Router,
+    private userService: UsersService,
+    private auth: AuthService,
+  ) {
     this._subscriptionsSubject$ = new Subject<void>();
+
+    this.modulesPermissions = this.auth.getPermission();
+
+
+    this.sidebarMenu = this.sidebarAllMenu.filter((o: any) => {
+      if (o.module_name) {
+        if (this.modulesPermissions[o.module_name] && this.modulesPermissions[o.module_name].length > 0 && this.modulesPermissions[o.module_name].includes('view')) {
+          return o;
+        }
+      } else {
+
+        if (o.sub_menu && o.sub_menu.length > 0) {
+          o.sub_menu = o.sub_menu.filter((subMenu: any) => {
+            if (subMenu.module_name) {
+              if (this.modulesPermissions[subMenu.module_name] && this.modulesPermissions[subMenu.module_name].length > 0 && this.modulesPermissions[subMenu.module_name].includes('view')) {
+                return subMenu;
+              }
+            } else {
+              return subMenu;
+            }
+          });
+
+          if(o.sub_menu && o.sub_menu.length>0){
+            return o;
+          }
+        } else {
+          return o;
+        }
+
+      }
+    });
+
+
   }
 
   ngOnInit(): void {
 
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
-    this.sideNavOpen=false;
+    this.sideNavOpen = false;
     this.rolePermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[4]
     this.userPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[4]?.childList[4]
     this._sidePanelService.panelStateChanges
@@ -258,18 +291,17 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       this._sidePanelService.changeState(SidePanelState.COLLAPSE);
     }
   }
-  public isCollapse():void{
+  public isCollapse(): void {
     // console.log("hi sameer");
-    this.sideNavOpen=!this.sideNavOpen;
+    this.sideNavOpen = !this.sideNavOpen;
     // console.log(this.SidePanelCollapse);
-    if(this.sideNavOpen)
-    {
+    if (this.sideNavOpen) {
       this._sidePanelService.changeState(SidePanelState.OPEN);
     }
-    else{
+    else {
       this._sidePanelService.changeState(SidePanelState.CLOSE);
     }
-    
+
   }
 
 
@@ -291,7 +323,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
 
   logout() {
-    localStorage.removeItem('loginData')
+    this.auth.removeUser();
     this.userService.updateLogin('logout');
     this.router.navigate(['/login']);
   }

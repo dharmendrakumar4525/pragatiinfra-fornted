@@ -66,10 +66,6 @@ import { RejectedpomComponent } from '../Procurement/Purchaseorder/rejectedpom/r
 import { PomcreatorEsignComponent } from '../Procurement/Purchaseorder/pomcreator-esign/pomcreator-esign.component';
 import { InventoryComponent } from '../Procurement/inventory/inventory.component';
 import { PrstatusComponent } from '../Procurement/prstatus/prstatus.component';
-import { MaterialRecordSheetComponent} from '../dmr/material-record-sheet/material-record-sheet.component';
-import {DMRFormComponent} from '../dmr/dmr-form/dmr-form.component';
-import {TableOverviewComponent} from '../dmr/table-overview/table-overview.component';
-import {FinalDmrComponent} from '../dmr/final-dmr/final-dmr.component';
 
 export const routes: Routes = [
   {
@@ -77,6 +73,26 @@ export const routes: Routes = [
     loadChildren: () => import('./../components/procurment-module/procurment-module.module')
       .then(mod => mod.ProcurmentModuleModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'rate-comparative',
+    loadChildren: () => import('./../components/rate-comparative/rate-comparative.module')
+      .then(mod => mod.RateComparativeModule),
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: 'rate-approval',
+    loadChildren: () => import('./../components/rate-approval/rate-approval.module')
+      .then(mod => mod.RateApprovalModule),
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: 'purchase-order',
+    loadChildren: () => import('./../components/purchase-order/purchase-order.module')
+      .then(mod => mod.PurchaseOrderModule),
+    // canActivate: [AuthGuard]
   },
 
   {
@@ -260,7 +276,7 @@ export const routes: Routes = [
   { path: 'vendorscomparativeapproved', component: VendorscomparativeapprovedComponent, canActivate: [AuthGuard] },
   { path: 'vendorscomparativerejected', component: VendorscomparativerejectedComponent, canActivate: [AuthGuard] },
   { path: 'vendorscomparativerevised', component: VendorscomparativerevisedComponent, canActivate: [AuthGuard] },
-  { path: 'rateapprovals', component: RateapprovalsComponent, canActivate: [AuthGuard] },
+  { path: 'rateapprovals/:id', component: RateapprovalsComponent, canActivate: [AuthGuard] },
   { path: 'rateapprovalsummary', component: RateapprovalsummaryComponent, canActivate: [AuthGuard] },
   { path: 'rejectedratessummary', component: RejectedratessummaryComponent, canActivate: [AuthGuard] },
   { path: 'pendingrates', component: PendingratesComponent, canActivate: [AuthGuard] },
@@ -296,18 +312,6 @@ export const routes: Routes = [
       //{path: 'forgotpassword', component: ForgotpasswordComponent},
 
 
-    ]
-  },
-  {
-    path: 'dmr',
-    component: ViewProjectComponent,
-    canActivate: [AuthGuard],
-    children: [
-      { path: '', component: MaterialRecordSheetComponent, canActivate: [AuthGuard] },
-      { path: 'dmrform/:id', component: DMRFormComponent, canActivate: [AuthGuard] },
-      { path: 'tableoverview', component: TableOverviewComponent, canActivate: [AuthGuard] },
-      { path: 'finaldmr', component: FinalDmrComponent, canActivate: [AuthGuard] },
-    
     ]
   },
   {

@@ -110,15 +110,22 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ConfirmationPopupModule } from '@component/project/confirmation-popup/confirmation-popup.module';
 import { MinTableDateModule } from '@pipe/min-table-date/min-table-date.module';
 import { DirectiveModule } from './shared/directives/directive.module';
-import { MaterialRecordSheetComponent} from './dmr/material-record-sheet/material-record-sheet.component';
-import {DMRFormComponent} from './dmr/dmr-form/dmr-form.component';
-import {TableOverviewComponent} from './dmr/table-overview/table-overview.component';
-import {ItemTablePopupComponent} from './dmr/item-table-popup/item-table-popup.component';
-import { FinalDmrComponent } from './dmr/final-dmr/final-dmr.component';
+import { JwtModule } from "@auth0/angular-jwt";
+
+export function tokenGetter() {
+  return 'TOKNE';
+}
 
 @NgModule({
   imports: [AppRoutingModule, BrowserModule, ReactiveFormsModule, HttpClientModule, FormsModule, CoreModule, SharedModule, CustomMaterialModule,
     FlexLayoutModule,
+    JwtModule.forRoot({
+      config: {
+          tokenGetter: tokenGetter,
+          allowedDomains: ['localhost:4200/'],
+          disallowedRoutes: ['']
+      }
+  }),
     FullCalendarModule,
     MatTooltipModule,
     NgxLocalStorageModule.forRoot(),
@@ -153,7 +160,7 @@ import { FinalDmrComponent } from './dmr/final-dmr/final-dmr.component';
   declarations: [AppComponent, HomeComponent, SearchPipe, SubActivitySearchPipe, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent, LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,
     ForgotpasswordComponent, NewRoleComponent, NewPermissionComponent, AddDataComponent, ManagePermissionsComponent, CreatenewpasswordComponent, NoPermissionsComponent, RoleEditComponent, UserEditComponent, UsersDeleteMultipleComponent, RolesDeleteMultipleComponent, AboutUsComponent, MasteruserComponent, MasterCreateuserComponent, InnerAddMemberComponent, EditActivityComponent, EditSubActivityComponent, TaskDeleteMulActivityComponent, DeleteMulSubActivityComponent, SubActivitiesComponent, EditSubActivitiesComponent, AddSubActivitiesComponent, SitemasterComponent,
     OrgmasterComponent, ItemmasterComponent, VendormasterComponent, CategorymanagementComponent, PurchaserequestComponent, PurchasereqlistComponent, RequisitionapprovalsComponent, ApprovedsummaryComponent, RejectedsummaryComponent, PendingsummaryComponent, RevisedpurchasereqlistComponent, ApprovedmaterialrequestComponent, RejectedpurchaserequestComponent, PendingpurchaserequestComponent, RatecomparativeComponent, RcomparativeComponent, RateapprovallistComponent, RevisedrateapprovallistComponent, VendorscomparativeapprovedComponent, VendorscomparativerejectedComponent,
-    VendorscomparativerevisedComponent, RateapprovalsComponent, RateapprovalsummaryComponent, RejectedratessummaryComponent, PendingratesComponent, VendorSelectionComponent, RejectReasonComponent, AddRemarksComponent, ProjectDeletePopupComponent, PolistComponent, PomapproverComponent, ApprovedpoComponent, RejectedpoComponent, PendingpoComponent, ApoVendorpostatusComponent, PomcreatorComponent, PotokenComponent, RejectedpomComponent, PomcreatorEsignComponent, InventoryComponent, PrstatusComponent, ModifyRemarksComponent,MaterialRecordSheetComponent,DMRFormComponent,TableOverviewComponent,ItemTablePopupComponent, FinalDmrComponent],
+    VendorscomparativerevisedComponent, RateapprovalsComponent, RateapprovalsummaryComponent, RejectedratessummaryComponent, PendingratesComponent, VendorSelectionComponent, RejectReasonComponent, AddRemarksComponent, ProjectDeletePopupComponent, PolistComponent, PomapproverComponent, ApprovedpoComponent, RejectedpoComponent, PendingpoComponent, ApoVendorpostatusComponent, PomcreatorComponent, PotokenComponent, RejectedpomComponent, PomcreatorEsignComponent, InventoryComponent, PrstatusComponent, ModifyRemarksComponent],
   providers: [AuthGuard],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
