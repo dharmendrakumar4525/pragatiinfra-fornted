@@ -39,6 +39,7 @@
     "ng-circle-progress": "^1.6.0",
     "ngx-cookie": "^6.0.1",
     "ngx-localstorage": "^3.4.0",
+    "ngx-ui-loader": "^13.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
