@@ -16,21 +16,60 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   openSidebar: boolean = false;
   link_name = "";
   obj = [];
+
+  ProcurementObj=[
+    {
+      link_name: "Add Procurement",
+      link: "/procurement",
+      img: './assets/images/icons/Buser.svg',
+      module_name: 'Add_procurement'
+    },
+    {
+      link_name: "Procurements List",
+      link: "/procurement/prlist",
+      img: './assets/images/icons/Buser.svg',
+      module_name: 'Procurement_approval'
+    },
+    {
+      link_name: "Rate Comparative",
+      link: '/rate-comparative',
+      icon: "bx bx-collection",
+      img: '../../../assets/images/icons/Inventory.svg',
+      module_name: 'Rate_comparitive'
+    },
+    {
+      link_name: "Rate Approval",
+      link: '/rate-approval',
+      icon: "bx bx-collection",
+      img: '../../../assets/images/icons/Inventory.svg',
+      module_name: 'Rate_approval'
+    },
+    {
+      link_name: "Purchase Order",
+      link: '/purchase-order',
+      icon: "bx bx-collection",
+      img: '../../../assets/images/icons/Inventory.svg',
+      module_name: 'Purchase_order'
+    },
+  ]
   masterManagementObj = [
     {
       link_name: "Location Master",
-      link: "/location",
+      link: '/location',
       img: './assets/images/icons/Buser.svg',
+      module_name: ''
     },
     {
       link_name: "Activity Master",
       link: "/structure",
       img: './assets/images/icons/Buser.svg',
+      module_name: 'activities'
     },
     {
       link_name: "Sub Activity Master",
       link: "/activity",
       img: './assets/images/icons/Buser.svg',
+      module_name: 'sub activities'
     },
     {
       link_name: "UOM Manager",
@@ -48,19 +87,22 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       link: "/item",
       img: './assets/images/icons/Buser.svg',
     },
-    
+
     {
       link_name: "Site Master",
       link: "/site",
       img: './assets/images/icons/Buser.svg',
-    },
-    
 
+      module_name: ''
+    },
     {
       link_name: "Vendor Master",
       link: "/vendor",
       img: './assets/images/icons/Broles.svg',
-    }, {
+
+      module_name: ''
+    }, 
+    {
       link_name: "Category Manager",
       link: "/category",
       img: './assets/images/icons/Bpermission.svg',
@@ -71,65 +113,6 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       icon: "bx bx-collection",
       img: './assets/images/icons/Bactivity.svg',
     },
-
-    
-  ]
-  menuSidebar = [
-    {
-      link_name: "dpr",
-      link: '/dpr',
-      icon: "bx bx-collection",
-      img: '../../../assets/images/icons/dpr.svg',
-
-    },
-    {
-      link_name: "dmr",
-      link: null,
-      icon: "bx bx-collection",
-      img: '../../../assets/images/icons/dmr.svg',
-    },
-
-    {
-      link_name: "Procurements",
-      link: '/procurement',
-      icon: "bx bx-collection",
-      img: '../../../assets/images/icons/procure.svg',
-    },
-
-    {
-      link_name: "Master Management",
-      link: null,
-      icon: "bx bx-collection",
-      img: '../../../assets/images/icons/usercirlceadd.svg',
-      sub_menu: [
-        ...this.masterManagementObj
-      ]
-    },
-
-    {
-      link_name: "Inventory",
-      link: '/inventory',
-      icon: "bx bx-collection",
-      img: '../../../assets/images/icons/Inventory.svg',
-    },
-
-    {
-      link_name: "PR status",
-      link: '/prstatus',
-      icon: "bx bx-collection",
-      img: '../../../assets/images/icons/PR.svg',
-    },
-
-    {
-      link_name: "User Management",
-      link: null,
-      icon: "bx bx-collection",
-      img: '../../../assets/images/icons/usercirlceadd.svg',
-      sub_menu: [
-
-      ]
-    }
-
   ]
 
 
@@ -162,17 +145,9 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       link: null,
       icon: "bx bx-collection",
       img: '../../../assets/images/icons/procure.svg',
-      sub_menu:[
-        {
-          link_name: "Add Procurement",
-          link: "/procurement",
-          img: './assets/images/icons/Buser.svg',
-        },
-        {
-          link_name: "Procurements List",
-          link: "/procurement/prlist",
-          img: './assets/images/icons/Buser.svg',
-        }
+      sub_menu: [
+        
+        ...this.ProcurementObj
       ]
     },
     {
