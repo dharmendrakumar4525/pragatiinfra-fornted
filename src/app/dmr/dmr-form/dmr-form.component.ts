@@ -62,6 +62,7 @@ export class DMRFormComponent implements OnInit{
       ChallanNumber: [''],
       InvoiceNumber: [''],
       // dmrRemarks: [''],
+      Freight: ['', [Validators.required,this.onlyNumbers]],
       TotalAmount: ['', [Validators.required,this.onlyNumbers]],
       dmrdate: ['', Validators.required],
       dmritem: this.formBuilder.array([]),
@@ -261,7 +262,7 @@ export class DMRFormComponent implements OnInit{
                 InvoiceUOM:new FormControl('',Validators.required),
                 InvoiceQuantity:new FormControl(0,Validators.required),
                 InvoiceRate:new FormControl(0,Validators.required),
-                Freight:new FormControl(0,Validators.required),
+                // Freight:new FormControl(0,Validators.required),
                 GST:new FormControl(0,Validators.required),
                 Remarks:new FormControl(' ',Validators.required),
               });

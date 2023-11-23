@@ -331,6 +331,7 @@ export class TableOverviewComponent implements OnInit {
       const form={
         UTR_No:Data
       }
+      list.PaymentStatus='Successful';
       let combinedData={...list,...form}
       if(flag && combinedData.InvoiceNumber.length>0)
       {

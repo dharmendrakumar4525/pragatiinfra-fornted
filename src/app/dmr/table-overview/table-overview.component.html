@@ -157,6 +157,7 @@
             <th>PO No</th>
             <th>PO Amount</th>
             <th>Invoice Amount</th>
+            <th>Freight</th>
             <!-- <th>Site <div>Remarks</div></th> -->
             
             
@@ -194,7 +195,7 @@
               <td style="color:#233A61 !important; font-weight: bolder;background-color: #ddd;"></td>
               <td style="color:#233A61 !important; font-weight: bolder;background-color: #ddd;"></td>
               <td style="color:#233A61 !important; font-weight: bolder;background-color: #ddd;"></td>
-              
+              <td style="color:#233A61 !important; font-weight: bolder;background-color: #ddd;"></td>
               
             </tr>
             <tr formArrayName="dmr" class="DMR-{{poItem}}"
@@ -220,6 +221,7 @@
               <td>{{list.PONumber}}</td>
               <td>{{list.vendors_total[0].total_amount}}</td>
               <td>{{list.TotalAmount}}</td>
+              <td>{{list.Freight}}</td>
               <!-- <td></td> -->
               
               <td>

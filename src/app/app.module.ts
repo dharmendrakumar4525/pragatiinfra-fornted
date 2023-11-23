@@ -115,7 +115,8 @@ import {DMRFormComponent} from './dmr/dmr-form/dmr-form.component';
 import {TableOverviewComponent} from './dmr/table-overview/table-overview.component';
 import {ItemTablePopupComponent} from './dmr/item-table-popup/item-table-popup.component';
 import { FinalDmrComponent } from './dmr/final-dmr/final-dmr.component';
-
+import { NgxUiLoaderHttpModule, NgxUiLoaderModule} from 'ngx-ui-loader';
+import { ngxUiLoaderConfig, ngxUiLoaderHttpConfig } from './ngx-ui-loader.config';
 @NgModule({
   imports: [AppRoutingModule, BrowserModule, ReactiveFormsModule, HttpClientModule, FormsModule, CoreModule, SharedModule, CustomMaterialModule,
     FlexLayoutModule,
@@ -148,7 +149,9 @@ import { FinalDmrComponent } from './dmr/final-dmr/final-dmr.component';
     LocationPopupModule,
     ConfirmationPopupModule,
     MinTableDateModule,
-    DirectiveModule
+    DirectiveModule,
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    NgxUiLoaderHttpModule.forRoot(ngxUiLoaderHttpConfig)
   ],
   declarations: [AppComponent, HomeComponent, SearchPipe, SubActivitySearchPipe, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent, LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,
     ForgotpasswordComponent, NewRoleComponent, NewPermissionComponent, AddDataComponent, ManagePermissionsComponent, CreatenewpasswordComponent, NoPermissionsComponent, RoleEditComponent, UserEditComponent, UsersDeleteMultipleComponent, RolesDeleteMultipleComponent, AboutUsComponent, MasteruserComponent, MasterCreateuserComponent, InnerAddMemberComponent, EditActivityComponent, EditSubActivityComponent, TaskDeleteMulActivityComponent, DeleteMulSubActivityComponent, SubActivitiesComponent, EditSubActivitiesComponent, AddSubActivitiesComponent, SitemasterComponent,
@@ -161,4 +164,5 @@ import { FinalDmrComponent } from './dmr/final-dmr/final-dmr.component';
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

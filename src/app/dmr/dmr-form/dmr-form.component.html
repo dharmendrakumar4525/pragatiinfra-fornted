@@ -111,6 +111,11 @@
     <option value="InvoiceNumber">Invoice Number</option>
   </select>
 </div> -->
+    <div class="flex-div" style="display: flex;flex-direction: column">
+      <label style="color: #4272BF;font-size: 14px;">Date <span class="star">*</span></label>
+      <input placeholder="Enter Details" formControlName="dmrdate"
+        style="font-size: medium;color:#97989D;width:75%;padding:10px;border-radius: 6px;border:1px solid #ccc;cursor: pointer;margin-top: 3px;font-family: 'Poppins'; height: 50px;" readonly>
+    </div>
       <div class="flex-div" style="display: flex; flex-direction: column">
         <label style="color: #4272BF; font-size: 14px;">Choose: <span class="star">*</span></label>
         <select (change)="setValidation()" (ngModelChange)="clearSearchField()" formControlName="userChoice" style="color:#97989D;font-size: medium;width:75%;padding:10px;border-radius: 6px;border:1px solid #ccc;cursor: pointer;margin-top: 3px;font-family: 'Poppins'; height: 50px;">
@@ -136,6 +141,17 @@
         </mat-error>
         </div>
       <div class="flex-div" style="display: flex;flex-direction: column">
+        <label style="color: #4272BF;font-size: 14px;">Freight <span class="star">*</span></label>
+        <input placeholder="Enter Details" formControlName="Freight"
+          style="font-size: medium;width:75%;padding:10px;border-radius: 6px;border:1px solid #ccc;cursor: pointer;margin-top: 3px;font-family: 'Poppins'; height: 50px;">
+          <mat-error *ngIf="dmrForm.get('Freight').invalid && ( dmrForm.get('Freight').dirty || dmrForm.get('Freight').touched )">
+            <span>Please provide a valid Freight</span>
+        </mat-error>
+          <mat-error *ngIf="dmrForm.get('TotalAmount').hasError('notNumeric') && !dmrForm.get('TotalAmount').invalid && ( dmrForm.get('TotalAmount').dirty || dmrForm.get('TotalAmount').touched )">>
+            <span>Please provide a valid Total Amount</span>
+        </mat-error>
+        </div>
+      <div class="flex-div" style="display: flex;flex-direction: column">
         <label style="color: #4272BF;font-size: 14px;">Total Amount <span class="star">*</span></label>
         <input placeholder="Enter Details" formControlName="TotalAmount"
           style="font-size: medium;width:75%;padding:10px;border-radius: 6px;border:1px solid #ccc;cursor: pointer;margin-top: 3px;font-family: 'Poppins'; height: 50px;">
@@ -146,11 +162,7 @@
             <span>Please provide a valid Total Amount</span>
         </mat-error>
         </div>
-      <div class="flex-div" style="display: flex;flex-direction: column">
-        <label style="color: #4272BF;font-size: 14px;">Date <span class="star">*</span></label>
-        <input placeholder="Enter Details" formControlName="dmrdate"
-          style="font-size: medium;color:#97989D;width:75%;padding:10px;border-radius: 6px;border:1px solid #ccc;cursor: pointer;margin-top: 3px;font-family: 'Poppins'; height: 50px;" readonly>
-      </div>
+     
       <!-- <div class="flex-div" style="display: flex;flex-direction: column">
         <label style="color: #4272BF;font-size: 14px;">Remarks </label>
         <textarea placeholder="Enter Remark" formControlName="dmrRemarks"
@@ -187,7 +199,7 @@
         <th style="text-align: center;">Balance Qty</th>
         <th>PO Rate</th>
         <th>Invoice Rate</th>
-        <th>Freight</th>
+        <!-- <th>Freight</th> -->
         <th>GST</th>
         <th>Remarks</th>
       </tr>
@@ -231,10 +243,10 @@
                 
                 <input type="text" placeholder="Enter" digitOnly formControlName="InvoiceRate" class="pr-form-field">
               </td>
-              <td>
+              <!-- <td>
                 
                 <input type="text" placeholder="Enter" digitOnly formControlName="Freight" class="pr-form-field">
-              </td>
+              </td> -->
               <td>
                 
                 <input type="text" placeholder="Enter" digitOnly formControlName="GST" class="pr-form-field">
