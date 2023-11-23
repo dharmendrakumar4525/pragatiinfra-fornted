@@ -269,7 +269,7 @@ export class AddDataComponent implements OnInit {
       let diffValue = lastRevisedDataMoment.diff(actualRevisedSartDateMoment, 'days');
       workingDaysRevised = diffValue+1;
 
-
+      
       // noofDaysBalanceasperrevisedEnddate;
       // noofDaysBalanceasperbaseLine;
       //console.log(this.itemForm.value.addRevisesDates.slice(-1)[0].revisedDate);
@@ -316,7 +316,7 @@ export class AddDataComponent implements OnInit {
     //   noofDaysBalanceasperbaseLine=0;
     // }
 
-
+   
     this.itemForm.value.baseLineWorkingDays = baseLineWorkingDays
    //this.itemForm.value.noofDaysBalanceasperrevisedEnddate = noofDaysBalanceasperrevisedEnddate
     this.itemForm.value.dailyAskingRateasperRevisedEndDate = dailyAskingRateasperRevisedEndDate

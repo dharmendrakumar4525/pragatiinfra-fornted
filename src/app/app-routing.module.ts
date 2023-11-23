@@ -71,17 +71,10 @@ import { PrstatusComponent } from './Procurement/prstatus/prstatus.component';
 
 
 const routes: Routes = [
-  // {
-  //   path: 'purchaserequest',
-  //   loadChildren: () => import('./procurment-module/procurment-module.module')
-  //     .then(mod => mod.ProcurmentModuleModule),
-  //   canActivate: [AuthGuard]
-  // },
-
   {
-    path: 'purchase-order',
-    loadChildren: () => import('./components/purchase-order/purchase-order.module')
-      .then(mod => mod.PurchaseOrderModule),
+    path: 'purchaserequest',
+    loadChildren: () => import('./procurment-module/procurment-module.module')
+      .then(mod => mod.ProcurmentModuleModule),
     canActivate: [AuthGuard]
   },
 
