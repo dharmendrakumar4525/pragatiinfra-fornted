@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SITE_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
+import { UsersService } from '@services/users.service';
 import { isEmpty } from 'lodash';
 @Component({
   selector: 'app-add-data',
@@ -30,11 +31,17 @@ export class AddDataComponent implements OnInit {
       country: new FormControl('', Validators.required),
     })
   });
+  users: any = [];
   constructor(
     private router: Router,
     private httpService: RequestService,
     private snack: SnackbarService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private userService: UsersService,) {
+    this.userService.getUserss().subscribe(data => {
+      this.users = data;
+    })
+  }
 
   saveData() {
     if (this.addForm.valid) {
@@ -53,7 +60,6 @@ export class AddDataComponent implements OnInit {
         } else {
           this.snack.notify(err.message, 2);
         }
-
       })
     }
     else {
@@ -64,6 +70,16 @@ export class AddDataComponent implements OnInit {
 
   list() {
     this.router.navigate(['site']);
+  }
+
+  manageChange(event) {
+    console.log(event);
+    let user = this.users.filter(res => res._id == event);
+    this.addForm.patchValue({
+      store_manager_phone_number: user[0].phone,
+      site_manager_email: user[0].email
+
+    })
   }
 
   ngOnInit(): void {

@@ -164,6 +164,37 @@ export class AuthService {
     return this.getCookies('authorized');
   }
 
+  setPermission(data:any) {
+    if (data) {
+      this.setLocalStorage('__permis', JSON.stringify(data) );
+    }
+  }
+  getPermission() {
+    let data: any = this.getLocalStorage('__permis');
+    if (data) {
+      data = JSON.parse(data);
+      return data;
+    } else {
+      return [];
+    }
+
+  }
+
+  setModules(data:any) {
+    if (data) {
+      this.setLocalStorage('__module_permis', JSON.stringify(data));
+    }
+  }
+  getModules() {
+    let data: any = this.getLocalStorage('__module_permis');
+    if (data) {
+      data = JSON.parse(data);
+      return data;
+    } else {
+      return [];
+    }
+
+  }
 
   isUserLoggedIn() {
 
@@ -195,11 +226,13 @@ export class AuthService {
 
 
 
-  async removeUser(redirectUrl:any) {    
+  async removeUser() {    
+    this.removeLocalStorage('__permis');
+    this.removeLocalStorage('__module_permis');
     this.removeLocalStorage('authorized');
+    this.removeLocalStorage('authentication');
     this.cookie.removeAll();
-    this.emit(null);
-    window.location.href = redirectUrl;
+    // this.emit(null);
   }
 
 

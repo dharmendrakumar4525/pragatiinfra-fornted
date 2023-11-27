@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, NgForm, Validators } from '@an
 import { Router } from '@angular/router';
 import { ToastService } from '@services/toast.service';
 import { UsersService } from '@services/users.service';
+import { AuthService } from '@services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,11 @@ export class LoginComponent implements OnInit {
   hide = true;
 show: boolean= false;
 
-  constructor(private _fb: FormBuilder,private router: Router,private userService:UsersService,private toast:ToastService) { }
+  constructor(
+    private _fb: FormBuilder,private router: Router,
+    private userService:UsersService,private toast:ToastService,
+    private auth: AuthService
+    ) { }
 
   ngOnInit(): void {
 
@@ -65,6 +70,12 @@ show: boolean= false;
 
           this.toast.openSnackBar('You logged in Successfully');
           this.afterSuccessLogin(data, login);
+
+          this.auth.setToken(data['token']);
+          this.auth.setUser(data['user']);
+          this.auth.setPermission(data['module_permissions']);
+          this.auth.setModules(data['modules']);
+
           this.userService.updateDashboard('dashboard');
            this.router.navigate(['/dpr']);
 

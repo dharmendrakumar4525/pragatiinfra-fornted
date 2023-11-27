@@ -2,7 +2,7 @@
   padding: 0 15px 0 15px;
 
   .section-header {
-    border-bottom: 2px solid #C5C5C5;
+    border-bottom: 2px solid #c5c5c5;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -12,7 +12,6 @@
       h2 {
         margin: 0;
       }
-
     }
   }
 }
@@ -29,33 +28,33 @@
   color: #fff;
   font-size: 12px;
   padding-left: 23px;
-    padding-right: 23px;
+  padding-right: 23px;
 
-    &:hover {
-      opacity: 0.7;
-    }
+  &:hover {
+    opacity: 0.7;
+  }
 }
 
 .cancel-btn {
   background: #ccc;
   font-size: 12px;
   padding-left: 23px;
-    padding-right: 23px;
+  padding-right: 23px;
 
-    &:hover {
-      opacity: 0.7;
-    }
+  &:hover {
+    opacity: 0.7;
+  }
 }
 .other-btn {
   background: #525252;
   color: #fff;
   font-size: 12px;
   padding-left: 23px;
-    padding-right: 23px;
+  padding-right: 23px;
 
-    &:hover {
-      opacity: 0.7;
-    }
+  &:hover {
+    opacity: 0.7;
+  }
 }
 
 .section-body {
@@ -66,25 +65,23 @@ mat-form-field {
   display: block;
 }
 
-
 .pragati-table {
   th {
-    background: #233A61;
+    background: #233a61;
     color: #fff;
     font-weight: normal;
     font-size: 12px;
-    border: 0.5px solid #94A3B8;
+    border: 0.5px solid #94a3b8;
     text-align: center;
     vertical-align: middle;
   }
 
   td {
-
-    border-left: 0.5px solid #94A3B8;
-    border-right: 0.5px solid #94A3B8;
+    border-left: 0.5px solid #94a3b8;
+    border-right: 0.5px solid #94a3b8;
     font-weight: normal;
     font-size: 12px;
-    background: #F4F4F5;
+    background: #f4f4f5;
     text-align: center;
     vertical-align: middle;
   }
@@ -92,11 +89,10 @@ mat-form-field {
   tr {
     &:nth-child(2n) {
       td {
-        background: #D9DADE;
+        background: #d9dade;
       }
     }
   }
-
 
   .action-btn-wrapper {
     display: flex;
@@ -118,8 +114,19 @@ mat-form-field {
         opacity: 0.7;
       }
     }
-
-
   }
+}
 
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+p,
+td,
+td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 50px;
 }

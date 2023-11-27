@@ -58,43 +58,37 @@
         <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>Store Manager</mat-label>
-            <input matInput formControlName="store_manager">
+            <mat-select matInput formControlName="store_manager">
+              <mat-option *ngFor="let user of users" [value]="user?.name" (onSelectionChange)="manageChange(user._id)">
+                {{user?.name}}
+              </mat-option>
+            </mat-select>
             <mat-error *ngIf="editForm.controls.store_manager.errors?.['required']">
               this field is required.
             </mat-error>
-            <!-- <mat-error>
-              <span>Please provide a valid email</span>
-            </mat-error> -->
           </mat-form-field>
 
         </div>
         <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>Store Manager Number</mat-label>
-            <input matInput formControlName="store_manager_phone_number" type="number">
+            <input matInput formControlName="store_manager_phone_number" type="number" [readonly]="true">
             <mat-error *ngIf="editForm.controls.store_manager_phone_number.errors?.['required']">
               this field is required.
             </mat-error>
-            <!-- <mat-error>
-              <span>Please provide a valid email</span>
-            </mat-error> -->
           </mat-form-field>
 
         </div>
         <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>Store Manager Email</mat-label>
-            <input matInput formControlName="site_manager_email" type="email">
+            <input matInput formControlName="site_manager_email" type="email" [readonly]="true">
             <mat-error *ngIf="editForm.controls.site_manager_email.errors?.['required']">
               this field is required.
             </mat-error>
-            <!-- <mat-error>
-              <span>Please provide a valid email</span>
-            </mat-error> -->
           </mat-form-field>
 
         </div>
-
 
 
         <h4>Address</h4>

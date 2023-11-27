@@ -117,9 +117,22 @@ import {ItemTablePopupComponent} from './dmr/item-table-popup/item-table-popup.c
 import { FinalDmrComponent } from './dmr/final-dmr/final-dmr.component';
 import { NgxUiLoaderHttpModule, NgxUiLoaderModule} from 'ngx-ui-loader';
 import { ngxUiLoaderConfig, ngxUiLoaderHttpConfig } from './ngx-ui-loader.config';
+import { JwtModule } from "@auth0/angular-jwt";
+
+export function tokenGetter() {
+  return 'TOKNE';
+}
+
 @NgModule({
   imports: [AppRoutingModule, BrowserModule, ReactiveFormsModule, HttpClientModule, FormsModule, CoreModule, SharedModule, CustomMaterialModule,
     FlexLayoutModule,
+    JwtModule.forRoot({
+      config: {
+          tokenGetter: tokenGetter,
+          allowedDomains: ['localhost:4200/'],
+          disallowedRoutes: ['']
+      }
+  }),
     FullCalendarModule,
     MatTooltipModule,
     NgxLocalStorageModule.forRoot(),

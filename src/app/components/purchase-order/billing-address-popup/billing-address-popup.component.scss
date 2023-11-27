@@ -1,0 +1,36 @@
+form {
+  height: 400px;
+}
+.my-selects {
+  display: flex;
+  flex-direction: row;
+  gap: 80px;
+}
+ng-select {
+  width: 200px;
+}
+.Actual-align {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.mat-form-field {
+  display: block;
+}
+
+a {
+  cursor: pointer;
+  padding: 5px 5px;
+  float: right;
+
+  i {
+    color: #233a61;
+    opacity: 0.8;
+    font-size: 13px;
+  }
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
