@@ -3,13 +3,14 @@ import { Component, OnInit, } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PURCHASE_ORDER_API } from '@env/api_path';
+import { PURCHASE_ORDER_API ,DMRPURCHASE_ORDER_API} from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { ESignComponent } from '../e-sign/e-sign.component';
 import { BillingAddressPopupComponent } from '../billing-address-popup/billing-address-popup.component';
 import { MailingAddressPopupComponent } from '../mailing-address-popup/mailing-address-popup.component';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
+import { forkJoin, of, switchMap } from 'rxjs';
 @Component({
   selector: 'app-purchase-order-update',
   templateUrl: './purchase-order-update.component.html',
@@ -36,6 +37,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
       if (params['id']) {
         this.httpService.GET(`${PURCHASE_ORDER_API}/detail`, { _id: params['id'] }).subscribe(res => {
           this.poDetails = res.data;
+          console.log(this.poDetails)
           this.mail_section.patchValue(this.poDetails.vendor_message);
           this.term_condition.patchValue(this.poDetails.terms_condition);
         })
@@ -106,13 +108,36 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     requestData['vendor_message'] = this.mail_section.value;
     requestData.vendor_detail.terms_condition = this.term_condition.value;
     this.load = true;
-    this.httpService.PUT(PURCHASE_ORDER_API, requestData).subscribe({
-      next: (resp: any) => {
-        this.load = false;
-        this.snack.notify("purchase Order has been generated.", 1);
-        this.router.navigate(['/purchase-order'])
+    this.httpService.PUT(PURCHASE_ORDER_API, requestData).pipe(
+      // Use switchMap to map the result of the PUT request to the next observable
+      switchMap((resp: any) => {
+        // Assuming this is the result you want to use in the POST request
+        let sendData = {
+          '0': { ...this.poDetails }
+        };
 
-      }, error: (err: any) => {
+        // Remove 'status' property
+        if ('status' in sendData['0']) {
+          delete sendData['0'].status;
+        }
+
+        // Create an observable for the POST request
+        const postRequest = this.httpService.POST(DMRPURCHASE_ORDER_API, sendData);
+
+        // Combine the observables using forkJoin
+        return forkJoin([of(resp), postRequest]);
+      })
+    ).subscribe({
+      next: ([putResp, postResp]: [any, any]) => {
+        // Both requests were successful
+        this.load = false;
+        console.log(putResp, postResp);
+
+        this.snack.notify("purchase Order has been generated.", 1);
+        this.router.navigate(['/purchase-order']);
+      },
+      error: (err: any) => {
+        // Handle errors from either PUT or POST request
         this.load = false;
         if (err.errors && !isEmpty(err.errors)) {
           let errMessage = '<ul>';
@@ -127,6 +152,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
         }
       }
     });
+
   }
 
   billingAddressPopup() {
