@@ -17,6 +17,11 @@ export class DmrService {
       catchError(this.handleError)
     );
   }
+  getUserList(): Observable<any>{
+    return this.http.get(`${environment.api_path}/users`).pipe(
+      catchError(this.handleError)
+    )
+  }
   GetDmrEntryList(): Observable<any>{
     return this.http.get(`${environment.api_path}/dmr_list`).pipe(
       catchError(this.handleError)

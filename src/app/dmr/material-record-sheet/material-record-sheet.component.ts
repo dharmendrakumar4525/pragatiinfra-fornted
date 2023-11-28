@@ -41,6 +41,7 @@ export class MaterialRecordSheetComponent implements OnInit {
   OriginalApprovedpurchaseOrderList:any=[];
   PurchaseRequestList:any=[];
   RateApprovalList:any=[];
+  UserList:any=[];
   selectedDate: Date ;
   Objdate: Date ; 
   selectedOption:String="FilterBytitle";
@@ -69,23 +70,24 @@ export class MaterialRecordSheetComponent implements OnInit {
   const recentActivities$ = this.recentActivityService.getRecentAtivities();
   const PurchaseRequestList$ = this.dmrService.getPurchaseRequestList();
   const RateApprovalList$ = this.dmrService.GetRateApprovalList();
-
+  const UserList$=this.dmrService.getUserList();
   // Use forkJoin to wait for all observables to complete
-  forkJoin([recentActivities$, PurchaseRequestList$, RateApprovalList$]).subscribe(
-    ([recentActivities, PurchaseRequestList, RateApprovalList]) => {
+  forkJoin([recentActivities$, PurchaseRequestList$, RateApprovalList$,UserList$]).subscribe(
+    ([recentActivities, PurchaseRequestList, RateApprovalList,UserList]) => {
       this.recentActivities = recentActivities;
       for (let single of this.recentActivities) {
         single.time = moment(single.createdAt).fromNow();
       }
       this.recentActivitiesLen = this.recentActivities.length;
-
+      this.UserList=UserList
+      //console.log(this.UserList)
       this.PurchaseRequestList = PurchaseRequestList;
       this.PurchaseRequestList=this.PurchaseRequestList.data
-      console.log(this.PurchaseRequestList);
+      //console.log(this.PurchaseRequestList);
 
       this.RateApprovalList = RateApprovalList//console.log(this.DmrEntryList);
       this.RateApprovalList=this.RateApprovalList.data;
-      console.log(this.RateApprovalList);
+      //console.log(this.RateApprovalList);
       this.dataReadySubject.next(true);
     },
     (error) => {
@@ -100,7 +102,7 @@ export class MaterialRecordSheetComponent implements OnInit {
   }
   GetApprovedpurchaseOrderList(filterObj: any){
     this.httpService.GET(DMRPURCHASE_ORDER_API, filterObj).subscribe(res => {
-     console.log(res);
+     //console.log(res);
       if (res && res.data) {
         this.ApprovedpurchaseOrderList = res.data;
         this.OriginalApprovedpurchaseOrderList = res.data;
@@ -157,6 +159,16 @@ export class MaterialRecordSheetComponent implements OnInit {
     //console.log(resultobj);
     return resultobj;
   }
+
+  getHandelByRateApprovaId(RateApprovalById:string)
+  {
+    //console.log(RateApprovalById)
+    let resultData=this.RateApprovalList.find((obj)=> obj._id==RateApprovalById)
+    //console.log(resultData)
+    let resultobj=this.UserList.find((obj)=> obj._id==resultData.handle_by)||null;
+    return resultobj;
+  }
+
   getRateApprovalById(id:string){
     
     //console.log(this.RateApprovalList)

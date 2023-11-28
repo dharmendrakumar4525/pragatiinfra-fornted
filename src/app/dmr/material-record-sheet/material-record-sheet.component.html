@@ -173,7 +173,7 @@
       width: fit-content;text-align: left;padding: 18px;">Location: <span style="color: #233a61;font-weight: 600;">{{getLocationById(obj.site)}}</span></td>
               
               <td style="color: #4272BF;text-wrap: nowrap;
-              width: fit-content;text-align: left;padding: 18px;">Handel By: <span style="color: #233a61;font-weight: 600;">{{getRateApprovalById(obj.rate_approval_id).handle_by}}</span></td>
+              width: fit-content;text-align: left;padding: 18px;">Handel By: <span style="color: #233a61;font-weight: 600;">{{getHandelByRateApprovaId(obj.rate_approval_id)?.name}}</span></td>
                       
               <td style="color: #4272BF;width:200px;text-align: left;padding: 18px;">Title: <span style="color: #233a61;font-weight: 600;">{{obj.title}}</span></td>
               
