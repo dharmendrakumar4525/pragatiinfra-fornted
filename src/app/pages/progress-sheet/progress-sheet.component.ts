@@ -64,9 +64,11 @@ export class ProgressSheetComponent implements OnInit {
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    //console.log(this.permissions)
     this.progressPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[1]?.childList[1];
     this.progressPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[1]?.childList[0];
     this.remarksPermissions = this.permissions.permissions[0]?.ParentChildchecklist[2]?.childList[2];
+    this.memberAddPermissions=this.permissions.permissions[0]?.ParentChildchecklist[5]?.childList[0];
     this.activeRoute.params.subscribe((params: any) => {
       console.log(params.id)
       this.projectId = params.id
@@ -133,6 +135,15 @@ export class ProgressSheetComponent implements OnInit {
   }
 
   addMember() {
+    if (!this.memberAddPermissions?.isSelected) {
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to add member"
+        //data: supply
+      });
+      return;
+    }
     const dialogRef = this._dialog.open(InnerAddMemberComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -163,7 +174,7 @@ export class ProgressSheetComponent implements OnInit {
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
         panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-        data: "you don't have permissions to add remarks calender"
+        data: "you don't have permissions to view remarks"
       });
       return;
     }
@@ -177,6 +188,15 @@ export class ProgressSheetComponent implements OnInit {
 
 
   addLocation() {
+    if (!this.progressPermissionsEdit?.isSelected) {
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to update sheet"
+        //data: supply
+      });
+      return;
+    }
     this.project._id;
     const dialogPopup = this.dialog.open(LocationPopupComponent, {
       data: {
@@ -194,6 +214,15 @@ export class ProgressSheetComponent implements OnInit {
   }
 
   deleteLocation(locationIndex) {
+    if (!this.progressPermissionsEdit?.isSelected) {
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to update sheet"
+        //data: supply
+      });
+      return;
+    }
     const dialogPopup = this.dialog.open(ConfirmationPopupComponent, {
     });
     dialogPopup.afterClosed().subscribe((result: any) => {
@@ -209,6 +238,15 @@ export class ProgressSheetComponent implements OnInit {
   }
 
   addStructure(locationIndex) {
+    if (!this.progressPermissionsEdit?.isSelected) {
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to update sheet"
+        //data: supply
+      });
+      return;
+    }
     const dialogPopup = this.dialog.open(LocationPopupComponent, {
       data: {
         type: 'structure',
@@ -227,6 +265,15 @@ export class ProgressSheetComponent implements OnInit {
 
 
   deleteStructure(locationIndex, structureIndex) {
+    if (!this.progressPermissionsEdit?.isSelected) {
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to update sheet"
+        //data: supply
+      });
+      return;
+    }
     const dialogPopup = this.dialog.open(ConfirmationPopupComponent, {
     });
     dialogPopup.afterClosed().subscribe((result: any) => {
@@ -241,6 +288,15 @@ export class ProgressSheetComponent implements OnInit {
   }
 
   addActivity(locationIndex, structureIndex) {
+    if (!this.progressPermissionsEdit?.isSelected) {
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to update sheet"
+        //data: supply
+      });
+      return;
+    }
     const dialogPopup = this.dialog.open(LocationPopupComponent, {
       data: {
         type: 'activity',
@@ -257,6 +313,15 @@ export class ProgressSheetComponent implements OnInit {
   }
 
   deleteActivity(locationIndex, structureIndex, activityIndex) {
+    if (!this.progressPermissionsEdit?.isSelected) {
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to update sheet"
+        //data: supply
+      });
+      return;
+    }
     const dialogPopup = this.dialog.open(ConfirmationPopupComponent, {
     });
     dialogPopup.afterClosed().subscribe((result: any) => {

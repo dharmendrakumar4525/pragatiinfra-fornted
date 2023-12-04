@@ -4,6 +4,7 @@ export const environment = {
   encryption: false,
   environmentType:'local',
   api_path: 'https://stagingpr.avidusinteractive.com/api/web',
+  api_base_path: 'https://stagingpr.avidusinteractive.com',
   cookiesOptions: {
     storeUnencoded: true,
     sameSite: 'Strict',

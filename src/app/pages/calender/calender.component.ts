@@ -66,6 +66,8 @@ export class CalenderComponent implements OnInit {
   });
 
   permissions: any;
+  calanderViewPermissions:any;
+  projectEditPermissions:any;
   calenderPermissions: any;
   recentActivities: any;
   datas = []
@@ -123,6 +125,15 @@ export class CalenderComponent implements OnInit {
     };
   }
   addAboutUs() {
+    if (!this.projectEditPermissions?.isSelected) {
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "You don't have permissions to edit "
+        //data: supply
+      });
+      return;
+    }
     const dialogRef = this._dialog.open(AboutUsComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown']
@@ -300,6 +311,15 @@ export class CalenderComponent implements OnInit {
 
   async saveActivityData(activityId: any, activity_ref_id: any, structure_id: any, structure_ref_id: any, location_id: any, location_ref_id: any, quantity: any, remark: any, subTaskObj) {
 
+    if (!this.calenderPermissions?.isSelected) {
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "You are not allowed to edit this field"
+        //data: supply
+      });
+      return;
+    }
 
     if (!this.activityEnabled[activity_ref_id]) {
       this.snack.notify("You are not allowed to edit this field", 2);
@@ -406,12 +426,12 @@ export class CalenderComponent implements OnInit {
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    console.log(this.permissions)
+    this.projectEditPermissions=this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[2]
     this.memberAddPermissions = this.permissions.permissions[0]?.ParentChildchecklist[5]?.childList[0]
-
-    this.permissions = JSON.parse(localStorage.getItem('loginData'))
     this.calenderPermissions = this.permissions.permissions[0]?.ParentChildchecklist[2]?.childList[0]
     this.remarksPermissions = this.permissions.permissions[0]?.ParentChildchecklist[2]?.childList[2]
-
+    this.calanderViewPermissions=this.permissions.permissions[0]?.ParentChildchecklist[2]?.childList[1]
 
 
     this.activeRoute.params.subscribe((params: any) => {

@@ -5,6 +5,7 @@ import { ModifyRemarksComponent } from '../modify-remarks/modify-remarks.compone
 import { RequestService } from '@services/https/request.service';
 import { PROJECT_ACTIVITY_REMARK_DATA_API } from '@env/api_path';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
+import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 
 @Component({
   selector: 'app-add-remarks',
@@ -13,6 +14,8 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
 })
 export class AddRemarksComponent implements OnInit {
   today: any;
+  permissions:any;
+  editRemarksPermissions:any;
   remarksArray: any;
   constructor(
     private dialogRef: MatDialogRef<AddRemarksComponent>,
@@ -53,10 +56,22 @@ export class AddRemarksComponent implements OnInit {
 
   ngOnInit(): void {
     this.today = new Date().getTime()
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    this.editRemarksPermissions = this.permissions.permissions[0]?.ParentChildchecklist[2]?.childList[0];
+ 
   }
 
 
   modifyRemarks(selectedData, i) {
+    if (!this.editRemarksPermissions?.isSelected) {
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "you don't have permissions to update Remarks"
+        //data: supply
+      });
+      return;
+    }
     const dialogRef = this._dialog.open(ModifyRemarksComponent, {
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
       data: { selectedData: selectedData, }

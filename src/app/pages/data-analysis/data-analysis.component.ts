@@ -55,6 +55,7 @@ export class DataAnalysisComponent implements OnInit {
   showDefaultFirst: any = {};
   recentActivitiesLen: any;
   memberAddPermissions: any;
+  projectEditPermissions:any;
   permissions: any;
   about: any;
   aboutUs: any;
@@ -80,6 +81,7 @@ export class DataAnalysisComponent implements OnInit {
     //this.projectsViewPermissions = this.permissions.permissions[0].ParentChildchecklist[0].childList[1]
     this.memberAddPermissions = this.permissions.permissions[0]?.ParentChildchecklist[5]?.childList[0]
     this.projectsDeletePermissions = this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[3]
+    this.projectEditPermissions=this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[2]
     this.month = new Date().toLocaleString('default', { month: 'short' });
     ///let year = new Date(single.date).getFullYear()
     this.day = new Date().getDate()
@@ -353,6 +355,15 @@ export class DataAnalysisComponent implements OnInit {
   }
 
   addAboutUs() {
+    if (!this.projectEditPermissions?.isSelected) {
+      const dialogRef = this._dialog.open(NoPermissionsComponent, {
+        width: '30%',
+        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+        data: "You don't have permissions to edit "
+        //data: supply
+      });
+      return;
+    }
     const dialogRef = this._dialog.open(AboutUsComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown']
