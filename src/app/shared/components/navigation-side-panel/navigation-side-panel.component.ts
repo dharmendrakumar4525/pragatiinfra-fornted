@@ -92,6 +92,12 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       module_name: ''
     },
     {
+      link_name: "Brand Master",
+      link: "/brand",
+      img: './assets/images/icons/Buser.svg',
+      module_name: ''
+    },
+    {
       link_name: "Site Master",
       link: "/site",
       img: './assets/images/icons/Buser.svg',
@@ -104,13 +110,13 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       module_name: ''
     }, 
     {
-      link_name: "Category Manager",
+      link_name: "Category Master",
       link: "/category",
       img: './assets/images/icons/Bpermission.svg',
       module_name: ''
     },
     {
-      link_name: "Sub Category Manager",
+      link_name: "Sub Category Master",
       link: '/sub-category',
       icon: "bx bx-collection",
       img: './assets/images/icons/Bactivity.svg',

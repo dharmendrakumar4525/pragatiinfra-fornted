@@ -118,6 +118,8 @@ import { FinalDmrComponent } from './dmr/final-dmr/final-dmr.component';
 import { NgxUiLoaderHttpModule, NgxUiLoaderModule} from 'ngx-ui-loader';
 import { ngxUiLoaderConfig, ngxUiLoaderHttpConfig } from './ngx-ui-loader.config';
 import { JwtModule } from "@auth0/angular-jwt";
+import { BrandMasterComponent } from './components/brand-master/brand-master.component';
+import { BrandAddDataComponent } from './components/brand-master/add-data/add-data.component';
 
 export function tokenGetter() {
   return 'TOKNE';
@@ -169,7 +171,7 @@ export function tokenGetter() {
   declarations: [AppComponent, HomeComponent, SearchPipe, SubActivitySearchPipe, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent, LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,
     ForgotpasswordComponent, NewRoleComponent, NewPermissionComponent, AddDataComponent, ManagePermissionsComponent, CreatenewpasswordComponent, NoPermissionsComponent, RoleEditComponent, UserEditComponent, UsersDeleteMultipleComponent, RolesDeleteMultipleComponent, AboutUsComponent, MasteruserComponent, MasterCreateuserComponent, InnerAddMemberComponent, EditActivityComponent, EditSubActivityComponent, TaskDeleteMulActivityComponent, DeleteMulSubActivityComponent, SubActivitiesComponent, EditSubActivitiesComponent, AddSubActivitiesComponent, SitemasterComponent,
     OrgmasterComponent, ItemmasterComponent, VendormasterComponent, CategorymanagementComponent, PurchaserequestComponent, PurchasereqlistComponent, RequisitionapprovalsComponent, ApprovedsummaryComponent, RejectedsummaryComponent, PendingsummaryComponent, RevisedpurchasereqlistComponent, ApprovedmaterialrequestComponent, RejectedpurchaserequestComponent, PendingpurchaserequestComponent, RatecomparativeComponent, RcomparativeComponent, RateapprovallistComponent, RevisedrateapprovallistComponent, VendorscomparativeapprovedComponent, VendorscomparativerejectedComponent,
-    VendorscomparativerevisedComponent, RateapprovalsComponent, RateapprovalsummaryComponent, RejectedratessummaryComponent, PendingratesComponent, VendorSelectionComponent, RejectReasonComponent, AddRemarksComponent, ProjectDeletePopupComponent, PolistComponent, PomapproverComponent, ApprovedpoComponent, RejectedpoComponent, PendingpoComponent, ApoVendorpostatusComponent, PomcreatorComponent, PotokenComponent, RejectedpomComponent, PomcreatorEsignComponent, InventoryComponent, PrstatusComponent, ModifyRemarksComponent,MaterialRecordSheetComponent,DMRFormComponent,TableOverviewComponent,ItemTablePopupComponent, FinalDmrComponent],
+    VendorscomparativerevisedComponent, RateapprovalsComponent, RateapprovalsummaryComponent, RejectedratessummaryComponent, PendingratesComponent, VendorSelectionComponent, RejectReasonComponent, AddRemarksComponent, ProjectDeletePopupComponent, PolistComponent, PomapproverComponent, ApprovedpoComponent, RejectedpoComponent, PendingpoComponent, ApoVendorpostatusComponent, PomcreatorComponent, PotokenComponent, RejectedpomComponent, PomcreatorEsignComponent, InventoryComponent, PrstatusComponent, ModifyRemarksComponent,MaterialRecordSheetComponent,DMRFormComponent,TableOverviewComponent,ItemTablePopupComponent, FinalDmrComponent,BrandMasterComponent,BrandAddDataComponent],
   providers: [AuthGuard],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

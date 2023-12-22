@@ -25,7 +25,7 @@ export const USER_PERMISSION_API = "/user/permission";
 export const DMRPURCHASE_ORDER_API= "/dmr_purchase_order";
 export const DmrEntryList= "/dmr_list";
 export const CREATE_DMR_ENTRY= "/dmr_entry";
-
+export const GET_VENDOR_API="/vendor";
 
 
 

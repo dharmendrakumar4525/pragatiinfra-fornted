@@ -70,6 +70,7 @@ import { MaterialRecordSheetComponent} from '../dmr/material-record-sheet/materi
 import {DMRFormComponent} from '../dmr/dmr-form/dmr-form.component';
 import {TableOverviewComponent} from '../dmr/table-overview/table-overview.component';
 import {FinalDmrComponent} from '../dmr/final-dmr/final-dmr.component';
+import {BrandMasterComponent} from '../components/brand-master/brand-master.component'
 export const routes: Routes = [
   {
     path: 'procurement',
@@ -297,7 +298,7 @@ export const routes: Routes = [
   { path: 'pomcreatoresign', component: PomcreatorEsignComponent, canActivate: [AuthGuard] },
   { path: 'inventory', component: InventoryComponent, canActivate: [AuthGuard] },
   { path: 'prstatus', component: PrstatusComponent, canActivate: [AuthGuard] },
-
+  
 
   //{path: 'create-activities', component: MasterCreateuserComponent,canActivate:[AuthGuard]},
 
@@ -328,6 +329,18 @@ export const routes: Routes = [
       { path: 'finaldmr', component: FinalDmrComponent, canActivate: [AuthGuard] },
     
     ]
+  },
+  {
+    path: 'brand',
+    component: BrandMasterComponent,
+    canActivate: [AuthGuard],
+    // children: [
+    //   { path: '', component: MaterialRecordSheetComponent, canActivate: [AuthGuard] },
+    //   { path: 'dmrform/:id', component: DMRFormComponent, canActivate: [AuthGuard] },
+    //   { path: 'tableoverview', component: TableOverviewComponent, canActivate: [AuthGuard] },
+    //   { path: 'finaldmr', component: FinalDmrComponent, canActivate: [AuthGuard] },
+    
+    // ]
   },
   {
     path: '**',
