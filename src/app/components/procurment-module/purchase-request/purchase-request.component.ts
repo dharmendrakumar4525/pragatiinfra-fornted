@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { PURCHASE_REQUEST_API, GET_SITE_API, ITEM_API, UOM_API } from '@env/api_path';
+import { PURCHASE_REQUEST_API, GET_SITE_API, ITEM_API, UOM_API,GET_VENDOR_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-purchase-request',
   templateUrl: './purchase-request.component.html',
@@ -38,10 +38,14 @@ export class PurchaseRequestComponent implements OnInit {
   requredByMinDate = new Date();
   id: any;
   siteList: any;
+  vendorList:any;
+  vendorSearch: string = '';
+  filteredVendorList: any[] = [];
   load = false;
   items: FormArray | any = [];
   uomList: any;
   itemList: any;
+  filteredItemList: any;
   option = 1;
   purchaseList: any = [];
   filter_by = "status";
@@ -63,6 +67,7 @@ export class PurchaseRequestComponent implements OnInit {
     local_purchase: new FormControl('yes', Validators.required),
     remarks: new FormControl(''),
     items: this.formBuilder.array([]),
+    vendor: new FormControl(''),
   });
 
 
@@ -110,19 +115,34 @@ export class PurchaseRequestComponent implements OnInit {
     const UOM = this.http.get<any>(`${environment.api_path}${UOM_API}`);
     const item = this.http.get<any>(`${environment.api_path}${ITEM_API}`);
     const site = this.http.get<any>(`${environment.api_path}${GET_SITE_API}`);
-    this.httpService.multipleRequests([UOM, item, site], {}).subscribe(res => {
+    const vendor = this.http.get<any>(`${environment.api_path}${GET_VENDOR_API}`);
+    this.httpService.multipleRequests([UOM, item, site, vendor], {}).subscribe(res => {
       if (res) {
         this.uomList = res[0].data;
         this.itemList = res[1].data;
         this.siteList = res[2].data;
+        this.vendorList=res[3].data;
+        console.log(this.vendorList);
+        console.log(this.itemList);
       }
 
     })
+    
   }
 
   addItem(): void {
     this.items = this.purchaseRequestForm.get('items') as FormArray;
-    this.items.push(this.createItem());
+    if(this.purchaseRequestForm.get('local_purchase').value==="yes")
+    {
+      //console.log("hi from local yes")
+      this.items.push(this.createLocalItem());
+    }  
+    else
+    {
+      //console.log("hi from local no")
+      this.items.push(this.createItem());
+    }  
+      
   }
 
   selectedItem(event: any, i: any) {
@@ -149,7 +169,50 @@ export class PurchaseRequestComponent implements OnInit {
 
     });
   }
+  createLocalItem(): FormGroup {
+    return this.formBuilder.group({
+      item_id: new FormControl('', Validators.required),
+      qty: new FormControl('', Validators.required),
+      category: new FormControl(null),
+      subCategory: new FormControl(null),
+      attachment: new FormControl(''),
+      remark: new FormControl(''),
+      uom: new FormControl(''),
+      brandName:new FormControl(''),
+      rate:new FormControl(''),
+      gst:new FormControl(''),
+      freight:new FormControl(''),
+    });
+  }
 
+  // Clearing the 'items' FormArray to ensure it is empty.
+  // Adding items based on the value of 'local_purchase' (yes or no).
+  handleLocalPurchaseChange(){
+    const itemsFormArray = this.purchaseRequestForm.get('items') as FormArray;
+    itemsFormArray.clear(); 
+    this.addItem();
+  }
+  onVendorSelection(event: any) {
+    // Retrieve the selected vendor from the vendorList based on the _id
+    const selectedVendor = this.vendorList.find(item => item._id === event.value);
+    console.log('Selected Vendor Object:', selectedVendor);
+  
+    // Check if a vendor was found
+    if (selectedVendor) {
+      // Filter the itemList based on the category and subcategory of the selected vendor
+      this.filteredItemList = this.itemList.filter(item =>
+        item.category === selectedVendor.category[0] && item.sub_category[0] === selectedVendor.SubCategory[0]
+      );
+      console.log(this.filteredItemList);
+    } else {
+      // Handle the case where no vendor is found (optional)
+      console.warn('No matching vendor found for the selected ID.');
+      this.filteredItemList = [];
+    }
+  }
+  
+  
+  
 
   delete(i) {
     const remove = this.purchaseRequestForm.get('items') as FormArray;;
