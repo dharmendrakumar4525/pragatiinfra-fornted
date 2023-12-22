@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CATEGORY_API, ORG_REQUEST_API, VENDOR_API } from '@env/api_path';
+import { CATEGORY_API, ORG_REQUEST_API, VENDOR_API,SUB_CATEGORY_API} from '@env/api_path';
 import { ExcelService } from '@services/export-excel/excel.service';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-listing',
   templateUrl: './listing.component.html',
@@ -14,6 +15,8 @@ export class ListingComponent implements OnInit {
   vendorList: any = [];
   categoryList: any = [];
   list: any = [];
+  subCategoryList:any=[];
+  dataReadySubject = new BehaviorSubject<boolean>(false);
   constructor(
     private router: Router,
     private httpService: RequestService,
@@ -36,15 +39,40 @@ export class ListingComponent implements OnInit {
       }
 
     })
-    this.getList();
+    this.httpService.GET(SUB_CATEGORY_API, {}).subscribe(res => {
+      this.subCategoryList = res.data;
+      this.dataReadySubject.next(true);
+      //this.subCategoryList=this.AllSubCategoryList;
+      //console.log(this.subCategoryList)
+    }, (err) => {
+      if (err.errors && !isEmpty(err.errors)) {
+        let errMessage = '<ul>';
+        for (let e in err.errors) {
+          let objData = err.errors[e];
+          errMessage += `<li>${objData[0]}</li>`;
+        }
+        errMessage += '</ul>';
+        this.snack.notifyHtml(errMessage, 2);
+      } else {
+        this.snack.notify(err.message, 2);
+      }
+
+    })
+    this.dataReadySubject.subscribe((dataReady) => {
+      if(dataReady){
+        this.getList();
+      }})
+   
   }
 
   getList() {
     this.httpService.GET(VENDOR_API, {}).subscribe(res => {
       if (res && res.data) {
         this.vendorList = res.data;
+        console.log(res.data)
         this.vendorList.map((obj: any) => {
           obj.category = this.getCategory(obj.category);
+          obj.SubCategory=this.getSubCategory(obj.SubCategory);
           return obj;
         }
 
@@ -108,7 +136,19 @@ export class ListingComponent implements OnInit {
     return finalName.join(",");
 
   }
+  getSubCategory(ids: any) {
+    // return this.categoryList.filter(ob => ob._id == id)[0]?.name;
+    //console.log(ids)
+    var finalName = [];
+    this.subCategoryList.forEach((element: any) => {
+      if (ids.includes(element._id)) {
+        finalName.push(element.subcategory_name);
+      }
+    });
 
+    return finalName.join(",");
+
+  }
   search(event: any) {
     if (event.target.value) {
       this.vendorList = this.list.filter(obj => obj.vendor_name.toLowerCase().includes(event.target.value.toLowerCase()))
@@ -151,6 +191,7 @@ export class ListingComponent implements OnInit {
     let sheetHeaders = [
       "Vendor Name",
       "Category",
+      "Sub Category",
       "Contact Person",
       "Phone Number",
       "GST Number",
@@ -162,7 +203,8 @@ export class ListingComponent implements OnInit {
     ];
 
     let valueKey = ['vendor_name',
-      'categoryList',
+      'category',
+      'SubCategory',
       'contact_person',
       'vendor_phone_number',
       'gst_number',
@@ -170,7 +212,7 @@ export class ListingComponent implements OnInit {
       'email',
       'payment_terms',
       , 'terms_condition', 'address2'];
-    let valueDataType = ['string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string'];
+    let valueDataType = ['string', 'string', 'string','string',  'string', 'string', 'string', 'string', 'string', 'string', 'string'];
     let sheetName: any = "sites";
     this.excelService.mapArrayToExcel(sheetName, sheetHeaders, valueKey, valueDataType, filterReport);
   }
