@@ -244,14 +244,14 @@ export class AddDataComponent implements OnInit {
       this.itemForm.markAllAsTouched();
       return;
     }
-    if (this.permissions.user.role != 'superadmin') {
-      if (!this.itemForm.value.addRevisesDates.length) {
-        this.toast.openSnackBar(
-          'Please add Atleast one revised end date'
-        );
-        return;
-      }
-    }
+    // if (this.permissions.user.role != 'superadmin') {
+    //   if (!this.itemForm.value.addRevisesDates.length) {
+    //     this.toast.openSnackBar(
+    //       'Please add Atleast one revised end date'
+    //     );
+    //     return;
+    //   }
+    // }
     var workingDaysRevised: any;
     var baseLineWorkingDays: any;
     //var noofDaysBalanceasperrevisedEnddate: any;
