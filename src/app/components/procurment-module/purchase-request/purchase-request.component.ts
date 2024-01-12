@@ -67,7 +67,7 @@ export class PurchaseRequestComponent implements OnInit {
     local_purchase: new FormControl('yes', Validators.required),
     remarks: new FormControl(''),
     items: this.formBuilder.array([]),
-    vendor: new FormControl(''),
+    vendor: new FormControl(),
   });
 
 
@@ -199,10 +199,16 @@ export class PurchaseRequestComponent implements OnInit {
   
     // Check if a vendor was found
     if (selectedVendor) {
-      // Filter the itemList based on the category and subcategory of the selected vendor
-      this.filteredItemList = this.itemList.filter(item =>
-        item.category === selectedVendor.category[0] && item.sub_category[0] === selectedVendor.SubCategory[0]
-      );
+      //Filter the itemList based on the category and subcategory of the selected vendor
+      console.log(this.itemList)
+      this.filteredItemList = this.itemList.filter(item => {
+        console.log(item.category + "----------" + item.sub_category);
+      
+        const categoryMatch = selectedVendor.category.some(categoryItem => categoryItem === item.category);
+        const subCategoryMatch = selectedVendor.SubCategory.some(subCategoryItem => subCategoryItem === item.sub_category);
+      
+        return categoryMatch && subCategoryMatch;
+      });
       console.log(this.filteredItemList);
     } else {
       // Handle the case where no vendor is found (optional)

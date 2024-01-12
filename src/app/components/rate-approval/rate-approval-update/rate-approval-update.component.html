@@ -16,30 +16,33 @@
 
   <div style="margin-top: 20px;margin-left: 30px;display: flex;">
 
-    <div><img src="./assets/images/box.svg"></div>
-    <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Purchase&nbsp;request</span>
-    <div><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
-  </div>
-  <div style="margin-top: 20px;margin-left: 10px;display: flex;">
+    <div style="margin-top: 20px;margin-left: 30px;display: flex;cursor: pointer;" [routerLink]="['/procurement']" routerLinkActive="active-link">
 
-    <div> <img src="./assets/images/approval.svg"></div>
-    <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Approvals</span>
-    <div><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
-  </div>
-  <div style="margin-top: 20px;margin-left: 10px;display: flex;">
-    <div> <img src="./assets/images/rc.svg"></div>
-    <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Rate&nbsp;Comparative</span>
-    <div><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
-  </div>
-  <div style="margin-top: 20px;margin-left: 10px;display: flex;">
-    <div> <img src="./assets/images/app.svg"></div>
-    <span style="color: #233A61;margin-left: 5px;font-size: 14px;">Rate&nbsp;Approvals</span>
-    <div><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
-  </div>
-  <div style="margin-top: 20px;margin-left: 10px;display: flex;">
-    <div><img src="./assets/images/po.svg"></div>
-    <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Purchase&nbsp;orders</span>
-  </div>
+      <div><img src="./assets/images/box.svg"></div>
+      <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Purchase&nbsp;request</span>
+      <div><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
+    </div>
+    <div style="margin-top: 20px;margin-left: 10px;display: flex;cursor: pointer;" [routerLink]="['/procurement/prlist']" routerLinkActive="active-link">
+  
+      <div> <img src="./assets/images/approval.svg"></div>
+      <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Approvals</span>
+      <div><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
+    </div>
+    <div style="margin-top: 20px;margin-left: 10px;display: flex;cursor: pointer;" [routerLink]="['/rate-comparative']" routerLinkActive="active-link">
+      <div> <img src="./assets/images/rc.svg" ></div>
+      <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Rate&nbsp;Comparative</span>
+      <div><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
+    </div>
+    <div style="margin-top: 20px;margin-left: 10px;display: flex;cursor: pointer;" [routerLink]="['/rate-approval']" routerLinkActive="active-link">
+      <div > <img src="./assets/images/app.svg"></div>
+      <span style="color:  #233A61;margin-left: 5px;font-size: 14px;">Rate&nbsp;Approvals</span>
+      <div><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
+    </div>
+    <div style="margin-top: 20px;margin-left: 10px;display: flex;cursor: pointer;" [routerLink]="['/purchase-order']" routerLinkActive="active-link">
+      <div><img src="./assets/images/po.svg"></div>
+      <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Purchase&nbsp;orders</span>
+    </div>
+    </div>
 </div>
 
 
@@ -52,7 +55,7 @@
       <div class="flex-div" style="display: flex;flex-direction: column;">
         <label style="color: #4272BF;font-size: 14px;">Request title </label>
         <mat-form-field appearance="outline">
-          <input placeholder="Enter title" formControlName="title" readonly matInput>
+          <input placeholder="Enter title" formControlName="title"  matInput>
         </mat-form-field>
       </div>
 
@@ -61,11 +64,11 @@
         <mat-form-field appearance="outline">
           <input matInput [matDatepicker]="date" formControlName="date" placeholder="Auto generate Request Date"
             readonly />
-          <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+          <mat-datepicker-toggle matSuffix [for]="date" ></mat-datepicker-toggle>
           <mat-datepicker #date></mat-datepicker>
         </mat-form-field>
       </div>
-
+      
       <div class="flex-div custom-form-group">
         <label class="custom-label" for="" style="color: #4272BF;font-size: 14px;"> Required by <span
             class="star">*</span>
@@ -103,7 +106,7 @@
           </mat-form-field> -->
           <mat-form-field appearance="outline">
             <!-- <mat-label>Handle by</mat-label> -->
-            <mat-select matInput formControlName="handle_by" [disabled]="true">
+            <mat-select matInput formControlName="handle_by" >
               <mat-option *ngFor="let user of users" [value]="user?._id">
                 {{user?.name}}
               </mat-option>
@@ -125,7 +128,7 @@
       <div class="flex-div" style="display: flex;flex-direction: column;">
         <label style="color: #4272BF;font-size: 14px;">Site name <span class="star">*</span></label>
         <mat-form-field appearance="outline">
-          <mat-select id="site" placeholder="Select site" formControlName="site" [disabled]="true">
+          <mat-select id="site" placeholder="Select site" formControlName="site" >
             <mat-option [value]="item._id" *ngFor="let item of siteList">
               {{item.site_name}}
             </mat-option>
@@ -137,7 +140,7 @@
       <div class="flex-div" style="display: flex;flex-direction: column;margin-left: 10px;">
         <label style="color: #4272BF;    margin-bottom: 10px;">Local Purchase <span class="star">*</span></label>
         <mat-radio-group aria-labelledby="example-radio-group-label" color="primary" class="example-radio-group"
-          formControlName="local_purchase" [disabled]="true">
+          formControlName="local_purchase" >
           <mat-radio-button class="example-radio-button" style="margin-right: 10px;" [value]="'yes'">
             Yes
           </mat-radio-button>
@@ -150,12 +153,138 @@
   </mat-card>
 
 
+<!-- <div style="display: flex; margin-top: 20px;">
+  <button (click)="compare('vendor')"  >Compare By Vendor</button>
+  <button style="margin-left: 20px;" (click)="compare('item')">Compare by Items</button>
+</div> -->
+<div class="requests">
+  <div [ngClass]="{'active':compareBy=='vendor'}"  (click)="compare('vendor')"  >Compare By Vendor</div>
+  <div [ngClass]="{'active':compareBy=='item'}"  (click)="compare('item')">Compare by Items</div>
+  <!-- <div class="innerreq">Rejected request</div>
+  <div class="innerreq">Revised request</div> -->
+</div>
+<div class="scroll-bar1" *ngIf="compareBy=='vendor'">
+    <ng-container *ngIf="CheckVendorComparision(); else noview">
+      <table style="direction: ltr !important;border-left: 2px solid #000 !important;" >
+        <tr>
+          <th>Item*</th>
+          <th>Category</th>
+          <th>Sub&nbsp;category</th>
+          <th>Uom</th>
+          <th>Quantity</th>
+          <th>Tax</th>
+          <!-- <th>Vendors</th> -->
+        </tr>
+        <tbody *ngFor="let item of details?.items; let i = index;">
+          <tr style="background-color: #F4F4F5;" >
+            <!-- <td style="text-align: center;">
+              {{i+1}}
+            </td> -->
+            <td>
+              {{item.item_name}}
+            </td>
+            <td style="color: #000;">
+              {{item.categoryDetail.name}}
+            </td>
+            <td style="color: #000;">
+              {{item.subCategoryDetail.subcategory_name}}
+            </td>
+            <td>
+              {{item.uomDetail.uom_name}}
+            </td>
+  
+            <td>
+              {{item.qty}}
+            </td>
+            <td>
+              <ng-container *ngIf="item.tax && item.tax.amount">
+                {{item.tax.name}}({{item.tax.amount}}%)
+              </ng-container>
+            </td>
+  
+            <!-- <td>
+              <a class="p-btns" (click)="vendorData(item)"> Vendor Rates</a>
+            </td> -->
+          </tr>
+        </tbody>
+        </table>
+        <div>Select Vendor</div>
+        <div class="vendor-wapper">
+          <div   *ngFor="let vendorItem of details.vendorItems; let i=index">
+                <div>
+                <div *ngIf="vendorTotal(vendorItem.items) as vendorTotal" >
+                  <div class="vendor-name-cl" *ngIf="findVendor(vendorItem.Vendor) as vendorDetails">
 
-
-  <div class="scroll-bar1">
-    <table style="direction: ltr !important;border-left: 2px solid #000 !important;">
+                    <!-- <ng-container
+                      *ngIf="vendorAssociatedData && vendorAssociatedData[item.vendor_id] && vendorAssociatedData[item.vendor_id]['vendor_name']">
+                      {{vendorAssociatedData[item.vendor_id]['vendor_name']}}
+                    </ng-container> -->
+                    <div style="display: flex; justify-content: space-between;">
+                      <div>{{vendorDetails.vendor_name}}</div>
+                      <div>
+                        <input [disabled]="VendorRate.size>0 && !VendorRate.has(vendorDetails._id)" type="checkbox" style="width: 20px;" (change)="handleCheckboxChange(vendorDetails._id,vendorItem,vendorTotal)" />
+                      </div>
+                    </div>
+            
+                  </div>
+                  <!-- <div class="vendor-value-cont">
+                    <div class="vendor-value-label">Rate</div>
+                    <div class="vendor-value">
+                      {{obj.Rate}}
+                    </div>
+                  </div>
+                  <div class="vendor-value-cont">
+                    <div class="vendor-value-label">Qty</div>
+                    <div class="vendor-value">
+                      {{obj.RequiredQuantity}}
+                    </div>
+                  </div> -->
+                  <div class="vendor-value-cont">
+                    <div class="vendor-value-label">Subtotal</div>
+                    <div class="vendor-value">
+                      {{vendorTotal.subTotal | number:'1.2-2' }}
+                    </div>
+                  </div>
+                  <div class="vendor-value-cont">
+                    <div class="vendor-value-label">GST Amount</div>
+                    <div class="vendor-value">
+                      {{ vendorTotal.gstAmount | number:'1.2-2' }}
+                    </div>
+                  </div>
+                  <!-- <div class="vendor-value-cont" style="background-color: #186D3C14;">
+                    <div class="vendor-value-label">Freight</div>
+                    <div class="vendor-value">
+                      <input type="number" min="0" (keyup)="onChangeFreightCharges($event,item)"
+                        (change)="onChangeFreightCharges($event,item)" [value]="item.freight_charges"
+                        [readonly]="item.subtotal == 0">
+                    </div>
+                  </div>
+                  <div class="vendor-value-cont" style="background-color: #186D3C14;">
+                    <div class="vendor-value-label">Freight GST(%)</div>
+                    <div class="vendor-value">
+                      <input type="number" min="0" (keyup)="onChangeFreightTaxPercent($event,item)"
+                        (change)="onChangeFreightTaxPercent($event,item)" [value]="item.freight_tax"
+                        [readonly]="item.subtotal == 0">
+                    </div>
+                  </div> -->
+                  <div class="vendor-value-cont" style="background-color: #073B4C14;">
+                    <div class="vendor-value-label"><strong>Grand total</strong></div>
+                    <div class="vendor-value">
+                      {{vendorTotal.total | number:'1.2-2' }}
+                    </div>
+                  </div>
+                </div>
+      </div>
+    </div>
+  </div>
+    </ng-container>
+    <ng-template #noview>
+      Vendor Comparison is not Applicable.
+    </ng-template>
+</div>
+  <div class="scroll-bar1" *ngIf="compareBy=='item'">
+    <table style="direction: ltr !important;border-left: 2px solid #000 !important;" >
       <tr>
-        <th>S&nbsp;No</th>
         <th>Item*</th>
         <th>Category</th>
         <th>Sub&nbsp;category</th>
@@ -163,15 +292,16 @@
         <th>Quantity</th>
         <th>Tax</th>
         <th>Vendors</th>
+        <th>Vendor Selection</th>
       </tr>
 
 
 
-      <tbody>
-        <tr style="background-color: #F4F4F5;" *ngFor="let item of details?.items; let i = index;">
-          <td style="text-align: center;">
+      <tbody *ngFor="let item of details?.items; let i = index;">
+        <tr style="background-color: #F4F4F5;" >
+          <!-- <td style="text-align: center;">
             {{i+1}}
-          </td>
+          </td> -->
           <td>
             {{item.item_name}}
           </td>
@@ -197,12 +327,20 @@
           <td>
             <a class="p-btns" (click)="vendorData(item)"> Vendor Rates</a>
           </td>
+          <td>
+            <ng-container *ngIf="ItemwiseVendorRate.has(item.item_id); else pendingView">
+              Completed
+            </ng-container>
+            <ng-template #pendingView>
+              Pending
+            </ng-template>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
 
-
+<!-- 
   <div class="vendor-wapper">
 
     <div class="vendor-container" *ngFor="let item of details.vendors_total">
@@ -252,7 +390,7 @@
     </div>
 
   </div>
-
+ -->
 
 
 

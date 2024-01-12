@@ -104,3 +104,36 @@
   font-size: 14px;
   font-weight: normal;
 }
+.vendor-wapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+
+  .vendor-name-cl {
+    padding: 6px 15px;
+    background: #233a61;
+    color: #fff;
+  }
+
+  .vendor-value-cont {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #073B4C0D;
+    padding: 6px 15px;
+    margin-bottom: 10px;
+    gap: 10px;
+
+    input {
+      width: 80px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      padding: 5px 5px;
+      outline: none;
+    }
+  }
+
+  .vendor-value-label {
+    min-width: 144px;
+  }
+}

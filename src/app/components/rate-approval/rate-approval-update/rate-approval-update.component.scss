@@ -18,7 +18,39 @@ mat-toolbar {
   margin-left: 30px;
   font-size: 14px;
 }
+.requests {
+  height: 40px;
+  width: 1140px;
+  background-color: #d9d9d9;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 30px;
+  font-size: 14px;
 
+  div {
+    height: 40px;
+    width: 250px;
+    font-family: "Poppins";
+    font-weight: 600;
+    font-style: normal;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex: 1;
+    &:hover {
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    &.active {
+      background-color: #233a61 !important;
+      color: #fff;
+    }
+  }
+}
 .innerreq {
   color: #233a61;
   font-family: "Poppins";

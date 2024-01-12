@@ -1,8 +1,8 @@
 <div mat-dialog-title class="mat-dialog-title">
-
-  <div class="row full-width">
+  <h1>{{VendorDetails.vendor_name}}</h1>
+  <!-- <div class="row full-width">
     <div class="col-md-9">
-      Vendors rate
+      Items rate
       <div class="header-subtitle">
         Item Name: {{pageDetail.item_name}}
       </div>
@@ -10,21 +10,51 @@
     <div class="col-md-3">
       <mat-icon class="float-end close-icon" (click)="onNoClick()">close</mat-icon>
     </div>
-  </div>
+  </div> -->
 </div>
 <div mat-dialog-content class="mat-dialog-content-cstm">
 
   <table class="vendor_list_table">
     <thead>
       <tr>
-        <th> Vendor name </th>
-        <th> Brand name </th>
-        <th>Item rate(per unit)</th>
+        <th>SNo.</th>
+        <th> Item name </th>
+        <th> UOM </th>
+        <th>Requested Qty</th>
+        <th>Required Qty</th>
+        <th>Rate</th>
+        <th>Sub Total Amount</th>
+        <th>Gst</th>
+        <th>Total</th>
       </tr>
     </thead>
 
-    <tbody>
-      <tr *ngFor="let item of itemVendors">
+    <tbody [formGroup]="vendorItemsForm">
+      <tr *ngFor="let item of tempFilteredItems; let i=index" formArrayName="items">
+        <ng-container [formGroupName]="i">
+          <td>{{i+1}}</td>
+          <td>{{item.item_name}}</td>
+          <td>{{item.uomDetail.uom_name}}</td>
+          <td>{{item.qty}}</td>
+          <td>
+            <input formControlName="RequiredQuantity" type="text" placeholder="Quantity" class="cstm-input" (input)="onChangeBrand($event,item)">
+          </td>
+          <td>
+            <input formControlName="Rate" type="text" placeholder="Rate" class="cstm-input" (input)="onChangeBrand($event,item)">
+          </td>
+          <td>
+            {{calculateSubTotalAmount(i)}}
+          </td>
+          <td>
+            {{item.tax.amount}}%
+          </td>
+          <td>
+            {{calculateTotalAmount(i)}}
+          </td>
+        </ng-container>
+        
+      </tr>
+      <!-- <tr *ngFor="let item of itemVendors">
         <td>
           <ng-container
             *ngIf="vendorAssociatedData && vendorAssociatedData[item.vendor_id] && vendorAssociatedData[item.vendor_id]['vendor_name']">
@@ -41,7 +71,7 @@
             (keyup)="onChangeItemRate($event,item)" (change)="onChangeItemRate($event,item)" [value]="item.item_rate">
         </td>
 
-      </tr>
+      </tr> -->
 
     </tbody>
   </table>

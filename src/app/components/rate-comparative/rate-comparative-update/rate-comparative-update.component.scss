@@ -6,7 +6,9 @@ mat-toolbar {
 .example-spacer {
   flex: 1 1 auto;
 }
-
+.p-btns-button:disabled {
+  opacity: 0.5; /* Adjust the opacity as needed */
+}
 .requests {
   height: 40px;
   width: 1140px;
