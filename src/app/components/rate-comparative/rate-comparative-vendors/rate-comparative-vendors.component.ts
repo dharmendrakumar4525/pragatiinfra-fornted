@@ -30,48 +30,65 @@ export class RateComparativeVendorsComponent implements OnInit {
   VendorDetails:any;
   tempFilteredItems:any;
   vendorItemsForm: FormGroup;
+  type:any;
+  vendors:any;
   filledData
   constructor(
     private formBuilder: FormBuilder,
     private snack: SnackbarService,
     public dialogRef: MatDialogRef<RateComparativeVendorsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.pageDetail = data.dataObj;
-    this.vendorsList = data.vendorsList;
-    this.items=data.items
-    this.i=data.index;
-    this.filledData=data.filledData;
-    //console.log(this.filledData)
-    
-    console.log(this.pageDetail);
-    console.log(this.items);
-    // console.log(this.i);
-    this.category=this.items[this.i].categoryDetail;
-    this.subCategory=this.items[this.i].subCategoryDetail;
-    this.VendorDetails=this.vendorsList.find(obj=> obj._id==this.pageDetail)
-    console.log(this.VendorDetails)
-    this.tempFilteredItems=this.items.filter(obj=> obj.categoryDetail._id==this.category._id && obj.subCategoryDetail._id==this.subCategory._id)
-    this.vendorItemsForm = new FormGroup({
-      Vendor: new FormControl(this.pageDetail, Validators.required),
-      category: new FormControl(this.category._id, Validators.required),
-      subCategory: new FormControl(this.subCategory._id, Validators.required),
-      items: this.formBuilder.array([]),
-    });
-    for(let i=0;i<this.tempFilteredItems.length;i++)
+    if(data.type)
     {
-      const itemGroup = this.formBuilder.group({
-        item: new FormControl(this.tempFilteredItems[i]),
-        RequiredQuantity: new FormControl('', Validators.required),
-        Rate:new FormControl('', Validators.required),
-        SubTotalAmount:new FormControl('', Validators.required),
-        Total:new FormControl('', Validators.required),
+      this.pageDetail = data.dataObj;
+      this.vendorsList = data.vendorsList;
+      this.items=data.items;
+      this.type=data.type;
+      this.filledData=data.filledData;
+      this.VendorDetails=this.vendorsList.find(obj=> obj._id==this.pageDetail)
+      // filledData:dataObj,
+    }
+    else{
+      this.pageDetail = data.dataObj;
+      this.vendorsList = data.vendorsList;
+      this.items=data.items;
+      this.vendors=data.vendors;
+      // this.i=data.index;
+      this.filledData=data.filledData;
+      //console.log(this.filledData)
+      
+      console.log(this.pageDetail);
+      console.log(this.items);
+      // console.log(this.i);
+      this.category=this.vendors.get('Item_category').value;
+      this.subCategory=this.vendors.get('Item_subCategory').value;
+      this.VendorDetails=this.vendorsList.find(obj=> obj._id==this.pageDetail)
+      console.log(this.VendorDetails)
+      this.tempFilteredItems=this.items.filter(obj=> obj.categoryDetail._id==this.category._id && obj.subCategoryDetail._id==this.subCategory._id)
+      this.vendorItemsForm = new FormGroup({
+        Vendor: new FormControl(this.pageDetail, Validators.required),
+        category: new FormControl(this.category._id, Validators.required),
+        subCategory: new FormControl(this.subCategory._id, Validators.required),
+        items: this.formBuilder.array([]),
       });
-      (this.vendorItemsForm.get('items')as FormArray).push(itemGroup);
+      for(let i=0;i<this.tempFilteredItems.length;i++)
+      {
+        const itemGroup = this.formBuilder.group({
+          item: new FormControl(this.tempFilteredItems[i]),
+          RequiredQuantity: new FormControl('', Validators.required),
+          Rate:new FormControl('', Validators.required),
+          SubTotalAmount:new FormControl('', Validators.required),
+          Total:new FormControl('', Validators.required),
+        });
+        (this.vendorItemsForm.get('items')as FormArray).push(itemGroup);
+      }
+      if(this.filledData)
+      {
+        this.fillpage(this.filledData);
+      }
+  
     }
-    if(this.filledData)
-    {
-      this.fillpage(this.filledData);
-    }
+    
     // this.itemVendors = this.itemVendors.map((o: any) => {
     //   this.totalInputQuantity = this.totalInputQuantity + (o.quantity && o.quantity > 0) ? o.quantity : 0;
     //   o.brand = o.brand ? o.brand : '';

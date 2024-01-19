@@ -22,25 +22,27 @@ export class RateComparativeListComponent implements OnInit {
       value: 'approved',
       label: 'Approved'
     },
-    {
-      value: 'rejected',
-      label: 'Rejected'
-    },
     // {
-    //   value: 'revise',
-    //   label: 'Revise'
+    //   value: 'rejected',
+    //   label: 'Rejected'
     // },
+    {
+      value: 'revise',
+      label: 'Revise'
+    },
   ]
   rateComparativeList: any;
   filter_by = "status";
   filter_value = "pending";
   requestType = "new";
   originalRateComparativeList: any = [];
+  stage='rate_comparitive';
   constructor(
     private httpService: RequestService,
     private snack: SnackbarService,
   ) {
     this.getList({ filter_by: this.filter_by, filter_value: this.filter_value, stage: 'rate_comparitive' });
+    console.log(this.stage)
   }
 
   getList(filterObj: any) {
@@ -68,13 +70,16 @@ export class RateComparativeListComponent implements OnInit {
 
   onStatusChange(item) {
     let stage;
-    if (item == 'pending') {
+    if (item.value == "pending" || item.value == "revise" || item.value == "rejected"  ) {
       stage = 'rate_comparitive';
+      this.getList({ filter_by: this.filter_by, filter_value: item.value, stage: stage })
     }
     else {
       stage = 'rate_approval'
+      this.getList({ filter_by: this.filter_by, stage: stage })
     }
-    this.getList({ filter_by: this.filter_by, filter_value: item.value, stage: stage })
+    this.stage=stage;
+    console.log(this.stage)
 
   }
 

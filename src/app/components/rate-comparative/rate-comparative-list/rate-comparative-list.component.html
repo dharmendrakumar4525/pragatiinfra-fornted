@@ -104,13 +104,14 @@
         <td style="color: #4272BF;width:800px;text-align: left;padding: 10px;font-size: 15px;">
           Site&nbsp;<span style="color: #000000;">{{obj.siteData.site_name}}</span></td>
         <td style="background-color: #233A61;color:#fff;width:200px;font-size: 14px;cursor: pointer;"
-          *ngIf="obj.status=='pending'" [routerLink]="['/rate-comparative/update',obj._id]">Create&nbsp;Comparative</td>
+          *ngIf="obj.status=='pending' && stage=='rate_comparitive'" [routerLink]="['/rate-comparative/update',obj._id]">Create&nbsp;Comparative</td>
         <td style="background-color: #54AA52;color:#fff;width:200px;font-size: 14px;cursor: pointer;"
-          *ngIf="obj.status =='approved'" [routerLink]="['/rate-comparative/details',obj._id]">Approved Vendors</td>
+          *ngIf="stage=='rate_approval' " [routerLink]="['/rate-comparative/details',obj._id]">Approved Vendors</td>
         <td style="background-color: #C7323B;color:#fff;width:200px;font-size: 14px;cursor: pointer;"
-          *ngIf="obj.status =='rejected'" [routerLink]="['/rate-comparative/details',obj._id]">Rejected Rates</td>
-
-
+          *ngIf="obj.status =='rejected'  && stage=='rate_comparitive' " [routerLink]="['/rate-comparative/details',obj._id]">Rejected Rates</td>
+          <td style="background-color: rgb(26, 188, 254); color:#fff;width:200px;font-size: 14px;cursor: pointer;"
+          *ngIf="obj.status=='revise' && stage=='rate_comparitive'" [routerLink]="['/rate-comparative/update',obj._id]">Revise&nbsp;Comparative</td>
+          <!-- *ngIf="stage=='rate_comparitive' -->
         <td style="width: 100px;"><mat-icon>
             arrow_forward_ios
           </mat-icon></td>

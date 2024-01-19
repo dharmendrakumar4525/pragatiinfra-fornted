@@ -105,7 +105,7 @@ export class VendorRateListingComponent implements OnInit {
 
     // }
     console.log(obj)
-    this.totalQuantity+=obj.RequiredQuantity;
+    this.totalQuantity+=Number(obj.RequiredQuantity);
     obj["vendor"]=vendorDetails
     this.VendorRate.set(key,obj)
 
@@ -118,7 +118,9 @@ export class VendorRateListingComponent implements OnInit {
   }
   check(obj,item,totalQuantity)
   {
-    return (totalQuantity+obj.RequiredQuantity)>item.qty
+    console.log(item.qty)
+    console.log(totalQuantity)
+    return (totalQuantity+Number(obj.RequiredQuantity))>item.qty
   }
   // pushselected()
   // {

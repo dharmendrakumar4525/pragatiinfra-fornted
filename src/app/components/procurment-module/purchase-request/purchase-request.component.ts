@@ -83,6 +83,50 @@ export class PurchaseRequestComponent implements OnInit {
     let requestData: any = this.purchaseRequestForm.value;
     requestData['date'] = moment(requestData.date, 'DD-MM-YYYY').toDate()
     requestData['expected_delivery_date'] = new Date(requestData.expected_delivery_date)
+   
+    if(this.purchaseRequestForm.get('local_purchase').value=="yes")
+    {
+      let vendorItems=[];
+      let obj={
+          Vendor:requestData.vendor,
+          items:[],
+      }
+      for(let item of requestData.items)
+      {
+          let tempobj={
+              item: this.itemList.filter(o=> o._id==item.item_id),
+              RequiredQuantity:item.qty,
+              Rate:item.rate,
+              SubTotalAmount:item.qty*item.rate,
+              Total:0,
+          }
+          tempobj.item=tempobj.item[0];
+          delete tempobj.item.category;
+          delete tempobj.item.created_at;
+          delete tempobj.item.gst;
+          let tax={
+            amount:tempobj.item.gstDetail.gst_percentage,
+            name:tempobj.item.gstDetail.gst_name,
+          }
+          tempobj.item.tax=tax;
+          delete tempobj.item.gstDetail;
+          delete tempobj.item.item_number;
+          delete tempobj.item.specification;
+          delete tempobj.item.sub_category;
+          delete tempobj.item.uom;
+          delete tempobj.item.updated_at;
+          tempobj.item.qty=tempobj.RequiredQuantity;
+          tempobj.item.item_id=item.item_id;
+          tempobj.item.remark=item.remark
+          // console.log(tempobj.item)
+          // console.log(tempobj.item.gstDetail)
+          tempobj.Total=(item.qty*item.rate)+((item.qty*item.rate)*tempobj.item.tax.amount)/100;
+          obj.items.push(tempobj);
+      }
+      vendorItems.push(obj);
+      requestData.vendorItems=vendorItems;
+    }
+    console.log(requestData)
     this.load = true;
     this.httpService.POST(PURCHASE_REQUEST_API, requestData).subscribe({
       next: (resp: any) => {

@@ -32,11 +32,13 @@ export class PurchaseOrderDetailsComponent implements OnInit {
 
     this.route.params.subscribe(params => {
       this.pageId = params['id'];
+      console.log(this.pageId)
       if (params['id']) {
         this.httpService.GET(`${PURCHASE_ORDER_API}/detail`, { _id: params['id'] }).subscribe(res => {
           this.poDetails = res.data;
+          console.log(this.poDetails)
           this.validityDate.patchValue(this.poDetails.due_date);
-          this.term_condition.patchValue(this.poDetails.vendor_detail.terms_condition);
+          this.term_condition.patchValue(this.poDetails.terms_condition);
           this.mail_section.patchValue(this.poDetails.vendor_message);
           this.mail_section.disable();
           this.term_condition.disable();

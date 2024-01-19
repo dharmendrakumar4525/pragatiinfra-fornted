@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { PURCHASE_REQUEST_API, GET_SITE_API, ITEM_API, UOM_API } from '@env/api_path';
+import { PURCHASE_REQUEST_API, GET_SITE_API, ITEM_API, UOM_API, GET_VENDOR_API, VENDOR_DETAIL_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,8 +24,8 @@ export class UpdatePrStatusComponent implements OnInit {
     date: new FormControl('', Validators.required),
     expected_delivery_date: new FormControl('', Validators.required),
     purchase_request_number: new FormControl(''),
-    site: new FormControl('', Validators.required),
-    local_purchase: new FormControl('', Validators.required),
+    site: new FormControl({value: '', disabled: true}, Validators.required),
+    local_purchase: new FormControl({value: '', disabled: true}, Validators.required),
     remarks: new FormControl(''),
     items: this.formBuilder.array([]),
     _id: new FormControl()
@@ -33,6 +33,7 @@ export class UpdatePrStatusComponent implements OnInit {
   uomList: any;
   itemList: any;
   details: any = {};
+  selectedVendor: any;
 
   constructor(
     private router: Router,
@@ -128,13 +129,38 @@ export class UpdatePrStatusComponent implements OnInit {
       this.router.navigate(['/procurement/prlist'])
     })
   }
+  // isVendorSelected(items: any): any[] {
+  //   console.log(items,"Items")
+  //   let tempVendorList=this.vendorsList.filter(vendor=>vendor.category.includes(items.categoryDetail._id) && vendor.SubCategory.includes(items.subCategoryDetail._id))
+  //   console.log(tempVendorList,"LLL")
+  //   return tempVendorList;
+  // }
+  getVendorList() {
+    if(this.details.vendor!=null)
+    {
+      const vendor = this.http.get<any>(`${environment.api_path}${VENDOR_DETAIL_API}?_id=${this.details.vendor}`);
+      this.httpService.multipleRequests(vendor, {}).subscribe(res => {
+        if (res) {
+          //console.log(res[0],"res")
+          //this.vendorsList=res[0].data;
+          this.selectedVendor=res[0].data[0].vendor_name
+         //this.isVendorSelected(this.details.items[1]);
+        }
+  
+      })
+    }
+    
+  }
+  
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.httpService.GET(`${PURCHASE_REQUEST_API}/detail`, { _id: params['id'] }).subscribe({
-          next: res => {
+          next: res => {  
             this.details = res.data[0];
+            console.log(this.details,"JKL")
+            this.getVendorList();
             this.patchData(res.data[0]);
           }, error: (error) => {
             this.router.navigate(['/procurement/prlist'])
@@ -142,6 +168,5 @@ export class UpdatePrStatusComponent implements OnInit {
         })
       }
     });
-  }
-
+    }
 }

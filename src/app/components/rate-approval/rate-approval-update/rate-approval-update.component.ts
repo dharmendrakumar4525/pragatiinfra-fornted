@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { RATE_COMPARATIVE_DETAIL_API, GET_SITE_API, ITEM_API, UOM_API, RATE_COMPARATIVE_API } from '@env/api_path';
+import { RATE_COMPARATIVE_DETAIL_API, GET_SITE_API, ITEM_API, UOM_API, RATE_COMPARATIVE_API,PURCHASE_ORDER_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 
@@ -29,6 +29,9 @@ export class RateApprovalUpdateComponent implements OnInit {
   VendorRate = new Map<string, any>();
   ItemwiseVendorRate=new Map<string,any>();
   compareBy:any="item"
+  purchaseList: any;
+  po_no: any;
+  curr_site:any;
   purchaseRequestForm = new FormGroup({
     title: new FormControl({value: '', disabled: true}, Validators.required),
     date: new FormControl({value: '', disabled: true}, Validators.required),
@@ -149,9 +152,12 @@ export class RateApprovalUpdateComponent implements OnInit {
   getList() {
 
     const site = this.http.get<any>(`${environment.api_path}${GET_SITE_API}`);
-    this.httpService.multipleRequests([site], {}).subscribe(res => {
+    const purchase = this.http.get<any>(`${environment.api_path}${PURCHASE_ORDER_API}`);
+    this.httpService.multipleRequests([site,purchase], {}).subscribe(res => {
       if (res) {
         this.siteList = res[0].data;
+        this.purchaseList=res[1].data
+        console.log(this.purchaseList+"from getsitelist")
       }
     })
   }
@@ -176,7 +182,7 @@ export class RateApprovalUpdateComponent implements OnInit {
       local_purchase: data.local_purchase,
       remarks: data.remarks,
     });
-
+    this.curr_site=data.site
     this.purchaseRequestForm.controls['remarks'].disable();
   }
 
@@ -290,65 +296,101 @@ export class RateApprovalUpdateComponent implements OnInit {
   }
 
   updateRequest(status: any) {
-
-    if(this.compareBy=='vendor')
+    if(status=="revise")
     {
-        console.log(this.VendorRate)
+      this.details['status']=status;
+      this.details.stage="rate_comparitive";
+    }
+    else if(status=="rejected")
+    {
+      this.details['status']=status;
+    }
+    else{
+
+      //generating po number
+      const siteName=this.siteList.find(obj=> obj._id==this.curr_site);
+      console.log(siteName)
+      const dynamicDataFormatted = siteName.site_name.replace(/[ ,]/g, '_');
+      console.log(dynamicDataFormatted)
+      const currentYear = new Date().getFullYear();
+      const nextYear = currentYear + 1;
+      const yearRange = `${String(currentYear).slice(-2)}-${String(nextYear).slice(-2)}`;
+      const searchTerm = `PISL/${yearRange}/${dynamicDataFormatted}/`;
+      console.log(searchTerm)
+      console.log(this.purchaseList)
+      const filteredList = this.purchaseList.filter(item => item.po_number.includes(dynamicDataFormatted));
+      const Pocount=filteredList.length+1;
+      this.po_no=searchTerm;
+      console.log(this.po_no);
+
+      if(this.compareBy=='vendor')
+      {
+          console.log(this.VendorRate)
+          // if (!this.purchaseRequestForm.valid) {
+          //   return;
+          // }
+          let vendorRates:any[]=[];
+          this.VendorRate.forEach((value,key)=>{
+            // console.log(value);
+            // value.VendorRate.forEach((value1,key1)=>{
+  
+              vendorRates.push(value);
+            // })
+          
+          })
+          this.details['vendorRatesVendorWise']=vendorRates;
+         
+          this.details['compareBy']=this.compareBy;
+          this.details['po_number']=this.po_no;
+          this.details['Pocount']=Pocount;
+          if(this.details.status='revise')
+            this.details['isRevised']=true;
+          this.details['status']="approved"
+          // let requestedData: any = this.purchaseRequestForm.value;
+          console.log(this.details);
+          // let requestedData: any = this.purchaseRequestForm.value;
+          // console.log(requestedData);
+          // requestedData['_id'] = this.details._id;
+          // requestedData['items'] = this.details.items;
+          // requestedData['vendors_total'] = this.details.vendors_total;
+          // requestedData['status'] = status;
+      }
+      else{
+        // console.log(this.ItemwiseVendorRate)
         // if (!this.purchaseRequestForm.valid) {
         //   return;
         // }
         let vendorRates:any[]=[];
-        this.VendorRate.forEach((value,key)=>{
+        this.ItemwiseVendorRate.forEach((value,key)=>{
           // console.log(value);
-          // value.VendorRate.forEach((value1,key1)=>{
-
-            vendorRates.push(value);
-          // })
-        
+          value.VendorRate.forEach((value1,key1)=>{
+            vendorRates.push(value1);
+          })
+         
         })
-        this.details['vendorRatesVendorWise']=vendorRates;
-        this.details['status']="approved"
+        this.details['vendorRatesItemWise']=vendorRates
+        
         this.details['compareBy']=this.compareBy;
+        this.details['po_number']=this.po_no;
+        this.details['Pocount']=Pocount;
+        if(this.details.status='revise')
+            this.details['isRevised']=true;
+        this.details['status']="approved"
         // let requestedData: any = this.purchaseRequestForm.value;
         console.log(this.details);
-        // let requestedData: any = this.purchaseRequestForm.value;
-        // console.log(requestedData);
-        // requestedData['_id'] = this.details._id;
-        // requestedData['items'] = this.details.items;
-        // requestedData['vendors_total'] = this.details.vendors_total;
-        // requestedData['status'] = status;
-    }
-
-    else{
-      // console.log(this.ItemwiseVendorRate)
-      // if (!this.purchaseRequestForm.valid) {
-      //   return;
-      // }
-      let vendorRates:any[]=[];
-      this.ItemwiseVendorRate.forEach((value,key)=>{
-        // console.log(value);
-        value.VendorRate.forEach((value1,key1)=>{
-          vendorRates.push(value1);
-        })
-       
-      })
-      this.details['vendorRatesItemWise']=vendorRates
-      this.details['status']="approved"
-      this.details['compareBy']=this.compareBy;
+  
+      }
+      if (!this.purchaseRequestForm.valid) {
+        return;
+      }
+  
       // let requestedData: any = this.purchaseRequestForm.value;
-      console.log(this.details);
-
+      // requestedData['_id'] = this.details._id;
+      // requestedData['items'] = this.details.items;
+      // requestedData['vendors_total'] = this.details.vendors_total;
+      // requestedData['status'] = status;
+      // requestedData['po_number']=this.po_no;
     }
-    // if (!this.purchaseRequestForm.valid) {
-    //   return;
-    // }
-
-    // let requestedData: any = this.purchaseRequestForm.value;
-    // requestedData['_id'] = this.details._id;
-    // requestedData['items'] = this.details.items;
-    // requestedData['vendors_total'] = this.details.vendors_total;
-    // requestedData['status'] = status;
-
     this.load = true;
     this.httpService.PUT(RATE_COMPARATIVE_API, this.details).subscribe(res => {
       this.snack.notify("Detail has been updated", 1);
@@ -368,6 +410,7 @@ export class RateApprovalUpdateComponent implements OnInit {
         this.snack.notify(err.message, 2);
       }
     })
+   
   }
 
   // onChangeFreightCharges(event: any, item: any) {

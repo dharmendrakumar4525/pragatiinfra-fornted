@@ -3,7 +3,7 @@ import { Component, OnInit, } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PURCHASE_ORDER_API ,DMRPURCHASE_ORDER_API} from '@env/api_path';
+import { PURCHASE_ORDER_API ,DMRPURCHASE_ORDER_API, RATE_COMPARATIVE_DETAIL_API, RATE_COMPARATIVE_API} from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { ESignComponent } from '../e-sign/e-sign.component';
 import { BillingAddressPopupComponent } from '../billing-address-popup/billing-address-popup.component';
@@ -49,7 +49,33 @@ export class PurchaseOrderUpdateComponent implements OnInit {
 
   }
 
-  updateStatus(status: any) {
+  async updateStatus(status: any) {
+
+    if(status=="revise"){
+      try {
+        const response = await this.httpService.GET(`${RATE_COMPARATIVE_DETAIL_API}`, { _id: this.poDetails.rate_approval_id }).toPromise();
+        const requestApprovalDocument = { ...response.data.details, status: 'revise' };
+        console.log(requestApprovalDocument);
+        await this.httpService.PUT(`${RATE_COMPARATIVE_API}`, requestApprovalDocument).toPromise();
+        await this.httpService.DELETE(`${PURCHASE_ORDER_API}`, {_id:this.poDetails._id}).toPromise();
+        this.snack.notify("Detail has been updated", 1);
+        this.router.navigate(['/purchase-order']);
+        this.load = false;
+      } catch (err) {
+        this.load = false;
+        if (err.errors && !isEmpty(err.errors)) {
+          const errMessage = '<ul>' + Object.values(err.errors).map(objData => `<li>${objData[0]}</li>`).join('') + '</ul>';
+          this.snack.notifyHtml(errMessage, 2);
+        } else {
+          this.snack.notify(err.message, 2);
+        }
+      }
+
+    return;
+  }
+
+
+
     let requestData: any = {};
     requestData['status'] = status;
     requestData['_id'] = this.poDetails._id;

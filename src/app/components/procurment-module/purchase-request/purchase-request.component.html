@@ -152,10 +152,10 @@
               <th>Sub&nbsp;category</th>
               <th>Uom*</th>
               <th>Quantity*</th>
-              <th>Brand Name</th>
+              <!-- <th>Brand Name</th> -->
               <th>Rate</th>
-              <th>Gst</th>
-              <th>Freight</th>
+              <!-- <th>Gst</th> -->
+              <!-- <th>Freight</th> -->
               <th>Remarks</th>
               <th>Action</th>
             </tr>
@@ -196,18 +196,21 @@
                   <td>
                     <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
                   </td>
-                  <td>
+                  <!-- <td>
                     <input type="text" placeholder="Enter"  formControlName="brandName" class="pr-form-field">
-                  </td>
+                  </td> -->
                   <td>
                     <input type="text" placeholder="Enter" digitOnly formControlName="rate" class="pr-form-field">
                   </td>
-                  <td>
-                    <input type="text" placeholder="Enter" digitOnly formControlName="gst" class="pr-form-field">
-                  </td>
-                  <td>
+                  <!-- <td>
+                    <input type="text" placeholder="Enter"  formControlName="gst" class="pr-form-field">
+                    {{ item.gstDetail.gst_percentage }}{{ item.gstDetail.gst_name }}
+                    {{ item?.get('gstDetail')?.get('gst_percentage')?.value }}
+
+                  </td> -->
+                  <!-- <td>
                     <input placeholder="Enter" formControlName="freight" class="pr-form-field">
-                  </td>
+                  </td> -->
                   <td>
                     <input placeholder="Enter" formControlName="remark" class="pr-form-field">
                   </td>

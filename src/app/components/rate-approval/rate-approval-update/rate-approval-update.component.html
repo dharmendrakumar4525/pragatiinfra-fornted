@@ -412,6 +412,9 @@
       <span *ngIf="!load">Reject</span>
       <span *ngIf="load">Please wait...</span>
     </button>
-
+    <button class="p-btns-button" (click)="updateRequest('revise')" [disabled]="load">
+      <span *ngIf="!load">Revise</span>
+      <span *ngIf="load">Please wait...</span>
+    </button>
   </div>
 </form>

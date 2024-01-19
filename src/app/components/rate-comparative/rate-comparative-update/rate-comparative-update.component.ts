@@ -46,7 +46,7 @@ export class RateComparativeUpdateComponent implements OnInit {
   vendorsList: Array<any> = [];
   vendorAssociatedData: Array<any> = [];
   users: any;
-  
+  filteredItems:Array<any> = [];
 
   constructor(
     private router: Router,
@@ -69,8 +69,8 @@ export class RateComparativeUpdateComponent implements OnInit {
   vendorForm = this.formBuilder.group({
     vendor: this.formBuilder.array([]),
   });
-  ItemData(dataObj: any,i:any) {
-
+  ItemData(dataObj: any,vendors:any) {
+    console.log(vendors)
     let index=this.finalVendorArray.findIndex(item=> item==dataObj)
     //console.log(index)
     const dialogPopup = this.dialog.open(RateComparativeVendorsComponent, {
@@ -78,7 +78,8 @@ export class RateComparativeUpdateComponent implements OnInit {
         dataObj: dataObj,
         vendorsList: this.vendorsList,
         items:this.details?.items,
-        index:i,
+        // index:i,
+        vendors:vendors,
         filledData:this.VendorItems[index]
       }
     });
@@ -177,17 +178,39 @@ export class RateComparativeUpdateComponent implements OnInit {
   }
 
 
-
+  // rejectRequest(){
+  //   this.details['status']="rejected"
+  //   this.load = true;
+  //   this.httpService.PUT(RATE_COMPARATIVE_API, this.details).subscribe(res => {
+  //     this.snack.notify("Detail has been updated", 1);
+  //     this.router.navigate(['/rate-comparative'])
+  //     this.load = false;
+  //   }, (err: any) => {
+  //     this.load = false;
+  //     if (err.errors && !isEmpty(err.errors)) {
+  //       let errMessage = '<ul>';
+  //       for (let e in err.errors) {
+  //         let objData = err.errors[e];
+  //         errMessage += `<li>${objData[0]}</li>`;
+  //       }
+  //       errMessage += '</ul>';
+  //       this.snack.notifyHtml(errMessage, 2);
+  //     } else {
+  //       this.snack.notify(err.message, 2);
+  //     }
+  //   })
+  // }
   updateRequest() {
     if (!this.rateComparativeForm.valid) {
       return;
     }
-
+    let loginUser = JSON.parse(localStorage.getItem('loginData'))
     let requestedData= this.rateComparativeForm.value;
+    // console.log(this.rateComparativeForm)
     requestedData['_id'] = this.details._id;
     requestedData['items'] = this.details.items;
     requestedData['stage'] = 'rate_approval';
-
+    requestedData['handle_by']=loginUser.user._id;
     for(let i=0;i<this.VendorItems.length;i++)
       this.VendorItems[i]=this.VendorItems[i].data.value
     
@@ -217,50 +240,50 @@ export class RateComparativeUpdateComponent implements OnInit {
     })
   }
 
-  onChangeFreightCharges(event: any, item: any) {
-    let value = (event.target.value && event.target.value >= 0) ? Number(event.target.value) : 0;
+  // onChangeFreightCharges(event: any, item: any) {
+  //   let value = (event.target.value && event.target.value >= 0) ? Number(event.target.value) : 0;
 
-    this.details.vendors_total = this.details.vendors_total.map((o: any) => {
+  //   this.details.vendors_total = this.details.vendors_total.map((o: any) => {
 
-      if (o.vendor_id == item.vendor_id) {
-        o.freight_charges = value;
-        let total = o.subtotal + o.total_tax;
+  //     if (o.vendor_id == item.vendor_id) {
+  //       o.freight_charges = value;
+  //       let total = o.subtotal + o.total_tax;
 
-        if (o.freight_charges) {
-          total += Number(o.freight_charges);
-        }
-        if (o.freight_tax) {
-          total += (Number(o.freight_charges) * Number(o.freight_tax)) / 100;
-        }
-        o.total_amount = total;
-      }
+  //       if (o.freight_charges) {
+  //         total += Number(o.freight_charges);
+  //       }
+  //       if (o.freight_tax) {
+  //         total += (Number(o.freight_charges) * Number(o.freight_tax)) / 100;
+  //       }
+  //       o.total_amount = total;
+  //     }
 
-      return o;
-    })
+  //     return o;
+  //   })
 
-  }
+  // }
 
 
-  onChangeFreightTaxPercent(event: any, item: any) {
-    let value = (event.target.value && event.target.value >= 0) ? Number(event.target.value) : 0;
+  // onChangeFreightTaxPercent(event: any, item: any) {
+  //   let value = (event.target.value && event.target.value >= 0) ? Number(event.target.value) : 0;
 
-    this.details.vendors_total = this.details.vendors_total.map((o: any) => {
+  //   this.details.vendors_total = this.details.vendors_total.map((o: any) => {
 
-      if (o.vendor_id == item.vendor_id) {
-        o.freight_tax = value;
-        let total = o.subtotal + o.total_tax;
+  //     if (o.vendor_id == item.vendor_id) {
+  //       o.freight_tax = value;
+  //       let total = o.subtotal + o.total_tax;
 
-        if (o.freight_charges) {
-          total += Number(o.freight_charges);
-        }
-        if (o.freight_tax) {
-          total += (Number(o.freight_charges) * Number(o.freight_tax)) / 100;
-        }
-        o.total_amount = total;
-      }
-      return o;
-    })
-  }
+  //       if (o.freight_charges) {
+  //         total += Number(o.freight_charges);
+  //       }
+  //       if (o.freight_tax) {
+  //         total += (Number(o.freight_charges) * Number(o.freight_tax)) / 100;
+  //       }
+  //       o.total_amount = total;
+  //     }
+  //     return o;
+  //   })
+  // }
   isVendorSelected(items: any): any[] {
     let tempVendorList=this.vendorsList.filter(vendor=>vendor.category.includes(items.categoryDetail._id) && vendor.SubCategory.includes(items.subCategoryDetail._id))
     return tempVendorList;
@@ -273,6 +296,7 @@ export class RateComparativeUpdateComponent implements OnInit {
     this.flag=false;
     this.isButtonDisabled=false;
   }
+
   save(){
     console.log(this.vendorForm)
     this.flag=true;
@@ -290,20 +314,21 @@ export class RateComparativeUpdateComponent implements OnInit {
     }
     console.log(this.finalVendorArray)
   }
-  detailsOfVendor(vendor:any,type:any,i:any){
+  detailsOfVendor(vendor:any){
     let tempvendor=this.vendorsList.find(obj=> obj._id==vendor)
-      if(type=="name")
-      {
-          return tempvendor.vendor_name
-      }
-      else if(type=="category")
-      {
-          return this.details.items[i].categoryDetail.name
-      }
-      else if(type=="subCategory")
-      {
-          return this.details.items[i].subCategoryDetail.subcategory_name
-      }
+    return tempvendor.vendor_name
+      // if(type=="name")
+      // {
+      //     return tempvendor.vendor_name
+      // }
+      // else if(type=="category")
+      // {
+      //     return this.details.items[i].categoryDetail.name
+      // }
+      // else if(type=="subCategory")
+      // {
+      //     return this.details.items[i].subCategoryDetail.subcategory_name
+      // }
   }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -318,14 +343,28 @@ export class RateComparativeUpdateComponent implements OnInit {
               this.vendorAssociatedData[o._id] = o;
               return o;
             });
-            //Initialize selectedVendors FormArray with empty form groups for each item
-            this.details?.items.forEach(() => {
-              const itemGroup = this.formBuilder.group({
-                selectedVendors: new FormControl([]),
-                // other form controls specific to each item...
-              });
-              (this.vendorForm.get('vendor')as FormArray).push(itemGroup);
+            let temparr = [];
+            this.filteredItems=this.details?.items.filter(item => {
+              let s = item.categoryDetail._id + "$" + item.subCategoryDetail._id;
+              if (!temparr.includes(s)) {
+                temparr.push(s);
+                return true; // Include the item when it's not in temparr
+              }
+              return false; // Exclude the item when it's already in temparr
             });
+            // console.log(x);
+            // return x;
+            //Initialize selectedVendors FormArray with empty form groups for each item
+            this.filteredItems.forEach((items) => {
+              let tempselectedVendors = this.formBuilder.group({
+                Item_category: items.categoryDetail,
+                Item_subCategory: items.subCategoryDetail,
+                selectedVendors: new FormControl([])
+              });
+              (this.vendorForm.get('vendor') as FormArray).push(tempselectedVendors);
+              // other form controls specific to each item...
+            });            
+            console.log(this.vendorForm.get('vendor')as FormArray)
             this.patchData(res.data.details);
           }, error: (error) => {
             // this.router.navigate(['/procurement/prlist'])

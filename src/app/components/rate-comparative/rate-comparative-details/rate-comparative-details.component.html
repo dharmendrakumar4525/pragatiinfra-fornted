@@ -4,7 +4,7 @@
   </div>
   <span
     style="font-family: 'Poppins';margin-top: 40px;font-style: normal;font-weight:600;font-size: 30px;color:#1E293B;margin-left: 10px;">Rate
-    approvals details</span>
+    approvals detailss</span>
   <span class="example-spacer"></span>
   <button mat-icon-button style="margin-right: 40px;">
     <mat-icon style="margin-top: 40px;">notifications</mat-icon>
@@ -16,29 +16,30 @@
 </div>
 <div style="display: flex;flex-direction: row;font-family: 'Poppins';font-weight: 600;">
 
-  <div style="margin-top: 20px;margin-left: 30px;display: flex;">
+ 
+  <div style="margin-top: 20px;margin-left: 30px;display: flex;cursor: pointer;" [routerLink]="['/procurement']" routerLinkActive="active-link">
 
     <div><img src="./assets/images/box.svg"></div>
     <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Purchase&nbsp;request</span>
     <div><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
   </div>
-  <div style="margin-top: 20px;margin-left: 10px;display: flex;">
+  <div style="margin-top: 20px;margin-left: 10px;display: flex;cursor: pointer;" [routerLink]="['/procurement/prlist']" routerLinkActive="active-link">
 
     <div> <img src="./assets/images/approval.svg"></div>
     <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Approvals</span>
     <div><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
   </div>
-  <div style="margin-top: 20px;margin-left: 10px;display: flex;">
-    <div> <img src="./assets/images/rc.svg"></div>
-    <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Rate&nbsp;Comparative</span>
+  <div style="margin-top: 20px;margin-left: 10px;display: flex;cursor: pointer;" [routerLink]="['/rate-comparative']" routerLinkActive="active-link">
+    <div> <img src="./assets/images/ratedown.svg"></div>
+    <span style="color: #233A61;margin-left: 5px;font-size: 14px;">Rate&nbsp;Comparative</span>
     <div><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
   </div>
-  <div style="margin-top: 20px;margin-left: 10px;display: flex;">
-    <div> <img src="./assets/images/app.svg"></div>
-    <span style="color: #233A61;margin-left: 5px;font-size: 14px;">Rate&nbsp;Approvals</span>
+  <div style="margin-top: 20px;margin-left: 10px;display: flex;cursor: pointer;" [routerLink]="['/rate-approval']" routerLinkActive="active-link">
+    <div> <img src="./assets/images/approval.svg"></div>
+    <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Rate&nbsp;Approvals</span>
     <div><mat-divider style="width: 90px;margin-left: 10px;margin-top: 10px;border:1px dashed"></mat-divider></div>
   </div>
-  <div style="margin-top: 20px;margin-left: 10px;display: flex;">
+  <div style="margin-top: 20px;margin-left: 10px;display: flex;cursor: pointer;" [routerLink]="['/purchase-order']" routerLinkActive="active-link">
     <div><img src="./assets/images/po.svg"></div>
     <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Purchase&nbsp;orders</span>
   </div>
@@ -88,7 +89,11 @@
         </label>
         <div class="custom-form-control">
           <mat-form-field appearance="outline">
-            <input matInput formControlName="handle_by" readonly placeholder="Enter handle by name" />
+            <mat-select matInput formControlName="handle_by" >
+              <mat-option *ngFor="let user of users" [value]="user?._id"  >
+                {{user?.name}}
+              </mat-option>
+            </mat-select>
 
           </mat-form-field>
         </div>
@@ -105,7 +110,7 @@
       <div class="flex-div" style="display: flex;flex-direction: column;">
         <label style="color: #4272BF;font-size: 14px;">Site name <span class="star">*</span></label>
 
-        <mat-select id="site" placeholder="Select site" formControlName="site" [disabled]="true"
+        <mat-select id="site" placeholder="Select site" formControlName="site" 
           style="padding: 10px;width: 100;border:1px solid #ccc;border-radius: 6px;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
           <mat-option [value]="item._id" *ngFor="let item of siteList">
             {{item.site_name}}
@@ -117,7 +122,7 @@
       <div class="flex-div" style="display: flex;flex-direction: column;align-items: center;">
         <label style="color: #4272BF;    margin-bottom: 10px;">Local Purchase <span class="star">*</span></label>
         <mat-radio-group aria-labelledby="example-radio-group-label" color="primary" class="example-radio-group"
-          formControlName="local_purchase" [disabled]="true">
+          formControlName="local_purchase" >
           <mat-radio-button class="example-radio-button" [value]="'yes'">
             Yes
           </mat-radio-button>
@@ -129,10 +134,130 @@
     </div>
   </mat-card>
 
+  <mat-card class="topcard" style="margin-top: 40px;">
+    <!-- Select your vendor for each Category and Subcategory -->
+    <form >
+      <div class="scroll-bar1">
+        <table>
+      <tr>
+        <th>Category</th> 
+        <th>Sub Category</th>
+        <th>Vendor</th>
+      </tr>
+      <tr *ngFor="let items of filteredItems; let i = index;" >
+        <td>{{ items.categoryDetail.name }}</td>
+        <td>{{ items.subCategoryDetail.subcategory_name }}</td>
+        <td>
+           <div *ngIf="isVendorSelected(items).length === 0 ; ">
+            No vendor available
+          </div>
+          <p *ngFor="let vendor of isVendorSelected(items)">
+            {{ detailsOfVendor(vendor,"topview",0) }}
+          </p>
+        </td>
+        
+        <!-- <td> -->
+          <!-- <div *ngIf="isVendorSelected(items).length === 0 ; else Option">
+            No vendor available
+          </div> -->
+          <!-- <ng-template #Option [formGroupName]="i">
+            <div class="col-md-3">
+              <mat-form-field appearance="outline" style="width: max-content;">
+                <mat-label>Select Vendors</mat-label>
+                <mat-select matInput multiple formControlName="selectedVendors" (selectionChange)="handleVendorChange()">
+                  <mat-option *ngFor="let vendor of isVendorSelected(items)" [value]="vendor._id">
+                    {{ vendor?.vendor_name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </ng-template> -->
+         
+        <!-- </td> -->
+      </tr>
+    </table>
+      </div>
+      <div style="display: flex; justify-content: center;">
+        <button class="p-btns-button" [disabled]="true" >Save</button>
+       </div>
+      </form>
+    
+  </mat-card>
+
+  <div class="scroll-bar1" >
+    <table style="direction: ltr !important;border-left: 2px solid #000 !important;">
+      <tr>
+        <th>Vendor*</th>
+        <th>Category</th>
+        <th>Sub&nbsp;category</th>
+        <th>Item</th>
+      </tr>
 
 
 
-  <div class="scroll-bar1">
+      <tbody >
+        <ng-container *ngFor="let vendor of details?.vendorItems; let i = index; " >
+          <!-- <tr *ngFor="let vendor of selectedVendors; let i = index;"> -->
+          <tr>
+            <td style="text-align: center;">
+              {{detailsOfVendor(vendor,"name",i)}}
+            </td>
+            <td style="text-align: center;">
+              {{vendor.items[0].item.categoryDetail.name}}
+              <!-- {{detailsOfVendor(vendor._id,"category",i)}} -->
+            </td>
+            <td style="text-align: center;">
+              {{vendor.items[0].item.subCategoryDetail.subcategory_name}}
+              <!-- {{detailsOfVendor(vendor._id,"subCategory",i)}} -->
+            </td>
+            <td>
+              <a class="p-btns" (click)="ItemData(vendor)"> Items Rates</a>
+            </td> 
+          </tr>
+          </ng-container>
+          <!-- <td style="text-align: center;">
+            {{ vendor.get('selectedVendors').value | json }}
+          </td> -->
+          <!-- <td>
+            {{item.item_name}}
+
+          </td>
+          <td style="color: #000;">
+            {{item.categoryDetail.name}}
+          </td>
+          <td style="color: #000;">
+            {{item.subCategoryDetail.subcategory_name}}
+          </td>
+
+          <td>
+            <a class="p-btns" (click)="vendorData(item)"> Vendor Rates</a>
+          </td> -->
+        
+      </tbody>
+    </table>
+  </div>
+  <div class="text-area-section">
+
+    <label style="color: #4272BF;font-size: 14px;">Remarks </label>
+    <textarea name="" id="" cols="30" rows="5" formControlName="remarks"></textarea>
+
+  </div>
+  <div class=" button-list">
+
+    <button class="p-btns-button"
+      [ngStyle]="{'background-color': details.status=='approved' ? '#54AA52' : (details.status=='rejected' ? '#C7323B' : '#233A61') }"
+      [disabled]="load">
+      <span>Approved</span>
+      <!-- <span *ngIf="details.status=='approved'">Approved</span> -->
+      <!-- <span *ngIf="details.status=='rejected'">Rejected</span>
+      <span *ngIf="details.status=='pending'">Pending</span> -->
+
+    </button>
+
+
+  </div>
+
+  <!-- <div class="scroll-bar1">
     <table style="direction: ltr !important;border-left: 2px solid #000 !important;">
       <tr>
         <th>S&nbsp;No</th>
@@ -253,20 +378,20 @@
       </div>
       <div class="vendor-value-cont" style="background-color: #186D3C14;">
         <div class="vendor-value-label">Freight</div>
-        <div class="vendor-value">
+        <div class="vendor-value"> -->
           <!-- <input type="number" min="0" (keyup)="onChangeFreightCharges($event,item)"
             (change)="onChangeFreightCharges($event,item)" [value]="item.freight_charges"
             [readonly]="item.subtotal == 0"> -->
-          {{item.freight_charges}}
+          <!-- {{item.freight_charges}}
         </div>
       </div>
       <div class="vendor-value-cont" style="background-color: #186D3C14;">
         <div class="vendor-value-label">Freight GST(%)</div>
-        <div class="vendor-value">
+        <div class="vendor-value"> -->
           <!-- <input type="number" min="0" (keyup)="onChangeFreightTaxPercent($event,item)"
             (change)="onChangeFreightTaxPercent($event,item)" [value]="item.freight_tax"
             [readonly]="item.subtotal == 0"> -->
-          {{item.freight_tax}}
+          <!-- {{item.freight_tax}}
         </div>
       </div>
       <div class="vendor-value-cont" style="background-color: #073B4C14;">
@@ -301,5 +426,5 @@
     </button>
 
 
-  </div>
+  </div>-->
 </form>

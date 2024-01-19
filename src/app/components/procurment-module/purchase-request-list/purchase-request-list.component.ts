@@ -45,7 +45,21 @@ export class PurchaseRequestListComponent implements OnInit {
     });
   }
 
+  getRemainingDays(targetDateString) {
+    const targetDate = new Date(targetDateString);
+  const currentDate = new Date();
 
+  // Set both dates to the same time of day
+  targetDate.setHours(0, 0, 0, 0);
+  currentDate.setHours(0, 0, 0, 0);
+  
+  // Calculate the difference in days
+  const timeDifference = targetDate.getTime() - currentDate.getTime();
+  let remainingDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+  return remainingDays;
+   
+  }
   dateFilter(event: MatDatepickerInputEvent<Date>) {
     if (this.originalPurchaseList && this.originalPurchaseList.length > 0) {
       if (event.value) {

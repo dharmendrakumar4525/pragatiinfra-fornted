@@ -107,7 +107,7 @@
         <td style="background-color: #C7323B;color:#fff;width:200px;font-size: 14px;cursor: pointer;"
           *ngIf="obj.status =='rejected'" [routerLink]="['/purchase-order/details',obj._id]">Rejected Rates</td>
         <td style="background-color: #ECD172;color:#fff;width:200px;font-size: 14px;cursor: pointer;"
-          *ngIf="obj.status =='revise'" [routerLink]="['/purchase-order/details',obj._id]">Revise Rates</td>
+          *ngIf="obj.status =='revise'" [routerLink]="['/purchase-order/update',obj._id]">Revise Rates</td>
 
 
         <td style="width: 100px;"><mat-icon>

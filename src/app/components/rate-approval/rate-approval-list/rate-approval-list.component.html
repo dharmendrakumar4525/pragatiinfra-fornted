@@ -107,6 +107,8 @@
           *ngIf="obj.status =='approved'" [routerLink]="['/rate-comparative/details',obj._id]">Approved Vendors</td>
         <td style="background-color: #C7323B;color:#fff;width:200px;font-size: 14px;cursor: pointer;"
           *ngIf="obj.status =='rejected'" [routerLink]="['/rate-comparative/details',obj._id]">Rejected Rates</td>
+        <td style="background-color:rgb(26, 188, 254);color:#fff;width:200px;font-size: 14px;cursor: pointer;"
+        *ngIf="obj.status=='revise'" [routerLink]="['/rate-approval/update',obj._id]">Revise &nbsp;Rates</td>
 
         <td style="width: 100px;"><mat-icon>
             arrow_forward_ios

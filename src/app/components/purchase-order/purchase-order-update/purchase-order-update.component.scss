@@ -208,6 +208,7 @@ tr:nth-child(even) {
 .terms-condition-textarea {
   width: 100%;
   height: 388px;
+  margin-top:20px ;
   background-color: #233A61;
   border: 1px solid #ffffff57;
   color: #fff;
@@ -223,7 +224,9 @@ tr:nth-child(even) {
 }
 
 .terms-condition-wrap {
-  width: 640px;
+ 
+  // justify-content: center;
+  width: 90%;
   background-color: #233A61;
   margin-left: 15px;
   border-radius: 5px;
@@ -231,7 +234,7 @@ tr:nth-child(even) {
   font-family: 'Poppins';
   padding: 20px;
 
-  @media only screen and (max-width: 836px) {
-    width: 90%;
-  }
+  // @media only screen and (max-width: 836px) {
+  //   width: 90%;
+  // }
 }

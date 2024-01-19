@@ -223,7 +223,7 @@ tr:nth-child(even) {
 }
 
 .terms-condition-wrap {
-  width: 640px;
+  
   background-color: #233A61;
   margin-left: 15px;
   border-radius: 5px;
@@ -231,7 +231,7 @@ tr:nth-child(even) {
   font-family: 'Poppins';
   padding: 20px;
 
-  @media only screen and (max-width: 836px) {
-    width: 90%;
-  }
+  // @media only screen and (max-width: 836px) {
+  //   width: 90%;
+  // }
 }

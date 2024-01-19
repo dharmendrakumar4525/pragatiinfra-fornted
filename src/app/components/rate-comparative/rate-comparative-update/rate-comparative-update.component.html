@@ -150,7 +150,7 @@
         <th>Sub Category</th>
         <th>Vendor</th>
       </tr>
-      <tr *ngFor="let items of details?.items; let i = index;" formArrayName="vendor">
+      <tr *ngFor="let items of filteredItems ; let i = index;" formArrayName="vendor">
         <td>{{ items.categoryDetail.name }}</td>
         <td>{{ items.subCategoryDetail.subcategory_name }}</td>
         <td>
@@ -192,20 +192,20 @@
 
 
 
-      <tbody >
+      <tbody > 
         <ng-container *ngFor="let vendors of vendorArray.controls; let i=index " >
           <tr *ngFor="let vendor of vendors.get('selectedVendors').value">
             <td style="text-align: center;">
-              {{detailsOfVendor(vendor,"name",i)}}
+              {{detailsOfVendor(vendor)}}
             </td>
             <td style="text-align: center;">
-              {{detailsOfVendor(vendor,"category",i)}}
+              {{vendors.get('Item_category').value.name}}
             </td>
             <td style="text-align: center;">
-              {{detailsOfVendor(vendor,"subCategory",i)}}
+              {{vendors.get('Item_subCategory').value.subcategory_name}}
             </td>
             <td>
-              <a class="p-btns" (click)="ItemData(vendor,i)"> Items Rates</a>
+              <a class="p-btns" (click)="ItemData(vendor,vendors)"> Items Rates</a>
             </td> 
           </tr>
           </ng-container>
@@ -241,6 +241,10 @@
       <span *ngIf="!load">Submit</span>
       <span *ngIf="load">Please wait...</span>
     </button>
+    <!-- <button class="p-btns-button" (click)="rejectRequest()" [disabled]="load">
+      <span *ngIf="!load">Reject</span>
+      <span *ngIf="load">Please wait...</span>
+    </button> -->
 
 
   </div>
