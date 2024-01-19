@@ -23,7 +23,7 @@ export class PurchaseOrderDetailsComponent implements OnInit {
   load: boolean;
   downloadLoading = false;
   pageId: any;
-
+  esignImage:any;
   constructor(
     private route: ActivatedRoute,
     private httpService: RequestService, private dialog: MatDialog,
@@ -37,6 +37,7 @@ export class PurchaseOrderDetailsComponent implements OnInit {
         this.httpService.GET(`${PURCHASE_ORDER_API}/detail`, { _id: params['id'] }).subscribe(res => {
           this.poDetails = res.data;
           console.log(this.poDetails)
+          this.esignImage=this.poDetails.sign;
           this.validityDate.patchValue(this.poDetails.due_date);
           this.term_condition.patchValue(this.poDetails.terms_condition);
           this.mail_section.patchValue(this.poDetails.vendor_message);

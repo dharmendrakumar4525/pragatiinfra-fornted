@@ -88,7 +88,7 @@ export class ESignComponent implements OnInit {
         next: (response) => {
           if (response) {
             this.snack.notify("Purchase order has been created with Esign.", 1);
-            this.dialogRef.close({ option: 1, data: response.data.filename });
+            this.dialogRef.close({ option: 1, data: response.data.s3FileUrl});
 
           }
         }, error: (err) => {

@@ -202,10 +202,15 @@
               </textarea>
         </div>
 
-    <!-- <div>
-      <h4>E-sign</h4>
-      <img [src]="esignImage" alt="" style="">
-    </div> -->
+    <div>
+      
+      <img style="    width: 20%;
+      padding: 2%;" [src]="esignImage" alt="" >
+      <p style="margin-left: 4%;
+      margin-top: -1%;
+      font-weight: bold;
+      font-size: large;">Authorised Signatory</p>
+    </div>
 
     <div style="display: flex;gap: 20px;justify-content: end;">
       <div><button *ngIf="poDetails.status=='approved'"
