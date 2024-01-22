@@ -7,6 +7,7 @@ import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { AddDataComponent } from '../add-data/add-data.component';
 import { isEmpty } from 'lodash';
+import { ToastService } from '@services/toast.service';
 @Component({
   selector: 'app-listing',
   templateUrl: './listing.component.html',
@@ -15,13 +16,19 @@ import { isEmpty } from 'lodash';
 export class ListingComponent implements OnInit {
   structureList: any = [];
   list: any = [];
+  permissions:any;
   constructor(
     private router: Router,
     private httpService: RequestService,
     private excelService: ExcelService,
     private snack: SnackbarService,
     private dialog: MatDialog,
+    private toast:ToastService,
   ) {
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    this.permissions=this.permissions.permissions[0].ParentChildchecklist[8];
+    console.log(this.permissions)
+    //console.log(this.permissions.permissions[0].ParentChildchecklist[8])
     this.getList();
   }
 
@@ -48,6 +55,11 @@ export class ListingComponent implements OnInit {
   }
 
   edit(id: any) {
+    if(!this.permissions.childList[1].isSelected)
+    {
+      this.toast.openSnackBar('Access to Location Master editing is restricted for your account.');
+      return;
+    }
     const confirmDialogPopup = this.dialog.open(AddDataComponent, {
       data: {
         id: id
@@ -62,6 +74,11 @@ export class ListingComponent implements OnInit {
   }
 
   add() {
+    if(!this.permissions.childList[0].isSelected)
+    {
+      this.toast.openSnackBar('Access to Location Master add is restricted for your account.');
+      return;
+    }
     const confirmDialogPopup = this.dialog.open(AddDataComponent, {
     });
     confirmDialogPopup.afterClosed().subscribe(result => {
@@ -73,6 +90,11 @@ export class ListingComponent implements OnInit {
   }
 
   delete(id: any) {
+    if(!this.permissions.childList[2].isSelected)
+    {
+      this.toast.openSnackBar('Access to Location Master deleting is restricted for your account.');
+      return;
+    }
     this.httpService.DELETE(LOCATION_API, { _id: id }).subscribe(res => {
       if (res) {
         this.snack.notify(" record has been deleted sucessfully.", 1);

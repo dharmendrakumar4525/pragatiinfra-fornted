@@ -64,13 +64,13 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       link_name: "Activity Master",
       link: "/structure",
       img: './assets/images/icons/Buser.svg',
-      module_name: 'activities'
+      module_name: ''
     },
     {
       link_name: "Sub Activity Master",
       link: "/activity",
       img: './assets/images/icons/Buser.svg',
-      module_name: 'sub activities'
+      module_name: ''
     },
     {
       link_name: "UOM Manager",
@@ -139,7 +139,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
       link: '/dmr',
       icon: "bx bx-collection",
       img: '../../../assets/images/icons/dmr.svg',
-      module_name: ''
+      module_name: 'DMR'
     },
 
     {
@@ -255,8 +255,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
       }
     });
-
-
+    // console.log("bye",this.sidebarMenu)
   }
 
   ngOnInit(): void {

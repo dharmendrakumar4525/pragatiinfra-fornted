@@ -4,7 +4,7 @@
     <div class="header-left">
       <h2>Activity Master</h2>
     </div>
-    <div class="header-right">
+    <div class="header-right" *ngIf="permissions.childList[3].isSelected">
       <div class="buttons-containers">
         <div class="filter-con">
 
@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <div class="section-body">
+  <div class="section-body" *ngIf="permissions.childList[3].isSelected; else noView">
     <table class="table  pragati-table">
       <thead>
         <tr>
@@ -69,5 +69,8 @@
 
 
   </div>
+  <ng-template #noView>
+    <h3>You don't have permissions to view.</h3>
+</ng-template>
 
 </div>
