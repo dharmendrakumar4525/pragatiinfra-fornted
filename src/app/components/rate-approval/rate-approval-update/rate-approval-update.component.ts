@@ -343,7 +343,7 @@ export class RateApprovalUpdateComponent implements OnInit {
           this.details['compareBy']=this.compareBy;
           this.details['po_number']=this.po_no;
           this.details['Pocount']=Pocount;
-          if(this.details.status='revise')
+          if(this.details.status=='revise')
             this.details['isRevised']=true;
           this.details['status']="approved"
           // let requestedData: any = this.purchaseRequestForm.value;
@@ -373,7 +373,7 @@ export class RateApprovalUpdateComponent implements OnInit {
         this.details['compareBy']=this.compareBy;
         this.details['po_number']=this.po_no;
         this.details['Pocount']=Pocount;
-        if(this.details.status='revise')
+        if(this.details.status=='revise')
             this.details['isRevised']=true;
         this.details['status']="approved"
         // let requestedData: any = this.purchaseRequestForm.value;
@@ -392,6 +392,7 @@ export class RateApprovalUpdateComponent implements OnInit {
       // requestedData['po_number']=this.po_no;
     }
     this.load = true;
+    // console.log(this.details)
     this.httpService.PUT(RATE_COMPARATIVE_API, this.details).subscribe(res => {
       this.snack.notify("Detail has been updated", 1);
       this.router.navigate(['/rate-approval'])
