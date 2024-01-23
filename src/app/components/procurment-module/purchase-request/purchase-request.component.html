@@ -42,7 +42,7 @@
       <span style="color: #97989D;margin-left: 5px;font-size: 14px;">Purchase&nbsp;orders</span>
     </div>
   </div>
-
+<ng-container *ngIf="permissions.childList[0].isSelected; else noView">
   <div class="requests">
     <div [ngClass]="{'active':option==1}" (click)="option=1">Create request</div>
     <div [ngClass]="{'active':option==2}"
@@ -152,7 +152,7 @@
               <th>Sub&nbsp;category</th>
               <th>Uom*</th>
               <th>Quantity*</th>
-              <!-- <th>Brand Name</th> -->
+              <th>Brand Name</th>
               <th>Rate</th>
               <!-- <th>Gst</th> -->
               <!-- <th>Freight</th> -->
@@ -196,9 +196,14 @@
                   <td>
                     <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
                   </td>
-                  <!-- <td>
-                    <input type="text" placeholder="Enter"  formControlName="brandName" class="pr-form-field">
-                  </td> -->
+                  <td>
+                    <mat-select id="site" placeholder="Select Brand" formControlName="brandName"
+                      class="pr-form-field">
+                      <mat-option [value]="brand._id" *ngFor="let brand of brandList">
+                        {{brand.brand_name}}
+                      </mat-option>
+                    </mat-select>
+                  </td>
                   <td>
                     <input type="text" placeholder="Enter" digitOnly formControlName="rate" class="pr-form-field">
                   </td>
@@ -255,6 +260,7 @@
               <th>Sub&nbsp;category</th>
               <th>Uom*</th>
               <th>Quantity*</th>
+              <th>Brand Name</th>
               <!-- <th>Attachments</th> -->
               <th>Remarks</th>
               <th>Action</th>
@@ -299,6 +305,14 @@
                   <!-- <td>
                     <input placeholder="Enter" formControlName="attachment" type="file" class="pr-form-field">
                   </td> -->
+                  <td>
+                    <mat-select id="site" placeholder="Select Brand" formControlName="brandName"
+                      class="pr-form-field">
+                      <mat-option [value]="brand._id" *ngFor="let brand of brandList">
+                        {{brand.brand_name}}
+                      </mat-option>
+                    </mat-select>
+                  </td>
                   <td>
                     <input placeholder="Enter" formControlName="remark" class="pr-form-field">
                   </td>
@@ -441,5 +455,15 @@
       </div>
     </div>
   </ng-container>
+</ng-container>
+<ng-template #noView>
+  <h3 style="    display: flex;
+  justify-content: center;
+  margin-top: 2%;
+  font-size: 160%;
+  font-weight: bolder;
+  color: grey;">You don't have permissions to view.</h3>
+</ng-template>
+ 
 
 </div>

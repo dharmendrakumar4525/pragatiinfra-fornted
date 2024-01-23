@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { PURCHASE_REQUEST_API, GET_SITE_API, ITEM_API, UOM_API,GET_VENDOR_API } from '@env/api_path';
+import { PURCHASE_REQUEST_API, GET_SITE_API, ITEM_API, UOM_API,GET_VENDOR_API,GET_BRAND_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
@@ -49,7 +49,9 @@ export class PurchaseRequestComponent implements OnInit {
   option = 1;
   purchaseList: any = [];
   filter_by = "status";
+  brandList:any;
   originalPurchaseList: any = [];
+  permissions: any;
   constructor(
     private router: Router,
     private httpService: RequestService,
@@ -160,14 +162,17 @@ export class PurchaseRequestComponent implements OnInit {
     const item = this.http.get<any>(`${environment.api_path}${ITEM_API}`);
     const site = this.http.get<any>(`${environment.api_path}${GET_SITE_API}`);
     const vendor = this.http.get<any>(`${environment.api_path}${GET_VENDOR_API}`);
-    this.httpService.multipleRequests([UOM, item, site, vendor], {}).subscribe(res => {
+    const brand = this.http.get<any>(`${environment.api_path}${GET_BRAND_API}`);
+    this.httpService.multipleRequests([UOM, item, site, vendor,brand], {}).subscribe(res => {
       if (res) {
         this.uomList = res[0].data;
         this.itemList = res[1].data;
         this.siteList = res[2].data;
         this.vendorList=res[3].data;
+        this.brandList=res[4].data;
         console.log(this.vendorList);
         console.log(this.itemList);
+        console.log("brand",this.brandList)
       }
 
     })
@@ -210,7 +215,7 @@ export class PurchaseRequestComponent implements OnInit {
       attachment: new FormControl(''),
       remark: new FormControl(''),
       uom: new FormControl(''),
-
+      brandName:new FormControl(''),
     });
   }
   createLocalItem(): FormGroup {
@@ -331,6 +336,8 @@ export class PurchaseRequestComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    this.permissions=this.permissions.permissions[0].ParentChildchecklist[9];
     this.getList();
     this.addItem();
   }
