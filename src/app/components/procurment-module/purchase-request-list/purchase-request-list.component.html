@@ -92,6 +92,56 @@
           <hr style="border: 1px solid #D9D9D9;height: 30px;">
           <td *ngIf="getRemainingDays(obj.expected_delivery_date) !== undefined && getRemainingDays(obj.expected_delivery_date) <= 2" style="width:200px;" [style.color]="getRemainingDays(obj.expected_delivery_date) >= 0 ? 'green' : 'red'">
             &nbsp; {{ getRemainingDays(obj.expected_delivery_date) >= 0 ? getRemainingDays(obj.expected_delivery_date) + ' days left' : 'Delayed by ' + getRemainingDays(obj.expected_delivery_date) * -1 + ' days' }}
+<ng-container *ngIf="permissions.childList[0].isSelected; else noView">
+  <div style="display: flex;flex-direction: row;gap:10px">
+    <div style="margin-left: 40px;width:100%;margin-top: 30px;">
+      <mat-form-field appearance="outline" class="searchbar">
+        <mat-icon matSuffix>search</mat-icon>
+        <input matInput type="search" placeholder="search title" class="search-input" (input)="search($event,'title')">
+  
+      </mat-form-field>
+    </div>
+    <div style=" margin-right: 600px;margin-top: 30px;display: flex;gap:10px">
+      <div style="margin-top: 15px;color: #94A3B8;margin-left: 30px;"> <span>Filter&nbsp;by</span></div>
+      <div> <mat-form-field appearance="outline" class="datebar">
+          <input matInput [matDatepicker]="startPicker" placeholder="Date" (dateChange)="dateFilter( $event)"
+            (click)="startPicker.open()" />
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field></div>
+    </div>
+    <div style="margin-top: 30px;display: flex;position: relative;right:570px;gap:10px">
+      <div style="margin-top: 15px;color: #94A3B8;margin-left: -10px;"> <span>Filter&nbsp;by</span></div>
+      <div> <mat-form-field appearance="outline" class="datebar">
+          <input matInput placeholder="Site" (input)="search($event,'site')" />
+        </mat-form-field></div>
+    </div>
+    <div style="margin-top: 50px;position: relative;right:520px;">
+      <span [ngClass]="[requestType=='new' ? 'active' : 'inactive']" style="cursor: pointer;"
+        (click)="changeRequestType('new')">New&nbsp;request&nbsp;|</span>
+      <span [ngClass]="[ requestType=='revise' ? 'active' : 'inactive']" style="cursor: pointer;"
+        (click)="changeRequestType('revise')">&nbsp;Revised&nbsp;request</span>
+    </div>
+  </div>
+  
+  
+  <div class="scroll-bar1" style="width: 93%;">
+    <table style="direction: ltr !important;margin-top: -20px;">
+  
+  
+  
+      <tbody>
+        <tr *ngFor="let obj of purchaseList">
+          <td style="color: #4272BF;width:300px;text-align: left;padding: 10px;">Request&nbsp;no&nbsp;
+            {{obj.purchase_request_number}}</td>
+          <hr style="border: 1px solid #D9D9D9;height: 30px;">
+          <td style="color: #4272BF;width:200px;">Title &nbsp; {{obj.title}}</td>
+          <hr style="border: 1px solid #D9D9D9;height: 30px;">
+          <td style="color: #4272BF;width:800px;text-align: left;padding: 10px;">Site &nbsp; {{obj.siteData.site_name}}
+          </td>
+          <hr style="border: 1px solid #D9D9D9;height: 30px;">
+          <td *ngIf="getRemainingDays(obj.expected_delivery_date) !== undefined && getRemainingDays(obj.expected_delivery_date) <= 2" style="width:200px;" [style.color]="getRemainingDays(obj.expected_delivery_date) >= 0 ? 'green' : 'red'">
+            &nbsp; {{ getRemainingDays(obj.expected_delivery_date) >= 0 ? getRemainingDays(obj.expected_delivery_date) + ' days left' : 'Delayed by ' + getRemainingDays(obj.expected_delivery_date) * -1 + ' days' }}
         </td>
         <td *ngIf="getRemainingDays(obj.expected_delivery_date) === undefined || getRemainingDays(obj.expected_delivery_date) > 2" style="width:200px;"></td>
           <td style="color:#fff;width:150px;cursor: pointer;"
