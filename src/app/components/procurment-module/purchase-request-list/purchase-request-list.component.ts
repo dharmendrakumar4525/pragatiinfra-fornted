@@ -17,6 +17,7 @@ export class PurchaseRequestListComponent implements OnInit {
   filter_value = "pending";
   requestType = "new";
   originalPurchaseList: any = [];
+  permissions: any;
   constructor(private router: Router,
     private httpService: RequestService,
     private snack: SnackbarService,
@@ -110,7 +111,8 @@ export class PurchaseRequestListComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    this.permissions=this.permissions.permissions[0].ParentChildchecklist[10];
   }
 
 }

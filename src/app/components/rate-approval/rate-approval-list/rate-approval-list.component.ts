@@ -37,6 +37,7 @@ export class RateApprovalListComponent implements OnInit {
   filter_value = "pending";
   requestType = "new";
   originalRateComparativeList: any = [];
+  permissions: any;
   constructor(
     private httpService: RequestService,
     private snack: SnackbarService,
@@ -107,7 +108,8 @@ export class RateApprovalListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    this.permissions=this.permissions.permissions[0].ParentChildchecklist[12];
   }
 
 }

@@ -37,6 +37,7 @@ export class RateComparativeListComponent implements OnInit {
   requestType = "new";
   originalRateComparativeList: any = [];
   stage='rate_comparitive';
+  permissions: any;
   constructor(
     private httpService: RequestService,
     private snack: SnackbarService,
@@ -118,6 +119,7 @@ export class RateComparativeListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    this.permissions=this.permissions.permissions[0].ParentChildchecklist[11];
   }
 }
