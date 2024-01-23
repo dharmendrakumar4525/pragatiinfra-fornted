@@ -43,7 +43,6 @@
     </div>
   </div>
 <ng-container *ngIf="permissions.childList[0].isSelected; else noView">
-<ng-container *ngIf="permissions.childList[0].isSelected; else noView">
   <div class="requests">
     <div [ngClass]="{'active':option==1}" (click)="option=1">Create request</div>
     <div [ngClass]="{'active':option==2}"
