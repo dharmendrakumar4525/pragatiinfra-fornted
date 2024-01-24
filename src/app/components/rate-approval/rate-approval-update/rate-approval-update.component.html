@@ -172,6 +172,7 @@
           <th>Sub&nbsp;category</th>
           <th>Uom</th>
           <th>Quantity</th>
+          <th>Brand Name</th>
           <th>Tax</th>
           <!-- <th>Vendors</th> -->
         </tr>
@@ -196,6 +197,7 @@
             <td>
               {{item.qty}}
             </td>
+            <td>{{myBrandName(item.brandName)}}</td>
             <td>
               <ng-container *ngIf="item.tax && item.tax.amount">
                 {{item.tax.name}}({{item.tax.amount}}%)
@@ -290,6 +292,7 @@
         <th>Sub&nbsp;category</th>
         <th>Uom</th>
         <th>Quantity</th>
+        <th>Brand Name</th>
         <th>Tax</th>
         <th>Vendors</th>
         <th>Vendor Selection</th>
@@ -318,6 +321,7 @@
           <td>
             {{item.qty}}
           </td>
+          <td>{{myBrandName(item.brandName)}}</td>
           <td>
             <ng-container *ngIf="item.tax && item.tax.amount">
               {{item.tax.name}}({{item.tax.amount}}%)

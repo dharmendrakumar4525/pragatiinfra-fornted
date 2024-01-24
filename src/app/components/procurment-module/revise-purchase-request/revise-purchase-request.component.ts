@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { PURCHASE_REQUEST_API, GET_SITE_API, ITEM_API, UOM_API, GET_VENDOR_API } from '@env/api_path';
+import { PURCHASE_REQUEST_API, GET_SITE_API, ITEM_API, UOM_API, GET_VENDOR_API, GET_BRAND_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
@@ -26,6 +26,7 @@ export class RevisePurchaseRequestComponent implements OnInit {
   itemList: any;
   filteredItemList: any;
   initialVendor:any
+  brandList: any;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -47,7 +48,7 @@ export class RevisePurchaseRequestComponent implements OnInit {
     remarks: new FormControl(''),
     items: this.formBuilder.array([]),
     _id: new FormControl(''),
-    vendor: new FormControl(),
+    vendor: new FormControl(''),
   });
 
   handleLocalPurchaseChange(){
@@ -57,6 +58,9 @@ export class RevisePurchaseRequestComponent implements OnInit {
     
   }
   onVendorSelection(event: any) {
+    console.log(event)
+    if(event.value==null)
+      return;
     // Retrieve the selected vendor from the vendorList based on the _id
     const selectedVendor = this.vendorList.find(item => item._id === event.value);
    // console.log('Selected Vendor Object:', selectedVendor);
@@ -103,6 +107,7 @@ export class RevisePurchaseRequestComponent implements OnInit {
       remark: new FormControl(null),
       uom: new FormControl(null),
       itemName: new FormControl(null),
+      brandName: new FormControl(null),
 
     })
 
@@ -112,7 +117,8 @@ export class RevisePurchaseRequestComponent implements OnInit {
     if (this.load) {
       return
     }
-
+    console.log(this.purchaseRequestForm)
+console.log(this.purchaseRequestForm.valid)
     if (!this.purchaseRequestForm.valid) {
       return;
     }
@@ -151,15 +157,17 @@ export class RevisePurchaseRequestComponent implements OnInit {
     const item = this.http.get<any>(`${environment.api_path}${ITEM_API}`);
     const site = this.http.get<any>(`${environment.api_path}${GET_SITE_API}`);
     const vendor = this.http.get<any>(`${environment.api_path}${GET_VENDOR_API}`);
+    const brand = this.http.get<any>(`${environment.api_path}${GET_BRAND_API}`);
     
     try {
-      const res = await this.httpService.multipleRequests([UOM, item, site, vendor], {}).toPromise();
+      const res = await this.httpService.multipleRequests([UOM, item, site, vendor,brand], {}).toPromise();
 
       if (res) {
         this.uomList = res[0].data;
         this.itemList = res[1].data;
         this.siteList = res[2].data;
         this.vendorList = res[3].data;
+        this.brandList=res[4].data
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -185,31 +193,33 @@ export class RevisePurchaseRequestComponent implements OnInit {
 
   createItem(item?: any): any {
     if (item) {
-      const foundItem = this.itemList.find(items => item.item_id == items._id);
-      const additionalKeyValue = foundItem ? foundItem.item_name : 'defaultValue';
+      // const foundItem = this.itemList.find(items => item.item_id == items._id);
+      // const additionalKeyValue = foundItem ? foundItem.item_name : 'defaultValue';
+      // const foundBrand = this.brandList.find(items => item.brandName == items._id);
+      // const additionalKeyValueBrand = foundBrand ? foundBrand.brand_name : 'defaultValue';
       return new FormGroup({
         item_id: new FormControl(item.item_id, Validators.required),
         qty: new FormControl(item.qty, Validators.required),
-        rate:new FormControl(item.rate, Validators.required),
+        rate:new FormControl(item.rate),
         category: new FormControl(item.categoryDetail.name),
         subCategory: new FormControl(item.subCategoryDetail.subcategory_name),
         attachment: new FormControl(item.attachment),
         remark: new FormControl(item.remark),
         uom: new FormControl(item.uomDetail.uom_name),
-        itemName: new FormControl(additionalKeyValue),
+        brandName: new FormControl(item.brandName),
       })
     }
     else {
       return new FormGroup({
         item_id: new FormControl('', Validators.required),
         qty: new FormControl('', Validators.required),
-        rate:new FormControl('', Validators.required),
+        rate:new FormControl(''),
         category: new FormControl(''),
         subCategory: new FormControl(''),
         attachment: new FormControl(),
         remark: new FormControl(''),
         uom: new FormControl(''),
-        itemName: new FormControl('')
+        brandName: new FormControl('')
 
       })
     }

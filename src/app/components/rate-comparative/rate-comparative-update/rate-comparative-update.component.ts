@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { RATE_COMPARATIVE_DETAIL_API, GET_SITE_API, ITEM_API, UOM_API, RATE_COMPARATIVE_API } from '@env/api_path';
+import { RATE_COMPARATIVE_DETAIL_API, GET_SITE_API, ITEM_API, UOM_API, RATE_COMPARATIVE_API, GET_BRAND_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 
@@ -47,6 +47,7 @@ export class RateComparativeUpdateComponent implements OnInit {
   vendorAssociatedData: Array<any> = [];
   users: any;
   filteredItems:Array<any> = [];
+  brandList: any;
 
   constructor(
     private router: Router,
@@ -58,6 +59,7 @@ export class RateComparativeUpdateComponent implements OnInit {
     private http: HttpClient,
     private userService: UsersService,
   ) {
+    this.getBrandList();
     this.getList();
     this.userService.getUserss().subscribe(data => {
       this.users = data
@@ -80,7 +82,8 @@ export class RateComparativeUpdateComponent implements OnInit {
         items:this.details?.items,
         // index:i,
         vendors:vendors,
-        filledData:this.VendorItems[index]
+        filledData:this.VendorItems[index],
+        brandList:this.brandList,
       }
     });
     dialogPopup.afterClosed().subscribe((result: any) => {
@@ -296,7 +299,13 @@ export class RateComparativeUpdateComponent implements OnInit {
     this.flag=false;
     this.isButtonDisabled=false;
   }
-
+  getBrandList(){
+    console.log("hi")
+    this.httpService.GET(GET_BRAND_API, {}).subscribe(res => {
+      this.brandList=res.data
+      console.log(this.brandList);
+    })
+  }
   save(){
     console.log(this.vendorForm)
     this.flag=true;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { PURCHASE_REQUEST_API, GET_SITE_API, ITEM_API, UOM_API, VENDOR_DETAIL_API } from '@env/api_path';
+import { PURCHASE_REQUEST_API, GET_SITE_API, ITEM_API, UOM_API, VENDOR_DETAIL_API, GET_BRAND_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 
@@ -35,6 +35,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
   itemList: any;
   details: any = {};
   selectedVendor: any;
+  brandList: any;
 
 
   constructor(
@@ -55,11 +56,13 @@ export class PurchaseRequestDetailsComponent implements OnInit {
     const UOM = this.http.get<any>(`${environment.api_path}${UOM_API}`);
     const item = this.http.get<any>(`${environment.api_path}${ITEM_API}`);
     const site = this.http.get<any>(`${environment.api_path}${GET_SITE_API}`);
-    this.httpService.multipleRequests([UOM, item, site], {}).subscribe(res => {
+    const brand = this.http.get<any>(`${environment.api_path}${GET_BRAND_API}`);
+    this.httpService.multipleRequests([UOM, item, site,brand], {}).subscribe(res => {
       if (res) {
         this.uomList = res[0].data;
         this.itemList = res[1].data;
         this.siteList = res[2].data;
+        this.brandList=res[3].data;
       }
     })
   }
@@ -88,8 +91,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
       attachment: new FormControl(''),
       remark: new FormControl('', Validators.required),
       uom: new FormControl('', Validators.required),
-
-
+      brandName:new FormControl(''),
     })
 
   }
@@ -113,12 +115,19 @@ export class PurchaseRequestDetailsComponent implements OnInit {
         attachment: new FormControl(item.attachment),
         remark: new FormControl(item.remark, Validators.required),
         uom: new FormControl(item.uomDetail._id, Validators.required),
+        brandName:new FormControl(item.brandName),
 
       })
     }
   }
 
-
+  myBrandName(brandId:any){
+    if(this.brandList){
+      let brand=this.brandList.filter(brand=>brand._id==brandId)
+      // console.log(brand)
+      return brand[0].brand_name;
+    }
+  } 
   getSiteList() {
     this.httpService.GET(GET_SITE_API, {}).subscribe(res => {
       this.siteList = res;
@@ -159,7 +168,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
         this.httpService.GET(`${PURCHASE_REQUEST_API}/detail`, { _id: params['id'] }).subscribe({
           next: res => {
             this.details = res.data[0];
-            console.log(this.details)
+            console.log(this.details);
             this.getVendorName();
             this.patchData(res.data[0]);
           }, error: (error) => {

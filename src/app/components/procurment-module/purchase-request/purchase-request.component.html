@@ -153,7 +153,7 @@
               <th>Uom*</th>
               <th>Quantity*</th>
               <th>Brand Name</th>
-              <th>Brand Name</th>
+              <!-- <th>Brand Name</th> -->
               <th>Rate</th>
               <!-- <th>Gst</th> -->
               <!-- <th>Freight</th> -->
@@ -196,14 +196,6 @@
                   </td>
                   <td>
                     <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
-                  </td>
-                  <td>
-                    <mat-select id="site" placeholder="Select Brand" formControlName="brandName"
-                      class="pr-form-field">
-                      <mat-option [value]="brand._id" *ngFor="let brand of brandList">
-                        {{brand.brand_name}}
-                      </mat-option>
-                    </mat-select>
                   </td>
                   <td>
                     <mat-select id="site" placeholder="Select Brand" formControlName="brandName"
@@ -270,7 +262,7 @@
               <th>Uom*</th>
               <th>Quantity*</th>
               <th>Brand Name</th>
-              <th>Brand Name</th>
+              
               <!-- <th>Attachments</th> -->
               <th>Remarks</th>
               <th>Action</th>
@@ -323,14 +315,7 @@
                       </mat-option>
                     </mat-select>
                   </td>
-                  <td>
-                    <mat-select id="site" placeholder="Select Brand" formControlName="brandName"
-                      class="pr-form-field">
-                      <mat-option [value]="brand._id" *ngFor="let brand of brandList">
-                        {{brand.brand_name}}
-                      </mat-option>
-                    </mat-select>
-                  </td>
+                
                   <td>
                     <input placeholder="Enter" formControlName="remark" class="pr-form-field">
                   </td>

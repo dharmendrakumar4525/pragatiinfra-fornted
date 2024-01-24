@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { RATE_COMPARATIVE_DETAIL_API, GET_SITE_API } from '@env/api_path';
+import { RATE_COMPARATIVE_DETAIL_API, GET_SITE_API, GET_BRAND_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RateComparativeVendorsComponent } from '../rate-comparative-vendors/rate-comparative-vendors.component';
 import { I, P } from '@angular/cdk/keycodes';
 import { UsersService } from '@services/users.service';
+import { environment } from '@env/environment';
+import { HttpClient } from '@angular/common/http';
 declare var $: any;
 @Component({
   selector: 'app-rate-comparative-details',
@@ -41,6 +43,7 @@ export class RateComparativeDetailsComponent implements OnInit {
   vendorsList: Array<any> = [];
   vendorAssociatedData: Array<any> = [];
   users:any;
+  brandList: any;
   constructor(
     private router: Router,
     private httpService: RequestService,
@@ -48,9 +51,11 @@ export class RateComparativeDetailsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private userService: UsersService,
+    private http: HttpClient
 
   ) {
     this.getSiteList();
+    this.getBrandList();
     this.userService.getUserss().subscribe(data => {
       this.users = data
       console.log("this.users", this.users);
@@ -108,6 +113,7 @@ export class RateComparativeDetailsComponent implements OnInit {
         vendorsList: this.vendorsList,
         items:this.details?.items,
         filledData:dataObj,
+        brandList:this.brandList,
         type:"detailsPage"
       }
     });
@@ -219,12 +225,22 @@ export class RateComparativeDetailsComponent implements OnInit {
   // get vendorArray(): FormArray {
   //   return this.vendorForm.get('vendor') as FormArray;
   // }
+  getBrandList(){
+    console.log("hi")
+    this.httpService.GET(GET_BRAND_API, {}).subscribe(res => {
+      this.brandList=res.data
+      console.log(this.brandList);
+    })
+  }
   ngOnInit(): void {
+    
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.httpService.GET(`${RATE_COMPARATIVE_DETAIL_API}`, { _id: params['id'] }).subscribe({
           next: res => {
             this.details = res.data.details;
+            console.log(this.details)
+            
             this.objectBackToFormGroup(); 
             console.log(this.details)
             this.vendorsList = res.data.vendorsList;

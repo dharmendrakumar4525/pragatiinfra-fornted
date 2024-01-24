@@ -33,11 +33,13 @@ export class RateComparativeVendorsComponent implements OnInit {
   type:any;
   vendors:any;
   filledData
+  brandList: any;
   constructor(
     private formBuilder: FormBuilder,
     private snack: SnackbarService,
     public dialogRef: MatDialogRef<RateComparativeVendorsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.brandList=data.brandList;
     if(data.type)
     {
       this.pageDetail = data.dataObj;
@@ -105,6 +107,12 @@ export class RateComparativeVendorsComponent implements OnInit {
       console.log(filledData);
       this.vendorItemsForm=filledData.data;
   }
+  myBrandName(brandId:any){
+    console.log("mybrandfunction",brandId)
+    let brand=this.brandList.filter(brand=>brand._id==brandId)
+    console.log(brand)
+    return brand[0].brand_name;
+  } 
   // Filtereditems(){
   //   let tempFilteredItems=this.items.filter(obj=> obj.categoryDetail._id==this.category._id && obj.subCategoryDetail._id==this.subCategory._id)
   //   for(let i=0;i<tempFilteredItems.length;i++)

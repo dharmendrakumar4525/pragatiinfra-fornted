@@ -22,6 +22,7 @@
         <th> UOM </th>
         <th>Requested Qty</th>
         <th>Required Qty</th>
+        <th>Brand Name</th>
         <th>Rate</th>
         <th>Sub Total Amount</th>
         <th>Gst</th>
@@ -40,6 +41,7 @@
             <td>
               <input [disabled]="true" type="text" [value]="item.RequiredQuantity" placeholder="Quantity" class="cstm-input" (input)="onChangeBrand($event,item)">
             </td>
+            <td>{{myBrandName(item.item.brandName)}}</td>
             <td>
               <input [disabled]="true" type="text" [value]="item.Rate" placeholder="Rate" class="cstm-input" (input)="onChangeBrand($event,item)">
             </td>
@@ -67,6 +69,7 @@
             <td>
               <input formControlName="RequiredQuantity" type="text" placeholder="Quantity" class="cstm-input" (input)="onChangeBrand($event,item)">
             </td>
+            <td>{{myBrandName(item.brandName)}}</td>
             <td>
               <input formControlName="Rate" type="text" placeholder="Rate" class="cstm-input" (input)="onChangeBrand($event,item)">
             </td>

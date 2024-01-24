@@ -136,8 +136,8 @@
         <mat-select id="site" placeholder="Select Vendor" formControlName="vendor"
                     style="padding: 10px;width: 200px; border: 1px solid #ccc; border-radius: 6px; cursor: pointer; font-family: 'Poppins';"
                     (selectionChange)="onVendorSelection($event)">
-          <mat-option [value]="item._id" *ngFor="let item of vendorList">
-            {{ item.vendor_name }}
+          <mat-option [value]="vendor._id" *ngFor="let vendor of vendorList">
+            {{ vendor.vendor_name }}
           </mat-option>
         </mat-select>
       </div>
@@ -173,7 +173,7 @@
           <th>Quantity*</th>
           <!-- <th>Brand Name</th> -->
           <th>Rate</th>
-          <!-- <th>Gst</th> -->
+          <th>Brand Name</th>
           <!-- <th>Freight</th> -->
           <th>Remarks</th>
           <th>Action</th>
@@ -189,7 +189,7 @@
             </td>
             <ng-container [formGroupName]="i">
               <td>
-                <mat-select id="itemName" placeholder="{{item.get('itemName')?.value}}  Select Item" formControlName="item_id" class="select-form-field"
+                <mat-select id="itemName" placeholder="Select Item" formControlName="item_id" class="select-form-field"
                 (selectionChange)="selectedItem($event,i)">
                 <mat-option [value]="item._id" *ngFor="let item of filteredItemList">
                   {{item.item_name}}
@@ -220,6 +220,15 @@
               </td> -->
               <td>
                 <input type="text" placeholder="Enter" digitOnly formControlName="rate" class="pr-form-field">
+              </td>
+              <td>
+                <mat-select id="brandName" placeholder="Select Brand" formControlName="brandName" class="select-form-field"
+                >
+                <mat-option [value]="brand._id" *ngFor="let brand of brandList">
+                  {{brand.brand_name}}
+                </mat-option>
+
+              </mat-select>
               </td>
               <!-- <td>
                 <input type="text" placeholder="Enter"  formControlName="gst" class="pr-form-field">
@@ -274,7 +283,7 @@
           <th>Sub&nbsp;category</th>
           <th>Uom*</th>
           <th>Quantity*</th>
-          <!-- <th>Attachments</th> -->
+          <th>Brand Name</th>
           <th>Remarks</th>
           <th>Action</th>
         </tr>
@@ -314,6 +323,15 @@
               </td>
               <td>
                 <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
+              </td>
+              <td>
+                <mat-select id="brandName" placeholder="Select Brand" formControlName="brandName" class="select-form-field"
+                >
+                <mat-option [value]="brand._id" *ngFor="let brand of brandList">
+                  {{brand.brand_name}}
+                </mat-option>
+
+              </mat-select>
               </td>
               <!-- <td>
                 <input placeholder="Enter" formControlName="attachment" type="file" class="pr-form-field">

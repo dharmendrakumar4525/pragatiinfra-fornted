@@ -137,7 +137,7 @@
                 <th>Sub&nbsp;category</th>
                 <th>Uom*</th>
                 <th>Quantity*</th>
-                <!-- <th>Brand Name</th> -->
+                <th>Brand Name</th>
                 <th>Rate</th>
                 <!-- <th>Gst</th>
                 <th>Freight</th> -->
@@ -179,9 +179,9 @@
               <td style="color: #000;">
                 {{item.qty}}
               </td>
-              <!-- <td style="color: #000;">
-                {{item.brandName}}
-              </td> -->
+              <td style="color: #000;">
+                {{myBrandName(item.brandName)}}
+              </td>
               <td style="color: #000;">
                 {{item.rate}}
               </td>
@@ -233,6 +233,7 @@
             <th>Sub&nbsp;category</th>
             <th>Uom*</th>
             <th>Quantity*</th>
+            <th>Brand Name</th>
             <!-- <th>Attachments</th> -->
             <th>Remarks</th>
           </tr>
@@ -258,9 +259,16 @@
               <td>
                 {{item.qty}}
               </td>
-              <!-- <td>
-                <input placeholder="Enter" formControlName="attachment" type="file" class="pr-form-field">
-              </td> -->
+              <td>
+                {{myBrandName(item.brandName)}}
+                <!-- <mat-select id="site" placeholder="Select Brand" class="pr-form-field" [(value)]="item.brandName">
+                  <mat-option *ngFor="let brand of brandList" [value]="brand.brand_name">
+                    {{ brand.brand_name }}
+                  </mat-option>
+                </mat-select> -->
+                
+                <!-- <input placeholder="Enter" formControlName="attachment" type="file" class="pr-form-field"> -->
+              </td>
               <td>
                 {{item.remark}}
               </td>

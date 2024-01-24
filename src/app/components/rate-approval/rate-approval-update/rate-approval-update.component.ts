@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { RATE_COMPARATIVE_DETAIL_API, GET_SITE_API, ITEM_API, UOM_API, RATE_COMPARATIVE_API,PURCHASE_ORDER_API } from '@env/api_path';
+import { RATE_COMPARATIVE_DETAIL_API, GET_SITE_API, ITEM_API, UOM_API, RATE_COMPARATIVE_API,PURCHASE_ORDER_API, GET_BRAND_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 
@@ -49,6 +49,7 @@ export class RateApprovalUpdateComponent implements OnInit {
   // vendorsList: Array<any> = [];
   // vendorAssociatedData: Array<any> = [];
   users: any = [];
+  brandList: any;
 
   constructor(
     private router: Router,
@@ -61,6 +62,7 @@ export class RateApprovalUpdateComponent implements OnInit {
     private userService: UsersService,
   ) {
     this.getList();
+    this.getBrandList();
     this.getVendorList();
     this.userService.getUserss().subscribe(data => {
       this.users = data;
@@ -294,7 +296,19 @@ export class RateApprovalUpdateComponent implements OnInit {
     this.VendorRate.set(vendor_id,{...vendorItem,...vendorTotal});
     // console.log("add vendor")
   }
-
+  getBrandList(){
+    console.log("hi")
+    this.httpService.GET(GET_BRAND_API, {}).subscribe(res => {
+      this.brandList=res.data
+      console.log(this.brandList);
+    })
+  }
+  myBrandName(brandId:any){
+    console.log("mybrandfunction",brandId)
+    let brand=this.brandList.filter(brand=>brand._id==brandId)
+    console.log(brand)
+    return brand[0].brand_name;
+  } 
   updateRequest(status: any) {
     if(status=="revise")
     {
@@ -392,7 +406,7 @@ export class RateApprovalUpdateComponent implements OnInit {
       // requestedData['po_number']=this.po_no;
     }
     this.load = true;
-    // console.log(this.details)
+    console.log(this.details)
     this.httpService.PUT(RATE_COMPARATIVE_API, this.details).subscribe(res => {
       this.snack.notify("Detail has been updated", 1);
       this.router.navigate(['/rate-approval'])
