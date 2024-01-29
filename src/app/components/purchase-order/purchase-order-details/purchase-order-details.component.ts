@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PURCHASE_ORDER_API } from '@env/api_path';
+import { GET_BRAND_API, PURCHASE_ORDER_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { saveAs } from 'file-saver';
@@ -24,12 +24,13 @@ export class PurchaseOrderDetailsComponent implements OnInit {
   downloadLoading = false;
   pageId: any;
   esignImage:any;
+  brandList: any;
   constructor(
     private route: ActivatedRoute,
     private httpService: RequestService, private dialog: MatDialog,
 
   ) {
-
+    this.getBrandList();
     this.route.params.subscribe(params => {
       this.pageId = params['id'];
       console.log(this.pageId)
@@ -56,7 +57,7 @@ export class PurchaseOrderDetailsComponent implements OnInit {
     this.downloadLoading = true;
     this.httpService.GETPDF('generate/pdf', {
       template: "po",
-      id: this.pageId
+      id: this.pageId,
     }).subscribe((res: any) => {
       this.downloadLoading = false;
       var blob = new Blob([res], { type: 'application/pdf' });
@@ -90,7 +91,19 @@ export class PurchaseOrderDetailsComponent implements OnInit {
       }
     });
   }
-
+  getBrandList(){
+    //console.log("hi")
+    this.httpService.GET(GET_BRAND_API, {}).subscribe(res => {
+      this.brandList=res.data
+      //console.log(this.brandList);
+    })
+  }
+  myBrandName(brandId:any){
+    console.log("mybrandfunction",brandId)
+    let brand=this.brandList.filter(brand=>brand._id==brandId)
+    console.log(brand)
+    return brand[0].brand_name;
+  } 
   ngOnInit(): void {
 
   }

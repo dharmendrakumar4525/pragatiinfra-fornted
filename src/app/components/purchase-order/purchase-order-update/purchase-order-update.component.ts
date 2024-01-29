@@ -3,7 +3,7 @@ import { Component, OnInit, } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PURCHASE_ORDER_API ,DMRPURCHASE_ORDER_API, RATE_COMPARATIVE_DETAIL_API, RATE_COMPARATIVE_API} from '@env/api_path';
+import { PURCHASE_ORDER_API ,DMRPURCHASE_ORDER_API, RATE_COMPARATIVE_DETAIL_API, RATE_COMPARATIVE_API, GET_BRAND_API} from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { ESignComponent } from '../e-sign/e-sign.component';
 import { BillingAddressPopupComponent } from '../billing-address-popup/billing-address-popup.component';
@@ -25,6 +25,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   poDetails: any;
   load: boolean;
   esignImage: any;
+  brandList: any;
   constructor(
     private dialog: MatDialog,
     private router: Router,
@@ -33,6 +34,8 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     private snack: SnackbarService,
     private formBuilder: FormBuilder,
   ) {
+      //console.log(this.brandList);
+    this.getBrandList();
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.httpService.GET(`${PURCHASE_ORDER_API}/detail`, { _id: params['id'] }).subscribe(res => {
@@ -206,5 +209,18 @@ export class PurchaseOrderUpdateComponent implements OnInit {
 
     });
   }
+  getBrandList(){
+    //console.log("hi")
+    this.httpService.GET(GET_BRAND_API, {}).subscribe(res => {
+      this.brandList=res.data
+      //console.log(this.brandList);
+    })
+  }
+  myBrandName(brandId:any){
+    console.log("mybrandfunction",brandId)
+    let brand=this.brandList.filter(brand=>brand._id==brandId)
+    console.log(brand)
+    return brand[0].brand_name;
+  } 
 
 }
