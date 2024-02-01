@@ -132,6 +132,10 @@ export class PurchaseOrderUpdateComponent implements OnInit {
       return false;
     }
     let requestData: any = this.poDetails;
+    for (let i = 0; i < requestData.items.length; i++) {
+      const brandName =  this.myBrandName(requestData.items[i].item.brandName);
+      requestData.items[i].item['brandName'] = brandName;
+    }
     requestData['status'] = 'approved';
     requestData['due_date'] = this.validityDate.value;
     requestData['vendor_message'] = this.mail_section.value;
