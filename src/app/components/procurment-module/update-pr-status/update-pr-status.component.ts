@@ -19,6 +19,11 @@ export class UpdatePrStatusComponent implements OnInit {
   siteList: any;
   load = false;
   items: FormArray;
+
+  /**
+  * Represents the purchase request form, including form controls for various fields.
+  * @returns void
+  */
   purchaseRequestForm = new FormGroup({
     title: new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
@@ -30,6 +35,7 @@ export class UpdatePrStatusComponent implements OnInit {
     items: this.formBuilder.array([]),
     _id: new FormControl()
   });
+
   uomList: any;
   itemList: any;
   details: any = {};
@@ -43,13 +49,15 @@ export class UpdatePrStatusComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private http: HttpClient
-  ) {
+  ){
     this.getList();
-
-
   }
 
-
+  /**
+ * Fetches lists of UOM, items, sites, and brands from the API and assigns them to corresponding class properties.
+ * Uses HTTP requests to retrieve data asynchronously.
+ * @returns void
+ */
   getList() {
     const UOM = this.http.get<any>(`${environment.api_path}${UOM_API}`);
     const item = this.http.get<any>(`${environment.api_path}${ITEM_API}`);
@@ -65,6 +73,11 @@ export class UpdatePrStatusComponent implements OnInit {
     })
   }
 
+  /**
+  * Patches data received from an external source into the purchase request form.
+  * @param data The data object containing values to be patched into the form.
+  * @returns void
+  */
   patchData(data) {
     this.purchaseRequestForm.patchValue({
       title: data.title,
@@ -117,6 +130,11 @@ export class UpdatePrStatusComponent implements OnInit {
     }
   }
 
+  /**
+  * Retrieves the brand name corresponding to the provided brand ID from the brand list.
+  * @param brandId The ID of the brand for which the name is to be retrieved.
+  * @returns The brand name corresponding to the provided brand ID, if found; otherwise, undefined.
+  */
   myBrandName(brandId:any){
     console.log(brandId)
     if(this.brandList==null)
@@ -125,37 +143,50 @@ export class UpdatePrStatusComponent implements OnInit {
     console.log(brand)
     return brand[0].brand_name;
   } 
+
+  /**
+  * Fetches the list of sites from the API and assigns it to the siteList property.
+  * @returns void
+  */
   getSiteList() {
     this.httpService.GET(GET_SITE_API, {}).subscribe(res => {
       this.siteList = res;
     })
   }
 
+  /**
+  * Retrieves the item name corresponding to the provided item ID from the itemList.
+  * @param id The ID of the item for which the name is to be retrieved.
+  * @returns The item name corresponding to the provided item ID, if found; otherwise, undefined.
+  */
   getItemName(id: any) {
-    if (this.itemList && id) return this.itemList.filter(obj => obj._id == id)[0].item_name;
+    if (this.itemList && id) 
+      return this.itemList.filter(obj => obj._id == id)[0].item_name;
   }
 
+  /**
+  * Updates the status and remarks of a purchase request using a PUT request to the API.
+  * Navigates to the purchase request list page upon successful update.
+  * @param status The new status to be assigned to the purchase request.
+  * @returns void
+  */
   updateRequest(status: any) {
     this.httpService.PUT(PURCHASE_REQUEST_API, { _id: this.details._id, status: status, remarks: this.purchaseRequestForm.value.remarks }).subscribe(res => {
       this.router.navigate(['/procurement/prlist'])
     })
   }
-  // isVendorSelected(items: any): any[] {
-  //   console.log(items,"Items")
-  //   let tempVendorList=this.vendorsList.filter(vendor=>vendor.category.includes(items.categoryDetail._id) && vendor.SubCategory.includes(items.subCategoryDetail._id))
-  //   console.log(tempVendorList,"LLL")
-  //   return tempVendorList;
-  // }
+
+  /**
+  * Retrieves the vendor details based on the vendor ID from the API.
+  * Updates the selectedVendor property with the retrieved vendor name.
+  * @returns void
+  */
   getVendorList() {
-    if(this.details.vendor!=null)
-    {
+    if(this.details.vendor!=null){
       const vendor = this.http.get<any>(`${environment.api_path}${VENDOR_DETAIL_API}?_id=${this.details.vendor}`);
       this.httpService.multipleRequests(vendor, {}).subscribe(res => {
         if (res) {
-          //console.log(res[0],"res")
-          //this.vendorsList=res[0].data;
           this.selectedVendor=res[0].data[0].vendor_name
-         //this.isVendorSelected(this.details.items[1]);
         }
   
       })
@@ -170,7 +201,7 @@ export class UpdatePrStatusComponent implements OnInit {
         this.httpService.GET(`${PURCHASE_REQUEST_API}/detail`, { _id: params['id'] }).subscribe({
           next: res => {  
             this.details = res.data[0];
-            console.log(this.details,"JKL")
+            // console.log(this.details,"JKL")
             this.getVendorList();
             this.patchData(res.data[0]);
           }, error: (error) => {

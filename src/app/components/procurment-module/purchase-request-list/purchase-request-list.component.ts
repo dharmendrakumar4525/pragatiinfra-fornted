@@ -21,10 +21,17 @@ export class PurchaseRequestListComponent implements OnInit {
   constructor(private router: Router,
     private httpService: RequestService,
     private snack: SnackbarService,
-  ) {
+  ){
+    // Call the getList method with filter parameters
     this.getList({ filter_by: this.filter_by, filter_value: this.filter_value });
   }
 
+  /**
+  * Fetches a list of purchase requests from the API based on the provided filter parameters.
+  * Updates the originalPurchaseList and purchaseList arrays with the retrieved data.
+  * @param filterObj An object containing filter parameters to be sent with the GET request.
+  * @returns void
+  */
   getList(filterObj: any) {
     this.httpService.GET(PURCHASE_REQUEST_API, filterObj).subscribe({
       next: (resp: any) => {
@@ -48,17 +55,17 @@ export class PurchaseRequestListComponent implements OnInit {
 
   getRemainingDays(targetDateString) {
     const targetDate = new Date(targetDateString);
-  const currentDate = new Date();
+    const currentDate = new Date();
 
-  // Set both dates to the same time of day
-  targetDate.setHours(0, 0, 0, 0);
-  currentDate.setHours(0, 0, 0, 0);
-  
-  // Calculate the difference in days
-  const timeDifference = targetDate.getTime() - currentDate.getTime();
-  let remainingDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    // Set both dates to the same time of day
+    targetDate.setHours(0, 0, 0, 0);
+    currentDate.setHours(0, 0, 0, 0);
+    
+    // Calculate the difference in days
+    const timeDifference = targetDate.getTime() - currentDate.getTime();
+    let remainingDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
-  return remainingDays;
+    return remainingDays;
    
   }
   dateFilter(event: MatDatepickerInputEvent<Date>) {
@@ -91,9 +98,13 @@ export class PurchaseRequestListComponent implements OnInit {
         }
       }
     }
-
   }
 
+  /**
+  * Changes the request type and updates the purchase request list accordingly.
+  * @param type The new request type ('new' or 'revised').
+  * @returns void
+  */
   changeRequestType(type: any) {
     this.requestType = type;
 
@@ -111,7 +122,10 @@ export class PurchaseRequestListComponent implements OnInit {
 
 
   ngOnInit(): void {
+    // Retrieve user permissions from local storage and parse them as JSON
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
+
+    // Extract a specific permission from the parsed permissions
     this.permissions=this.permissions.permissions[0].ParentChildchecklist[10];
   }
 

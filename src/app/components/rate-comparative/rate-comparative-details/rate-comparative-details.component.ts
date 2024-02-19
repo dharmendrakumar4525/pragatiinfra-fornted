@@ -226,7 +226,7 @@ export class RateComparativeDetailsComponent implements OnInit {
   //   return this.vendorForm.get('vendor') as FormArray;
   // }
   getBrandList(){
-    console.log("hi")
+    // console.log("hi")
     this.httpService.GET(GET_BRAND_API, {}).subscribe(res => {
       this.brandList=res.data
       console.log(this.brandList);

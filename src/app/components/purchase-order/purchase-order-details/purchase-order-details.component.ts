@@ -33,7 +33,7 @@ export class PurchaseOrderDetailsComponent implements OnInit {
     this.getBrandList();
     this.route.params.subscribe(params => {
       this.pageId = params['id'];
-      console.log(this.pageId)
+      // console.log(this.pageId)
       if (params['id']) {
         this.httpService.GET(`${PURCHASE_ORDER_API}/detail`, { _id: params['id'] }).subscribe(res => {
           this.poDetails = res.data;
@@ -51,17 +51,28 @@ export class PurchaseOrderDetailsComponent implements OnInit {
   }
 
 
-
+  // Method to download the PDF of the purchase order
   downloadPdf() {
-
+    // Set the download loading flag to true
     this.downloadLoading = true;
+
+    // Request the server to generate the PDF
     this.httpService.GETPDF('generate/pdf', {
-      template: "po",
-      id: this.pageId,
+      template: "po",  // Specify the template type as 'po' for purchase order
+      id: this.pageId, // Provide the ID of the purchase order to generate its PDF
     }).subscribe((res: any) => {
+      // Once the PDF is received from the server
+
+      // Set the download loading flag to false
       this.downloadLoading = false;
+
+      // Create a blob from the PDF data received
       var blob = new Blob([res], { type: 'application/pdf' });
+
+      // Generate a unique ID based on the current timestamp
       let id = new Date().getTime();
+
+      // Save the PDF blob with a filename including the unique ID
       saveAs(blob, `po-${id}.pdf`);
     });
   }

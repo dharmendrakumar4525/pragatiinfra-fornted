@@ -37,6 +37,7 @@ export class PurchaseOrderListComponent implements OnInit {
   requestType = "new";
   originalRateComparativeList: any = [];
   permissions: any;
+
   constructor(
     private httpService: RequestService,
     private snack: SnackbarService,
@@ -44,6 +45,10 @@ export class PurchaseOrderListComponent implements OnInit {
     this.getList({ filter_by: this.filter_by, filter_value: this.filter_value });
   }
 
+  /**
+  * Fetches data from the PURCHASE_ORDER_API based on the provided filter object.
+  * @param filterObj The filter object containing parameters for the request.
+  */
   getList(filterObj: any) {
     this.httpService.GET(PURCHASE_ORDER_API, filterObj).subscribe({
       next: (resp: any) => {
@@ -67,12 +72,22 @@ export class PurchaseOrderListComponent implements OnInit {
     });
   }
 
+  /**
+  * Updates the list based on the selected status.
+  * @param item The selected status item.
+  */
   onStatusChange(item) {
 
+    // Call the getList function with the filter_by and filter_value parameters
+    // The filter_by parameter is taken from the component's property filter_by
+    // The filter_value parameter is taken from the value of the selected item
     this.getList({ filter_by: this.filter_by, filter_value: item.value })
-
   }
 
+  /**
+  * Filters the rateComparativeList based on the selected date.
+  * @param event The MatDatepickerInputEvent<Date> event containing the selected date.
+  */
   dateFilter(event: MatDatepickerInputEvent<Date>) {
     if (this.originalRateComparativeList && this.originalRateComparativeList.length > 0) {
       if (event.value) {
@@ -84,6 +99,11 @@ export class PurchaseOrderListComponent implements OnInit {
     }
   }
 
+  /**
+  * Filters the rateComparativeList based on the search input and type.
+  * @param event The event containing the search input.
+  * @param type The type of search (optional).
+  */
   search(event: any, type?: any) {
 
     if (this.originalRateComparativeList && this.originalRateComparativeList.length > 0) {
@@ -108,7 +128,12 @@ export class PurchaseOrderListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    // Retrieve user permissions from local storage
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
+
+    // Set the permissions property to the permissions retrieved from local storage
+    // In this case, it appears that the permissions are stored in an array at permissions[0].ParentChildchecklist[13]
     this.permissions=this.permissions.permissions[0].ParentChildchecklist[13];
   }
 }

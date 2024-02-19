@@ -32,6 +32,10 @@ export class RateApprovalUpdateComponent implements OnInit {
   purchaseList: any;
   po_no: any;
   curr_site:any;
+
+  /**
+  * Defines the form structure for purchase request data.
+  */
   purchaseRequestForm = new FormGroup({
     title: new FormControl({value: '', disabled: true}, Validators.required),
     date: new FormControl({value: '', disabled: true}, Validators.required),
@@ -46,8 +50,6 @@ export class RateApprovalUpdateComponent implements OnInit {
   });
 
   details: any = {};
-  // vendorsList: Array<any> = [];
-  // vendorAssociatedData: Array<any> = [];
   users: any = [];
   brandList: any;
 
@@ -65,16 +67,20 @@ export class RateApprovalUpdateComponent implements OnInit {
     this.getBrandList();
     this.getVendorList();
     this.userService.getUserss().subscribe(data => {
+      // Store the retrieved user data in the 'users' property
       this.users = data;
     })
-
-
   }
 
-
+  /**
+  * Opens a dialog to display vendor rate listings for a specific item.
+  * @param dataObj The object containing data related to the item.
+  * @returns void
+  */
   vendorData(dataObj: any) {
     console.log(dataObj)
-    // console.log(this.ItemwiseVendorRate.get(dataObj.item_id))
+
+    // Open a dialog to display vendor rate listings
     const dialogPopup = this.dialog.open(VendorRateListingComponent, {
       data: {
         item: dataObj,
@@ -83,6 +89,7 @@ export class RateApprovalUpdateComponent implements OnInit {
         pageData:this.ItemwiseVendorRate.get(dataObj.item_id)
       }
     });
+    // Subscribe to dialog closing event
     dialogPopup.afterClosed().subscribe((result: any) => {
       console.log('result', result)
       if(result && result.data && result.data.VendorRate ){
@@ -91,78 +98,31 @@ export class RateApprovalUpdateComponent implements OnInit {
         else
           this.ItemwiseVendorRate.delete(dataObj.item_id)
       }
-      // if (result && result['option'] === 1) {
-
-      //   let vendorTotalData: Array<any> = [];
-
-      //   this.details.items = this.details.items.map((o: any) => {
-      //     if (o._id == dataObj._id) {
-      //       o.vendors = result.data.itemVendors;
-      //     }
-
-      //     o.vendors.map((vendorObj: any) => {
-      //       if (!(vendorTotalData[vendorObj.vendor_id])) {
-      //         vendorTotalData[vendorObj.vendor_id] = { tax_total: 0, vendor_subtotal: 0 };
-      //       }
-      //       if (!vendorTotalData[vendorObj.vendor_id]['tax_total']) {
-      //         vendorTotalData[vendorObj.vendor_id]['tax_total'] = 0;
-      //       }
-      //       if (!vendorTotalData[vendorObj.vendor_id]['vendor_subtotal']) {
-      //         vendorTotalData[vendorObj.vendor_id]['vendor_subtotal'] = 0;
-      //       }
-
-      //       let taxamount = 0;
-      //       if (o.tax && o.tax.amount) {
-      //         taxamount = (vendorObj.item_subtotal * o.tax.amount) / 100;
-      //       }
-      //       vendorTotalData[vendorObj.vendor_id]['tax_total'] += taxamount;
-      //       vendorTotalData[vendorObj.vendor_id]['vendor_subtotal'] += vendorObj.item_subtotal;
-      //     })
-      //     return o;
-      //   });
-
-
-
-      //   this.details.vendors_total = this.details.vendors_total.map((o: any) => {
-      //     let dataObj = vendorTotalData[o.vendor_id];
-      //     o.subtotal = dataObj.vendor_subtotal;
-      //     o.total_tax = dataObj.tax_total;
-      //     let total = o.subtotal + o.total_tax;
-
-      //     if (o.freight_charges) {
-      //       total += Number(o.freight_charges);
-      //     }
-      //     if (o.freight_tax) {
-      //       total += (Number(o.freight_charges) * Number(o.freight_tax)) / 100;
-      //     }
-      //     o.total_amount = total;
-      //     return o;
-        // })
-
-
-
-
-
-        // console.log('vendorTotalData', vendorTotalData)
-
-      // }
+      
     });
   }
 
 
-
+  /**
+  * Fetches site and purchase order data.
+  * Updates the siteList and purchaseList properties with the fetched data.
+  */
   getList() {
-
     const site = this.http.get<any>(`${environment.api_path}${GET_SITE_API}`);
     const purchase = this.http.get<any>(`${environment.api_path}${PURCHASE_ORDER_API}`);
     this.httpService.multipleRequests([site,purchase], {}).subscribe(res => {
       if (res) {
         this.siteList = res[0].data;
         this.purchaseList=res[1].data
-        console.log(this.purchaseList+"from getsitelist")
+        // console.log(this.purchaseList+"from getsitelist")
       }
     })
   }
+
+  /**
+  * Clears VendorRate and ItemwiseVendorRate maps and sets the comparison type.
+  * @param type The type of comparison ('vendor' or 'item').
+  */
   compare(type:any)
   {
     this.VendorRate.clear();
@@ -172,8 +132,13 @@ export class RateApprovalUpdateComponent implements OnInit {
     else
       this.compareBy="item";
   }
+
+  /**
+  * Patches the purchase request form with provided data and disables remarks field.
+  * @param data The data to patch into the form.
+  */
   patchData(data) {
-    console.log(data)
+    // console.log(data)
     this.purchaseRequestForm.patchValue({
       title: data.title,
       date: data.date,
@@ -226,16 +191,7 @@ export class RateApprovalUpdateComponent implements OnInit {
       })
     }
   }
-  // vendorDisplay(item:any){
-  //   console.log(item)
-  //   console.log(this.details);
-  //   // let filteredVendors=this.details.vendorItems.filter((obj)=>{
-  //   //     return obj.items.filter( (itemobj)=> itemobj.item.item_id==item.item_id)
-  //   // })
-  //   // console.log("---------")
-  //   // console.log(filteredVendors)
-  // }
-
+  
   getSiteList() {
     this.httpService.GET(GET_SITE_API, {}).subscribe(res => {
       this.siteList = res;
@@ -254,6 +210,10 @@ export class RateApprovalUpdateComponent implements OnInit {
     return this.fetchedVendorList.find(obj=> obj._id==id);
   }
 
+  /**
+  * Checks if the number of items in each vendor's item list matches the number of items in the purchase request.
+  * @returns A boolean indicating whether the vendor comparison is valid.
+  */
   CheckVendorComparision(){
     let ans = false;
     for (const obj of this.details.vendorItems) {
@@ -265,6 +225,11 @@ export class RateApprovalUpdateComponent implements OnInit {
     return ans;
   }
 
+  /**
+  * Calculates the total amounts for a given item from vendor data.
+  * @param item An array of vendor data for the item.
+  * @returns An object containing subTotal, gstAmount, and total.
+  */
   vendorTotal(item:any){
       let subTotal=0;
       let total=0;
@@ -278,37 +243,65 @@ export class RateApprovalUpdateComponent implements OnInit {
               total:total
         }
   }
+
+  /**
+  * Handles the change in checkbox state for a vendor.
+  * If the vendor already exists in VendorRate, deletes the vendor.
+  * If the vendor doesn't exist in VendorRate, adds the vendor.
+  * @param vendor_id The ID of the vendor.
+  * @param vendorItem The vendor item data.
+  * @param vendorTotal The total amount for the vendor.
+  */
   handleCheckboxChange(vendor_id,vendorItem,vendorTotal)
   {
-    // console.log(vendorItem)
-    // console.log(vendorTotal)
-      if(this.VendorRate.has(vendor_id))
-        this.deleteVendor(vendor_id,vendorItem,vendorTotal);
-      else 
-        this.addVendor(vendor_id,vendorItem,vendorTotal);
+    if(this.VendorRate.has(vendor_id))
+      this.deleteVendor(vendor_id,vendorItem,vendorTotal);
+    else 
+      this.addVendor(vendor_id,vendorItem,vendorTotal);
   }
+
+  /**
+  * Deletes a vendor from the VendorRate map.
+  * @param vendor_id The ID of the vendor to delete.
+  */
   deleteVendor(vendor_id,vendorItem,vendorTotal){
     this.VendorRate.delete(vendor_id)
-      // console.log("delete vendor")
   }
+
+  /**
+  * Adds a vendor to the VendorRate map.
+  * @param vendor_id The ID of the vendor.
+  * @param vendorItem The vendor item data.
+  * @param vendorTotal The total amount for the vendor.
+  */
   addVendor(vendor_id,vendorItem,vendorTotal){
-    // console.log({...vendorItem,...vendorTotal})
     this.VendorRate.set(vendor_id,{...vendorItem,...vendorTotal});
-    // console.log("add vendor")
   }
+
+  /**
+  * Retrieves the list of brands from the API.
+  */
   getBrandList(){
-    console.log("hi")
     this.httpService.GET(GET_BRAND_API, {}).subscribe(res => {
       this.brandList=res.data
       console.log(this.brandList);
     })
   }
+
+  /**
+  * Retrieves the name of the brand based on the provided brand ID.
+  * @param brandId The ID of the brand.
+  * @returns The name of the brand.
+  */
   myBrandName(brandId:any){
-    console.log("mybrandfunction",brandId)
     let brand=this.brandList.filter(brand=>brand._id==brandId)
-    console.log(brand)
     return brand[0].brand_name;
   } 
+
+  /**
+  * Updates the purchase request with the provided status.
+  * @param status The status of the purchase request.
+  */
   updateRequest(status: any) {
     if(status=="revise")
     {
@@ -428,63 +421,12 @@ export class RateApprovalUpdateComponent implements OnInit {
    
   }
 
-  // onChangeFreightCharges(event: any, item: any) {
-  //   let value = (event.target.value && event.target.value >= 0) ? Number(event.target.value) : 0;
-
-  //   this.details.vendors_total = this.details.vendors_total.map((o: any) => {
-
-  //     if (o.vendor_id == item.vendor_id) {
-  //       o.freight_charges = value;
-  //       let total = o.subtotal + o.total_tax;
-
-  //       if (o.freight_charges) {
-  //         total += Number(o.freight_charges);
-  //       }
-  //       if (o.freight_tax) {
-  //         total += (Number(o.freight_charges) * Number(o.freight_tax)) / 100;
-  //       }
-  //       o.total_amount = total;
-  //     }
-
-  //     return o;
-  //   })
-
-  // }
-
-
-  // onChangeFreightTaxPercent(event: any, item: any) {
-  //   let value = (event.target.value && event.target.value >= 0) ? Number(event.target.value) : 0;
-
-  //   this.details.vendors_total = this.details.vendors_total.map((o: any) => {
-
-  //     if (o.vendor_id == item.vendor_id) {
-  //       o.freight_tax = value;
-  //       let total = o.subtotal + o.total_tax;
-
-  //       if (o.freight_charges) {
-  //         total += Number(o.freight_charges);
-  //       }
-  //       if (o.freight_tax) {
-  //         total += (Number(o.freight_charges) * Number(o.freight_tax)) / 100;
-  //       }
-  //       o.total_amount = total;
-  //     }
-  //     return o;
-  //   })
-  // }
-
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.httpService.GET(`${RATE_COMPARATIVE_DETAIL_API}`, { _id: params['id'] }).subscribe({
           next: res => {
             this.details = res.data.details;
-            // this.vendorsList = res.data.vendorsList;
-            // this.vendorsList.map((o: any) => {
-            //   this.vendorAssociatedData[o._id] = o;
-            //   return o;
-            // });
-
             this.patchData(res.data.details);
           }, error: (error) => {
             // this.router.navigate(['/procurement/prlist'])

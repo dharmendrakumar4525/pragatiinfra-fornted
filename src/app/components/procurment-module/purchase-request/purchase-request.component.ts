@@ -60,6 +60,11 @@ export class PurchaseRequestComponent implements OnInit {
     private http: HttpClient
   ) { }
 
+  /**
+ * Represents the purchase request form, including form controls for various fields.
+ * Default values are set for date and expected delivery date fields using moment.js library.
+ * @returns void
+ */
   purchaseRequestForm = new FormGroup({
     title: new FormControl('', Validators.required),
     date: new FormControl(moment().format('DD-MM-YYYY'), Validators.required),
@@ -86,6 +91,7 @@ export class PurchaseRequestComponent implements OnInit {
     requestData['date'] = moment(requestData.date, 'DD-MM-YYYY').toDate()
     requestData['expected_delivery_date'] = new Date(requestData.expected_delivery_date)
    
+    //for local purchase
     if(this.purchaseRequestForm.get('local_purchase').value=="yes")
     {
       let vendorItems=[];
@@ -103,20 +109,27 @@ export class PurchaseRequestComponent implements OnInit {
               Total:0,
           }
           tempobj.item=tempobj.item[0];
+
+          //deleting non required property from temobj object
           delete tempobj.item.category;
           delete tempobj.item.created_at;
           delete tempobj.item.gst;
+
+          //adding new property tax to temobj object
           let tax={
             amount:tempobj.item.gstDetail.gst_percentage,
             name:tempobj.item.gstDetail.gst_name,
           }
           tempobj.item.tax=tax;
+
+          //deleting non required property from temobj object
           delete tempobj.item.gstDetail;
           delete tempobj.item.item_number;
           delete tempobj.item.specification;
           delete tempobj.item.sub_category;
           delete tempobj.item.uom;
           delete tempobj.item.updated_at;
+
           tempobj.item.qty=tempobj.RequiredQuantity;
           tempobj.item.item_id=item.item_id;
           tempobj.item.remark=item.remark
@@ -130,6 +143,7 @@ export class PurchaseRequestComponent implements OnInit {
     }
     console.log(requestData)
     this.load = true;
+    // Make a POST request to the PURCHASE_REQUEST_API with requestData
     this.httpService.POST(PURCHASE_REQUEST_API, requestData).subscribe({
       next: (resp: any) => {
         this.load = false;
@@ -156,7 +170,10 @@ export class PurchaseRequestComponent implements OnInit {
     });
   }
 
-
+  /**
+ * Fetches lists of UOM, items, sites, vendors, and brands from the API and assigns them to corresponding class properties.
+ * Uses HTTP requests to retrieve data asynchronously.
+ */
   getList() {
     const UOM = this.http.get<any>(`${environment.api_path}${UOM_API}`);
     const item = this.http.get<any>(`${environment.api_path}${ITEM_API}`);
@@ -170,30 +187,34 @@ export class PurchaseRequestComponent implements OnInit {
         this.siteList = res[2].data;
         this.vendorList=res[3].data;
         this.brandList=res[4].data;
-        console.log(this.vendorList);
-        console.log(this.itemList);
-        console.log("brand",this.brandList)
+        // console.log(this.vendorList);
+        // console.log(this.itemList);
+        // console.log("brand",this.brandList)
       }
 
     })
     
   }
 
+  /**
+   * Adds a new item to the list of items in the purchase request form.
+   * If the purchase request is for a local purchase, creates a local item; otherwise, creates a regular item.
+   * @returns void
+   */
   addItem(): void {
+    // Retrieve the 'items' FormArray from the purchase request form
     this.items = this.purchaseRequestForm.get('items') as FormArray;
+
+    // Check if the purchase request is for a local purchase
     if(this.purchaseRequestForm.get('local_purchase').value==="yes")
-    {
-      //console.log("hi from local yes")
       this.items.push(this.createLocalItem());
-    }  
     else
-    {
-      //console.log("hi from local no")
       this.items.push(this.createItem());
-    }  
-      
   }
 
+  /**Updates the category, subcategory, and unit of measurement (UOM) fields 
+  of the selected item in the items array.
+  */
   selectedItem(event: any, i: any) {
     let category = this.itemList.filter(obj => obj._id == event.value)[0]?.categoryDetail.name;
     let subCategory = this.itemList.filter(obj => obj._id == event.value)[0]?.subCategoryDetail.subcategory_name;
@@ -251,7 +272,7 @@ export class PurchaseRequestComponent implements OnInit {
       //Filter the itemList based on the category and subcategory of the selected vendor
       console.log(this.itemList)
       this.filteredItemList = this.itemList.filter(item => {
-        console.log(item.category + "----------" + item.sub_category);
+        // console.log(item.category + "----------" + item.sub_category);
       
         const categoryMatch = selectedVendor.category.some(categoryItem => categoryItem === item.category);
         const subCategoryMatch = selectedVendor.SubCategory.some(subCategoryItem => subCategoryItem === item.sub_category);
@@ -268,7 +289,11 @@ export class PurchaseRequestComponent implements OnInit {
   
   
   
-
+  /**
+   * Removes an item from the list of items in the purchase request form at the specified index.
+   * @param i The index of the item to be removed.
+   * @returns void
+   */
   delete(i) {
     const remove = this.purchaseRequestForm.get('items') as FormArray;;
     remove.removeAt(i);
@@ -276,7 +301,6 @@ export class PurchaseRequestComponent implements OnInit {
 
   onStatusChange(item) {
     this.getPurchaseList({ filter_by: this.filter_by, filter_value: item.value })
-
   }
 
   getPurchaseList(filterObj: any) {
@@ -336,8 +360,13 @@ export class PurchaseRequestComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    // Retrieve user permissions from local storage and parse them as JSON
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
+
+    // Extract specific permissions related to ParentChildchecklist from the parsed data
     this.permissions=this.permissions.permissions[0].ParentChildchecklist[9];
+
     this.getList();
     this.addItem();
   }

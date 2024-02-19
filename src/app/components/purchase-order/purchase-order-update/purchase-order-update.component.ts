@@ -35,10 +35,17 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     private formBuilder: FormBuilder,
   ) {
       //console.log(this.brandList);
-    this.getBrandList();
-    this.route.params.subscribe(params => {
+
+      // Call the getBrandList() method to fetch the brand list
+      this.getBrandList();
+
+      // Subscribe to route parameters to retrieve the id parameter
+      this.route.params.subscribe(params => {
+      // Check if the id parameter is present
       if (params['id']) {
+        // Make a GET request to fetch the details of the purchase order
         this.httpService.GET(`${PURCHASE_ORDER_API}/detail`, { _id: params['id'] }).subscribe(res => {
+          // Assign the fetched details to the poDetails property
           this.poDetails = res.data;
           console.log(this.poDetails)
           this.mail_section.patchValue(this.poDetails.vendor_message);
@@ -74,16 +81,17 @@ export class PurchaseOrderUpdateComponent implements OnInit {
         }
       }
 
-    return;
-  }
+      return;
+    }
 
 
-
+    // For other status updates
     let requestData: any = {};
     requestData['status'] = status;
     requestData['_id'] = this.poDetails._id;
 
     this.load = true;
+    // Send PUT request to update the purchase order
     this.httpService.PUT(PURCHASE_ORDER_API, requestData).subscribe({
       next: (resp: any) => {
         this.load = false;
@@ -108,18 +116,23 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   }
 
   openEsignModal() {
+    // Check if validity date is provided
     if(!this.validityDate.valid){
       this.snack.notify("Please provide validity date",2);
       return;
     }
+    // Open e-sign modal
     const esignPopup = this.dialog.open(ESignComponent, {
       maxWidth: '80vw',
       maxHeight: '80vh',
       autoFocus: false
     });
+    // Handle modal closure
     esignPopup.afterClosed().subscribe((result: any) => {
       if (result && result.option == 1) {
+        // Assign signature data to poDetails.sign property
         this.poDetails.sign = result.data;
+        // Proceed with creating the order
         this.createOrder();
       }
     });
@@ -189,11 +202,17 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   }
 
   billingAddressPopup() {
+
+    // Open billing address popup
     const address = this.dialog.open(BillingAddressPopupComponent, {
       autoFocus: false
     });
+
+    // Handle popup closure
     address.afterClosed().subscribe((result: any) => {
       if (result && result.type && result.type == 1) {
+        
+        // Update billing address details in poDetails object
         this.poDetails.billing_address.company_name = result.data.company_name;
         this.poDetails.billing_address.street_address = result.data.street_address;
         this.poDetails.billing_address.street_address2 = result.data.street_address2;
@@ -221,9 +240,9 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     })
   }
   myBrandName(brandId:any){
-    console.log("mybrandfunction",brandId)
+    // console.log("mybrandfunction",brandId)
     let brand=this.brandList.filter(brand=>brand._id==brandId)
-    console.log(brand)
+    // console.log(brand)
     return brand[0].brand_name;
   } 
 

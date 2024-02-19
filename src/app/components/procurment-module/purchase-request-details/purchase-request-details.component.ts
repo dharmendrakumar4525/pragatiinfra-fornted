@@ -20,6 +20,11 @@ export class PurchaseRequestDetailsComponent implements OnInit {
   siteList: any;
   load = false;
   items: FormArray;
+
+  /**
+  * Represents the purchase request form, including form controls for various fields.
+  * @returns void
+  */
   purchaseRequestForm = new FormGroup({
     title: new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
@@ -51,7 +56,11 @@ export class PurchaseRequestDetailsComponent implements OnInit {
 
   }
 
-
+  /**
+   * Fetches lists of UOM, items, sites, and brands from the API and assigns them to corresponding class properties.
+   * Uses HTTP requests to retrieve data asynchronously.
+   * @returns void
+   */
   getList() {
     const UOM = this.http.get<any>(`${environment.api_path}${UOM_API}`);
     const item = this.http.get<any>(`${environment.api_path}${ITEM_API}`);
@@ -67,6 +76,12 @@ export class PurchaseRequestDetailsComponent implements OnInit {
     })
   }
 
+  /**
+  * Patches data received from an DB into the purchase request form.
+  * Disables the 'remarks' form control after patching the data.
+  * @param data The data object containing values to be patched into the form.
+  * @returns void
+  */
   patchData(data) {
     this.purchaseRequestForm.patchValue({
       title: data.title,
@@ -121,6 +136,11 @@ export class PurchaseRequestDetailsComponent implements OnInit {
     }
   }
 
+  /**
+  * Retrieves the brand name corresponding to the provided brand ID from the brand list.
+  * @param brandId The ID of the brand for which the name is to be retrieved.
+  * @returns The brand name corresponding to the provided brand ID, if found; otherwise, undefined.
+  */
   myBrandName(brandId:any){
     if(this.brandList){
       let brand=this.brandList.filter(brand=>brand._id==brandId)

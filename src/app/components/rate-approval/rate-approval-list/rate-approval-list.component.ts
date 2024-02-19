@@ -45,6 +45,13 @@ export class RateApprovalListComponent implements OnInit {
     this.getList({ filter_by: this.filter_by, filter_value: this.filter_value, stage: 'rate_approval' });
   }
 
+  /**
+  * Fetches rate comparative data from the API based on the provided filter object.
+  * Updates the originalRateComparativeList and rateComparativeList with the fetched data.
+  * Notifies the user of any errors encountered during the API request.
+  * @param filterObj The filter object to apply to the API request.
+  * @returns void
+  */
   getList(filterObj: any) {
     this.httpService.GET(RATE_COMPARATIVE_API, filterObj).subscribe({
       next: (resp: any) => {
@@ -68,11 +75,22 @@ export class RateApprovalListComponent implements OnInit {
     });
   }
 
+  /**
+  * Handles changes in the status selection.
+  * Fetches rate comparative data based on the selected status and stage.
+  * @param item The selected status item.
+  * @returns void
+  */
   onStatusChange(item) {
     this.getList({ filter_by: this.filter_by, filter_value: item.value, stage: 'rate_approval' })
-
   }
 
+  /**
+  * Filters rate comparative data based on the selected date.
+  * Updates the rateComparativeList with filtered data.
+  * @param event The MatDatepickerInputEvent containing the selected date.
+  * @returns void
+  */
   dateFilter(event: MatDatepickerInputEvent<Date>) {
     if (this.originalRateComparativeList && this.originalRateComparativeList.length > 0) {
       if (event.value) {
@@ -83,7 +101,14 @@ export class RateApprovalListComponent implements OnInit {
       }
     }
   }
-
+ 
+  /**
+  * Performs a search on the rate comparative data based on the provided event and type.
+  * Updates the rateComparativeList with filtered data.
+  * @param event The event triggered by the search input.
+  * @param type The type of search to perform ('site' or 'title').
+  * @returns void
+  */
   search(event: any, type?: any) {
 
     if (this.originalRateComparativeList && this.originalRateComparativeList.length > 0) {

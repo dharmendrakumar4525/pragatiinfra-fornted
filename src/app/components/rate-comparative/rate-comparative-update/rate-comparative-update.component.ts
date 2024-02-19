@@ -30,6 +30,10 @@ export class RateComparativeUpdateComponent implements OnInit {
   VendorItems:any[]=[];
   isButtonDisabled: boolean = true;
 
+  /**
+  * Represents the rate comparative form, including form controls for various fields.
+  * @returns void
+  */
   rateComparativeForm = new FormGroup({
     title: new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
@@ -59,66 +63,74 @@ export class RateComparativeUpdateComponent implements OnInit {
     private http: HttpClient,
     private userService: UsersService,
   ) {
-    this.getBrandList();
-    this.getList();
-    this.userService.getUserss().subscribe(data => {
+      // Call the method to fetch the brand list
+      this.getBrandList();
+
+      // Call the method to fetch the list of rate comparatives
+      this.getList();
+
+      // Subscribe to the getUserss method of the userService to fetch user data
+      this.userService.getUserss().subscribe(data => {
+
+      // Assign the fetched user data to the users property
       this.users = data
-      console.log("this.users", this.users);
-      //console.log(this.tasksData)
     })
   }
 
   vendorForm = this.formBuilder.group({
     vendor: this.formBuilder.array([]),
   });
+
+  /**
+  * Opens a dialog popup for rate comparative vendors with the provided data.
+  * @param dataObj The data object related to the item.
+  * @param vendors The vendors related to the item.
+  * @returns void
+  */
   ItemData(dataObj: any,vendors:any) {
     console.log(vendors)
     let index=this.finalVendorArray.findIndex(item=> item==dataObj)
-    //console.log(index)
+
+    // Open a dialog popup for rate comparative vendors
     const dialogPopup = this.dialog.open(RateComparativeVendorsComponent, {
       data: {
         dataObj: dataObj,
         vendorsList: this.vendorsList,
         items:this.details?.items,
-        // index:i,
         vendors:vendors,
         filledData:this.VendorItems[index],
         brandList:this.brandList,
       }
     });
+    
+    // Subscribe to the dialog popup's afterClosed event
     dialogPopup.afterClosed().subscribe((result: any) => {
-      if (result && result['option'] === 1) {
-
-       
+      if (result && result['option'] === 1) { 
         this.VendorItems[index]=result;
-        // this.rateComparativeForm.get('VendorItems')['insert'](0, result);
-        // this.rateComparativeForm.get('VendorItems').get(index.toString()).setValue(result);
         console.log(this.VendorItems);
-        // let vendorTotalData: Array<any> = [];
-
-        // this.details.items = this.details.items.map((o: any) => {
-        //   if (o._id == dataObj._id) {
-        //     o.vendors = result.data.itemVendors;
-        //   }
-        //   return o;
-        // });
-
       }
     });
   }
 
-
-
+  /**
+  * Fetches the list of sites from the API.
+  * @returns void
+  */
   getList() {
-
     const site = this.http.get<any>(`${environment.api_path}${GET_SITE_API}`);
     this.httpService.multipleRequests([site], {}).subscribe(res => {
       if (res) {
+        // Assign the retrieved site list to the siteList property
         this.siteList = res[0].data;
       }
     })
   }
 
+  /**
+  * Patches the provided data into the rate comparative form.
+  * @param data The data to be patched into the form.
+  * @returns void
+  */
   patchData(data) {
     let loginUser = JSON.parse(localStorage.getItem('loginData'))
     this.rateComparativeForm.patchValue({
@@ -243,69 +255,53 @@ export class RateComparativeUpdateComponent implements OnInit {
     })
   }
 
-  // onChangeFreightCharges(event: any, item: any) {
-  //   let value = (event.target.value && event.target.value >= 0) ? Number(event.target.value) : 0;
-
-  //   this.details.vendors_total = this.details.vendors_total.map((o: any) => {
-
-  //     if (o.vendor_id == item.vendor_id) {
-  //       o.freight_charges = value;
-  //       let total = o.subtotal + o.total_tax;
-
-  //       if (o.freight_charges) {
-  //         total += Number(o.freight_charges);
-  //       }
-  //       if (o.freight_tax) {
-  //         total += (Number(o.freight_charges) * Number(o.freight_tax)) / 100;
-  //       }
-  //       o.total_amount = total;
-  //     }
-
-  //     return o;
-  //   })
-
-  // }
-
-
-  // onChangeFreightTaxPercent(event: any, item: any) {
-  //   let value = (event.target.value && event.target.value >= 0) ? Number(event.target.value) : 0;
-
-  //   this.details.vendors_total = this.details.vendors_total.map((o: any) => {
-
-  //     if (o.vendor_id == item.vendor_id) {
-  //       o.freight_tax = value;
-  //       let total = o.subtotal + o.total_tax;
-
-  //       if (o.freight_charges) {
-  //         total += Number(o.freight_charges);
-  //       }
-  //       if (o.freight_tax) {
-  //         total += (Number(o.freight_charges) * Number(o.freight_tax)) / 100;
-  //       }
-  //       o.total_amount = total;
-  //     }
-  //     return o;
-  //   })
-  // }
+  /**
+  * Determines the list of vendors based on the category and subcategory of the items.
+  * @param items The items for which vendors are to be filtered.
+  * @returns An array of vendors that match the category and subcategory of the items.
+  */
   isVendorSelected(items: any): any[] {
     let tempVendorList=this.vendorsList.filter(vendor=>vendor.category.includes(items.categoryDetail._id) && vendor.SubCategory.includes(items.subCategoryDetail._id))
     return tempVendorList;
   }
+
+  /**
+  * Getter method to access the vendor array from the vendor form.
+  * @returns The vendor array FormArray.
+  */
   get vendorArray(): FormArray {
     return this.vendorForm.get('vendor') as FormArray;
   }
+
+  /**
+  * Handles changes in vendor selection.
+  * Resets the flag and enables the button.
+  * @returns void
+  */
   handleVendorChange(){
-    //console.log("hi")
     this.flag=false;
     this.isButtonDisabled=false;
   }
+
+  /**
+  * Retrieves the list of brands from the API.
+  * Logs the retrieved brand list.
+  * @returns void
+  */
   getBrandList(){
-    console.log("hi")
     this.httpService.GET(GET_BRAND_API, {}).subscribe(res => {
       this.brandList=res.data
       console.log(this.brandList);
     })
   }
+
+  /**
+  * Saves the vendor form data.
+  * Sets flag to true and disables the button.
+  * Clears the finalVendorArray and VendorItems arrays.
+  * Iterates through the vendor array controls, pushes selected vendors into finalVendorArray, and initializes VendorItems array.
+  * @returns void
+  */
   save(){
     console.log(this.vendorForm)
     this.flag=true;
@@ -321,24 +317,19 @@ export class RateComparativeUpdateComponent implements OnInit {
         this.VendorItems.push("");
       }
     }
-    console.log(this.finalVendorArray)
+    // console.log(this.finalVendorArray)
   }
+
+  /**
+  * Retrieves details of a vendor based on the vendor ID.
+  * @param vendor The ID of the vendor.
+  * @returns The name of the vendor.
+  */
   detailsOfVendor(vendor:any){
     let tempvendor=this.vendorsList.find(obj=> obj._id==vendor)
     return tempvendor.vendor_name
-      // if(type=="name")
-      // {
-      //     return tempvendor.vendor_name
-      // }
-      // else if(type=="category")
-      // {
-      //     return this.details.items[i].categoryDetail.name
-      // }
-      // else if(type=="subCategory")
-      // {
-      //     return this.details.items[i].subCategoryDetail.subcategory_name
-      // }
   }
+  
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       if (params['id']) {
@@ -361,8 +352,7 @@ export class RateComparativeUpdateComponent implements OnInit {
               }
               return false; // Exclude the item when it's already in temparr
             });
-            // console.log(x);
-            // return x;
+            
             //Initialize selectedVendors FormArray with empty form groups for each item
             this.filteredItems.forEach((items) => {
               let tempselectedVendors = this.formBuilder.group({
@@ -371,7 +361,7 @@ export class RateComparativeUpdateComponent implements OnInit {
                 selectedVendors: new FormControl([])
               });
               (this.vendorForm.get('vendor') as FormArray).push(tempselectedVendors);
-              // other form controls specific to each item...
+              
             });            
             console.log(this.vendorForm.get('vendor')as FormArray)
             this.patchData(res.data.details);

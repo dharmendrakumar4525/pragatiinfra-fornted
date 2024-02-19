@@ -40,17 +40,22 @@ export class RateComparativeListComponent implements OnInit {
   permissions: any;
   constructor(
     private httpService: RequestService,
-    private snack: SnackbarService,
-  ) {
-    this.getList({ filter_by: this.filter_by, filter_value: this.filter_value, stage: 'rate_comparitive' });
-    console.log(this.stage)
+    private snack: SnackbarService,){
+    
+      this.getList({ filter_by: this.filter_by, filter_value: this.filter_value, stage: 'rate_comparitive' });
+      // console.log(this.stage)
   }
 
+  /**
+  * Fetches a list of rate comparatives from the API based on the provided filter parameters.
+  * Updates the originalRateComparativeList and rateComparativeList arrays with the retrieved data.
+  * @param filterObj An object containing filter parameters to be sent with the GET request.
+  * @returns void
+  */
   getList(filterObj: any) {
     this.httpService.GET(RATE_COMPARATIVE_API, filterObj).subscribe({
       next: (resp: any) => {
         console.log(resp);
-
         this.originalRateComparativeList = resp.data;
         this.rateComparativeList = resp.data;
       }, error: (err: any) => {
@@ -69,6 +74,11 @@ export class RateComparativeListComponent implements OnInit {
     });
   }
 
+  /**
+  * Handles the change in status of an item and fetches the corresponding list based on the selected status.
+  * @param item The selected item containing the new status value.
+  * @returns void
+  */
   onStatusChange(item) {
     let stage;
     if (item.value == "pending" || item.value == "revise" || item.value == "rejected"  ) {
@@ -80,10 +90,15 @@ export class RateComparativeListComponent implements OnInit {
       this.getList({ filter_by: this.filter_by, stage: stage })
     }
     this.stage=stage;
-    console.log(this.stage)
+    // console.log(this.stage)
 
   }
 
+  /**
+  * Filters the rate comparative list based on the selected date.
+  * @param event The MatDatepickerInputEvent containing the selected date.
+  * @returns void
+  */
   dateFilter(event: MatDatepickerInputEvent<Date>) {
     if (this.originalRateComparativeList && this.originalRateComparativeList.length > 0) {
       if (event.value) {
@@ -95,6 +110,12 @@ export class RateComparativeListComponent implements OnInit {
     }
   }
 
+  /**
+  * Searches and filters the rate comparative list based on the provided search query and type.
+  * @param event The event object containing the search query.
+  * @param type Optional parameter indicating the type of search ('site' or undefined for default title search).
+  * @returns void
+  */
   search(event: any, type?: any) {
 
     if (this.originalRateComparativeList && this.originalRateComparativeList.length > 0) {
@@ -119,7 +140,10 @@ export class RateComparativeListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Retrieve user permissions from local storage and parse them as JSON
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
+
+    // Assign a specific permission from the parsed permissions
     this.permissions=this.permissions.permissions[0].ParentChildchecklist[11];
   }
 }
