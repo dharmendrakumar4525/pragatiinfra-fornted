@@ -11,7 +11,7 @@
           <div dir="ltr" class="labeled-outlined-field-wrapper">
             <mat-form-field class="full-width drop-down outline-filter-field hide-form-bottom-field"
               appearance="outline">
-              <input matInput placeholder="Search by location" (input)="search($event)">
+              <input matInput placeholder="Search by Company Name" (input)="search($event)">
             </mat-form-field>
           </div>
 
@@ -25,15 +25,15 @@
 
   <div class="section-body">
     <table class="table  pragati-table">
-      <thead>
+      <thead> 
         <tr>
           <th scope="col">SN.</th>
 
-          <th scope="col">Locaton</th>
+          <th scope="col">Company Name</th>
           <th scope="col">Contact Person</th>
-          <th scope="col">Designation</th>
+          <!-- <th scope="col">Designation</th> -->
           <th scope="col">Phone Number</th>
-          <th scope="col">Email</th>
+          <!-- <th scope="col">Email</th> -->
           <th scope="col">PAN Number</th>
           <th scope="col">GST Number</th>
           <th scope="col">Address </th>
@@ -44,11 +44,11 @@
       <tbody>
         <tr *ngFor="let item of orgList;let i = index">
           <td scope="row">{{i+1}}</td>
-          <td>{{item.location}}</td>
+          <td>{{item.companyName}}</td>
           <td>{{item.contact_person}}</td>
-          <td>{{item.designation}}</td>
+          <!-- <td>{{item.designation}}</td> -->
           <td>{{item.dialcode}}{{item.phone_number}}</td>
-          <td>{{item.email}}</td>
+          <!-- <td>{{item.email}}</td> -->
           <td>{{item.pan_number}}</td>
           <td>{{item.gst_number}}</td>
           <td>{{item.address.street_address + ' '

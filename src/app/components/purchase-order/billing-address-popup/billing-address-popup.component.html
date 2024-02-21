@@ -16,11 +16,20 @@
           <div class="custom-form-control" style="position: relative;">
             <mat-form-field appearance="outline">
               <mat-label>Company Name</mat-label>
-              <input matInput formControlName="company_name">
+              <mat-select id="site" placeholder="Select Name" formControlName="company_name" >
+                <mat-option [value]="item._id" *ngFor="let item of orgList" (click)="companySelection(item)">
+                  {{item.companyName}}
+                </mat-option>
+  
+              </mat-select>
+              
+             
               <mat-error *ngIf="addForm.get('address.company_name').errors?.['required']">
                 this field is required.
               </mat-error>
             </mat-form-field>
+
+            
           </div>
         </div>
       </div>
@@ -139,6 +148,37 @@
         </div>
 
       </div>
+      <div class="col-md-4">
+        <div class="custom-form-group">
+          <div class="custom-form-control" style="position: relative;">
+            <mat-form-field appearance="outline">
+              <mat-label>Contact Person</mat-label>
+              <input matInput formControlName="contactPerson">
+              <mat-error *ngIf="
+                      addForm.get('address.contactPerson').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-4">
+        <div class="custom-form-group">
+          <div class="custom-form-control" style="position: relative;">
+            <mat-form-field appearance="outline">
+              <mat-label>Phone Number</mat-label>
+              <input matInput formControlName="phoneNumber">
+              <mat-error *ngIf="
+                      addForm.get('address.phoneNumber').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+
 
     </div>
     <div class="row">

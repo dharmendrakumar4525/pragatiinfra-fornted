@@ -52,6 +52,7 @@ export class PurchaseRequestComponent implements OnInit {
   brandList:any;
   originalPurchaseList: any = [];
   permissions: any;
+  
   constructor(
     private router: Router,
     private httpService: RequestService,
@@ -71,7 +72,7 @@ export class PurchaseRequestComponent implements OnInit {
     expected_delivery_date: new FormControl(moment().add(1, 'days').format('DD-MM-YYYY'), Validators.required),
     purchase_request_number: new FormControl(''),
     site: new FormControl('', Validators.required),
-    local_purchase: new FormControl('yes', Validators.required),
+    local_purchase: new FormControl('no', Validators.required),
     remarks: new FormControl(''),
     items: this.formBuilder.array([]),
     vendor: new FormControl(),
@@ -258,6 +259,12 @@ export class PurchaseRequestComponent implements OnInit {
   // Clearing the 'items' FormArray to ensure it is empty.
   // Adding items based on the value of 'local_purchase' (yes or no).
   handleLocalPurchaseChange(){
+    if(this.purchaseRequestForm.get('local_purchase').value==="yes"){
+      this.purchaseRequestForm.get('local_purchase').setValue('no');
+    }
+    else{
+      this.purchaseRequestForm.get('local_purchase').setValue('yes');
+    }
     const itemsFormArray = this.purchaseRequestForm.get('items') as FormArray;
     itemsFormArray.clear(); 
     this.addItem();

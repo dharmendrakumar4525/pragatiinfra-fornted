@@ -11,6 +11,7 @@ import { MailingAddressPopupComponent } from '../mailing-address-popup/mailing-a
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
 import { forkJoin, of, switchMap } from 'rxjs';
+import { ORG_REQUEST_API } from '@env/api_path';
 @Component({
   selector: 'app-purchase-order-update',
   templateUrl: './purchase-order-update.component.html',
@@ -38,7 +39,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
 
       // Call the getBrandList() method to fetch the brand list
       this.getBrandList();
-
+      
       // Subscribe to route parameters to retrieve the id parameter
       this.route.params.subscribe(params => {
       // Check if the id parameter is present
@@ -212,14 +213,24 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     address.afterClosed().subscribe((result: any) => {
       if (result && result.type && result.type == 1) {
         
+
+       
+        // zip_code: data.address.zip_code,
+        // country:data.address.country,
+        
+        console.log(result.data)
+
         // Update billing address details in poDetails object
-        this.poDetails.billing_address.company_name = result.data.company_name;
-        this.poDetails.billing_address.street_address = result.data.street_address;
-        this.poDetails.billing_address.street_address2 = result.data.street_address2;
-        this.poDetails.billing_address.city = result.data.city;
-        this.poDetails.billing_address.state = result.data.state;
+        this.poDetails.billing_address.company_name = result.data.companyName;
+        this.poDetails.billing_address.street_address = result.data.address.street_address;
+        this.poDetails.billing_address.street_address2 = result.data.address.street_address2;
+        this.poDetails.billing_address.city = result.data.address.city;
+        this.poDetails.billing_address.state = result.data.address.state;
         this.poDetails.billing_address.gst_number = result.data.gst_number;
-        this.poDetails.billing_address.pan_card = result.data.pan_card;
+        this.poDetails.billing_address.pan_card = result.data.pan_number;
+        this.poDetails.billing_address.contact_person=result.data.contact_person+"-"+result.data.phone_number;
+        // this.poDetails.billing_address.contact_person=result.data.contact_person;
+        // this.poDetails.billing_address.phone_number=result.data.phone_number;
 
       }
     });
@@ -245,5 +256,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     // console.log(brand)
     return brand[0].brand_name;
   } 
+
+  
 
 }

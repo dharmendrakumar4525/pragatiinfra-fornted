@@ -15,9 +15,9 @@ export class AddDataComponent implements OnInit {
 
 
   orgmasterForm = new FormGroup({
-    location: new FormControl('', Validators.required),
+    companyName: new FormControl('', Validators.required),
     contact_person: new FormControl("", Validators.required),
-    designation: new FormControl("", Validators.required),
+    // designation: new FormControl("", Validators.required),
     dialcode: new FormControl('+91'),
     phone_number: new FormControl('', Validators.required),
     gst_number: new FormControl('', Validators.required),
@@ -31,7 +31,7 @@ export class AddDataComponent implements OnInit {
       zip_code: new FormControl('', Validators.required),
       country: new FormControl('', Validators.required),
     }),
-    email: new FormControl('', [Validators.email, Validators.required]),
+    // email: new FormControl('', [Validators.email, Validators.required]),
 
   });
   constructor(

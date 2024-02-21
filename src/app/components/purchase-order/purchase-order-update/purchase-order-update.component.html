@@ -50,13 +50,13 @@
             style="position: relative;right: 27px;top: 9px;margin-left: 35px;color: #3568BA;width: 20px;height: 20px;font-size: 14px;cursor: pointer;">border_color</mat-icon><br>
           <div class="textarealeft">
 
-            <span><b>{{poDetails?.billing_address?.company_name}}</b></span>
-            <span>
+            <span><b>Company Name: </b>{{poDetails?.billing_address?.company_name}}</span>
+            <span><b>Address: </b>
               {{poDetails?.billing_address?.street_address}} {{poDetails?.billing_address?.street_address2}}
               <br>{{poDetails?.billing_address?.city}} {{poDetails?.billing_address?.state}} {{poDetails?.billing_address?.zip_code}} </span>
-            <span>GSTIN:{{poDetails?.billing_address?.gst_number}}</span>
-            <span>PAN:{{poDetails?.billing_address?.pan_card}}</span>
-            <span>{{poDetails?.billing_address?.contact_person}}</span>
+            <span><b>GSTIN: </b>{{poDetails?.billing_address?.gst_number}}</span>
+            <span><b>PAN: </b>{{poDetails?.billing_address?.pan_card}}</span>
+            <span><b>Contact Person: </b>{{poDetails?.billing_address?.contact_person}}</span>
 
           </div>
 
@@ -80,8 +80,8 @@
             <span><b>PO NO</b>: {{poDetails?.po_number}}<input type="text"
                 style="width:120px;padding:5px;border:none;margin-left: 16px;"> </span>
             <span><b>Site Address</b> </span>
-              <span>{{poDetails?.billing_address?.street_address}} {{poDetails?.billing_address?.street_address2}} {{poDetails?.billing_address?.city}},{{poDetails?.billing_address?.state}} {{poDetails?.billing_address?.zip_code}} </span>
-            <span><b>Contact Person</b>: {{poDetails?.billing_address?.contact_person}}<input
+              <span>{{poDetails?.delivery_address?.street_address}} ,{{poDetails?.delivery_address?.street_address2}}, {{poDetails?.delivery_address?.city}},{{poDetails?.delivery_address?.state}} ,{{poDetails?.delivery_address?.zip_code}} </span>
+            <span><b>Contact Person</b>: {{poDetails?.delivery_address?.contact_person}}<input
                 type="text" style="width:150px;padding:5px;border:none;margin-left: 16px;"> </span>
 
           </div>
@@ -91,11 +91,13 @@
         <span style="font-size: 14px;font-family: 'Poppins';color:#3568BA;margin-bottom: 10px;">To,</span><br>
         <div style="border: 1px solid #94A3B8;border-radius: 5px;padding: 5px 0 20px 0;">
           <div type="text" class="textareadown">
-            <span style="margin-left: 20px;margin-top: 10px;width:500px">{{poDetails.vendor_detail.vendor_name}}
+            <span style="margin-left: 20px;margin-top: 10px;width:500px"><b>Vendor Name: </b>{{poDetails.vendor_detail.vendor_name}}
               <br>
+              <span><b>Vendor Address: </b>
               {{poDetails.vendor_detail.address.street_address}} {{poDetails.vendor_detail.address.street_address2}} {{poDetails.vendor_detail.address.city}} {{poDetails.vendor_detail.address.state}} {{poDetails.vendor_detail.address.country}} {{poDetails.vendor_detail.address.zip_code}}
             </span>
-            <span style="margin-left: 20px">GSTIN:{{poDetails.vendor_detail.gst_number}}</span>
+            </span>
+           <span><b style="margin-left: 20px">GSTIN: </b>{{poDetails.vendor_detail.gst_number}}</span> 
           </div>
           <div class="msg-teatarea">
             <p>{{poDetails.vendor_message_header}}</p>

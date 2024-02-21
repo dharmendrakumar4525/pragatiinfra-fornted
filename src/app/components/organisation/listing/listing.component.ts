@@ -81,7 +81,7 @@ export class ListingComponent implements OnInit {
 
   search(event: any) {
     if (event.target.value) {
-      this.orgList = this.list.filter(obj => obj.location.toLowerCase().includes(event.target.value.toLowerCase()))
+      this.orgList = this.list.filter(obj => obj.companyName.toLowerCase().includes(event.target.value.toLowerCase()))
     }
     else {
       this.orgList = this.list;
@@ -118,19 +118,19 @@ export class ListingComponent implements OnInit {
       return o;
     })
     let sheetHeaders = [
-      "Locaton",
-      "Contact PErson Name",
-      "Designation",
-      'Organisation Number',
-      "Email",
+      "Company Name",
+      "Contact Person Name",
+      // "Designation",
+      'Phone Number',
+      // "Email",
       "PAN Number",
       "GST Number",
       "Address"
     ];
 
 
-    let valueKey = ['location', 'contact_person', 'designation', 'organisation_number', 'email', 'pan_number', 'gst_number', 'address2'];
-    let valueDataType = ['string', 'string', 'string', 'string', 'string', 'string', 'string'];
+    let valueKey = ['companyName', 'contact_person','phone_number','pan_number', 'gst_number', 'address2'];
+    let valueDataType = ['string', 'string', 'string', 'string', 'string', 'string'];
     let sheetName: any = "Organisation";
     this.excelService.mapArrayToExcel(sheetName, sheetHeaders, valueKey, valueDataType, filterReport);
   }

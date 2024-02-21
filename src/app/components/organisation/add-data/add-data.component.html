@@ -17,9 +17,9 @@
       <div class="row">
         <div class="col-md-3">
           <mat-form-field appearance="outline">
-            <mat-label>Location</mat-label>
-            <input matInput formControlName="location">
-            <mat-error *ngIf="orgmasterForm.controls.location.errors?.['required']">
+            <mat-label>Company Name</mat-label>
+            <input matInput formControlName="companyName">
+            <mat-error *ngIf="orgmasterForm.controls.companyName.errors?.['required']">
               this field is required.
             </mat-error>
             <!-- <mat-error>
@@ -41,19 +41,17 @@
           </mat-form-field>
 
         </div>
-        <div class="col-md-3">
+        <!-- <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>Designation</mat-label>
             <input matInput formControlName="designation">
             <mat-error *ngIf="orgmasterForm.controls.designation.errors?.['required']">
               this field is required.
             </mat-error>
-            <!-- <mat-error>
-              <span>Please provide a valid email</span>
-            </mat-error> -->
+           
           </mat-form-field>
 
-        </div>
+        </div> -->
         <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>Phone Number</mat-label>
@@ -90,7 +88,7 @@
 
         </div>
 
-        <div class="col-md-3">
+        <!-- <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>Enter Email</mat-label>
             <input matInput formControlName="email">
@@ -98,7 +96,7 @@
               this field is required.
             </mat-error>
           </mat-form-field>
-        </div>
+        </div> -->
 
         <h4>Address</h4>
         <div formGroupName="address" class="row">

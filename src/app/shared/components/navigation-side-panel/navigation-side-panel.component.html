@@ -44,7 +44,7 @@
           <li *ngFor="let item_sub of item.sub_menu" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <a [routerLink]="[item_sub.link]">
               <div class="allignSvg" style="margin-left:0.5em;">
-                {{item_sub.link_name | lowercase}}
+                {{item_sub.link_name}}
               </div>
             </a>
           </li>

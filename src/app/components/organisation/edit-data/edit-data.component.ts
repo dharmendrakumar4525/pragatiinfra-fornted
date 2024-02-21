@@ -14,9 +14,9 @@ export class EditDataComponent implements OnInit {
 
 
   orgmasterForm = new FormGroup({
-    location: new FormControl('', Validators.required),
+    companyName: new FormControl('', Validators.required),
     contact_person: new FormControl("", Validators.required),
-    designation: new FormControl("", Validators.required),
+    // designation: new FormControl("", Validators.required),
     dialcode: new FormControl('+91'),
     phone_number: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]),
     gst_number: new FormControl('', Validators.required),
@@ -30,7 +30,7 @@ export class EditDataComponent implements OnInit {
       zip_code: new FormControl('', [Validators.required, Validators.maxLength(6), Validators.minLength(6)]),
       country: new FormControl('', Validators.required),
     }),
-    email: new FormControl('', [Validators.email, Validators.required]),
+    // email: new FormControl('', [Validators.email, Validators.required]),
     _id: new FormControl()
   });
   constructor(
@@ -72,9 +72,9 @@ export class EditDataComponent implements OnInit {
 
   patchValue(data: any) {
     this.orgmasterForm.patchValue({
-      location: data.location,
+      companyName: data.companyName,
       contact_person: data.contact_person,
-      designation: data.designation,
+      // designation: data.designation,
       dialcode: data.dialcode,
       phone_number: data.phone_number,
       gst_number: data.gst_number,
@@ -88,13 +88,14 @@ export class EditDataComponent implements OnInit {
         zip_code: data.address.zip_code,
         country: data.address.country,
       },
-      email: data.email,
+      // email: data.email,
       _id: data._id
 
     })
   }
 
   saveData() {
+    console.log(this.orgmasterForm)
     if (this.orgmasterForm.valid) {
       this.httpService.PUT(ORG_REQUEST_API, this.orgmasterForm.value).subscribe(res => {
         this.snack.notify("Organisation data has been saved sucessfully.", 1);

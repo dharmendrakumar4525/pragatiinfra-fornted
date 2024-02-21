@@ -20,13 +20,13 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
   ProcurementObj=[
     {
-      link_name: "Add Procurement",
+      link_name: "Create PR",
       link: "/procurement",
       img: './assets/images/icons/Buser.svg',
       module_name: 'Add_procurement'
     },
     {
-      link_name: "Procurements List",
+      link_name: "PR Approvals",
       link: "/procurement/prlist",
       img: './assets/images/icons/Buser.svg',
       module_name: 'Procurement_approval'
@@ -94,6 +94,12 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
     {
       link_name: "Brand Master",
       link: "/brand",
+      img: './assets/images/icons/Buser.svg',
+      module_name: ''
+    },
+    {
+      link_name: "Organisation Master",
+      link: "/organisation",
       img: './assets/images/icons/Buser.svg',
       module_name: ''
     },

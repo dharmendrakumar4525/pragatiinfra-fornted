@@ -111,8 +111,11 @@
           </div>
           
           <div class="flex-div" style="display: flex;flex-direction: column;">
-            <label style="color: #4272BF;">Local Purchase <span class="star">*</span></label>
-            <mat-radio-group aria-labelledby="example-radio-group-label" color="primary" class="example-radio-group"
+            <label style="color: #4272BF;">Local Purchase
+            <input style="transform: scale(1.5);margin-left: 20px;
+            margin-top: 30px;" type="checkbox"  name="local_purchase_checkbox" (change)="handleLocalPurchaseChange()">
+          </label>
+            <!-- <mat-radio-group aria-labelledby="example-radio-group-label" color="primary" class="example-radio-group"
               formControlName="local_purchase" (change)="handleLocalPurchaseChange()">
               <mat-radio-button class="example-radio-button" [value]="'yes'">
                 Yes
@@ -120,11 +123,7 @@
               <mat-radio-button class="example-radio-button" [value]="'no'">
                 No
               </mat-radio-button>
-            </mat-radio-group>
-            <!-- <div style="margin-top: 20px;">
-              <mat-checkbox color="primary">Yes</mat-checkbox>
-              <mat-checkbox style="margin-left: 30px;" color="primary">No</mat-checkbox>
-            </div> -->
+            </mat-radio-group> -->
           </div>
           <div class="flex-div" style="display: flex; flex-direction: column;" *ngIf="purchaseRequestForm.get('local_purchase')?.value === 'yes'">
             <label style="color: #4272BF; font-size: 14px;">Vendor<span class="star">*</span></label>
@@ -241,13 +240,16 @@
             </button>
           </div>
         </div>
-        <div style="display: flex;flex-direction: row;gap: 10px;float: right;position: relative;top:-120px;right:125px">
-          <div><button
+        <div style="display: flex;
+        justify-content: center;
+        margin-top: -126px;margin-bottom: 20px;">
+          <!-- <div> -->
+            <button
               style="padding: 8px;width: 120px;background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-size: 14px;font-family: 'Poppins';">Submit</button>
-          </div>
-          <div><button
+          <!-- </div> -->
+          <!-- <div><button
               style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">Clear</button>
-          </div>
+          </div> -->
         </div>
       
       </ng-container>
@@ -340,13 +342,16 @@
             </button>
           </div>
         </div>
-        <div style="display: flex;flex-direction: row;gap: 10px;float: right;position: relative;top:-120px;right:125px">
-          <div><button
+        <div style="display: flex;
+        justify-content: center;
+        margin-top: -126px;margin-bottom: 20px;">
+          <!-- <div> -->
+            <button
               style="padding: 8px;width: 120px;background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-size: 14px;font-family: 'Poppins';">Submit</button>
-          </div>
-          <div><button
+          <!-- </div> -->
+          <!-- <div><button
               style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">Clear</button>
-          </div>
+          </div> -->
         </div>
       
       </ng-template>
