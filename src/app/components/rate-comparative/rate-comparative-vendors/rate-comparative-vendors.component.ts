@@ -80,6 +80,7 @@ export class RateComparativeVendorsComponent implements OnInit {
           RequiredQuantity: new FormControl('', Validators.required),
           Rate:new FormControl('', Validators.required),
           SubTotalAmount:new FormControl('', Validators.required),
+          Freight: new FormControl('', Validators.required),
           Total:new FormControl('', Validators.required),
         });
         (this.vendorItemsForm.get('items')as FormArray).push(itemGroup);
@@ -131,18 +132,51 @@ export class RateComparativeVendorsComponent implements OnInit {
   calculateSubTotalAmount(index: number): number {
     const rate = this.vendorItemsForm.get('items').get(index.toString()).get('Rate').value;
     const requiredQuantity = this.vendorItemsForm.get('items').get(index.toString()).get('RequiredQuantity').value;
-    this.vendorItemsForm.get('items').get(index.toString()).get('SubTotalAmount').setValue(rate*requiredQuantity);
+    
+
+    console.log(" ===== ",this.vendorItemsForm);
+    this.vendorItemsForm.get('items').get(index.toString()).get('SubTotalAmount').setValue((rate*requiredQuantity));
     return rate * requiredQuantity;
   }
-  calculateTotalAmount(index: number): number {
-    const totalAmount=this.vendorItemsForm.get('items').get(index.toString()).get('SubTotalAmount').value+(this.vendorItemsForm.get('items').get(index.toString()).get('SubTotalAmount').value*this.tempFilteredItems[index].tax.amount)/100;
-    this.vendorItemsForm.get('items').get(index.toString()).get('Total').setValue(totalAmount);
-    // console.log(this.vendorItemsForm)
-    return totalAmount;
+  // calculateTotalAmount(index: number): number {
+  //   const totalAmount=this.vendorItemsForm.get('items').get(index.toString()).get('SubTotalAmount').value+(this.vendorItemsForm.get('items').get(index.toString()).get('SubTotalAmount').value*this.tempFilteredItems[index].tax.amount)/100;
+  //   const freight = this.vendorItemsForm.get('items').get(index.toString()).get('Freight').value;
+  //   const freightAsInt = parseInt(freight, 10);
+  //   const totalAmountAsInt = parseInt(totalAmount, 10);
+
+  //   const x = totalAmountAsInt + freightAsInt;
+  //   // console.log("x === == == ==",x)
+
+  //   const y = x.toString();
+  //   console.log("y=== == == ==",y,typeof(y));
+  //   this.vendorItemsForm.get('items').get(index.toString()).get('Total').setValue(y);
+  //   console.log(this.vendorItemsForm)
+  //   return y;
+  // }
+
+
+
+  calculateTotalAmount(index: number): string {
+    const totalAmount = this.vendorItemsForm.get('items').get(index.toString()).get('SubTotalAmount').value +
+      (this.vendorItemsForm.get('items').get(index.toString()).get('SubTotalAmount').value * this.tempFilteredItems[index].tax.amount) / 100;
+  
+    const freight = this.vendorItemsForm.get('items').get(index.toString()).get('Freight').value;
+    const freightAsInt = parseInt(freight, 10);
+    const totalAmountAsInt = parseInt(totalAmount.toString(), 10);
+  
+    const sum = totalAmountAsInt + freightAsInt;
+  
+    const stringValue = sum.toString();
+  
+    this.vendorItemsForm.get('items').get(index.toString()).get('Total').setValue(stringValue);
+  
+    console.log(this.vendorItemsForm);
+    return stringValue;
   }
   onNoClick(): void {
     this.dialogRef.close({ option: 2, data: this.data });
   }
+  
 
   onYesClick(): void {
     //console.log(this.vendorItemsForm.value)

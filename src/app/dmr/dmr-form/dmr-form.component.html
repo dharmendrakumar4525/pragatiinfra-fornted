@@ -211,16 +211,16 @@
             </td>
             <ng-container [formGroupName]="i">
               <td style="color: #000;">
-                {{item.item_name}}
+                {{item.item.item_name}}
               </td>
-              <td>{{item.remark}}</td>
+              <td>{{item.item.remark}}</td>
               <td style="color: #000;">
-                {{item.uom.uom_name}}
+                {{item.item.uomDetail.uom_name}}
               </td>
               <td style="color: #000;">
-                {{item.qty}}
+                {{item.RequiredQuantity}}
               </td>
-              <td>{{item.Totalrecived_qty}}</td>
+              <!-- <td>{{item.c}}</td> -->
               <td>
                 
                 <input type="text" placeholder="Enter"  formControlName="InvoiceUOM" class="pr-form-field">
@@ -236,7 +236,7 @@
                 
                 </td>
               <td >
-                {{item.vendors[0].item_rate}}/qty
+                <!-- {{item.vendors[0].item_rate}}/qty -->
               <!-- {{item.qty*item.vendors[0].item_rate+((item.qty*item.vendors[0].item_rate*item.tax.amount)/100) }}   -->
               </td>
               <td>

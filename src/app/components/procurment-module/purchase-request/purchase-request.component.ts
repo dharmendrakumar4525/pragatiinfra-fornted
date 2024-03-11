@@ -5,17 +5,22 @@ import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
 import * as moment from 'moment';
-import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import {Observable} from 'rxjs';
 @Component({
   selector: 'app-purchase-request',
   templateUrl: './purchase-request.component.html',
   styleUrls: ['./purchase-request.component.scss']
 })
+
 export class PurchaseRequestComponent implements OnInit {
+
+
+  siteName: any;
+  apiResponse: any;
   statusOption = new FormControl('pending');
   statusList = [
     {
@@ -47,20 +52,29 @@ export class PurchaseRequestComponent implements OnInit {
   itemList: any;
   filteredItemList: any;
   option = 1;
-  purchaseList: any = [];
+  purchaseList: any[] = [];
   filter_by = "status";
   brandList:any;
   originalPurchaseList: any = [];
   permissions: any;
+  filter_value = "pending";
+  curr_site:any;
+  requestNo: number = 0;
   
+  // updateRequestNo(newNumber: number): void {
+  //   this.requestNo = newNumber;
+  // }
+  details: any = {};
   constructor(
     private router: Router,
     private httpService: RequestService,
     private snack: SnackbarService,
     private formBuilder: FormBuilder,
-    private http: HttpClient
-  ) { }
-
+    private http: HttpClient,
+    private route: ActivatedRoute
+  ) {}
+  // {this.getPRN({ filter_by: this.filter_by, filter_value: this.filter_value });}
+  
   /**
  * Represents the purchase request form, including form controls for various fields.
  * Default values are set for date and expected delivery date fields using moment.js library.
@@ -70,7 +84,9 @@ export class PurchaseRequestComponent implements OnInit {
     title: new FormControl('', Validators.required),
     date: new FormControl(moment().format('DD-MM-YYYY'), Validators.required),
     expected_delivery_date: new FormControl(moment().add(1, 'days').format('DD-MM-YYYY'), Validators.required),
-    purchase_request_number: new FormControl(''),
+    purchase_request_number: new FormControl(null, Validators.required), // assuming null is the initial value
+
+    
     site: new FormControl('', Validators.required),
     local_purchase: new FormControl('no', Validators.required),
     remarks: new FormControl(''),
@@ -81,7 +97,7 @@ export class PurchaseRequestComponent implements OnInit {
 
   onSubmit() {
     if (this.load) {
-      return
+      return;
     }
 
     if (!this.purchaseRequestForm.valid) {
@@ -89,8 +105,11 @@ export class PurchaseRequestComponent implements OnInit {
     }
 
     let requestData: any = this.purchaseRequestForm.value;
+
+    requestData['requestNo'] = this.requestNo;
     requestData['date'] = moment(requestData.date, 'DD-MM-YYYY').toDate()
     requestData['expected_delivery_date'] = new Date(requestData.expected_delivery_date)
+
    
     //for local purchase
     if(this.purchaseRequestForm.get('local_purchase').value=="yes")
@@ -134,15 +153,12 @@ export class PurchaseRequestComponent implements OnInit {
           tempobj.item.qty=tempobj.RequiredQuantity;
           tempobj.item.item_id=item.item_id;
           tempobj.item.remark=item.remark
-          // console.log(tempobj.item)
-          // console.log(tempobj.item.gstDetail)
           tempobj.Total=(item.qty*item.rate)+((item.qty*item.rate)*tempobj.item.tax.amount)/100;
           obj.items.push(tempobj);
       }
       vendorItems.push(obj);
       requestData.vendorItems=vendorItems;
     }
-    console.log(requestData)
     this.load = true;
     // Make a POST request to the PURCHASE_REQUEST_API with requestData
     this.httpService.POST(PURCHASE_REQUEST_API, requestData).subscribe({
@@ -171,10 +187,6 @@ export class PurchaseRequestComponent implements OnInit {
     });
   }
 
-  /**
- * Fetches lists of UOM, items, sites, vendors, and brands from the API and assigns them to corresponding class properties.
- * Uses HTTP requests to retrieve data asynchronously.
- */
   getList() {
     const UOM = this.http.get<any>(`${environment.api_path}${UOM_API}`);
     const item = this.http.get<any>(`${environment.api_path}${ITEM_API}`);
@@ -188,11 +200,13 @@ export class PurchaseRequestComponent implements OnInit {
         this.siteList = res[2].data;
         this.vendorList=res[3].data;
         this.brandList=res[4].data;
-        // console.log(this.vendorList);
-        // console.log(this.itemList);
-        // console.log("brand",this.brandList)
-      }
 
+        console.log("--itemList--");
+        console.log(this.itemList);
+        console.log("--itemList--");
+
+        this.filteredItemList = this.itemList;
+      }
     })
     
   }
@@ -216,10 +230,14 @@ export class PurchaseRequestComponent implements OnInit {
   /**Updates the category, subcategory, and unit of measurement (UOM) fields 
   of the selected item in the items array.
   */
+  
+  
+ 
   selectedItem(event: any, i: any) {
-    let category = this.itemList.filter(obj => obj._id == event.value)[0]?.categoryDetail.name;
-    let subCategory = this.itemList.filter(obj => obj._id == event.value)[0]?.subCategoryDetail.subcategory_name;
-    let uom = this.itemList.filter(obj => obj._id == event.value)[0]?.uomDetail.uom_name;
+    console.log(event.option.value);
+    let category = this.itemList.filter(obj => obj._id == event.option.value._id)[0]?.categoryDetail.name;
+    let subCategory = this.itemList.filter(obj => obj._id == event.option.value._id)[0]?.subCategoryDetail.subcategory_name;
+    let uom = this.itemList.filter(obj => obj._id == event.option.value._id)[0]?.uomDetail.uom_name;
 
     this.items.at(i).patchValue({
       category: category,
@@ -235,6 +253,7 @@ export class PurchaseRequestComponent implements OnInit {
       category: new FormControl(null),
       subCategory: new FormControl(null),
       attachment: new FormControl(''),
+      
       remark: new FormControl(''),
       uom: new FormControl(''),
       brandName:new FormControl(''),
@@ -258,41 +277,45 @@ export class PurchaseRequestComponent implements OnInit {
 
   // Clearing the 'items' FormArray to ensure it is empty.
   // Adding items based on the value of 'local_purchase' (yes or no).
-  handleLocalPurchaseChange(){
-    if(this.purchaseRequestForm.get('local_purchase').value==="yes"){
+  handleLocalPurchaseChange() {
+    if (this.purchaseRequestForm.get('local_purchase').value === "yes") {
       this.purchaseRequestForm.get('local_purchase').setValue('no');
-    }
-    else{
+    } else {
       this.purchaseRequestForm.get('local_purchase').setValue('yes');
     }
+
     const itemsFormArray = this.purchaseRequestForm.get('items') as FormArray;
-    itemsFormArray.clear(); 
+    itemsFormArray.clear();
     this.addItem();
   }
   onVendorSelection(event: any) {
     // Retrieve the selected vendor from the vendorList based on the _id
     const selectedVendor = this.vendorList.find(item => item._id === event.value);
-    console.log('Selected Vendor Object:', selectedVendor);
+    
   
     // Check if a vendor was found
     if (selectedVendor) {
       //Filter the itemList based on the category and subcategory of the selected vendor
-      console.log(this.itemList)
+      
       this.filteredItemList = this.itemList.filter(item => {
-        // console.log(item.category + "----------" + item.sub_category);
       
         const categoryMatch = selectedVendor.category.some(categoryItem => categoryItem === item.category);
         const subCategoryMatch = selectedVendor.SubCategory.some(subCategoryItem => subCategoryItem === item.sub_category);
       
         return categoryMatch && subCategoryMatch;
       });
-      console.log(this.filteredItemList);
+      
     } else {
       // Handle the case where no vendor is found (optional)
       console.warn('No matching vendor found for the selected ID.');
       this.filteredItemList = [];
     }
   }
+
+  
+
+
+ 
   
   
   
@@ -310,23 +333,31 @@ export class PurchaseRequestComponent implements OnInit {
     this.getPurchaseList({ filter_by: this.filter_by, filter_value: item.value })
   }
 
+
+  selectedSite(event: any) {
+
+    console.log("event____selectedsite",event);
+    const siteName = this.siteList.find((obj: { _id: any; }) => obj._id == event.value);
+    const dynamicDataFormatted = siteName.site_name.replace(/[ ,]/g, '_');
+    const searchTerm = `${dynamicDataFormatted}/`;
+    const purchase = this.http.get<any>(`${environment.api_path}${PURCHASE_REQUEST_API}`);
+    this.httpService.multipleRequests([purchase], {}).subscribe(res => {
+      if (res) {
+        this.purchaseList = res[0].data; 
+        const filteredList = this.purchaseList.filter(item => item.siteData.site_name.includes(siteName.site_name));
+        this.requestNo = filteredList.length + 1;
+        this.purchaseRequestForm.controls['purchase_request_number'].setValue(this.requestNo);
+      }
+    });
+  }
+
+  
+  
   getPurchaseList(filterObj: any) {
     this.httpService.GET(PURCHASE_REQUEST_API, filterObj).subscribe({
       next: (resp: any) => {
         this.originalPurchaseList = resp.data;
         this.purchaseList = resp.data;
-      }, error: (err) => {
-        if (err.errors && !isEmpty(err.errors)) {
-          let errMessage = '<ul>';
-          for (let e in err.errors) {
-            let objData = err.errors[e];
-            errMessage += `<li>${objData[0]}</li>`;
-          }
-          errMessage += '</ul>';
-          this.snack.notifyHtml(errMessage, 2);
-        } else {
-          this.snack.notify(err.message, 2);
-        }
       }
     });
   }
@@ -343,6 +374,8 @@ export class PurchaseRequestComponent implements OnInit {
   }
 
   search(event: any, type?: any) {
+    
+    console.log("event: ",event.data,type);
     if (this.originalPurchaseList && this.originalPurchaseList.length > 0) {
       if (type == 'site') {
         if (event.target.value) {
@@ -361,12 +394,29 @@ export class PurchaseRequestComponent implements OnInit {
         }
       }
     }
-
   }
 
+  displayItemFn(item: any): string {
+  return item ? item.item_name : '';
+}
+  searchItem(event: any) {
+    console.log(event)
+    const searchValue = event.target.value.toLowerCase();
+    if (this.itemList && this.itemList.length > 0 ) {
+      if (event.target.value) {
+        this.filteredItemList = this.itemList.filter(obj => obj.item_name.toLowerCase().includes(searchValue));
+
+      }else{
+        this.filteredItemList = this.itemList;
+      }
+    }
+  }
+  
 
 
+  filteredOptions: Observable<string[]>;
   ngOnInit(): void {
+
 
     // Retrieve user permissions from local storage and parse them as JSON
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
@@ -376,5 +426,6 @@ export class PurchaseRequestComponent implements OnInit {
 
     this.getList();
     this.addItem();
+    
   }
 }

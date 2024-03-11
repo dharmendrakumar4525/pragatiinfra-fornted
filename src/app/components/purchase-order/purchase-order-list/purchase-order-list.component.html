@@ -94,7 +94,13 @@
       <tbody>
         <tr *ngFor="let obj of rateComparativeList;let index = index">
           <td style="color: #4272BF;width:300px;text-align: left;padding: 10px;font-size: 15px;">
-            Request&nbsp;no&nbsp; <span style="color: #000000;">{{obj.po_number}}</span>
+            Request no <span style="color: #000000;">{{reqNo(obj.title)}}</span>
+          </td>
+          <td style="color: #4272BF;width:300px;text-align: left;padding: 10px;font-size: 15px;">
+            PO Hello No : {{obj.po_number}}<span style="color: #000000;"></span>
+          </td>
+          <td style="color: #4272BF;width:300px;text-align: left;padding: 10px;font-size: 15px;">
+            Company Name : <span style="color: #000000;">{{obj.billing_address.company_name}}</span>
           </td>
           <hr style="border: 1px solid #D9D9D9;height: 30px;">
           <td style="color: #4272BF;width:200px;font-size: 15px;">Title&nbsp;<span

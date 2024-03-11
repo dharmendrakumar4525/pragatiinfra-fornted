@@ -25,6 +25,7 @@
         <th>Brand Name</th>
         <th>Rate</th>
         <th>Sub Total Amount</th>
+        <th>Freight</th>
         <th>Gst</th>
         <th>Total</th>
       </tr>
@@ -47,6 +48,9 @@
             </td>
             <td>
               {{item.SubTotalAmount}}
+            </td>
+            <td>
+              <input [disabled]="true" type="text" [value]="item.Freight" placeholder="Freight" class="cstm-input" (input)="onChangeBrand($event,item)">
             </td>
             <td>
               {{item.item.tax.amount}}%({{item.item.tax.name}})
@@ -73,9 +77,22 @@
             <td>
               <input formControlName="Rate" type="text" placeholder="Rate" class="cstm-input" (input)="onChangeBrand($event,item)">
             </td>
+
+
+
+
+
             <td>
               {{calculateSubTotalAmount(i)}}
             </td>
+
+
+            <td>
+              <input formControlName="Freight" type="text" placeholder="Freight" class="cstm-input" (input)="onChangeBrand($event, item)" [ngModel]="0">
+            </td>
+            
+            
+            
             <td>
               {{item.tax.amount}}%
             </td>

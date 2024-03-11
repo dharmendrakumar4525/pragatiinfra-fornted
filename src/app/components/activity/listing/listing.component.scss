@@ -67,8 +67,41 @@ mat-form-field {
 }
 
 
+// .pragati-table {
+//   th {
+//     background: #233A61;
+//     color: #fff;
+//     font-weight: normal;
+//     font-size: 12px;
+//     border: 0.5px solid #94A3B8;
+//     text-align: center;
+//     vertical-align: middle;
+//   }
+
+//   td {
+
+//     border-left: 0.5px solid #94A3B8;
+//     border-right: 0.5px solid #94A3B8;
+//     font-weight: normal;
+//     font-size: 12px;
+//     background: #F4F4F5;
+//     text-align: center;
+//     vertical-align: middle;
+//   }
+
+//   tr {
+//     &:nth-child(2n) {
+//       td {
+//         background: #D9DADE;
+//       }
+//     }
+//   }
+// }
+
 .pragati-table {
   th {
+    position: sticky;
+    top: 0;
     background: #233A61;
     color: #fff;
     font-weight: normal;
@@ -79,7 +112,6 @@ mat-form-field {
   }
 
   td {
-
     border-left: 0.5px solid #94A3B8;
     border-right: 0.5px solid #94A3B8;
     font-weight: normal;
@@ -96,6 +128,9 @@ mat-form-field {
       }
     }
   }
+
+
+
 
 
   .action-btn-wrapper {
@@ -118,8 +153,5 @@ mat-form-field {
         opacity: 0.7;
       }
     }
-
-
   }
-
 }

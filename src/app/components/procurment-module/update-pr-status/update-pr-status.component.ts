@@ -84,6 +84,7 @@ export class UpdatePrStatusComponent implements OnInit {
       date: data.date,
       expected_delivery_date: data.expected_delivery_date,
       purchase_request_number: data.purchase_request_number,
+      
       site: data.site,
       local_purchase: data.local_purchase,
       remarks: data.remarks,
@@ -201,7 +202,6 @@ export class UpdatePrStatusComponent implements OnInit {
         this.httpService.GET(`${PURCHASE_REQUEST_API}/detail`, { _id: params['id'] }).subscribe({
           next: res => {  
             this.details = res.data[0];
-            // console.log(this.details,"JKL")
             this.getVendorList();
             this.patchData(res.data[0]);
           }, error: (error) => {

@@ -114,7 +114,7 @@ export class RateApprovalUpdateComponent implements OnInit {
       if (res) {
         this.siteList = res[0].data;
         this.purchaseList=res[1].data
-        // console.log(this.purchaseList+"from getsitelist")
+        console.log("--purchaseListRAC--",this.purchaseList);
       }
     })
   }
@@ -138,7 +138,7 @@ export class RateApprovalUpdateComponent implements OnInit {
   * @param data The data to patch into the form.
   */
   patchData(data) {
-    // console.log(data)
+    
     this.purchaseRequestForm.patchValue({
       title: data.title,
       date: data.date,
@@ -150,6 +150,7 @@ export class RateApprovalUpdateComponent implements OnInit {
       remarks: data.remarks,
     });
     this.curr_site=data.site
+    
     this.purchaseRequestForm.controls['remarks'].disable();
   }
 
@@ -201,7 +202,6 @@ export class RateApprovalUpdateComponent implements OnInit {
   getVendorList(){
     this.httpService.GET("/vendor",{}).subscribe(res=>{
       this.fetchedVendorList=res.data;
-      console.log(this.fetchedVendorList);
     })
   }
 
@@ -283,8 +283,7 @@ export class RateApprovalUpdateComponent implements OnInit {
   */
   getBrandList(){
     this.httpService.GET(GET_BRAND_API, {}).subscribe(res => {
-      this.brandList=res.data
-      console.log(this.brandList);
+      this.brandList=res.data;
     })
   }
 
@@ -316,34 +315,32 @@ export class RateApprovalUpdateComponent implements OnInit {
 
       //generating po number
       const siteName=this.siteList.find(obj=> obj._id==this.curr_site);
-      console.log(siteName)
       const dynamicDataFormatted = siteName.site_name.replace(/[ ,]/g, '_');
-      console.log(dynamicDataFormatted)
       const currentYear = new Date().getFullYear();
       const nextYear = currentYear + 1;
       const yearRange = `${String(currentYear).slice(-2)}-${String(nextYear).slice(-2)}`;
-      const searchTerm = `PISL/${yearRange}/${dynamicDataFormatted}/`;
-      console.log(searchTerm)
-      console.log(this.purchaseList)
-      const filteredList = this.purchaseList.filter(item => item.po_number.includes(dynamicDataFormatted));
+      const searchTerm = `${dynamicDataFormatted}/`;
+
+      console.log("dynamicDataFormatted---",dynamicDataFormatted);
+      console.log("purchaseList---",this.purchaseList);
+
+
+      
+      const filteredList = this.purchaseList.filter(item => item.billing_address.company_name.includes("Pragati Infra Solutions Pvt. Ltd."));
+
+        console.log("filteredList---",filteredList);
       const Pocount=filteredList.length+1;
-      this.po_no=searchTerm;
-      console.log(this.po_no);
+
+      console.log("Pocount ---",Pocount);
+      this.po_no=Pocount;
+      console.log("po_no  ---",this.po_no);
 
       if(this.compareBy=='vendor')
       {
-          console.log(this.VendorRate)
-          // if (!this.purchaseRequestForm.valid) {
-          //   return;
-          // }
-          let vendorRates:any[]=[];
-          this.VendorRate.forEach((value,key)=>{
-            // console.log(value);
-            // value.VendorRate.forEach((value1,key1)=>{
-  
-              vendorRates.push(value);
-            // })
           
+          let vendorRates:any[]=[];
+          this.VendorRate.forEach((value,key)=>{  
+              vendorRates.push(value);
           })
           this.details['vendorRatesVendorWise']=vendorRates;
          
@@ -353,23 +350,10 @@ export class RateApprovalUpdateComponent implements OnInit {
           if(this.details.status=='revise')
             this.details['isRevised']=true;
           this.details['status']="approved"
-          // let requestedData: any = this.purchaseRequestForm.value;
-          console.log(this.details);
-          // let requestedData: any = this.purchaseRequestForm.value;
-          // console.log(requestedData);
-          // requestedData['_id'] = this.details._id;
-          // requestedData['items'] = this.details.items;
-          // requestedData['vendors_total'] = this.details.vendors_total;
-          // requestedData['status'] = status;
       }
       else{
-        // console.log(this.ItemwiseVendorRate)
-        // if (!this.purchaseRequestForm.valid) {
-        //   return;
-        // }
         let vendorRates:any[]=[];
         this.ItemwiseVendorRate.forEach((value,key)=>{
-          // console.log(value);
           value.VendorRate.forEach((value1,key1)=>{
             vendorRates.push(value1);
           })
@@ -383,9 +367,6 @@ export class RateApprovalUpdateComponent implements OnInit {
         if(this.details.status=='revise')
             this.details['isRevised']=true;
         this.details['status']="approved"
-        // let requestedData: any = this.purchaseRequestForm.value;
-        console.log(this.details);
-  
       }
       if (!this.purchaseRequestForm.valid) {
         return;
@@ -399,7 +380,7 @@ export class RateApprovalUpdateComponent implements OnInit {
       // requestedData['po_number']=this.po_no;
     }
     this.load = true;
-    console.log(this.details)
+
     this.httpService.PUT(RATE_COMPARATIVE_API, this.details).subscribe(res => {
       this.snack.notify("Detail has been updated", 1);
       this.router.navigate(['/rate-approval'])
@@ -428,8 +409,8 @@ export class RateApprovalUpdateComponent implements OnInit {
           next: res => {
             this.details = res.data.details;
             this.patchData(res.data.details);
-          }, error: (error) => {
-            // this.router.navigate(['/procurement/prlist'])
+           
+            
           }
         })
       }

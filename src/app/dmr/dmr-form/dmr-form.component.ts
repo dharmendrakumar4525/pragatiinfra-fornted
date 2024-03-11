@@ -83,6 +83,7 @@ export class DMRFormComponent implements OnInit{
   const recentActivities$ = this.recentActivityService.getRecentAtivities();
   const purchaseOrderList$ = this.dmrService.GetpurchaseOrderList();
   const dmrEntryList$ = this.dmrService.GetDmrEntryList();
+
   const PurchaseRequestList$ = this.dmrService.getPurchaseRequestList();
   const RateApprovalList$ = this.dmrService.GetRateApprovalList();
 
@@ -96,10 +97,18 @@ export class DMRFormComponent implements OnInit{
       this.recentActivitiesLen = this.recentActivities.length;
 
       this.purchaseOrderList = purchaseOrderList.data.filter((item) => item._id === this.PurchaseId);
-      console.log(this.purchaseOrderList);
+      console.log("--purchaseOrderList--");
+      // // console.log( this.purchaseOrderList[0].items[0].item.item_name);
+      // console.log( this.purchaseOrderList[0].items[0].item.uomDetail.uom_name);
+      
+      console.log( this.purchaseOrderList[0].items[0]);
+      console.log("--purchaseOrderList--");
 
       this.DmrEntryList = dmrEntryList.filter((item) => item.PurchaseId === this.PurchaseId.toString());
       //console.log(this.DmrEntryList);
+      console.log("--this.DmrEntryList--");
+      console.log(dmrEntryList);
+      console.log("--this.DmrEntryList--");
 
       this.PurchaseRequestList = PurchaseRequestList;
       this.PurchaseRequestList=this.PurchaseRequestList.data

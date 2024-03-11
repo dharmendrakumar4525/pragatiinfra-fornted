@@ -67,21 +67,23 @@ mat-form-field {
 
 .pragati-table {
   th {
-    background: #233a61;
+    position: sticky;
+    top: 0;
+    background: #233A61;
     color: #fff;
     font-weight: normal;
     font-size: 12px;
-    border: 0.5px solid #94a3b8;
+    border: 0.5px solid #94A3B8;
     text-align: center;
     vertical-align: middle;
   }
 
   td {
-    border-left: 0.5px solid #94a3b8;
-    border-right: 0.5px solid #94a3b8;
+    border-left: 0.5px solid #94A3B8;
+    border-right: 0.5px solid #94A3B8;
     font-weight: normal;
     font-size: 12px;
-    background: #f4f4f5;
+    background: #F4F4F5;
     text-align: center;
     vertical-align: middle;
   }
@@ -89,7 +91,7 @@ mat-form-field {
   tr {
     &:nth-child(2n) {
       td {
-        background: #d9dade;
+        background: #D9DADE;
       }
     }
   }

@@ -70,7 +70,7 @@
           <option value="FilterBydate">Date </option>
           <option value="FilterByLocation">Location</option>
           <option value="FilterByVendorName">Vendor Name </option>
-          <option value="FilterByHandelBy">Handel By </option>
+          <option value="FilterByHandelBy">Handle By </option>
         </select>
       </div>
 
@@ -131,9 +131,9 @@
       </div> 
       <div *ngIf="selectedOption === 'FilterByHandelBy'">
 
-        <div style="margin-top: 15px;color: #94A3B8;"> <span>Handel By</span></div>
+        <div style="margin-top: 15px;color: #94A3B8;"> <span>Handle By</span></div>
         <div> <mat-form-field appearance="outline" class="datebar">
-            <input #prSearchInput matInput placeholder="Handel by" (input)="search($event,'handelBy')" />
+            <input #prSearchInput matInput placeholder="Handle by" (input)="search($event,'handelBy')" />
           </mat-form-field></div>
       </div> 
 
@@ -173,7 +173,7 @@
       width: fit-content;text-align: left;padding: 18px;">Location: <span style="color: #233a61;font-weight: 600;">{{getLocationById(obj.site)}}</span></td>
               
               <td style="color: #4272BF;text-wrap: nowrap;
-              width: fit-content;text-align: left;padding: 18px;">Handel By: <span style="color: #233a61;font-weight: 600;">{{getHandelByRateApprovaId(obj.rate_approval_id)?.name}}</span></td>
+              width: fit-content;text-align: left;padding: 18px;">Handle By: <span style="color: #233a61;font-weight: 600;">{{getHandelByRateApprovaId(obj.rate_approval_id)?.name}}</span></td>
                       
               <td style="color: #4272BF;width:200px;text-align: left;padding: 18px;">Title: <span style="color: #233a61;font-weight: 600;">{{obj.title}}</span></td>
               

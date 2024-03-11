@@ -61,13 +61,13 @@
       </mat-form-field>
     </div>
     <div style=" margin-right: 600px;margin-top: 30px;display: flex;gap:10px;width: 100%;">
-      <div style="margin-top: 15px;color: #94A3B8;margin-left: 40px;"> <span>Filter&nbsp;by</span></div>
-      <div> <mat-form-field appearance="outline" class="datebar">
+      <!-- <div style="margin-top: 15px;color: #94A3B8;margin-left: 40px;"> <span>Filter&nbsp;by</span></div> -->
+      <!-- <div> <mat-form-field appearance="outline" class="datebar">
           <input matInput [matDatepicker]="startPicker" placeholder="Date" (click)="startPicker.open()"
             (dateChange)="dateFilter( $event)" />
           <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
           <mat-datepicker #startPicker></mat-datepicker>
-        </mat-form-field></div>
+        </mat-form-field></div> -->
     </div>
     <div style="margin-top: 30px;display: flex;position: relative;right:570px;gap:10px;width: 100%;">
       <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter&nbsp;by</span></div>
@@ -95,8 +95,11 @@
     <table style="direction: ltr !important;margin-top: -20px;">
       <tbody>
         <tr *ngFor="let obj of rateComparativeList;let index = index">
-          <td style="color: #4272BF;width:300px;text-align: left;padding: 10px;font-size: 15px;">
+          <!-- <td style="color: #4272BF;width:300px;text-align: left;padding: 10px;font-size: 15px;">
             Request&nbsp;no&nbsp; <span style="color: #000000;">{{index+1}}</span>
+          </td> -->
+          <td style="color: #4272BF;width:300px;text-align: left;padding: 10px;font-size: 15px;">
+            Request&nbsp;no&nbsp; <span style="color: #000000;">{{reqNo(obj.purchase_request_id)}}</span>
           </td>
           <hr style="border: 1px solid #D9D9D9;height: 30px;">
           <td style="color: #4272BF;width:200px;font-size: 15px;">Title&nbsp;<span

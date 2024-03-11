@@ -69,6 +69,8 @@ mat-form-field {
 
 .pragati-table {
   th {
+    position: sticky;
+    top: 0;
     background: #233A61;
     color: #fff;
     font-weight: normal;
@@ -79,7 +81,6 @@ mat-form-field {
   }
 
   td {
-
     border-left: 0.5px solid #94A3B8;
     border-right: 0.5px solid #94A3B8;
     font-weight: normal;

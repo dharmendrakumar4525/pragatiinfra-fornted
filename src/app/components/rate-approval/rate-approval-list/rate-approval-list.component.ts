@@ -5,6 +5,10 @@ import { RATE_COMPARATIVE_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
+import { HttpClient } from '@angular/common/http';
+
+import { PURCHASE_REQUEST_API} from '@env/api_path';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-rate-approval-list',
@@ -38,9 +42,12 @@ export class RateApprovalListComponent implements OnInit {
   requestType = "new";
   originalRateComparativeList: any = [];
   permissions: any;
+
+  purchaseList: any[] = [];
   constructor(
     private httpService: RequestService,
     private snack: SnackbarService,
+    private http: HttpClient,
   ) {
     this.getList({ filter_by: this.filter_by, filter_value: this.filter_value, stage: 'rate_approval' });
   }
@@ -131,8 +138,25 @@ export class RateApprovalListComponent implements OnInit {
     }
 
   }
+  getReqNO(){
+    const purchase = this.http.get<any>(`${environment.api_path}${PURCHASE_REQUEST_API}`);
+    this.httpService.multipleRequests([purchase], {}).subscribe(res => {
+      if (res) {
+        this.purchaseList = res[0].data; 
+      }
+      });
+    
+
+  }
+  reqNo(value: any) {
+    const filteredList = this.purchaseList.filter(item => item._id === value);
+    return filteredList[0].purchase_request_number;
+  }
+
 
   ngOnInit(): void {
+
+    this.getReqNO();
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
     this.permissions=this.permissions.permissions[0].ParentChildchecklist[12];
   }

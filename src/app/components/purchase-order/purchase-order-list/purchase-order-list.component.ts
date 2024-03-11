@@ -5,12 +5,22 @@ import { PURCHASE_ORDER_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
+import { Observable } from 'rxjs';
+
+
+import { HttpClient } from '@angular/common/http';
+
+import { PURCHASE_REQUEST_API} from '@env/api_path';
+import { environment } from '@env/environment';
+
 @Component({
   selector: 'app-purchase-order-list',
   templateUrl: './purchase-order-list.component.html',
   styleUrls: ['./purchase-order-list.component.scss']
 })
 export class PurchaseOrderListComponent implements OnInit {
+
+  private apiUrl = PURCHASE_ORDER_API; 
 
   statusOption = new FormControl('pending');
   statusList = [
@@ -38,9 +48,13 @@ export class PurchaseOrderListComponent implements OnInit {
   originalRateComparativeList: any = [];
   permissions: any;
 
+  purchaseList: any[] = [];
+  purchaseOrderList: any[] = [];
+  purchase_request_number: any[] = [];
   constructor(
     private httpService: RequestService,
     private snack: SnackbarService,
+    private http: HttpClient,
   ) {
     this.getList({ filter_by: this.filter_by, filter_value: this.filter_value });
   }
@@ -52,10 +66,10 @@ export class PurchaseOrderListComponent implements OnInit {
   getList(filterObj: any) {
     this.httpService.GET(PURCHASE_ORDER_API, filterObj).subscribe({
       next: (resp: any) => {
-        console.log(resp);
-
         this.originalRateComparativeList = resp.data;
         this.rateComparativeList = resp.data;
+
+        //console.log("this.originalRateComparativeList",this.originalRateComparativeList)
       }, error: (err: any) => {
         if (err.errors && !isEmpty(err.errors)) {
           let errMessage = '<ul>';
@@ -126,9 +140,49 @@ export class PurchaseOrderListComponent implements OnInit {
     }
 
   }
+  getReqNO(){
+
+    const purchase = this.http.get<any>(`${environment.api_path}${PURCHASE_REQUEST_API}`);
+    this.httpService.multipleRequests([purchase], {}).subscribe(res => {
+      if (res) {
+        this.purchaseList = res[0].data; 
+        //console.log("--this.PURCHASE_REQUEST_API--",this.purchaseList);
+      }
+    });
+
+    const purchaseOrder = this.http.get<any>(`${environment.api_path}${PURCHASE_ORDER_API}`);
+    this.httpService.multipleRequests([purchaseOrder], {}).subscribe(res => {
+      if (res) {
+        this.purchaseOrderList = res[0].data; 
+        //console.log("--purchaseOrderList--",this.purchaseOrderList);
+      }
+    });
+  }
+
+  reqNo(value: any) {
+    // console.log("valuePPP",value);
+    const filteredList = this.purchaseList.filter(item => item.title === value);
+    // console.log("--filteredListt--",filteredList);
+    return filteredList[0].purchase_request_number ;
+  }
+
+  poNo(value: any) {
+    // console.log("--VALUE--",)
+    // console.log(value)
+    // console.log("--VALUE--")
+    // console.log("--originalRateComparativeList--");
+    // console.log(this.originalRateComparativeList);
+    const filteredList = this.purchaseOrderList.filter(item => item.billing_address.company_name.includes(value.company_name));
+    //console.log("--filteredListt--",filteredList);
+    const purchaseOrderNumber = filteredList.length ;
+    return purchaseOrderNumber ;
+  }
+
+
 
   ngOnInit(): void {
 
+    this.getReqNO();
     // Retrieve user permissions from local storage
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
 

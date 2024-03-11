@@ -12,6 +12,9 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
 import { forkJoin, of, switchMap } from 'rxjs';
 import { ORG_REQUEST_API } from '@env/api_path';
+
+import { environment } from '@env/environment';
+
 @Component({
   selector: 'app-purchase-order-update',
   templateUrl: './purchase-order-update.component.html',
@@ -27,6 +30,8 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   load: boolean;
   esignImage: any;
   brandList: any;
+  purchaseOrderNumber: number;
+  purchaseOrderList: any[] = [];
   constructor(
     private dialog: MatDialog,
     private router: Router,
@@ -34,6 +39,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     private httpService: RequestService,
     private snack: SnackbarService,
     private formBuilder: FormBuilder,
+    private http: HttpClient,
   ) {
       //console.log(this.brandList);
 
@@ -48,7 +54,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
         this.httpService.GET(`${PURCHASE_ORDER_API}/detail`, { _id: params['id'] }).subscribe(res => {
           // Assign the fetched details to the poDetails property
           this.poDetails = res.data;
-          console.log(this.poDetails)
+          // console.log(this.poDetails)
           this.mail_section.patchValue(this.poDetails.vendor_message);
           this.term_condition.patchValue(this.poDetails.terms_condition);
         })
@@ -66,7 +72,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
       try {
         const response = await this.httpService.GET(`${RATE_COMPARATIVE_DETAIL_API}`, { _id: this.poDetails.rate_approval_id }).toPromise();
         const requestApprovalDocument = { ...response.data.details, status: 'revise' };
-        console.log(requestApprovalDocument);
+        //console.log(requestApprovalDocument);
         await this.httpService.PUT(`${RATE_COMPARATIVE_API}`, requestApprovalDocument).toPromise();
         await this.httpService.DELETE(`${PURCHASE_ORDER_API}`, {_id:this.poDetails._id}).toPromise();
         this.snack.notify("Detail has been updated", 1);
@@ -146,10 +152,13 @@ export class PurchaseOrderUpdateComponent implements OnInit {
       return false;
     }
     let requestData: any = this.poDetails;
+    //console.log("--requestDAta--",requestData)
     for (let i = 0; i < requestData.items.length; i++) {
       const brandName =  this.myBrandName(requestData.items[i].item.brandName);
       requestData.items[i].item['brandName'] = brandName;
     }
+
+    requestData['po_number'] = this.purchaseOrderNumber;
     requestData['status'] = 'approved';
     requestData['due_date'] = this.validityDate.value;
     requestData['vendor_message'] = this.mail_section.value;
@@ -178,7 +187,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
       next: ([putResp, postResp]: [any, any]) => {
         // Both requests were successful
         this.load = false;
-        console.log(putResp, postResp);
+        //console.log(putResp, postResp);
 
         this.snack.notify("purchase Order has been generated.", 1);
         this.router.navigate(['/purchase-order']);
@@ -202,6 +211,8 @@ export class PurchaseOrderUpdateComponent implements OnInit {
 
   }
 
+
+
   billingAddressPopup() {
 
     // Open billing address popup
@@ -212,13 +223,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     // Handle popup closure
     address.afterClosed().subscribe((result: any) => {
       if (result && result.type && result.type == 1) {
-        
-
-       
-        // zip_code: data.address.zip_code,
-        // country:data.address.country,
-        
-        console.log(result.data)
+        //console.log(result.data)
 
         // Update billing address details in poDetails object
         this.poDetails.billing_address.company_name = result.data.companyName;
@@ -229,9 +234,45 @@ export class PurchaseOrderUpdateComponent implements OnInit {
         this.poDetails.billing_address.gst_number = result.data.gst_number;
         this.poDetails.billing_address.pan_card = result.data.pan_number;
         this.poDetails.billing_address.contact_person=result.data.contact_person+"-"+result.data.phone_number;
-        // this.poDetails.billing_address.contact_person=result.data.contact_person;
-        // this.poDetails.billing_address.phone_number=result.data.phone_number;
 
+        // const purchaseOrder = this.http.get<any>(`${environment.api_path}${PURCHASE_ORDER_API}`);
+        // this.httpService.multipleRequests([purchaseOrder], {}).subscribe(res => {
+        //   if (res) {
+        //     this.purchaseOrderList = res[0].data; 
+        //     console.log("--purchaseOrderListdd--",this.purchaseOrderList);
+        //     console.log("--this.poDetails.billing_address.company_name--",this.poDetails.billing_address.company_name)
+        // const filteredList = this.purchaseOrderList.filter(item => item.billing_address.company_name.includes(this.poDetails.billing_address.company_name));
+        // console.log("--filteredList--",filteredList)
+        // this.purchaseOrderNumber = filteredList.length+1;
+        // this.poDetails.po_number = this.purchaseOrderNumber;
+        // console.log("==this.purchaseOrderNumber==",this.purchaseOrderNumber);
+        // console.log("==this.poDetails.po_number==",this.poDetails.po_number);
+
+        const purchaseOrder = this.http.get<any>(`${environment.api_path}${PURCHASE_ORDER_API}`);
+this.httpService.multipleRequests([purchaseOrder], {}).subscribe(res => {
+  if (res) {
+    this.purchaseOrderList = res[0].data; 
+    console.log("--purchaseOrderListdd--", this.purchaseOrderList);
+
+    // Assuming this is where you are setting the value for poDetails.billing_address.company_name
+    console.log("--this.poDetails.billing_address.company_name--", this.poDetails.billing_address.company_name);
+
+    const companyNameToMatch = this.poDetails.billing_address.company_name.toLowerCase().trim();
+
+    const filteredList = this.purchaseOrderList.filter(item => {
+      const itemCompanyName = item.billing_address.company_name ? item.billing_address.company_name.toLowerCase().trim() : '';
+      return itemCompanyName.includes(companyNameToMatch);
+    });
+
+    console.log("--filteredList--", filteredList);
+
+    this.purchaseOrderNumber = filteredList.length + 1;
+    this.poDetails.po_number = this.purchaseOrderNumber;
+
+    console.log("==this.purchaseOrderNumber==", this.purchaseOrderNumber);
+    console.log("==this.poDetails.po_number==", this.poDetails.po_number);
+          }
+        });
       }
     });
   }
