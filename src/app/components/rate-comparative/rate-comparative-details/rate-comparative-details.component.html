@@ -196,25 +196,45 @@
 
 
       <tbody >
-        <ng-container *ngFor="let vendor of details?.vendorItems; let i = index; " >
-          <!-- <tr *ngFor="let vendor of selectedVendors; let i = index;"> -->
+        <!-- <ng-container *ngFor="let vendor of details?.vendorItems; let i = index; " >
+          
           <tr>
             <td style="text-align: center;">
               {{detailsOfVendor(vendor,"name",i)}}
             </td>
             <td style="text-align: center;">
               {{vendor.items[0].item.categoryDetail.name}}
-              <!-- {{detailsOfVendor(vendor._id,"category",i)}} -->
+              
             </td>
             <td style="text-align: center;">
               {{vendor.items[0].item.subCategoryDetail.subcategory_name}}
-              <!-- {{detailsOfVendor(vendor._id,"subCategory",i)}} -->
+              
             </td>
             <td>
               <a class="p-btns" (click)="ItemData(vendor)"> Items Rates</a>
             </td> 
           </tr>
+          </ng-container> -->
+
+          <ng-container *ngFor="let vendor of details?.vendorItems; let i = index; ">
+            <tr>
+              <td style="text-align: center;">
+                {{ detailsOfVendor(vendor, 'name', i) }}
+              </td>
+              <td style="text-align: center;">
+                {{ vendor.items[0]?.item?.categoryDetail?.name || 'N/A' }}
+              </td>
+              <td style="text-align: center;">
+                {{ vendor.items[0]?.item?.subCategoryDetail?.subcategory_name || 'N/A' }}
+              </td>
+              <td>
+                <a class="p-btns" (click)="ItemData(vendor)"> Items Rates</a>
+              </td>
+            </tr>
           </ng-container>
+
+
+
           <!-- <td style="text-align: center;">
             {{ vendor.get('selectedVendors').value | json }}
           </td> -->

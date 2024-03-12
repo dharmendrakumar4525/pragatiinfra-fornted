@@ -217,28 +217,21 @@
               <td style="color: #000;">
                 {{item.item.uomDetail.uom_name}}
               </td>
+              
+              <td>{{item.RequiredQuantity}}</td>
               <td style="color: #000;">
-                {{item.RequiredQuantity}}
+                {{item.item.qty}}
               </td>
-              <!-- <td>{{item.c}}</td> -->
               <td>
-                
                 <input type="text" placeholder="Enter"  formControlName="InvoiceUOM" class="pr-form-field">
               </td>
               <td>
-                
                 <input type="text" placeholder="Enter" digitOnly formControlName="InvoiceQuantity" class="pr-form-field">
               </td>
               <td>
-            
-                  {{item.qty-item.Totalrecived_qty-dmrForm.get('dmritem').get(i.toString()).get('InvoiceQuantity').value}}
-               
-                
+                 {{item.item.qty-item.RequiredQuantity-dmrForm.get('dmritem').get(i.toString()).get('InvoiceQuantity').value}}
                 </td>
-              <td >
-                <!-- {{item.vendors[0].item_rate}}/qty -->
-              <!-- {{item.qty*item.vendors[0].item_rate+((item.qty*item.vendors[0].item_rate*item.tax.amount)/100) }}   -->
-              </td>
+                <td>{{item.Rate}}</td>
               <td>
                 
                 <input type="text" placeholder="Enter" digitOnly formControlName="InvoiceRate" class="pr-form-field">

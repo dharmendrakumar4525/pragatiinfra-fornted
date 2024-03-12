@@ -18,6 +18,7 @@ export class ItemTablePopupComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) 
     { 
       this.itemList = this.data?.currentRecords;
+      console.log("--item--")
       console.log(this.itemList)
     }
 

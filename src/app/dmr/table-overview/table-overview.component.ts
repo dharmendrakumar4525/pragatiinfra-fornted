@@ -50,6 +50,7 @@ export class TableOverviewComponent implements OnInit {
       });
       this.dmrServide.GetDmrEntryList().subscribe(data=>{
           this.dmrEntryList=data;
+          
           this.OriginaldmrEntryList=data;
           this.dmrEntryList.sort((a,b)=>(a.DMR_No<b.DMR_No)?1:-1)
           this.OriginaldmrEntryList.sort((a,b)=>(a.DMR_No<b.DMR_No)?1:-1)

@@ -34,13 +34,14 @@ export class FinalDmrComponent implements OnInit {
       this.finalDmrList=data;
       this.OriginalfinalDmrList=data;
       this.finalDmrList.sort((a,b)=>(a.DMR_No<b.DMR_No)?1:-1)
+      
+      console.log("this.finalDmrList")
+      console.log(this.finalDmrList)
       this.finalDmrList=this.finalDmrList.filter(item=> item.status==="completed")
       
       this.OriginalfinalDmrList.sort((a,b)=>(a.DMR_No<b.DMR_No)?1:-1)
       this.OriginalfinalDmrList=this.OriginalfinalDmrList.filter(item=> item.status==="completed")
 
-
-      console.log(this.finalDmrList)
 
   })
    }

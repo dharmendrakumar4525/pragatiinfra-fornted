@@ -112,10 +112,6 @@
             No
           </mat-radio-button>
         </mat-radio-group>
-        <!-- <div style="margin-top: 20px;">
-          <mat-checkbox color="primary">Yes</mat-checkbox>
-          <mat-checkbox style="margin-left: 30px;" color="primary">No</mat-checkbox>
-        </div> -->
       </div>
     </div>
   </mat-card>
@@ -212,7 +208,7 @@
               Auto&nbsp;Generated
             </td>
             <td>
-              <mat-select id="itemName" placeholder="Select site" formControlName="uom"
+              <mat-select id="itemName" placeholder="Sete" formControlName="uom"
                 class="select-form-field">
                 <mat-option [value]="item._id" *ngFor="let item of siteList">
                   {{item.siteName}}

@@ -231,16 +231,30 @@ export class RateApprovalUpdateComponent implements OnInit {
   * @returns An object containing subTotal, gstAmount, and total.
   */
   vendorTotal(item:any){
+    console.log("--item--");
+    console.log(item);
+    console.log("--item--");
       let subTotal=0;
       let total=0;
+      let freight=0;
+      let gstAmount=0;
+      let rate=0;
+      let qty=0;
       item.forEach(obj=>{
-          subTotal=subTotal+obj.SubTotalAmount;
-          total=total+obj.Total
+          subTotal=obj.SubTotalAmount;
+          total=obj.Total;
+          freight = obj.Freight;
+          gstAmount = total-subTotal-freight;
+          rate=obj.Rate;
+          qty=obj.RequiredQuantity;
+
       })
-      let gstAmount=total-subTotal;
       return {subTotal:subTotal,
               gstAmount:gstAmount,
-              total:total
+              total:total,
+              freight : freight,
+              rate:rate,
+              qty:qty
         }
   }
 

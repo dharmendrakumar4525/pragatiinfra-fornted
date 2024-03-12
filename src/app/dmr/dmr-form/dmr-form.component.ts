@@ -98,17 +98,17 @@ export class DMRFormComponent implements OnInit{
 
       this.purchaseOrderList = purchaseOrderList.data.filter((item) => item._id === this.PurchaseId);
       console.log("--purchaseOrderList--");
-      // // console.log( this.purchaseOrderList[0].items[0].item.item_name);
-      // console.log( this.purchaseOrderList[0].items[0].item.uomDetail.uom_name);
-      
-      console.log( this.purchaseOrderList[0].items[0]);
+      console.log( this.purchaseOrderList[0].items);
       console.log("--purchaseOrderList--");
+      
+      // console.log( this.purchaseOrderList[0].items[0]);
+      // console.log("--purchaseOrderList--");
 
       this.DmrEntryList = dmrEntryList.filter((item) => item.PurchaseId === this.PurchaseId.toString());
       //console.log(this.DmrEntryList);
-      console.log("--this.DmrEntryList--");
-      console.log(dmrEntryList);
-      console.log("--this.DmrEntryList--");
+      // console.log("--this.DmrEntryList--");
+      // console.log(dmrEntryList);
+      // console.log("--this.DmrEntryList--");
 
       this.PurchaseRequestList = PurchaseRequestList;
       this.PurchaseRequestList=this.PurchaseRequestList.data
@@ -189,10 +189,12 @@ export class DMRFormComponent implements OnInit{
     //to update the total recived quantity
     for(let i=0;i<this.dmrForm.value.dmritem.length;i++)
     {
-      this.purchaseOrderList[0].items[i].Totalrecived_qty= parseInt(this.purchaseOrderList[0].items[i].Totalrecived_qty, 10) +
+      console.log("--this.purchaseOrderList[0].items[i].RequiredQuantity--");
+      console.log(this.purchaseOrderList[0].items[i]);
+      this.purchaseOrderList[0].items[i].RequiredQuantity= parseInt(this.purchaseOrderList[0].items[i].RequiredQuantity, 10) +
       parseInt(this.dmrForm.value.dmritem[i].InvoiceQuantity, 10);
 
-      if(this.purchaseOrderList[0].items[i].Totalrecived_qty<this.purchaseOrderList[0].items[i].qty)
+      if(this.purchaseOrderList[0].items[i].RequiredQuantity<this.purchaseOrderList[0].items[i].qty)
         flag=true;
     }
 
@@ -208,11 +210,26 @@ export class DMRFormComponent implements OnInit{
     delete combinedData['status'];
     // combinedData.status="pending"
     combinedData.InvoiceOrChallanDoc=this.imageUrl
-    console.log(combinedData);
+ 
+
+    // combinedData[0].items.item_id="16";
+    // console.log("combinedData");
+    // console.log(combinedData);
+    // combinedData[0].vendors_total[0].vendor_id = "99";
+    // this.httpService.POST(CREATE_DMR_ENTRY, combinedData).subscribe({
+    //   next: (resp: any) => {
+    //     console.log("resp--",resp)
+    //   },
+      
+      
+    // });
+    // return
+
 
    // Creating a new DMR entry
   this.httpService.POST(CREATE_DMR_ENTRY, combinedData).pipe(
     switchMap((res) => {
+      console.log(res,"sdfjkhsdkjfhsk")
       if (res) {
         // Updating the DMR purchase order
         return this.httpService.PUT(DMRPURCHASE_ORDER_API, this.purchaseOrderList);
@@ -252,10 +269,12 @@ export class DMRFormComponent implements OnInit{
   once(){
     this.dataReadySubject.subscribe((dataReady) => {
         if(dataReady){
-            //console.log("hi sameer"+this.dmrForm.get('InvoiceQuantity').value)
             let dmrsize=this.DmrEntryList.length+1
             this.dmrForm.get('DMR_No').setValue(this.purchaseOrderList[0].po_number+"/DMR/"+dmrsize)
-            this.dmrForm.get('PONumber').setValue(this.purchaseOrderList[0].po_number)
+
+            const concatenatedString = this.purchaseOrderList[0].billing_address.company_name + '/' + this.purchaseOrderList[0].po_number;
+            // this.dmrForm.get('PONumber').setValue(this.purchaseOrderList[0].po_number)
+            this.dmrForm.get('PONumber').setValue(concatenatedString)
             this.dmrForm.get('FinalDeliveryDate').setValue(moment(this.purchaseOrderList[0].due_date).format('DD-MM-YYYY'))
             this.dmrForm.get('NameOfOrg').setValue(this.purchaseOrderList[0].billing_address.company_name)
             this.dmrForm.get('VendorName').setValue(this.purchaseOrderList[0].vendor_detail.vendor_name)

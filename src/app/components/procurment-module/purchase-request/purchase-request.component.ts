@@ -112,67 +112,72 @@ export class PurchaseRequestComponent implements OnInit {
 
    
     //for local purchase
-    if(this.purchaseRequestForm.get('local_purchase').value=="yes")
-    {
-      let vendorItems=[];
-      let obj={
-          Vendor:requestData.vendor,
-          items:[],
-      }
-      for(let item of requestData.items)
-      {
-          let tempobj={
-              item: this.itemList.filter(o=> o._id==item.item_id),
-              RequiredQuantity:item.qty,
-              Rate:item.rate,
-              SubTotalAmount:item.qty*item.rate,
-              Total:0,
+    if (this.purchaseRequestForm.get('local_purchase').value === "yes") {
+      let vendorItems = [];
+      let obj = {
+        Vendor: requestData.vendor || null,
+        items: [],
+      };
+    
+      if (requestData.items && this.itemList) {
+        for (let item of requestData.items) {
+          let tempobj = {
+            item: this.itemList.find(o => o._id === item.item_id) || null,
+            RequiredQuantity: item.qty,
+            Rate: item.rate,
+            SubTotalAmount: item.qty * item.rate,
+            Total: 0,
+          };
+    
+          if (tempobj.item) {
+            delete tempobj.item.category;
+            delete tempobj.item.created_at;
+            delete tempobj.item.gst;
+    
+            if (tempobj.item.gstDetail) {
+              let tax = {
+                amount: tempobj.item.gstDetail.gst_percentage || 0,
+                name: tempobj.item.gstDetail.gst_name || '',
+              };
+              tempobj.item.tax = tax;
+              delete tempobj.item.gstDetail;
+            }
+    
+            delete tempobj.item.item_number;
+            delete tempobj.item.specification;
+            delete tempobj.item.sub_category;
+            delete tempobj.item.uom;
+            delete tempobj.item.updated_at;
+    
+            tempobj.item.qty = tempobj.RequiredQuantity;
+            tempobj.item.item_id = item.item_id;
+            tempobj.item.remark = item.remark;
+            tempobj.Total = (item.qty * item.rate) + ((item.qty * item.rate) * (tempobj.item.tax ? tempobj.item.tax.amount : 0)) / 100;
+    
+            obj.items.push(tempobj);
           }
-          tempobj.item=tempobj.item[0];
-
-          //deleting non required property from temobj object
-          delete tempobj.item.category;
-          delete tempobj.item.created_at;
-          delete tempobj.item.gst;
-
-          //adding new property tax to temobj object
-          let tax={
-            amount:tempobj.item.gstDetail.gst_percentage,
-            name:tempobj.item.gstDetail.gst_name,
-          }
-          tempobj.item.tax=tax;
-
-          //deleting non required property from temobj object
-          delete tempobj.item.gstDetail;
-          delete tempobj.item.item_number;
-          delete tempobj.item.specification;
-          delete tempobj.item.sub_category;
-          delete tempobj.item.uom;
-          delete tempobj.item.updated_at;
-
-          tempobj.item.qty=tempobj.RequiredQuantity;
-          tempobj.item.item_id=item.item_id;
-          tempobj.item.remark=item.remark
-          tempobj.Total=(item.qty*item.rate)+((item.qty*item.rate)*tempobj.item.tax.amount)/100;
-          obj.items.push(tempobj);
+        }
       }
+    
       vendorItems.push(obj);
-      requestData.vendorItems=vendorItems;
+      requestData.vendorItems = vendorItems;
     }
+    
     this.load = true;
+    
     // Make a POST request to the PURCHASE_REQUEST_API with requestData
     this.httpService.POST(PURCHASE_REQUEST_API, requestData).subscribe({
       next: (resp: any) => {
         this.load = false;
-        this.snack.notify("Purchase requrest has been created.", 1);
+        this.snack.notify("Purchase request has been created.", 1);
         this.purchaseRequestForm.reset();
         this.purchaseRequestForm.markAsUntouched();
         this.option = 2;
-        this.getPurchaseList({ filter_by: this.filter_by, filter_value: this.statusOption.value })
-
-      }, error: (err) => {
+        this.getPurchaseList({ filter_by: this.filter_by, filter_value: this.statusOption.value });
+      },
+      error: (err) => {
         this.load = false;
-        if (err.errors && !isEmpty(err.errors)) {
+        if (err.errors && Object.keys(err.errors).length > 0) {
           let errMessage = '<ul>';
           for (let e in err.errors) {
             let objData = err.errors[e];
@@ -181,12 +186,12 @@ export class PurchaseRequestComponent implements OnInit {
           errMessage += '</ul>';
           this.snack.notifyHtml(errMessage, 2);
         } else {
-          this.snack.notify(err.message, 2);
+          this.snack.notify(err.message || 'An error occurred', 2);
         }
       }
     });
+    
   }
-
   getList() {
     const UOM = this.http.get<any>(`${environment.api_path}${UOM_API}`);
     const item = this.http.get<any>(`${environment.api_path}${ITEM_API}`);

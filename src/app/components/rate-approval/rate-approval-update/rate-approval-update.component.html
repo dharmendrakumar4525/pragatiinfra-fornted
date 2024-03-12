@@ -242,9 +242,27 @@
                     </div>
                   </div> -->
                   <div class="vendor-value-cont">
+                    <div class="vendor-value-label">Rate</div>
+                    <div class="vendor-value">
+                      {{vendorTotal.rate | number:'1.2-2' }}
+                    </div>
+                  </div>
+                  <div class="vendor-value-cont">
+                    <div class="vendor-value-label">Qty.</div>
+                    <div class="vendor-value">
+                      {{vendorTotal.qty | number:'1.2-2' }}
+                    </div>
+                  </div>
+                  <div class="vendor-value-cont">
                     <div class="vendor-value-label">Subtotal</div>
                     <div class="vendor-value">
                       {{vendorTotal.subTotal | number:'1.2-2' }}
+                    </div>
+                  </div>
+                  <div class="vendor-value-cont">
+                    <div class="vendor-value-label">Freight</div>
+                    <div class="vendor-value">
+                      {{vendorTotal.freight | number:'1.2-2' }}
                     </div>
                   </div>
                   <div class="vendor-value-cont">

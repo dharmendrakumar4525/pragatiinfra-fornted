@@ -162,12 +162,12 @@
               <td style="color: #4272BF;text-wrap: nowrap;
               width: fit-content;text-align: left;padding: 18px;">Date: <span style="color: #233a61;font-weight: 600;">{{ obj.date | date:'dd MMM y' }}</span> </td>
     
-              <td style="color: #4272BF;text-wrap: nowrap;
+              <!-- <td style="color: #4272BF;text-wrap: nowrap;
               width: fit-content;text-align: left;padding: 18px;">PR No: <span style="color: #233a61;font-weight: 600;">{{getRateApprovalById(obj.rate_approval_id).purchase_request_number}}</span> </td>
-    
+     -->
 
               <td style="color: #4272BF;text-wrap: nowrap;
-              width: fit-content;text-align: left;padding: 18px;">PO No: <span style="color: #233a61;font-weight: 600;">{{obj.po_number}}</span> </td>
+              width: fit-content;text-align: left;padding: 18px;">PO No: <span style="color: #233a61;font-weight: 600;">{{obj.billing_address.company_name}}/{{obj.po_number}}</span> </td>
     
               <td style="color: #4272BF;text-wrap: nowrap;
       width: fit-content;text-align: left;padding: 18px;">Location: <span style="color: #233a61;font-weight: 600;">{{getLocationById(obj.site)}}</span></td>

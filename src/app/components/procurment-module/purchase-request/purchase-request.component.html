@@ -190,13 +190,24 @@
                 </td>
                 <ng-container [formGroupName]="i">
                   <td>
-                    <mat-select id="itemName" placeholder="Select Item" formControlName="item_id"
-                      class="select-form-field" (selectionChange)="selectedItem($event,i)">
-                      <mat-option [value]="item._id" *ngFor="let item of filteredItemList">
-                        {{item.item_name}}
-                      </mat-option>
-  
-                    </mat-select>
+                    <mat-form-field class="example-full-width">
+                      <input
+                        type="text"
+                        placeholder="Select Item"
+                        aria-label="Item"
+                        matInput
+                        [matAutocomplete]="auto"
+                        formControlName="item_id"
+                        (input)="searchItem($event)"
+                        
+                        
+                      />
+                      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedItem($event, i)" [displayWith]="displayItemFn">
+                        <mat-option *ngFor="let item of filteredItemList" [value]="item">
+                          {{ item.item_name }}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
                   </td>
                   <td style="color: #000;">
                     {{item.get('category')?.value}}
@@ -300,14 +311,7 @@
                 </td>
                 <ng-container [formGroupName]="i">
 
-                  <!-- <td>
-                    <mat-select id="itemName" placeholder="Select Item" formControlName="item_id"
-                      class="select-form-field" (selectionChange)="selectedItem($event,i)">
-                      <mat-option [value]="item._id" *ngFor="let item of itemList">
-                        {{item.item_name}}
-                      </mat-option>
-                    </mat-select>
-                  </td> -->
+    
 
                   <td>
                     <mat-form-field class="example-full-width">

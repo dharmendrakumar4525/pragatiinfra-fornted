@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
      private router:Router, private authGuard:AuthGuard) {
 
       this.currentUser = this.auth.getUser();
-      console.log('this.currentUser', this.currentUser)
+      console.log('this.currentUser', this.currentUser._id)
 
 
     this.configuration = new DashboardLayoutConfiguration(
@@ -74,6 +74,9 @@ export class AppComponent implements OnInit {
   getSiteList() {
     this.httpService.GET(USER_PERMISSION_API, {user_id:this.currentUser._id}).subscribe((res:any) => {
       // this.siteList = res;
+      console.log("--res--");
+      console.log(res);
+      console.log("--res--");
       if(res.data && res.data['module_permissions']){
         this.auth.setPermission(res.data['module_permissions']);
         this.auth.setModules(res.data['modules']);

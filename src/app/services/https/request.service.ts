@@ -71,8 +71,8 @@ export class RequestService {
         window.location.href = `/login`;
       }
 
-      console.error(
-        `Backend returned code ${error.status}, `, error);
+      // console.error(
+      //   `Backend returned code ${error.status}, `, error);
     }
 
 
