@@ -1,16 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ITEM_API } from '@env/api_path';
+import { ITEM_API_MASTER } from '@env/api_path';
 import { ExcelService } from '@services/export-excel/excel.service';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '@env/environment';
+import { CATEGORY_API,SUB_CATEGORY_API} from '@env/api_path';
 @Component({
   selector: 'app-listing',
   templateUrl: './listing.component.html',
   styleUrls: ['./listing.component.scss']
 })
 export class ListingComponent implements OnInit {
+  categoryList: any;
+  subCategoryList: any = [];
   itemList: any = [];
   list: any;
   constructor(
@@ -18,13 +23,40 @@ export class ListingComponent implements OnInit {
     private httpService: RequestService,
     private excelService: ExcelService,
     private snack: SnackbarService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private http: HttpClient
   ) {
     this.getList();
   }
 
   getList() {
-    this.httpService.GET(ITEM_API, {}).subscribe(res => {
+    const subCategory = this.http.get<any>(`${environment.api_path}${SUB_CATEGORY_API}`);
+    const category = this.http.get<any>(`${environment.api_path}${CATEGORY_API}`);
+
+    this.httpService.multipleRequests([subCategory, category], {}).subscribe(res => {
+      if (res) {
+        this.subCategoryList = res[0].data;
+        console.log("Sub Category : ",this.subCategoryList);
+        this.categoryList = res[1].data;
+      }
+    }, (err) => {
+      if (err.errors && !isEmpty(err.errors)) {
+        let errMessage = '<ul>';
+        for (let e in err.errors) {
+          let objData = err.errors[e];
+          errMessage += `<li>${objData[0]}</li>`;
+        }
+        errMessage += '</ul>';
+        this.snack.notifyHtml(errMessage, 2);
+      } else {
+        this.snack.notify(err.message, 2);
+      }
+
+    })
+  
+
+    this.httpService.GET(ITEM_API_MASTER, {}).subscribe(res => {
+      console.log("res+++",res);
       if (res && res.data) {
         this.itemList = res.data;
         this.list = res.data;
@@ -45,6 +77,15 @@ export class ListingComponent implements OnInit {
     })
   }
 
+  getCategory(id: any) {
+    return this.categoryList.filter((obj: { _id: any; }) => obj._id == id)[0]?.name
+  }
+
+  getSubCategory(id: any) {
+    return this.subCategoryList.filter((obj: { _id: any; }) => obj._id == id)[0]?.subcategory_name
+  }
+
+
   edit(id: any) {
     let url: string = "item/edit/" + id
     console.log(url);
@@ -58,7 +99,7 @@ export class ListingComponent implements OnInit {
   }
 
   delete(id: any) {
-    this.httpService.DELETE(ITEM_API, { _id: id }).subscribe(res => {
+    this.httpService.DELETE(ITEM_API_MASTER, { _id: id }).subscribe(res => {
       if (res) {
         this.snack.notify("item record has been deleted sucessfully.", 1);
         this.getList();

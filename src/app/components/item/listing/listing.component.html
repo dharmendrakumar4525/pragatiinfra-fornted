@@ -44,10 +44,12 @@
           <td scope="row">{{i+1}}</td>
           <td>{{item.item_number}}</td>
           <td>{{item.item_name}}</td>
-          <td>{{item.categoryDetail?.name}}</td>
-          <td>{{item.subCategoryDetail?.subcategory_name}}</td>
-          <td>{{item.uomDetail?.uom_name}}</td>
-          <td>{{item.gstDetail?.gst_percentage}}</td>
+          <!-- <td>{{getCategory(item.category)}}</td>
+          <td>{{getSubCategory(item.sub_category)}}</td> -->
+          <td>{{item?.category?.name}}</td>
+          <td>{{item?.sub_category?.subcategory_name}}</td>
+          <td>{{item?.uom?.uom_name}}</td>
+          <td>{{item?.gst?.gst_name}}</td>
           <td>{{item.specification}}</td>
 
           <td>

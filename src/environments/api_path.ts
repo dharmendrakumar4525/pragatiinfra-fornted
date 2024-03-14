@@ -28,5 +28,7 @@ export const CREATE_DMR_ENTRY= "/dmr_entry";
 export const GET_VENDOR_API="/vendor";
 export const GET_BRAND_API="/brand";
 
+export const ITEM_API_MASTER = "/items";
+
 
 

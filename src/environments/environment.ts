@@ -13,10 +13,11 @@ export const environment = {
   app_name:"pragati-infra-local",
   encryption: false,
   environmentType:'local',
-  api_path: 'https://stagingpr.avidusinteractive.com/api/web',
-  api_base_path: 'https://stagingpr.avidusinteractive.com',
-  // api_base_path: 'http://localhost:3000',
-  // api_path: 'http://localhost:3000/api/web',
+  // api_path: 'https://stagingpr.avidusinteractive.com/api/web',
+  // api_base_path: 'https://stagingpr.avidusinteractive.com',
+  api_base_path: 'http://localhost:3000',
+  api_path: 'http://localhost:3000/api/web',
+
   cookiesOptions: {
     storeUnencoded: true,
     sameSite: 'Strict',

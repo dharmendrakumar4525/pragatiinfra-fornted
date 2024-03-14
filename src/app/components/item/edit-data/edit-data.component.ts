@@ -65,6 +65,7 @@ export class EditDataComponent implements OnInit {
       console.log(params['id']);
       if (params['id']) {
         this.httpService.GET(`${ITEM_API}/detail`, { _id: params['id'] }).subscribe((res: any) => {
+          console.log("TTTTTTttt");
           console.log(res);
           if (res) {
             this.patchValue(res.data[0]);

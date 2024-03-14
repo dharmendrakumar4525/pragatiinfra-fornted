@@ -34,6 +34,7 @@ export class ListingComponent implements OnInit {
     this.httpService.multipleRequests([subCategory, category], {}).subscribe(res => {
       if (res) {
         this.subCategoryList = res[0].data;
+        console.log("Sub Category :   ",this.subCategoryList);
         this.categoryList = res[1].data;
         this.list = res[0].data;
       }
