@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ITEM_API_MASTER } from '@env/api_path';
+import { ITEM_API } from '@env/api_path';
 import { ExcelService } from '@services/export-excel/excel.service';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
@@ -55,7 +55,7 @@ export class ListingComponent implements OnInit {
     })
   
 
-    this.httpService.GET(ITEM_API_MASTER, {}).subscribe(res => {
+    this.httpService.GET(ITEM_API, {}).subscribe(res => {
       console.log("res+++",res);
       if (res && res.data) {
         this.itemList = res.data;
@@ -99,7 +99,7 @@ export class ListingComponent implements OnInit {
   }
 
   delete(id: any) {
-    this.httpService.DELETE(ITEM_API_MASTER, { _id: id }).subscribe(res => {
+    this.httpService.DELETE(ITEM_API, { _id: id }).subscribe(res => {
       if (res) {
         this.snack.notify("item record has been deleted sucessfully.", 1);
         this.getList();
