@@ -69,6 +69,7 @@ export class ListingComponent implements OnInit {
     this.httpService.GET(VENDOR_API, {}).subscribe(res => {
       if (res && res.data) {
         this.vendorList = res.data;
+    console.log("kjjhv")
         console.log(res.data)
         this.vendorList.map((obj: any) => {
           obj.category = this.getCategory(obj.category);
@@ -124,31 +125,32 @@ export class ListingComponent implements OnInit {
   }
 
   getCategory(ids: any) {
-    // return this.categoryList.filter(ob => ob._id == id)[0]?.name;
+    console.log("wfjhfgjhg");
+    console.log(ids);
 
     var finalName = [];
-    this.categoryList.forEach((element: any) => {
-      if (ids.includes(element._id)) {
-        finalName.push(element.name);
-      }
+    Object.values(ids).forEach((id: string) => {
+        const category = this.categoryList.find((element: any) => element._id === id);
+        if (category) {
+            finalName.push(category.name);
+        }
     });
 
     return finalName.join(",");
+}
 
-  }
-  getSubCategory(ids: any) {
-    // return this.categoryList.filter(ob => ob._id == id)[0]?.name;
-    //console.log(ids)
-    var finalName = [];
-    this.subCategoryList.forEach((element: any) => {
-      if (ids.includes(element._id)) {
-        finalName.push(element.subcategory_name);
+getSubCategory(ids: any) {
+  var finalName = [];
+  Object.values(ids).forEach((id: string) => {
+      const subCategory = this.subCategoryList.find((element: any) => element._id === id);
+      if (subCategory) {
+          finalName.push(subCategory.subcategory_name);
       }
-    });
+  });
 
-    return finalName.join(",");
+  return finalName.join(",");
+}
 
-  }
   search(event: any) {
     if (event.target.value) {
       this.vendorList = this.list.filter(obj => obj.vendor_name.toLowerCase().includes(event.target.value.toLowerCase()))

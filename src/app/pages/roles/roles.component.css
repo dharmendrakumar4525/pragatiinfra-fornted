@@ -81,13 +81,13 @@
 .scroll-bar1{
         
    
-  height: 300px;
+  height: auto;
   
   
 
   overflow: auto;
   overflow-x: hidden;
-  }
+}
 
 ::-webkit-scrollbar {
 width: 7px;

@@ -29,8 +29,8 @@
         <tr>
           <th scope="col">SN.</th>
           <th scope="col">Vendor Name</th>
-          <th scope="col">Category</th>
-          <th scope="col">Sub Category</th>
+          <th scope="col">Category</th> 
+         <th scope="col">Sub Category</th>
           <th scope="col">Contact Person</th>
           <th scope="col">Phone Number</th>
           <th scope="col">GST Number</th>
@@ -39,7 +39,7 @@
           <th scope="col">Payment Term </th>
           <th scope="col">Term & Condtiion </th>
 
-          <th scope="col">Address </th>
+          <!-- <th scope="col">Address </th> -->
           <th scope="col">Action </th>
 
         </tr>
@@ -47,22 +47,23 @@
       <tbody>
         <tr *ngFor="let item of vendorList;let i = index">
           <td scope="row">{{i+1}}</td>
-          <td>{{item.vendor_name}}</td>
-          <td>{{item.category}}</td>
-          <td>{{item.SubCategory}}</td>
-          <td>{{item.contact_person}}</td>
-          <td>{{item.phone_number}}</td>
-          <td>{{item.gst_number}}</td>
-          <td>{{item.pan_number}}</td>
-          <td>{{item.email}}</td>
-          <td>{{item.payment_terms}}</td>
-          <td>{{item.terms_condition}}</td>
-          <td>{{item.address.street_address + ' '
-            + item.address.street_address2 + ' '
-            + item.address.state + ' '
-            +item.address.city + ' '
-            +item.address.country}}</td>
-          <td>
+          <td >{{item?.vendor_name}}</td>
+          <td>{{item?.category}}</td>
+          
+          <td>{{item?.SubCategory}}</td>
+          <td>{{item?.contact_person}}</td>
+          <td>{{item?.phone_number}}</td>
+          <td>{{item?.gst_number}}</td>
+          <td>{{item?.pan_number}}</td>
+          <td>{{item?.email}}</td>
+          <td>{{item?.payment_terms}}</td>
+          <td>{{item?.terms_condition}}</td>
+          <!-- <td>{{item?.address?.street_address + ' '
+            + item?.address?.street_address2 + ' '
+            + item?.address?.state + ' '
+            +item?.address?.city + ' '
+            +item?.address?.country}}</td>-->
+          <td> 
             <div class="action-btn-wrapper">
               <a class="action-btn" [routerLink]="['/vendor/edit',item._id]" title="Edit"><i class="fa fa-edit"></i>
               </a>

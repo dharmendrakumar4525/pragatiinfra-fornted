@@ -27,7 +27,6 @@ export class AppComponent implements OnInit {
      private router:Router, private authGuard:AuthGuard) {
 
       this.currentUser = this.auth.getUser();
-      console.log('this.currentUser', this.currentUser._id)
 
 
     this.configuration = new DashboardLayoutConfiguration(
@@ -81,7 +80,6 @@ export class AppComponent implements OnInit {
         this.auth.setPermission(res.data['module_permissions']);
         this.auth.setModules(res.data['modules']);
       }
-      
     })
   }
 
