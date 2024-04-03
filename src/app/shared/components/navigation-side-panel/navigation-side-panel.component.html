@@ -27,8 +27,8 @@
     <div class="scroll-bar2" width="10%">
 
 
-
-      <li *ngFor="let item of sidebarMenu;let i = index" class="sidebar" #itemEl routerLinkActive="active" >
+      
+            <li *ngFor="let item of sidebarMenu;let i = index" class="sidebar" #itemEl routerLinkActive="active" >
         <div class="dropdown-title">
           <a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="addSubItems(item,i)">
             <div class="allignSvg">
@@ -67,6 +67,24 @@
             out</span>
         </a>
       </li>
+
+
+      <hr >
+
+      <div class="dropdown-title" style="margin-left: 25px; margin-bottom: 10px;">
+        <span style="font-weight: bold; font-size: 14px;">Username : </span>
+        <span style="font-size: 14px;">{{ this.permissions.user.name }}</span>
+      </div>
+      
+      <div class="dropdown-title" style="margin-left: 25px; margin-bottom: 10px;">
+        <span style="font-weight: bold; font-size: 14px;">Email : </span>
+        <span style="font-size: 14px;">{{ this.permissions.user.email }}</span>
+      </div>
+      
+      <div class="dropdown-title" style="margin-left: 25px; margin-bottom: 10px;">
+        <span style="font-weight: bold; font-size: 14px;">Role : </span>
+        <span style="font-size: 14px;">{{ this.permissions.user.role }}</span>
+      </div>
     </div>
   </ul>
 </div>

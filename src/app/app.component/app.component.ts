@@ -73,9 +73,7 @@ export class AppComponent implements OnInit {
   getSiteList() {
     this.httpService.GET(USER_PERMISSION_API, {user_id:this.currentUser._id}).subscribe((res:any) => {
       // this.siteList = res;
-      console.log("--res--");
-      console.log(res);
-      console.log("--res--");
+      
       if(res.data && res.data['module_permissions']){
         this.auth.setPermission(res.data['module_permissions']);
         this.auth.setModules(res.data['modules']);

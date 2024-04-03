@@ -137,11 +137,11 @@ export class UpdatePrStatusComponent implements OnInit {
   * @returns The brand name corresponding to the provided brand ID, if found; otherwise, undefined.
   */
   myBrandName(brandId:any){
-    console.log(brandId)
+    // console.log(brandId)
     if(this.brandList==null)
       return;
     let brand=this.brandList.filter(brand=>brand._id==brandId)
-    console.log(brand)
+    // console.log(brand)
     return brand[0].brand_name;
   } 
 
@@ -172,8 +172,11 @@ export class UpdatePrStatusComponent implements OnInit {
   * @returns void
   */
   updateRequest(status: any) {
+    console.log("meaafsdfs",this.details._id,this.purchaseRequestForm.value.remarks,status)
     this.httpService.PUT(PURCHASE_REQUEST_API, { _id: this.details._id, status: status, remarks: this.purchaseRequestForm.value.remarks }).subscribe(res => {
+      
       this.router.navigate(['/procurement/prlist'])
+      
     })
   }
 
@@ -185,8 +188,10 @@ export class UpdatePrStatusComponent implements OnInit {
   getVendorList() {
     if(this.details.vendor!=null){
       const vendor = this.http.get<any>(`${environment.api_path}${VENDOR_DETAIL_API}?_id=${this.details.vendor}`);
+      console.log("this is res : ");
       this.httpService.multipleRequests(vendor, {}).subscribe(res => {
         if (res) {
+          
           this.selectedVendor=res[0].data[0].vendor_name
         }
   

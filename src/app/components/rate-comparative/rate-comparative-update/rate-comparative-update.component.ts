@@ -29,6 +29,8 @@ export class RateComparativeUpdateComponent implements OnInit {
   finalVendorArray:any[]=[];
   VendorItems:any[]=[];
   isButtonDisabled: boolean = true;
+  isSelectDisabled: boolean = false;
+  
 
   /**
   * Represents the rate comparative form, including form controls for various fields.
@@ -88,13 +90,16 @@ export class RateComparativeUpdateComponent implements OnInit {
   * @returns void
   */
   ItemData(dataObj: any,vendors:any) {
-    console.log(vendors)
-    let index=this.finalVendorArray.findIndex(item=> item==dataObj)
-
+    console.log("1 : ItemData")
+    
+    
+    let index=this.finalVendorArray.findIndex(item=> item[1]==dataObj[1])
+    console.log("Index = ",index);
+    console.log("this.VendorItems[index]",this.VendorItems[index]);
     // Open a dialog popup for rate comparative vendors
     const dialogPopup = this.dialog.open(RateComparativeVendorsComponent, {
       data: {
-        dataObj: dataObj,
+        dataObj: dataObj[0],
         vendorsList: this.vendorsList,
         items:this.details?.items,
         vendors:vendors,
@@ -107,7 +112,7 @@ export class RateComparativeUpdateComponent implements OnInit {
     dialogPopup.afterClosed().subscribe((result: any) => {
       if (result && result['option'] === 1) { 
         this.VendorItems[index]=result;
-        console.log(this.VendorItems);
+        
       }
     });
   }
@@ -221,7 +226,7 @@ export class RateComparativeUpdateComponent implements OnInit {
     }
     let loginUser = JSON.parse(localStorage.getItem('loginData'))
     let requestedData= this.rateComparativeForm.value;
-    // console.log(this.rateComparativeForm)
+    
     requestedData['_id'] = this.details._id;
     requestedData['items'] = this.details.items;
     requestedData['stage'] = 'rate_approval';
@@ -231,8 +236,7 @@ export class RateComparativeUpdateComponent implements OnInit {
     
     requestedData['vendorItems']=this.VendorItems;
     this.load = true;
-    // console.log(this.VendorItems)
-    console.log(requestedData)
+    
     this.httpService.PUT(RATE_COMPARATIVE_API, requestedData).subscribe({
       next: res => {
         this.snack.notify("Detail has been updated", 1);
@@ -261,7 +265,10 @@ export class RateComparativeUpdateComponent implements OnInit {
   * @returns An array of vendors that match the category and subcategory of the items.
   */
   isVendorSelected(items: any): any[] {
+    
+   
     let tempVendorList=this.vendorsList.filter(vendor=>vendor.category.includes(items.categoryDetail._id) && vendor.SubCategory.includes(items.subCategoryDetail._id))
+
     return tempVendorList;
   }
 
@@ -291,7 +298,7 @@ export class RateComparativeUpdateComponent implements OnInit {
   getBrandList(){
     this.httpService.GET(GET_BRAND_API, {}).subscribe(res => {
       this.brandList=res.data
-      console.log(this.brandList);
+    
     })
   }
 
@@ -303,9 +310,10 @@ export class RateComparativeUpdateComponent implements OnInit {
   * @returns void
   */
   save(){
-    console.log(this.vendorForm)
+    let vendorIndex: number = 0;
     this.flag=true;
     this.isButtonDisabled=true;
+    this.isSelectDisabled=true
     //making array empty
     this.finalVendorArray.length=0;
     this.VendorItems.length=0;
@@ -313,11 +321,21 @@ export class RateComparativeUpdateComponent implements OnInit {
     {
       for(let vendor of vendors.get('selectedVendors').value)
       {
-        this.finalVendorArray.push(vendor)
+        this.finalVendorArray.push([vendor,vendorIndex])
         this.VendorItems.push("");
+        vendorIndex++
       }
     }
-    // console.log(this.finalVendorArray)
+    let len=0;
+    for(let i=0;i<this.vendorForm.get('vendor').value.length;i++){
+      let tex=this.vendorForm.get('vendor').value[i]['selectedVendors']
+      for(let j=0;j<tex.length;j++){
+        let add=tex[j]
+        tex[j]=[add,len]
+        len++
+      }
+      len=tex.length
+    }
   }
 
   /**
@@ -326,7 +344,7 @@ export class RateComparativeUpdateComponent implements OnInit {
   * @returns The name of the vendor.
   */
   detailsOfVendor(vendor:any){
-    let tempvendor=this.vendorsList.find(obj=> obj._id==vendor)
+    let tempvendor=this.vendorsList.find(obj=> obj._id==vendor[0])
     return tempvendor.vendor_name
   }
   
@@ -336,9 +354,9 @@ export class RateComparativeUpdateComponent implements OnInit {
         this.httpService.GET(`${RATE_COMPARATIVE_DETAIL_API}`, { _id: params['id'] }).subscribe({
           next: res => {
             this.details = res.data.details;
-            console.log(this.details)
+            
             this.vendorsList = res.data.vendorsList;
-            console.log(this.vendorsList)
+            
             this.vendorsList.map((o: any) => {
               this.vendorAssociatedData[o._id] = o;
               return o;
@@ -352,6 +370,7 @@ export class RateComparativeUpdateComponent implements OnInit {
               }
               return false; // Exclude the item when it's already in temparr
             });
+          
             
             //Initialize selectedVendors FormArray with empty form groups for each item
             this.filteredItems.forEach((items) => {
@@ -363,7 +382,7 @@ export class RateComparativeUpdateComponent implements OnInit {
               (this.vendorForm.get('vendor') as FormArray).push(tempselectedVendors);
               
             });            
-            console.log(this.vendorForm.get('vendor')as FormArray)
+            // console.log(this.vendorForm.get('vendor')as FormArray)
             this.patchData(res.data.details);
           }, error: (error) => {
             // this.router.navigate(['/procurement/prlist'])

@@ -78,7 +78,7 @@ export class RateApprovalUpdateComponent implements OnInit {
   * @returns void
   */
   vendorData(dataObj: any) {
-    console.log(dataObj)
+  
 
     // Open a dialog to display vendor rate listings
     const dialogPopup = this.dialog.open(VendorRateListingComponent, {
@@ -91,7 +91,7 @@ export class RateApprovalUpdateComponent implements OnInit {
     });
     // Subscribe to dialog closing event
     dialogPopup.afterClosed().subscribe((result: any) => {
-      console.log('result', result)
+     
       if(result && result.data && result.data.VendorRate ){
         if(result.data.VendorRate.size>0)
           this.ItemwiseVendorRate.set(dataObj.item_id,result.data)
@@ -114,7 +114,7 @@ export class RateApprovalUpdateComponent implements OnInit {
       if (res) {
         this.siteList = res[0].data;
         this.purchaseList=res[1].data
-        console.log("--purchaseListRAC--",this.purchaseList);
+        
       }
     })
   }
@@ -206,7 +206,7 @@ export class RateApprovalUpdateComponent implements OnInit {
   }
 
   findVendor(id:any){
-    // console.log(this.fetchedVendorList.find(obj=> obj._id==id))
+    
     return this.fetchedVendorList.find(obj=> obj._id==id);
   }
 
@@ -231,9 +231,10 @@ export class RateApprovalUpdateComponent implements OnInit {
   * @returns An object containing subTotal, gstAmount, and total.
   */
   vendorTotal(item:any){
-    console.log("--item--");
-    console.log(item);
-    console.log("--item--");
+    console.log("==Item==")
+    console.log(item)
+    console.log("==Item==")
+      
       let subTotal=0;
       let total=0;
       let freight=0;
@@ -241,9 +242,9 @@ export class RateApprovalUpdateComponent implements OnInit {
       let rate=0;
       let qty=0;
       item.forEach(obj=>{
-          subTotal=obj.SubTotalAmount;
-          total=obj.Total;
-          freight = obj.Freight;
+          subTotal=obj.SubTotalAmount + subTotal;
+          total=+obj.Total + +total;
+          freight = +obj.Freight + +freight;
           gstAmount = total-subTotal-freight;
           rate=obj.Rate;
           qty=obj.RequiredQuantity;
@@ -272,6 +273,7 @@ export class RateApprovalUpdateComponent implements OnInit {
       this.deleteVendor(vendor_id,vendorItem,vendorTotal);
     else 
       this.addVendor(vendor_id,vendorItem,vendorTotal);
+
   }
 
   /**
@@ -289,6 +291,8 @@ export class RateApprovalUpdateComponent implements OnInit {
   * @param vendorTotal The total amount for the vendor.
   */
   addVendor(vendor_id,vendorItem,vendorTotal){
+
+
     this.VendorRate.set(vendor_id,{...vendorItem,...vendorTotal});
   }
 
@@ -335,28 +339,29 @@ export class RateApprovalUpdateComponent implements OnInit {
       const yearRange = `${String(currentYear).slice(-2)}-${String(nextYear).slice(-2)}`;
       const searchTerm = `${dynamicDataFormatted}/`;
 
-      console.log("dynamicDataFormatted---",dynamicDataFormatted);
-      console.log("purchaseList---",this.purchaseList);
-
-
-      
+ 
       const filteredList = this.purchaseList.filter(item => item.billing_address.company_name.includes("Pragati Infra Solutions Pvt. Ltd."));
 
-        console.log("filteredList---",filteredList);
       const Pocount=filteredList.length+1;
 
-      console.log("Pocount ---",Pocount);
+      
       this.po_no=Pocount;
-      console.log("po_no  ---",this.po_no);
+     
 
       if(this.compareBy=='vendor')
       {
           
           let vendorRates:any[]=[];
+         
           this.VendorRate.forEach((value,key)=>{  
               vendorRates.push(value);
+       
           })
+          
+
+          
           this.details['vendorRatesVendorWise']=vendorRates;
+
          
           this.details['compareBy']=this.compareBy;
           this.details['po_number']=this.po_no;
@@ -367,12 +372,16 @@ export class RateApprovalUpdateComponent implements OnInit {
       }
       else{
         let vendorRates:any[]=[];
+        
         this.ItemwiseVendorRate.forEach((value,key)=>{
           value.VendorRate.forEach((value1,key1)=>{
             vendorRates.push(value1);
           })
-         
+          
         })
+      
+     
+
         this.details['vendorRatesItemWise']=vendorRates
         
         this.details['compareBy']=this.compareBy;
@@ -385,16 +394,13 @@ export class RateApprovalUpdateComponent implements OnInit {
       if (!this.purchaseRequestForm.valid) {
         return;
       }
-  
-      // let requestedData: any = this.purchaseRequestForm.value;
-      // requestedData['_id'] = this.details._id;
-      // requestedData['items'] = this.details.items;
-      // requestedData['vendors_total'] = this.details.vendors_total;
-      // requestedData['status'] = status;
-      // requestedData['po_number']=this.po_no;
+
     }
     this.load = true;
 
+    console.log("DETAILS_THSI")
+    console.log(this.details);
+    
     this.httpService.PUT(RATE_COMPARATIVE_API, this.details).subscribe(res => {
       this.snack.notify("Detail has been updated", 1);
       this.router.navigate(['/rate-approval'])
@@ -409,10 +415,13 @@ export class RateApprovalUpdateComponent implements OnInit {
         }
         errMessage += '</ul>';
         this.snack.notifyHtml(errMessage, 2);
+        
       } else {
+        
         this.snack.notify(err.message, 2);
       }
     })
+  
    
   }
 
@@ -422,9 +431,8 @@ export class RateApprovalUpdateComponent implements OnInit {
         this.httpService.GET(`${RATE_COMPARATIVE_DETAIL_API}`, { _id: params['id'] }).subscribe({
           next: res => {
             this.details = res.data.details;
-            this.patchData(res.data.details);
-           
             
+            this.patchData(res.data.details);
           }
         })
       }

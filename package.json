@@ -41,6 +41,7 @@
     "ng-circle-progress": "^1.6.0",
     "ngx-cookie": "^6.0.1",
     "ngx-localstorage": "^3.4.0",
+    "ngx-pagination": "^6.0.3",
     "ngx-ui-loader": "^13.0.0",
     "rxjs": "~7.5.0",
     "signature_pad": "^4.2.0",

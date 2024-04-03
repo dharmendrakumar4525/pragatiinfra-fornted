@@ -231,6 +231,7 @@ export class AuthService {
     this.removeLocalStorage('__module_permis');
     this.removeLocalStorage('authorized');
     this.removeLocalStorage('authentication');
+    localStorage.removeItem('loginData')
     this.cookie.removeAll();
     // this.emit(null);
   }

@@ -5,18 +5,15 @@
 
         <mat-grid-list cols="4" rowHeight="800px" >
             <div>
-            <img src="../../assets/images/Mainpage.png" style="width:100%;"> 
-            <div style="height: 100px;width:100px;position: absolute;bottom:18%;left:300px">
-            <img src="../../assets/images/dot.png" style="width:100%" alt="cinque terre"> </div>
+            <img src="../../assets/images/pisllogo.jpg" style="width:90%; position: relative; left: -200px; top: 20px"> 
         </div>
             <mat-grid-tile colspan="2" rowspan="1" >
                 
-                    <h1 style="font-size:70px;color: #fff;margin-top: 500px;margin-left: 250px;">Pragati Infra</h1>
+                    <h1 style="font-size:70px;color: #fff;margin-top: 500px;margin-left: 250px; top: -100px;"></h1>
                
             </mat-grid-tile>
             <mat-grid-tile colspan="2" rowspan="1"  >
-                <mat-card  style="width:60%;padding: 20px;margin-top: 50px;margin-left: 60px;height: 500px;">
-       
+                <mat-card  style="width:60%;padding: 20px;margin-top: 50px;margin-left: 60px;height: 500px; position: relative; left: -250px; top: -150px">      
                     <form class="example-form" [formGroup]="loginForm" style="margin-top: 40px;">
                         <h2>Login</h2><br>
                         <h4>Just signin if you have an account in here. Enjoy your website.</h4>
@@ -40,7 +37,7 @@
                         </mat-form-field>
                      
                         <input type="checkbox">Remember me<br><br>
-                        <div style="position: relative;bottom:40px;left:330px;">
+                        <div style="position: relative; bottom:40px; left:215px">
                         <a href="#" style="color: black;" [routerLink]="['/forgotpassword']">Forgot Password?</a>
                     </div>
                         <button mat-raised-button style="background-color: #233A61;color: #fff;width:100%" (click)="login()" >Login</button>

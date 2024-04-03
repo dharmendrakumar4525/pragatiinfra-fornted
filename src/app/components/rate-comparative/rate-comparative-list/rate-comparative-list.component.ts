@@ -109,7 +109,9 @@ export class RateComparativeListComponent implements OnInit {
 
   }
   reqNo(value: any) {
+    console.log("reqNo Value",value)
     const filteredList = this.purchaseList.filter(item => item._id === value);
+    console.log("filteredList ",filteredList)
     return filteredList[0].purchase_request_number;
   }
 

@@ -74,7 +74,7 @@
           </div>
 
           <div class="flex-div custom-form-group" style="margin-right: 45px;">
-            <label class="custom-label" for="" style="color: #4272BF;font-size: 14px;"> Required by <span
+            <label class="custom-label" for="" style="color: #4272BF;font-size: 14px;"> Required By <span
                 class="star">*</span>
             </label>
             <div class="custom-form-control">
@@ -88,49 +88,21 @@
               </mat-form-field>
             </div>
           </div>
-
-
-
-          <!-- <div style="display: flex;flex-direction: column;">
-            <label style="color: #4272BF;font-size: 14px;">Purchase request no </label>
-            <input placeholder="Auto generate" formControlName="purchase_request_number" readonly
-              style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
-          </div> -->
           <div class="flex-div" style="display: flex;flex-direction: column;">
             <label style="color: #4272BF;font-size: 14px;">Site name <span class="star">*</span></label>
-
-            <!-- <mat-select id="site" placeholder="Select site" formControlName="site" 
-              style="padding: 10px;width: 75%;border:1px solid #ccc;border-radius: 6px;cursor: pointer;font-family: 'Poppins';">
-              <mat-option [value]="item._id" *ngFor="let item of siteList">
-                {{item.site_name}}
-              </mat-option> -->
-
               <mat-select id="site" placeholder="Select site" formControlName="site" (selectionChange)="selectedSite($event)"
               style="padding: 10px;width: 75%;border:1px solid #ccc;border-radius: 6px;cursor: pointer;font-family: 'Poppins';">
               <mat-option [value]="item._id" *ngFor="let item of siteList">
                 {{item.site_name}}
               </mat-option>
-
             </mat-select>
           </div>
-          
           <div class="flex-div" style="display: flex;flex-direction: column;">
             <label style="color: #4272BF;">Local Purchase
             <input style="transform: scale(1.5);margin-left: 20px;
             margin-top: 30px;" type="checkbox"  name="local_purchase_checkbox" (change)="handleLocalPurchaseChange()">
           </label>
           </div>
-
-
-          <!-- <div class="flex-div" style="display: flex; flex-direction: column">
-            <label style="color: #4272BF; font-size: 14px;">PR Number <span class="star">*</span></label>
-            <input placeholder="Enter title" formControlName="title"
-                   style="width:75%; padding:10px; border-radius: 6px; border: 1px solid #ccc;
-                          cursor: not-allowed; margin-top: 3px; font-family: 'Poppins';
-                          height: 50px;" readonly [value]="requestNo">
-          </div> -->
-    
-           
           <div style="display: flex;flex-direction: column;">
             <label style="color: #4272BF; font-size: 14px;">Purchase request no </label>
             <input
@@ -142,9 +114,6 @@
               style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';"
             >
           </div>
-          
-          
-
           <div class="flex-div" style="display: flex; flex-direction: column;" *ngIf="purchaseRequestForm.get('local_purchase')?.value === 'yes'">
             <label style="color: #4272BF; font-size: 14px;">Vendor<span class="star">*</span></label>
           
@@ -156,8 +125,6 @@
               </mat-option>
             </mat-select>
           </div>
-          
-          
         </div>
       </mat-card>
 
@@ -199,10 +166,8 @@
                         [matAutocomplete]="auto"
                         formControlName="item_id"
                         (input)="searchItem($event)"
-                        
-                        
                       />
-                      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedItem($event, i)" [displayWith]="displayItemFn">
+                      <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'auto'" (optionSelected)="selectedItem($event, i)" [displayWith]="displayItemFn">
                         <mat-option *ngFor="let item of filteredItemList" [value]="item">
                           {{ item.item_name }}
                         </mat-option>
@@ -217,23 +182,27 @@
                   </td>
                   <td>
                     {{item.get('uom')?.value}}
-                    <!-- <mat-select id="itemName" placeholder="Select UOM" formControlName="uom" class="select-form-field">
-                      <mat-option [value]="item._id" *ngFor="let item of uomList">
-                        {{item.unit}}
-                      </mat-option>
-  
-                    </mat-select> -->
                   </td>
                   <td>
                     <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
                   </td>
                   <td>
-                    <mat-select id="site" placeholder="Select Brand" formControlName="brandName"
-                      class="pr-form-field">
-                      <mat-option [value]="brand._id" *ngFor="let brand of brandList">
-                        {{brand.brand_name}}
-                      </mat-option>
-                    </mat-select>
+                    <mat-form-field class="example-full-width">
+                      <input
+                        type="text"
+                        placeholder="Select Brand"
+                        aria-label="Brand"
+                        matInput
+                        [matAutocomplete]="fill"
+                        formControlName="brandName"
+                        (input)="searchBrand($event)"
+                      />
+                      <mat-autocomplete #fill="matAutocomplete" [displayWith]="displayBrandFn" [panelWidth]="'auto'">
+                        <mat-option *ngFor="let brand of filteredBrandList" [value]="brand">
+                          {{brand.brand_name}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
                   </td>
                   <td>
                     <input type="text" placeholder="Enter" digitOnly formControlName="rate" class="pr-form-field">
@@ -295,8 +264,6 @@
               <th>Uom*</th>
               <th>Quantity*</th>
               <th>Brand Name</th>
-              
-              <!-- <th>Attachments</th> -->
               <th>Remarks</th>
               <th>Action</th>
             </tr>
@@ -314,7 +281,7 @@
     
 
                   <td>
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="example-full-width" >
                       <input
                         type="text"
                         placeholder="Select Item"
@@ -323,10 +290,8 @@
                         [matAutocomplete]="auto"
                         formControlName="item_id"
                         (input)="searchItem($event)"
-                        
-                        
                       />
-                      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedItem($event, i)" [displayWith]="displayItemFn">
+                      <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'auto'"(optionSelected)="selectedItem($event, i)" [displayWith]="displayItemFn">
                         <mat-option *ngFor="let item of filteredItemList" [value]="item">
                           {{ item.item_name }}
                         </mat-option>
@@ -342,7 +307,7 @@
                     {{item.get('subCategory')?.value}}
                   </td>
                   <td>
-                    asxas{{item.get('uom')?.value}}
+                    {{item.get('uom')?.value}}
                     <!-- <mat-select id="itemName" placeholder="Select UOM" formControlName="uom" class="select-form-field">
                       <mat-option [value]="item._id" *ngFor="let item of uomList">
                         {{item.unit}}
@@ -353,17 +318,28 @@
                   <td>
                     <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
                   </td>
-                  <!-- <td>
-                    <input placeholder="Enter" formControlName="attachment" type="file" class="pr-form-field">
-                  </td> -->
                   <td>
-                    <mat-select id="site" placeholder="Select Brand" formControlName="brandName"
-                      class="pr-form-field">
-                      <mat-option [value]="brand._id" *ngFor="let brand of brandList">
-                        {{brand.brand_name}}
-                      </mat-option>
-                    </mat-select>
+                    <mat-form-field class="example-full-width">
+                      <input
+                        type="text"
+                        placeholder="Select Brand"
+                        aria-label="Brand"
+                        matInput
+                        [matAutocomplete]="fill"
+                        formControlName="brandName"
+                        (input)="searchBrand($event)"
+                      />
+                      <mat-autocomplete #fill="matAutocomplete" [displayWith]="displayBrandFn" [panelWidth]="'auto'">
+                        <mat-option *ngFor="let brand of filteredBrandList" [value]="brand">
+                          {{brand.brand_name}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
                   </td>
+                  
+
+
+       
                 
                   <td>
                     <input placeholder="Enter" formControlName="remark" class="pr-form-field">

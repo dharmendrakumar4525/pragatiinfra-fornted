@@ -1,5 +1,4 @@
 <div class="section-wrapper">
-
   <div class="section-header">
     <div class="header-left">
       <h2>Vendor Master</h2>
@@ -7,29 +6,25 @@
     <div class="header-right">
       <div class="buttons-containers">
         <div class="filter-con">
-
           <div dir="ltr" class="labeled-outlined-field-wrapper">
             <mat-form-field class="full-width drop-down outline-filter-field hide-form-bottom-field"
               appearance="outline">
               <input matInput placeholder="Search by name" (input)="search($event)">
             </mat-form-field>
           </div>
-
-
         </div>
         <button mat-button class="submit-btn" (click)="add()">Add New</button>
         <button mat-button class="other-btn" (click)="exportXlSX()">Export</button>
       </div>
     </div>
   </div>
-
   <div class="section-body">
     <table class="table  pragati-table">
       <thead>
         <tr>
           <th scope="col">SN.</th>
           <th scope="col">Vendor Name</th>
-          <th scope="col">Category</th> 
+          <th scope="col">Category</th>
          <th scope="col">Sub Category</th>
           <th scope="col">Contact Person</th>
           <th scope="col">Phone Number</th>
@@ -38,10 +33,8 @@
           <th scope="col">Email</th>
           <th scope="col">Payment Term </th>
           <th scope="col">Term & Condtiion </th>
-
           <!-- <th scope="col">Address </th> -->
           <th scope="col">Action </th>
-
         </tr>
       </thead>
       <tbody>
@@ -49,7 +42,6 @@
           <td scope="row">{{i+1}}</td>
           <td >{{item?.vendor_name}}</td>
           <td>{{item?.category}}</td>
-          
           <td>{{item?.SubCategory}}</td>
           <td>{{item?.contact_person}}</td>
           <td>{{item?.phone_number}}</td>
@@ -63,7 +55,7 @@
             + item?.address?.state + ' '
             +item?.address?.city + ' '
             +item?.address?.country}}</td>-->
-          <td> 
+          <td>
             <div class="action-btn-wrapper">
               <a class="action-btn" [routerLink]="['/vendor/edit',item._id]" title="Edit"><i class="fa fa-edit"></i>
               </a>
@@ -71,12 +63,7 @@
             </div>
           </td>
         </tr>
-
       </tbody>
     </table>
-
-
-
   </div>
-
 </div>

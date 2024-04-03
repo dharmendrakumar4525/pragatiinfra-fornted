@@ -114,8 +114,9 @@
           <th>Item&nbsp;No</th>
           <th>Item&nbsp;Name</th>
           <!-- <th>Brand</th> -->
-          <th>Required Quantity</th>
-          <th>Purchased Quantity</th>
+          <th>Quantity</th>
+          <th>UOM</th>
+          <th>Freight</th>
           <th>Brand Name</th>
           <th>Rate</th>
           <th>Sub Total</th>
@@ -131,14 +132,14 @@
             <td>
               {{item.item.item_name}}
             </td>
-            <!-- <td style="text-align: center;">
-              {{item.vendors[0].brand}}
-            </td> -->
             <td>
               {{item.item.qty}}
             </td>
             <td style="color: #000;">
-              {{item.RequiredQuantity}}
+              {{item.item.uomDetail.uom_name}}
+            </td>
+            <td style="color: #000;">
+              {{item.Freight}}
             </td>
             <td>{{myBrandName(item.item.brandName)}}</td>
             <td style="color: #000;">
@@ -150,7 +151,7 @@
             </td>
             <td style="color: #000;">
               <ng-container *ngIf="item.item.tax && item.item.tax.amount">
-                {{item.item.tax.name}}({{item.item.tax.amount}}%)
+                ({{item.item.tax.amount}}%)
               </ng-container>
             </td>
             <td style="color: #000;">
@@ -162,6 +163,10 @@
         <tr>
           <td colspan="5" style="border: none;font-size: small;">Total&nbsp;amount</td>
           <td colspan="5" style="border: none;font-size: small;">{{poDetails.vendors_total[0].subTotal| currency:'INR'}}</td>
+        </tr>
+        <tr>
+          <td colspan="5" style="border: none;font-size: small;">Total&nbsp;Freight</td>
+          <td colspan="5" style="border: none;font-size: small;">{{poDetails.vendors_total[0].freightTotal| currency:'INR'}}</td>
         </tr>
         <tr>
           <td colspan="5" style="border: none;font-size: small;">GST&nbsp;amount</td>

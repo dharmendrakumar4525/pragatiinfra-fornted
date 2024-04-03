@@ -58,7 +58,7 @@ export class RateComparativeDetailsComponent implements OnInit {
     this.getBrandList();
     this.userService.getUserss().subscribe(data => {
       this.users = data
-      console.log("this.users", this.users);
+      
       //console.log(this.tasksData)
     })
   }
@@ -89,7 +89,7 @@ export class RateComparativeDetailsComponent implements OnInit {
 
   }
   createItem(item?: any): any {
-    console.log(item,"item")
+    
     if (item) {
       return new FormGroup({
         item_id: new FormControl(item.item_id, Validators.required),
@@ -104,6 +104,7 @@ export class RateComparativeDetailsComponent implements OnInit {
     }
   }
   ItemData(dataObj: any) {
+    console.log("==dataObj==",dataObj)
     
     // let index=this.finalVendorArray.findIndex(item=> item==dataObj)
     // console.log(index)
@@ -151,8 +152,7 @@ export class RateComparativeDetailsComponent implements OnInit {
         subCategory: 'GST',
         items: this.details.vendorItems[i].items,
       };
-      console.log(this.details.vendorItems[i].items)
-      console.log("bye")
+      
       const formGroup: FormGroup = this.formBuilder.group({
         Vendor: [myObject.Vendor, Validators.required],
         category: [myObject.category, Validators.required],
@@ -163,7 +163,7 @@ export class RateComparativeDetailsComponent implements OnInit {
 
       this.VendorItems.push(formGroup);
     }
-    console.log(this.VendorItems)
+    
   }
 
  
@@ -185,7 +185,7 @@ export class RateComparativeDetailsComponent implements OnInit {
 
   getSiteList() {
     this.httpService.GET(GET_SITE_API, {}).subscribe(res => {
-      console.log("site",res.data)
+      
       this.siteList = res.data;
       //console.log("site",this.siteList)
     })
@@ -229,7 +229,7 @@ export class RateComparativeDetailsComponent implements OnInit {
     // console.log("hi")
     this.httpService.GET(GET_BRAND_API, {}).subscribe(res => {
       this.brandList=res.data
-      console.log(this.brandList);
+      
     })
   }
   ngOnInit(): void {
@@ -239,10 +239,10 @@ export class RateComparativeDetailsComponent implements OnInit {
         this.httpService.GET(`${RATE_COMPARATIVE_DETAIL_API}`, { _id: params['id'] }).subscribe({
           next: res => {
             this.details = res.data.details;
-            console.log(this.details)
+            
             
             this.objectBackToFormGroup(); 
-            console.log(this.details)
+            
             this.vendorsList = res.data.vendorsList;
             this.vendorsList.map((o: any) => {
               this.vendorAssociatedData[o._id] = o;

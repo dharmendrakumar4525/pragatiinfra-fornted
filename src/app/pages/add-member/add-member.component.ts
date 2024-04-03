@@ -60,9 +60,7 @@ export class AddMemberComponent implements OnInit {
       return;
     }
 
-    let checkUserEmail = this.users.filter(ele=>{
-      return ele.email == this.memberForm.value.email
-    })
+    let checkUserEmail = this.users.filter(ele=>{ return ele.email == this.memberForm.value.email})
 
     if(!checkUserEmail.length){
       this.toast.openSnackBar("This email is not in users list. so you can't add it");

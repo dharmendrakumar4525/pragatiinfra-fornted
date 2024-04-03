@@ -51,6 +51,7 @@ export class PurchaseRequestComponent implements OnInit {
   uomList: any;
   itemList: any;
   filteredItemList: any;
+  filteredBrandList: any;
   option = 1;
   purchaseList: any[] = [];
   filter_by = "status";
@@ -206,11 +207,10 @@ export class PurchaseRequestComponent implements OnInit {
         this.vendorList=res[3].data;
         this.brandList=res[4].data;
 
-        console.log("--itemList--");
-        console.log(this.itemList);
-        console.log("--itemList--");
 
         this.filteredItemList = this.itemList;
+        this.filteredBrandList = this.brandList;
+        
       }
     })
     
@@ -238,18 +238,7 @@ export class PurchaseRequestComponent implements OnInit {
   
   
  
-  selectedItem(event: any, i: any) {
-    console.log(event.option.value);
-    let category = this.itemList.filter(obj => obj._id == event.option.value._id)[0]?.categoryDetail.name;
-    let subCategory = this.itemList.filter(obj => obj._id == event.option.value._id)[0]?.subCategoryDetail.subcategory_name;
-    let uom = this.itemList.filter(obj => obj._id == event.option.value._id)[0]?.uomDetail.uom_name;
 
-    this.items.at(i).patchValue({
-      category: category,
-      subCategory: subCategory,
-      uom: uom
-    });
-  }
 
   createItem(): FormGroup {
     return this.formBuilder.group({
@@ -261,7 +250,7 @@ export class PurchaseRequestComponent implements OnInit {
       
       remark: new FormControl(''),
       uom: new FormControl(''),
-      brandName:new FormControl(''),
+      brandName:new FormControl('',Validators.required),
     });
   }
   createLocalItem(): FormGroup {
@@ -273,7 +262,7 @@ export class PurchaseRequestComponent implements OnInit {
       attachment: new FormControl(''),
       remark: new FormControl(''),
       uom: new FormControl(''),
-      brandName:new FormControl(''),
+      brandName:new FormControl('',Validators.required),
       rate:new FormControl(''),
       gst:new FormControl(''),
       freight:new FormControl(''),
@@ -340,8 +329,6 @@ export class PurchaseRequestComponent implements OnInit {
 
 
   selectedSite(event: any) {
-
-    console.log("event____selectedsite",event);
     const siteName = this.siteList.find((obj: { _id: any; }) => obj._id == event.value);
     const dynamicDataFormatted = siteName.site_name.replace(/[ ,]/g, '_');
     const searchTerm = `${dynamicDataFormatted}/`;
@@ -379,8 +366,6 @@ export class PurchaseRequestComponent implements OnInit {
   }
 
   search(event: any, type?: any) {
-    
-    console.log("event: ",event.data,type);
     if (this.originalPurchaseList && this.originalPurchaseList.length > 0) {
       if (type == 'site') {
         if (event.target.value) {
@@ -404,8 +389,25 @@ export class PurchaseRequestComponent implements OnInit {
   displayItemFn(item: any): string {
   return item ? item.item_name : '';
 }
+
+displayBrandFn(brand: any): string {
+  return brand ? brand.brand_name : '';
+}
+
+
+
+selectedItem(event: any, i: any) {
+  let category = this.itemList.filter(obj => obj._id == event.option.value._id)[0]?.categoryDetail.name;
+  let subCategory = this.itemList.filter(obj => obj._id == event.option.value._id)[0]?.subCategoryDetail.subcategory_name;
+  let uom = this.itemList.filter(obj => obj._id == event.option.value._id)[0]?.uomDetail.uom_name;
+
+  this.items.at(i).patchValue({
+    category: category,
+    subCategory: subCategory,
+    uom: uom
+  });
+}
   searchItem(event: any) {
-    console.log(event)
     const searchValue = event.target.value.toLowerCase();
     if (this.itemList && this.itemList.length > 0 ) {
       if (event.target.value) {
@@ -416,6 +418,26 @@ export class PurchaseRequestComponent implements OnInit {
       }
     }
   }
+
+
+
+  searchBrand(event: any) {
+    
+    const searchValue = event.target.value.toLowerCase();
+    if (this.brandList && this.brandList.length > 0 ) {
+      if (event.target.value) {
+        this.filteredBrandList = this.brandList.filter(obj => obj.brand_name.toLowerCase().includes(searchValue));
+
+      }else{
+        this.filteredBrandList = this.brandList;
+      }
+    }
+  
+  }
+
+
+
+
   
 
 

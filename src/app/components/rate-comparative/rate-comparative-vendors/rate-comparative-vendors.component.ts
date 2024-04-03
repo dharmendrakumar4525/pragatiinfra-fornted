@@ -7,12 +7,16 @@ import { isEmpty } from 'lodash';
 import * as moment from 'moment';
 import { VENDOR_API } from '@env/api_path';
 import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-rate-comparative-vendors',
   templateUrl: './rate-comparative-vendors.component.html',
   styleUrls: ['./rate-comparative-vendors.component.scss']
 })
 export class RateComparativeVendorsComponent implements OnInit {
+
+  formSubmitted: boolean = false
 
   // form = new UntypedFormGroup({
   //   customer: new UntypedFormControl('', [Validators.required]),
@@ -35,9 +39,11 @@ export class RateComparativeVendorsComponent implements OnInit {
   filledData
   brandList: any;
   constructor(
+    private _snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
     private snack: SnackbarService,
     public dialogRef: MatDialogRef<RateComparativeVendorsComponent>,
+
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.brandList=data.brandList;
     if(data.type)
@@ -57,15 +63,13 @@ export class RateComparativeVendorsComponent implements OnInit {
       this.vendors=data.vendors;
       // this.i=data.index;
       this.filledData=data.filledData;
-      //console.log(this.filledData)
+
       
-      console.log(this.pageDetail);
-      console.log(this.items);
       // console.log(this.i);
       this.category=this.vendors.get('Item_category').value;
       this.subCategory=this.vendors.get('Item_subCategory').value;
       this.VendorDetails=this.vendorsList.find(obj=> obj._id==this.pageDetail)
-      console.log(this.VendorDetails)
+     
       this.tempFilteredItems=this.items.filter(obj=> obj.categoryDetail._id==this.category._id && obj.subCategoryDetail._id==this.subCategory._id)
       this.vendorItemsForm = new FormGroup({
         Vendor: new FormControl(this.pageDetail, Validators.required),
@@ -80,38 +84,29 @@ export class RateComparativeVendorsComponent implements OnInit {
           RequiredQuantity: new FormControl('', Validators.required),
           Rate:new FormControl('', Validators.required),
           SubTotalAmount:new FormControl('', Validators.required),
-          Freight: new FormControl('', Validators.required),
+          Freight: new FormControl(0, Validators.required),
           Total:new FormControl('', Validators.required),
         });
         (this.vendorItemsForm.get('items')as FormArray).push(itemGroup);
       }
+      
       if(this.filledData)
       {
+        
+        console.log("++this.filledData++",this.filledData)
         this.fillpage(this.filledData);
       }
   
     }
-    
-    // this.itemVendors = this.itemVendors.map((o: any) => {
-    //   this.totalInputQuantity = this.totalInputQuantity + (o.quantity && o.quantity > 0) ? o.quantity : 0;
-    //   o.brand = o.brand ? o.brand : '';
-    //   return o;
-    // })
-
-    // this.data.vendorsList.map((o: any) => {
-    //   this.vendorAssociatedData[o._id] = o;
-    //   return o;
-    // });
   }
   fillpage(filledData:any)
   {
-      console.log(filledData);
       this.vendorItemsForm=filledData.data;
   }
   myBrandName(brandId:any){
-    console.log("mybrandfunction",brandId)
+    
     let brand=this.brandList.filter(brand=>brand._id==brandId)
-    console.log(brand)
+   
     return brand[0].brand_name;
   } 
   // Filtereditems(){
@@ -132,9 +127,12 @@ export class RateComparativeVendorsComponent implements OnInit {
   calculateSubTotalAmount(index: number): number {
     const rate = this.vendorItemsForm.get('items').get(index.toString()).get('Rate').value;
     const requiredQuantity = this.vendorItemsForm.get('items').get(index.toString()).get('RequiredQuantity').value;
+    const freight = this.vendorItemsForm.get('items').get(index.toString()).get('Freight').value;
+
+    
     
 
-    console.log(" ===== ",this.vendorItemsForm);
+   
     this.vendorItemsForm.get('items').get(index.toString()).get('SubTotalAmount').setValue((rate*requiredQuantity));
     return rate * requiredQuantity;
   }
@@ -145,12 +143,12 @@ export class RateComparativeVendorsComponent implements OnInit {
   //   const totalAmountAsInt = parseInt(totalAmount, 10);
 
   //   const x = totalAmountAsInt + freightAsInt;
-  //   // console.log("x === == == ==",x)
+
 
   //   const y = x.toString();
-  //   console.log("y=== == == ==",y,typeof(y));
+
   //   this.vendorItemsForm.get('items').get(index.toString()).get('Total').setValue(y);
-  //   console.log(this.vendorItemsForm)
+
   //   return y;
   // }
 
@@ -161,16 +159,19 @@ export class RateComparativeVendorsComponent implements OnInit {
       (this.vendorItemsForm.get('items').get(index.toString()).get('SubTotalAmount').value * this.tempFilteredItems[index].tax.amount) / 100;
   
     const freight = this.vendorItemsForm.get('items').get(index.toString()).get('Freight').value;
-    const freightAsInt = parseInt(freight, 10);
+    let freightAsInt = parseInt(freight, 10);
     const totalAmountAsInt = parseInt(totalAmount.toString(), 10);
-  
+
+    if(!freightAsInt){
+      freightAsInt=0
+    }
     const sum = totalAmountAsInt + freightAsInt;
   
     const stringValue = sum.toString();
   
     this.vendorItemsForm.get('items').get(index.toString()).get('Total').setValue(stringValue);
   
-    console.log(this.vendorItemsForm);
+    
     return stringValue;
   }
   onNoClick(): void {
@@ -179,7 +180,7 @@ export class RateComparativeVendorsComponent implements OnInit {
   
 
   onYesClick(): void {
-    //console.log(this.vendorItemsForm.value)
+    
     this.dialogRef.close({ option: 1, data: this.data });
   }
 
@@ -246,12 +247,77 @@ export class RateComparativeVendorsComponent implements OnInit {
     // });
   }
 
+  // onClickSubmit() {
+    
+  //   if (this.vendorItemsForm.valid) {
+  //     this.dialogRef.close({ option: 1, data: this.vendorItemsForm });
+  // } else {
+  //     console.log("Form is invalid. Cannot submit.");
+  // }
+  // }
+
+  // onClickSubmit() {
+  //   if (this.vendorItemsForm.valid) {
+  //     this.dialogRef.close({ option: 1, data: this.vendorItemsForm });
+  //   } else {
+  //     this._snackBar.open('Please fill all the required fields', 'Close', {
+  //       duration: 3000 // Adjust the duration as needed
+  //     });
+  //   }
+  // }
   onClickSubmit() {
-    console.log(this.vendorItemsForm.value)
-    this.dialogRef.close({ option: 1, data: this.vendorItemsForm});
-    // this.data.itemVendors = this.itemVendors;
-    // this.onYesClick();
+    // Mark the form as submitted
+    this.formSubmitted = true;
+  
+    // Check if the form is valid
+    if (this.vendorItemsForm.valid) {
+      // Iterate through each item in the form array
+      const itemsControls = this.vendorItemsForm.get('items') as FormArray;
+      for (let i = 0; i < itemsControls.length; i++) {
+        const itemGroup = itemsControls.at(i) as FormGroup;
+        
+        // Check if the Rate field is empty
+        const rateControl = itemGroup.get('Rate');
+        if (!rateControl || rateControl.value === '') {
+          // If Rate field is empty, show an error message and return
+          this._snackBar.open('Please fill in the Rate field for all items', 'Close', {
+            duration: 3000
+          });
+          return;
+        }
+  
+        // Check if the RequiredQuantity field is empty
+        const quantityControl = itemGroup.get('RequiredQuantity');
+        if (!quantityControl || quantityControl.value === '') {
+          // If RequiredQuantity field is empty, show an error message and return
+          this._snackBar.open('Please fill in the Quantity field for all items', 'Close', {
+            duration: 3000
+          });
+          return;
+        }
+  
+        // Check if the Freight field is empty
+        const freightControl = itemGroup.get('Freight');
+        if (!freightControl || freightControl.value === '') {
+          // If Freight field is empty, show an error message and return
+          this._snackBar.open('Please fill in the Freight field for all items', 'Close', {
+            duration: 3000
+          });
+          return;
+        }
+      }
+      // If all checks pass, close the dialog with the form data
+      this.dialogRef.close({ option: 1, data: this.vendorItemsForm });
+    } else {
+      // If the form is invalid, show an error message
+      this._snackBar.open('Please fill in all the required fields', 'Close', {
+        duration: 3000
+      });
+    }
   }
+  
+  
+  
 
 
   ngOnInit(): void {

@@ -1,7 +1,7 @@
 <mat-toolbar style="background-color: #fff;">
     <mat-toolbar-row fxLayoutAlign="space-between center">
         <div style="padding: 1rem;margin-top: 60px;">
-        <span style="color: #1E293B;font-size: 30px;font-weight: 600;font-family: 'Poppins';">Pragati Infra</span></div>
+        <span style="color: #1E293B;font-size: 30px;font-weight: 600;font-family: 'Poppins';">PISL</span></div>
         <div style="margin-right: 20px;">
             <button style="padding: 10px 10px;width: 150px;margin-top: 60px;background-color: #fff;cursor: pointer;border: 1px solid #97989D;border-radius: 5px;color: #97989D;font-family: 'Poppins';" [routerLink]="['/add-project']">  Add Project +  </button>
             <button mat-button [matMenuTriggerFor]="menu"> <mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn" >notifications</mat-icon></button>
@@ -170,7 +170,10 @@
       <div class="aboutcard-spaceset" fxFlex="row" fxLayoutAlign="start"  style="height: 55px;" *ngFor="let mem of members">
       <div style="margin-top:10px" mat-card-avatar class="example-header-image"></div>
       <div  style="margin-top:10px">
-      <button mat-button style="font-size: 14px;font-weight: 300;font-family: 'Poppins';">{{mem.split('@')[0]}}</button> 
+        <button mat-button style="font-size: 14px; font-weight: 300; font-family: 'Poppins';">{{mem}}</button>
+        <!-- <button mat-button style="font-size: 14px; font-weight: 300; font-family: 'Poppins';">{{mem.split('@')[0]}}</button> -->
+        
+
     </div>
   
   </div>

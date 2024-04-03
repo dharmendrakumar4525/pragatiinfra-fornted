@@ -162,7 +162,7 @@
               <mat-form-field appearance="outline" style="width: max-content;">
                 <mat-label>Select Vendors</mat-label>
                 <mat-select matInput multiple formControlName="selectedVendors" (selectionChange)="handleVendorChange()">
-                  <mat-option *ngFor="let vendor of isVendorSelected(items)" [value]="vendor._id">
+                  <mat-option *ngFor="let vendor of isVendorSelected(items)" [value]="vendor._id" [disabled]="isSelectDisabled">
                     {{ vendor?.vendor_name }}
                   </mat-option>
                 </mat-select>

@@ -94,11 +94,11 @@ export class ProjectsComponent implements OnInit {
         },
     
       ];
-      console.log(this.projects)
+      console.log("Hello There",this.projects)
       for(let single of this.projects){
         this.members.push(...single.members)
       }
-      console.log(this.members)
+      console.log("Members s",this.members)
     });
     this.recentActivityService.getRecentAtivities().subscribe(data=>{
       this.recentActivities = data

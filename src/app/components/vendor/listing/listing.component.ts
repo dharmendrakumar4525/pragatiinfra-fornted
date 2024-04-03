@@ -1,3 +1,161 @@
+// import { Component, OnInit } from '@angular/core';
+// import { Router } from '@angular/router';
+// import { RequestService } from '@services/https/request.service';
+// import { SnackbarService } from '@services/snackbar/snackbar.service';
+// import { ExcelService } from '@services/export-excel/excel.service';
+// import { isEmpty } from 'lodash';
+// import { CATEGORY_API, ORG_REQUEST_API, VENDOR_API,SUB_CATEGORY_API} from '@env/api_path';
+
+// @Component({
+//   selector: 'app-listing',
+//   templateUrl: './listing.component.html',
+//   styleUrls: ['./listing.component.scss']
+// })
+// export class ListingComponent implements OnInit {
+//   vendorList: any = [];
+//   paginatedVendorList: any = [];
+//   currentPage: number = 1;
+//   pageSize: number = 10; // Change this value as per your requirement
+//   totalPages: number = 0;
+
+//   constructor(
+//     private router: Router,
+//     private httpService: RequestService,
+//     private excelService: ExcelService,
+//     private snack: SnackbarService,
+//   ) {}
+
+//   ngOnInit(): void {
+//     this.getList();
+//   }
+
+//   getList() {
+//     this.httpService.GET(VENDOR_API, {}).subscribe(res => {
+//       if (res && res.data) {
+//         this.vendorList = res.data;
+//         this.totalPages = Math.ceil(this.vendorList.length / this.pageSize);
+//         this.paginateList();
+//       }
+//     }, (err) => {
+//       // Handle errors
+//     })
+//   }
+
+//   paginateList() {
+//     const startIndex = (this.currentPage - 1) * this.pageSize;
+//     const endIndex = Math.min(startIndex + this.pageSize, this.vendorList.length);
+//     this.paginatedVendorList = this.vendorList.slice(startIndex, endIndex);
+//   }
+
+//   previousPage() {
+//     if (this.currentPage > 1) {
+//       this.currentPage--;
+//       this.paginateList();
+//     }
+//   }
+
+//   nextPage() {
+//     if (this.currentPage < this.totalPages) {
+//       this.currentPage++;
+//       this.paginateList();
+//     }
+//   }
+
+//   add() {
+//     let url: string = "vendor/add"
+//     this.router.navigateByUrl(url);
+//   }
+
+//   delete(id: any) {
+//     this.httpService.DELETE(VENDOR_API, { _id: id }).subscribe(res => {
+//       if (res) {
+//         this.snack.notify("vendor record has been deleted successfully.", 1);
+//         this.getList();
+//       }
+//     }, (err) => {
+//       if (err.errors && !isEmpty(err.errors)) {
+//         let errMessage = '<ul>';
+//         for (let e in err.errors) {
+//           let objData = err.errors[e];
+//           errMessage += `<li>${objData[0]}</li>`;
+//         }
+//         errMessage += '</ul>';
+//         this.snack.notifyHtml(errMessage, 2);
+//       } else {
+//         this.snack.notify(err.message, 2);
+//       }
+//     })
+//   }
+
+//   search(event: any) {
+//     if (event.target.value) {
+//       this.paginatedVendorList = this.vendorList.filter(obj => obj.vendor_name.toLowerCase().includes(event.target.value.toLowerCase()))
+//     } else {
+//       this.getList();
+//     }
+//   }
+
+//   async exportXlSX() {
+//     let filterReport = this.vendorList.map((o: any) => {
+//       o.vendor_phone_number = `${o.dialcode}-${o.phone_number}`;
+//       let address = [];
+//       if (o.address) {
+//         if (o.address.street_address) {
+//           address.push(o.address.street_address)
+//         }
+//         if (o.address.street_address2) {
+//           address.push(o.address.street_address2)
+//         }
+//         if (o.address.city) {
+//           address.push(o.address.city)
+//         }
+//         if (o.address.state) {
+//           address.push(o.address.state)
+//         }
+//         if (o.address.country) {
+//           address.push(o.address.country)
+//         }
+//         if (o.address.zip_code) {
+//           address.push(o.address.zip_code)
+//         }
+//       }
+//       o.address2 = address.join(", ");
+//       return o;
+//     })
+
+//     let sheetHeaders = [
+//       "Vendor Name",
+//       "Category",
+//       "Sub Category",
+//       "Contact Person",
+//       "Phone Number",
+//       "GST Number",
+//       "PAN Number",
+//       "Email",
+//       "Payment Term",
+//       "Term & Condition",
+//       "Address"
+//     ];
+
+//     let valueKey = ['vendor_name',
+//       'category',
+//       'SubCategory',
+//       'contact_person',
+//       'vendor_phone_number',
+//       'gst_number',
+//       'pan_number',
+//       'email',
+//       'payment_terms',
+//       'terms_condition', // Removed extra comma
+//       'address2'];
+//     let valueDataType = ['string', 'string', 'string','string',  'string', 'string', 'string', 'string', 'string', 'string', 'string'];
+//     let sheetName: any = "sites";
+//     this.excelService.mapArrayToExcel(sheetName, sheetHeaders, valueKey, valueDataType, filterReport);
+//   }
+// }
+
+
+
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CATEGORY_API, ORG_REQUEST_API, VENDOR_API,SUB_CATEGORY_API} from '@env/api_path';
@@ -37,7 +195,6 @@ export class ListingComponent implements OnInit {
       } else {
         this.snack.notify(err.message, 2);
       }
-
     })
     this.httpService.GET(SUB_CATEGORY_API, {}).subscribe(res => {
       this.subCategoryList = res.data;
@@ -56,15 +213,12 @@ export class ListingComponent implements OnInit {
       } else {
         this.snack.notify(err.message, 2);
       }
-
     })
     this.dataReadySubject.subscribe((dataReady) => {
       if(dataReady){
         this.getList();
       }})
-   
   }
-
   getList() {
     this.httpService.GET(VENDOR_API, {}).subscribe(res => {
       if (res && res.data) {
@@ -76,7 +230,6 @@ export class ListingComponent implements OnInit {
           obj.SubCategory=this.getSubCategory(obj.SubCategory);
           return obj;
         }
-
         )
         this.list = res.data;
       }
@@ -92,16 +245,12 @@ export class ListingComponent implements OnInit {
       } else {
         this.snack.notify(err.message, 2);
       }
-
     })
   }
-
-
   add() {
     let url: string = "vendor/add"
     this.router.navigateByUrl(url);
   }
-
   delete(id: any) {
     this.httpService.DELETE(VENDOR_API, { _id: id }).subscribe(res => {
       if (res) {
@@ -120,14 +269,11 @@ export class ListingComponent implements OnInit {
       } else {
         this.snack.notify(err.message, 2);
       }
-
     })
   }
-
   getCategory(ids: any) {
     console.log("wfjhfgjhg");
     console.log(ids);
-
     var finalName = [];
     Object.values(ids).forEach((id: string) => {
         const category = this.categoryList.find((element: any) => element._id === id);
@@ -135,10 +281,8 @@ export class ListingComponent implements OnInit {
             finalName.push(category.name);
         }
     });
-
     return finalName.join(",");
 }
-
 getSubCategory(ids: any) {
   var finalName = [];
   Object.values(ids).forEach((id: string) => {
@@ -147,10 +291,8 @@ getSubCategory(ids: any) {
           finalName.push(subCategory.subcategory_name);
       }
   });
-
   return finalName.join(",");
 }
-
   search(event: any) {
     if (event.target.value) {
       this.vendorList = this.list.filter(obj => obj.vendor_name.toLowerCase().includes(event.target.value.toLowerCase()))
@@ -159,9 +301,7 @@ getSubCategory(ids: any) {
       this.vendorList = this.list;
     }
   }
-
   async exportXlSX() {
-
     let filterReport = this.vendorList.map((o: any) => {
       o.vendor_phone_number = `${o.dialcode}-${o.phone_number}`;
       let address = [];
@@ -185,11 +325,9 @@ getSubCategory(ids: any) {
           address.push(o.address.zip_code)
         }
       }
-
       o.address2 = address.join(", ");
       return o;
     })
-
     let sheetHeaders = [
       "Vendor Name",
       "Category",
@@ -203,7 +341,6 @@ getSubCategory(ids: any) {
       "Term & Condtiion",
       "Address"
     ];
-
     let valueKey = ['vendor_name',
       'category',
       'SubCategory',
@@ -218,8 +355,6 @@ getSubCategory(ids: any) {
     let sheetName: any = "sites";
     this.excelService.mapArrayToExcel(sheetName, sheetHeaders, valueKey, valueDataType, filterReport);
   }
-
   ngOnInit(): void {
   }
-
 }
