@@ -14,6 +14,11 @@ import { environment } from '@env/environment';
 })
 export class UpdatePrStatusComponent implements OnInit {
 
+  viewPermission: any;
+  editPermission: any;
+  addPermission: any;
+  deletePermission: any;
+
 
   id: any;
   siteList: any;
@@ -41,6 +46,7 @@ export class UpdatePrStatusComponent implements OnInit {
   details: any = {};
   selectedVendor: any;
   brandList: any;
+  permissions: any;
 
   constructor(
     private router: Router,
@@ -202,6 +208,30 @@ export class UpdatePrStatusComponent implements OnInit {
   
 
   ngOnInit(): void {
+
+
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+
+    // Extract specific permissions related to ParentChildchecklist from the parsed data
+    const rolePermission = this.permissions.user.role
+    const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
+      this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
+        next: (resp: any) => {
+          console.log(resp)
+          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[10].childList[0].isSelected;
+          this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[10].childList[1].isSelected;
+          this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[10].childList[2].isSelected;
+          this.deletePermission=resp.dashboard_permissions[0].ParentChildchecklist[10].childList[3].isSelected;
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      });
+
+
+
+
+
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.httpService.GET(`${PURCHASE_REQUEST_API}/detail`, { _id: params['id'] }).subscribe({

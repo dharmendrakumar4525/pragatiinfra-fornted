@@ -291,7 +291,7 @@ export class RateComparativeVendorsComponent implements OnInit {
         if (!quantityControl || quantityControl.value === '') {
           // If RequiredQuantity field is empty, show an error message and return
           this._snackBar.open('Please fill in the Quantity field for all items', 'Close', {
-            duration: 3000
+            duration: 6000
           });
           return;
         }
@@ -310,7 +310,7 @@ export class RateComparativeVendorsComponent implements OnInit {
       this.dialogRef.close({ option: 1, data: this.vendorItemsForm });
     } else {
       // If the form is invalid, show an error message
-      this._snackBar.open('Please fill in all the required fields', 'Close', {
+      this._snackBar.open('Please fill in all the required fields or Check the Value', 'Close', {
         duration: 3000
       });
     }

@@ -65,8 +65,8 @@ export class NewRoleComponent implements OnInit {
 
       {
         next: (data: any) =>  {
-          console.log(data)
-          this.toast.openSnackBar("Role Added Successfully");
+          console.log("DAta",data)
+          this.toast.openSnackBar(data.message ||  "Successfully added new role!");
       this.closeDialog('yes');
           // this.spinner.hide()
           // this.router.navigate(['/usersList']);

@@ -403,10 +403,6 @@ export class ManagePermissionsComponent implements OnInit {
         this.data.ParentChildchecklist = this.userRolePermissions?.dashboard_permissions[0]?.ParentChildchecklist
 
       }
-
-
-
-
     });
 
   }

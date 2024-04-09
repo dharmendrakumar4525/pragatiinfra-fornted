@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { PURCHASE_REQUEST_API, GET_SITE_API, ITEM_API, UOM_API,GET_VENDOR_API,GET_BRAND_API } from '@env/api_path';
+import { PURCHASE_REQUEST_API, GET_SITE_API, ITEM_API, UOM_API,GET_VENDOR_API,GET_BRAND_API,GET_ROLE_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
@@ -18,6 +18,10 @@ import {Observable} from 'rxjs';
 
 export class PurchaseRequestComponent implements OnInit {
 
+  viewPermission: any;
+  editPermission: any;
+  addPermission: any;
+  // deletePermission: any;
 
   siteName: any;
   apiResponse: any;
@@ -449,10 +453,28 @@ selectedItem(event: any, i: any) {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
 
     // Extract specific permissions related to ParentChildchecklist from the parsed data
-    this.permissions=this.permissions.permissions[0].ParentChildchecklist[9];
+    const rolePermission = this.permissions.user.role
+    const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
+      this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
+        next: (resp: any) => {
+          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[9].childList[0].isSelected;
+    this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[9].childList[1].isSelected;
+    this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[9].childList[2].isSelected;
+          
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      });
+
+
+    
 
     this.getList();
     this.addItem();
+
+
+  
     
   }
 }

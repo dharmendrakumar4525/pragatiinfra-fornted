@@ -54,12 +54,15 @@
    
 </div>
 </div>
+
 <div class="projectcontent" fxLayout="row" fxLayoutGap="10px" style="height: 60%;">
+  
 
   <div class="scroll-bar">
+    
     <div fxLayout="row wrap" *ngIf="projectsViewPermissions?.isSelected; else noView"  fxLayoutGap="40px" fxLayoutAlign="start center" >
       <div  fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let project of projects | customerEmailFilter:projectName">
-      
+        
         <div class="" >
           
           <div class="content1">

@@ -32,6 +32,13 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   brandList: any;
   purchaseOrderNumber: number;
   purchaseOrderList: any[] = [];
+  permissions: any;
+ 
+  viewPermission: any;
+  editPermission: any;
+  addPermission: any;
+  deletePermission: any;
+
   constructor(
     private dialog: MatDialog,
     private router: Router,
@@ -64,6 +71,23 @@ export class PurchaseOrderUpdateComponent implements OnInit {
 
   ngOnInit(): void {
 
+        // Retrieve user permissions from local storage and parse them as JSON
+        this.permissions = JSON.parse(localStorage.getItem('loginData'))
+
+        // Extract specific permissions related to ParentChildchecklist from the parsed data
+        const rolePermission = this.permissions.user.role
+        const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
+          this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
+            next: (resp: any) => {
+              this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[13].childList[0].isSelected;
+              this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[13].childList[1].isSelected;
+              this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[13].childList[2].isSelected;
+              this.deletePermission=resp.dashboard_permissions[0].ParentChildchecklist[13].childList[3].isSelected;
+            },
+            error: (err) => {
+              console.log(err)
+            }
+          });
   }
 
   async updateStatus(status: any) {

@@ -52,8 +52,8 @@ export class RolesService {
 
 
 
-  editRole(role:any,id): Observable<any> {
-    
+  editRole(role:any,id,prevRole): Observable<any> {
+    role = {prevRole , ...role};
     return this.http.put(`${environment.api_path}/roles/${id}`, role).pipe(
       catchError(this.handleError)
     );

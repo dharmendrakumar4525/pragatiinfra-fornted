@@ -79,14 +79,18 @@
                        'invalid-input': 
                          vendorItemsForm.get('items').get(i.toString()).get('RequiredQuantity').invalid && 
                          (formSubmitted || vendorItemsForm.get('items').get(i.toString()).get('RequiredQuantity').touched)
-                     }">
+                     }"
+                     max={{item.qty}} min="0" 
+                     style="width: 150px;"
+                     >
             </td>
             <td>{{myBrandName(item.brandName)}}</td>
             <!-- <td>
               <input formControlName="Rate" type="number" placeholder="Rate" class="cstm-input">
             </td> -->
             <td>
-              <input formControlName="Rate" 
+              <input 
+                    formControlName="Rate" 
                      type="number" 
                      placeholder="Rate" 
                      class="cstm-input" 

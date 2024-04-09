@@ -36,12 +36,19 @@ export class RateApprovalListComponent implements OnInit {
       label: 'Revise'
     },
   ]
+
+  
+  viewPermission: any;
+  editPermission: any;
+  addPermission: any;
+  deletePermission: any;
+  permissions: any;
   rateComparativeList: any;
   filter_by = "status";
   filter_value = "pending";
   requestType = "new";
   originalRateComparativeList: any = [];
-  permissions: any;
+
 
   purchaseList: any[] = [];
   constructor(
@@ -156,9 +163,27 @@ export class RateApprovalListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getReqNO();
+
+
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
-    this.permissions=this.permissions.permissions[0].ParentChildchecklist[12];
+
+    // Extract specific permissions related to ParentChildchecklist from the parsed data
+    const rolePermission = this.permissions.user.role
+    const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
+      this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
+        next: (resp: any) => {
+          console.log(resp)
+          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[12].childList[0].isSelected;
+          this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[12].childList[1].isSelected;
+          this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[12].childList[2].isSelected;
+          this.deletePermission=resp.dashboard_permissions[0].ParentChildchecklist[12].childList[3].isSelected;
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      });
+
+    this.getReqNO();
   }
 
 }

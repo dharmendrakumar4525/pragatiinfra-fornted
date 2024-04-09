@@ -442,18 +442,66 @@
   </div>
   <div class=" button-list">
 
-    <button class="p-btns-button" (click)="updateRequest('approved')" [disabled]="load">
-      <span *ngIf="!load">Santion</span>
-      <span *ngIf="load">Please wait...</span>
-    </button>
 
-    <button class="p-btns-button" (click)="updateRequest('rejected')" [disabled]="load">
-      <span *ngIf="!load">Reject</span>
-      <span *ngIf="load">Please wait...</span>
-    </button>
-    <button class="p-btns-button" (click)="updateRequest('revise')" [disabled]="load">
-      <span *ngIf="!load">Revise</span>
-      <span *ngIf="load">Please wait...</span>
-    </button>
+
+    <ng-container *ngIf="editPermission || addPermission; else noAddPermission">
+      <button class="p-btns-button" (click)="updateRequest('approved')" [disabled]="load">
+        <span *ngIf="!load">Santion</span>
+        <span *ngIf="load">Please wait...</span>
+      </button>
+    </ng-container>
+    <ng-template #noAddPermission>
+      <button class="p-btns-button"  disabled>
+        <span>No Permission To Santion</span>  
+      </button>
+    </ng-template>
+
+
+
+
+
+
+
+
+    <ng-container *ngIf="deletePermission; else noDeletePermission">
+      <button class="p-btns-button" (click)="updateRequest('rejected')" [disabled]="load">
+        <span *ngIf="!load">Reject</span>
+        <span *ngIf="load">Please wait...</span>
+      </button>
+    </ng-container>
+    <ng-template #noDeletePermission>
+      <button class="p-btns-button" disabled>
+        <span>No Permission To Reject</span>
+      </button>
+    </ng-template>
+
+
+
+
+
+
+
+  
+
+    <ng-container *ngIf="editPermission; else noEditPermission">
+      <button class="p-btns-button" (click)="updateRequest('revise')" [disabled]="load">
+        <span *ngIf="!load">Revise</span>
+        <span *ngIf="load">Please wait...</span>
+      </button>
+  
+    </ng-container>
+    <ng-template #noEditPermission>
+      <button class="p-btns-button"disabled>
+        <span *ngIf="!load">No Permission To Revise</span>
+      </button>
+    </ng-template>
+
+
+
+
+
+
+
+    
   </div>
 </form>

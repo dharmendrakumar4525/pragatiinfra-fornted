@@ -51,7 +51,7 @@
   <div class="innerreq">Revised rates</div>
 </div> -->
 
-<ng-container class="section-body" *ngIf="permissions.childList[0].isSelected; else noView">
+<ng-container class="section-body" *ngIf="viewPermission; else noView">
   <div style="display: flex;flex-direction: row;gap:10px;width: 100%;">
     <div style="margin-left: 40px;width:100%;margin-top: 30px;">
       <mat-form-field appearance="outline" class="searchbar">
@@ -113,8 +113,24 @@
             *ngIf="stage=='rate_approval' " [routerLink]="['/rate-comparative/details',obj._id]">Approved Vendors</td>
           <td style="background-color: #C7323B;color:#fff;width:200px;font-size: 14px;cursor: pointer;"
             *ngIf="obj.status =='rejected'  && stage=='rate_comparitive' " [routerLink]="['/rate-comparative/details',obj._id]">Rejected Rates</td>
-            <td style="background-color: rgb(26, 188, 254); color:#fff;width:200px;font-size: 14px;cursor: pointer;"
-            *ngIf="obj.status=='revise' && stage=='rate_comparitive'" [routerLink]="['/rate-comparative/update',obj._id]">Revise&nbsp;Comparative</td>
+           
+            
+            
+            
+           
+            <ng-container *ngIf="editPermission; else noEditPermission">
+              <td style="background-color: rgb(26, 188, 254); color:#fff;width:200px;font-size: 14px;cursor: pointer;"
+              *ngIf="obj.status=='revise' && stage=='rate_comparitive'" [routerLink]="['/rate-comparative/update',obj._id]">Revise&nbsp;Comparative</td>
+  
+            </ng-container>
+            <ng-template #noEditPermission>
+              <td style="background-color: rgb(26, 188, 254); color:#fff;width:200px;font-size: 14px;cursor: pointer;"
+              *ngIf="obj.status=='revise' && stage=='rate_comparitive'" disabled>No Permission to Revise Comparative</td>
+  
+            </ng-template>
+
+
+
             <!-- *ngIf="stage=='rate_comparitive' -->
           <td style="width: 100px;"><mat-icon>
               arrow_forward_ios

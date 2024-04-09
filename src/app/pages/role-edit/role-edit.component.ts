@@ -11,6 +11,7 @@ import { FormGroup, Validators, AbstractControl, NgForm } from '@angular/forms';
   styleUrls: ['./role-edit.component.css']
 })
 export class RoleEditComponent implements OnInit {
+  prevRole: any;
 
   roleForm: FormGroup = this._fb.group({
     
@@ -29,6 +30,9 @@ export class RoleEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.prevRole = this.data.role
+    
     this.roleForm.patchValue({
       role:this.data.role
 
@@ -57,12 +61,12 @@ export class RoleEditComponent implements OnInit {
       this.roleForm.markAllAsTouched();
       return;
     }
-    this.roleService.editRole(this.roleForm.value,this.data._id).subscribe(
+    this.roleService.editRole(this.roleForm.value,this.data._id,this.prevRole).subscribe(
 
       {
         next: (data: any) =>  {
           console.log(data)
-          this.toast.openSnackBar("Role updated Successfully");
+          this.toast.openSnackBar(data.message || "Role updated Successfully");
       this.closeDialog('yes');
           // this.spinner.hide()
           // this.router.navigate(['/usersList']);

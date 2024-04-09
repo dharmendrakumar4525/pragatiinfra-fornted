@@ -43,6 +43,12 @@ export class RateComparativeListComponent implements OnInit {
   stage='rate_comparitive';
   permissions: any;
   purchaseList: any[] = [];
+
+ 
+  viewPermission: any;
+  editPermission: any;
+  addPermission: any;
+  // deletePermission: any;
  
   
   
@@ -71,14 +77,9 @@ export class RateComparativeListComponent implements OnInit {
         this.rateComparativeList = resp.data;
 
         const x = this.originalRateComparativeList
-        console.log("+++++++x+++++++++");
-        console.log(x);
-        console.log("+++++++x+++++++++");
 
 
-        // console.log("+++++++this.rateComparativeList+++++++++");
-        // console.log(this.rateComparativeList);
-        // console.log("+++++++this.rateComparativeList+++++++++");
+  
 
 
       }, error: (err: any) => {
@@ -109,9 +110,9 @@ export class RateComparativeListComponent implements OnInit {
 
   }
   reqNo(value: any) {
-    console.log("reqNo Value",value)
+
     const filteredList = this.purchaseList.filter(item => item._id === value);
-    console.log("filteredList ",filteredList)
+ 
     return filteredList[0].purchase_request_number;
   }
 
@@ -184,13 +185,24 @@ export class RateComparativeListComponent implements OnInit {
 
   
   ngOnInit(): void {
-    // Retrieve user permissions from local storage and parse them as JSON
-    this.permissions = JSON.parse(localStorage.getItem('loginData'));
-  
-    // Assign a specific permission from the parsed permissions
-    this.permissions = this.permissions.permissions[0].ParentChildchecklist[11];
-  
-    // Call the reqNo method without any filter object
+
+
+        // Retrieve user permissions from local storage and parse them as JSON
+        this.permissions = JSON.parse(localStorage.getItem('loginData'))
+
+        // Extract specific permissions related to ParentChildchecklist from the parsed data
+        const rolePermission = this.permissions.user.role
+        const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
+          this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
+            next: (resp: any) => {
+              this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[12].childList[0].isSelected;
+              this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[12].childList[1].isSelected;
+              this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[12].childList[2].isSelected;
+            },
+            error: (err) => {
+              console.log(err)
+            }
+          });
 
     this.getReqNO();
 

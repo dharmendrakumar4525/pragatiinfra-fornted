@@ -30,6 +30,12 @@ export class RateComparativeUpdateComponent implements OnInit {
   VendorItems:any[]=[];
   isButtonDisabled: boolean = true;
   isSelectDisabled: boolean = false;
+  permissions: any;
+
+  viewPermission: any;
+  editPermission: any;
+  addPermission: any;
+  // deletePermission: any;
   
 
   /**
@@ -349,6 +355,47 @@ export class RateComparativeUpdateComponent implements OnInit {
   }
   
   ngOnInit(): void {
+
+
+
+    // Retrieve user permissions from local storage and parse them as JSON
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+
+    // Extract specific permissions related to ParentChildchecklist from the parsed data
+    const rolePermission = this.permissions.user.role
+    const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
+      this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
+        next: (resp: any) => {
+          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[11].childList[0].isSelected;
+          this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[11].childList[1].isSelected;
+          this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[11].childList[2].isSelected;
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.httpService.GET(`${RATE_COMPARATIVE_DETAIL_API}`, { _id: params['id'] }).subscribe({

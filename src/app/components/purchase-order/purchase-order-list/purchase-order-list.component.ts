@@ -47,6 +47,11 @@ export class PurchaseOrderListComponent implements OnInit {
   requestType = "new";
   originalRateComparativeList: any = [];
   permissions: any;
+ 
+  viewPermission: any;
+  editPermission: any;
+  addPermission: any;
+  deletePermission: any;
 
   purchaseList: any[] = [];
   purchaseOrderList: any[] = [];
@@ -183,11 +188,22 @@ export class PurchaseOrderListComponent implements OnInit {
   ngOnInit(): void {
 
     this.getReqNO();
-    // Retrieve user permissions from local storage
-    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+        // Retrieve user permissions from local storage and parse them as JSON
+        this.permissions = JSON.parse(localStorage.getItem('loginData'))
 
-    // Set the permissions property to the permissions retrieved from local storage
-    // In this case, it appears that the permissions are stored in an array at permissions[0].ParentChildchecklist[13]
-    this.permissions=this.permissions.permissions[0].ParentChildchecklist[13];
+        // Extract specific permissions related to ParentChildchecklist from the parsed data
+        const rolePermission = this.permissions.user.role
+        const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
+          this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
+            next: (resp: any) => {
+              this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[13].childList[0].isSelected;
+              this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[13].childList[1].isSelected;
+              this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[13].childList[2].isSelected;
+              this.deletePermission=resp.dashboard_permissions[0].ParentChildchecklist[13].childList[3].isSelected;
+            },
+            error: (err) => {
+              console.log(err)
+            }
+          });
   }
 }

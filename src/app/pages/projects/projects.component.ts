@@ -60,8 +60,7 @@ export class ProjectsComponent implements OnInit {
     this.projectService.getProjects().subscribe(data=>{
       //this.spinner.hide()
       this.projects = data;
-      console.log(this.projects)
-      if(this.permissions.user.role !== 'superadmin'){
+      if(this.permissions.user.role !== 'superadmin' ){
 
         this.filterProjects = this.projects.filter((product) => {
           return product.members.some((prod) => {

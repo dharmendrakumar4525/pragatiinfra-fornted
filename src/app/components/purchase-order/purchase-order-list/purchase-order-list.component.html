@@ -49,7 +49,7 @@
   <div class="innerreq">Revised rates</div>
 </div> -->
 
-<ng-container *ngIf="permissions.childList[0].isSelected; else noView">
+<ng-container *ngIf="viewPermission; else noView">
   <div style="display: flex;flex-direction: row;gap:10px;width: 100%;">
     <div style="margin-left: 40px;width:100%;margin-top: 30px;">
       <mat-form-field appearance="outline" class="searchbar">
@@ -113,8 +113,18 @@
             *ngIf="obj.status =='approved'" [routerLink]="['/purchase-order/details',obj._id]">Approved Vendors</td>
           <td style="background-color: #C7323B;color:#fff;width:200px;font-size: 14px;cursor: pointer;"
             *ngIf="obj.status =='rejected'" [routerLink]="['/purchase-order/details',obj._id]">Rejected Rates</td>
-          <td style="background-color: #ECD172;color:#fff;width:200px;font-size: 14px;cursor: pointer;"
+          
+
+
+            <ng-container *ngIf="editPermission; else noEditPermission">
+              <td style="background-color: #ECD172;color:#fff;width:200px;font-size: 14px;cursor: pointer;"
             *ngIf="obj.status =='revise'" [routerLink]="['/purchase-order/update',obj._id]">Revise Rates</td>
+          
+            </ng-container>
+            <ng-template #noEditPermission>
+              <td style="background-color: #ECD172;color:#fff;width:200px;font-size: 14px;cursor: pointer;"
+            *ngIf="obj.status =='revise'" disabled >No Permission TO Revise Rates</td>
+            </ng-template>
   
   
           <td style="width: 100px;"><mat-icon>

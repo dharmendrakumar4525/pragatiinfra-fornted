@@ -20,6 +20,11 @@ import { UsersService } from '@services/users.service';
 export class RateApprovalUpdateComponent implements OnInit {
 
 
+  viewPermission: any;
+  editPermission: any;
+  addPermission: any;
+  deletePermission: any;
+  permissions: any;
 
   id: any;
   siteList: any;
@@ -231,9 +236,7 @@ export class RateApprovalUpdateComponent implements OnInit {
   * @returns An object containing subTotal, gstAmount, and total.
   */
   vendorTotal(item:any){
-    console.log("==Item==")
-    console.log(item)
-    console.log("==Item==")
+
       
       let subTotal=0;
       let total=0;
@@ -397,10 +400,6 @@ export class RateApprovalUpdateComponent implements OnInit {
 
     }
     this.load = true;
-
-    console.log("DETAILS_THSI")
-    console.log(this.details);
-    
     this.httpService.PUT(RATE_COMPARATIVE_API, this.details).subscribe(res => {
       this.snack.notify("Detail has been updated", 1);
       this.router.navigate(['/rate-approval'])
@@ -426,6 +425,32 @@ export class RateApprovalUpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
+
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+
+    // Extract specific permissions related to ParentChildchecklist from the parsed data
+    const rolePermission = this.permissions.user.role
+    const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
+      this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
+        next: (resp: any) => {
+          console.log(resp)
+          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[12].childList[0].isSelected;
+          this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[12].childList[1].isSelected;
+          this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[12].childList[2].isSelected;
+          this.deletePermission=resp.dashboard_permissions[0].ParentChildchecklist[12].childList[3].isSelected;
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      });
+
+
+
+
+
+
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.httpService.GET(`${RATE_COMPARATIVE_DETAIL_API}`, { _id: params['id'] }).subscribe({

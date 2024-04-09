@@ -237,15 +237,20 @@
   </div>
   <div class=" button-list">
 
-    <button class="p-btns-button" (click)="updateRequest()" [disabled]="load">
-      <span *ngIf="!load">Submit</span>
-      <span *ngIf="load">Please wait...</span>
-    </button>
-    <!-- <button class="p-btns-button" (click)="rejectRequest()" [disabled]="load">
-      <span *ngIf="!load">Reject</span>
-      <span *ngIf="load">Please wait...</span>
-    </button> -->
 
+
+
+    <ng-container *ngIf="addPermission || editPermission; else noAddPermission">
+      <button class="p-btns-button" (click)="updateRequest()" [disabled]="load">
+        <span *ngIf="!load">Submit</span>
+        <span *ngIf="load">Please wait...</span>
+      </button>
+    </ng-container>
+    <ng-template #noAddPermission>
+      <button class="p-btns-button" disabled>
+        <span  *ngIf="!load">No Permission to Submit</span>
+      </button>
+    </ng-template>
 
   </div>
 </form>

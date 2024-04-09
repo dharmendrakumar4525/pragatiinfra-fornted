@@ -42,6 +42,7 @@
   </div>
 </div>
 <div>
+  <ng-container *ngIf="viewPermission; else noView">
   <div *ngIf="poDetails" class="main-wrapper">
     <div style="margin-top: 20px;">
       <div style="display: flex;gap:50px;flex-wrap: wrap;">
@@ -247,22 +248,89 @@
     </div> -->
 
     <div style="display: flex;gap: 20px;justify-content: end;">
-      <div><button (click)="openEsignModal()"
-          style="padding: 8px;width: 180px;background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-family: 'Poppins';font-size: 14px;">Approve
-          with esign</button></div>
+        <div>
+
+
+
+          <ng-container *ngIf="addPermission || editPermission; else noAddPermission">
+            <button (click)="openEsignModal()"
+              style="padding: 8px;width: 180px;
+              background-color: #233A61;color: #fff;
+              border-radius: 5px;border-color: lightgrey;font-family: 'Poppins';
+              font-size: 14px;">
+              Approve with esign
+            </button>
+          </ng-container>
+          <ng-template #noAddPermission>
+            <button 
+              style="padding: 8px;width: 180px;
+              background-color: #233A61;color: #fff;
+              border-radius: 5px;border-color: lightgrey;font-family: 'Poppins';
+              font-size: 14px;"
+              disabled>
+              No Permission to Approve
+            </button>
+          </ng-template>
+
+        </div>
+
       <div>
 
-        <button (click)="updateStatus('revise')"
-          style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-family: 'Poppins';font-size: 14px;">Revise</button>
+
+        <ng-container *ngIf="editPermission; else noEditPermission">
+          <button (click)="updateStatus('revise')"
+          style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;
+          border: 1px solid #94A3B8;border-radius: 5px;font-family: 'Poppins';
+          font-size: 14px;">
+          Revise
+        </button>
+        </ng-container>
+        <ng-template #noEditPermission>
+          <button 
+          style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;
+          border: 1px solid #94A3B8;border-radius: 5px;font-family: 'Poppins';
+          font-size: 14px;"
+          disabled>
+          No Permission To Revise
+        </button>
+        </ng-template>
       </div>
       <div>
-        <button (click)="updateStatus('rejected')"
-          style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-family: 'Poppins';font-size: 14px;">Reject</button>
+
+
+
+
+        <ng-container *ngIf="deletePermission; else noDeletePermission">
+          <button (click)="updateStatus('rejected')"
+          style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;
+          border: 1px solid #94A3B8;border-radius: 5px;font-family: 'Poppins';
+          font-size: 14px;">
+          Reject
+        </button>
+        </ng-container>
+        <ng-template #noDeletePermission>
+          <button (click)="updateStatus('rejected')"
+          style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;
+          border: 1px solid #94A3B8;border-radius: 5px;font-family: 'Poppins';
+          font-size: 14px;"
+          disabled>
+         No Permission to Reject
+        </button>
+        </ng-template>
       </div>
     
 
     </div>
 
   </div>
+</ng-container>
+<ng-template #noView>
+  <h3 style="    display: flex;
+  justify-content: center;
+  margin-top: 2%;
+  font-size: 160%;
+  font-weight: bolder;
+  color: grey;">You don't have permissions to view.</h3>
+</ng-template>
 
 </div>

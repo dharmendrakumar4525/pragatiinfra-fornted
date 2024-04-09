@@ -42,12 +42,6 @@
   </div>
 </div>
 
-<!-- <div class="requests">
-  <div class="createreq">Create request</div>
-  <div class="innerreq">Approved request</div>
-  <div class="innerreq">Rejected request</div>
-  <div class="innerreq">Revised request</div>
-</div> -->
 
 <form [formGroup]="purchaseRequestForm">
   <mat-card class="topcard">
@@ -265,17 +259,84 @@
 
 <div class="row button-list">
 
+  <ng-container *ngIf="addPermission || editPermission; else noAddPermission">
   <button (click)="updateRequest('approved')"
-    style="padding: 8px;width: 120px;background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-size: 14px;font-family: 'Poppins';">Approved</button>
+    style="padding: 8px;width: 120px;
+    background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-size: 14px;
+    font-family: 'Poppins';">
+    Approve
+
+  </button>
+</ng-container>
+<ng-template #noAddPermission>
+  <button
+  style="padding: 8px;width: 120px;
+  background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-size: 14px;
+  font-family: 'Poppins';"
+  disabled
+  >
+  No Permission to Approve
+</button>
+</ng-template>
 
 
-  <button (click)="updateRequest('rejected')"
-    style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">Rejected</button>
 
 
-  <button (click)="updateRequest('revise')"
-    style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">Revise
-    request</button>
+
+  <ng-container *ngIf="deletePermission; else noDeletePermission">
+    <button (click)="updateRequest('rejected')"
+    style="padding: 8px;width: 120px;background-color: #fff;
+    color: #233A61;
+    border: 1px solid #94A3B8;border-radius: 5px;
+    font-size: 14px;font-family: 'Poppins';">
+    Rejected
+  </button>
+  </ng-container>
+  <ng-template #noDeletePermission>
+    <button
+    style="padding: 8px;width: 120px;background-color: #fff;
+    color: #233A61;
+    border: 1px solid #94A3B8;border-radius: 5px;
+    font-size: 14px;font-family: 'Poppins';"
+    disabled>
+    No Permission To Reject
+  </button>
+  </ng-template>
+  
+
+
+
+
+
+
+
+
+
+  <ng-container *ngIf="editPermission; else noEditPermission">
+    <button (click)="updateRequest('revise')"
+    style="padding: 8px;width: 120px;
+    background-color: #fff;
+    color: #233A61;
+    border: 1px solid #94A3B8;
+    border-radius: 5px;font-size: 14px;font-family: 'Poppins';
+    ">
+    Revise Request
+  </button>
+  </ng-container>
+  <ng-template #noEditPermission>
+    <button
+    style="padding: 8px;width: 120px;
+    background-color: #fff;
+    color: #233A61;
+    border: 1px solid #94A3B8;
+    border-radius: 5px;font-size: 14px;font-family: 'Poppins';
+    "
+    disabled>
+    No Permission To Revise Request
+  </button>
+  </ng-template>
+
+  
 
 
 </div>
