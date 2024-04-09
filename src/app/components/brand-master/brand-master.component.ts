@@ -6,6 +6,7 @@ import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
 import { BrandAddDataComponent } from './add-data/add-data.component';
+import { ToastService } from '@services/toast.service';
 
 @Component({
   selector: 'app-brand-master',
@@ -13,13 +14,35 @@ import { BrandAddDataComponent } from './add-data/add-data.component';
   styleUrls: ['./brand-master.component.scss']
 })
 export class BrandMasterComponent implements OnInit {
+  viewPermission: any;
+  editPermission: any;
+  addPermission: any;
+  deletePermission: any;
+  permissions:any;
   brandList:any=[];
   list:any=[];
   constructor(private router: Router,
     private httpService: RequestService,
     private excelService: ExcelService,
     private snack: SnackbarService,
-    private dialog: MatDialog,) {
+    private dialog: MatDialog,
+    private toast:ToastService
+    ) {
+      this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    const rolePermission = this.permissions.user.role
+    const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
+      this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
+        next: (resp: any) => {
+          this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[12].childList[0].isSelected;
+          this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[12].childList[1].isSelected;
+          this.deletePermission=resp.dashboard_permissions[0].ParentChildchecklist[12].childList[2].isSelected;
+          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[12].childList[3].isSelected;
+        
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      });
       this.getList();
      }
 
@@ -48,6 +71,11 @@ export class BrandMasterComponent implements OnInit {
   }
   
   delete(id: any) {
+    if(!this.deletePermission)
+    {
+      this.toast.openSnackBar('Access to Brand Master deleting is restricted for your account.');
+      return;
+    }
     this.httpService.DELETE('/brand', { _id: id }).subscribe(res => {
       if (res) {
         this.snack.notify(" record has been deleted sucessfully.", 1);
@@ -89,6 +117,11 @@ export class BrandMasterComponent implements OnInit {
     this.excelService.mapArrayToExcel(sheetName, sheetHeaders, valueKey, valueDataType, this.brandList);
   }
   add() {
+    if(!this.addPermission)
+    {
+      this.toast.openSnackBar('Access to Brand Master add is restricted for your account.');
+      return;
+    }
     const confirmDialogPopup = this.dialog.open(BrandAddDataComponent, {
       data: {
         list: this.list
@@ -102,6 +135,11 @@ export class BrandMasterComponent implements OnInit {
     });
   }
   edit(id: any) {
+    if(!this.editPermission)
+    {
+      this.toast.openSnackBar('Access to Brand Master editing is restricted for your account.');
+      return;
+    }
     const confirmDialogPopup = this.dialog.open(BrandAddDataComponent, {
       data: {
         id: id

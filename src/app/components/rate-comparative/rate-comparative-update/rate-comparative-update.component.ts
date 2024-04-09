@@ -366,9 +366,9 @@ export class RateComparativeUpdateComponent implements OnInit {
     const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
       this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
         next: (resp: any) => {
-          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[11].childList[0].isSelected;
-          this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[11].childList[1].isSelected;
-          this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[11].childList[2].isSelected;
+          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[20].childList[0].isSelected;
+          this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[20].childList[1].isSelected;
+          this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[20].childList[2].isSelected;
         },
         error: (err) => {
           console.log(err)

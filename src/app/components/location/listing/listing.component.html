@@ -4,7 +4,7 @@
     <div class="header-left">
       <h2>Location Master</h2>
     </div>
-    <div class="header-right" *ngIf="permissions.childList[3].isSelected">
+    <div class="header-right" *ngIf="viewPermission">
       <div class="buttons-containers">
         <div class="filter-con">
 
@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <div class="section-body" *ngIf="permissions.childList[3].isSelected; else noView">
+  <div class="section-body" *ngIf="viewPermission; else noView">
     <table class="table  pragati-table">
       <thead>
         <tr>
@@ -61,7 +61,12 @@
 
 
   <ng-template #noView>
-      <h3>You don't have permissions to view.</h3>
+    <h3 style="    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+    font-size: 160%;
+    font-weight: bolder;
+    color: grey;">You don't have permissions to view.</h3>
   </ng-template>
 
 </div>

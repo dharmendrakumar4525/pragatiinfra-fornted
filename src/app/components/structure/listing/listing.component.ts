@@ -14,6 +14,10 @@ import { ToastService } from '@services/toast.service';
   styleUrls: ['./listing.component.scss']
 })
 export class ListingComponent implements OnInit {
+  viewPermission: any;
+  editPermission: any;
+  addPermission: any;
+  deletePermission: any;
   structureList: any = [];
   list: any = [];
   permissions:any;
@@ -26,9 +30,19 @@ export class ListingComponent implements OnInit {
     private toast:ToastService,
   ) {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
-    // console.log(this.permissions=this.permissions.permissions[0])
-    this.permissions=this.permissions.permissions[0].ParentChildchecklist[6];
-    console.log(this.permissions)
+    const rolePermission = this.permissions.user.role
+    const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
+      this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
+        next: (resp: any) => {
+          this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[6].childList[0].isSelected;
+          this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[6].childList[1].isSelected;
+          this.deletePermission=resp.dashboard_permissions[0].ParentChildchecklist[6].childList[2].isSelected;
+          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[6].childList[3].isSelected;
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      });
     this.getList();
   }
 
@@ -55,7 +69,7 @@ export class ListingComponent implements OnInit {
   }
 
   edit(id: any) {
-    if(!this.permissions.childList[1].isSelected)
+    if(!this.editPermission)
     {
       this.toast.openSnackBar('Access to Activity Master editing is restricted for your account.');
       return;
@@ -74,7 +88,7 @@ export class ListingComponent implements OnInit {
   }
 
   add() {
-    if(!this.permissions.childList[0].isSelected)
+    if(!this.addPermission)
     {
       this.toast.openSnackBar('Access to Activity Master add is restricted for your account.');
       return;
@@ -90,7 +104,7 @@ export class ListingComponent implements OnInit {
   }
 
   delete(id: any) {
-    if(!this.permissions.childList[2].isSelected)
+    if(!this.deletePermission)
     {
       this.toast.openSnackBar('Access to Activity Master deleting is restricted for your account.');
       return;

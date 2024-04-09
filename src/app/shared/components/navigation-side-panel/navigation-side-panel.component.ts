@@ -235,6 +235,8 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
 
     this.sidebarMenu = this.sidebarAllMenu.filter((o: any) => {
+      console.log(this.sidebarAllMenu,"View",this.modulesPermissions);
+      
       if (o.module_name) {
         if (this.modulesPermissions[o.module_name] && this.modulesPermissions[o.module_name].length > 0 && this.modulesPermissions[o.module_name].includes('view')) {
           return o;

@@ -12,6 +12,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
   styleUrls: ['./purchase-request-list.component.scss']
 })
 export class PurchaseRequestListComponent implements OnInit {
+  viewPermission: any;
   purchaseList: any;
   filter_by = "status";
   filter_value = "pending";
@@ -125,8 +126,18 @@ export class PurchaseRequestListComponent implements OnInit {
     // Retrieve user permissions from local storage and parse them as JSON
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
 
-    // Extract a specific permission from the parsed permissions
-    this.permissions=this.permissions.permissions[0].ParentChildchecklist[10];
+    // Extract specific permissions related to ParentChildchecklist from the parsed data
+    const rolePermission = this.permissions.user.role
+    const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
+      this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
+        next: (resp: any) => {
+          console.log(resp)
+          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[19].childList[0].isSelected;
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      });
   }
 
 }

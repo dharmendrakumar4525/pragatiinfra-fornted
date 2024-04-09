@@ -5,12 +5,18 @@ import { ExcelService } from '@services/export-excel/excel.service';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
+import { ToastService } from '@services/toast.service';
 @Component({
   selector: 'app-listing',
   templateUrl: './listing.component.html',
   styleUrls: ['./listing.component.scss']
 })
 export class ListingComponent implements OnInit {
+  viewPermission: any;
+  editPermission: any;
+  addPermission: any;
+  deletePermission: any;
+  permissions:any;
   categoryList: any = [];
   list: any = [];
   constructor(
@@ -18,8 +24,24 @@ export class ListingComponent implements OnInit {
     private httpService: RequestService,
     private excelService: ExcelService,
     private snack: SnackbarService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toast:ToastService
   ) {
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    const rolePermission = this.permissions.user.role
+    const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
+      this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
+        next: (resp: any) => {
+          this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[16].childList[0].isSelected;
+          this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[16].childList[1].isSelected;
+          this.deletePermission=resp.dashboard_permissions[0].ParentChildchecklist[16].childList[2].isSelected;
+          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[16].childList[3].isSelected;
+        
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      });
     this.getList();
   }
 
@@ -46,6 +68,11 @@ export class ListingComponent implements OnInit {
   }
 
   edit(id: any) {
+    if(!this.editPermission)
+    {
+      this.toast.openSnackBar('Access to Category Master editing is restricted for your account.');
+      return;
+    }
     let url: string = "category/edit/" + id
     console.log(url);
 
@@ -53,11 +80,21 @@ export class ListingComponent implements OnInit {
   }
 
   add() {
+    if(!this.addPermission)
+    {
+      this.toast.openSnackBar('Access to Category Master add is restricted for your account.');
+      return;
+    }
     let url: string = "category/add"
     this.router.navigateByUrl(url);
   }
 
   delete(id: any) {
+    if(!this.deletePermission)
+    {
+      this.toast.openSnackBar('Access to Category Master deleting is restricted for your account.');
+      return;
+    }
     this.httpService.DELETE(CATEGORY_API, { _id: id }).subscribe(res => {
       if (res) {
         this.snack.notify(" record has been deleted sucessfully.", 1);

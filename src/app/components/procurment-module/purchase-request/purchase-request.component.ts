@@ -457,9 +457,9 @@ selectedItem(event: any, i: any) {
     const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
       this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
         next: (resp: any) => {
-          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[9].childList[0].isSelected;
-    this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[9].childList[1].isSelected;
-    this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[9].childList[2].isSelected;
+          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[18].childList[0].isSelected;
+    this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[18].childList[1].isSelected;
+    this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[18].childList[2].isSelected;
           
         },
         error: (err) => {

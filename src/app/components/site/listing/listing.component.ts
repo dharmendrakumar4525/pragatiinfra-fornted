@@ -5,12 +5,18 @@ import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { ExcelService } from '@services/export-excel/excel.service';
 import { isEmpty } from 'lodash';
+import { ToastService } from '@services/toast.service';
 @Component({
   selector: 'app-listing',
   templateUrl: './listing.component.html',
   styleUrls: ['./listing.component.scss']
 })
 export class ListingComponent implements OnInit {
+  viewPermission: any;
+  editPermission: any;
+  addPermission: any;
+  deletePermission: any;
+  permissions:any;
   siteList: any = [];
   list: any = [];
   constructor(
@@ -18,7 +24,23 @@ export class ListingComponent implements OnInit {
     private httpService: RequestService,
     private excelService: ExcelService,
     private snack: SnackbarService,
+    private toast:ToastService
   ) {
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    const rolePermission = this.permissions.user.role
+    const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
+      this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
+        next: (resp: any) => {
+          this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[14].childList[0].isSelected;
+          this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[14].childList[1].isSelected;
+          this.deletePermission=resp.dashboard_permissions[0].ParentChildchecklist[14].childList[2].isSelected;
+          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[14].childList[3].isSelected;
+        
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      });
     this.getList();
   }
 
@@ -44,13 +66,35 @@ export class ListingComponent implements OnInit {
 
     })
   }
+  edit(id: any) {
+    console.log(id,"Id");
+    if(!this.editPermission)
+    {
+      this.toast.openSnackBar('Access to Site Master editing is restricted for your account.');
+      return;
+    }
+    let url: string = "site/edit/" + id
+    console.log(url);
+
+    this.router.navigateByUrl(url);
+  }
 
   add() {
+    if(!this.addPermission)
+    {
+      this.toast.openSnackBar('Access to Site Master add is restricted for your account.');
+      return;
+    }
     let url: string = "site/add"
     this.router.navigateByUrl(url);
   }
 
   delete(id: any) {
+    if(!this.deletePermission)
+    {
+      this.toast.openSnackBar('Access to Site Master deleting is restricted for your account.');
+      return;
+    }
     this.httpService.DELETE(SITE_API, { _id: id }).subscribe(res => {
       if (res) {
         this.snack.notify("site record has been deleted sucessfully.", 1);

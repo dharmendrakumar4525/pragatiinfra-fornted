@@ -180,6 +180,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { CATEGORY_API, SUB_CATEGORY_API } from '@env/api_path';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { ToastService } from '@services/toast.service';
 @Component({
   selector: 'app-listing',
   templateUrl: './listing.component.html',
@@ -187,6 +188,11 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 })
 export class ListingComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  viewPermission: any;
+  editPermission: any;
+  addPermission: any;
+  deletePermission: any;
+  permissions:any;
   categoryList: any;
   subCategoryList: any = [];
   itemList: any = [];
@@ -206,9 +212,25 @@ export class ListingComponent implements OnInit {
     private excelService: ExcelService,
     private snack: SnackbarService,
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private toast:ToastService
   ) { }
   ngOnInit(): void {
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    const rolePermission = this.permissions.user.role
+    const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
+      this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
+        next: (resp: any) => {
+          this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[11].childList[0].isSelected;
+          this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[11].childList[1].isSelected;
+          this.deletePermission=resp.dashboard_permissions[0].ParentChildchecklist[11].childList[2].isSelected;
+          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[11].childList[3].isSelected;
+        
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      });
     this.getList();
   }
   getList() {
@@ -283,15 +305,30 @@ export class ListingComponent implements OnInit {
     return this.subCategoryList.filter((obj: { _id: any; }) => obj._id == id)[0]?.subcategory_name
   }
   edit(id: any) {
+    if(!this.editPermission)
+    {
+      this.toast.openSnackBar('Access to Item Master editing is restricted for your account.');
+      return;
+    }
     let url: string = "item/edit/" + id
     console.log(url);
     this.router.navigateByUrl(url);
   }
   add() {
+    if(!this.addPermission)
+    {
+      this.toast.openSnackBar('Access to Item Master add is restricted for your account.');
+      return;
+    }
     let url: string = "item/add"
     this.router.navigateByUrl(url);
   }
   delete(id: any) {
+    if(!this.deletePermission)
+    {
+      this.toast.openSnackBar('Access to Item Master deleting is restricted for your account.');
+      return;
+    }
     this.httpService.DELETE(ITEM_API, { _id: id }).subscribe(res => {
       if (res) {
         this.snack.notify("item record has been deleted sucessfully.", 1);

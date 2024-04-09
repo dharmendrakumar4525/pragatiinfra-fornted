@@ -218,10 +218,10 @@ export class UpdatePrStatusComponent implements OnInit {
       this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
         next: (resp: any) => {
           console.log(resp)
-          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[10].childList[0].isSelected;
-          this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[10].childList[1].isSelected;
-          this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[10].childList[2].isSelected;
-          this.deletePermission=resp.dashboard_permissions[0].ParentChildchecklist[10].childList[3].isSelected;
+          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[19].childList[0].isSelected;
+          this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[19].childList[1].isSelected;
+          this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[19].childList[2].isSelected;
+          this.deletePermission=resp.dashboard_permissions[0].ParentChildchecklist[19].childList[3].isSelected;
         },
         error: (err) => {
           console.log(err)

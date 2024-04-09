@@ -1,55 +1,54 @@
 <div class="section-wrapper">
+  <ng-container *ngIf="viewPermission; else noView">
+    <div class="section-header">
+      <div class="header-left">
+        <h2>GST Master</h2>
+      </div>
+      <div class="header-right">
+        <div class="buttons-containers">
+          <div class="filter-con">
 
-  <div class="section-header">
-    <div class="header-left">
-      <h2>GST Master</h2>
-    </div>
-    <div class="header-right">
-      <div class="buttons-containers">
-        <div class="filter-con">
+            <div dir="ltr" class="labeled-outlined-field-wrapper">
+              <mat-form-field class="full-width drop-down outline-filter-field hide-form-bottom-field"
+                appearance="outline">
+                <input matInput placeholder="Search by name" (input)="search($event)">
+              </mat-form-field>
+            </div>
 
-          <div dir="ltr" class="labeled-outlined-field-wrapper">
-            <mat-form-field class="full-width drop-down outline-filter-field hide-form-bottom-field"
-              appearance="outline">
-              <input matInput placeholder="Search by name" (input)="search($event)">
-            </mat-form-field>
+
           </div>
-
-
+          <button mat-button class="submit-btn" (click)="add()">Add New</button>
+          <button mat-button class="other-btn" (click)="exportXlSX()">Export</button>
         </div>
-        <button mat-button class="submit-btn" (click)="add()">Add New</button>
-        <button mat-button class="other-btn" (click)="exportXlSX()">Export</button>
       </div>
     </div>
-  </div>
 
-  <div class="section-body">
-    <table class="table  pragati-table">
-      <thead>
-        <tr>
-          <th scope="col">SN.</th>
+    <div class="section-body">
+      <table class="table  pragati-table">
+        <thead>
+          <tr>
+            <th scope="col">SN.</th>
 
-          <th scope="col">GST Name</th>
-          <th scope="col">Percentage</th>
-          <th scope="col">Action</th>
+            <th scope="col">GST Name</th>
+            <th scope="col">Percentage</th>
+            <th scope="col">Action</th>
 
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of list;let i = index">
-          <td scope="row">{{i+1}}</td>
-          <td>{{item.gst_name}}</td>
-          <td>{{item.gst_percentage}}</td>
-          <td>
-            <div class="action-btn-wrapper">
-              <a class="action-btn" [routerLink]="['/gst/edit',item._id]" title="Edit"><i
-                  class="fa fa-edit"></i>
-              </a>
-              <a class="action-btn" (click)="delete(item._id)" title="Delete"><i class="fa fa-trash"></i></a>
-            </div>
-          </td>
-        </tr>
-        <!-- <tr>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of list;let i = index">
+            <td scope="row">{{i+1}}</td>
+            <td>{{item.gst_name}}</td>
+            <td>{{item.gst_percentage}}</td>
+            <td>
+              <div class="action-btn-wrapper">
+                <a class="action-btn" (click)="edit(item._id)" title="Edit"><i class="fa fa-edit"></i>
+                </a>
+                <a class="action-btn" (click)="delete(item._id)" title="Delete"><i class="fa fa-trash"></i></a>
+              </div>
+            </td>
+          </tr>
+          <!-- <tr>
           <th scope="row">2</th>
           <td>Jacob</td>
           <td>Thornton</td>
@@ -60,11 +59,19 @@
           <td colspan="2">Larry the Bird</td>
           <td>@twitter</td>
         </tr> -->
-      </tbody>
-    </table>
+        </tbody>
+      </table>
 
 
 
-  </div>
-
+    </div>
+  </ng-container>
+  <ng-template #noView>
+    <h3 style="    display: flex;
+justify-content: center;
+margin-top: 2%;
+font-size: 160%;
+font-weight: bolder;
+color: grey;">You don't have permissions to view.</h3>
+  </ng-template>
 </div>

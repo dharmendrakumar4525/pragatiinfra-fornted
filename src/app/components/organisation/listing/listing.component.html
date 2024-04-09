@@ -1,71 +1,88 @@
 <div class="section-wrapper">
-
-  <div class="section-header">
-    <div class="header-left">
-      <h2>Organisations Master</h2>
-    </div>
-    <div class="header-right">
-      <div class="buttons-containers">
-        <div class="filter-con">
-
-          <div dir="ltr" class="labeled-outlined-field-wrapper">
-            <mat-form-field class="full-width drop-down outline-filter-field hide-form-bottom-field"
-              appearance="outline">
-              <input matInput placeholder="Search by Company Name" (input)="search($event)">
-            </mat-form-field>
+  <ng-container *ngIf="viewPermission; else noView">
+    <div class="section-header">
+      <div class="header-left">
+        <h2>Organisations Master</h2>
+      </div>
+      <div class="header-right">
+        <div class="buttons-containers">
+          <div class="filter-con">
+            <div dir="ltr" class="labeled-outlined-field-wrapper">
+              <mat-form-field
+                class="full-width drop-down outline-filter-field hide-form-bottom-field"
+                appearance="outline"
+              >
+                <input
+                  matInput
+                  placeholder="Search by Company Name"
+                  (input)="search($event)"
+                />
+              </mat-form-field>
+            </div>
           </div>
-
-
+          <button mat-button class="submit-btn" (click)="add()">Add New</button>
+          <button mat-button class="other-btn" (click)="exportXlSX()">
+            Export
+          </button>
         </div>
-        <button mat-button class="submit-btn" (click)="add()">Add New</button>
-        <button mat-button class="other-btn" (click)="exportXlSX()">Export</button>
       </div>
     </div>
-  </div>
 
-  <div class="section-body">
-    <table class="table  pragati-table">
-      <thead> 
-        <tr>
-          <th scope="col">SN.</th>
+    <div class="section-body">
+      <table class="table pragati-table">
+        <thead>
+          <tr>
+            <th scope="col">SN.</th>
 
-          <th scope="col">Company Name</th>
-          <th scope="col">Contact Person</th>
-          <!-- <th scope="col">Designation</th> -->
-          <th scope="col">Phone Number</th>
-          <!-- <th scope="col">Email</th> -->
-          <th scope="col">PAN Number</th>
-          <th scope="col">GST Number</th>
-          <th scope="col">Address </th>
-          <th scope="col">Action </th>
-
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of orgList;let i = index">
-          <td scope="row">{{i+1}}</td>
-          <td>{{item.companyName}}</td>
-          <td>{{item.contact_person}}</td>
-          <!-- <td>{{item.designation}}</td> -->
-          <td>{{item.dialcode}}{{item.phone_number}}</td>
-          <!-- <td>{{item.email}}</td> -->
-          <td>{{item.pan_number}}</td>
-          <td>{{item.gst_number}}</td>
-          <td>{{item.address.street_address + ' '
-            + item.address.street_address2 + ' '
-            + item.address.state + ' '
-            +item.address.city + ' '
-            +item.address.country}}</td>
-          <td>
-            <div class="action-btn-wrapper">
-              <a class="action-btn" [routerLink]="['/organisation/edit',item._id]" title="Edit"><i
-                  class="fa fa-edit"></i>
-              </a>
-              <a class="action-btn" (click)="delete(item._id)" title="Delete"><i class="fa fa-trash"></i></a>
-            </div>
-          </td>
-        </tr>
-        <!-- <tr>
+            <th scope="col">Company Name</th>
+            <th scope="col">Contact Person</th>
+            <!-- <th scope="col">Designation</th> -->
+            <th scope="col">Phone Number</th>
+            <!-- <th scope="col">Email</th> -->
+            <th scope="col">PAN Number</th>
+            <th scope="col">GST Number</th>
+            <th scope="col">Address</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of orgList; let i = index">
+            <td scope="row">{{ i + 1 }}</td>
+            <td>{{ item.companyName }}</td>
+            <td>{{ item.contact_person }}</td>
+            <!-- <td>{{item.designation}}</td> -->
+            <td>{{ item.dialcode }}{{ item.phone_number }}</td>
+            <!-- <td>{{item.email}}</td> -->
+            <td>{{ item.pan_number }}</td>
+            <td>{{ item.gst_number }}</td>
+            <td>
+              {{
+                item.address.street_address +
+                  " " +
+                  item.address.street_address2 +
+                  " " +
+                  item.address.state +
+                  " " +
+                  item.address.city +
+                  " " +
+                  item.address.country
+              }}
+            </td>
+            <td>
+              <div class="action-btn-wrapper">
+                <a
+                  class="action-btn"
+                  (click)="edit(item._id)"
+                  title="Edit"
+                  ><i class="fa fa-edit"></i>
+                </a>
+                <a class="action-btn" (click)="delete(item._id)" title="Delete"
+                  ><i class="fa fa-trash"></i
+                ></a>
+              </div>
+            </td>
+          </tr>
+          <!-- <tr>
           <th scope="row">2</th>
           <td>Jacob</td>
           <td>Thornton</td>
@@ -76,11 +93,22 @@
           <td colspan="2">Larry the Bird</td>
           <td>@twitter</td>
         </tr> -->
-      </tbody>
-    </table>
-
-
-
-  </div>
-
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+  <ng-template #noView>
+    <h3
+      style="
+        display: flex;
+        justify-content: center;
+        margin-top: 2%;
+        font-size: 160%;
+        font-weight: bolder;
+        color: grey;
+      "
+    >
+      You don't have permissions to view.
+    </h3>
+  </ng-template>
 </div>
