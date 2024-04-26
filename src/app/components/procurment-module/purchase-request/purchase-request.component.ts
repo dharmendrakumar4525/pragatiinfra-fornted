@@ -359,6 +359,7 @@ export class PurchaseRequestComponent implements OnInit {
   }
 
   dateFilter(event: MatDatepickerInputEvent<Date>) {
+    
     if (this.originalPurchaseList && this.originalPurchaseList.length > 0) {
       if (event.value) {
         this.purchaseList = this.originalPurchaseList.filter(obj => new Date(obj.date) == new Date(event.value))

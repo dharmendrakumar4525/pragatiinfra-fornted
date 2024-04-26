@@ -233,16 +233,14 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
     this.modulesPermissions = this.auth.getPermission();
 
-
     this.sidebarMenu = this.sidebarAllMenu.filter((o: any) => {
-      console.log(this.sidebarAllMenu,"View",this.modulesPermissions);
-      
+
       if (o.module_name) {
+        
         if (this.modulesPermissions[o.module_name] && this.modulesPermissions[o.module_name].length > 0 && this.modulesPermissions[o.module_name].includes('view')) {
           return o;
         }
       } else {
-
         if (o.sub_menu && o.sub_menu.length > 0) {
           o.sub_menu = o.sub_menu.filter((subMenu: any) => {
             if (subMenu.module_name) {
@@ -263,7 +261,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
 
       }
     });
-    // console.log("bye",this.sidebarMenu)
+    
   }
 
   ngOnInit(): void {
@@ -285,7 +283,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
     else {
       value = value;
     }
-    //console.log(value);
+  
     return value;
   }
   ngOnDestroy(): void {
@@ -294,7 +292,6 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
   }
 
   public handleSingleClick(): void {
-    console.log('single click');
     if (
       this.currentPanelState === SidePanelState.CLOSE ||
       this.currentPanelState === SidePanelState.COLLAPSE
@@ -305,9 +302,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
     }
   }
   public isCollapse(): void {
-    // console.log("hi sameer");
     this.sideNavOpen = !this.sideNavOpen;
-    // console.log(this.SidePanelCollapse);
     if (this.sideNavOpen) {
       this._sidePanelService.changeState(SidePanelState.OPEN);
     }

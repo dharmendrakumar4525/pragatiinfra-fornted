@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RolesService } from '@services/roles.service';
 import { ToastService } from '@services/toast.service';
+import { RequestService } from '@services/https/request.service';
 
 @Component({
   selector: 'app-manage-permissions',
@@ -16,6 +17,8 @@ export class ManagePermissionsComponent implements OnInit {
   permi: any;
   userRolePermissions: any;
   roles: any
+  editPermission: any;
+  permissions:any;
 
   roleForm: FormGroup = this._fb.group({
     role: [null, [Validators.required]],
@@ -28,7 +31,7 @@ export class ManagePermissionsComponent implements OnInit {
   }
   dashboard_permissions
   newOne: any
-  constructor(private _fb: FormBuilder, private roleService: RolesService, private toast: ToastService) {
+  constructor(private httpService: RequestService,private _fb: FormBuilder, private roleService: RolesService, private toast: ToastService) {
 
 
     this.data = {};
@@ -379,7 +382,17 @@ export class ManagePermissionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    const rolePermission = this.permissions.user.role
+    const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
+      this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
+        next: (resp: any) => {
+          this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[3].childList[1].isSelected;
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      });
     this.roleService.getRoles().subscribe(data => {
       this.roles = data
     })

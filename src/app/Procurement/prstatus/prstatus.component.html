@@ -16,7 +16,7 @@
   <div style="margin-left: 40px;width:100%;margin-top: 30px;">
       <mat-form-field appearance="outline" class="searchbar">
           <mat-icon matSuffix>search</mat-icon>
-          <input matInput type="search" placeholder="Search Title" class="search-input">
+          <input matInput (input)="filterRecords($event)" type="search" placeholder="Search Title" class="search-input">
 
       </mat-form-field>
       </div>
@@ -24,15 +24,15 @@
     <div style="margin-top: 15px;color: #94A3B8;margin-left: 30px;"> <span>Filter&nbsp;by</span></div>
         <div>  <mat-form-field appearance="outline" class="datebar" >
               <input matInput [matDatepicker]="startPicker" placeholder="Date"
-              (click)="startPicker.open()" />
+              (click)="startPicker.open()" (dateChange)="dateFilter( $event)"/>
               <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
               <mat-datepicker #startPicker></mat-datepicker>
           </mat-form-field></div>
           </div>
-          <div style="position: relative;right:570px;top:35px">
+          <!-- <div style="position: relative;right:570px;top:35px">
               <button style="padding: 8px ;width: 150px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;color:#797979;font-family: 'Poppins';font-size: 14px;">
               Show History <img src="./assets/images/showhistory.svg" class="imgstyle"> </button>
-             </div>
+             </div> -->
     </div>
 
     <div class="scroll-bar1" >
@@ -50,10 +50,10 @@
 
       <tbody>
           <tr  style="background-color: #F4F4F5;" *ngFor="let item of prList">
-              <td style="text-align: center;"> {{item.purchaseRequestNumber}}</td>
-              <td style="color: #000;" >{{item.requestTitle}}</td>
-              <td > {{item.siteData.siteName}}</td>
-              <td>{{item.requiredBy | date:'dd-MM-yyyy'}} </td>
+              <td style="text-align: center;"> {{item.purchase_request_number}}</td>
+              <td style="color: #000;" >{{item.title}}</td>
+              <td > {{item.siteData.site_name}}</td>
+              <td>{{item.expected_delivery_date | date:'dd-MM-yyyy'}} </td>
               <td>- </td>
               <td >
                 <button style="padding: 15px ;width:120px;background-color: #3CB03A;font-family: 'Poppins';border-radius: 8px;color: #fff;border-color: lightgrey;font-size: 14px;">

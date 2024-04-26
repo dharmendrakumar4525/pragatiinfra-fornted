@@ -69,9 +69,10 @@ td {
 tr:nth-child(odd) {
   background-color: #F4F4F5 !important;
 }
-
+.table td{
+  text-align: center;
+}
 .scroll-bar1{
-
 
   height: 90vh;
   width:95%;

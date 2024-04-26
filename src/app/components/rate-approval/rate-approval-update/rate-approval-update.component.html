@@ -325,7 +325,7 @@
         <th>Quantity</th>
         <th>Brand Name</th>
         <th>Tax</th>
-        <th>Vendors</th>
+        <th >Vendors</th>
         <th>Vendor Selection</th>
       </tr>
 
@@ -362,16 +362,16 @@
           <!-- <td>
             <a class="p-btns" (click)="vendorData(item)">Vendor Rates</a>
           </td> -->
-          <td>
-            <a class="p-btns" style="display: inline-block; padding: 10px 20px; background-color: #233a61; color: #fff; text-decoration: none; border-radius: 5px;" (click)="vendorData(item)">Vendor Rates</a>
+          <td >
+            <a class="p-btns" style="display: inline-block; padding: 10px 20px;  background-color: #233a61; color: #fff; text-decoration: none; border-radius: 5px;" (click)="vendorData(item)">Vendor Rates</a>
         </td>
         
           <td>
             <ng-container *ngIf="ItemwiseVendorRate.has(item.item_id); else pendingView">
-              Completed
+             <p style="color: green;">Completed</p> 
             </ng-container>
             <ng-template #pendingView>
-              Pending
+             <p style="color: red;">Pending</p> 
             </ng-template>
           </td>
         </tr>

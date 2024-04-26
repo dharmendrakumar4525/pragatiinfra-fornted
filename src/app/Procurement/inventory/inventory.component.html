@@ -46,16 +46,16 @@
 
 
     <tbody>
-      <tr *ngFor=" let obj of poArray">
-        <td>{{obj.items.item_name}}</td>
+      <tr *ngFor=" let obj of poArray" class="table">
+        <td>{{obj.items.item.item_name}}</td>
         <td>{{obj.po_number}}</td>
-        <td>{{obj.items.vendors[0].quantity}}</td>
+        <td>{{obj.items.RequiredQuantity}}</td>
         <td>{{obj.vendor_detail.vendor_name}}</td>
         <td>
           {{obj.delivery_address.street_address}},{{obj.delivery_address.street_address2}},{{obj.delivery_address.city}},{{obj.delivery_address.state}},{{obj.delivery_address.country}},{{obj.delivery_address.zip_code}}
         </td>
 
-        <td>{{obj.status | titlecase }}</td>
+        <td>{{obj.status | titlecase }}</td> 
 
       </tr>
 

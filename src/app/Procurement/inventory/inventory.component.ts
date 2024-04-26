@@ -15,7 +15,6 @@ export class InventoryComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private httpService: RequestService) {
     this.httpService.GET(INVENTORY_API, {}).subscribe(res => {
-      console.log(res);
       this.poArray = res.data;
       this.allpoArray = res.data;
     })
@@ -23,8 +22,10 @@ export class InventoryComponent implements OnInit {
   }
 
   filterRecords(event: any) {
+    console.log(this.allpoArray,event.target.value);
+    
     if (event.target.value) {
-      this.poArray = this.allpoArray.filter(obj => obj.items.item_name.includes(event.target.value));
+      this.poArray = this.allpoArray.filter(obj => obj.items.item.item_name.toLowerCase().includes(event.target.value.toLowerCase()));
     }
     else {
       this.poArray = this.allpoArray

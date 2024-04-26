@@ -98,6 +98,7 @@ export class RateApprovalUpdateComponent implements OnInit {
     dialogPopup.afterClosed().subscribe((result: any) => {
      
       if(result && result.data && result.data.VendorRate ){
+        console.log(result.data)
         if(result.data.VendorRate.size>0)
           this.ItemwiseVendorRate.set(dataObj.item_id,result.data)
         else

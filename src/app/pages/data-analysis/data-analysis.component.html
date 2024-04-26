@@ -3,7 +3,7 @@
     <div style="padding: 1rem;margin-top: 110px;">
       <form [formGroup]="projectNameForm">
         <select style="padding: 10px;width:300px;border: none;font-size: 30px;font-weight: 600;font-family: 'Poppins';"
-          (change)="onChangeProject($event)" formControlName="_id">
+          (change)="onChangeProject($event)" formControlName="_id" [attr.disabled]="true ? 'disabled' : null">
           <option *ngFor=" let one of projectsList" [value]="one._id">
 
             <span>{{one?.projectName}}</span>

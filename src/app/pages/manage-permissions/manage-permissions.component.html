@@ -46,8 +46,15 @@
                     </mat-form-field>
                   </div>
                 </div>
-                <button  class="mat_step8per_next global-btn" type="button" (click)="addPermissions()" style="margin-left: 20px;padding: 10px;width:100px;margin-top: -10px;border-radius: 5px;border: 1px solid #97989D;background-color: #fff;cursor: pointer;font-family: 'Poppins';background-color: #233A61;color:#fff">Save
-                </button>
+                <ng-container *ngIf="editPermission; else noEditPermission">
+                  <button  class="mat_step8per_next global-btn" type="button" (click)="addPermissions()" style="margin-left: 20px;padding: 10px;width:100px;margin-top: -10px;border-radius: 5px;border: 1px solid #97989D;background-color: #fff;cursor: pointer;font-family: 'Poppins';background-color: #233A61;color:#fff">Save
+                  </button>
+                 </ng-container>
+                 <ng-template #noEditPermission>
+                  <button  class="mat_step8per_next global-btn" type="button"  style="margin-left: 20px;padding: 10px;width:auto;margin-top: -10px;border-radius: 5px;border: 1px solid #97989D;background-color: #fff;cursor: pointer;font-family: 'Poppins';background-color: #233A61;color:#fff">No Permission to Edit
+                  </button>
+                 </ng-template>
+                
               </form>
             </div>
           </div>

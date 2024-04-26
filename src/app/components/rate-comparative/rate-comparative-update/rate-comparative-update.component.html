@@ -4,7 +4,7 @@
   </div>
   <span
     style="font-family: 'Poppins';margin-top: 40px;font-style: normal;font-weight:600;font-size: 30px;color:#1E293B;margin-left: 10px;">Rate
-    comparativ </span>
+    comparative </span>
   <span class="example-spacer"></span>
 
 
@@ -188,6 +188,7 @@
         <th>Category</th>
         <th>Sub&nbsp;category</th>
         <th>Item</th>
+        <th>Status</th>
       </tr>
 
 
@@ -207,6 +208,14 @@
             <td>
               <a class="p-btns" (click)="ItemData(vendor,vendors)"> Items Rates</a>
             </td> 
+            <td>
+              <ng-container  *ngIf="ItemwiseVendorRate.has(vendor[0]); else pendingView">
+               <p style="color: green;">Completed</p> 
+              </ng-container>
+              <ng-template  #pendingView>
+                <p style="color: red;">Pending</p>
+              </ng-template>
+            </td>
           </tr>
           </ng-container>
           <!-- <td style="text-align: center;">

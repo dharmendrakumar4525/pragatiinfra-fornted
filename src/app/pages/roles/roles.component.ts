@@ -12,6 +12,7 @@ import { RolesDeleteMultipleComponent } from '../roles-delete-multiple/roles-del
 import { RecentActivityService } from '@services/recent-activity.service';
 import * as moment from 'moment';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
+import { RequestService } from '@services/https/request.service';
 
 
 export interface PeriodicElement {
@@ -51,6 +52,12 @@ export class RolesComponent implements OnInit {
   rolesPermissionsAdd:any;
   rolesPermissionsDelete:any;
   rolesPermissionsDeleteMul:any;
+
+  viewPermission: any;
+  editPermission: any;
+  addPermission: any;
+  deletePermission: any;
+
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.length = e.length;
@@ -65,9 +72,9 @@ export class RolesComponent implements OnInit {
   }
   recentActivities:any;
   recentActivitiesLen:any
-  constructor(public dialog: MatDialog,private _dialog: MatDialog, private recentActivityService:RecentActivityService, private roleService:RolesService, private toast:ToastService) { }
+  constructor(private httpService: RequestService,public dialog: MatDialog,private _dialog: MatDialog, private recentActivityService:RecentActivityService, private roleService:RolesService, private toast:ToastService) { }
   addRole() {
-    if(!this.rolesPermissionsAdd?.isSelected){
+    if(!this.addPermission){
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
         panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -102,13 +109,19 @@ export class RolesComponent implements OnInit {
   ngOnInit(): void {
 
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
-    console.log(this.permissions)
-    this.rolesPermissionsAdd = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[0]
-    this.rolesPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[1]
-    this.rolesPermissionsDelete = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[2]
-    //this.rolesPermissionsDeleteMul = this.permissions.permissions[0]?.ParentChildchecklist[3]?.childList[3]
-    //this.rolesPermissionsEdit = this.permissions.permissions[0].ParentChildchecklist[3].childList[1]
-
+    const rolePermission = this.permissions.user.role
+    const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
+      this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
+        next: (resp: any) => {
+          this.addPermission=resp.dashboard_permissions[0].ParentChildchecklist[3].childList[0].isSelected;
+          this.editPermission=resp.dashboard_permissions[0].ParentChildchecklist[3].childList[1].isSelected;
+          this.deletePermission=resp.dashboard_permissions[0].ParentChildchecklist[3].childList[2].isSelected;
+          this.viewPermission=resp.dashboard_permissions[0].ParentChildchecklist[3].childList[3].isSelected;
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      });
     //console.log(this.progressPermissionsView)
     //console.log(this.progressPermissionsEdit)
 
@@ -134,7 +147,7 @@ export class RolesComponent implements OnInit {
 
   deleteRole(id){
 
-    if(!this.rolesPermissionsDelete?.isSelected){
+    if(!this.deletePermission){
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
         panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -173,7 +186,7 @@ export class RolesComponent implements OnInit {
 
 editRole(ele){
 
-  if(!this.rolesPermissionsEdit?.isSelected){
+  if(!this.editPermission){
     const dialogRef = this._dialog.open(NoPermissionsComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
@@ -237,15 +250,15 @@ checkboxLabel(row?: any): string {
 
 deleteMultipleDialog() {
 
-  // if(!this.rolesPermissionsDeleteMul?.isSelected){
-  //   const dialogRef = this._dialog.open(NoPermissionsComponent, {
-  //     width: '30%',
-  //     panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-  //     data: "you don't have permissions to delete multiple roles"
-  //     //data: supply
-  //   });
-  //   return;
-  // }
+  if(!this.deletePermission){
+    const dialogRef = this._dialog.open(NoPermissionsComponent, {
+      width: '30%',
+      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
+      data: "you don't have permissions to delete role"
+      //data: supply
+    });
+    return;
+  }
 
   if (this.selection.selected.length === 0) {
     this.toast.openSnackBar("Please select roles to delete");
@@ -311,4 +324,3 @@ deleteMultipleDialog() {
   
 
 // ];
-
