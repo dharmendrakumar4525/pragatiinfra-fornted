@@ -51,14 +51,14 @@
 
 <ng-container *ngIf="viewPermission; else noView">
   <div style="display: flex;flex-direction: row;gap:10px">
-    <div style="margin-left: 40px;width:100%;margin-top: 30px;">
+    <div style="margin-left: 40px;width: 20%;margin-top: 30px;">
       <mat-form-field appearance="outline" class="searchbar">
         <mat-icon matSuffix>search</mat-icon>
-        <input matInput type="search" placeholder="search title" class="search-input" (input)="search($event,'title')">
+        <input  matInput type="search" placeholder="search title" class="search-input" (input)="search($event,'title')">
   
       </mat-form-field>
     </div>
-    <div style=" margin-right: 600px;margin-top: 30px;display: flex;gap:10px">
+    <div style="margin-top: 30px;display: flex;gap:10px">
       <div style="margin-top: 15px;color: #94A3B8;margin-left: 40px;"> <span>Filter&nbsp;by</span></div>
       <div> <mat-form-field appearance="outline" class="datebar">
           <input matInput [matDatepicker]="startPicker" placeholder="Date" (click)="startPicker.open()"
@@ -67,19 +67,19 @@
           <mat-datepicker #startPicker></mat-datepicker>
         </mat-form-field></div>
     </div>
-    <div style="margin-top: 30px;display: flex;position: relative;right:570px;gap:10px">
+    <div style="margin-top: 30px;display: flex;gap:10px">
       <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter&nbsp;by</span></div>
       <div> <mat-form-field appearance="outline" class="datebar">
           <input matInput placeholder="Site" (input)="search($event,'site')" />
         </mat-form-field></div>
     </div>
   
-    <div style="margin-top: 30px;display: flex;position: relative;right:570px;gap:10px">
+    <div style="margin-top: 30px;display: flex;gap:10px;">
   
       <div style="margin-top: 15px;color: #94A3B8;"> <span>Filter by Status</span></div>
-      <div class="custom-form-control" style="position: relative;">
+      <div class="custom-form-control" style="width: 50%;">
   
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" style="width: 100%;">
           <mat-select [formControl]="statusOption" (selectionChange)="onStatusChange($event)">
             <mat-option [value]="item.value" *ngFor="let item of statusList">{{item.label}}</mat-option>
           </mat-select>

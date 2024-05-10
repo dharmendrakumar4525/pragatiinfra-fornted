@@ -180,6 +180,7 @@ export class MaterialRecordSheetComponent implements OnInit {
   }
   
   search(event: any, type?: any) {
+    console.log(type)
     if (this.OriginalApprovedpurchaseOrderList && this.OriginalApprovedpurchaseOrderList.length > 0) {
       if (type == 'location') {
         if (event.target.value) {
@@ -207,7 +208,9 @@ export class MaterialRecordSheetComponent implements OnInit {
       }
       else if(type=='po'){
         if (event.target.value) {
+          console.log(this.OriginalApprovedpurchaseOrderList);
           this.ApprovedpurchaseOrderList = this.OriginalApprovedpurchaseOrderList.filter(obj => obj.po_number.toLowerCase().includes(event.target.value.toLowerCase()))
+          console.log(this.ApprovedpurchaseOrderList);
         }
         else {
           this.ApprovedpurchaseOrderList = this.OriginalApprovedpurchaseOrderList;

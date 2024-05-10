@@ -221,6 +221,8 @@ export class RateApprovalUpdateComponent implements OnInit {
   * @returns A boolean indicating whether the vendor comparison is valid.
   */
   CheckVendorComparision(){
+    console.log(this.details);
+    
     let ans = false;
     for (const obj of this.details.vendorItems) {
       if (obj.items.length === this.details.items.length) {
