@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { PURCHASE_REQUEST_API, GET_SITE_API, ITEM_API, UOM_API,GET_VENDOR_API,GET_BRAND_API,GET_ROLE_API } from '@env/api_path';
+import { PURCHASE_REQUEST_API, CATEGORY_API, GET_SITE_API, ITEM_API, UOM_API,GET_VENDOR_API,GET_BRAND_API,GET_ROLE_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
@@ -46,6 +46,7 @@ export class PurchaseRequestComponent implements OnInit {
   ]
   requredByMinDate = new Date();
   id: any;
+  categoryList:any;
   siteList: any;
   vendorList:any;
   vendorSearch: string = '';
@@ -110,11 +111,14 @@ export class PurchaseRequestComponent implements OnInit {
     }
 
     let requestData: any = this.purchaseRequestForm.value;
+    const selectedCategory = this.categoryList.find((obj: { _id: any; }) => obj._id == requestData.title);
+    console.log(selectedCategory);
+    requestData['title'] = selectedCategory.name;
 
     requestData['requestNo'] = this.requestNo;
     requestData['date'] = moment(requestData.date, 'DD-MM-YYYY').toDate()
     requestData['expected_delivery_date'] = new Date(requestData.expected_delivery_date)
-
+    console.log(requestData);
    
     //for local purchase
     if (this.purchaseRequestForm.get('local_purchase').value === "yes") {
@@ -203,13 +207,15 @@ export class PurchaseRequestComponent implements OnInit {
     const site = this.http.get<any>(`${environment.api_path}${GET_SITE_API}`);
     const vendor = this.http.get<any>(`${environment.api_path}${GET_VENDOR_API}`);
     const brand = this.http.get<any>(`${environment.api_path}${GET_BRAND_API}`);
-    this.httpService.multipleRequests([UOM, item, site, vendor,brand], {}).subscribe(res => {
+    const category=this.http.get<any>(`${environment.api_path}${CATEGORY_API}`);
+    this.httpService.multipleRequests([UOM, item, site, vendor,brand,category], {}).subscribe(res => {
       if (res) {
         this.uomList = res[0].data;
         this.itemList = res[1].data;
         this.siteList = res[2].data;
         this.vendorList=res[3].data;
         this.brandList=res[4].data;
+        this.categoryList=res[5].data;
 
 
         this.filteredItemList = this.itemList;
@@ -331,12 +337,23 @@ export class PurchaseRequestComponent implements OnInit {
     this.getPurchaseList({ filter_by: this.filter_by, filter_value: item.value })
   }
 
+  selectedTitle(event: any) {
+    const title = this.categoryList.find((obj: { _id: any; }) => obj._id == event.value);
+    
+    const dynamicDataFormatted = title.name.replace(/[ ,]/g, '_');
+
+   
+
+    console.log("titleSelected", this.purchaseRequestForm);
+  }
 
   selectedSite(event: any) {
     const siteName = this.siteList.find((obj: { _id: any; }) => obj._id == event.value);
     const dynamicDataFormatted = siteName.site_name.replace(/[ ,]/g, '_');
+    console.log("title", this.purchaseRequestForm);
     const searchTerm = `${dynamicDataFormatted}/`;
     const purchase = this.http.get<any>(`${environment.api_path}${PURCHASE_REQUEST_API}`);
+
     this.httpService.multipleRequests([purchase], {}).subscribe(res => {
       if (res) {
         this.purchaseList = res[0].data; 
@@ -345,6 +362,7 @@ export class PurchaseRequestComponent implements OnInit {
         this.purchaseRequestForm.controls['purchase_request_number'].setValue(this.requestNo);
       }
     });
+    
   }
 
   

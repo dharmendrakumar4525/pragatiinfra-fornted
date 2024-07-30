@@ -58,9 +58,14 @@
     <div style="display: flex;flex-wrap: wrap;gap:40px;width:1000px">
       <div style="display: flex;flex-direction: column;">
         <label style="color: #4272BF;font-size: 14px;">Request title <span class="star">*</span></label>
-        <input placeholder="Enter title" formControlName="requestTitle"
-          style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
-      </div>
+      
+         <mat-select id="requestTitle" placeholder="Enter title" formControlName="requestTitle"
+  style="padding: 10px;width: 200px;border:1px solid #9F9F9F;border-radius: 6px;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+  <mat-option [value]="item._id" *ngFor="let item of siteList">
+    {{item.category}}
+  </mat-option>
+</mat-select>
+        </div>
       <div style="display: flex;flex-direction: column;margin-left: 100px;">
         <label style="color: #4272BF;font-size: 14px;">Request date</label>
         <input placeholder="Auto generate" formControlName="requestDate" [readonly]="true"

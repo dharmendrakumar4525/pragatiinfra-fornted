@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { PURCHASE_REQUEST_API, GET_SITE_API } from '@env/api_path';
+import { PURCHASE_REQUEST_API, GET_SITE_API, CATEGORY_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 export class PurchaserequestComponent implements OnInit {
 
   id: any;
+  categoryList:any;
   siteList: any;
   load = false;
   items: FormArray;
@@ -96,6 +97,14 @@ export class PurchaserequestComponent implements OnInit {
     })
   }
 
+  getCategoryList() {
+    this.httpService.GET(CATEGORY_API, {}).subscribe(res => {
+      this.categoryList = res;
+      console.log('Category List:', this.categoryList); // Add this line to check the data
+    });
+  }
+  
+
   addItem(): void {
     this.items = this.purchaseRequestForm.get('items') as FormArray;
     this.items.push(this.createItem());
@@ -115,6 +124,7 @@ export class PurchaserequestComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSiteList();
+    this.getCategoryList();
   }
 
 }

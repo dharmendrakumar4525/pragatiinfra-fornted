@@ -4,11 +4,12 @@ export const environment = {
   encryption: false,
   environmentType:'local',
   
-  api_path: 'https://stagingpr.avidusinteractive.com/api/web',
+ api_path: 'https://stagingpr.avidusinteractive.com/api/web',
   api_base_path: 'https://stagingpr.avidusinteractive.com',
 
-  // api_path: 'https://pr.avidusinteractive.com/api/web',
-  //  api_base_path: 'https://pr.avidusinteractive.com',
+
+  //api_path: 'https://pr.avidusinteractive.com/api/web',
+   //api_base_path: 'https://pr.avidusinteractive.com',
 
   cookiesOptions: {
     storeUnencoded: true,

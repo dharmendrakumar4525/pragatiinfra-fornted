@@ -58,9 +58,13 @@
         <div style="display: flex;flex-wrap: wrap;gap:10px; max-width: 100%;">
           <div class="flex-div" style="display: flex;flex-direction: column">
             <label style="color: #4272BF;font-size: 14px;">Request title <span class="star">*</span></label>
-            <input placeholder="Enter title" formControlName="title"
-              style="width:75%;padding:10px;border-radius: 6px;border:1px solid #ccc;cursor: pointer;margin-top: 3px;font-family: 'Poppins'; height: 50px;">
-          </div>
+              <mat-select id="title" placeholder="Select title" formControlName="title" (selectionChange)="selectedTitle($event)"
+              style="padding: 10px;width: 75%;border:1px solid #ccc;border-radius: 6px;cursor: pointer;font-family: 'Poppins';">
+              <mat-option [value]="item._id" *ngFor="let item of categoryList">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+            </div>
           <div class="flex-div custom-form-group">
             <label style="color: #4272BF;font-size: 14px;">Request date</label>
             <div class="custom-form-control">
