@@ -212,7 +212,7 @@ export class PurchaseRequestComponent implements OnInit {
       if (res) {
         this.uomList = res[0].data;
         this.itemList = res[1].data;
-        this.siteList = res[2].data;
+       
         this.vendorList=res[3].data;
         this.brandList=res[4].data;
         this.categoryList=res[5].data;
@@ -487,7 +487,8 @@ selectedItem(event: any, i: any) {
       });
 
 
-    
+      this.siteList= this.permissions.user.sites
+      console.log(this.siteList);
 
     this.getList();
     this.addItem();

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '@env/environment';
+import { GET_SITE_API } from '@env/api_path';
 import { RolesService } from '@services/roles.service';
 import { ToastService } from '@services/toast.service';
 import { UsersService } from '@services/users.service';
@@ -13,30 +16,42 @@ import { UsersService } from '@services/users.service';
 export class AddUserComponent implements OnInit {
   hide = true;
   addUserForm: FormGroup;
-
   emailRegex = new RegExp(
     /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
   );
-  roles:any;
+  siteList: any[] = [];
+  roles: any[] = [];
   phoneRegex = new RegExp(/^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/);
-  constructor( private _fb: FormBuilder,private router: Router,private userService:UsersService,private toast:ToastService, private roleService:RolesService) { }
+
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private http: HttpClient,
+    private userService: UsersService,
+    private toast: ToastService,
+    private roleService: RolesService
+  ) {}
 
   ngOnInit(): void {
+    // Fetch roles
+    this.roleService.getRoles().subscribe(data => {
+      this.roles = data;
+    });
 
-    this.roleService.getRoles().subscribe(data=>{
-      this.roles = data
-      
-    })
+    // Fetch sites
+    this.http.get<any>(`${environment.api_path}${GET_SITE_API}`).subscribe(res => {
+      this.siteList = res.data;
+    });
 
-    this.addUserForm = this._fb.group({
+    // Initialize form
+    this.addUserForm = this.fb.group({
       name: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
       email: [null, [Validators.required, Validators.pattern(this.emailRegex)]],
       phone: [null, [Validators.required, Validators.pattern(this.phoneRegex)]],
       role: [null, [Validators.required]],
+      sites: [[], Validators.required],  // Initialize as an empty array
       password: [null, [Validators.required, Validators.minLength(6)]],
-      cPassword: [null, [Validators.required]],
-
-      
+      cPassword: [null, [Validators.required]]
     });
   }
 
@@ -59,47 +74,30 @@ export class AddUserComponent implements OnInit {
     return this.addUserForm.get('cPassword');
   }
 
-  addUser(){
+  addUser() {
     if (this.addUserForm.invalid) {
-      this.toast.openSnackBar(
-        'Enter Valid Details'
-      );
-      //this.clearForm = true;
-      //this.clearForm = true;
+      this.toast.openSnackBar('Enter Valid Details');
+      this.addUserForm.markAllAsTouched();
+      return;
+    }
+console.log(this.addUserForm);
+    if (this.addUserForm.value.password !== this.addUserForm.value.cPassword) {
+      this.toast.openSnackBar('Password and Confirm password should be same');
       this.addUserForm.markAllAsTouched();
       return;
     }
 
-    if (this.addUserForm.value.password !== this.addUserForm.value.cPassword) {
-      this.toast.openSnackBar(
-        'Password and Confirm password should be same'
-      );
-      this.addUserForm.markAllAsTouched();
-      return;
-      }
-     delete this.addUserForm.value.cPassword
+    delete this.addUserForm.value.cPassword;
 
-    this.userService.addUser(this.addUserForm.value).subscribe(
-
-      {
-        next: (data: any) =>  {
-          console.log(data)
-         
-          this.toast.openSnackBar('User Created Successfully');
-           this.router.navigate(['/users']);
-           
-          
-        },
-        error: (err) => {
-          this.toast.openSnackBar("Something went wrong. Unable to Create User");
-          
-  
-          
-  
-        }
+    this.userService.addUser(this.addUserForm.value).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.toast.openSnackBar('User Created Successfully');
+        this.router.navigate(['/users']);
+      },
+      error: (err) => {
+        this.toast.openSnackBar('Something went wrong. Unable to Create User');
       }
-  
-    )
+    });
   }
-
 }

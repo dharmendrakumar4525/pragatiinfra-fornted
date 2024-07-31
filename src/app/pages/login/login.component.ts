@@ -73,6 +73,7 @@ show: boolean= false;
 
           this.auth.setToken(data['token']);
           this.auth.setUser(data['user']);
+        
           this.auth.setPermission(data['module_permissions']);
           this.auth.setModules(data['modules']);
 
