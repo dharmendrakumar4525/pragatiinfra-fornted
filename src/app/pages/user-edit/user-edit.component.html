@@ -1,68 +1,74 @@
-
 <mat-toolbar style="background-color: #fff !important;">
-    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" >
-        <div style="padding: 1rem;margin-top: 60px;font-size: 30px;">  
-        <span>Pragati Infra</span>
-</div>     
-      </mat-toolbar-row>
-        
-      <mat-toolbar-row>
-        <hr style="width:100%">
-      </mat-toolbar-row>
-  </mat-toolbar>
-  <div style="height: 150vh;margin-bottom: 10px;" >
-    <div><h2 style="padding:10px 50px ;font-family: 'Poppins';">Update user</h2></div>
-    <form [formGroup]="editUserForm" >
-<div>
-    <label>Name</label><br>
-    <mat-form-field appearance="outline">
+  <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+    <div style="padding: 1rem; margin-top: 60px; font-size: 30px;">
+      <span>Pragati Infra</span>
+    </div>
+  </mat-toolbar-row>
+  <mat-toolbar-row>
+    <hr style="width: 100%;">
+  </mat-toolbar-row>
+</mat-toolbar>
+<div style="height: 150vh; margin-bottom: 10px;">
+  <div>
+    <h2 style="padding: 10px 50px; font-family: 'Poppins';">Update User</h2>
+  </div>
+  <form [formGroup]="editUserForm">
+    <div>
+      <label>Name</label><br>
+      <mat-form-field appearance="outline">
         <mat-label>Enter Name</mat-label>
         <input matInput formControlName="name">
-        <mat-error *ngIf="name.invalid && ( name.dirty || name.touched )">
+        <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">
           <span>Please provide a valid name</span>
         </mat-error>
       </mat-form-field><br>
 
       <label>Email</label><br>
       <mat-form-field appearance="outline">
-          <mat-label>Enter email</mat-label>
-          <input matInput formControlName="email">
-          <mat-error *ngIf="email.invalid && ( email.dirty || email.touched )">
-            <span>Please provide a valid email</span>
-          </mat-error>
-        </mat-form-field><br>
+        <mat-label>Enter Email</mat-label>
+        <input matInput formControlName="email">
+        <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
+          <span>Please provide a valid email</span>
+        </mat-error>
+      </mat-form-field><br>
 
-        <label>Contact Number</label><br>
-        <mat-form-field appearance="outline">
-            <mat-label>Enter Contact Number</mat-label>
-            <input matInput formControlName="phone">
-            <mat-error *ngIf="phone.invalid && ( phone.dirty || phone.touched )">
-              <span>Please provide a valid phone</span>
-            </mat-error>
-          </mat-form-field><br>
-          
-          <label>Role</label><br>
-          <mat-form-field appearance="outline">
-            <mat-label>Enter role</mat-label>
-            <mat-select formControlName="role">
-              <mat-option *ngFor="let role of roles" [value]="role.role">{{role.role}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="role.invalid && ( role.dirty || role.touched )">
-              <span>Please provide a valid role</span>
-            </mat-error>
-          </mat-form-field><br>
+      <label>Contact Number</label><br>
+      <mat-form-field appearance="outline">
+        <mat-label>Enter Contact Number</mat-label>
+        <input matInput formControlName="phone">
+        <mat-error *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+          <span>Please provide a valid phone</span>
+        </mat-error>
+      </mat-form-field><br>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Enter Password</mat-label>
-            <input matInput type="password" formControlName="password">
-            <!-- <mat-error *ngIf="password.invalid && ( password.dirty || password.touched )">
-              <span>Please provide a valid password</span>
-            </mat-error> -->
-          </mat-form-field><br>
+      <label>Role</label><br>
+      <mat-form-field appearance="outline">
+        <mat-label>Enter Role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option *ngFor="let role of roles" [value]="role.role">{{ role.role }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="role.invalid && (role.dirty || role.touched)">
+          <span>Please provide a valid role</span>
+        </mat-error>
+      </mat-form-field><br>
 
-       
+      <label>Select Sites</label><br>
+      <mat-form-field appearance="outline">
+        <mat-label>Select Sites</mat-label>
+        <mat-select formControlName="sites" multiple>
+          <mat-option *ngFor="let site of siteList" [value]="site._id">
+            {{ site.site_name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field><br>
 
-            <button mat-button (click)="updateUser()">Submit</button>
+      <label>Enter Password</label><br>
+      <mat-form-field appearance="outline">
+        <mat-label>Enter Password</mat-label>
+        <input matInput type="password" formControlName="password">
+      </mat-form-field><br>
+
+      <button mat-button (click)="updateUser()">Submit</button>
     </div>
   </form>
-    </div>
+</div>

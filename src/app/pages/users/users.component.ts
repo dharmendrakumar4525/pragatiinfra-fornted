@@ -1,4 +1,3 @@
-39
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastService } from '@services/toast.service';
@@ -19,6 +18,7 @@ export interface PeriodicElement {
   Name: string;
   Email: string;
   Roles: string;
+  Sites:string;
   Action: string;
 
 }
@@ -31,7 +31,7 @@ export interface PeriodicElement {
 export class UsersComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   checked = false;
-  displayedColumns = ['SelectAll', 'No', 'name', 'email', 'role',
+  displayedColumns = ['SelectAll', 'No', 'name', 'email', 'role', 'sites',
     'Action']
   dataSource = null;
   users: any
@@ -87,11 +87,19 @@ export class UsersComponent implements OnInit {
     //this.userPermissionsDeleteMul = this.permissions.permissions[0]?.ParentChildchecklist[4]?.childList[3]
     this.userService.getUserss().subscribe(data => {
       //this.spinner.hide()
-      this.users = data
+
+
+      this.users = data.map(user => {
+        const siteNames = user.sites.map(site => site.site_name).join(', ');
+        return {
+          ...user,
+          sites: siteNames
+        };
+      });
       this.usersLen = this.users.length
       this.dataSource = new MatTableDataSource(this.users);
       this.dataSource.paginator = this.paginator;
-      //console.log(this.roles)
+      console.log(this.users)
     });
     this.recentActivityService.getRecentAtivities().subscribe(data => {
       this.recentActivities = data
@@ -102,6 +110,8 @@ export class UsersComponent implements OnInit {
 
     });
   }
+
+  
 
   deleteUser(id) {
     if (!this.deletePermission) {
