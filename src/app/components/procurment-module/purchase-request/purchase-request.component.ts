@@ -48,6 +48,7 @@ export class PurchaseRequestComponent implements OnInit {
   id: any;
   categoryList:any;
   siteList: any;
+  superSiteList:any;
   vendorList:any;
   vendorSearch: string = '';
   filteredVendorList: any[] = [];
@@ -208,21 +209,30 @@ export class PurchaseRequestComponent implements OnInit {
     const vendor = this.http.get<any>(`${environment.api_path}${GET_VENDOR_API}`);
     const brand = this.http.get<any>(`${environment.api_path}${GET_BRAND_API}`);
     const category=this.http.get<any>(`${environment.api_path}${CATEGORY_API}`);
-    this.httpService.multipleRequests([UOM, item, site, vendor,brand,category], {}).subscribe(res => {
+    this.httpService.multipleRequests([UOM, item, vendor,brand,site,category], {}).subscribe(res => {
       if (res) {
         this.uomList = res[0].data;
         this.itemList = res[1].data;
-       
-        this.vendorList=res[3].data;
-        this.brandList=res[4].data;
+
+        this.vendorList=res[2].data;
+        this.brandList=res[3].data;
+        console.log(this.brandList);
+        
+        this.superSiteList=res[4].data;
         this.categoryList=res[5].data;
-
-
         this.filteredItemList = this.itemList;
         this.filteredBrandList = this.brandList;
+       
+        if(this.permissions.user.role === "superadmin"){
+        
+           this.siteList= this.superSiteList;
+          
+         }
         
       }
     })
+
+   
     
   }
 
@@ -485,7 +495,6 @@ selectedItem(event: any, i: any) {
           console.log(err)
         }
       });
-
 
       this.siteList= this.permissions.user.sites
       console.log(this.siteList);

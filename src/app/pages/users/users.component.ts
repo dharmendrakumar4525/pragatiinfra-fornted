@@ -131,7 +131,16 @@ export class UsersComponent implements OnInit {
           this.toast.openSnackBar("User deleted Successfully");
           this.userService.getUserss().subscribe(data => {
             //this.spinner.hide()
-            this.users = data
+
+            this.users = data.map(user => {
+              const siteNames = user.sites.map(site => site.site_name).join(', ');
+              return {
+                ...user,
+                sites: siteNames
+              };
+            });
+
+           
             this.usersLen = this.users.length
             this.dataSource = new MatTableDataSource(this.users);
             this.dataSource.paginator = this.paginator;

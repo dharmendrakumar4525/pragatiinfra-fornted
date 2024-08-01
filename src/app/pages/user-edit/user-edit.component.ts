@@ -110,6 +110,7 @@ export class UserEditComponent implements OnInit {
     }
 
     console.log(this.editUserForm);
+    
     this.userService.editUser(this.editUserForm.value, this.user['_id']).subscribe({
       next: () => {
         this.toast.openSnackBar('User Updated Successfully');
