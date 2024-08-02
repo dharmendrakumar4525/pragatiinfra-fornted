@@ -369,7 +369,9 @@ export class PurchaseRequestComponent implements OnInit {
         this.purchaseList = res[0].data; 
         const filteredList = this.purchaseList.filter(item => item.siteData.site_name.includes(siteName.site_name));
         this.requestNo = filteredList.length + 1;
+        
         this.purchaseRequestForm.controls['purchase_request_number'].setValue(this.requestNo);
+        console.log("PO Numer", this.purchaseRequestForm.value.purchase_request_number)
       }
     });
     
