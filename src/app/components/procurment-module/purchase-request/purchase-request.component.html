@@ -285,6 +285,7 @@
               <th>Quantity*</th>
               <th>Brand Name</th>
               <th>Remarks</th>
+              <th>Upload</th>
               <th>Action</th>
             </tr>
   
@@ -363,6 +364,13 @@
                 
                   <td>
                     <input placeholder="Enter" formControlName="remark" class="pr-form-field">
+                  </td>
+                  <td>
+                    <button
+              style="padding: 8px ;width: 120px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';"
+              (click)="addItem()">
+             Upload File 
+            </button>
                   </td>
                   <td>
                     <div class="action-btn-wrapper">
