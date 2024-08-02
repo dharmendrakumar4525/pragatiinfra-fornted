@@ -11,26 +11,15 @@
       <button mat-button [matMenuTriggerFor]="menu"> <mat-icon [matBadge]="recentActivitiesLen"
           matBadgeColor="warn">notifications</mat-icon></button>
       <mat-menu #menu="matMenu">
-        <div class="scroll-bar1" fxLayout="column" style="height: 500px;">
+        <div class="scroll-bar1" fxLayout="column" style="height: 450px; width:300px;padding: 10px; padding-top:30px;padding-bottom: 30px;">
           <div fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
-            <div mat-card-avatar class="example-header-image"></div>
-            <div class="notification-container">
+           
+            <div class="notification-container" style="margin-left: 10px; width: 280px;">
               <div class="content">{{data.description}}
-                <div class="time" style="color: #BBBBBB;">{{data.time}}</div><br>
+                <div class="time" style="color:#BBBBBB">{{data.time}}</div><br>
               </div>
             </div>
-
           </div>
-          <!-- <div fxFlex="row" fxLayoutAlign="start" *ngFor="let num of [1,2,3,]">
-        <div mat-card-avatar class="example-header-image"></div>
-        <div >
-          <div class="content" style="margin-left: 10px;"><b>Kate: .</b>
-            <div class="time">1 hour ago</div>
-          </div>
-      </div>
-
-    </div> -->
-
         </div>
       </mat-menu>
     </div>

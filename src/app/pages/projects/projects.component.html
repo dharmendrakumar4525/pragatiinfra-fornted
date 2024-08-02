@@ -233,7 +233,7 @@
       <div>
         <hr
           style="
-            width: 750px;
+            width: 700px;
             border: 1px solid #233a61;
             margin-left: 30px;
             background-color: #233a61;
@@ -254,6 +254,7 @@
             fxLayout="row"
             fxLayoutGap="50px grid"
             fxLayoutAlign="space-around center"
+            style="padding: 20px;"
           >
             <div
               fxFlex="25%"
@@ -416,12 +417,12 @@
           fxLayout="row"
           fxLayoutAlign="left"
           style="
-            height: 70vh;
+            height: 65vh;
             background-color: #fafafa;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
           "
         >
-          <div class="scroll-bar1" fxLayout="column">
+          <div class="scroll-bar1" fxLayout="column" style="height: 60vh;">
             <span
               style="
                 font-size: 15px;
@@ -437,6 +438,7 @@
               fxFlex="row"
               fxLayoutAlign="start"
               *ngFor="let data of recentActivities"
+              
             >
              
               <div style="margin-left: 10px">

@@ -32,17 +32,16 @@
           matBadgeColor="warn">notifications</mat-icon></button>
       <mat-menu #menu="matMenu">
         <div style="height: 450px;margin-top: 20px;">
-          <div class="scroll-bar2">
+          <div class="scroll-bar2" fxLayout="column" style="height: 450px; width:300px;padding: 10px; padding-top:30px;padding-bottom: 30px;">
             <div fxLayout="row" fxLayoutGap="10px" *ngFor="let data of recentActivities">
-              <div mat-card-avatar class="example-header-image"></div>
-
-              <div class="notification-container">
-                <div class="content">{{data.description}}
-                  <div class="time" style="color: #BBBBBB;">{{data.time}}</div><br>
-                </div>
+              
+                 
+                  <div class="notification-container" style="margin-left: 10px; width: 280px;">
+                    <div class="content">{{data.description}}
+                      <div class="time" style="color:#BBBBBB">{{data.time}}</div><br>
+                    </div>
+                  </div>
               </div>
-            </div><br>
-
           </div>
         </div>
 

@@ -14,26 +14,7 @@
           style="font-size: medium;margin-top: 5px;right:-10px;">group_add</mat-icon>
         Add Member </button>
 
-      <button mat-button [matMenuTriggerFor]="menu"><mat-icon [matBadge]="recentActivitiesLen" matBadgeColor="warn"
-          style="margin-left:-10px">notifications</mat-icon></button>
-      <mat-menu #menu="matMenu">
-        <div style="height: 450px;margin-top: 20px;">
-          <div class="scroll-bar2" fxLayout="column">
-            <div fxFlex="row" fxLayoutAlign="start" *ngFor="let data of recentActivities">
-              <div mat-card-avatar class="example-header-image"></div>
-
-              <div class="notification-container">
-                <div class="content">{{data.description}}
-                  <div class="time" style="color: #BBBBBB;">{{data.time}}</div><br>
-                </div>
-              </div>
-
-            </div><br>
-
-
-          </div>
-        </div>
-      </mat-menu>
+      
 
     </div>
   </mat-toolbar-row>
