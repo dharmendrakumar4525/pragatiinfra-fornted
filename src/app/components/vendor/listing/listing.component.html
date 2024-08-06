@@ -21,10 +21,11 @@
             </div>
           </div>
           <button mat-button class="submit-btn" (click)="add()">Add New</button>
-          <button mat-button class="submit-btn" (click)="add()">Import</button>
+          <button mat-button class="submit-btn" (click)="fileInput.click()">Import</button>
           <button mat-button class="other-btn" (click)="exportXlSX()">
             Export
           </button>
+          <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)" />
         </div>
       </div>
     </div>
@@ -43,7 +44,6 @@
             <th scope="col">Email</th>
             <th scope="col">Payment Term</th>
             <th scope="col">Term & Condtiion</th>
-            <!-- <th scope="col">Address </th> -->
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -60,11 +60,6 @@
             <td>{{ item?.email }}</td>
             <td>{{ item?.payment_terms }}</td>
             <td>{{ item?.terms_condition }}</td>
-            <!-- <td>{{item?.address?.street_address + ' '
-            + item?.address?.street_address2 + ' '
-            + item?.address?.state + ' '
-            +item?.address?.city + ' '
-            +item?.address?.country}}</td>-->
             <td>
               <div class="action-btn-wrapper">
                 <a
@@ -98,3 +93,15 @@
     </h3>
   </ng-template>
 </div>
+
+<!-- Error Dialog Template -->
+
+<ng-template #errorDialog let-data>
+  <h1 mat-dialog-title style="font-size: 15px; font-weight: bold;">Error in Imported Vendor List</h1>
+  <div mat-dialog-content [innerHTML]="data.message" class="error-dialog-content"></div>
+  <div mat-dialog-actions class="modal-actions">
+    <button mat-button class="modal-close-button" (click)="dialog.closeAll()">Close</button>
+  </div>
+</ng-template>
+
+

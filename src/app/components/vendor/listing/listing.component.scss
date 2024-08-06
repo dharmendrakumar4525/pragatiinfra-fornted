@@ -124,6 +124,30 @@ mat-form-field {
   flex-direction: row;
 }
 
+.error-dialog-content {
+  max-height: 400px; /* Adjust this height to fit your design needs */
+  overflow-y: auto;  /* Allows scrolling if content exceeds max-height */
+  word-wrap: break-word;
+  font-size: 12px; /* Ensures long words are broken up */
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;/* Centers the button horizontally */
+ /* Adjust padding as needed */
+}
+
+.modal-close-button {
+  background-color: #233a61; /* Background color for the button */
+  color: white; /* Text color for the button */
+  font-size: 13px;
+  
+  height:35px; /* Adjust font size as needed */
+  border-radius: 4px; /* Optional: rounds the button corners */
+}
+
+
 p,
 td,
 td {
