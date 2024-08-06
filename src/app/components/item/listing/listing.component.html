@@ -7,21 +7,21 @@
       <div class="header-right">
         <div class="buttons-containers">
           <div class="filter-con">
-            <div dir="ltr" class="labeled-outlined-field-wrapper">
-              <mat-form-field class="full-width drop-down outline-filter-field hide-form-bottom-field"
-                appearance="outline">
-                <input matInput placeholder="Search by name" (input)="search($event)">
-              </mat-form-field>
-            </div>
+            <mat-form-field class="full-width drop-down outline-filter-field hide-form-bottom-field" appearance="outline">
+              <input matInput placeholder="Search by name" (input)="search($event)">
+            </mat-form-field>
           </div>
           <button mat-button class="submit-btn" (click)="add()">Add New</button>
-          <button mat-button class="submit-btn" (click)="add()">Import</button>
+          <button mat-button class="submit-btn">
+            <input type="file" (change)="importFile($event)" accept=".csv" style="display: none;" #fileInput>
+            <span (click)="fileInput.click()">Import</span>
+          </button>
           <button mat-button class="other-btn" (click)="exportXlSX()">Export</button>
         </div>
       </div>
     </div>
     <div class="section-body">
-      <table class="table  pragati-table">
+      <table class="table pragati-table">
         <thead>
           <tr>
             <th scope="col">SN.</th>
@@ -32,16 +32,14 @@
             <th scope="col">UOM</th>
             <th scope="col">GST</th>
             <th scope="col">Specification</th>
-            <th scope="col">Action </th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of itemList;let i = index">
-            <td scope="row">{{i+1}}</td>
+          <tr *ngFor="let item of itemList; let i = index">
+            <td scope="row">{{i + 1}}</td>
             <td>{{item.item_number}}</td>
             <td>{{item.item_name}}</td>
-            <!-- <td>{{getCategory(item.category)}}</td>
-          <td>{{getSubCategory(item.sub_category)}}</td> -->
             <td>{{item?.categoryDetail?.name}}</td>
             <td>{{item?.subCategoryDetail?.subcategory_name}}</td>
             <td>{{item?.uomDetail?.uom_name}}</td>
@@ -49,38 +47,31 @@
             <td>{{item.specification}}</td>
             <td>
               <div class="action-btn-wrapper">
-                <a class="action-btn" (click)="edit(item._id)" title="Edit"><i class="fa fa-edit"></i>
-                </a>
+                <a class="action-btn" (click)="edit(item._id)" title="Edit"><i class="fa fa-edit"></i></a>
                 <a class="action-btn" (click)="delete(item._id)" title="Delete"><i class="fa fa-trash"></i></a>
               </div>
             </td>
           </tr>
-          <!-- <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td colspan="2">Larry the Bird</td>
-          <td>@twitter</td>
-        </tr> -->
         </tbody>
       </table>
-      <mat-paginator #paginator class="demo-paginator" (page)="onPageChange($event)" [length]="length"
-        [pageSize]="pageSize" [disabled]="disabled" [showFirstLastButtons]="showFirstLastButtons"
-        [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize"
-        [pageIndex]="pageIndex" aria-label="Select page">
+      <mat-paginator #paginator class="demo-paginator" (page)="onPageChange($event)"
+        [length]="length" [pageSize]="pageSize" [disabled]="disabled"
+        [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions"
+        [hidePageSize]="hidePageSize" [pageIndex]="pageIndex" aria-label="Select page">
       </mat-paginator>
     </div>
   </ng-container>
   <ng-template #noView>
-    <h3 style="    display: flex;
-justify-content: center;
-margin-top: 2%;
-font-size: 160%;
-font-weight: bolder;
-color: grey;">You don't have permissions to view.</h3>
+    <h3 style="display: flex; justify-content: center; margin-top: 2%; font-size: 160%; font-weight: bolder; color: grey;">
+      You don't have permissions to view.
+    </h3>
   </ng-template>
 </div>
+
+<ng-template #errorDialog let-data>
+  <h1 mat-dialog-title style="font-size: 15px; font-weight: bold;">Error in Imported Vendor List</h1>
+  <div mat-dialog-content [innerHTML]="data.message" class="error-dialog-content"></div>
+  <div mat-dialog-actions class="modal-actions">
+    <button mat-button class="modal-close-button" (click)="dialog.closeAll()">Close</button>
+  </div>
+</ng-template>
