@@ -184,6 +184,7 @@ export class PurchaseRequestComponent implements OnInit {
         this.purchaseRequestForm.markAsUntouched();
         this.option = 2;
         this.getPurchaseList({ filter_by: this.filter_by, filter_value: this.statusOption.value });
+
       },
       error: (err) => {
         this.load = false;
@@ -226,7 +227,7 @@ export class PurchaseRequestComponent implements OnInit {
         if(this.permissions.user.role === "superadmin"){
         
            this.siteList= this.superSiteList;
-          
+          console.log(this.siteList);
          }
         
       }
@@ -267,7 +268,7 @@ export class PurchaseRequestComponent implements OnInit {
       category: new FormControl(null),
       subCategory: new FormControl(null),
       attachment: new FormControl(''),
-      
+      files: new FormControl([]),
       remark: new FormControl(''),
       uom: new FormControl(''),
       brandName:new FormControl('',Validators.required),
@@ -282,6 +283,7 @@ export class PurchaseRequestComponent implements OnInit {
       attachment: new FormControl(''),
       remark: new FormControl(''),
       uom: new FormControl(''),
+      files: new FormControl([]),
       brandName:new FormControl('',Validators.required),
       rate:new FormControl(''),
       gst:new FormControl(''),
@@ -381,9 +383,28 @@ export class PurchaseRequestComponent implements OnInit {
   
   getPurchaseList(filterObj: any) {
     this.httpService.GET(PURCHASE_REQUEST_API, filterObj).subscribe({
+
       next: (resp: any) => {
+        console.log(resp.data);
+        if(this.permissions.user.role === "superadmin"){
+        
         this.originalPurchaseList = resp.data;
-        this.purchaseList = resp.data;
+        this.purchaseList = resp.data;  
+        }
+        else
+        {
+          const purchaseRequests= resp.data;
+          const filteredPurchaseRequests = purchaseRequests.filter(pr => 
+            this.siteList.some(site => site._id === pr.site)
+        );
+        
+        console.log(filteredPurchaseRequests);
+        this.originalPurchaseList = filteredPurchaseRequests;
+        this.purchaseList = filteredPurchaseRequests;  
+        }
+       
+
+
       }
     });
   }
@@ -499,7 +520,7 @@ selectedItem(event: any, i: any) {
       });
 
       this.siteList= this.permissions.user.sites
-      console.log(this.siteList);
+      console.log("SiteSelect", this.siteList);
 
     this.getList();
     this.addItem();

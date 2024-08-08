@@ -268,6 +268,7 @@ export class AddProjectComponent implements OnInit {
     )
   }
   errorMessage: string | null = null; // Initialize errorMessage to null
+
   uploadFile(event: any) {
     let reader = new FileReader(); // HTML5 FileReader API
     let file = event.target.files[0];
@@ -276,7 +277,7 @@ export class AddProjectComponent implements OnInit {
       const allowedFileTypes = ['image/jpeg', 'image/png', 'image/gif'];
       if (allowedFileTypes.includes(file.type)) {
         // Check file size
-        const maxSizeInBytes = 1024 * 1024; // 20kb
+        const maxSizeInBytes = 1024 * 1024; // 1MB
         if (file.size <= maxSizeInBytes) {
           // File type and size are within the limits
           reader.readAsDataURL(file);
@@ -292,6 +293,7 @@ export class AddProjectComponent implements OnInit {
       }
     }
   }
+  
   displayMater() {
     this.showMaster = true;
     this.showAddProject = false

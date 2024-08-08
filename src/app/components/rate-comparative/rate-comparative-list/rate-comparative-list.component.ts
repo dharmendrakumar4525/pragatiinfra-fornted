@@ -36,6 +36,7 @@ export class RateComparativeListComponent implements OnInit {
     },
   ]
   rateComparativeList: any;
+  siteList : any;
   filter_by = "status";
   filter_value = "pending";
   requestType = "new";
@@ -73,10 +74,28 @@ export class RateComparativeListComponent implements OnInit {
   getList(filterObj: any) {
     this.httpService.GET(RATE_COMPARATIVE_API, filterObj).subscribe({
       next: (resp: any) => {
-        this.originalRateComparativeList = resp.data;
-        this.rateComparativeList = resp.data;
+       
 
         const x = this.originalRateComparativeList
+
+        console.log(resp.data);
+        if(this.permissions.user.role === "superadmin"){
+        
+          this.originalRateComparativeList = resp.data;
+          this.rateComparativeList = resp.data;
+        }
+        else
+        {
+          const ComparativeList= resp.data;
+          const filteredComparativeList = ComparativeList.filter(pr => 
+            this.siteList.some(site => site._id === pr.site)
+        );
+        
+        
+        console.log(filteredComparativeList);
+        this.originalRateComparativeList = filteredComparativeList;
+        this.rateComparativeList = filteredComparativeList;  
+        }
 
 
   
@@ -205,6 +224,8 @@ export class RateComparativeListComponent implements OnInit {
           });
 
     this.getReqNO();
+    this.siteList= this.permissions.user.sites
+      console.log("SiteSelect", this.siteList);
 
   }
 }

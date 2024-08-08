@@ -17,6 +17,7 @@ export class PurchaseRequestListComponent implements OnInit {
   filter_by = "status";
   filter_value = "pending";
   requestType = "new";
+  siteList: any;
   originalPurchaseList: any = [];
   permissions: any;
   constructor(private router: Router,
@@ -36,8 +37,25 @@ export class PurchaseRequestListComponent implements OnInit {
   getList(filterObj: any) {
     this.httpService.GET(PURCHASE_REQUEST_API, filterObj).subscribe({
       next: (resp: any) => {
+        console.log(resp.data);
+        if(this.permissions.user.role === "superadmin"){
+        
         this.originalPurchaseList = resp.data;
-        this.purchaseList = resp.data;
+        this.purchaseList = resp.data;  
+        }
+        else
+        {
+          const purchaseRequests= resp.data;
+          const filteredPurchaseRequests = purchaseRequests.filter(pr => 
+            this.siteList.some(site => site._id === pr.site)
+        );
+        
+        console.log(filteredPurchaseRequests);
+        this.originalPurchaseList = filteredPurchaseRequests;
+        this.purchaseList = filteredPurchaseRequests;  
+        }
+
+
       }, error: (err) => {
         if (err.errors && !isEmpty(err.errors)) {
           let errMessage = '<ul>';
@@ -138,6 +156,9 @@ export class PurchaseRequestListComponent implements OnInit {
           console.log(err)
         }
       });
+
+      this.siteList= this.permissions.user.sites
+      console.log("SiteSelect", this.siteList);
   }
 
 }
