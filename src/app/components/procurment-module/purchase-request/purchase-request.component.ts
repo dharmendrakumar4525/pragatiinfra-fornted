@@ -182,6 +182,7 @@ export class PurchaseRequestComponent implements OnInit {
         this.snack.notify("Purchase request has been created.", 1);
         this.purchaseRequestForm.reset();
         this.purchaseRequestForm.markAsUntouched();
+        
         this.option = 2;
         this.getPurchaseList({ filter_by: this.filter_by, filter_value: this.statusOption.value });
 
@@ -203,6 +204,12 @@ export class PurchaseRequestComponent implements OnInit {
     });
     
   }
+
+  createRequest() {
+    this.option = 1;
+    window.location.reload();
+  }
+  
   getList() {
     const UOM = this.http.get<any>(`${environment.api_path}${UOM_API}`);
     const item = this.http.get<any>(`${environment.api_path}${ITEM_API}`);
@@ -383,31 +390,31 @@ export class PurchaseRequestComponent implements OnInit {
   
   getPurchaseList(filterObj: any) {
     this.httpService.GET(PURCHASE_REQUEST_API, filterObj).subscribe({
-
       next: (resp: any) => {
         console.log(resp.data);
-        if(this.permissions.user.role === "superadmin"){
         
-        this.originalPurchaseList = resp.data;
-        this.purchaseList = resp.data;  
-        }
-        else
-        {
-          const purchaseRequests= resp.data;
+        // Format the Date field for each purchase request
+        resp.data.forEach((purchaseRequest: any) => {
+          purchaseRequest.date = moment(purchaseRequest.date).format('YYYY-MM-DD');
+        });
+        
+        if (this.permissions.user.role === "superadmin") {
+          this.originalPurchaseList = resp.data;
+          this.purchaseList = resp.data;  
+        } else {
+          const purchaseRequests = resp.data;
           const filteredPurchaseRequests = purchaseRequests.filter(pr => 
             this.siteList.some(site => site._id === pr.site)
-        );
-        
-        console.log(filteredPurchaseRequests);
-        this.originalPurchaseList = filteredPurchaseRequests;
-        this.purchaseList = filteredPurchaseRequests;  
+          );
+          
+          console.log(filteredPurchaseRequests);
+          this.originalPurchaseList = filteredPurchaseRequests;
+          this.purchaseList = filteredPurchaseRequests;  
         }
-       
-
-
       }
     });
   }
+  
 
   dateFilter(event: MatDatepickerInputEvent<Date>) {
     
@@ -450,19 +457,52 @@ displayBrandFn(brand: any): string {
   return brand ? brand.brand_name : '';
 }
 
-
-
 selectedItem(event: any, i: any) {
-  let category = this.itemList.filter(obj => obj._id == event.option.value._id)[0]?.categoryDetail.name;
-  let subCategory = this.itemList.filter(obj => obj._id == event.option.value._id)[0]?.subCategoryDetail.subcategory_name;
-  let uom = this.itemList.filter(obj => obj._id == event.option.value._id)[0]?.uomDetail.uom_name;
+  const selectedItem = event.option.value;
+  const selectedItemId = selectedItem._id;
+  console.log(selectedItem);
 
-  this.items.at(i).patchValue({
-    category: category,
-    subCategory: subCategory,
-    uom: uom
-  });
+  // Retrieve the 'items' FormArray
+  const itemsFormArray = this.purchaseRequestForm.get('items') as FormArray;
+  console.log("itemsArray", itemsFormArray.value);
+
+  // Find indices of items with the selected ID by checking the nested 'item_id' property
+  const indices = itemsFormArray.value
+    .map((item: any, index: number) => ({ index, id: item.item_id._id }))
+    .filter((item: any) => item.id === selectedItemId)
+    .map((item: any) => item.index);
+
+  console.log('Indices of duplicate items:', indices);
+
+  if (indices.length >= 2) {
+    // If the item occurs twice or more, remove the last occurrence and show an error
+    itemsFormArray.removeAt(indices.pop() as number);
+
+    // Show an error message
+    this.snack.notify('Item already exists', 2);
+
+    // Optionally clear the current row's selected item
+    this.items.at(i).reset();
+    return;
+  } else if (indices.length === 1) {
+    // If the item occurs only once, update the FormArray item
+    let category = selectedItem.categoryDetail.name;
+    let subCategory = selectedItem.subCategoryDetail.subcategory_name;
+    let uom = selectedItem.uomDetail.uom_name;
+
+    this.items.at(i).patchValue({
+      category: category,
+      subCategory: subCategory,
+      uom: uom
+    });
+  } 
 }
+
+
+
+
+
+
   searchItem(event: any) {
     const searchValue = event.target.value.toLowerCase();
     if (this.itemList && this.itemList.length > 0 ) {

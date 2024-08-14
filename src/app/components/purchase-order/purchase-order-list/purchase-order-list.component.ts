@@ -6,7 +6,7 @@ import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
 import { Observable } from 'rxjs';
-
+import * as moment from 'moment';
 
 import { HttpClient } from '@angular/common/http';
 
@@ -69,6 +69,11 @@ export class PurchaseOrderListComponent implements OnInit {
   getList(filterObj: any) {
     this.httpService.GET(PURCHASE_ORDER_API, filterObj).subscribe({
       next: (resp: any) => {
+
+        resp.data.forEach((purchaseRequest: any) => {
+          purchaseRequest.date = moment(purchaseRequest.date).format('YYYY-MM-DD');
+        });
+        
         this.originalRateComparativeList = resp.data;
         this.rateComparativeList = resp.data;
 

@@ -44,7 +44,7 @@
   </div>
 <ng-container *ngIf="viewPermission; else noView">
   <div class="requests">
-    <div [ngClass]="{'active':option==1}" (click)="option=1">Create request</div>
+    <div [ngClass]="{'active':option==1}" (click)="createRequest()">Create request</div>
     <div [ngClass]="{'active':option==2}"
       (click)="option=2;getPurchaseList({ filter_by: filter_by, filter_value: statusOption.value })"> Request list
     </div>
@@ -225,12 +225,16 @@
                     <input placeholder="Enter" formControlName="remark" class="pr-form-field">
                   </td>
                   <td>
-                    <button
-              style="padding: 8px ;width: 120px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';"
-              (click)="addItem()">
-             Upload File 
-            </button>
-                  </td>
+                   <!-- <input type="file" (change)="onFilesSelected($event, i)" multiple>
+                    <div *ngIf="purchaseRequestForm.get('items').at(i).get('files').value.length > 0">
+                      <ul>
+                        <li *ngFor="let file of purchaseRequestForm.get('items').at(i).get('files').value">
+                          {{ file.name }} 
+                          <button (click)="removeFile(i, file)">Remove</button>
+                        </li>
+                      </ul>
+                    </div>  -->
+                  </td> 
                   <td>
                     <div class="action-btn-wrapper">
                       <a class="action-btn" (click)="delete(i)" *ngIf="i>0" title="Delete"><i class="fa fa-trash"></i></a>
@@ -373,13 +377,18 @@
                   <td>
                     <input placeholder="Enter" formControlName="remark" class="pr-form-field">
                   </td>
-                  <td>
-                    <button
-              style="padding: 8px ;width: 120px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';"
-              (click)="addItem()">
-             Upload File 
-            </button>
-                  </td>
+                    <td>
+                    <!-- <input type="file" (change)="onFilesSelected($event, i)" multiple>
+                    <div *ngIf="purchaseRequestForm.get('items').at(i).get('files').value.length > 0">
+                      <ul>
+                        <li *ngFor="let file of purchaseRequestForm.get('items').at(i).get('files').value">
+                          {{ file.name }} 
+                          <button (click)="removeFile(i, file)">Remove</button>
+                        </li>
+                      </ul>
+                    </div>-->
+                  </td> 
+            
                   <td>
                     <div class="action-btn-wrapper">
                       <a class="action-btn" (click)="delete(i)" *ngIf="i>0" title="Delete"><i class="fa fa-trash"></i></a>
@@ -484,19 +493,21 @@
     </div>
 
 
-    <div class="scroll-bar1" style="width: 93%;">
+    <div class="scroll-bar1" style="width: 96%;">
       <table style="direction: ltr !important;margin-top: -20px;" class="r-list">
 
 
 
         <tbody>
           <tr *ngFor="let obj of purchaseList">
-            <td style="color: #4272BF;width:300px;text-align: left;padding: 18px;">Request&nbsp;no:
+            <td style="color: #4272BF;width:200px;text-align: left;padding: 18px;">Request&nbsp;no:
               {{obj.purchase_request_number}}</td>
 
-            <td style="color: #4272BF;width:200px;">Title: {{obj.title}}</td>
+              <td style="color: #4272BF;width:500px;">Requested on: {{obj.date}}</td>
 
-            <td style="color: #4272BF;width:800px;text-align: left;padding: 18px;">Site: {{obj.siteData.site_name}}
+            <td style="color: #4272BF;width:400px;">Title: {{obj.title}}</td>
+
+            <td style="color: #4272BF;width:700px;text-align: left;padding: 18px;">Site: {{obj.siteData.site_name}}
             </td>
             <td *ngIf="obj.status=='pending'" style="width: 20%;
             text-align: right;">

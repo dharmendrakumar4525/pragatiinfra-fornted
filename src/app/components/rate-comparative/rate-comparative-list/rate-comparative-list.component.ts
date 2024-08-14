@@ -8,6 +8,8 @@ import { isEmpty } from 'lodash';
 import { HttpClient } from '@angular/common/http';
 import { PURCHASE_REQUEST_API} from '@env/api_path';
 import { environment } from '@env/environment';
+import { formatDate } from '@angular/common'; 
+import * as moment from 'moment';
 
 
 @Component({
@@ -76,9 +78,13 @@ export class RateComparativeListComponent implements OnInit {
       next: (resp: any) => {
        
 
-        const x = this.originalRateComparativeList
+        resp.data.forEach((purchaseRequest: any) => {
+          purchaseRequest.date = moment(purchaseRequest.date).format('YYYY-MM-DD');
+        });
 
         console.log(resp.data);
+
+        
         if(this.permissions.user.role === "superadmin"){
         
           this.originalRateComparativeList = resp.data;

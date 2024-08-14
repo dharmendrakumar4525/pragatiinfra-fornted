@@ -21,8 +21,8 @@ api_base_path: 'http://localhost:3000',
 //api_base_path: 'https://stagingpr.avidusinteractive.com',
 
    
-  // api_path: 'https://pr.avidusinteractive.com/api/web',
-  //  api_base_path: 'https://pr.avidusinteractive.com',
+//api_path: 'https://pr.avidusinteractive.com/api/web',
+//api_base_path: 'https://pr.avidusinteractive.com',
 
   cookiesOptions: {
     storeUnencoded: true,

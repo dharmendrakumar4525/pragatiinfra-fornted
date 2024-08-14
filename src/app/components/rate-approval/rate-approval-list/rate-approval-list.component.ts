@@ -6,7 +6,7 @@ import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
 import { HttpClient } from '@angular/common/http';
-
+import * as moment from 'moment';
 import { PURCHASE_REQUEST_API} from '@env/api_path';
 import { environment } from '@env/environment';
 
@@ -45,6 +45,7 @@ export class RateApprovalListComponent implements OnInit {
   filter_by = "status";
   filter_value = "pending";
   requestType = "new";
+  siteList: any;
   originalRateComparativeList: any = [];
 
 
@@ -67,10 +68,30 @@ export class RateApprovalListComponent implements OnInit {
   getList(filterObj: any) {
     this.httpService.GET(RATE_COMPARATIVE_API, filterObj).subscribe({
       next: (resp: any) => {
-        console.log(resp);
+  
+        console.log(resp.data);
+        resp.data.forEach((purchaseRequest: any) => {
+          purchaseRequest.date = moment(purchaseRequest.date).format('YYYY-MM-DD');
+        });
 
-        this.originalRateComparativeList = resp.data;
-        this.rateComparativeList = resp.data;
+        if(this.permissions.user.role === "superadmin"){
+        
+          this.originalRateComparativeList = resp.data;
+          this.rateComparativeList = resp.data;
+        }
+        else
+        {
+          const ComparativeList= resp.data;
+          const filteredComparativeList = ComparativeList.filter(pr => 
+            this.siteList.some(site => site._id === pr.site)
+        );
+        
+        
+        console.log(filteredComparativeList);
+        this.originalRateComparativeList = filteredComparativeList;
+        this.rateComparativeList = filteredComparativeList;  
+        }
+
       }, error: (err: any) => {
         if (err.errors && !isEmpty(err.errors)) {
           let errMessage = '<ul>';
@@ -180,6 +201,8 @@ export class RateApprovalListComponent implements OnInit {
       });
 
     this.getReqNO();
+    this.siteList= this.permissions.user.sites
+      console.log("SiteSelect", this.siteList);
   }
 
 }

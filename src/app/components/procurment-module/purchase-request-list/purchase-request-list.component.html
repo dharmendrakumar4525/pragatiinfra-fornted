@@ -81,12 +81,15 @@
 
       <tbody>
         <tr *ngFor="let obj of purchaseList">
-          <td style="color: #4272BF;width:300px;text-align: left;padding: 10px;">Request&nbsp;no&nbsp;
+          <td style="color: #4272BF;width:200px;text-align: left;padding: 10px;">Request&nbsp;no :&nbsp;
             {{obj.purchase_request_number}}</td>
           <hr style="border: 1px solid #D9D9D9;height: 30px;">
-          <td style="color: #4272BF;width:200px;">Title &nbsp; {{obj.title}}</td>
+          <td style="color: #4272BF;width:450px;">Requested on : &nbsp; {{obj.
+            formattedDate}}</td>
           <hr style="border: 1px solid #D9D9D9;height: 30px;">
-          <td style="color: #4272BF;width:800px;text-align: left;padding: 10px;">Site &nbsp; {{obj.siteData.site_name}}
+          <td style="color: #4272BF;width:300px;">Title : &nbsp; {{obj.title}}</td>
+          <hr style="border: 1px solid #D9D9D9;height: 30px;">
+          <td style="color: #4272BF;width:800px;text-align: left;padding: 10px;">Site :&nbsp; {{obj.siteData.site_name}}
           </td>
           <hr style="border: 1px solid #D9D9D9;height: 30px;">
           <td *ngIf="getRemainingDays(obj.expected_delivery_date) !== undefined && getRemainingDays(obj.expected_delivery_date) <= 2" style="width:200px;" [style.color]="getRemainingDays(obj.expected_delivery_date) >= 0 ? 'green' : 'red'">

@@ -94,6 +94,7 @@ export class ListingComponent implements OnInit {
     this.fetchItemList(0, this.pageSize);
     this.httpService.GET(ITEM_API, {}).subscribe(res => {
       if (res && res.data) {
+        console.log(res.data);
         this.list = res.data;
         this.length = res.data.length;
       }
@@ -198,6 +199,35 @@ export class ListingComponent implements OnInit {
 
   async exportXlSX() {
     let filterReport = this.itemList.map((o: any) => {
+      o.categoryName = o.categoryDetail?.name;
+      o.subCategoryName = o.subCategoryDetail?.subcategory_name;
+      o.uomName = o.uomDetail?.uom_name;
+      o.gstValue = o.gstDetail?.gst_percentage;
+      return o;
+    });
+    let sheetHeaders = [
+      "Item Number",
+      "Item Name",
+      "Category Name",
+      "Sub Category Name",
+      "UOM",
+      "GST",
+      "Specification"
+    ];
+    let valueKey = ['item_number',
+      'item_name',
+      'categoryName',
+      'subCategoryName',
+      'uomName',
+      'gstValue',
+      'specification'];
+    let valueDataType = ['string', 'string', 'string', 'string', 'string', 'string', 'string'];
+    let sheetName: any = "Item";
+    this.excelService.mapArrayToExcel(sheetName, sheetHeaders, valueKey, valueDataType, filterReport);
+  }
+
+  async exportAllXlSX() {
+    let filterReport = this.list.map((o: any) => {
       o.categoryName = o.categoryDetail?.name;
       o.subCategoryName = o.subCategoryDetail?.subcategory_name;
       o.uomName = o.uomDetail?.uom_name;
