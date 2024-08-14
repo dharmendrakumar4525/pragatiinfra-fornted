@@ -271,7 +271,7 @@ export class PurchaseRequestComponent implements OnInit {
   createItem(): FormGroup {
     return this.formBuilder.group({
       item_id: new FormControl('', Validators.required),
-      qty: new FormControl('', Validators.required),
+      qty:new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       category: new FormControl(null),
       subCategory: new FormControl(null),
       attachment: new FormControl(''),
@@ -284,7 +284,7 @@ export class PurchaseRequestComponent implements OnInit {
   createLocalItem(): FormGroup {
     return this.formBuilder.group({
       item_id: new FormControl('', Validators.required),
-      qty: new FormControl('', Validators.required),
+      qty:new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       category: new FormControl(null),
       subCategory: new FormControl(null),
       attachment: new FormControl(''),
@@ -292,9 +292,9 @@ export class PurchaseRequestComponent implements OnInit {
       uom: new FormControl(''),
       files: new FormControl([]),
       brandName:new FormControl('',Validators.required),
-      rate:new FormControl(''),
+      rate:new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       gst:new FormControl(''),
-      freight:new FormControl(''),
+      freight:new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
     });
   }
 
@@ -426,6 +426,27 @@ export class PurchaseRequestComponent implements OnInit {
         this.purchaseList = this.originalPurchaseList;
       }
     }
+  }
+
+  onFilesSelected(event: any, index: number): void {
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      const files = Array.from(fileList);
+      const fileArray = this.items.at(index).get('files') as FormArray;
+      files.forEach(file => fileArray.push(new FormControl(file)));
+    }
+  }
+
+  removeFile(index: number, file: File): void {
+    const fileArray = this.items.at(index).get('files') as FormArray;
+    const fileIndex = fileArray.controls.findIndex(f => f.value === file);
+    if (fileIndex >= 0) {
+      fileArray.removeAt(fileIndex);
+    }
+  }
+
+  files(index: number): File[] {
+    return (this.items.at(index).get('files') as FormArray).controls.map(c => c.value);
   }
 
   search(event: any, type?: any) {

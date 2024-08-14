@@ -189,8 +189,8 @@
                     {{item.get('uom')?.value}}
                   </td>
                   <td>
-                    <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
-                  </td>
+                    <input type="text" formControlName="qty" class="pr-form-field" placeholder="Enter" pattern="^\d+(\.\d{1,2})?$">
+                    </td>
                   <td>
                     <mat-form-field class="example-full-width">
                       <input
@@ -210,7 +210,8 @@
                     </mat-form-field>
                   </td>
                   <td>
-                    <input type="text" placeholder="Enter" digitOnly formControlName="rate" class="pr-form-field">
+                 
+                    <input type="text" formControlName="rate"  placeholder="Enter" pattern="^\d+(\.\d{1,2})?$">
                   </td>
                   <!-- <td>
                     <input type="text" placeholder="Enter"  formControlName="gst" class="pr-form-field">
@@ -349,7 +350,8 @@
                     </mat-select> -->
                   </td>
                   <td>
-                    <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
+                   
+                    <input type="text" formControlName="qty" class="pr-form-field" placeholder="Enter" pattern="^\d+(\.\d{1,2})?$">
                   </td>
                   <td>
                     <mat-form-field class="example-full-width">
