@@ -213,29 +213,24 @@
                  
                     <input type="text" formControlName="rate"  placeholder="Enter" pattern="^\d+(\.\d{1,2})?$">
                   </td>
-                  <!-- <td>
-                    <input type="text" placeholder="Enter"  formControlName="gst" class="pr-form-field">
-                    {{ item.gstDetail.gst_percentage }}{{ item.gstDetail.gst_name }}
-                    {{ item?.get('gstDetail')?.get('gst_percentage')?.value }}
-
-                  </td> -->
-                  <!-- <td>
-                    <input placeholder="Enter" formControlName="freight" class="pr-form-field">
-                  </td> -->
                   <td>
                     <input placeholder="Enter" formControlName="remark" class="pr-form-field">
                   </td>
-                  <td>
-                   <!-- <input type="file" (change)="onFilesSelected($event, i)" multiple>
-                    <div *ngIf="purchaseRequestForm.get('items').at(i).get('files').value.length > 0">
-                      <ul>
-                        <li *ngFor="let file of purchaseRequestForm.get('items').at(i).get('files').value">
+                 <td>
+                 
+                   <input type="file" (change)="onFilesSelected($event, i)" multiple>
+                    <div *ngIf="items?.value?.at(i)?.files">
+                     
+                     <ul>
+                       <li *ngFor="let file of items?.value?.at(i)?.files" style="margin:10px; display: flex; flex-direction: row ;">
+                       
                           {{ file.name }} 
-                          <button (click)="removeFile(i, file)">Remove</button>
+                          <button (click)="removeFile(i, file)" style="border: none; color: red; font-weight: bold;"> x</button>
                         </li>
                       </ul>
-                    </div>  -->
+                    </div>
                   </td> 
+                  
                   <td>
                     <div class="action-btn-wrapper">
                       <a class="action-btn" (click)="delete(i)" *ngIf="i>0" title="Delete"><i class="fa fa-trash"></i></a>
@@ -379,16 +374,19 @@
                   <td>
                     <input placeholder="Enter" formControlName="remark" class="pr-form-field">
                   </td>
-                    <td>
-                    <!-- <input type="file" (change)="onFilesSelected($event, i)" multiple>
-                    <div *ngIf="purchaseRequestForm.get('items').at(i).get('files').value.length > 0">
+                 <td>
+                 
+                   <input type="file" (change)="onFilesSelected($event, i)" multiple>
+                    <div *ngIf="items?.value?.at(i)?.files">
+                     
                       <ul>
-                        <li *ngFor="let file of purchaseRequestForm.get('items').at(i).get('files').value">
-                          {{ file.name }} 
-                          <button (click)="removeFile(i, file)">Remove</button>
-                        </li>
-                      </ul>
-                    </div>-->
+                        <li *ngFor="let file of items?.value?.at(i)?.files" style="margin:10px; display: flex; flex-direction: row ;">
+                        
+                           {{ file.name }} 
+                           <button (click)="removeFile(i, file)" style="border: none; color: red; font-weight: bold; margin-left: 5px;"> x</button>
+                         </li>
+                       </ul>
+                    </div>
                   </td> 
             
                   <td>

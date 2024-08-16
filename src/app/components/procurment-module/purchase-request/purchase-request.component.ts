@@ -119,7 +119,8 @@ export class PurchaseRequestComponent implements OnInit {
     requestData['requestNo'] = this.requestNo;
     requestData['date'] = moment(requestData.date, 'DD-MM-YYYY').toDate()
     requestData['expected_delivery_date'] = new Date(requestData.expected_delivery_date)
-    console.log(requestData);
+    console.log("Hamra Console log", requestData);
+    
    
     //for local purchase
     if (this.purchaseRequestForm.get('local_purchase').value === "yes") {
@@ -174,7 +175,10 @@ export class PurchaseRequestComponent implements OnInit {
     }
     
     this.load = true;
+    console.log("Payload", requestData);
+
     
+
     // Make a POST request to the PURCHASE_REQUEST_API with requestData
     this.httpService.POST(PURCHASE_REQUEST_API, requestData).subscribe({
       next: (resp: any) => {
@@ -430,21 +434,67 @@ export class PurchaseRequestComponent implements OnInit {
 
   onFilesSelected(event: any, index: number): void {
     const fileList: FileList = event.target.files;
+    console.log("file", fileList);
+  
+    if (fileList.length > 5) {
+      this.snack.notify('Can upload a maximum of 5 files at a time', 2);
+      return;
+    }
+  
     if (fileList.length > 0) {
       const files = Array.from(fileList);
-      const fileArray = this.items.at(index).get('files') as FormArray;
-      files.forEach(file => fileArray.push(new FormControl(file)));
+      const currentFiles = this.items.at(index).get('files').value || [];
+  
+      if (currentFiles.length + files.length > 5) {
+        this.snack.notify('Total files should not exceed 5', 2);
+        return;
+      }
+  
+      // Read files as base64
+      const fileReaders = files.map(file => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve({ name: file.name, type: file.type, base64: reader.result });
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      });
+  
+      Promise.all(fileReaders).then(base64Files => {
+        const updatedFiles = [...currentFiles, ...base64Files];
+        this.items.at(index).patchValue({ files: updatedFiles });
+        console.log(this.items);
+      }).catch(error => {
+        console.error('Error reading files:', error);
+      });
     }
   }
+  
 
   removeFile(index: number, file: File): void {
-    const fileArray = this.items.at(index).get('files') as FormArray;
-    const fileIndex = fileArray.controls.findIndex(f => f.value === file);
-    if (fileIndex >= 0) {
-      fileArray.removeAt(fileIndex);
+    // Get the FormArray of files for the specified item
+    const filesArray = this.items.at(index).get('files') as FormArray;
+  console.log("here", filesArray);
+    // Filter out the file with the matching name
+    const updatedFiles = filesArray.value.filter((f: File) => f.name !== file.name);
+    console.log("there", updatedFiles);
+    // Clear the current files array
+   /* while (filesArray.length !== 0) {
+      filesArray.value.removeAt(0);
     }
-  }
+  
+    // Add the updated files back to the FormArray
+    updatedFiles.forEach((f: File) => filesArray.push(new FormControl(f)));
+  
+    console.log(updatedFiles); */
+    this.items.at(index).patchValue({
+      files :updatedFiles,
+    });
 
+    console.log(this.items);
+
+  }
+  
   files(index: number): File[] {
     return (this.items.at(index).get('files') as FormArray).controls.map(c => c.value);
   }

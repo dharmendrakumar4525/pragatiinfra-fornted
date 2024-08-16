@@ -263,9 +263,11 @@ export class ListingComponent implements OnInit {
   importFile(event: any) {
     const file = event.target.files[0];
     if (!file) return;
-
+console.log(file);
     const formData = new FormData();
     formData.append('file', file);
+
+    console.log(formData);
 
     this.http.post(`${environment.api_path}/item/upload-csv`, formData).subscribe({
       next: (res: any) => {
