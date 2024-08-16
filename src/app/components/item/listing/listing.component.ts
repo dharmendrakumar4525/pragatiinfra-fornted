@@ -263,7 +263,7 @@ export class ListingComponent implements OnInit {
   importFile(event: any) {
     const file = event.target.files[0];
     if (!file) return;
-console.log(file);
+console.log("deaw",file);
     const formData = new FormData();
     formData.append('file', file);
 

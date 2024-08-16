@@ -177,10 +177,46 @@ export class PurchaseRequestComponent implements OnInit {
     this.load = true;
     console.log("Payload", requestData);
 
+
+    const formData = new FormData();
+  const formValue = requestData;
+
+  // Append non-file fields to FormData
+  formData.append('title', formValue.title);
+  formData.append('date', formValue.date);
+  formData.append('expected_delivery_date', formValue.expected_delivery_date);
+  formData.append('purchase_request_number', formValue.purchase_request_number);
+  formData.append('site', formValue.site);
+  formData.append('local_purchase', formValue.local_purchase);
+  formData.append('remarks', formValue.remarks);
+  //formData.append('vendor', formValue.vendor);
+  formData.append('requestNo', formValue.requestNo);
+  
+
+  // Append items and their files
+  formValue.items.forEach((item, index) => {
+    formData.append(`items[${index}][item_id]`, item.item_id._id);
+    formData.append(`items[${index}][qty]`, item.qty);
+    formData.append(`items[${index}][category]`, item.category);
+    formData.append(`items[${index}][subCategory]`, item.subCategory);
+   // formData.append(`items[${index}][attachment]`, item.attachment);
+    formData.append(`items[${index}][remark]`, item.remark);
+    formData.append(`items[${index}][uom]`, item.uom);
+    formData.append(`items[${index}][brandName]`, item.brandName.brand_name);
+    
+    
     
 
+    // Append files separately
+   item.files.forEach((file, fileIndex) => {
+      formData.append(`items[${index}][attachment]`,  file, file.name);
+    });
+  }); 
+
+    console.log("THERE", formData)
+
     // Make a POST request to the PURCHASE_REQUEST_API with requestData
-    this.httpService.POST(PURCHASE_REQUEST_API, requestData).subscribe({
+    this.httpService.POST(PURCHASE_REQUEST_API, formData).subscribe({
       next: (resp: any) => {
         this.load = false;
         this.snack.notify("Purchase request has been created.", 1);
@@ -278,7 +314,7 @@ export class PurchaseRequestComponent implements OnInit {
       qty:new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       category: new FormControl(null),
       subCategory: new FormControl(null),
-      attachment: new FormControl(''),
+      attachment: new FormControl([]),
       files: new FormControl([]),
       remark: new FormControl(''),
       uom: new FormControl(''),
@@ -291,7 +327,7 @@ export class PurchaseRequestComponent implements OnInit {
       qty:new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       category: new FormControl(null),
       subCategory: new FormControl(null),
-      attachment: new FormControl(''),
+      attachment: new FormControl([]),
       remark: new FormControl(''),
       uom: new FormControl(''),
       files: new FormControl([]),
@@ -434,42 +470,24 @@ export class PurchaseRequestComponent implements OnInit {
 
   onFilesSelected(event: any, index: number): void {
     const fileList: FileList = event.target.files;
-    console.log("file", fileList);
-  
-    if (fileList.length > 5) {
-      this.snack.notify('Can upload a maximum of 5 files at a time', 2);
-      return;
-    }
-  
-    if (fileList.length > 0) {
-      const files = Array.from(fileList);
-      const currentFiles = this.items.at(index).get('files').value || [];
-  
-      if (currentFiles.length + files.length > 5) {
-        this.snack.notify('Total files should not exceed 5', 2);
+     console.log("file", fileList);
+      if (fileList.length > 5)
+      {
+        this.snack.notify('Can upload Maximum 5 Files', 2);
         return;
       }
-  
-      // Read files as base64
-      const fileReaders = files.map(file => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve({ name: file.name, type: file.type, base64: reader.result });
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-        });
+
+    if (fileList.length > 0) {
+      const files = Array.from(fileList);
+      
+      this.items.at(index).patchValue({
+        files :files,
       });
-  
-      Promise.all(fileReaders).then(base64Files => {
-        const updatedFiles = [...currentFiles, ...base64Files];
-        this.items.at(index).patchValue({ files: updatedFiles });
-        console.log(this.items);
-      }).catch(error => {
-        console.error('Error reading files:', error);
-      });
+     
+
+      console.log(this.items);
     }
   }
-  
 
   removeFile(index: number, file: File): void {
     // Get the FormArray of files for the specified item
