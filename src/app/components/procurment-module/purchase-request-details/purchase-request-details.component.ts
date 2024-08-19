@@ -144,7 +144,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
   myBrandName(brandId:any){
     if(this.brandList){
       let brand=this.brandList.filter(brand=>brand._id==brandId)
-      // console.log(brand)
+      console.log(brand)
       return brand[0].brand_name;
     }
   } 

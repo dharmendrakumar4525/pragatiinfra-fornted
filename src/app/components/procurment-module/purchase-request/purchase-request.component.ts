@@ -108,6 +108,17 @@ export class PurchaseRequestComponent implements OnInit {
     }
 
     if (!this.purchaseRequestForm.valid) {
+      console.log("Form is invalid", this.purchaseRequestForm);
+    
+      // Iterate over form controls to identify validation errors
+      Object.keys(this.purchaseRequestForm.controls).forEach(key => {
+        const control = this.purchaseRequestForm.get(key);
+        if (control && control.invalid) {
+          console.log(`Validation error in ${key}:`, control.errors);
+    
+        }
+      });
+    
       return;
     }
 
@@ -119,6 +130,8 @@ export class PurchaseRequestComponent implements OnInit {
     requestData['requestNo'] = this.requestNo;
     requestData['date'] = moment(requestData.date, 'DD-MM-YYYY').toDate()
     requestData['expected_delivery_date'] = new Date(requestData.expected_delivery_date)
+
+
     console.log("Hamra Console log", requestData);
     
    
@@ -178,20 +191,22 @@ export class PurchaseRequestComponent implements OnInit {
     console.log("Payload", requestData);
 
 
-    const formData = new FormData();
+const formData = new FormData();
   const formValue = requestData;
 
   // Append non-file fields to FormData
   formData.append('title', formValue.title);
+  formData.append('handle_by', formValue.handle_by);
   formData.append('date', formValue.date);
   formData.append('expected_delivery_date', formValue.expected_delivery_date);
   formData.append('purchase_request_number', formValue.purchase_request_number);
   formData.append('site', formValue.site);
   formData.append('local_purchase', formValue.local_purchase);
   formData.append('remarks', formValue.remarks);
-  //formData.append('vendor', formValue.vendor);
-  formData.append('requestNo', formValue.requestNo);
-  
+  //formData.append('vendor', null);
+  formData.append ('requestNo', formValue.requestNo);
+
+
 
   // Append items and their files
   formValue.items.forEach((item, index) => {
@@ -199,15 +214,13 @@ export class PurchaseRequestComponent implements OnInit {
     formData.append(`items[${index}][qty]`, item.qty);
     formData.append(`items[${index}][category]`, item.category);
     formData.append(`items[${index}][subCategory]`, item.subCategory);
-   // formData.append(`items[${index}][attachment]`, item.attachment);
     formData.append(`items[${index}][remark]`, item.remark);
     formData.append(`items[${index}][uom]`, item.uom);
-    formData.append(`items[${index}][brandName]`, item.brandName.brand_name);
-    
-    
+    formData.append(`items[${index}][brandName]`, item.brandName._id);
     
 
     // Append files separately
+
    item.files.forEach((file, fileIndex) => {
       formData.append(`items[${index}][attachment]`,  file, file.name);
     });
@@ -241,7 +254,7 @@ export class PurchaseRequestComponent implements OnInit {
           this.snack.notify(err.message || 'An error occurred', 2);
         }
       }
-    });
+    }); 
     
   }
 
