@@ -126,7 +126,6 @@ export class PurchaseRequestComponent implements OnInit {
     const selectedCategory = this.categoryList.find((obj: { _id: any; }) => obj._id == requestData.title);
     console.log(selectedCategory);
     requestData['title'] = selectedCategory.name;
-
     requestData['requestNo'] = this.requestNo;
     requestData['date'] = moment(requestData.date, 'DD-MM-YYYY').toDate()
     requestData['expected_delivery_date'] = new Date(requestData.expected_delivery_date)
@@ -173,7 +172,7 @@ export class PurchaseRequestComponent implements OnInit {
             delete tempobj.item.uom;
             delete tempobj.item.updated_at;
     
-            tempobj.item.qty = tempobj.RequiredQuantity;
+            tempobj.item.qty = parseFloat(tempobj.RequiredQuantity);
             tempobj.item.item_id = item.item_id;
             tempobj.item.remark = item.remark;
             tempobj.Total = (item.qty * item.rate) + ((item.qty * item.rate) * (tempobj.item.tax ? tempobj.item.tax.amount : 0)) / 100;
@@ -194,6 +193,7 @@ export class PurchaseRequestComponent implements OnInit {
 const formData = new FormData();
   const formValue = requestData;
 
+ 
   // Append non-file fields to FormData
   formData.append('title', formValue.title);
   formData.append('handle_by', formValue.handle_by);
@@ -203,10 +203,12 @@ const formData = new FormData();
   formData.append('site', formValue.site);
   formData.append('local_purchase', formValue.local_purchase);
   formData.append('remarks', formValue.remarks);
-  //formData.append('vendor', null);
+
   formData.append ('requestNo', formValue.requestNo);
 
 
+  if (this.purchaseRequestForm.get('local_purchase').value === "no") {
+   
 
   // Append items and their files
   formValue.items.forEach((item, index) => {
@@ -225,6 +227,34 @@ const formData = new FormData();
       formData.append(`items[${index}][attachment]`,  file, file.name);
     });
   }); 
+}
+else
+{
+  formData.append('vendor', formValue.vendor);
+ formData.append('vendorItems[0][Vendor]',"");
+ formData.append('vendorItems[0][items]', "");
+
+  formValue.items.forEach((item, index) => {
+    formData.append(`items[${index}][item_id]`, item.item_id._id);
+    formData.append(`items[${index}][qty]`, item.qty);
+    formData.append(`items[${index}][category]`, item.category);
+    formData.append(`items[${index}][subCategory]`, item.subCategory);
+    formData.append(`items[${index}][remark]`, item.remark);
+    formData.append(`items[${index}][uom]`, item.uom);
+    formData.append(`items[${index}][brandName]`, item.brandName._id);
+    formData.append(`items[${index}][rate]`, item.rate);
+    formData.append(`items[${index}][gst]`, "");
+    formData.append(`items[${index}][freight]`, "");
+    
+
+    // Append files separately
+
+   item.files.forEach((file, fileIndex) => {
+      formData.append(`items[${index}][attachment]`,  file, file.name);
+    });
+  }); 
+
+}
 
     console.log("THERE", formData)
 
@@ -347,7 +377,7 @@ const formData = new FormData();
       brandName:new FormControl('',Validators.required),
       rate:new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       gst:new FormControl(''),
-      freight:new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+      freight:new FormControl(''),
     });
   }
 
