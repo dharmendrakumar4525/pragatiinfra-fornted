@@ -176,15 +176,15 @@
               {{item.remark}}
             </td>
             <td style="color: #000;">
-              <button 
-
-              (click)="onDownloadAllFiles(item.attachment)"
-                style="padding: 4px;width: 120px;background-color: #fff;
-                color: #233A61;
-                border: 1px solid #94A3B8;border-radius: 5px;
-                font-size: 14px;font-family: 'Poppins';">
-                 Download files 
-              </button>
+             
+             
+                <div *ngFor="let attachment of item.attachment; let i = index">
+                  <a [href]="attachment">
+                    <p style="color: blue; text-decoration: underline; font-size: 12px; margin-top:-10px;"> Attachment {{i + 1}}</p>
+                  </a>
+                  
+                </div>
+              
             </td>
              
             
@@ -260,15 +260,12 @@
                 {{item.remark}}
               </td>
               <td>
-                <button 
-
-                (click)="onDownloadAllFiles(item.attachment)"
-                  style="padding: 4px;width: 120px;background-color: #fff;
-                  color: #233A61;
-                  border: 1px solid #94A3B8;border-radius: 5px;
-                  font-size: 14px;font-family: 'Poppins';">
-                   Download files 
-                </button>
+                <div *ngFor="let attachment of item.attachment; let i = index">
+                  <a [href]="attachment">
+                    <p style="color: blue; text-decoration: underline; font-size: 12px; margin-top:-10px;"> Attachment {{i + 1}}</p>
+                  </a>
+                  
+                </div>
               </td>
             </tr>
           </tbody>
