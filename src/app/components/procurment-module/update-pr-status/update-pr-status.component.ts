@@ -6,6 +6,8 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
+import { saveAs } from 'file-saver';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-update-pr-status',
@@ -136,6 +138,32 @@ export class UpdatePrStatusComponent implements OnInit {
       })
     }
   }
+
+
+  downloadMultipleFiles(fileLinks: string[]): void {
+    const downloadRequests = fileLinks.map(url => 
+      this.http.get(url, { responseType: 'blob' })
+    );
+
+    forkJoin(downloadRequests).subscribe({
+      next: (blobs) => {
+        blobs.forEach((blob, index) => {
+          const fileName = this.getFileNameFromUrl(fileLinks[index]);
+          saveAs(blob, fileName);
+        });
+      },
+      error: (err) => console.error('Error downloading files:', err)
+    });
+  }
+
+  onDownloadAllFiles(fileLinks: string[]): void {
+    this.downloadMultipleFiles(fileLinks);
+  }
+
+  private getFileNameFromUrl(url: string): string {
+    return url.split('/').pop() || 'downloaded-file';
+  }
+
 
   /**
   * Retrieves the brand name corresponding to the provided brand ID from the brand list.

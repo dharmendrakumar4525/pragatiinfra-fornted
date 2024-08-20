@@ -123,6 +123,7 @@
               <!-- <th>Gst</th>
               <th>Freight</th> -->
               <th>Remarks</th>
+              <th>Attachments</th>
               <!-- <th>Action</th> -->
       </tr>
       <tbody>
@@ -174,6 +175,19 @@
             <td style="color: #000;">
               {{item.remark}}
             </td>
+            <td style="color: #000;">
+              <button 
+
+              (click)="onDownloadAllFiles(item.attachment)"
+                style="padding: 4px;width: 120px;background-color: #fff;
+                color: #233A61;
+                border: 1px solid #94A3B8;border-radius: 5px;
+                font-size: 14px;font-family: 'Poppins';">
+                 Download files 
+              </button>
+            </td>
+             
+            
             <!-- <td>
               <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
             </td>
@@ -213,8 +227,9 @@
             <th>Uom*</th>
             <th>Quantity*</th>
             <th>Brand Name</th>
-            <!-- <th>Attachments</th> -->
+           
             <th>Remarks</th>
+            <th>Attachments</th> 
           </tr>
           <tbody>
             <tr style="background-color: #F4F4F5;" *ngFor="let item of details?.items; let i = index;">
@@ -243,6 +258,17 @@
               </td>
               <td>
                 {{item.remark}}
+              </td>
+              <td>
+                <button 
+
+                (click)="onDownloadAllFiles(item.attachment)"
+                  style="padding: 4px;width: 120px;background-color: #fff;
+                  color: #233A61;
+                  border: 1px solid #94A3B8;border-radius: 5px;
+                  font-size: 14px;font-family: 'Poppins';">
+                   Download files 
+                </button>
               </td>
             </tr>
           </tbody>
