@@ -77,7 +77,7 @@ export class PurchaseOrderListComponent implements OnInit {
         this.originalRateComparativeList = resp.data;
         this.rateComparativeList = resp.data;
 
-        //console.log("this.originalRateComparativeList",this.originalRateComparativeList)
+        console.log("this.originalRateComparativeList",this.originalRateComparativeList)
       }, error: (err: any) => {
         if (err.errors && !isEmpty(err.errors)) {
           let errMessage = '<ul>';
@@ -180,7 +180,7 @@ export class PurchaseOrderListComponent implements OnInit {
     // console.log("--VALUE--")
     // console.log("--originalRateComparativeList--");
     // console.log(this.originalRateComparativeList);
-    const filteredList = this.purchaseOrderList.filter(item => item.billing_address.company_name.includes(value.company_name));
+    const filteredList = this.purchaseOrderList.filter(item => item.billing_address.company_name.includes(value.code));
     //console.log("--filteredListt--",filteredList);
     const purchaseOrderNumber = filteredList.length ;
     return purchaseOrderNumber ;

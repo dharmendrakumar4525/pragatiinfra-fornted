@@ -142,6 +142,7 @@
                 <!-- <th>Gst</th>
                 <th>Freight</th> -->
                 <th>Remarks</th>
+                <th>Attachments/th>
                 <!-- <th>Action</th> -->
         </tr>
   
@@ -194,6 +195,14 @@
               <td style="color: #000;">
                 {{item.remark}}
               </td>
+              <td>
+                <div *ngFor="let attachment of item.attachment; let i = index">
+                  <a [href]="attachment">
+                    <p style="color: blue; text-decoration: underline; font-size: 12px; margin-top:-10px;"> Attachment {{i + 1}}</p>
+                  </a>
+                  
+                </div>
+              </td>
               <!-- <td>
                 <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
               </td>
@@ -236,6 +245,7 @@
             <th>Brand Name</th>
             <!-- <th>Attachments</th> -->
             <th>Remarks</th>
+            <th>Attachments</th>
           </tr>
           <tbody>
             <tr style="background-color: #F4F4F5;" *ngFor="let item of details?.items; let i = index;">
@@ -269,8 +279,17 @@
                 
                 <!-- <input placeholder="Enter" formControlName="attachment" type="file" class="pr-form-field"> -->
               </td>
+             
               <td>
                 {{item.remark}}
+              </td>
+              <td>
+                <div *ngFor="let attachment of item.attachment; let i = index">
+                  <a [href]="attachment">
+                    <p style="color: blue; text-decoration: underline; font-size: 12px; margin-top:-10px;"> Attachment {{i + 1}}</p>
+                  </a>
+                  
+                </div>
               </td>
             </tr>
           </tbody>
@@ -284,6 +303,11 @@
 
   </div>
   <div class=" button-list">
+
+    <button
+      style="padding: 8px;width: 120px;background-color: #f7f3f3;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">Download PR</button>
+ 
+
 
     <button *ngIf="details.status=='pending'"
       class="pending">Pending</button>

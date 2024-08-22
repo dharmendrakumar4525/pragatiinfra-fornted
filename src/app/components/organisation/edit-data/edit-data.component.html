@@ -28,6 +28,21 @@
           </mat-form-field>
 
         </div>
+
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Company Code</mat-label>
+            <input matInput formControlName="code">
+            <mat-error *ngIf="orgmasterForm.controls.code.errors?.['required']">
+              this field is required.
+            </mat-error>
+            <!-- <mat-error>
+              <span>Please provide a valid email</span>
+            </mat-error> -->
+          </mat-form-field>
+
+        </div>
+        
         <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>Contact Person</mat-label>

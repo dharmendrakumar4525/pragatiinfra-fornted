@@ -19,6 +19,7 @@ export class AddDataComponent implements OnInit {
     contact_person: new FormControl("", Validators.required),
     // designation: new FormControl("", Validators.required),
     dialcode: new FormControl('+91'),
+    code: new FormControl('', Validators.required),
     phone_number: new FormControl('', Validators.required),
     gst_number: new FormControl('', Validators.required),
     pan_number: new FormControl(''),

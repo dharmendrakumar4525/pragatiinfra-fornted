@@ -17,6 +17,7 @@ export class BillingAddressPopupComponent implements OnInit {
       company_name: new FormControl('', Validators.required),
       gst_number: new FormControl({value: '', disabled: true}),
       pan_card: new FormControl({value: '', disabled: true}),
+      code:new FormControl({value: '', disabled: true}),
       street_address: new FormControl({value: '', disabled: true}, Validators.required),
       street_address2: new FormControl({value: '', disabled: true}, Validators.required),
       state: new FormControl({value: '', disabled: true}, Validators.required),
@@ -95,6 +96,7 @@ export class BillingAddressPopupComponent implements OnInit {
         zip_code: data.address.zip_code,
         country:data.address.country,
         contactPerson:data.contact_person,
+        code:data.code,
         phoneNumber:data.phone_number,
       }
     });

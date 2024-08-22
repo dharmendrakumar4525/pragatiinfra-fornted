@@ -37,6 +37,20 @@
         <div class="custom-form-group">
           <div class="custom-form-control" style="position: relative;">
             <mat-form-field appearance="outline">
+              <mat-label>Organisation Code</mat-label>
+              <input matInput formControlName="code">
+              <mat-error *ngIf="addForm.get('address.code').errors?.['required']">
+                this field is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="custom-form-group">
+          <div class="custom-form-control" style="position: relative;">
+            <mat-form-field appearance="outline">
               <mat-label>GST</mat-label>
               <input matInput formControlName="gst_number">
               <mat-error *ngIf="addForm.get('address.gst_number').errors?.['required']">

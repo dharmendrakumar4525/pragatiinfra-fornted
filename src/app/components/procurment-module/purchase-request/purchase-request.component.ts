@@ -281,7 +281,8 @@ else
           errMessage += '</ul>';
           this.snack.notifyHtml(errMessage, 2);
         } else {
-          this.snack.notify(err.message || 'An error occurred', 2);
+          console.log("there", err);
+          this.snack.notify(err.errors || 'An error occurred', 2);
         }
       }
     }); 

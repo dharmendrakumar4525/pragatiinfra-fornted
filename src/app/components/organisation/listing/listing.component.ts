@@ -48,6 +48,7 @@ export class ListingComponent implements OnInit {
   getList() {
     this.httpService.GET(ORG_REQUEST_API, {}).subscribe(res => {
       if (res && res.data) {
+        console.log("organisation",res.data);
         this.orgList = res.data;
         this.list = res.data;
       }

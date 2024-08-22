@@ -15,6 +15,7 @@ export class EditDataComponent implements OnInit {
 
   orgmasterForm = new FormGroup({
     companyName: new FormControl('', Validators.required),
+    code: new FormControl('', Validators.required),
     contact_person: new FormControl("", Validators.required),
     // designation: new FormControl("", Validators.required),
     dialcode: new FormControl('+91'),
@@ -73,6 +74,7 @@ export class EditDataComponent implements OnInit {
   patchValue(data: any) {
     this.orgmasterForm.patchValue({
       companyName: data.companyName,
+      code: data.code ? data.code : '',
       contact_person: data.contact_person,
       // designation: data.designation,
       dialcode: data.dialcode,

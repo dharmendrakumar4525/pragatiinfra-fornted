@@ -103,7 +103,7 @@ export class RevisePurchaseRequestComponent implements OnInit {
       qty: new FormControl('', Validators.required),
       category: new FormControl(null),
       subCategory: new FormControl(null),
-      attachment: new FormControl(null),
+      attachment: new FormControl([]),
       remark: new FormControl(null),
       uom: new FormControl(null),
       itemName: new FormControl(null),

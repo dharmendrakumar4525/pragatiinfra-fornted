@@ -117,7 +117,9 @@ export class RateApprovalUpdateComponent implements OnInit {
     const site = this.http.get<any>(`${environment.api_path}${GET_SITE_API}`);
     const purchase = this.http.get<any>(`${environment.api_path}${PURCHASE_ORDER_API}`);
     this.httpService.multipleRequests([site,purchase], {}).subscribe(res => {
+      
       if (res) {
+        console.log(res[1].data);
         this.siteList = res[0].data;
         this.purchaseList=res[1].data
         

@@ -303,6 +303,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
 
         // Update billing address details in poDetails object
         this.poDetails.billing_address.company_name = result.data.companyName;
+        this.poDetails.billing_address.code=result.data.code;
         this.poDetails.billing_address.street_address =
           result.data.address.street_address;
         this.poDetails.billing_address.street_address2 =
@@ -360,7 +361,9 @@ export class PurchaseOrderUpdateComponent implements OnInit {
               console.log('--filteredList--', filteredList);
 
               this.purchaseOrderNumber = filteredList.length + 1;
-              this.poDetails.po_number = this.purchaseOrderNumber;
+              this.poDetails.po_number = `${this.poDetails.billing_address.code}/${this.poDetails.delivery_address.
+                site_code
+                }/${this.getCurrentFinancialYearShort()}/${this.convertToFiveDigitNumber(this.purchaseOrderNumber)}`;
               console.log('-------------');
               console.log('this.poDetails.po_number', this.poDetails.po_number);
               console.log('-------------');
@@ -388,4 +391,24 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     // console.log(brand)
     return brand[0].brand_name;
   }
+
+  
+  getCurrentFinancialYearShort() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1; // getMonth() returns 0-based month
+
+    // Financial year starts in April
+    if (month >= 4) {
+        return `${(year).toString().slice(-2)} - ${(year+1).toString().slice(-2)}`
+    } else {
+        return `${(year - 1).toString().slice(-2)} - ${(year).toString().slice(-2)}`;
+    }
+}
+
+ convertToFiveDigitNumber(number) {
+  return number.toString().padStart(4, '0');
+}
+
+
 }
