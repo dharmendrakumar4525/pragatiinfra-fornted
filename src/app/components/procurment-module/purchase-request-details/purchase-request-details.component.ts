@@ -7,6 +7,7 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-purchase-request-details',
@@ -15,11 +16,12 @@ import { environment } from '@env/environment';
 })
 export class PurchaseRequestDetailsComponent implements OnInit {
 
-
+  downloadLoading = false;
   id: any;
   siteList: any;
   load = false;
   items: FormArray;
+  pageId: any;
 
   /**
   * Represents the purchase request form, including form controls for various fields.
@@ -52,6 +54,9 @@ export class PurchaseRequestDetailsComponent implements OnInit {
     private http: HttpClient
   ) {
     this.getList();
+    this.route.params.subscribe((params) => {
+      this.pageId = params['id'];
+    });
 
 
   }
@@ -180,6 +185,21 @@ export class PurchaseRequestDetailsComponent implements OnInit {
       })
     }
     
+  }
+
+  downloadPRPDF() {
+    this.downloadLoading = true;
+    this.httpService
+      .GETPDF('generate/prpdf', {
+        template: 'pr',
+        id: this.pageId,
+      })
+      .subscribe((res: any) => {
+        this.downloadLoading = false;
+        var blob = new Blob([res], { type: 'application/pdf' });
+        let id = new Date().getTime();
+        saveAs(blob, `pr-${id}.pdf`);
+      });
   }
 
   ngOnInit(): void {
