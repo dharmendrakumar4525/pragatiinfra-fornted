@@ -148,13 +148,12 @@ if(requestData.local_purchase==="no")
 {
   formData.append('_id', requestData._id);
   formData.append('title', requestData.title);
-  formData.append('handle_by', requestData.handle_by);
+  formData.append('handle_by', "");
   formData.append('date', requestData.date);
   formData.append('expected_delivery_date', requestData.expected_delivery_date);
   formData.append('purchase_request_number', requestData.purchase_request_number);
   formData.append('site', requestData.site);
   formData.append('local_purchase', requestData.local_purchase);
-  formData.append('remarks', requestData.remarks);
   formData.append('status', requestData.status);
   
     
