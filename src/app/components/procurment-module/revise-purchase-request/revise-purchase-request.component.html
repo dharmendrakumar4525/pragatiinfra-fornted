@@ -42,12 +42,7 @@
   </div>
 </div>
 
-<!-- <div class="requests">
-  <div class="createreq">Create request</div>
-  <div class="innerreq">Approved request</div>
-  <div class="innerreq">Rejected request</div>
-  <div class="innerreq">Revised request</div>
-</div> -->
+
 
 <form (ngSubmit)="onSubmit()" [formGroup]="purchaseRequestForm">
 
@@ -62,10 +57,7 @@
       <div style="display: flex;flex-direction: column;margin-left: 100px;">
         <label style="color: #4272BF;font-size: 14px;">Request date</label>
 
-        <!-- <input matInput [matDatepicker]="date" [readonly]="true" formControlName="date"
-            placeholder="Auto generate Request Date" (click)="date.open()"  style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';"/>
-          <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
-          <mat-datepicker #date></mat-datepicker> -->
+       
         <div class="custom-form-control">
           <mat-form-field appearance="outline">
             <!-- [min]="requredByMinDate" -->
@@ -76,9 +68,7 @@
 
           </mat-form-field>
         </div>
-        <!-- <input placeholder="Auto generate" formControlName="date" [readonly]="true"
-          style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';"> -->
-
+       
       </div>
 
       <div class="custom-form-group">
@@ -125,10 +115,7 @@
             No
           </mat-radio-button>
         </mat-radio-group>
-        <!-- <div style="margin-top: 20px;">
-          <mat-checkbox color="primary">Yes</mat-checkbox>
-          <mat-checkbox style="margin-left: 30px;" color="primary">No</mat-checkbox>
-        </div> -->
+       
       </div>
       <div style="display: flex;flex-direction: column;" *ngIf="purchaseRequestForm.get('local_purchase')?.value === 'yes'">
         <label style="color: #4272BF; font-size: 14px;">Vendor<span class="star">*</span></label>
@@ -141,22 +128,7 @@
           </mat-option>
         </mat-select>
       </div>
-      <!-- <div style="display: flex;flex-direction: column;margin-left: 100px;">
-        <label style="color: #4272BF;">Local Purchase <span class="star">*</span></label>
-        <mat-radio-group aria-labelledby="example-radio-group-label" color="primary" class="example-radio-group"
-          formControlName="local_purchase">
-          <mat-radio-button class="example-radio-button" [value]="'yes'">
-            Yes
-          </mat-radio-button>
-          <mat-radio-button class="example-radio-button" [value]="'no'">
-            No
-          </mat-radio-button>
-        </mat-radio-group> -->
-        <!-- <div style="margin-top: 20px;">
-          <mat-checkbox color="primary">Yes</mat-checkbox>
-          <mat-checkbox style="margin-left: 30px;" color="primary">No</mat-checkbox>
-        </div> -->
-      <!-- </div> -->
+     
     </div>
   </mat-card>
 
@@ -174,7 +146,8 @@
           <!-- <th>Brand Name</th> -->
           <th>Rate</th>
           <th>Brand Name</th>
-          <!-- <th>Freight</th> -->
+          <th>Attachments</th>
+          <th>Upload</th>
           <th>Remarks</th>
           <th>Action</th>
         </tr>
@@ -205,19 +178,12 @@
               </td>
               <td>
                 {{item.get('uom')?.value}}
-                <!-- <mat-select id="itemName" placeholder="Select UOM" formControlName="uom" class="select-form-field">
-                  <mat-option [value]="item._id" *ngFor="let item of uomList">
-                    {{item.unit}}
-                  </mat-option>
-
-                </mat-select> -->
+               
               </td>
               <td>
                 <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
               </td>
-              <!-- <td>
-                <input type="text" placeholder="Enter"  formControlName="brandName" class="pr-form-field">
-              </td> -->
+             
               <td>
                 <input type="text" placeholder="Enter" digitOnly formControlName="rate" class="pr-form-field">
               </td>
@@ -230,18 +196,34 @@
 
               </mat-select>
               </td>
-              <!-- <td>
-                <input type="text" placeholder="Enter"  formControlName="gst" class="pr-form-field">
-                {{ item.gstDetail.gst_percentage }}{{ item.gstDetail.gst_name }}
-                {{ item?.get('gstDetail')?.get('gst_percentage')?.value }}
+             
+              <td>
+                <div *ngFor="let attachment of item.get('attachment').value; let j = index">
+                  <a [href]="attachment" target="_blank"> <p style="color: blue; text-decoration: underline; font-size: 12px; margin-top:-10px;"> Attachment {{j + 1}}</p>
+                  </a>
+                </div>
+                
+              </td>
+                <td>
+                 
+                  <input type="file" (change)="onFilesSelected($event, i)" multiple>
+                   <div *ngIf="items?.value?.at(i)?.files">
+                    
+                     <ul>
+                       <li *ngFor="let file of items?.value?.at(i)?.files" style="margin:10px; display: flex; flex-direction: row ;">
+                       
+                          {{ file.name }} 
+                          <button (click)="removeFile(i, file)" style="border: none; color: red; font-weight: bold; margin-left: 5px;"> x</button>
+                        </li>
+                      </ul>
+                   </div>
+                 </td> 
 
-              </td> -->
-              <!-- <td>
-                <input placeholder="Enter" formControlName="freight" class="pr-form-field">
-              </td> -->
               <td>
                 <input placeholder="Enter" formControlName="remark" class="pr-form-field">
               </td>
+             
+              
               <td>
                 <div class="action-btn-wrapper">
                   <a class="action-btn" (click)="delete(i)" *ngIf="i>0" title="Delete"><i class="fa fa-trash"></i></a>
@@ -263,14 +245,7 @@
         </button>
       </div>
     </div>
-    <!-- <div style="display: flex;flex-direction: row;gap: 10px;float: right;position: relative;top:-120px;right:125px">
-      <div><button
-          style="padding: 8px;width: 120px;background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-size: 14px;font-family: 'Poppins';">Submit</button>
-      </div>
-      <div><button
-          style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">Clear</button>
-      </div>
-    </div> -->
+   
   
   </ng-container>
   <ng-template #noLocalPurchase>
@@ -284,6 +259,8 @@
           <th>Uom*</th>
           <th>Quantity*</th>
           <th>Brand Name</th>
+          <th>Attachments</th>
+          <th>Upload</th>
           <th>Remarks</th>
           <th>Action</th>
         </tr>
@@ -314,12 +291,7 @@
               </td>
               <td>
                 {{item.get('uom')?.value}}
-                <!-- <mat-select id="itemName" placeholder="Select UOM" formControlName="uom" class="select-form-field">
-                  <mat-option [value]="item._id" *ngFor="let item of uomList">
-                    {{item.unit}}
-                  </mat-option>
-
-                </mat-select> -->
+               
               </td>
               <td>
                 <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
@@ -333,12 +305,32 @@
 
               </mat-select>
               </td>
-              <!-- <td>
-                <input placeholder="Enter" formControlName="attachment" type="file" class="pr-form-field">
-              </td> -->
+              
+              <td>
+                <div *ngFor="let attachment of item.get('attachment').value; let j = index">
+                  <a [href]="attachment" target="_blank"> <p style="color: blue; text-decoration: underline; font-size: 12px; margin-top:-10px;"> Attachment {{j + 1}}</p>
+                  </a>
+                </div>
+                
+              </td>
+                <td>
+                 
+                  <input type="file" (change)="onFilesSelected($event, i)" multiple>
+                   <div *ngIf="items?.value?.at(i)?.files">
+                    
+                     <ul>
+                       <li *ngFor="let file of items?.value?.at(i)?.files" style="margin:10px; display: flex; flex-direction: row ;">
+                       
+                          {{ file.name }} 
+                          <button (click)="removeFile(i, file)" style="border: none; color: red; font-weight: bold; margin-left: 5px;"> x</button>
+                        </li>
+                      </ul>
+                   </div>
+                 </td> 
               <td>
                 <input placeholder="Enter" formControlName="remark" class="pr-form-field">
               </td>
+             
               <td>
                 <div class="action-btn-wrapper">
                   <a class="action-btn" (click)="delete(i)" *ngIf="i>0" title="Delete"><i class="fa fa-trash"></i></a>
@@ -360,97 +352,14 @@
         </button>
       </div>
     </div>
-    <!-- <div style="display: flex;flex-direction: row;gap: 10px;float: right;position: relative;top:-120px;right:125px">
-      <div><button
-          style="padding: 8px;width: 120px;background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-size: 14px;font-family: 'Poppins';">Submit</button>
-      </div>
-      <div><button
-          style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">Clear</button>
-      </div>
-    </div> -->
+   
   
   </ng-template>
   
 
 
 
-  <!-- <div class="scroll-bar1">
-    <table style="direction: ltr !important;border-left: 2px solid #000 !important;">
-      <tr>
-        <th>S&nbsp;No</th>
-        <th>Item*</th>
-        <th>Category</th>
-        <th>Sub&nbsp;category</th>
-        <th>Uom*</th>
-        <th>Quantity*</th>
-        <th>Attachments</th>
-        <th>Remarks</th>
-        <th>Action</th>
-      </tr>
-
-
-
-      <tbody>
-        <tr style="background-color: #F4F4F5;" formArrayName="items"
-          *ngFor="let item of purchaseRequestForm.get('items')['controls']; let i = index;">
-          <td style="text-align: center;">
-            {{i+1}}
-          </td>
-          <ng-container [formGroupName]="i">
-            <td>
-              <mat-select id="itemName" placeholder="Select site" formControlName="item_id" class="select-form-field"
-                (selectionChange)="selectedItem($event,i)">
-                <mat-option [value]="item._id" *ngFor="let item of itemList">
-                  {{item.item_name}}
-                </mat-option>
-
-              </mat-select>
-            </td>
-            <td style="color: #000;">
-              {{item.get('category')?.value}}
-            </td>
-            <td style="color: #000;">
-              {{item.get('subCategory')?.value}}
-            </td>
-            <td>
-              {{item.get('uom')?.value}}
-              <mat-select id="itemName" placeholder="Select UOM" formControlName="uom" class="select-form-field">
-                <mat-option [value]="item._id" *ngFor="let item of uomList">
-                  {{item.unit}}
-                </mat-option>
-
-              </mat-select>
-            </td>
-            <td>
-              <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
-            </td>
-            <td>
-              <input placeholder="Enter" formControlName="attachment" type="file" class="pr-form-field">
-            </td>
-            <td>
-              <input placeholder="Enter" formControlName="remark" class="pr-form-field">
-            </td>
-            <td>
-              <div class="action-btn-wrapper">
-                <a class="action-btn" (click)="delete(i)" *ngIf="i>0" title="Delete"><i class="fa fa-trash"></i></a>
-              </div>
-            </td>
-          </ng-container>
-        </tr>
-      </tbody>
-    </table>
-  </div> -->
-
-  <!-- <div style="display: flex;flex-direction: row;gap: 40px;margin-left:60px;top: -50px;position: relative;">
-    <div>
-      <button
-        style="padding: 8px ;width: 120px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';"
-        (click)="addItem()">
-        Add Item +
-      </button>
-    </div>
-
-  </div> -->
+ 
     <div class="row text-area-section">
 
       <label style="color: #4272BF;font-size: 14px;">Remarks </label>
@@ -465,12 +374,5 @@
       Material Request</button>
 
   </div>
-  <!-- <div style="display: flex;flex-direction: row;gap: 10px;float: right;position: relative;top:-120px;right:60px">
-    <div><button
-        style="padding: 8px;width: 120px;background-color: #233A61;color: #fff;border-radius: 5px;border-color: lightgrey;font-size: 14px;font-family: 'Poppins';">Submit</button>
-    </div>
-    <div><button
-        style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;border: 1px solid #94A3B8;border-radius: 5px;font-size: 14px;font-family: 'Poppins';">Clear</button>
-    </div>
-  </div> -->
+ 
 </form>

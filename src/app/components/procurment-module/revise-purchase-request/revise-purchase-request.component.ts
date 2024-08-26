@@ -104,6 +104,7 @@ export class RevisePurchaseRequestComponent implements OnInit {
       category: new FormControl(null),
       subCategory: new FormControl(null),
       attachment: new FormControl([]),
+      files: new FormControl([]),
       remark: new FormControl(null),
       uom: new FormControl(null),
       itemName: new FormControl(null),
@@ -119,20 +120,101 @@ export class RevisePurchaseRequestComponent implements OnInit {
     }
     console.log(this.purchaseRequestForm)
 console.log(this.purchaseRequestForm.valid)
-    if (!this.purchaseRequestForm.valid) {
-      return;
+
+if (!this.purchaseRequestForm.valid) {
+  console.log("Form is invalid", this.purchaseRequestForm);
+
+  // Iterate over form controls to identify validation errors
+  Object.keys(this.purchaseRequestForm.controls).forEach(key => {
+    const control = this.purchaseRequestForm.get(key);
+    if (control && control.invalid) {
+      console.log(`Validation error in ${key}:`, control.errors);
+
     }
+  });
+
+  return;
+}
 
     let requestData: any = this.purchaseRequestForm.value;
     requestData['date'] = moment(requestData.date, 'DD-MM-YYYY').toDate()
     requestData['expected_delivery_date'] = new Date(requestData.expected_delivery_date);
     requestData['status'] = 'revised';
     this.load = true;
-    this.httpService.PUT(PURCHASE_REQUEST_API, requestData).subscribe({
+
+console.log("there", requestData);
+const formData = new FormData();
+if(requestData.local_purchase==="no")
+{
+  formData.append('_id', requestData._id);
+  formData.append('title', requestData.title);
+  formData.append('handle_by', requestData.handle_by);
+  formData.append('date', requestData.date);
+  formData.append('expected_delivery_date', requestData.expected_delivery_date);
+  formData.append('purchase_request_number', requestData.purchase_request_number);
+  formData.append('site', requestData.site);
+  formData.append('local_purchase', requestData.local_purchase);
+  formData.append('remarks', requestData.remarks);
+  formData.append('status', requestData.status);
+  
+    
+    // Append items and their files
+    requestData.items.forEach((item, index) => {
+      formData.append(`items[${index}][item_id]`, item.item_id);
+      formData.append(`items[${index}][qty]`, item.qty);
+      formData.append(`items[${index}][category]`, item.category);
+      formData.append(`items[${index}][subCategory]`, item.subCategory);
+      
+      formData.append(`items[${index}][uom]`, item.uom);
+      formData.append(`items[${index}][brandName]`, item.brandName);
+  
+      // Append each file in the 'files' array
+      item.files.forEach((file, fileIndex) => {
+        formData.append(`items[${index}][attachment][${fileIndex}]`, file, file.name);
+      });
+    });
+  
+}
+
+else
+{
+  formData.append('title', requestData.title);
+formData.append('date', requestData.date);
+formData.append('expected_delivery_date', requestData.expected_delivery_date);
+formData.append('purchase_request_number', requestData.purchase_request_number);
+formData.append('site', requestData.site);
+formData.append('local_purchase', requestData.local_purchase);
+formData.append('_id', requestData._id);
+formData.append('vendor', requestData.vendor);
+formData.append('status', requestData.status);
+
+// Append items and their attachments
+requestData.items.forEach((item, index) => {
+    formData.append(`items[${index}][item_id]`, item.item_id);
+    formData.append(`items[${index}][qty]`, item.qty.toString());
+    formData.append(`items[${index}][rate]`, item.rate.toString());
+    formData.append(`items[${index}][category]`, item.category);
+    formData.append(`items[${index}][subCategory]`, item.subCategory);
+    formData.append(`items[${index}][remark]`, item.remark);
+    formData.append(`items[${index}][uom]`, item.uom);
+    formData.append(`items[${index}][brandName]`, item.brandName);
+
+    // Append files
+     // Append each file in the 'files' array
+     item.files.forEach((file, fileIndex) => {
+      formData.append(`items[${index}][attachment][${fileIndex}]`, file, file.name);
+    });
+});
+}
+
+
+console.log(formData);
+
+  this.httpService.PUT(PURCHASE_REQUEST_API, formData).subscribe({
       next: (resp: any) => {
         this.load = false;
         this.snack.notify("Record has been updated.", 1);
-        this.router.navigate(['/procurement'])
+        this.router.navigate(['/procurement/prlist'])
 
       }, error: (err) => {
         this.load = false;
@@ -193,6 +275,7 @@ console.log(this.purchaseRequestForm.valid)
 
   createItem(item?: any): any {
     if (item) {
+      console.log("item Here", item.attachment);
       // const foundItem = this.itemList.find(items => item.item_id == items._id);
       // const additionalKeyValue = foundItem ? foundItem.item_name : 'defaultValue';
       // const foundBrand = this.brandList.find(items => item.brandName == items._id);
@@ -204,10 +287,12 @@ console.log(this.purchaseRequestForm.valid)
         category: new FormControl(item.categoryDetail.name),
         subCategory: new FormControl(item.subCategoryDetail.subcategory_name),
         attachment: new FormControl(item.attachment),
+        files: new FormControl([]),
         remark: new FormControl(item.remark),
         uom: new FormControl(item.uomDetail.uom_name),
         brandName: new FormControl(item.brandName),
       })
+
     }
     else {
       return new FormGroup({
@@ -216,7 +301,8 @@ console.log(this.purchaseRequestForm.valid)
         rate:new FormControl(''),
         category: new FormControl(''),
         subCategory: new FormControl(''),
-        attachment: new FormControl(),
+        attachment: new FormControl([]),
+        files: new FormControl([]),
         remark: new FormControl(''),
         uom: new FormControl(''),
         brandName: new FormControl('')
@@ -249,7 +335,7 @@ console.log(this.purchaseRequestForm.valid)
         this.addItems(item);
       })
     }
-
+console.log(this.purchaseRequestForm);
     this.purchaseRequestForm.controls.remarks.disable();
 
   }
@@ -265,6 +351,55 @@ console.log(this.purchaseRequestForm.valid)
     if (item) {
       this.items.push(this.createItem(item));
     }
+  }
+
+  onFilesSelected(event: any, index: number): void {
+    const fileList: FileList = event.target.files;
+     console.log("file", fileList);
+      if (fileList.length > 5)
+      {
+        this.snack.notify('Can upload Maximum 5 Files', 2);
+        return;
+      }
+
+    if (fileList.length > 0) {
+      const files = Array.from(fileList);
+      
+      this.items.at(index).patchValue({
+        files :files,
+      });
+     
+
+      console.log(this.items);
+    }
+  }
+
+  removeFile(index: number, file: File): void {
+    // Get the FormArray of files for the specified item
+    const filesArray = this.items.at(index).get('files') as FormArray;
+  console.log("here", filesArray);
+    // Filter out the file with the matching name
+    const updatedFiles = filesArray.value.filter((f: File) => f.name !== file.name);
+    console.log("there", updatedFiles);
+    // Clear the current files array
+   /* while (filesArray.length !== 0) {
+      filesArray.value.removeAt(0);
+    }
+  
+    // Add the updated files back to the FormArray
+    updatedFiles.forEach((f: File) => filesArray.push(new FormControl(f)));
+  
+    console.log(updatedFiles); */
+    this.items.at(index).patchValue({
+      files :updatedFiles,
+    });
+
+    console.log(this.items);
+
+  }
+  
+  files(index: number): File[] {
+    return (this.items.at(index).get('files') as FormArray).controls.map(c => c.value);
   }
 
 
