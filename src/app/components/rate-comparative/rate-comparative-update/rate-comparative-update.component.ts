@@ -252,6 +252,9 @@ export class RateComparativeUpdateComponent implements OnInit {
     requestedData['vendorItems'] = this.VendorItems;
     this.load = true;
 
+
+    console.log("there", requestedData )
+
     this.httpService.PUT(RATE_COMPARATIVE_API, requestedData).subscribe({
       next: (res) => {
         this.snack.notify('Detail has been updated', 1);
@@ -283,8 +286,7 @@ export class RateComparativeUpdateComponent implements OnInit {
   isVendorSelected(items: any): any[] {
     let tempVendorList = this.vendorsList.filter(
       (vendor) =>
-        vendor.category.includes(items.categoryDetail._id) &&
-        vendor.SubCategory.includes(items.subCategoryDetail._id)
+        vendor.category.includes(items.categoryDetail._id)
     );
 
     return tempVendorList;

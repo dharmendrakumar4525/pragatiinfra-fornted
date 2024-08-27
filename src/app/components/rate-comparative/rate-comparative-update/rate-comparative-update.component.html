@@ -209,7 +209,7 @@
               <a class="p-btns" (click)="ItemData(vendor,vendors)"> Items Rates</a>
             </td> 
             <td>
-              <ng-container  *ngIf="ItemwiseVendorRate.has(vendor[0]); else pendingView">
+              <ng-container  *ngIf="ItemwiseVendorRate.has(vendor[i]); else pendingView">
                <p style="color: green;">Completed</p> 
               </ng-container>
               <ng-template  #pendingView>

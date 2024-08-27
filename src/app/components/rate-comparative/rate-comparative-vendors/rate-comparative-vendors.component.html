@@ -1,63 +1,75 @@
+<!-- Freight Input Field for the First Item Outside the Table -->
 <div mat-dialog-title class="mat-dialog-title">
   <h1>{{VendorDetails.vendor_name}}</h1>
-  <!-- <div class="row full-width">
-    <div class="col-md-9">
-      Items rate
-      <div class="header-subtitle">
-        Item Name: {{pageDetail.item_name}}
-      </div>
-    </div>
-    <div class="col-md-3">
-      <mat-icon class="float-end close-icon" (click)="onNoClick()">close</mat-icon>
-    </div>
-  </div> -->
+ 
 </div>
-<div mat-dialog-content class="mat-dialog-content-cstm">
 
+<div *ngIf="vendorItemsForm.get('items').get('0')" class="freight-input-container" style="padding: 10px;">
+  <label for="freight">Freight + GST </label>
+  <input 
+  style="margin-left: 20px;"
+    id="freight" 
+    formControlName="Freight" 
+    type="number" 
+    placeholder="Freight" 
+    class="cstm-input"
+    [ngClass]="{
+      'invalid-input': 
+        vendorItemsForm.get('items').get('0').get('Freight').invalid && 
+        (formSubmitted || vendorItemsForm.get('items').get('0').get('Freight').touched)
+    }">
+</div>
+
+<!-- Table of Items -->
+<div mat-dialog-content class="mat-dialog-content-cstm">
   <table class="vendor_list_table">
     <thead>
       <tr>
+        <!-- Table Headers -->
         <th>SNo.</th>
-        <th> Item name </th>
-        <th> UOM </th>
+        <th>Item name</th>
+        <th>UOM</th>
         <th>Requested Qty</th>
         <th>Required Qty</th>
         <th>Brand Name</th>
         <th>Rate</th>
         <th>Sub Total Amount</th>
-        <th>Freight</th>
         <th>Gst</th>
         <th>Total</th>
       </tr>
     </thead>
 
+    <!-- Your existing template code -->
     <ng-container *ngIf="type!=null ; else enterDetails">
-      <tbody >
-        <tr *ngFor="let item of filledData.items; let i=index" >
+      <tbody>
+        <tr *ngFor="let item of filledData.items; let i=index">
           <ng-container>
             <td>{{i+1}}</td>
             <td>{{item.item.item_name}}</td>
             <td>{{item.item.uomDetail.uom_name}}</td>
             <td>{{item.item.qty}}</td>
             <td>
-              <input [disabled]="true" type="text" [value]="item.RequiredQuantity" placeholder="Quantity" class="cstm-input" (input)="onChangeBrand($event,item)">
+              <input 
+                [disabled]="true" 
+                type="text" 
+                [value]="item.RequiredQuantity" 
+                placeholder="Quantity" 
+                class="cstm-input" 
+                (input)="onChangeBrand($event,item)">
             </td>
             <td>{{myBrandName(item.item.brandName)}}</td>
             <td>
-              <input [disabled]="true" type="text" [value]="item.Rate" placeholder="Rate" class="cstm-input" (input)="onChangeBrand($event,item)">
+              <input 
+                [disabled]="true" 
+                type="text" 
+                [value]="item.Rate" 
+                placeholder="Rate" 
+                class="cstm-input" 
+                (input)="onChangeBrand($event,item)">
             </td>
-            <td>
-              {{item.SubTotalAmount}}
-            </td>
-            <td>
-              <input [disabled]="true" type="text" [value]="item.Freight" placeholder="Freight" class="cstm-input" (input)="onChangeBrand($event,item)">
-            </td>
-            <td>
-              {{item.item.tax.amount}}%({{item.item.tax.name}})
-            </td>
-            <td>
-              {{item.Total}}
-            </td>
+            <td>{{item.SubTotalAmount}}</td>
+            <td>{{item.item.tax.amount}}%({{item.item.tax.name}})</td>
+            <td>{{item.Total}}</td>
           </ng-container>
         </tr>
       </tbody>
@@ -70,68 +82,41 @@
             <td>{{item.item_name}}</td>
             <td>{{item.uomDetail.uom_name}}</td>
             <td>{{item.qty}}</td>
-            <!-- <td>
-              <input formControlName="RequiredQuantity" type="number" placeholder="Quantity" class="cstm-input" (input)="onChangeBrand($event,item)">
-            </td> -->
-            <td>
-              <input formControlName="RequiredQuantity" type="number" placeholder="Quantity" class="cstm-input" 
-                     [ngClass]="{
-                       'invalid-input': 
-                         vendorItemsForm.get('items').get(i.toString()).get('RequiredQuantity').invalid && 
-                         (formSubmitted || vendorItemsForm.get('items').get(i.toString()).get('RequiredQuantity').touched)
-                     }"
-                     max={{item.qty}} min="0" 
-                     style="width: 150px;"
-                     >
-            </td>
-            <td>{{myBrandName(item.brandName)}}</td>
-            <!-- <td>
-              <input formControlName="Rate" type="number" placeholder="Rate" class="cstm-input">
-            </td> -->
             <td>
               <input 
-                    formControlName="Rate" 
-                     type="number" 
-                     placeholder="Rate" 
-                     class="cstm-input" 
-                     [ngClass]="{
-                        'invalid-input': 
-                          vendorItemsForm.get('items').get(i.toString()).get('Rate').invalid && 
-                          (formSubmitted || vendorItemsForm.get('items').get(i.toString()).get('Rate').touched)
-                     }">
+                formControlName="RequiredQuantity" 
+                type="number" 
+                placeholder="Quantity" 
+                class="cstm-input" 
+                [ngClass]="{
+                  'invalid-input': 
+                    vendorItemsForm.get('items').get(i.toString()).get('RequiredQuantity').invalid && 
+                    (formSubmitted || vendorItemsForm.get('items').get(i.toString()).get('RequiredQuantity').touched)
+                }" 
+                max={{item.qty}} min="0" 
+                style="width: 150px;">
             </td>
-            
-            
-            
-            
+            <td>{{myBrandName(item.brandName)}}</td>
             <td>
-              {{calculateSubTotalAmount(i)}}
+              <input 
+                formControlName="Rate" 
+                type="number" 
+                placeholder="Rate" 
+                class="cstm-input" 
+                [ngClass]="{
+                  'invalid-input': 
+                    vendorItemsForm.get('items').get(i.toString()).get('Rate').invalid && 
+                    (formSubmitted || vendorItemsForm.get('items').get(i.toString()).get('Rate').touched)
+                }">
             </td>
-            <!-- <td>
-              <input formControlName="Freight" type="number" placeholder="Freight" class="cstm-input" (input)="onChangeBrand($event, item)" required>
-            </td> -->
-            <td>
-              <input formControlName="Freight" type="number" placeholder="Freight" class="cstm-input" 
-                     [ngClass]="{
-                       'invalid-input': 
-                         vendorItemsForm.get('items').get(i.toString()).get('Freight').invalid && 
-                         (formSubmitted || vendorItemsForm.get('items').get(i.toString()).get('Freight').touched)
-                     }" required>
-            </td>
-            
-            <td>
-              {{item.tax.amount}}%
-            </td>
-            <td>
-              {{calculateTotalAmount(i)}}
-            </td>
+            <td>{{calculateSubTotalAmount(i)}}</td>
+            <td>{{item.tax.amount}}%</td>
+            <td>{{calculateTotalAmount(i)}}</td>
           </ng-container>
         </tr>
       </tbody>
     </ng-template>
-   
   </table>
-
 </div>
 
 <ng-container *ngIf="type!=null; else action">
@@ -153,4 +138,3 @@
     </button>
   </div>
 </ng-template>
-
