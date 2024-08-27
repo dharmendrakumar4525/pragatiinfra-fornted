@@ -206,7 +206,7 @@
               {{vendors.get('Item_subCategory').value.subcategory_name}}
             </td>
             <td>
-              <a class="p-btns" (click)="ItemData(vendor,vendors)"> Items Rates</a>
+              <a class="p-btns" (click)="ItemData(vendor,vendors, i)"> Items Rates</a>
             </td> 
             <td>
               <ng-container  *ngIf="ItemwiseVendorRate.has(vendor[i]); else pendingView">

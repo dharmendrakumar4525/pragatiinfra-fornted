@@ -109,10 +109,15 @@ export class RateComparativeUpdateComponent implements OnInit {
    * @param vendors The vendors related to the item.
    * @returns void
    */
-  ItemData(dataObj: any, vendors: any) {
+  ItemData(dataObj: any, vendors: any, i:any) {
     let index = this.finalVendorArray.findIndex(
-      (item) => item[1] == dataObj[1]
+      (item) => item[i] == dataObj[i]
     );
+
+    console.log("dataObj", dataObj[i]);
+    console.log("vndorsList",this.vendorsList)
+    console.log("filledData",this.VendorItems[index])
+
     // Open a dialog popup for rate comparative vendors
     const dialogPopup = this.dialog.open(RateComparativeVendorsComponent, {
       data: {
@@ -129,10 +134,13 @@ export class RateComparativeUpdateComponent implements OnInit {
     dialogPopup.afterClosed().subscribe((result: any) => {
       if (result && result['option'] === 1) {
         this.VendorItems[index] = result;
-        this.ItemwiseVendorRate.set(dataObj[0], result.data.status);
+        this.ItemwiseVendorRate.set(dataObj[i], result.data.status);
       } else {
-        this.ItemwiseVendorRate.delete(dataObj[0]);
+        this.ItemwiseVendorRate.delete(dataObj[i]);
       }
+
+      console.log("VendorItems[index]", this.VendorItems[index]);
+      console.log("itemWiseVendorRate",this.ItemwiseVendorRate );
     });
   }
 
@@ -247,13 +255,14 @@ export class RateComparativeUpdateComponent implements OnInit {
     requestedData['stage'] = 'rate_approval';
     requestedData['handle_by'] = loginUser.user._id;
     for (let i = 0; i < this.VendorItems.length; i++)
-      this.VendorItems[i] = this.VendorItems[i].data.value;
+      this.VendorItems[i] = this.VendorItems[i].data;
 
     requestedData['vendorItems'] = this.VendorItems;
     this.load = true;
 
 
     console.log("there", requestedData )
+
 
     this.httpService.PUT(RATE_COMPARATIVE_API, requestedData).subscribe({
       next: (res) => {
@@ -286,7 +295,8 @@ export class RateComparativeUpdateComponent implements OnInit {
   isVendorSelected(items: any): any[] {
     let tempVendorList = this.vendorsList.filter(
       (vendor) =>
-        vendor.category.includes(items.categoryDetail._id)
+        vendor.category.includes(items.categoryDetail._id) 
+      // && vendor.SubCategory.includes(items.subCategoryDetail._id)
     );
 
     return tempVendorList;

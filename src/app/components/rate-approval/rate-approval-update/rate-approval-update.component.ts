@@ -242,7 +242,7 @@ export class RateApprovalUpdateComponent implements OnInit {
   */
   vendorTotal(item:any){
 
-      
+      console.log("check Item", item);
       let subTotal=0;
       let total=0;
       let freight=0;
@@ -258,7 +258,8 @@ export class RateApprovalUpdateComponent implements OnInit {
           qty=obj.RequiredQuantity;
 
       })
-      return {subTotal:subTotal,
+      return {
+              subTotal:subTotal,
               gstAmount:gstAmount,
               total:total,
               freight : freight,
@@ -461,7 +462,7 @@ export class RateApprovalUpdateComponent implements OnInit {
         this.httpService.GET(`${RATE_COMPARATIVE_DETAIL_API}`, { _id: params['id'] }).subscribe({
           next: res => {
             this.details = res.data.details;
-            
+            console.log("API", this.details);
             this.patchData(res.data.details);
           }
         })
