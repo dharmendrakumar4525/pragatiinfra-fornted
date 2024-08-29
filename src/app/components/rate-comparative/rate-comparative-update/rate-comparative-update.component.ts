@@ -296,7 +296,7 @@ export class RateComparativeUpdateComponent implements OnInit {
     let tempVendorList = this.vendorsList.filter(
       (vendor) =>
         vendor.category.includes(items.categoryDetail._id) 
-      // && vendor.SubCategory.includes(items.subCategoryDetail._id)
+       && vendor.SubCategory.includes(items.subCategoryDetail._id)
     );
 
     return tempVendorList;

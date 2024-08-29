@@ -64,8 +64,11 @@ export class RateComparativeVendorsComponent implements OnInit {
       for (let i = 0; i < this.tempFilteredItems.length; i++) {
         const itemGroup = this.formBuilder.group({
           item: new FormControl(this.tempFilteredItems[i]),
-          RequiredQuantity: new FormControl('', Validators.required),
-          Rate: new FormControl('', Validators.required),
+          RequiredQuantity: new FormControl(this.tempFilteredItems[i].qty, Validators.required),
+          Rate: new FormControl('', [
+            Validators.required,
+            Validators.pattern('^[-+]?[0-9]*\\.?[0-9]+$')
+          ]),
           SubTotalAmount: new FormControl('', Validators.required),
           Freight: new FormControl(0, Validators.required),
           Total: new FormControl('', Validators.required),
@@ -130,6 +133,16 @@ export class RateComparativeVendorsComponent implements OnInit {
       itemsControls.at(0).get('Freight').setValue(newFreightValue);
       this.calculateSubTotalAmount(0);
       this.calculateTotalAmount(0);
+    }
+  }
+
+  validateFloat(event: KeyboardEvent) {
+    const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
+    const pattern = /[0-9\.\-+]/;
+    const inputChar = String.fromCharCode(event.charCode);
+  
+    if (!pattern.test(inputChar) && !allowedKeys.includes(event.key)) {
+      event.preventDefault();
     }
   }
 

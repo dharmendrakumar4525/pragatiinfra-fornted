@@ -5,7 +5,7 @@
 <div style="padding: 10px;">
   <ng-container>
     <label style="margin-right: 20px;">Freight + GST </label>
-    <input [value]="firstItemFreight" type="number" placeholder="Freight" class="cstm-input" (input)="onFreightChange($event)">
+    <input [value]="firstItemFreight" type="text"  (keypress)="validateFloat($event)" placeholder="Freight" class="cstm-input" (input)="onFreightChange($event)">
   </ng-container>
 </div>
 
@@ -62,20 +62,27 @@
             <td>{{item.uomDetail.uom_name}}</td>
             <td>{{item.qty}}</td>
             <td>
-              <input formControlName="RequiredQuantity" type="number" placeholder="Quantity" class="cstm-input"
+              <input formControlName="RequiredQuantity"  placeholder="Quantity" class="cstm-input"
                      [ngClass]="{
                        'invalid-input': vendorItemsForm.get('items').get(i.toString()).get('RequiredQuantity').invalid && 
                          (formSubmitted || vendorItemsForm.get('items').get(i.toString()).get('RequiredQuantity').touched)
                      }"
-                     max="{{item.qty}}" min="0" style="width: 150px;">
+                     max="{{item.qty}}" min="0" style="width: 150px;"
+                     type="text"
+                     (keypress)="validateFloat($event)"
+                     >
             </td>
             <td>{{myBrandName(item.brandName)}}</td>
             <td>
-              <input formControlName="Rate" type="number" placeholder="Rate" class="cstm-input"
-                     [ngClass]="{
-                       'invalid-input': vendorItemsForm.get('items').get(i.toString()).get('Rate').invalid && 
-                         (formSubmitted || vendorItemsForm.get('items').get(i.toString()).get('Rate').touched)
-                     }">
+              <input formControlName="Rate" type="text" placeholder="Rate" class="cstm-input"
+       [ngClass]="{
+         'invalid-input': vendorItemsForm.get('items').get(i.toString()).get('Rate').invalid && 
+           (formSubmitted || vendorItemsForm.get('items').get(i.toString()).get('Rate').touched)
+       }"
+    
+       (keypress)="validateFloat($event)">
+
+
             </td>
             <td>
               {{calculateSubTotalAmount(i)}}
