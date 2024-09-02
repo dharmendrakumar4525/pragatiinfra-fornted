@@ -253,7 +253,7 @@ export class RateApprovalUpdateComponent implements OnInit {
           subTotal=obj.SubTotalAmount + subTotal;
           total=+obj.Total + +total;
           freight = +obj.Freight + +freight;
-          gstAmount = total-subTotal-freight;
+          gstAmount = total-subTotal;
           rate=obj.Rate;
           qty=obj.RequiredQuantity;
 
@@ -285,6 +285,14 @@ export class RateApprovalUpdateComponent implements OnInit {
 
   }
 
+  getTotalAmount(items: any[]): number {
+    console.log("here that is", items);
+    return items.reduce((total, item) => {
+      const taxAmount = item.Total-item. SubTotalAmount;
+      return total + taxAmount;
+    }, 0);
+  }
+
   /**
   * Deletes a vendor from the VendorRate map.
   * @param vendor_id The ID of the vendor to delete.
@@ -313,6 +321,17 @@ export class RateApprovalUpdateComponent implements OnInit {
       this.brandList=res.data;
     })
   }
+
+  calculateGrandTotal(vendorItem: any): number {
+    const vendorTotal = this.vendorTotal(vendorItem.items);
+    const gstTotal = this.getTotalAmount(vendorItem.items);
+    return vendorTotal.subTotal + vendorTotal.freight + gstTotal;
+  }
+  
+  getLowestGrandTotal(): number {
+    return Math.min(...this.details.vendorItems.map(vendorItem => this.calculateGrandTotal(vendorItem)));
+  }
+  
 
   /**
   * Retrieves the name of the brand based on the provided brand ID.

@@ -7,6 +7,15 @@ mat-toolbar {
   flex: 1 1 auto;
 }
 
+.highlight {
+  background-color: #ffcc00; /* Light yellow background */
+  border: 3px solid #ffcc00; /* Optional: Yellow border */
+  border-radius: 5px;
+
+  color: black;
+}
+
+
 .requests {
   height: 40px;
   width: 1140px;

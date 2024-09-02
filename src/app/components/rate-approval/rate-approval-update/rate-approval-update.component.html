@@ -212,104 +212,67 @@
         </table>
         <div>Select Vendor</div>
         <div class="vendor-wapper">
-          <div   *ngFor="let vendorItem of details.vendorItems; let i=index">
-                <div>
-                <div *ngIf="vendorTotal(vendorItem.items) as vendorTotal" >
-                  <div class="vendor-name-cl" *ngIf="findVendor(vendorItem.Vendor) as vendorDetails">
-
-                    <div style="display: flex; justify-content: space-between;">
-                      <div>{{vendorDetails.vendor_name}}</div>
-                      <div>
-                        <input [disabled]="VendorRate.size>0 && !VendorRate.has(vendorDetails._id)" type="checkbox" style="width: 20px;" (change)="handleCheckboxChange(vendorDetails._id,vendorItem,vendorTotal)" />
-                      </div>
-                    </div>
-            
-                  </div>
-                  <div   *ngFor="let item of details.vendorItems[i].items; let i=index">
-
-                    <div class="vendor-value-cont">
-                      <div class="vendor-value-label">SubTotal {{item.item.item_name}} </div>
-                      <div class="vendor-value">
-                        {{item.SubTotalAmount | number:'1.2-2'}}
-                      </div>
+          <div *ngFor="let vendorItem of details.vendorItems; let i=index">
+            <div>
+              <div *ngIf="vendorTotal(vendorItem.items) as vendorTotal">
+                <div 
+                  
+                  class="vendor-name-cl"
+                  *ngIf="findVendor(vendorItem.Vendor) as vendorDetails"
+                >
+        
+                  <div style="display: flex; justify-content: space-between;">
+                    <div>{{vendorDetails.vendor_name}}</div>
+                    <div>
+                      <input [disabled]="VendorRate.size>0 && !VendorRate.has(vendorDetails._id)" type="checkbox" style="width: 20px;" (change)="handleCheckboxChange(vendorDetails._id,vendorItem,vendorTotal)" />
                     </div>
                   </div>
-                  <div class="vendor-value-cont">
-                    <div class="vendor-value-label">Total Freight (Inc* All Items)</div>
-                    <div class="vendor-value">
-                      {{vendorTotal.freight| number:'1.2-2'}}
-                    </div>
-                  </div>
-
-                  <div class="vendor-value-cont">
-                    <div class="vendor-value-label">Total GST</div>
-                    <div class="vendor-value">
-                      {{vendorTotal.total - vendorTotal.subTotal - vendorTotal.freight | number:'1.2-2' }}
-                    </div>
-                  </div>
-                  <div class="vendor-value-cont">
-                    <div class="vendor-value-label">Sub Total (Inc* All Items)</div>
-                    <div class="vendor-value">
-                      {{vendorTotal.subTotal | number:'1.2-2' }}
-                    </div>
-                  </div>
-
-                  <div class="vendor-value-cont">
-                    <div class="vendor-value-label">Grand Total (Inc* All Items)</div>
-                    <div class="vendor-value">
-                      {{vendorTotal.total | number:'1.2-2' }}
-                    </div>
-                  </div>
-    
-                  <!-- <div class="vendor-value-cont">
-                    <div class="vendor-value-label">Item Rate</div>
-                    <div class="vendor-value">
-                      {{vendorTotal.rate | number:'1.2-2' }}
-                    </div>
-                  </div>
-
-                  <div class="vendor-value-cont">
-                    <div class="vendor-value-label">Rate</div>
-                    <div class="vendor-value">
-                      {{vendorTotal.rate | number:'1.2-2' }}
-                    </div>
-                  </div>
-
-                  <div class="vendor-value-cont">
-                    <div class="vendor-value-label">Qty.</div>
-                    <div class="vendor-value">
-                      {{vendorTotal.qty | number:'1.2-2' }}
-                    </div>
-                  </div>
-                  <div class="vendor-value-cont">
-                    <div class="vendor-value-label">Subtotal</div>
-                    <div class="vendor-value">
-                      {{vendorTotal.subTotal | number:'1.2-2' }}
-                    </div>
-                  </div>
-                  <div class="vendor-value-cont">
-                    <div class="vendor-value-label">Freight</div>
-                    <div class="vendor-value">
-                      {{vendorTotal.freight | number:'1.2-2' }}
-                    </div>
-                  </div>
-                  <div class="vendor-value-cont">
-                    <div class="vendor-value-label">GST Amount</div>
-                    <div class="vendor-value">
-                      {{ vendorTotal.gstAmount | number:'1.2-2' }}
-                    </div>
-                  </div>
-                 
-                  <div class="vendor-value-cont" style="background-color: #073B4C14;">
-                    <div class="vendor-value-label"><strong>Grand total</strong></div>
-                    <div class="vendor-value">
-                      {{vendorTotal.total | number:'1.2-2' }}
-                    </div>
-                  </div> -->
+        
                 </div>
+        
+                <div *ngFor="let item of details.vendorItems[i].items; let i=index">
+                  <div class="vendor-value-cont">
+                    <div class="vendor-value-label">SubTotal {{item.item.item_name}} </div>
+                    <div class="vendor-value">
+                      {{item.SubTotalAmount | number:'1.2-2'}}
+                    </div>
+                  </div>
+                </div>
+        
+                <div class="vendor-value-cont" style="font-weight:bold;">
+                  <div class="vendor-value-label">Sub Total (All Items)</div>
+                  <div class="vendor-value">
+                    {{vendorTotal.subTotal | number:'1.2-2' }}
+                  </div>
+                </div>
+        
+                <div class="vendor-value-cont" style="font-weight:bold;">
+                  <div class="vendor-value-label">Total GST (All Items) </div>
+                  <div class="vendor-value">
+                    {{ getTotalAmount(details.vendorItems[i].items) | number:'1.2-2' }}
+                  </div>
+                </div>
+        
+                <div class="vendor-value-cont" style="font-weight:bold;">
+                  <div class="vendor-value-label">Total Freight (Inc* GST)</div>
+                  <div class="vendor-value">
+                    {{vendorTotal.freight | number:'1.2-2'}}
+                  </div>
+                </div>
+        
+                <div class="vendor-value-cont" style="font-weight:bold;"  [ngClass]="{'highlight': calculateGrandTotal(vendorItem) === getLowestGrandTotal()}">
+                  <div class="vendor-value-label">Grand Total</div>
+                  <div class="vendor-value">
+                    {{vendorTotal.subTotal + vendorTotal.freight + getTotalAmount(details.vendorItems[i].items) | number:'1.2-2'}}
+                  </div>
+                </div>
+        
+              </div>
             </div>
-    </div>
-  </div>
+          </div>
+        </div>
+        
+  
     </ng-container>
     <ng-template #noview>
       Vendor Comparison is not Applicable.
