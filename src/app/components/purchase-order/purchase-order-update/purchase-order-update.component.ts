@@ -280,8 +280,11 @@ export class PurchaseOrderUpdateComponent implements OnInit {
             }
             errMessage += '</ul>';
             this.snack.notifyHtml(errMessage, 2);
+            this.router.navigate(['/purchase-order']);
+            
           } else {
             this.snack.notify(err.message, 2);
+            this.router.navigate(['/purchase-order']);
           }
         },
       });

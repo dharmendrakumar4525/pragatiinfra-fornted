@@ -58,7 +58,7 @@ export class PurchaseRequestComponent implements OnInit {
   itemList: any;
   filteredItemList: any;
   filteredBrandList: any;
-  option = 1;
+  option = 2;
   purchaseList: any[] = [];
   filter_by = "status";
   brandList:any;
@@ -290,8 +290,10 @@ else
   }
 
   createRequest() {
+   
     this.option = 1;
-    window.location.reload();
+    this.purchaseRequestForm.get('date').setValue(moment().format('DD-MM-YYYY'));
+   
   }
   
   getList() {
@@ -697,6 +699,7 @@ selectedItem(event: any, i: any) {
 
     this.getList();
     this.addItem();
+    this.getPurchaseList({ filter_by: this.filter_by, filter_value: this.statusOption.value });
 
 
   
