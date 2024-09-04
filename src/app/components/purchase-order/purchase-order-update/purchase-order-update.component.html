@@ -253,12 +253,12 @@
 
 
           <ng-container *ngIf="addPermission || editPermission; else noAddPermission">
-            <button (click)="openEsignModal()"
+            <button (click)="createOrder()"
               style="padding: 8px;width: 180px;
               background-color: #233A61;color: #fff;
               border-radius: 5px;border-color: lightgrey;font-family: 'Poppins';
               font-size: 14px;">
-              Approve with esign
+              Approve
             </button>
           </ng-container>
           <ng-template #noAddPermission>

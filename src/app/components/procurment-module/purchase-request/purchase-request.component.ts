@@ -56,6 +56,7 @@ export class PurchaseRequestComponent implements OnInit {
   items: FormArray | any = [];
   uomList: any;
   itemList: any;
+  
   filteredItemList: any;
   filteredBrandList: any;
   option = 2;
@@ -446,9 +447,9 @@ else
     const title = this.categoryList.find((obj: { _id: any; }) => obj._id == event.value);
     
     const dynamicDataFormatted = title.name.replace(/[ ,]/g, '_');
-
-   
-
+     
+   this.filteredItemList= this.itemList.filter(item => item.category === event.value);
+console.log("check for filtered", this.filteredItemList);
     console.log("titleSelected", this.purchaseRequestForm);
   }
 
