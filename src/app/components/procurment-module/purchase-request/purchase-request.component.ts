@@ -88,6 +88,9 @@ export class PurchaseRequestComponent implements OnInit {
  * Default values are set for date and expected delivery date fields using moment.js library.
  * @returns void
  */
+
+  brandSelections: FormArray = this.formBuilder.array([]);
+
   purchaseRequestForm = new FormGroup({
     title: new FormControl('', Validators.required),
     date: new FormControl(moment().format('DD-MM-YYYY'), Validators.required),
@@ -219,10 +222,14 @@ const formData = new FormData();
     formData.append(`items[${index}][subCategory]`, item.subCategory);
     formData.append(`items[${index}][remark]`, item.remark);
     formData.append(`items[${index}][uom]`, item.uom);
-    formData.append(`items[${index}][brandName]`, item.brandName._id);
-    
+    item.brandName = item.brandSelections.map(brandId => brandId);
 
     // Append files separately
+
+    item.brandSelections.forEach((brand, fileIndex) => {
+      formData.append(`items[${index}][brandName]`, brand);
+    });
+
 
    item.files.forEach((file, fileIndex) => {
       formData.append(`items[${index}][attachment]`,  file, file.name);
@@ -246,9 +253,13 @@ else
     formData.append(`items[${index}][rate]`, item.rate);
     formData.append(`items[${index}][gst]`, "");
     formData.append(`items[${index}][freight]`, "");
-    
+  
 
     // Append files separately
+
+    item.brandSelections.forEach((brand, fileIndex) => {
+      formData.append(`items[${index}][brandName]`, brand);
+    });
 
    item.files.forEach((file, fileIndex) => {
       formData.append(`items[${index}][attachment]`,  file, file.name);
@@ -365,7 +376,8 @@ else
       files: new FormControl([]),
       remark: new FormControl(''),
       uom: new FormControl(''),
-      brandName:new FormControl('',Validators.required),
+     
+      brandSelections: this.formBuilder.array([]),
     });
   }
   createLocalItem(): FormGroup {
@@ -378,10 +390,11 @@ else
       remark: new FormControl(''),
       uom: new FormControl(''),
       files: new FormControl([]),
-      brandName:new FormControl('',Validators.required),
+     
       rate:new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       gst:new FormControl(''),
       freight:new FormControl(''),
+      brandSelections: this.formBuilder.array([]),
     });
   }
 
@@ -424,7 +437,18 @@ else
 
   
 
+ toggleBrandSelection(brandId: string, index: number): void {
+  const brandSelections = (this.purchaseRequestForm.get('items') as FormArray).controls[index].get('brandSelections') as FormArray;
+    const existingIndex = brandSelections.controls.findIndex(control => control.value === brandId);
 
+    if (existingIndex !== -1) {
+      brandSelections.removeAt(existingIndex);
+    } else {
+      brandSelections.push(new FormControl(brandId));
+    }
+
+    console.log("brandSelections", brandSelections);
+  }
  
   
   

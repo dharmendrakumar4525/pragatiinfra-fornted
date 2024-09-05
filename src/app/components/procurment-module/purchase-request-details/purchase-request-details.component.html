@@ -268,16 +268,9 @@
     
               <td>
                 {{item.qty}}
-              </td>
-              <td>
-                {{myBrandName(item.brandName)}}
-                <!-- <mat-select id="site" placeholder="Select Brand" class="pr-form-field" [(value)]="item.brandName">
-                  <mat-option *ngFor="let brand of brandList" [value]="brand.brand_name">
-                    {{ brand.brand_name }}
-                  </mat-option>
-                </mat-select> -->
+            <td>
+                {{ getFormattedBrandNames(item.brandName) }}
                 
-                <!-- <input placeholder="Enter" formControlName="attachment" type="file" class="pr-form-field"> -->
               </td>
              
               <td>

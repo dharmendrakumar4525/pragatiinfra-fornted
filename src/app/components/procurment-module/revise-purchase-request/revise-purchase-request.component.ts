@@ -119,7 +119,7 @@ export class RevisePurchaseRequestComponent implements OnInit {
       return
     }
     console.log(this.purchaseRequestForm)
-console.log(this.purchaseRequestForm.valid)
+    console.log(this.purchaseRequestForm.valid)
 
 if (!this.purchaseRequestForm.valid) {
   console.log("Form is invalid", this.purchaseRequestForm);

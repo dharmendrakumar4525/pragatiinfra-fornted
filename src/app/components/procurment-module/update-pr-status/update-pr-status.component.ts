@@ -155,6 +155,19 @@ export class UpdatePrStatusComponent implements OnInit {
     }
   }
 
+  isArray(value: any): boolean {
+    return Array.isArray(value);
+  }
+
+  getFormattedBrandNames(brandName): string {
+    console.log("see BrandName", brandName);
+    if (this.isArray(brandName)) {
+      return (brandName as string[]).map(brand => this.myBrandName(brand)).join(' / ');
+    } else {
+      return this.myBrandName(brandName as string);
+    }
+  }
+
   /**
    * Retrieves the brand name corresponding to the provided brand ID from the brand list.
    * @param brandId The ID of the brand for which the name is to be retrieved.

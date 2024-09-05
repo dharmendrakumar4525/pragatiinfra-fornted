@@ -88,6 +88,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
   * @returns void
   */
   patchData(data) {
+    console.log("lets see data", data);
     this.purchaseRequestForm.patchValue({
       title: data.title,
       date: data.date,
@@ -153,6 +154,20 @@ export class PurchaseRequestDetailsComponent implements OnInit {
       return brand[0].brand_name;
     }
   } 
+
+  isArray(value: any): boolean {
+    return Array.isArray(value);
+  }
+
+  getFormattedBrandNames(brandName): string {
+    console.log("see BrandName", brandName);
+    if (this.isArray(brandName)) {
+      return (brandName as string[]).map(brand => this.myBrandName(brand)).join(' / ');
+    } else {
+      return this.myBrandName(brandName as string);
+    }
+  }
+
   getSiteList() {
     this.httpService.GET(GET_SITE_API, {}).subscribe(res => {
       this.siteList = res;
@@ -210,6 +225,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
             this.details = res.data[0];
             console.log(this.details);
             this.getVendorName();
+            console.log("check data",res.data[0]);
             this.patchData(res.data[0]);
           }, error: (error) => {
             this.router.navigate(['/procurement/prlist'])

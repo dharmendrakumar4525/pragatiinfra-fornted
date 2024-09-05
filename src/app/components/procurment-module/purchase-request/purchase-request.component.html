@@ -192,22 +192,11 @@
                     <input type="text" formControlName="qty" class="pr-form-field" placeholder="Enter" pattern="^\d+(\.\d{1,2})?$">
                     </td>
                   <td>
-                    <mat-form-field class="example-full-width">
-                      <input
-                        type="text"
-                        placeholder="Select Brand"
-                        aria-label="Brand"
-                        matInput
-                        [matAutocomplete]="fill"
-                        formControlName="brandName"
-                        (input)="searchBrand($event)"
-                      />
-                      <mat-autocomplete #fill="matAutocomplete" [displayWith]="displayBrandFn" [panelWidth]="'auto'">
-                        <mat-option *ngFor="let brand of filteredBrandList" [value]="brand">
-                          {{brand.brand_name}}
-                        </mat-option>
-                      </mat-autocomplete>
-                    </mat-form-field>
+                    <mat-select multiple class="pr-form-field" placeholder="Select Brand">
+                      <mat-option *ngFor="let brand of brandList" [value]="brand._id" (click)="toggleBrandSelection(brand._id, i)">
+                        {{ brand.brand_name }}
+                      </mat-option>
+                    </mat-select>
                   </td>
                   <td>
                  
@@ -349,22 +338,11 @@
                     <input type="text" formControlName="qty" class="pr-form-field" placeholder="Enter" pattern="^\d+(\.\d{1,2})?$">
                   </td>
                   <td>
-                    <mat-form-field class="example-full-width">
-                      <input
-                        type="text"
-                        placeholder="Select Brand"
-                        aria-label="Brand"
-                        matInput
-                        [matAutocomplete]="fill"
-                        formControlName="brandName"
-                        (input)="searchBrand($event)"
-                      />
-                      <mat-autocomplete #fill="matAutocomplete" [displayWith]="displayBrandFn" [panelWidth]="'auto'">
-                        <mat-option *ngFor="let brand of filteredBrandList" [value]="brand">
-                          {{brand.brand_name}}
-                        </mat-option>
-                      </mat-autocomplete>
-                    </mat-form-field>
+                    <mat-select multiple class="pr-form-field" placeholder="Select Brand">
+                      <mat-option *ngFor="let brand of brandList" [value]="brand._id" (click)="toggleBrandSelection(brand._id, i)">
+                        {{ brand.brand_name }}
+                      </mat-option>
+                    </mat-select>
                   </td>
                   
 
