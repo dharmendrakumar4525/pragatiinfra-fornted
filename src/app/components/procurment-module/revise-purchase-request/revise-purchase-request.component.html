@@ -188,14 +188,16 @@
                 <input type="text" placeholder="Enter" digitOnly formControlName="rate" class="pr-form-field">
               </td>
               <td>
-                <mat-select id="brandName" placeholder="Select Brand" formControlName="brandName" class="select-form-field"
-                >
-                <mat-option [value]="brand._id" *ngFor="let brand of brandList">
-                  {{brand.brand_name}}
-                </mat-option>
-
-              </mat-select>
-              </td>
+                <input type="text" formControlName="qty" class="pr-form-field" placeholder="Enter" pattern="^\d+(\.\d{1,2})?$">
+                </td>
+                <td>
+                  <mat-select multiple class="pr-form-field" placeholder="Select Brand"
+                              [formControlName]="'brandSelections'">
+                    <mat-option *ngFor="let brand of brandList" [value]="brand._id">
+                      {{ brand.brand_name }}
+                    </mat-option>
+                  </mat-select>
+                </td>
              
               <td>
                 <div *ngFor="let attachment of item.get('attachment').value; let j = index">
@@ -297,14 +299,16 @@
                 <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
               </td>
               <td>
-                <mat-select id="brandName" placeholder="Select Brand" formControlName="brandName" class="select-form-field"
-                >
-                <mat-option [value]="brand._id" *ngFor="let brand of brandList">
-                  {{brand.brand_name}}
-                </mat-option>
-
-              </mat-select>
-              </td>
+                <input type="text" formControlName="qty" class="pr-form-field" placeholder="Enter" pattern="^\d+(\.\d{1,2})?$">
+                </td>
+                <td>
+                  <mat-select multiple class="pr-form-field" placeholder="Select Brand"
+                              [formControlName]="'brandSelections'">
+                    <mat-option *ngFor="let brand of brandList" [value]="brand._id">
+                      {{ brand.brand_name }}
+                    </mat-option>
+                  </mat-select>
+                </td>
               
               <td>
                 <div *ngFor="let attachment of item.get('attachment').value; let j = index">

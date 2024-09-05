@@ -38,6 +38,8 @@ export class RevisePurchaseRequestComponent implements OnInit {
     //this.getList();
   }
 
+  brandSelections: FormArray = this.formBuilder.array([]);
+
   purchaseRequestForm = new FormGroup({
     title: new FormControl('', Validators.required),
     date: new FormControl(moment().format('DD-MM-YYYY'), Validators.required),
@@ -108,7 +110,7 @@ export class RevisePurchaseRequestComponent implements OnInit {
       remark: new FormControl(null),
       uom: new FormControl(null),
       itemName: new FormControl(null),
-      brandName: new FormControl(null),
+      brandSelections:new FormControl(null),
 
     })
 
@@ -165,7 +167,11 @@ if(requestData.local_purchase==="no")
       formData.append(`items[${index}][subCategory]`, item.subCategory);
       
       formData.append(`items[${index}][uom]`, item.uom);
-      formData.append(`items[${index}][brandName]`, item.brandName);
+      
+
+      item.brandSelections.forEach((brand) => {
+        formData.append(`items[${index}][brandName]`, brand);
+      });
   
       // Append each file in the 'files' array
       item.files.forEach((file, fileIndex) => {
@@ -196,7 +202,10 @@ requestData.items.forEach((item, index) => {
     formData.append(`items[${index}][subCategory]`, item.subCategory);
     formData.append(`items[${index}][remark]`, item.remark);
     formData.append(`items[${index}][uom]`, item.uom);
-    formData.append(`items[${index}][brandName]`, item.brandName);
+    
+    item.brandSelections.forEach((brand) => {
+      formData.append(`items[${index}][brandName]`, brand);
+    });
 
     // Append files
      // Append each file in the 'files' array
@@ -257,6 +266,21 @@ console.log(formData);
   }
 
 
+  toggleBrandSelection(brandId: string, index: number): void {
+    const brandSelections = (this.purchaseRequestForm.get('items') as FormArray).at(index).get('brandSelections') as FormArray;
+    const existingIndex = brandSelections.value.findIndex(id => id === brandId);
+
+    if (existingIndex !== -1) {
+      brandSelections.removeAt(existingIndex);
+    } else {
+      brandSelections.push(new FormControl(brandId));
+    }
+  }
+
+  isBrandSelected(brandId: string, index: number): boolean {
+    const brandSelections = (this.purchaseRequestForm.get('items') as FormArray).at(index).get('brandSelections') as FormArray;
+    return brandSelections.value.includes(brandId);
+  }
 
 
   selectedItem(event: any, i: any) {
@@ -271,14 +295,24 @@ console.log(formData);
     });
   }
 
+  
+
 
   createItem(item?: any): any {
     if (item) {
       console.log("item Here", item.attachment);
-      // const foundItem = this.itemList.find(items => item.item_id == items._id);
-      // const additionalKeyValue = foundItem ? foundItem.item_name : 'defaultValue';
-      // const foundBrand = this.brandList.find(items => item.brandName == items._id);
-      // const additionalKeyValueBrand = foundBrand ? foundBrand.brand_name : 'defaultValue';
+      
+      let brandSelections: string[];
+      
+      if (Array.isArray(item.brandName)) {
+        brandSelections = item.brandName;
+      } else if (typeof item.brandName === 'string') {
+        brandSelections = [item.brandName];
+      } else {
+        brandSelections = [];
+      }
+
+
       return new FormGroup({
         item_id: new FormControl(item.item_id, Validators.required),
         qty: new FormControl(item.qty, Validators.required),
@@ -289,7 +323,7 @@ console.log(formData);
         files: new FormControl([]),
         remark: new FormControl(item.remark),
         uom: new FormControl(item.uomDetail.uom_name),
-        brandName: new FormControl(item.brandName),
+        brandSelections: new FormControl(brandSelections|| []),
       })
 
     }
@@ -304,7 +338,7 @@ console.log(formData);
         files: new FormControl([]),
         remark: new FormControl(''),
         uom: new FormControl(''),
-        brandName: new FormControl('')
+        brandSelections: new FormControl( []),
 
       })
     }
