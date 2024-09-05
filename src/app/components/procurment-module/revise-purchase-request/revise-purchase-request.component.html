@@ -49,12 +49,17 @@
 
   <mat-card class="topcard">
     <div style="display: flex;flex-wrap: wrap;gap:40px;width:1000px">
-      <div style="display: flex;flex-direction: column;">
+      <div class="flex-div" style="display: flex;flex-direction: column; margin-bottom:-10px;">
         <label style="color: #4272BF;font-size: 14px;">Request title <span class="star">*</span></label>
-        <input placeholder="Enter title" formControlName="title"
-          style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+        <mat-select id="title" placeholder="Select title" formControlName="title" (selectionChange)="selectedTitle($event)"
+              style="padding: 10px;width: 200px; margin-right:-20px; height:50px;border:1px solid #ccc;border-radius: 6px;cursor: pointer;font-family: 'Poppins';">
+              <mat-option [value]="item._id" *ngFor="let item of categoryList">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+            
       </div>
-      <div style="display: flex;flex-direction: column;margin-left: 100px;">
+      <div  class="flex-div" style="display: flex;flex-direction: column;margin-left: 100px;">
         <label style="color: #4272BF;font-size: 14px;">Request date</label>
 
        
@@ -162,13 +167,22 @@
             </td>
             <ng-container [formGroupName]="i">
               <td>
-                <mat-select id="itemName" placeholder="Select Item" formControlName="item_id" class="select-form-field"
-                (selectionChange)="selectedItem($event,i)">
-                <mat-option [value]="item._id" *ngFor="let item of filteredItemList">
-                  {{item.item_name}}
-                </mat-option>
-
-              </mat-select>
+                <mat-form-field class="example-full-width">
+                  <input
+                    type="text"
+                    placeholder="Select Item"
+                    aria-label="Item"
+                    matInput
+                    [matAutocomplete]="auto"
+                    formControlName="item_id"
+                    (input)="searchItem($event)"
+                  />
+                  <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'auto'" (optionSelected)="selectedItem($event, i)" [displayWith]="displayItemFn">
+                    <mat-option *ngFor="let item of filteredItemList" [value]="item">
+                      {{ item.item_name }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
               </td>
               <td style="color: #000;">
                 {{item.get('category')?.value}}
@@ -277,13 +291,22 @@
             </td>
             <ng-container [formGroupName]="i">
               <td>
-                <mat-select id="itemName" placeholder="Select Item" formControlName="item_id"
-                  class="select-form-field" (selectionChange)="selectedItem($event,i)">
-                  <mat-option [value]="item._id" *ngFor="let item of itemList">
-                    {{item.item_name}}
-                  </mat-option>
-
-                </mat-select>
+                <mat-form-field class="example-full-width">
+                  <input
+                    type="text"
+                    placeholder="Select Item"
+                    aria-label="Item"
+                    matInput
+                    [matAutocomplete]="auto"
+                    formControlName="item_id"
+                    (input)="searchItem($event)"
+                  />
+                  <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'auto'" (optionSelected)="selectedItem($event, i)" [displayWith]="displayItemFn">
+                    <mat-option *ngFor="let item of filteredItemList" [value]="item">
+                      {{ item.item_name }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
               </td>
               <td style="color: #000;">
                 {{item.get('category')?.value}}
@@ -298,9 +321,7 @@
               <td>
                 <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
               </td>
-              <td>
-                <input type="text" formControlName="qty" class="pr-form-field" placeholder="Enter" pattern="^\d+(\.\d{1,2})?$">
-                </td>
+             
                 <td>
                   <mat-select multiple class="pr-form-field" placeholder="Select Brand"
                               [formControlName]="'brandSelections'">

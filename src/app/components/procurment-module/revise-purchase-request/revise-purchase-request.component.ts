@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { PURCHASE_REQUEST_API, GET_SITE_API, ITEM_API, UOM_API, GET_VENDOR_API, GET_BRAND_API } from '@env/api_path';
+import { PURCHASE_REQUEST_API, GET_SITE_API, CATEGORY_API, ITEM_API, UOM_API, GET_VENDOR_API, GET_BRAND_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
@@ -25,7 +25,8 @@ export class RevisePurchaseRequestComponent implements OnInit {
   uomList: any;
   itemList: any;
   filteredItemList: any;
-  initialVendor:any
+  initialVendor:any;
+  categoryList:any;
   brandList: any;
   constructor(
     private router: Router,
@@ -139,6 +140,9 @@ if (!this.purchaseRequestForm.valid) {
 }
 
     let requestData: any = this.purchaseRequestForm.value;
+    const selectedCategory = this.categoryList.find((obj: { _id: any; }) => obj._id == requestData.title);
+    console.log(selectedCategory);
+    requestData['title'] = selectedCategory.name;
     requestData['date'] = moment(requestData.date, 'DD-MM-YYYY').toDate()
     requestData['expected_delivery_date'] = new Date(requestData.expected_delivery_date);
     requestData['status'] = 'revised';
@@ -161,7 +165,7 @@ if(requestData.local_purchase==="no")
     
     // Append items and their files
     requestData.items.forEach((item, index) => {
-      formData.append(`items[${index}][item_id]`, item.item_id);
+      formData.append(`items[${index}][item_id]`, item.item_id._id);
       formData.append(`items[${index}][qty]`, item.qty);
       formData.append(`items[${index}][category]`, item.category);
       formData.append(`items[${index}][subCategory]`, item.subCategory);
@@ -195,7 +199,7 @@ formData.append('status', requestData.status);
 
 // Append items and their attachments
 requestData.items.forEach((item, index) => {
-    formData.append(`items[${index}][item_id]`, item.item_id);
+    formData.append(`items[${index}][item_id]`, item.item_id._id);
     formData.append(`items[${index}][qty]`, item.qty.toString());
     formData.append(`items[${index}][rate]`, item.rate.toString());
     formData.append(`items[${index}][category]`, item.category);
@@ -248,9 +252,10 @@ console.log(formData);
     const site = this.http.get<any>(`${environment.api_path}${GET_SITE_API}`);
     const vendor = this.http.get<any>(`${environment.api_path}${GET_VENDOR_API}`);
     const brand = this.http.get<any>(`${environment.api_path}${GET_BRAND_API}`);
+    const category=this.http.get<any>(`${environment.api_path}${CATEGORY_API}`);
     
     try {
-      const res = await this.httpService.multipleRequests([UOM, item, site, vendor,brand], {}).toPromise();
+      const res = await this.httpService.multipleRequests([UOM, item, site, vendor,brand, category], {}).toPromise();
 
       if (res) {
         this.uomList = res[0].data;
@@ -258,6 +263,7 @@ console.log(formData);
         this.siteList = res[2].data;
         this.vendorList = res[3].data;
         this.brandList=res[4].data
+        this.categoryList=res[5].data;
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -282,19 +288,63 @@ console.log(formData);
     return brandSelections.value.includes(brandId);
   }
 
-
   selectedItem(event: any, i: any) {
-    let category = this.itemList.filter(obj => obj._id == event.value)[0]?.categoryDetail.name;
-    let subCategory = this.itemList.filter(obj => obj._id == event.value)[0]?.subCategoryDetail.subcategory_name;
-    let uom = this.itemList.filter(obj => obj._id == event.value)[0]?.uomDetail.uom_name;
-
-    this.items.at(i).patchValue({
-      category: category,
-      subCategory: subCategory,
-      uom: uom
-    });
+    const selectedItem = event.option.value;
+    const selectedItemId = selectedItem._id;
+    console.log(selectedItem);
+  
+    // Retrieve the 'items' FormArray
+    const itemsFormArray = this.purchaseRequestForm.get('items') as FormArray;
+    console.log("itemsArray", itemsFormArray.value);
+  
+    // Find indices of items with the selected ID by checking the nested 'item_id' property
+    const indices = itemsFormArray.value
+      .map((item: any, index: number) => ({ index, id: item.item_id._id }))
+      .filter((item: any) => item.id === selectedItemId)
+      .map((item: any) => item.index);
+  
+    console.log('Indices of duplicate items:', indices);
+  
+    if (indices.length >= 2) {
+      // If the item occurs twice or more, remove the last occurrence and show an error
+      itemsFormArray.removeAt(indices.pop() as number);
+  
+      // Show an error message
+      this.snack.notify('Item already exists', 2);
+  
+      // Optionally clear the current row's selected item
+      this.items.at(i).reset();
+      return;
+    } else if (indices.length === 1) {
+      // If the item occurs only once, update the FormArray item
+      let category = selectedItem.categoryDetail.name;
+      let subCategory = selectedItem.subCategoryDetail.subcategory_name;
+      let uom = selectedItem.uomDetail.uom_name;
+  
+      this.items.at(i).patchValue({
+        category: category,
+        subCategory: subCategory,
+        uom: uom
+      });
+    } 
   }
-
+  
+  
+  
+  
+  
+  
+    searchItem(event: any) {
+      const searchValue = event.target.value.toLowerCase();
+      if (this.itemList && this.itemList.length > 0 ) {
+        if (event.target.value) {
+          this.filteredItemList = this.itemList.filter(obj => obj.item_name.toLowerCase().includes(searchValue));
+  
+        }else{
+          this.filteredItemList = this.itemList;
+        }
+      }
+    }
   
 
 
@@ -313,8 +363,10 @@ console.log(formData);
       }
 
 
+      const catItem = this.itemList.filter(items => items._id === item.item_id);
+
       return new FormGroup({
-        item_id: new FormControl(item.item_id, Validators.required),
+        item_id: new FormControl(catItem[0], Validators.required),
         qty: new FormControl(item.qty, Validators.required),
         rate:new FormControl(item.rate),
         category: new FormControl(item.categoryDetail.name),
@@ -350,9 +402,33 @@ console.log(formData);
     remove.removeAt(i);
   }
 
+  
+  displayItemFn(item: any): string {
+    return item ? item.item_name : '';
+  }
+
+
+  selectedTitle(event: any) {
+    const title = this.categoryList.find((obj: { _id: any; }) => obj._id == event.value);
+    
+    const dynamicDataFormatted = title.name.replace(/[ ,]/g, '_');
+    this.filteredItemList= this.itemList.filter(item => item.category === event.value);
+  
+console.log("check for filtered", this.filteredItemList);
+    console.log("titleSelected", this.purchaseRequestForm);
+  }
+
+
   patchData(data) {
+
+    const category = this.categoryList.find(cat => cat.name === data.title);
+
+    this.filteredItemList= this.itemList.filter(item => item.category === category._id);
+
+    console.log("check filtered", this.filteredItemList);
+
     this.purchaseRequestForm.patchValue({
-      title: data.title,
+      title: category._id,
       date: data.date,
       expected_delivery_date: data.expected_delivery_date,
       purchase_request_number: data.purchase_request_number,
@@ -368,7 +444,7 @@ console.log(formData);
         this.addItems(item);
       })
     }
-console.log(this.purchaseRequestForm);
+console.log("checkForm", this.purchaseRequestForm);
     this.purchaseRequestForm.controls.remarks.disable();
 
   }
