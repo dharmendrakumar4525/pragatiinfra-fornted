@@ -24,12 +24,18 @@ import { environment } from '@env/environment';
 import { RateComparativeVendorsComponent } from '../rate-comparative-vendors/rate-comparative-vendors.component';
 import { isEmpty } from 'lodash';
 import { UsersService } from '@services/users.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+
 
 @Component({
   selector: 'app-rate-comparative-update',
   templateUrl: './rate-comparative-update.component.html',
   styleUrls: ['./rate-comparative-update.component.scss'],
 })
+
+
+
 export class RateComparativeUpdateComponent implements OnInit {
   id: any;
   siteList: any;
@@ -38,13 +44,17 @@ export class RateComparativeUpdateComponent implements OnInit {
   flag: boolean = false;
   finalVendorArray: any[] = [];
   VendorItems: any[] = [];
+  vendorItemsTables: any[] = [];
+  vendorItemsForm: FormGroup;
   isButtonDisabled: boolean = true;
   isSelectDisabled: boolean = false;
   permissions: any;
+  isSaved: boolean = false;
   ItemwiseVendorRate = new Map<string, any>();
   viewPermission: any;
   editPermission: any;
   addPermission: any;
+ 
   // deletePermission: any;
 
   /**
@@ -88,7 +98,7 @@ export class RateComparativeUpdateComponent implements OnInit {
   ) {
     // Call the method to fetch the brand list
     this.getBrandList();
-
+    this.vendorItemsForm = this.formBuilder.group({});
     // Call the method to fetch the list of rate comparatives
     this.getList();
 
@@ -103,51 +113,7 @@ export class RateComparativeUpdateComponent implements OnInit {
     vendor: this.formBuilder.array([]),
   });
 
-  /**
-   * Opens a dialog popup for rate comparative vendors with the provided data.
-   * @param dataObj The data object related to the item.
-   * @param vendors The vendors related to the item.
-   * @returns void
-   */
-  ItemData(dataObj: any, vendors: any, i:any) {
-    let index = this.finalVendorArray.findIndex(
-      (item) => item[i] == dataObj[i]
-    );
-
-    console.log("dataObj", dataObj[i]);
-    console.log("vndorsList",this.vendorsList)
-    console.log("filledData",this.VendorItems[index])
-
-    // Open a dialog popup for rate comparative vendors
-    const dialogPopup = this.dialog.open(RateComparativeVendorsComponent, {
-      data: {
-        dataObj: dataObj[0],
-        vendorsList: this.vendorsList,
-        items: this.details?.items,
-        vendors: vendors,
-        filledData: this.VendorItems[index],
-        brandList: this.brandList,
-      },
-    });
-
-    // Subscribe to the dialog popup's afterClosed event
-    dialogPopup.afterClosed().subscribe((result: any) => {
-      if (result && result['option'] === 1) {
-        this.VendorItems[index] = result;
-        this.ItemwiseVendorRate.set(dataObj[i], result.data.status);
-      } else {
-        this.ItemwiseVendorRate.delete(dataObj[i]);
-      }
-
-      console.log("VendorItems[index]", this.VendorItems[index]);
-      console.log("itemWiseVendorRate",this.ItemwiseVendorRate );
-    });
-  }
-
-  /**
-   * Fetches the list of sites from the API.
-   * @returns void
-   */
+  
   getList() {
     const site = this.http.get<any>(`${environment.api_path}${GET_SITE_API}`);
     this.httpService.multipleRequests([site], {}).subscribe((res) => {
@@ -158,11 +124,6 @@ export class RateComparativeUpdateComponent implements OnInit {
     });
   }
 
-  /**
-   * Patches the provided data into the rate comparative form.
-   * @param data The data to be patched into the form.
-   * @returns void
-   */
   patchData(data) {
     let loginUser = JSON.parse(localStorage.getItem('loginData'));
     this.rateComparativeForm.patchValue({
@@ -190,12 +151,7 @@ export class RateComparativeUpdateComponent implements OnInit {
     });
   }
 
-  addItems(item: any): void {
-    // this.items = this.rateComparativeForm.get('items') as FormArray;
-    // if (item) {
-    //   this.items.push(this.createItem(item));
-    // }
-  }
+ 
 
   createItem(item?: any): any {
     if (item) {
@@ -217,28 +173,6 @@ export class RateComparativeUpdateComponent implements OnInit {
     });
   }
 
-  // rejectRequest(){
-  //   this.details['status']="rejected"
-  //   this.load = true;
-  //   this.httpService.PUT(RATE_COMPARATIVE_API, this.details).subscribe(res => {
-  //     this.snack.notify("Detail has been updated", 1);
-  //     this.router.navigate(['/rate-comparative'])
-  //     this.load = false;
-  //   }, (err: any) => {
-  //     this.load = false;
-  //     if (err.errors && !isEmpty(err.errors)) {
-  //       let errMessage = '<ul>';
-  //       for (let e in err.errors) {
-  //         let objData = err.errors[e];
-  //         errMessage += `<li>${objData[0]}</li>`;
-  //       }
-  //       errMessage += '</ul>';
-  //       this.snack.notifyHtml(errMessage, 2);
-  //     } else {
-  //       this.snack.notify(err.message, 2);
-  //     }
-  //   })
-  // }
   updateRequest() {
     if (this.VendorItems.some((item) => item === '')) {
       this.snack.notify('Some items rates are pending', 2);
@@ -261,9 +195,9 @@ export class RateComparativeUpdateComponent implements OnInit {
     this.load = true;
 
 
-    console.log("there", requestedData )
+    console.log("there, checking payload", requestedData )
 
-
+return;
     this.httpService.PUT(RATE_COMPARATIVE_API, requestedData).subscribe({
       next: (res) => {
         this.snack.notify('Detail has been updated', 1);
@@ -331,49 +265,285 @@ export class RateComparativeUpdateComponent implements OnInit {
     });
   }
 
-  /**
-   * Saves the vendor form data.
-   * Sets flag to true and disables the button.
-   * Clears the finalVendorArray and VendorItems arrays.
-   * Iterates through the vendor array controls, pushes selected vendors into finalVendorArray, and initializes VendorItems array.
-   * @returns void
-   */
+
   save() {
     let vendorIndex: number = 0;
     this.flag = true;
     this.isButtonDisabled = true;
     this.isSelectDisabled = true;
-    //making array empty
+
+    // Clear existing arrays
     this.finalVendorArray.length = 0;
     this.VendorItems.length = 0;
+    this.vendorItemsTables.length = 0;
+
     for (let vendors of this.vendorArray.controls) {
-      for (let vendor of vendors.get('selectedVendors').value) {
-        this.finalVendorArray.push([vendor, vendorIndex]);
-        this.VendorItems.push('');
-        vendorIndex++;
-        console.log(vendorIndex, 'I');
-      }
+        const category = vendors.get('Item_category').value._id;
+        const subCategory = vendors.get('Item_subCategory').value._id;
+        
+
+        let tableData = {
+            items: [],
+            vendors: [],
+            totals: {}
+        };
+
+        for (let vendor of vendors.get('selectedVendors').value) {
+            this.finalVendorArray.push([vendor, vendorIndex]);
+            tableData.vendors.push(this.detailsOfVendor(vendor));
+
+            // Initialize totals for this vendor
+            tableData.totals[vendor] = {
+                totalAmount: 0,
+                gstAmount: 0,
+                freight: 0,
+                freightGst: 0,
+                grandTotal: 0,
+                preferred:false,
+            };
+
+            // Create a new FormGroup for each vendor
+            const vendorItemsForm = new FormGroup({
+                Vendor: new FormControl(vendor, Validators.required),
+                category: new FormControl(category, Validators.required),
+                subCategory: new FormControl(subCategory, Validators.required),
+                items: this.formBuilder.array([]),
+            });
+
+            // Get items for this category and subcategory
+            const tempFilteredItems = this.details.items; 
+
+            // Add item FormGroups to the items FormArray
+            for (let item of tempFilteredItems) {
+                const itemGroup = this.formBuilder.group({
+                    item: new FormControl(item),
+                    RequiredQuantity: new FormControl(item.qty, Validators.required),
+                    Rate: new FormControl('', [
+                        Validators.required,
+                        Validators.pattern('^[-+]?[0-9]*\\.?[0-9]+$')
+                    ]),
+                    SubTotalAmount: new FormControl('', Validators.required),
+                    Freight: new FormControl(0, Validators.required),
+                    Total: new FormControl('', Validators.required),
+                });
+                (vendorItemsForm.get('items') as FormArray).push(itemGroup);
+
+                // Check if item is already in tableData.items
+                const existingItem = tableData.items.find(i => i.item_id === item._id);
+                
+                if (!existingItem) {
+                    // Add item if it's not already present
+                    tableData.items.push({
+                        item_id: item._id,
+                        name: item.item_name,
+                        category: item.categoryDetail.name,
+                        subCategory: item.subCategoryDetail.subcategory_name,
+                        uom: item.uomDetail.uom_name,
+                        quantity: item.qty,
+                        gst: item.tax.amount,
+                        vendors: {}
+                    });
+                }
+
+                // Initialize vendor data for this item
+                tableData.items.find(i => i.item_id === item._id).vendors[vendor] = {
+                    rate: '',
+                    amount: ''
+                };
+            }
+
+            this.VendorItems.push(vendorItemsForm);
+            vendorIndex++;
+        }
+
+        this.vendorItemsTables.push(tableData);
     }
-    let len = 0;
-    for (let i = 0; i < this.vendorForm.get('vendor').value.length; i++) {
-      let tex = this.vendorForm.get('vendor').value[i]['selectedVendors'];
-      for (let j = 0; j < tex.length; j++) {
-        let add = tex[j];
-        tex[j] = [add, len];
-        len++;
-      }
+    console.log("Checking vendorItems", this.vendorItemsTables);
+  
+    this.createFormControls();
+  }
+    
+
+
+  createFormControls() {
+    this.vendorItemsTables.forEach((table, tableIndex) => {
+      table.items.forEach((item) => {
+        Object.keys(item.vendors).forEach(vendorId => {
+          const rateControlName = `table_${tableIndex}_item_${item.item_id}_vendor_${vendorId}_rate`;
+          const amountControlName = `table_${tableIndex}_item_${item.item_id}_vendor_${vendorId}_amount`;
+          
+          this.vendorItemsForm.addControl(rateControlName, new FormControl('', Validators.required));
+          this.vendorItemsForm.addControl(amountControlName, new FormControl('', Validators.required));
+          
+          console.log(`Creating control: ${rateControlName}`);
+          console.log(`Creating control: ${amountControlName}`);
+        });
+        
+        const remarksControlName = `table_${tableIndex}_item_${item.item_id}_remarks`;
+        this.vendorItemsForm.addControl(remarksControlName, new FormControl(''));
+        console.log(`Creating control: ${remarksControlName}`);
+      });
+
+      Object.keys(table.totals).forEach(vendorId => {
+        const freightControlName = `table_${tableIndex}_vendor_${vendorId}_freight`;
+        const freightGstControlName = `table_${tableIndex}_vendor_${vendorId}_freightGst`;
+        
+        this.vendorItemsForm.addControl(freightControlName, new FormControl(0, Validators.required));
+        this.vendorItemsForm.addControl(freightGstControlName, new FormControl(0, Validators.required));
+        
+        console.log(`Creating control: ${freightControlName}`);
+        console.log(`Creating control: ${freightGstControlName}`);
+      });
+    });
+
+    console.log('Form controls after creation:', Object.keys(this.vendorItemsForm.controls));
+  }
+
+  getFormControl(tableIndex: number, itemId: string, vendorId: string, field: string): FormControl {
+    let controlName: string;
+    if (field === 'rate' || field === 'amount') {
+      controlName = `table_${tableIndex}_item_${itemId}_vendor_${vendorId}_${field}`;
+    } else if (field === 'remarks') {
+      controlName = `table_${tableIndex}_item_${itemId}_${field}`;
+    } else {
+      controlName = `table_${tableIndex}_vendor_${vendorId}_${field}`;
+    }
+
+    const control = this.vendorItemsForm.get(controlName);
+    if (control) {
+      return control as FormControl;
+    } else {
+      console.error(`Control not found: ${controlName}`);
+      console.log('Available controls:', Object.keys(this.vendorItemsForm.controls));
+      return new FormControl('');
     }
   }
 
-  /**
-   * Retrieves details of a vendor based on the vendor ID.
-   * @param vendor The ID of the vendor.
-   * @returns The name of the vendor.
-   */
+
+  updateAmount(item: any, vendorId: string, tableIndex: number) {
+    const rateControl = this.getFormControl(tableIndex, item.item_id, vendorId, 'rate');
+    const amountControl = this.getFormControl(tableIndex, item.item_id, vendorId, 'amount');
+  
+    if (rateControl && amountControl) {
+      const rate = parseFloat(rateControl.value) || 0;
+      const amount = rate * item.quantity;
+      amountControl.setValue(amount.toFixed(2), { emitEvent: false });
+      this.updateTotals(tableIndex);
+    }
+  }
+  
+  updateTotals(tableIndex: number) {
+    const table = this.vendorItemsTables[tableIndex];
+    Object.keys(table.totals).forEach(vendorId => {
+      let totalAmount = 0;
+      let totalGstAmount = 0;
+  
+      table.items.forEach(item => {
+        const amountControl = this.getFormControl(tableIndex, item.item_id, vendorId, 'amount');
+        const amount = parseFloat(amountControl.value) || 0;
+  
+        totalAmount += amount;
+        const gstAmount = amount * (item.gst / 100);
+        totalGstAmount += gstAmount;
+        
+        console.log("Item Amount:", amount);
+        console.log("Item GST Amount:", gstAmount);
+      });
+  
+      console.log("Total GST Amount:", totalGstAmount);
+      table.totals[vendorId].totalAmount = totalAmount;
+      table.totals[vendorId].gstAmount = totalGstAmount;
+  
+      const freightControl = this.getFormControl(tableIndex, '', vendorId, 'freight');
+      const freightGstControl = this.getFormControl(tableIndex, '', vendorId, 'freightGst');
+  
+      table.totals[vendorId].freight = parseFloat(freightControl.value) || 0;
+      table.totals[vendorId].freightGst = parseFloat(freightGstControl.value) || 0;
+      table.totals[vendorId].grandTotal =
+        table.totals[vendorId].totalAmount +
+        table.totals[vendorId].gstAmount +
+        table.totals[vendorId].freight +
+        ( table.totals[vendorId].freight *(table.totals[vendorId].freightGst/100));
+    });
+  }
+
+  saveAndHighlight() {
+    this.isSaved = true;
+    // Disable all form controls
+    
+    // No need to explicitly call isLowestAmount here as it's handled in the template
+  }
+
+  isLowestAmount(tableIndex: number, itemId: string, vendorId: string): boolean {
+    const currentAmount = parseFloat(this.getFormControl(tableIndex, itemId, vendorId, 'amount').value) || Infinity;
+    const allAmounts = this.getVendorIds(this.vendorItemsTables[tableIndex]).map(vid => 
+      parseFloat(this.getFormControl(tableIndex, itemId, vid, 'amount').value) || Infinity
+    );
+    return currentAmount === Math.min(...allAmounts);
+  }
+  
+  isLowestGrandTotal(vendorId: string): boolean {
+    const vendorItemsTable = this.vendorItemsTables[0];
+    
+    // Ensure vendorItemsTable and totals exist
+    if (!vendorItemsTable || !vendorItemsTable.totals) {
+        console.error('Vendor items table or totals not found');
+        return false;
+    }
+
+    const currentGrandTotal = vendorItemsTable.totals[vendorId]?.grandTotal || Infinity;
+    console.log("check", currentGrandTotal);
+
+    // Extract grandTotal values from the totals object
+    const totalsArray = Object.values(vendorItemsTable.totals);
+    const grandTotalArray: number[] = totalsArray.map((item: any) => item.grandTotal);
+
+    console.log(grandTotalArray);
+
+    // Check if the currentGrandTotal is the minimum in the array
+    const isLowest = currentGrandTotal === Math.min(...grandTotalArray);
+    return isLowest;
+}
+
+toggleVendorPreferred(index: number, event: any) {
+  // Get the corresponding vendor ID from the dynamically generated vendorKeys array
+ const vendorKeys = Object.keys(this.vendorItemsTables[0].totals);
+  const vendorId = vendorKeys[index];
+
+  // Update the preferred field for the vendor in the totals object
+  this.vendorItemsTables[0].totals[vendorId].preferred = event.target.checked;
+  console.log("checking this here", this.vendorItemsTables);
+}
+
+// In your component
+getVendorKeys() {
+  return Object.keys(this.vendorItemsTables[0].totals);
+}
+
+  
+// In your component
+
+  getVendorIds(table: any): string[] {
+    return Object.keys(table.totals);
+  }
+
+
   detailsOfVendor(vendor: any) {
-    let tempvendor = this.vendorsList.find((obj) => obj._id == vendor[0]);
+    console.log("checking", vendor)
+    let tempvendor = this.vendorsList.find((obj) => obj._id == vendor);
     return tempvendor.vendor_name;
   }
+
+
+  /*-----------------------------*/
+
+
+
+
+
+
+
+ /* -----------------------------------------*/
 
   ngOnInit(): void {
     // Retrieve user permissions from local storage and parse them as JSON
@@ -395,6 +565,8 @@ export class RateComparativeUpdateComponent implements OnInit {
         console.log(err);
       },
     });
+
+    this.vendorItemsForm = new FormGroup({});
 
     this.route.params.subscribe((params) => {
       if (params['id']) {

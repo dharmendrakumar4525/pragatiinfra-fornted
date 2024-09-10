@@ -162,7 +162,7 @@
               <mat-form-field appearance="outline" style="width: max-content;">
                 <mat-label>Select Vendors</mat-label>
                 <mat-select matInput multiple formControlName="selectedVendors" (selectionChange)="handleVendorChange()">
-                  <mat-option *ngFor="let vendor of isVendorSelected(items)" [value]="vendor._id" [disabled]="isSelectDisabled">
+                  <mat-option *ngFor="let vendor of isVendorSelected(items)" [value]="vendor._id" >
                     {{ vendor?.vendor_name }}
                   </mat-option>
                 </mat-select>
@@ -175,70 +175,150 @@
     </table>
       </div>
       <div style="display: flex; justify-content: center;">
-        <button class="p-btns-button" [disabled]="isButtonDisabled" (click)="save()">Save</button>
+        <button class="p-btns-button" (click)="save()">Enter Vendor Rates</button>
        </div>
       </form>
     
   </mat-card>
 
-  <div class="scroll-bar1" *ngIf="flag">
-    <table style="direction: ltr !important;border-left: 2px solid #000 !important;">
+ <!---->
+
+ <div *ngIf="vendorItemsTables && vendorItemsTables.length > 0">
+  <table class="table table-bordered">
+    <thead>
       <tr>
-        <th>Vendor*</th>
-        <th>Category</th>
-        <th>Sub&nbsp;category</th>
-        <th>Item</th>
-        <th>Status</th>
+        <th rowspan="2" style=" text-align: center; width:300px; vertical-align: middle;">Item</th>
+        <th rowspan="2" style=" text-align: center; width:250px; vertical-align: middle;">Category</th>
+        <th rowspan="2" style=" text-align: center; width:250px; vertical-align: middle;">Sub-Category</th>
+        <th rowspan="2" style=" text-align: center; vertical-align: middle;">UOM</th>
+        <th rowspan="2" style=" text-align: center; vertical-align: middle;">Quantity</th>
+        <th rowspan="2" style=" text-align: center; vertical-align: middle;">GST %</th>
+        <ng-container *ngFor="let vendor of vendorItemsTables[0].vendors; let i = index">
+          <th colspan="2" style="text-align: center; vertical-align: middle;">
+            <label>
+              <input type="checkbox" (change)="toggleVendorPreferred(i, $event)" 
+                     [checked]="vendorItemsTables[0].totals[getVendorKeys()[i]].preferred" />
+              {{ vendor }}
+            </label>
+          </th>
+        </ng-container>
+    
+        <th rowspan="2" style=" text-align: center; vertical-align: middle;">Add Remarks</th>
       </tr>
+      <tr>
+        <ng-container *ngFor="let vendor of vendorItemsTables[0].vendors">
+          <th style=" text-align: center; vertical-align: middle;">Rate (₹)</th>
+          <th style=" text-align: center; vertical-align: middle;">Sub Total (₹)</th>
+        </ng-container>
+      </tr>
+    </thead>
 
+    <tbody>
+      <ng-container *ngFor="let table of vendorItemsTables; let tableIndex = index">
+        <tr *ngFor="let item of table.items">
+          <td style=" text-align: center;width:300px; vertical-align: middle;">{{ item.name }}</td>
+          <td style=" text-align: center; width:250px;vertical-align: middle;">{{ item.category }}</td>
+          <td style=" text-align: center;width:250px; vertical-align: middle;">{{ item.subCategory }}</td>
+          <td style=" text-align: center; vertical-align: middle;">{{ item.uom }}</td>
+          <td style=" text-align: center; vertical-align: middle;">{{ item.quantity }}</td>
+          <td style=" text-align: center; vertical-align: middle;">{{ item.gst }}</td>
 
-
-      <tbody > 
-        <ng-container *ngFor="let vendors of vendorArray.controls; let i=index " >
-          <tr *ngFor="let vendor of vendors.get('selectedVendors').value">
-            <td style="text-align: center;">
-              {{detailsOfVendor(vendor)}}
+          <ng-container *ngFor="let vendorId of getVendorIds(table)">
+            <td >
+              <input type="number"
+              class="inputBoxes"
+                     [formControl]="getFormControl(tableIndex, item.item_id, vendorId, 'rate')"
+                     (input)="updateAmount(item, vendorId, tableIndex)"
+                     [attr.data-control-name]="'table_' + tableIndex + '_item_' + item.item_id + '_vendor_' + vendorId + '_rate'"
+                     >
             </td>
-            <td style="text-align: center;">
-              {{vendors.get('Item_category').value.name}}
+            <td style="text-align: center; vertical-align: middle;width:150px"
+                [ngClass]="{'lowest-amount': isSaved && isLowestAmount(tableIndex, item.item_id, vendorId)}">
+              {{ getFormControl(tableIndex, item.item_id, vendorId, 'amount').value || '0' }}
             </td>
-            <td style="text-align: center;">
-              {{vendors.get('Item_subCategory').value.subcategory_name}}
-            </td>
-            <td>
-              <a class="p-btns" (click)="ItemData(vendor,vendors, i)"> Items Rates</a>
-            </td> 
-            <td>
-              <ng-container  *ngIf="ItemwiseVendorRate.has(vendor[i]); else pendingView">
-               <p style="color: green;">Completed</p> 
-              </ng-container>
-              <ng-template  #pendingView>
-                <p style="color: red;">Pending</p>
-              </ng-template>
-            </td>
-          </tr>
           </ng-container>
-          <!-- <td style="text-align: center;">
-            {{ vendor.get('selectedVendors').value | json }}
-          </td> -->
-          <!-- <td>
-            {{item.item_name}}
 
+          <td >
+            <input type="text"
+            class="inputBoxes"
+                   [formControl]="getFormControl(tableIndex, item.item_id, '', 'remarks')"
+                   [attr.data-control-name]="'table_' + tableIndex + '_item_' + item.item_id + '_remarks'">
           </td>
-          <td style="color: #000;">
-            {{item.categoryDetail.name}}
-          </td>
-          <td style="color: #000;">
-            {{item.subCategoryDetail.subcategory_name}}
-          </td>
+        </tr>
+      </ng-container>
+    </tbody>
 
-          <td>
-            <a class="p-btns" (click)="vendorData(item)"> Vendor Rates</a>
-          </td> -->
-        
-      </tbody>
-    </table>
-  </div>
+    <tfoot>
+     
+      <tr>
+        <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+        </td>
+        <td colspan="2" style="text-align: right; border: 0.5px solid;">Total Amount (₹)</td>
+        <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
+          <td colspan="2" style="height:50px; border: 0.5px solid;">{{ vendorItemsTables[0].totals[vendorId]?.totalAmount || '0' }}</td>
+        </ng-container>
+        <td style="border-color: white;"></td>
+      </tr>
+      <tr>
+        <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+        </td>
+        <td colspan="2" style="text-align: right; border: 0.5px solid;">GST Amount (₹)</td>
+        <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
+          <td colspan="2" style="height:50px; border: 0.5px solid;">{{ vendorItemsTables[0].totals[vendorId]?.gstAmount || '0' }}</td>
+        </ng-container>
+        <td style="border-color: white;"></td>
+      </tr>
+      <tr>
+        <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+        </td>
+        <td colspan="2" style="text-align: right; border: 0.5px solid;">Freight (₹)</td>
+        <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
+          <td colspan="2" style="height:40px; border: 0.5px solid;">
+            <input type="number"
+            class="inputBoxes"
+                   [formControl]="getFormControl(0, '', vendorId, 'freight')"
+                   (input)="updateTotals(0)"
+                   [attr.data-control-name]="'table_0_vendor_' + vendorId + '_freight'">
+          </td>
+        </ng-container>
+       <td style="border-color: white;"></td>
+      </tr>
+      <tr>
+        <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+        </td>
+        <td colspan="2" style="text-align: right; border: 0.5px solid;">Freight GST (%)</td>
+        <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
+          <td colspan="2" style="height:40px; border: 0.5px solid;">
+            <input type="number"
+            class="inputBoxes"
+                   [formControl]="getFormControl(0, '', vendorId, 'freightGst')"
+                   (input)="updateTotals(0)"
+                   [attr.data-control-name]="'table_0_vendor_' + vendorId + '_freightGst'">
+          </td>
+        </ng-container>
+        <td style="border-color: white;"></td>
+      </tr>
+      <tr>
+        <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+        </td>
+        <td colspan="2" style="text-align: right; border: 0.5px solid;">Grand Total (₹)</td>
+        <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
+          <td colspan="2" style="height:50px; border: 0.5px solid;" [ngClass]="{'lowest-grand-total': isSaved && isLowestGrandTotal(vendorId)}">
+            {{ vendorItemsTables[0].totals[vendorId]?.grandTotal || '0' }}
+          </td>
+        </ng-container>
+        <td style="border-color: white;"></td>
+      </tr>
+    </tfoot>
+  </table>
+
+
+  <div style="display: flex; justify-content: left; padding-top: 20px;">
+    <button class="p-btns-button" (click)="saveAndHighlight()" [disabled]="isSaved">Save Rates</button>
+   </div>
+</div>
+
+
 
   <div class="text-area-section">
     <label style="color: #4272BF;font-size: 14px;">Remarks </label>
