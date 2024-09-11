@@ -173,6 +173,25 @@ export class RateComparativeUpdateComponent implements OnInit {
     });
   }
 
+  convertTotalsToVendorsTotal() {
+    const vendors_total = Object.keys(this.vendorItemsTables[0].totals).map(vendorId => {
+      const totalData = this.vendorItemsTables[0].totals[vendorId];
+      
+      return {
+        vendor_id: vendorId,
+        subtotal: totalData.totalAmount,
+        total_tax: totalData.gstAmount,
+        freight_charges: totalData.freight,
+        freight_tax: totalData.freightGst,
+        total_amount: totalData.grandTotal,
+        preferred: totalData.preferred
+      };
+    });
+  
+    return vendors_total;
+  }
+  
+
   updateRequest() {
     if (this.VendorItems.some((item) => item === '')) {
       this.snack.notify('Some items rates are pending', 2);
@@ -188,16 +207,15 @@ export class RateComparativeUpdateComponent implements OnInit {
     requestedData['items'] = this.details.items;
     requestedData['stage'] = 'rate_approval';
     requestedData['handle_by'] = loginUser.user._id;
-    for (let i = 0; i < this.VendorItems.length; i++)
-      this.VendorItems[i] = this.VendorItems[i].data;
+    requestedData['vendorItems'] = this.vendorItemsTables[0].items;
+    requestedData['vendorRatesVendorWise']=this.vendorItemsTables;
+    requestedData['vendors_total']=this.convertTotalsToVendorsTotal();
 
-    requestedData['vendorItems'] = this.VendorItems;
-    this.load = true;
-
+  
 
     console.log("there, checking payload", requestedData )
 
-return;
+
     this.httpService.PUT(RATE_COMPARATIVE_API, requestedData).subscribe({
       next: (res) => {
         this.snack.notify('Detail has been updated', 1);
@@ -347,9 +365,14 @@ return;
 
                 // Initialize vendor data for this item
                 tableData.items.find(i => i.item_id === item._id).vendors[vendor] = {
+                  requiredQty:'',
                     rate: '',
                     amount: ''
                 };
+
+
+
+
             }
 
             this.VendorItems.push(vendorItemsForm);
@@ -358,7 +381,8 @@ return;
 
         this.vendorItemsTables.push(tableData);
     }
-    console.log("Checking vendorItems", this.vendorItemsTables);
+   
+   
   
     this.createFormControls();
   }
@@ -370,18 +394,19 @@ return;
       table.items.forEach((item) => {
         Object.keys(item.vendors).forEach(vendorId => {
           const rateControlName = `table_${tableIndex}_item_${item.item_id}_vendor_${vendorId}_rate`;
+          const requiredQtyControlName = `table_${tableIndex}_item_${item.item_id}_vendor_${vendorId}_requiredQty`;
           const amountControlName = `table_${tableIndex}_item_${item.item_id}_vendor_${vendorId}_amount`;
           
           this.vendorItemsForm.addControl(rateControlName, new FormControl('', Validators.required));
+          this.vendorItemsForm.addControl(requiredQtyControlName, new FormControl('', Validators.required));
           this.vendorItemsForm.addControl(amountControlName, new FormControl('', Validators.required));
           
-          console.log(`Creating control: ${rateControlName}`);
-          console.log(`Creating control: ${amountControlName}`);
+         
         });
         
         const remarksControlName = `table_${tableIndex}_item_${item.item_id}_remarks`;
         this.vendorItemsForm.addControl(remarksControlName, new FormControl(''));
-        console.log(`Creating control: ${remarksControlName}`);
+      
       });
 
       Object.keys(table.totals).forEach(vendorId => {
@@ -391,19 +416,24 @@ return;
         this.vendorItemsForm.addControl(freightControlName, new FormControl(0, Validators.required));
         this.vendorItemsForm.addControl(freightGstControlName, new FormControl(0, Validators.required));
         
-        console.log(`Creating control: ${freightControlName}`);
-        console.log(`Creating control: ${freightGstControlName}`);
+    
       });
     });
 
-    console.log('Form controls after creation:', Object.keys(this.vendorItemsForm.controls));
+
+    this.updateTotals(0);
+    console.log(this.vendorItemsForm);
   }
 
   getFormControl(tableIndex: number, itemId: string, vendorId: string, field: string): FormControl {
     let controlName: string;
     if (field === 'rate' || field === 'amount') {
       controlName = `table_${tableIndex}_item_${itemId}_vendor_${vendorId}_${field}`;
-    } else if (field === 'remarks') {
+    }
+    else if (field === 'requiredQty') {
+      controlName = `table_${tableIndex}_item_${itemId}_vendor_${vendorId}_${field}`;
+    } 
+      else if (field === 'remarks') {
       controlName = `table_${tableIndex}_item_${itemId}_${field}`;
     } else {
       controlName = `table_${tableIndex}_vendor_${vendorId}_${field}`;
@@ -414,23 +444,48 @@ return;
       return control as FormControl;
     } else {
       console.error(`Control not found: ${controlName}`);
-      console.log('Available controls:', Object.keys(this.vendorItemsForm.controls));
+ 
       return new FormControl('');
     }
   }
 
-
   updateAmount(item: any, vendorId: string, tableIndex: number) {
     const rateControl = this.getFormControl(tableIndex, item.item_id, vendorId, 'rate');
+    const requiredQtyControl = this.getFormControl(tableIndex, item.item_id, vendorId, 'requiredQty');
     const amountControl = this.getFormControl(tableIndex, item.item_id, vendorId, 'amount');
   
     if (rateControl && amountControl) {
       const rate = parseFloat(rateControl.value) || 0;
       const amount = rate * item.quantity;
       amountControl.setValue(amount.toFixed(2), { emitEvent: false });
+  
+      // Update the vendorItemsTable structure with the rate and amount
+      const table = this.vendorItemsTables[tableIndex];
+      const itemInTable = table.items.find(i => i.item_id === item.item_id);
+      if (itemInTable) {
+        itemInTable.vendors[vendorId].rate = rateControl.value;  // Store rate
+        itemInTable.vendors[vendorId].amount = amount.toFixed(2);  // Store amount
+      }
+  
+      console.log(`Table: ${tableIndex}, Item: ${item.item_id}, Vendor: ${vendorId}, Rate: ${rateControl.value}, Amount: ${amount.toFixed(2)}`);
+      
       this.updateTotals(tableIndex);
     }
+
+    else if (requiredQtyControl){
+      const reQty = parseFloat(requiredQtyControl.value) || 0;
+  
+      // Update the vendorItemsTable structure with the rate and amount
+      const table = this.vendorItemsTables[tableIndex];
+      const itemInTable = table.items.find(i => i.item_id === item.item_id);
+      if (itemInTable) {
+        // Store rate
+        itemInTable.vendors[vendorId].requiredQty = reQty;  // Store amount
+      }
+    }
+    
   }
+
   
   updateTotals(tableIndex: number) {
     const table = this.vendorItemsTables[tableIndex];
@@ -446,11 +501,10 @@ return;
         const gstAmount = amount * (item.gst / 100);
         totalGstAmount += gstAmount;
         
-        console.log("Item Amount:", amount);
-        console.log("Item GST Amount:", gstAmount);
+      
       });
   
-      console.log("Total GST Amount:", totalGstAmount);
+
       table.totals[vendorId].totalAmount = totalAmount;
       table.totals[vendorId].gstAmount = totalGstAmount;
   
@@ -469,9 +523,7 @@ return;
 
   saveAndHighlight() {
     this.isSaved = true;
-    // Disable all form controls
-    
-    // No need to explicitly call isLowestAmount here as it's handled in the template
+  
   }
 
   isLowestAmount(tableIndex: number, itemId: string, vendorId: string): boolean {
@@ -492,13 +544,13 @@ return;
     }
 
     const currentGrandTotal = vendorItemsTable.totals[vendorId]?.grandTotal || Infinity;
-    console.log("check", currentGrandTotal);
+
 
     // Extract grandTotal values from the totals object
     const totalsArray = Object.values(vendorItemsTable.totals);
     const grandTotalArray: number[] = totalsArray.map((item: any) => item.grandTotal);
 
-    console.log(grandTotalArray);
+  
 
     // Check if the currentGrandTotal is the minimum in the array
     const isLowest = currentGrandTotal === Math.min(...grandTotalArray);
@@ -512,7 +564,7 @@ toggleVendorPreferred(index: number, event: any) {
 
   // Update the preferred field for the vendor in the totals object
   this.vendorItemsTables[0].totals[vendorId].preferred = event.target.checked;
-  console.log("checking this here", this.vendorItemsTables);
+
 }
 
 // In your component
@@ -529,7 +581,7 @@ getVendorKeys() {
 
 
   detailsOfVendor(vendor: any) {
-    console.log("checking", vendor)
+ 
     let tempvendor = this.vendorsList.find((obj) => obj._id == vendor);
     return tempvendor.vendor_name;
   }

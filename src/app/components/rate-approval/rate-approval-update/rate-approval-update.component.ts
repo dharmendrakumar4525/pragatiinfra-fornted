@@ -25,7 +25,9 @@ export class RateApprovalUpdateComponent implements OnInit {
   addPermission: any;
   deletePermission: any;
   permissions: any;
-
+  VendorItems: any[] = [];
+  vendorItemsTables: any[] = [];
+  vendorItemsForm: FormGroup;
   id: any;
   siteList: any;
   load = false;
@@ -146,7 +148,7 @@ export class RateApprovalUpdateComponent implements OnInit {
   * @param data The data to patch into the form.
   */
   patchData(data) {
-    
+    console.log("checking form", this.purchaseRequestForm);
     this.purchaseRequestForm.patchValue({
       title: data.title,
       date: data.date,
@@ -156,8 +158,11 @@ export class RateApprovalUpdateComponent implements OnInit {
       site: data.site,
       local_purchase: data.local_purchase,
       remarks: data.remarks,
+      
     });
     this.curr_site=data.site
+    this.vendorItemsTables=data.vendorRatesVendorWise;
+    console.log("vendorItemsTable", this.vendorItemsTables);
     
     this.purchaseRequestForm.controls['remarks'].disable();
   }
@@ -481,7 +486,7 @@ export class RateApprovalUpdateComponent implements OnInit {
         this.httpService.GET(`${RATE_COMPARATIVE_DETAIL_API}`, { _id: params['id'] }).subscribe({
           next: res => {
             this.details = res.data.details;
-            console.log("API", this.details);
+            console.log("checking the API", this.details);
             this.patchData(res.data.details);
           }
         })
