@@ -220,7 +220,7 @@
               <input type="number"
               class="inputBoxes"
                      [formControl]="getFormControl(tableIndex, item.item_id, vendorId, 'requiredQty')"
-                     (input)="updateAmount(item, vendorId, tableIndex)"
+                     (input)="updateQty(item, vendorId, tableIndex)"
                      [attr.data-control-name]="'table_' + tableIndex + '_item_' + item.item_id + '_vendor_' + vendorId + '_requiredQty'"
                      >
             </td>
@@ -241,6 +241,8 @@
           <td >
             <input type="text"
             class="inputBoxes"
+            (input)="updateStatus(item, tableIndex)"
+           
                    [formControl]="getFormControl(tableIndex, item.item_id, '', 'remarks')"
                    [attr.data-control-name]="'table_' + tableIndex + '_item_' + item.item_id + '_remarks'">
           </td>

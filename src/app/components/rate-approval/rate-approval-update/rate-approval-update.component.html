@@ -153,246 +153,128 @@
   </mat-card>
 
 
-<!-- <div style="display: flex; margin-top: 20px;">
-  <button (click)="compare('vendor')"  >Compare By Vendor</button>
-  <button style="margin-left: 20px;" (click)="compare('item')">Compare by Items</button>
-</div> -->
-<div class="requests">
-  <div [ngClass]="{'active':compareBy=='vendor'}"  (click)="compare('vendor')"  >Compare By Vendor</div>
-  <div [ngClass]="{'active':compareBy=='item'}"  (click)="compare('item')">Compare by Items</div>
-  <!-- <div class="innerreq">Rejected request</div>
-  <div class="innerreq">Revised request</div> -->
-</div>
-<div class="scroll-bar1" *ngIf="compareBy=='vendor'">
-    <ng-container *ngIf="CheckVendorComparision(); else noview">
-      <table style="direction: ltr !important;border-left: 2px solid #000 !important;" >
+  <div *ngIf="vendorItemsTables && vendorItemsTables.length > 0">
+    <table class="table table-bordered">
+      <thead>
         <tr>
-          <th>Item*</th>
-          <th>Category</th>
-          <th>Sub&nbsp;category</th>
-          <th>Uom</th>
-          <th>Quantity</th>
-          <th>Brand Name</th>
-          <th>Tax</th>
-          <!-- <th>Vendors</th> -->
+          <th rowspan="2" style=" text-align: center; width:300px; vertical-align: middle;">Item</th>
+          <th rowspan="2" style=" text-align: center; width:250px; vertical-align: middle;">Category</th>
+          <th rowspan="2" style=" text-align: center; width:250px; vertical-align: middle;">Sub-Category</th>
+          <th rowspan="2" style=" text-align: center; vertical-align: middle;">UOM</th>
+          <th rowspan="2" style=" text-align: center; vertical-align: middle;">Quantity</th>
+          <th rowspan="2" style=" text-align: center; vertical-align: middle;">GST %</th>
+          <ng-container *ngFor="let vendor of vendorItemsTables[0].vendors; let i = index">
+            <th colspan="3" style="text-align: center; vertical-align: middle;">
+              <label>
+                <input type="checkbox" (change)="toggleVendorPreferred(i, $event)" 
+                       [checked]="vendorItemsTables[0].totals[getVendorKeys()[i]].preferred" />
+                {{ vendor }}
+              </label>
+            </th>
+          </ng-container>
+      
+          <th rowspan="2" style=" text-align: center; vertical-align: middle;">Add Remarks</th>
         </tr>
-        <tbody *ngFor="let item of details?.items; let i = index;">
-          <tr style="background-color: #F4F4F5;" >
-            <!-- <td style="text-align: center;">
-              {{i+1}}
-            </td> -->
-            <td>
-              {{item.item_name}}
-            </td>
-            <td style="color: #000;">
-              {{item.categoryDetail.name}}
-            </td>
-            <td style="color: #000;">
-              {{item.subCategoryDetail.subcategory_name}}
-            </td>
-            <td>
-              {{item.uomDetail.uom_name}}
-            </td>
+        <tr>
+          <ng-container *ngFor="let vendor of vendorItemsTables[0].vendors">
+            <th style=" text-align: center; vertical-align: middle;">Available Qty</th>
+            <th style=" text-align: center; vertical-align: middle;">Rate (₹)</th>
+            <th style=" text-align: center; vertical-align: middle;">Sub Total (₹)</th>
+          </ng-container>
+        </tr>
+      </thead>
   
-            <td>
-              {{item.qty}}
-            </td>
-            <td>{{myBrandName(item.brandName)}}</td>
-            <td>
-              <ng-container *ngIf="item.tax && item.tax.amount">
-                {{item.tax.name}}({{item.tax.amount}}%)
-              </ng-container>
-            </td>
+      <tbody>
+        <ng-container *ngFor="let table of vendorItemsTables; let tableIndex = index">
+          <tr *ngFor="let item of table.items">
+            <td style=" text-align: center;width:300px; vertical-align: middle;">{{ item.name }}</td>
+            <td style=" text-align: center; width:250px;vertical-align: middle;">{{ item.category }}</td>
+            <td style=" text-align: center;width:250px; vertical-align: middle;">{{ item.subCategory }}</td>
+            <td style=" text-align: center; vertical-align: middle;">{{ item.uom }}</td>
+            <td style=" text-align: center; vertical-align: middle;">{{ item.quantity }}</td>
+            <td style=" text-align: center; vertical-align: middle;">{{ item.gst }}</td>
   
-            <!-- <td>
-              <a class="p-btns" (click)="vendorData(item)"> Vendor Rates</a>
-            </td> -->
+            <ng-container *ngFor="let vendorId of getVendorKeysArray(item.vendors)">
+              <td style="text-align: center; vertical-align: middle;">
+                {{ item.vendors[vendorId].requiredQty }}
+              </td>
+              <td style="text-align: center; vertical-align: middle;">
+                {{ item.vendors[vendorId].rate }}
+              </td>
+              <td style="text-align: center; vertical-align: middle;">
+                {{ item.vendors[vendorId].amount }}
+              </td>
+            </ng-container>
+            
+  
+           
+              <td style=" text-align: center; vertical-align: middle;">{{ item.remark }}</td>
+             
           </tr>
-        </tbody>
-        </table>
-        <div>Select Vendor</div>
-        <div class="vendor-wapper">
-          <div *ngFor="let vendorItem of details.vendorItems; let i=index">
-            <div>
-              <div *ngIf="vendorTotal(vendorItem.items) as vendorTotal">
-                <div 
-                  
-                  class="vendor-name-cl"
-                  *ngIf="findVendor(vendorItem.Vendor) as vendorDetails"
-                >
-        
-                  <div style="display: flex; justify-content: space-between;">
-                    <div>{{vendorDetails.vendor_name}}</div>
-                    <div>
-                      <input [disabled]="VendorRate.size>0 && !VendorRate.has(vendorDetails._id)" type="checkbox" style="width: 20px;" (change)="handleCheckboxChange(vendorDetails._id,vendorItem,vendorTotal)" />
-                    </div>
-                  </div>
-        
-                </div>
-        
-                <div *ngFor="let item of details.vendorItems[i].items; let i=index">
-                  <div class="vendor-value-cont">
-                    <div class="vendor-value-label">SubTotal {{item.item.item_name}} </div>
-                    <div class="vendor-value">
-                      {{item.SubTotalAmount | number:'1.2-2'}}
-                    </div>
-                  </div>
-                </div>
-        
-                <div class="vendor-value-cont" style="font-weight:bold;">
-                  <div class="vendor-value-label">Sub Total (All Items)</div>
-                  <div class="vendor-value">
-                    {{vendorTotal.subTotal | number:'1.2-2' }}
-                  </div>
-                </div>
-        
-                <div class="vendor-value-cont" style="font-weight:bold;">
-                  <div class="vendor-value-label">Total GST (All Items) </div>
-                  <div class="vendor-value">
-                    {{ getTotalAmount(details.vendorItems[i].items) | number:'1.2-2' }}
-                  </div>
-                </div>
-        
-                <div class="vendor-value-cont" style="font-weight:bold;">
-                  <div class="vendor-value-label">Total Freight (Inc* GST)</div>
-                  <div class="vendor-value">
-                    {{vendorTotal.freight | number:'1.2-2'}}
-                  </div>
-                </div>
-        
-                <div class="vendor-value-cont" style="font-weight:bold;"  [ngClass]="{'highlight': calculateGrandTotal(vendorItem) === getLowestGrandTotal()}">
-                  <div class="vendor-value-label">Grand Total</div>
-                  <div class="vendor-value">
-                    {{vendorTotal.subTotal + vendorTotal.freight + getTotalAmount(details.vendorItems[i].items) | number:'1.2-2'}}
-                  </div>
-                </div>
-        
-              </div>
-            </div>
-          </div>
-        </div>
-        
-  
-    </ng-container>
-    <ng-template #noview>
-      Vendor Comparison is not Applicable.
-    </ng-template>
-</div>
-  <div class="scroll-bar1" *ngIf="compareBy=='item'">
-    <table style="direction: ltr !important;border-left: 2px solid #000 !important;" >
-      <tr>
-        <th>Item*</th>
-        <th>Category</th>
-        <th>Sub&nbsp;category</th>
-        <th>Uom</th>
-        <th>Quantity</th>
-        <th>Brand Name</th>
-        <th>Tax</th>
-        <th >Vendors</th>
-        <th>Vendor Selection</th>
-      </tr>
-
-
-
-      <tbody *ngFor="let item of details?.items; let i = index;">
-        <tr style="background-color: #F4F4F5;" >
-          <!-- <td style="text-align: center;">
-            {{i+1}}
-          </td> -->
-          <td>
-            {{item.item_name}}
-          </td>
-          <td style="color: #000;">
-            {{item.categoryDetail.name}}
-          </td>
-          <td style="color: #000;">
-            {{item.subCategoryDetail.subcategory_name}}
-          </td>
-          <td>
-            {{item.uomDetail.uom_name}}
-          </td>
-
-          <td>
-            {{item.qty}}
-          </td>
-          <td>{{myBrandName(item.brandName)}}</td>
-          <td>
-            <ng-container *ngIf="item.tax && item.tax.amount">
-              {{item.tax.name}}({{item.tax.amount}}%)
-            </ng-container>
-          </td>
-
-          <!-- <td>
-            <a class="p-btns" (click)="vendorData(item)">Vendor Rates</a>
-          </td> -->
-          <td >
-            <a class="p-btns" style="display: inline-block; padding: 10px 20px;  background-color: #233a61; color: #fff; text-decoration: none; border-radius: 5px;" (click)="vendorData(item)">Vendor Rates</a>
-        </td>
-        
-          <td>
-            <ng-container *ngIf="ItemwiseVendorRate.has(item.item_id); else pendingView">
-             <p style="color: green;">Completed</p> 
-            </ng-container>
-            <ng-template #pendingView>
-             <p style="color: red;">Pending</p> 
-            </ng-template>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-<!-- 
-  <div class="vendor-wapper">
-
-    <div class="vendor-container" *ngFor="let item of details.vendors_total">
-
-      <div class="vendor-name-cl">
-
-        <ng-container
-          *ngIf="vendorAssociatedData && vendorAssociatedData[item.vendor_id] && vendorAssociatedData[item.vendor_id]['vendor_name']">
-          {{vendorAssociatedData[item.vendor_id]['vendor_name']}}
         </ng-container>
-
-      </div>
-      <div class="vendor-value-cont">
-        <div class="vendor-value-label">Subtotal</div>
-        <div class="vendor-value">
-          {{item.subtotal}}
-        </div>
-      </div>
-      <div class="vendor-value-cont">
-        <div class="vendor-value-label">GST Amount</div>
-        <div class="vendor-value">
-          {{item.total_tax}}
-        </div>
-      </div>
-      <div class="vendor-value-cont" style="background-color: #186D3C14;">
-        <div class="vendor-value-label">Freight</div>
-        <div class="vendor-value">
-          <input type="number" min="0" (keyup)="onChangeFreightCharges($event,item)"
-            (change)="onChangeFreightCharges($event,item)" [value]="item.freight_charges"
-            [readonly]="item.subtotal == 0">
-        </div>
-      </div>
-      <div class="vendor-value-cont" style="background-color: #186D3C14;">
-        <div class="vendor-value-label">Freight GST(%)</div>
-        <div class="vendor-value">
-          <input type="number" min="0" (keyup)="onChangeFreightTaxPercent($event,item)"
-            (change)="onChangeFreightTaxPercent($event,item)" [value]="item.freight_tax"
-            [readonly]="item.subtotal == 0">
-        </div>
-      </div>
-      <div class="vendor-value-cont" style="background-color: #073B4C14;">
-        <div class="vendor-value-label"><strong>Grand total</strong></div>
-        <div class="vendor-value">
-          {{item.total_amount}}
-        </div>
-      </div>
-    </div>
-
+      </tbody>
+  
+      <tfoot>
+       
+        <tr>
+          <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+          </td>
+          <td colspan="2" style="text-align: right; border: 0.5px solid;">Total Amount (₹)</td>
+          <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
+            <td colspan="3" style="height:50px; border: 0.5px solid;">{{ vendorItemsTables[0].totals[vendorId]?.totalAmount || '0' }}</td>
+          </ng-container>
+          <td style="border-color: white;"></td>
+        </tr>
+        <tr>
+          <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+          </td>
+          <td colspan="2" style="text-align: right; border: 0.5px solid;">GST Amount (₹)</td>
+          <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
+            <td colspan="3" style="height:50px; border: 0.5px solid;">{{ vendorItemsTables[0].totals[vendorId]?.gstAmount || '0' }}</td>
+          </ng-container>
+          <td style="border-color: white;"></td>
+        </tr>
+        <tr>
+          <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+          </td>
+          <td colspan="2" style="text-align: right; border: 0.5px solid;">Freight (₹)</td>
+          <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
+            <td colspan="3" style="height:40px; border: 0.5px solid;">
+              {{ vendorItemsTables[0].totals[vendorId]?.freight || '0' }}
+    
+            </td>
+          </ng-container>
+         <td style="border-color: white;"></td>
+        </tr>
+        <tr>
+          <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+          </td>
+          <td colspan="2" style="text-align: right; border: 0.5px solid;">Freight GST (%)</td>
+          <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
+            <td colspan="3" style="height:40px; border: 0.5px solid;">
+              {{ vendorItemsTables[0].totals[vendorId]?.freightGst || '0' }}
+             
+            </td>
+          </ng-container>
+          <td style="border-color: white;"></td>
+        </tr>
+        <tr>
+          <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+          </td>
+          <td colspan="2" style="text-align: right; border: 0.5px solid;">Grand Total (₹)</td>
+          <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
+            <td colspan="3" style="height:50px; border: 0.5px solid;" [ngClass]="{'lowest-grand-total': isSaved && isLowestGrandTotal(vendorId)}">
+              {{ vendorItemsTables[0].totals[vendorId]?.grandTotal || '0' }}
+            </td>
+          </ng-container>
+          <td style="border-color: white;"></td>
+        </tr>
+      </tfoot>
+    </table>
+  
+  
   </div>
- -->
+ 
 
 
 

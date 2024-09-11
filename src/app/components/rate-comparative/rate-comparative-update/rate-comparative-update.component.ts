@@ -215,7 +215,7 @@ export class RateComparativeUpdateComponent implements OnInit {
 
     console.log("there, checking payload", requestedData )
 
-
+return;
     this.httpService.PUT(RATE_COMPARATIVE_API, requestedData).subscribe({
       next: (res) => {
         this.snack.notify('Detail has been updated', 1);
@@ -359,6 +359,8 @@ export class RateComparativeUpdateComponent implements OnInit {
                         uom: item.uomDetail.uom_name,
                         quantity: item.qty,
                         gst: item.tax.amount,
+                        remark:"",
+            
                         vendors: {}
                     });
                 }
@@ -435,6 +437,7 @@ export class RateComparativeUpdateComponent implements OnInit {
     } 
       else if (field === 'remarks') {
       controlName = `table_${tableIndex}_item_${itemId}_${field}`;
+
     } else {
       controlName = `table_${tableIndex}_vendor_${vendorId}_${field}`;
     }
@@ -449,9 +452,38 @@ export class RateComparativeUpdateComponent implements OnInit {
     }
   }
 
+  updateStatus(item:any, tableIndex:number)
+  {
+    const remarkControl = this.getFormControl(tableIndex, item.item_id, "", 'remarks');
+    const table = this.vendorItemsTables[tableIndex];
+    const itemInTable = table.items.find(i => i.item_id === item.item_id);
+    if (itemInTable) {
+     
+      itemInTable.remark = remarkControl.value;  // remark
+    }
+
+  }
+
+  
+  updateQty(item: any, vendorId: string, tableIndex: number)
+  {
+    const requiredQtyControl = this.getFormControl(tableIndex, item.item_id, vendorId, 'requiredQty');
+    const reQty = parseFloat(requiredQtyControl.value) || 0;
+  
+    // Update the vendorItemsTable structure with the rate and amount
+    const table = this.vendorItemsTables[tableIndex];
+    const itemInTable = table.items.find(i => i.item_id === item.item_id);
+    if (itemInTable) {
+      // Store rate
+      itemInTable.vendors[vendorId].requiredQty = reQty;  // Store amount
+    }
+
+    console.log("Checking for quanity", this.vendorItemsTables[0].items);
+  }
+
   updateAmount(item: any, vendorId: string, tableIndex: number) {
     const rateControl = this.getFormControl(tableIndex, item.item_id, vendorId, 'rate');
-    const requiredQtyControl = this.getFormControl(tableIndex, item.item_id, vendorId, 'requiredQty');
+    
     const amountControl = this.getFormControl(tableIndex, item.item_id, vendorId, 'amount');
   
     if (rateControl && amountControl) {
@@ -472,18 +504,7 @@ export class RateComparativeUpdateComponent implements OnInit {
       this.updateTotals(tableIndex);
     }
 
-    else if (requiredQtyControl){
-      const reQty = parseFloat(requiredQtyControl.value) || 0;
-  
-      // Update the vendorItemsTable structure with the rate and amount
-      const table = this.vendorItemsTables[tableIndex];
-      const itemInTable = table.items.find(i => i.item_id === item.item_id);
-      if (itemInTable) {
-        // Store rate
-        itemInTable.vendors[vendorId].requiredQty = reQty;  // Store amount
-      }
-    }
-    
+
   }
 
   

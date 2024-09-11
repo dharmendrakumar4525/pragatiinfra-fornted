@@ -25,12 +25,14 @@ export class RateApprovalUpdateComponent implements OnInit {
   addPermission: any;
   deletePermission: any;
   permissions: any;
+  vendorList:any[] = [];
   VendorItems: any[] = [];
   vendorItemsTables: any[] = [];
   vendorItemsForm: FormGroup;
   id: any;
   siteList: any;
   load = false;
+  isSaved = true;
   items: FormArray;
   fetchedVendorList:any;
   VendorRate = new Map<string, any>();
@@ -163,10 +165,63 @@ export class RateApprovalUpdateComponent implements OnInit {
     this.curr_site=data.site
     this.vendorItemsTables=data.vendorRatesVendorWise;
     console.log("vendorItemsTable", this.vendorItemsTables);
-    
     this.purchaseRequestForm.controls['remarks'].disable();
   }
 
+  
+  getVendorKeysArray(vendorObj: any): string[] {
+
+    console.log(vendorObj);
+    return Object.keys(vendorObj);
+  }
+
+  isLowestGrandTotal(vendorId: string): boolean {
+    const vendorItemsTable = this.vendorItemsTables[0];
+    
+    // Ensure vendorItemsTable and totals exist
+    if (!vendorItemsTable || !vendorItemsTable.totals) {
+        console.error('Vendor items table or totals not found');
+        return false;
+    }
+
+    const currentGrandTotal = vendorItemsTable.totals[vendorId]?.grandTotal || Infinity;
+
+
+    // Extract grandTotal values from the totals object
+    const totalsArray = Object.values(vendorItemsTable.totals);
+    const grandTotalArray: number[] = totalsArray.map((item: any) => item.grandTotal);
+
+  
+
+    // Check if the currentGrandTotal is the minimum in the array
+    const isLowest = currentGrandTotal === Math.min(...grandTotalArray);
+    return isLowest;
+} 
+
+toggleVendorPreferred(index: number, event: any) {
+  // Get the corresponding vendor ID from the dynamically generated vendorKeys array
+ const vendorKeys = Object.keys(this.vendorItemsTables[0].totals);
+  const vendorId = vendorKeys[index];
+
+  // Update the preferred field for the vendor in the totals object
+  this.vendorItemsTables[0].totals[vendorId].preferred = event.target.checked;
+
+}
+
+// In your component
+getVendorKeys() {
+  return Object.keys(this.vendorItemsTables[0].totals);
+}
+
+  
+
+  
+
+  detailsOfVendor(vendor: any) {
+ 
+    let tempvendor = this.vendorList.find((obj) => obj._id == vendor);
+    return tempvendor.vendor_name;
+  }
 
   createItemArrayForm() {
     return new FormGroup({
@@ -214,8 +269,12 @@ export class RateApprovalUpdateComponent implements OnInit {
 
   getVendorList(){
     this.httpService.GET("/vendor",{}).subscribe(res=>{
-      this.fetchedVendorList=res.data;
+      this.vendorList=res.data;
     })
+  }
+
+  getVendorIds(table: any): string[] {
+    return Object.keys(table.totals);
   }
 
   findVendor(id:any){
