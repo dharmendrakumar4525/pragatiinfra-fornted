@@ -164,7 +164,9 @@
           <th rowspan="2" style=" text-align: center; vertical-align: middle;">Quantity</th>
           <th rowspan="2" style=" text-align: center; vertical-align: middle;">GST %</th>
           <ng-container *ngFor="let vendor of vendorItemsTables[0].vendors; let i = index">
-            <th colspan="3" style="text-align: center; vertical-align: middle;">
+            <th colspan="3" 
+                style="text-align: center; vertical-align: middle;" 
+                [ngClass]="{'preferred-vendor': vendorItemsTables[0].totals[getVendorKeys()[i]].preferred}">
               <label>
                 <input type="checkbox" (change)="toggleVendorPreferred(i, $event)" 
                        [checked]="vendorItemsTables[0].totals[getVendorKeys()[i]].preferred" />
@@ -172,7 +174,6 @@
               </label>
             </th>
           </ng-container>
-      
           <th rowspan="2" style=" text-align: center; vertical-align: middle;">Add Remarks</th>
         </tr>
         <tr>
@@ -187,13 +188,13 @@
       <tbody>
         <ng-container *ngFor="let table of vendorItemsTables; let tableIndex = index">
           <tr *ngFor="let item of table.items">
-            <td style=" text-align: center;width:300px; vertical-align: middle;">{{ item.name }}</td>
-            <td style=" text-align: center; width:250px;vertical-align: middle;">{{ item.category }}</td>
-            <td style=" text-align: center;width:250px; vertical-align: middle;">{{ item.subCategory }}</td>
-            <td style=" text-align: center; vertical-align: middle;">{{ item.uom }}</td>
-            <td style=" text-align: center; vertical-align: middle;">{{ item.quantity }}</td>
-            <td style=" text-align: center; vertical-align: middle;">{{ item.gst }}</td>
-  
+            <td style="text-align: center;width:300px; vertical-align: middle;">{{ item.name }}</td>
+            <td style="text-align: center; width:250px;vertical-align: middle;">{{ item.category }}</td>
+            <td style="text-align: center;width:250px; vertical-align: middle;">{{ item.subCategory }}</td>
+            <td style="text-align: center; vertical-align: middle;">{{ item.uom }}</td>
+            <td style="text-align: center; vertical-align: middle;">{{ item.quantity }}</td>
+            <td style="text-align: center; vertical-align: middle;">{{ item.gst }}</td>
+      
             <ng-container *ngFor="let vendorId of getVendorKeysArray(item.vendors)">
               <td style="text-align: center; vertical-align: middle;">
                 {{ item.vendors[vendorId].requiredQty }}
@@ -201,19 +202,27 @@
               <td style="text-align: center; vertical-align: middle;">
                 {{ item.vendors[vendorId].rate }}
               </td>
-              <td style="text-align: center; vertical-align: middle;">
-                {{ item.vendors[vendorId].amount }}
+              <td style="text-align: center;  vertical-align: middle;"
+              [ngClass]="{
+                'lowest-amount': isSaved && isSmallestAmount(item.item_id, vendorId),
+                'selected-td': item.vendors[vendorId].preferred
+              }">
+                {{ item.vendors[vendorId].amount }} 
+
+                <input type="checkbox"
+                style="margin-top: 10px; transform: scale(1.2); width: 15px; height: 15px;"
+                [checked]="item.vendors[vendorId].preferred"
+                (change)="togglePreferredVendor(item, vendorId)" />
               </td>
-            </ng-container>
-            
-  
-           
-              <td style=" text-align: center; vertical-align: middle;">{{ item.remark }}</td>
+              <!-- Checkbox for setting preferred vendor -->
              
+            </ng-container>
+      
+            <td style="text-align: center; vertical-align: middle;">{{ item.remark }}</td>
           </tr>
         </ng-container>
       </tbody>
-  
+      
       <tfoot>
        
         <tr>
@@ -263,10 +272,15 @@
           </td>
           <td colspan="2" style="text-align: right; border: 0.5px solid;">Grand Total (₹)</td>
           <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
-            <td colspan="3" style="height:50px; border: 0.5px solid;" [ngClass]="{'lowest-grand-total': isSaved && isLowestGrandTotal(vendorId)}">
+            <td colspan="3" style="height:50px; border: 0.5px solid;" 
+              [ngClass]="{
+                'lowest-grand-total': isSaved && isLowestGrandTotal(vendorId),
+                'preferred-grand-total': isPreferredGrandTotal(vendorId)
+              }">
               {{ vendorItemsTables[0].totals[vendorId]?.grandTotal || '0' }}
             </td>
           </ng-container>
+          
           <td style="border-color: white;"></td>
         </tr>
       </tfoot>

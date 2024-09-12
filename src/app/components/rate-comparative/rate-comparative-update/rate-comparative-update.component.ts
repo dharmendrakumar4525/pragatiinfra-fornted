@@ -215,7 +215,7 @@ export class RateComparativeUpdateComponent implements OnInit {
 
     console.log("there, checking payload", requestedData )
 
-return;
+
     this.httpService.PUT(RATE_COMPARATIVE_API, requestedData).subscribe({
       next: (res) => {
         this.snack.notify('Detail has been updated', 1);
@@ -250,6 +250,8 @@ return;
         vendor.category.includes(items.categoryDetail._id) 
        && vendor.SubCategory.includes(items.subCategoryDetail._id)
     );
+
+    console.log("checking vendor", tempVendorList);
 
     return tempVendorList;
   }
@@ -366,11 +368,14 @@ return;
                 }
 
                 // Initialize vendor data for this item
-                tableData.items.find(i => i.item_id === item._id).vendors[vendor] = {
-                  requiredQty:'',
-                    rate: '',
-                    amount: ''
-                };
+                const matchedItem = tableData.items.find(i => i.item_id === item._id);
+                if (matchedItem) {
+                    matchedItem.vendors[vendor] = {
+                        requiredQty: matchedItem.quantity, // Assign the matched item's quantity
+                        rate: '',
+                        amount: ''
+                    };
+                }
 
 
 
@@ -400,7 +405,7 @@ return;
           const amountControlName = `table_${tableIndex}_item_${item.item_id}_vendor_${vendorId}_amount`;
           
           this.vendorItemsForm.addControl(rateControlName, new FormControl('', Validators.required));
-          this.vendorItemsForm.addControl(requiredQtyControlName, new FormControl('', Validators.required));
+          this.vendorItemsForm.addControl(requiredQtyControlName, new FormControl(item.quantity, Validators.required));
           this.vendorItemsForm.addControl(amountControlName, new FormControl('', Validators.required));
           
          

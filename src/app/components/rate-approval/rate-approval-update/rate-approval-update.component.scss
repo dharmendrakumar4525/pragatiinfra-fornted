@@ -7,6 +7,48 @@ mat-toolbar {
   flex: 1 1 auto;
 }
 
+
+.lowest-amount {
+  color:brown;
+  
+  font-weight: bold;/* Light green */
+}
+
+.selected-td {
+  background-color: darkgreen;
+  color:white; /* You can customize this color */
+}
+
+
+
+.preferred-grand-total {
+  color: darkgreen;
+  font-weight: bold;
+  font-size: 18px;
+  /* Additional styles can go here */
+}
+
+.preferred-vendor {
+  background-color: darkgreen;
+  font-weight: bold;
+  /* Additional styles can be added here */
+}
+
+
+
+.lowest-rate {
+  color:brown;
+  font-size: 18px;
+  font-weight: bold; /* Light green */
+}
+
+.lowest-grand-total {
+  color:brown;
+  font-size: 18px;
+  font-weight: bold; /* Light green */
+}
+
+
 .highlight {
   background-color: #ffcc00; /* Light yellow background */
   border: 3px solid #ffcc00; /* Optional: Yellow border */

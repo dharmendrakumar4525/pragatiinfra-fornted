@@ -9,6 +9,7 @@ import {
   RATE_COMPARATIVE_DETAIL_API,
   RATE_COMPARATIVE_API,
   GET_BRAND_API,
+  ITEM_API
 } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { ESignComponent } from '../e-sign/e-sign.component';
@@ -39,7 +40,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   purchaseOrderNumber: number;
   purchaseOrderList: any[] = [];
   permissions: any;
-
+  ItemList: any;
   viewPermission: any;
   editPermission: any;
   addPermission: any;
@@ -53,53 +54,89 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     private snack: SnackbarService,
     private formBuilder: FormBuilder,
     private http: HttpClient
-  ) {
-    //console.log(this.brandList);
+  ) { }
 
-    // Call the getBrandList() method to fetch the brand list
-    this.getBrandList();
 
-    // Subscribe to route parameters to retrieve the id parameter
-    this.route.params.subscribe((params) => {
-      // Check if the id parameter is present
-      if (params['id']) {
-        // Make a GET request to fetch the details of the purchase order
-        this.httpService
-          .GET(`${PURCHASE_ORDER_API}/detail`, { _id: params['id'] })
-          .subscribe((res) => {
-            // Assign the fetched details to the poDetails property
-            this.poDetails = res.data;
-            // console.log(this.poDetails)
-            this.mail_section.patchValue(this.poDetails.vendor_message);
-            this.term_condition.patchValue(this.poDetails.terms_condition);
-          });
-      }
+  updateItemsWithDetails(itemList) {
+    const itemIds = this.poDetails.items.map(item => item.item.item_id);
+    const itemDetailsMap = itemList.reduce((map, item) => {
+        map[item._id] = item;
+        return map;
+    }, {});
+
+    this.poDetails.items = this.poDetails.items.map(item => {
+        const itemId = item.item.item_id;
+        const details = itemDetailsMap[itemId] || {};
+
+        return {
+            ...item,
+            item: {
+                ...item.item,
+                categoryDetail: details.categoryDetail || {},
+                subCategoryDetail: details.subCategoryDetail || {},
+                uomDetail: details.uomDetail || {},
+                item_name: details.item_name || item.item.item_name,
+                brandName: details.brandName || item.item.brandName,
+                attachment: details.attachment || item.item.attachment
+            }
+        };
     });
+    console.log("checkDats", this.poDetails);
   }
 
-  ngOnInit(): void {
-    // Retrieve user permissions from local storage and parse them as JSON
-    this.permissions = JSON.parse(localStorage.getItem('loginData'));
 
-    // Extract specific permissions related to ParentChildchecklist from the parsed data
-    const rolePermission = this.permissions.user.role;
-    const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;
-    this.httpService.GET(GET_ROLE_API_PERMISSION, {}).subscribe({
-      next: (resp: any) => {
-        this.viewPermission =
-          resp.dashboard_permissions[0].ParentChildchecklist[22].childList[0].isSelected;
-        this.addPermission =
-          resp.dashboard_permissions[0].ParentChildchecklist[22].childList[1].isSelected;
-        this.editPermission =
-          resp.dashboard_permissions[0].ParentChildchecklist[22].childList[2].isSelected;
-        this.deletePermission =
-          resp.dashboard_permissions[0].ParentChildchecklist[22].childList[3].isSelected;
-      },
-      error: (err) => {
-        console.log(err);
-      },
+ngOnInit(): void {
+  // Retrieve user permissions from local storage and parse them as JSON
+  this.permissions = JSON.parse(localStorage.getItem('loginData'));
+
+  // Extract specific permissions related to ParentChildchecklist from the parsed data
+  const rolePermission = this.permissions.user.role;
+  const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;
+  
+  // Fetch user permissions and initialize component state
+  this.httpService.GET(GET_ROLE_API_PERMISSION, {}).subscribe({
+    next: (resp: any) => {
+      this.viewPermission =
+        resp.dashboard_permissions[0].ParentChildchecklist[22].childList[0].isSelected;
+      this.addPermission =
+        resp.dashboard_permissions[0].ParentChildchecklist[22].childList[1].isSelected;
+      this.editPermission =
+        resp.dashboard_permissions[0].ParentChildchecklist[22].childList[2].isSelected;
+      this.deletePermission =
+        resp.dashboard_permissions[0].ParentChildchecklist[22].childList[3].isSelected;
+    },
+    error: (err) => {
+      console.log(err);
+    },
+  });
+
+  // Fetch brand list and item list
+  Promise.all([this.getBrandList(), this.getItemList()])
+    .then(([brandList, itemList]) => {
+      this.brandList = brandList;
+      this.ItemList = itemList;
+
+      // Subscribe to route parameters to retrieve the id parameter
+      this.route.params.subscribe((params) => {
+        if (params['id']) {
+          this.httpService
+            .GET(`${PURCHASE_ORDER_API}/detail`, { _id: params['id'] })
+            .subscribe((res) => {
+              this.poDetails = res.data;
+              this.mail_section.patchValue(this.poDetails.vendor_message);
+              this.term_condition.patchValue(this.poDetails.terms_condition);
+
+              // Update items with details once purchase order details are fetched
+              this.updateItemsWithDetails(this.ItemList);
+            });
+        }
+      });
+    })
+    .catch((err) => {
+      console.error('Error fetching data', err);
     });
-  }
+}
+ 
 
   async updateStatus(status: any) {
     if (status == 'revise') {
@@ -202,7 +239,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     let requestData: any = this.poDetails;
     //console.log("--requestDAta--",requestData)
     for (let i = 0; i < requestData.items.length; i++) {
-      const brandName = this.myBrandName(requestData.items[i].item.brandName);
+      const brandName = this.getBrandNamesByIds(requestData.items[i].item.brandName);
       requestData.items[i].item['brandName'] = brandName;
     }
 
@@ -289,6 +326,21 @@ export class PurchaseOrderUpdateComponent implements OnInit {
         },
       });
   }
+
+ getBrandNamesByIds(brandIds): string {
+    // Create a map for quick lookup of brand names by their IDs
+    const brandMap = this.brandList.reduce((map, brand) => {
+      map[brand._id] = brand.brand_name;
+      return map;
+    }, {} as Record<string, string>);
+  
+    // Map the brand IDs to their names and join them with '/'
+    return brandIds
+      .map(id => brandMap[id])
+      .filter(name => name) // filter out any undefined names if ID does not exist
+      .join(' / ');
+  }
+
 
   billingAddressPopup() {
     // Open billing address popup
@@ -385,11 +437,11 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     address.afterClosed().subscribe((result: any) => {});
   }
   getBrandList() {
-    //console.log("hi")
-    this.httpService.GET(GET_BRAND_API, {}).subscribe((res) => {
-      this.brandList = res.data;
-      //console.log(this.brandList);
-    });
+    return this.httpService.GET(GET_BRAND_API, {}).toPromise().then(res => res.data);
+  }
+
+  getItemList() {
+    return this.httpService.GET(ITEM_API, {}).toPromise().then(res => res.data);
   }
   myBrandName(brandId: any) {
     // console.log("mybrandfunction",brandId)

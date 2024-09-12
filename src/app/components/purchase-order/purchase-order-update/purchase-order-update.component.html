@@ -117,7 +117,7 @@
           <!-- <th>Brand</th> -->
           <th>Quantity</th>
           <th>UOM</th>
-          <th>Freight</th>
+         
           <th>Brand Name</th>
           <th>Rate</th>
           <th>Sub Total</th>
@@ -139,16 +139,16 @@
             <td style="color: #000;">
               {{item.item.uomDetail.uom_name}}
             </td>
-            <td style="color: #000;">
-              {{item.Freight}}
-            </td>
-            <td>{{myBrandName(item.item.brandName)}}</td>
+            
+            <td>{{getBrandNamesByIds(item.item.brandName)}}</td>
             <td style="color: #000;">
               {{item.Rate}}
             </td>
 
             <td style="color: #000;">
-              {{item.SubTotalAmount}}
+              {{item.
+                SubTotalAmount
+                }}
             </td>
             <td style="color: #000;">
               <ng-container *ngIf="item.item.tax && item.item.tax.amount">

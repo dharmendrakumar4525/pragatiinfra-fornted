@@ -81,42 +81,6 @@ export class RateApprovalUpdateComponent implements OnInit {
     })
   }
 
-  /**
-  * Opens a dialog to display vendor rate listings for a specific item.
-  * @param dataObj The object containing data related to the item.
-  * @returns void
-  */
-  vendorData(dataObj: any) {
-  
-
-    // Open a dialog to display vendor rate listings
-    const dialogPopup = this.dialog.open(VendorRateListingComponent, {
-      data: {
-        item: dataObj,
-        vendorItems: this.details.vendorItems,
-        fetchedVendorList:this.fetchedVendorList,
-        pageData:this.ItemwiseVendorRate.get(dataObj.item_id)
-      }
-    });
-    // Subscribe to dialog closing event
-    dialogPopup.afterClosed().subscribe((result: any) => {
-     
-      if(result && result.data && result.data.VendorRate ){
-        console.log(result.data)
-        if(result.data.VendorRate.size>0)
-          this.ItemwiseVendorRate.set(dataObj.item_id,result.data)
-        else
-          this.ItemwiseVendorRate.delete(dataObj.item_id)
-      }
-      
-    });
-  }
-
-
-  /**
-  * Fetches site and purchase order data.
-  * Updates the siteList and purchaseList properties with the fetched data.
-  */
   getList() {
     const site = this.http.get<any>(`${environment.api_path}${GET_SITE_API}`);
     const purchase = this.http.get<any>(`${environment.api_path}${PURCHASE_ORDER_API}`);
@@ -131,24 +95,6 @@ export class RateApprovalUpdateComponent implements OnInit {
     })
   }
 
-  /**
-  * Clears VendorRate and ItemwiseVendorRate maps and sets the comparison type.
-  * @param type The type of comparison ('vendor' or 'item').
-  */
-  compare(type:any)
-  {
-    this.VendorRate.clear();
-    this.ItemwiseVendorRate.clear();
-    if(type=="vendor")
-      this.compareBy="vendor"
-    else
-      this.compareBy="item";
-  }
-
-  /**
-  * Patches the purchase request form with provided data and disables remarks field.
-  * @param data The data to patch into the form.
-  */
   patchData(data) {
     console.log("checking form", this.purchaseRequestForm);
     this.purchaseRequestForm.patchValue({
@@ -198,69 +144,57 @@ export class RateApprovalUpdateComponent implements OnInit {
     return isLowest;
 } 
 
-toggleVendorPreferred(index: number, event: any) {
-  // Get the corresponding vendor ID from the dynamically generated vendorKeys array
- const vendorKeys = Object.keys(this.vendorItemsTables[0].totals);
-  const vendorId = vendorKeys[index];
+isPreferredGrandTotal(vendorId: string): boolean {
+  const vendorItemsTable = this.vendorItemsTables[0];
 
-  // Update the preferred field for the vendor in the totals object
-  this.vendorItemsTables[0].totals[vendorId].preferred = event.target.checked;
+  // Ensure vendorItemsTable and totals exist
+  if (!vendorItemsTable || !vendorItemsTable.totals) {
+      console.error('Vendor items table or totals not found');
+      return false;
+  }
 
+  // Check if the preferred property is true for this vendorId
+  return vendorItemsTable.totals[vendorId]?.preferred === true;
 }
+t
+
+
+isSmallestAmount(itemId: string, vendorId: string): boolean {
+  // Find the item that matches the provided itemId
+  const item = this.vendorItemsTables[0].items.find((item: any) => item.item_id === itemId);
+  
+  // If item is not found, return false
+  if (!item) {
+    console.error(`Item with ID ${itemId} not found`);
+    return false;
+  }
+
+  // Get the vendors object for the specific item
+  const vendors = item.vendors;
+
+  // If the vendorId is not found in the vendors object, return false
+  if (!vendors[vendorId]) {
+    console.error(`Vendor with ID ${vendorId} not found in item ${itemId}`);
+    return false;
+  }
+
+  // Get the amount of the vendorId we're checking
+  const currentVendorAmount = parseFloat(vendors[vendorId].amount);
+
+  // Extract all vendor amounts and compare
+  const vendorAmounts = Object.values(vendors).map((vendor: any) => parseFloat(vendor.amount));
+
+  // Return true if the current vendor's amount is the smallest in the list
+  return currentVendorAmount === Math.min(...vendorAmounts);
+}
+
 
 // In your component
 getVendorKeys() {
   return Object.keys(this.vendorItemsTables[0].totals);
 }
 
-  
 
-  
-
-  detailsOfVendor(vendor: any) {
- 
-    let tempvendor = this.vendorList.find((obj) => obj._id == vendor);
-    return tempvendor.vendor_name;
-  }
-
-  createItemArrayForm() {
-    return new FormGroup({
-      item_id: new FormControl('', Validators.required),
-      qty: new FormControl('', Validators.required),
-      category: new FormControl(''),
-      subCategory: new FormControl(''),
-      attachment: new FormControl(''),
-      remark: new FormControl('', Validators.required),
-      uom: new FormControl('', Validators.required),
-
-    })
-
-  }
-
-
-  addItems(item: any): void {
-
-    this.items = this.purchaseRequestForm.get('items') as FormArray;
-    if (item) {
-      this.items.push(this.createItem(item));
-    }
-  }
-
-  createItem(item?: any): any {
-    if (item) {
-      return new FormGroup({
-        item_id: new FormControl(item.item_id, Validators.required),
-        qty: new FormControl(item.qty, Validators.required),
-        category: new FormControl(item.categoryDetail.name),
-        subCategory: new FormControl(item.subCategoryDetail.subcategory_name),
-        attachment: new FormControl(item.attachment),
-        remark: new FormControl(item.remark, Validators.required),
-        uom: new FormControl(item.uomDetail._id, Validators.required),
-
-      })
-    }
-  }
-  
   getSiteList() {
     this.httpService.GET(GET_SITE_API, {}).subscribe(res => {
       this.siteList = res;
@@ -282,28 +216,6 @@ getVendorKeys() {
     return this.fetchedVendorList.find(obj=> obj._id==id);
   }
 
-  /**
-  * Checks if the number of items in each vendor's item list matches the number of items in the purchase request.
-  * @returns A boolean indicating whether the vendor comparison is valid.
-  */
-  CheckVendorComparision(){
-    console.log(this.details);
-    
-    let ans = false;
-    for (const obj of this.details.vendorItems) {
-      if (obj.items.length === this.details.items.length) {
-        ans = true;
-        break; // This will terminate the loop
-      }
-    }
-    return ans;
-  }
-
-  /**
-  * Calculates the total amounts for a given item from vendor data.
-  * @param item An array of vendor data for the item.
-  * @returns An object containing subTotal, gstAmount, and total.
-  */
   vendorTotal(item:any){
 
       console.log("check Item", item);
@@ -332,14 +244,7 @@ getVendorKeys() {
         }
   }
 
-  /**
-  * Handles the change in checkbox state for a vendor.
-  * If the vendor already exists in VendorRate, deletes the vendor.
-  * If the vendor doesn't exist in VendorRate, adds the vendor.
-  * @param vendor_id The ID of the vendor.
-  * @param vendorItem The vendor item data.
-  * @param vendorTotal The total amount for the vendor.
-  */
+ 
   handleCheckboxChange(vendor_id,vendorItem,vendorTotal)
   {
     if(this.VendorRate.has(vendor_id))
@@ -349,6 +254,133 @@ getVendorKeys() {
 
   }
 
+  
+  updateVendorTotals() {
+    // Get all items from all vendor items tables
+    const allItems = this.vendorItemsTables.flatMap(table => table.items);
+  
+    // Update each vendor's total preferred status based on their preference in items
+    Object.keys(this.vendorItemsTables[0].totals).forEach(vendorId => {
+      const vendorIsPreferredInAllItems = allItems.every(itm => itm.vendors[vendorId]?.preferred);
+      this.vendorItemsTables[0].totals[vendorId].preferred = vendorIsPreferredInAllItems;
+    });
+  }
+  
+  
+  
+  togglePreferredVendor(item: any, selectedVendorId: string): void {
+    // Find the vendor that was previously selected in this item
+    const previouslyPreferredVendorId = Object.keys(item.vendors).find(vendorId => item.vendors[vendorId].preferred);
+  
+    // If there was a previously preferred vendor, unset its preference
+    if (previouslyPreferredVendorId && previouslyPreferredVendorId !== selectedVendorId) {
+      item.vendors[previouslyPreferredVendorId].preferred = false;
+    }
+  
+    // Toggle the selected vendor's preferred status
+    const selectedVendor = item.vendors[selectedVendorId];
+    selectedVendor.preferred = !selectedVendor.preferred;
+  
+    // Update the totals
+    this.updateVendorTotals();
+  }
+
+  toggleVendorPreferred(index: number, event: any) {
+    const vendorKeys = Object.keys(this.vendorItemsTables[0].totals);
+    const selectedVendorId = vendorKeys[index];
+    const isChecked = event.target.checked;
+  
+    // Loop through all items to update the preference status
+    this.vendorItemsTables.forEach(table => {
+      table.items.forEach(item => {
+        Object.keys(item.vendors).forEach(vendorId => {
+          if (vendorId !== selectedVendorId) {
+            // Clear preference for vendors that are not selected
+            item.vendors[vendorId].preferred = false;
+          } else if (!isChecked) {
+            // If the selected vendor is being unselected, just clear its preference
+            item.vendors[vendorId].preferred = false;
+          }
+        });
+      });
+    });
+  
+    // Update the preferred status in totals
+    vendorKeys.forEach(vendorId => {
+      this.vendorItemsTables[0].totals[vendorId].preferred = (vendorId === selectedVendorId) && isChecked;
+    });
+  
+    // If the vendor is selected, set all items' vendor preferred to true for that vendor
+    if (isChecked) {
+      this.vendorItemsTables.forEach(table => {
+        table.items.forEach(item => {
+          item.vendors[selectedVendorId].preferred = true;
+        });
+      });
+    }
+  
+    // Update totals based on item preferences
+    this.updateVendorTotals();
+  }
+  
+  
+  filterData(data) {
+    const { items, vendors, totals } = data;
+
+    // Check if any vendor in totals is preferred
+    const preferredVendorIds = Object.keys(totals).filter(vendorId => totals[vendorId].preferred);
+
+    if (preferredVendorIds.length > 0) {
+        // Case 1: If there are preferred vendors, remove other vendors from totals
+        const preferredVendorId = preferredVendorIds[0];
+
+        // Filter totals
+        const filteredTotals = {};
+        filteredTotals[preferredVendorId] = totals[preferredVendorId];
+
+        // Filter items
+        const filteredItems = items.map(item => {
+            const preferredVendorData = item.vendors[preferredVendorId];
+            if (preferredVendorData) {
+                return {
+                    ...item,
+                    vendors: {
+                        [preferredVendorId]: preferredVendorData
+                    }
+                };
+            }
+            return item;
+        });
+
+        return { items: filteredItems, vendors, totals: filteredTotals };
+    } else {
+        // Case 2: No preferred vendors, filter items based on preferred vendors
+        const filteredItems = items.map(item => {
+            const preferredVendors = Object.keys(item.vendors).filter(vendorId => item.vendors[vendorId].preferred);
+            if (preferredVendors.length > 0) {
+                const filteredVendors = preferredVendors.reduce((acc, vendorId) => {
+                    acc[vendorId] = item.vendors[vendorId];
+                    return acc;
+                }, {});
+
+                return {
+                    ...item,
+                    vendors: filteredVendors
+                };
+            }
+            return {
+                ...item,
+                vendors: {}
+            };
+        });
+
+        return { items: filteredItems, vendors, totals };
+    }
+}
+
+  
+
+  
   getTotalAmount(items: any[]): number {
     console.log("here that is", items);
     return items.reduce((total, item) => {
@@ -440,41 +472,9 @@ getVendorKeys() {
       this.po_no=Pocount;
      
 
-      if(this.compareBy=='vendor')
-      {
-          
-          let vendorRates:any[]=[];
-         
-          this.VendorRate.forEach((value,key)=>{  
-              vendorRates.push(value);
-       
-          })
-          
-
-          
-          this.details['vendorRatesVendorWise']=vendorRates;
-
-         
-          this.details['compareBy']=this.compareBy;
-          this.details['po_number']=this.po_no;
-          this.details['Pocount']=Pocount;
-          if(this.details.status=='revise')
-            this.details['isRevised']=true;
-          this.details['status']="approved"
-      }
-      else{
-        let vendorRates:any[]=[];
-        
-        this.ItemwiseVendorRate.forEach((value,key)=>{
-          value.VendorRate.forEach((value1,key1)=>{
-            vendorRates.push(value1);
-          })
-          
-        })
-      
      
 
-        this.details['vendorRatesItemWise']=vendorRates
+        this.details['vendorRatesItemWise']= this.updateVendorPreferredTotals(this.filterData(this.vendorItemsTables[0]));
         
         this.details['compareBy']=this.compareBy;
         this.details['po_number']=this.po_no;
@@ -487,7 +487,9 @@ getVendorKeys() {
         return;
       }
 
-    }
+      console.log("details", this.details);
+      
+    console.log("")
     this.load = true;
     this.httpService.PUT(RATE_COMPARATIVE_API, this.details).subscribe(res => {
       this.snack.notify("Detail has been updated", 1);
@@ -512,6 +514,53 @@ getVendorKeys() {
   
    
   }
+
+updateVendorPreferredTotals(data) {
+    const { items, totals } = data;
+
+    // Initialize a map to store recalculated totals for each vendor
+    const updatedTotals = {};
+
+    // Iterate through each vendor in totals
+    for (const vendorId in totals) {
+        // Initialize subtotal and other values
+        let subtotal = 0;
+        let gstAmount = 0;
+        let freight = totals[vendorId].freight || 0;
+        let freightGst = totals[vendorId].freightGst || 0;
+        let preferred = true;
+
+        // Iterate through each item and check if this vendor is preferred
+        items.forEach(item => {
+            const vendorData = item.vendors[vendorId];
+            if (vendorData && vendorData.preferred) {
+                // Add this item's amount to the subtotal
+                subtotal += parseFloat(vendorData.amount);
+                gstAmount += (parseFloat(vendorData.amount) * item.gst) / 100;
+            } else {
+                preferred = false;
+            }
+        });
+
+        // Calculate grand total
+        const grandTotal = subtotal + gstAmount + freight + (freight*(freightGst/100));
+
+        // Update totals for this vendor
+        updatedTotals[vendorId] = {
+            ...totals[vendorId],
+            totalAmount: subtotal,
+            gstAmount: gstAmount,
+            grandTotal: grandTotal,
+            preferred: preferred
+        };
+    }
+
+    return {
+        ...data,
+        totals: updatedTotals
+    };
+}
+
 
   ngOnInit(): void {
 

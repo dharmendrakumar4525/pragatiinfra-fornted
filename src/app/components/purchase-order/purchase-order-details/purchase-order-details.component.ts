@@ -37,7 +37,7 @@ export class PurchaseOrderDetailsComponent implements OnInit {
       if (params['id']) {
         this.httpService.GET(`${PURCHASE_ORDER_API}/detail`, { _id: params['id'] }).subscribe(res => {
           this.poDetails = res.data;
-          console.log(this.poDetails)
+          console.log("checking", this.poDetails)
           this.esignImage=this.poDetails.sign;
           this.validityDate.patchValue(this.poDetails.due_date);
           this.term_condition.patchValue(this.poDetails.terms_condition);

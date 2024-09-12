@@ -284,6 +284,7 @@ else
       },
       error: (err) => {
         this.load = false;
+        console.log(err);
         if (err.errors && Object.keys(err.errors).length > 0) {
           let errMessage = '<ul>';
           for (let e in err.errors) {
@@ -291,9 +292,9 @@ else
             errMessage += `<li>${objData[0]}</li>`;
           }
           errMessage += '</ul>';
-          this.snack.notifyHtml(errMessage, 2);
+          this.snack.notifyHtml(err.message, 2);
         } else {
-          console.log("there", err);
+          console.log("there", err.message);
           this.snack.notify(err.errors || 'An error occurred', 2);
         }
       }
