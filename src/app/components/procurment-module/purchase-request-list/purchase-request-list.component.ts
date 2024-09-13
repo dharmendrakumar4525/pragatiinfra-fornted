@@ -42,11 +42,11 @@ export class PurchaseRequestListComponent implements OnInit {
   getList(filterObj: any) {
     this.httpService.GET(PURCHASE_REQUEST_API, filterObj).subscribe({
       next: (resp: any) => {
-        console.log(resp.data);
+        console.log("check DATA HERE", resp.data);
         const purchaseRequests = resp.data.map((item: any) => {
           return {
             ...item,
-            formattedDate: this.datePipe.transform(item.date, 'yyyy-MM-dd')
+            formattedDate: this.datePipe.transform(item.updated_at, 'DD-MM-YYYY')
           };
         });
 

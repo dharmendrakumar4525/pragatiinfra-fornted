@@ -503,13 +503,16 @@ console.log("check for filtered", this.filteredItemList);
   getPurchaseList(filterObj: any) {
     this.httpService.GET(PURCHASE_REQUEST_API, filterObj).subscribe({
       next: (resp: any) => {
-        console.log(resp.data);
+        console.log("checking Data", resp.data);
         
         // Format the Date field for each purchase request
         resp.data.forEach((purchaseRequest: any) => {
-          purchaseRequest.date = moment(purchaseRequest.date).format('YYYY-MM-DD');
+          purchaseRequest.date = moment(purchaseRequest.
+            updated_at
+            ).format('DD-MM-YYYY');
         });
         
+        console.log("check Data once", resp.data);
         if (this.permissions.user.role === "superadmin") {
           this.originalPurchaseList = resp.data;
           this.purchaseList = resp.data;  
@@ -519,7 +522,7 @@ console.log("check for filtered", this.filteredItemList);
             this.siteList.some(site => site._id === pr.site)
           );
           
-          console.log(filteredPurchaseRequests);
+         
           this.originalPurchaseList = filteredPurchaseRequests;
           this.purchaseList = filteredPurchaseRequests;  
         }

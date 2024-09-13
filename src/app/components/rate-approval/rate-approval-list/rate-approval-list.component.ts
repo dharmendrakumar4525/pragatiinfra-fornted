@@ -71,7 +71,7 @@ export class RateApprovalListComponent implements OnInit {
   
         console.log(resp.data);
         resp.data.forEach((purchaseRequest: any) => {
-          purchaseRequest.date = moment(purchaseRequest.date).format('YYYY-MM-DD');
+          purchaseRequest.date = moment(purchaseRequest. updated_at).format('DD-MM-YYYY');
         });
 
         if(this.permissions.user.role === "superadmin"){

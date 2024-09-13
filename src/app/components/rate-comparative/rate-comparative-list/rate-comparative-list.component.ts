@@ -79,7 +79,7 @@ export class RateComparativeListComponent implements OnInit {
        
 
         resp.data.forEach((purchaseRequest: any) => {
-          purchaseRequest.date = moment(purchaseRequest.date).format('YYYY-MM-DD');
+          purchaseRequest.date = moment(purchaseRequest.updated_at).format('DD-MM-YYYY');
         });
 
         console.log(resp.data);

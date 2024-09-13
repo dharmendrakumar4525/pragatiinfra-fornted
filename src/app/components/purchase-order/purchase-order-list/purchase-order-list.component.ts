@@ -71,7 +71,7 @@ export class PurchaseOrderListComponent implements OnInit {
       next: (resp: any) => {
 
         resp.data.forEach((purchaseRequest: any) => {
-          purchaseRequest.date = moment(purchaseRequest.date).format('YYYY-MM-DD');
+          purchaseRequest.date = moment(purchaseRequest. updated_at).format('DD-MM-YYYY');
         });
         
         this.originalRateComparativeList = resp.data;
