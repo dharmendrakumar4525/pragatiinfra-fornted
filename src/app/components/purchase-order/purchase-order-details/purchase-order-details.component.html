@@ -78,10 +78,10 @@
             <span><b>PO NO</b>: {{poDetails?.po_number}}<input type="text"
                 style="width:120px;padding:5px;border:none;margin-left: 16px;"> </span>
             <span><b>Site Address</b> </span>
-            <span>{{poDetails?.billing_address?.street_address}} {{poDetails?.billing_address?.street_address2}}
-              {{poDetails?.billing_address?.city}},{{poDetails?.billing_address?.state}}
-              {{poDetails?.billing_address?.zip_code}} </span>
-            <span><b>Contact Person</b>: {{poDetails?.billing_address?.contact_person}}<input type="text"
+            <span>{{poDetails?.delivery_address?.street_address}} {{poDetails?.delivery_address?.street_address2}}
+              {{poDetails?.delivery_address?.city}},{{poDetails?.delivery_address?.state}}
+              {{poDetails?.delivery_address?.zip_code}} </span>
+            <span><b>Contact Person</b>: {{poDetails?.delivery_address?.contact_person}}<input type="text"
                 style="width:150px;padding:5px;border:none;margin-left: 16px;"> </span>
 
           </div>
@@ -115,7 +115,7 @@
           <!-- <th>Brand</th> -->
           <th>Quantity</th>
           <th>UOM</th>
-          <th>Freight</th>
+         
           <th>Brand Name</th>
           <th>Rate</th>
           <th>Sub Total</th>
@@ -137,15 +137,15 @@
             <td>
               {{item.item.qty}}
             </td>
-            <td style="color: #000;">
-              {{item.item.uomDetail.uom_name}}
+            <td>
+              {{getUomName(item.item)}}
             </td>
-            <td style="color: #000;">
-              {{item.Freight}}
+            
+            <td td style="color: #000;">
+              {{ isBrandArray(item.item.brandName) }}
             </td>
-            <td style="color: #000;">
-              {{item.item.brandName}}
-            </td>
+            
+          
             <td style="color: #000;">
               {{item.Rate}}
             </td>
@@ -242,11 +242,12 @@
           style="padding: 8px;width: 120px;background-color: #C7323B;color: #fff;border: 1px solid #94A3B8;border-radius: 5px;font-family: 'Poppins';font-size: 14px;">Rejected</button>
       </div>
 
-      <div>
+      <div *ngIf="poDetails.status !== 'rejected'">
         <button
-          style="padding: 8px ;width: 180px;background-color: #fff;cursor: pointer;border: 0.5px solid #94A3B8;border-radius: 5px;color:#797979;font-family: 'Poppins';font-size: 14px;"
+          style="padding: 8px; width: 180px; background-color: #fff; cursor: pointer; border: 0.5px solid #94A3B8; border-radius: 5px; color: #797979; font-family: 'Poppins'; font-size: 14px;"
           (click)="downloadPdf()">
-          Download PDF <img src="./assets/images/pdfd.svg" class="imgstyle"></button>
+          Download PDF <img src="./assets/images/pdfd.svg" class="imgstyle">
+        </button>
       </div>
       <div style="display: none;">
         <button

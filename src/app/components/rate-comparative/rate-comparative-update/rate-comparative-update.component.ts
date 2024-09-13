@@ -250,9 +250,6 @@ export class RateComparativeUpdateComponent implements OnInit {
         vendor.category.includes(items.categoryDetail._id) 
        && vendor.SubCategory.includes(items.subCategoryDetail._id)
     );
-
-    console.log("checking vendor", tempVendorList);
-
     return tempVendorList;
   }
 
@@ -262,6 +259,7 @@ export class RateComparativeUpdateComponent implements OnInit {
    */
   get vendorArray(): FormArray {
     return this.vendorForm.get('vendor') as FormArray;
+    console.log(this.vendorForm);
   }
 
   /**
@@ -289,8 +287,7 @@ export class RateComparativeUpdateComponent implements OnInit {
   save() {
     let vendorIndex: number = 0;
     this.flag = true;
-    this.isButtonDisabled = true;
-    this.isSelectDisabled = true;
+  
 
     // Clear existing arrays
     this.finalVendorArray.length = 0;
@@ -309,6 +306,7 @@ export class RateComparativeUpdateComponent implements OnInit {
         };
 
         for (let vendor of vendors.get('selectedVendors').value) {
+          console.log("checking.",vendors.get('selectedVendors').value);
             this.finalVendorArray.push([vendor, vendorIndex]);
             tableData.vendors.push(this.detailsOfVendor(vendor));
 
@@ -653,13 +651,14 @@ getVendorKeys() {
           .subscribe({
             next: (res) => {
               this.details = res.data.details;
-
+console.log("checking Api",this.details);
               this.vendorsList = res.data.vendorsList;
-
+             
               this.vendorsList.map((o: any) => {
                 this.vendorAssociatedData[o._id] = o;
                 return o;
               });
+
               let temparr = [];
               this.filteredItems = this.details?.items.filter((item) => {
                 let s =
@@ -671,17 +670,21 @@ getVendorKeys() {
                 return false; // Exclude the item when it's already in temparr
               });
 
+              
+             
               //Initialize selectedVendors FormArray with empty form groups for each item
               this.filteredItems.forEach((items) => {
                 let tempselectedVendors = this.formBuilder.group({
                   Item_category: items.categoryDetail,
                   Item_subCategory: items.subCategoryDetail,
-                  selectedVendors: new FormControl([]),
+                  selectedVendors: new FormControl( []),
                 });
                 (this.vendorForm.get('vendor') as FormArray).push(
                   tempselectedVendors
                 );
               });
+
+              console.log(this.vendorForm);
               // console.log(this.vendorForm.get('vendor')as FormArray)
               this.patchData(res.data.details);
             },
