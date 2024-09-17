@@ -56,7 +56,7 @@ export class PurchaseRequestComponent implements OnInit {
   items: FormArray | any = [];
   uomList: any;
   itemList: any;
-  
+  itemSelected: boolean = false;
   filteredItemList: any;
   filteredBrandList: any;
   option = 2;
@@ -474,6 +474,16 @@ else
     const dynamicDataFormatted = title.name.replace(/[ ,]/g, '_');
      
    this.filteredItemList= this.itemList.filter(item => item.category === event.value);
+   this.items = [];
+   const items = this.purchaseRequestForm.get('items') as FormArray;
+
+// Loop from the last index to the first and remove each element
+while (items.length !== 0) {
+  items.removeAt(0);
+}
+
+this.addItem();
+  
 console.log("check for filtered", this.filteredItemList);
     console.log("titleSelected", this.purchaseRequestForm);
   }
@@ -653,7 +663,10 @@ selectedItem(event: any, i: any) {
     let category = selectedItem.categoryDetail.name;
     let subCategory = selectedItem.subCategoryDetail.subcategory_name;
     let uom = selectedItem.uomDetail.uom_name;
-
+    if(this.items.length >1)
+    {
+      this.itemSelected = true; 
+    }
     this.items.at(i).patchValue({
       category: category,
       subCategory: subCategory,
