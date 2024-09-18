@@ -272,7 +272,7 @@ export class DMRFormComponent implements OnInit{
             let dmrsize=this.DmrEntryList.length+1
             this.dmrForm.get('DMR_No').setValue(this.purchaseOrderList[0].po_number+"/DMR/"+dmrsize)
 
-            const concatenatedString = this.purchaseOrderList[0].billing_address.company_name + '/' + this.purchaseOrderList[0].po_number;
+            const concatenatedString = this.purchaseOrderList[0].po_number;
             // this.dmrForm.get('PONumber').setValue(this.purchaseOrderList[0].po_number)
             this.dmrForm.get('PONumber').setValue(concatenatedString)
             this.dmrForm.get('FinalDeliveryDate').setValue(moment(this.purchaseOrderList[0].due_date).format('DD-MM-YYYY'))

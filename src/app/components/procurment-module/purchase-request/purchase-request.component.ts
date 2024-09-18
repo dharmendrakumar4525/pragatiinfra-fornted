@@ -56,6 +56,7 @@ export class PurchaseRequestComponent implements OnInit {
   items: FormArray | any = [];
   uomList: any;
   itemList: any;
+  itemCategoryList:any;
   itemSelected: boolean = false;
   filteredItemList: any;
   filteredBrandList: any;
@@ -216,25 +217,49 @@ const formData = new FormData();
 
   // Append items and their files
   formValue.items.forEach((item, index) => {
-    formData.append(`items[${index}][item_id]`, item.item_id._id);
-    formData.append(`items[${index}][qty]`, item.qty);
-    formData.append(`items[${index}][category]`, item.category);
-    formData.append(`items[${index}][subCategory]`, item.subCategory);
-    formData.append(`items[${index}][remark]`, item.remark);
-    formData.append(`items[${index}][uom]`, item.uom);
-    item.brandName = item.brandSelections.map(brandId => brandId);
-
-    // Append files separately
-
-    item.brandSelections.forEach((brand, fileIndex) => {
-      formData.append(`items[${index}][brandName]`, brand);
-    });
-
-
-   item.files.forEach((file, fileIndex) => {
-      formData.append(`items[${index}][attachment]`,  file, file.name);
-    });
-  }); 
+    try {
+      if (!item) {
+        console.error(`Item at index ${index} is null or undefined`);
+        return; // Skip this iteration
+      }
+  
+      // Basic item properties
+      formData.append(`items[${index}][item_id]`, item.item_id && item.item_id._id ? item.item_id._id : '');
+      formData.append(`items[${index}][qty]`, item.qty || '');
+      formData.append(`items[${index}][category]`, item.category || '');
+      formData.append(`items[${index}][subCategory]`, item.subCategory || '');
+      formData.append(`items[${index}][remark]`, item.remark || '');
+      formData.append(`items[${index}][uom]`, item.uom || '');
+  
+      // Brand selections
+      if (Array.isArray(item.brandSelections)) {
+        item.brandName = item.brandSelections.map(brandId => brandId);
+        item.brandSelections.forEach((brand, fileIndex) => {
+          if (brand) {
+            formData.append(`items[${index}][brandName]`, brand);
+          }
+        });
+      } else {
+        console.warn(`brandSelections for item ${index} is not an array`);
+      }
+  
+      // File attachments
+      if (item.files && Array.isArray(item.files)) {
+        item.files.forEach((file, fileIndex) => {
+          if (file && file.name) {
+            console.log(`Appending file for item ${index}:`, file.name);
+            formData.append(`items[${index}][attachment]`, file, file.name);
+          } else {
+            console.warn(`Invalid file object for item ${index}, file index ${fileIndex}`);
+          }
+        });
+      } else {
+        console.log(`No files to process for item ${index}`);
+      }
+    } catch (error) {
+      console.error(`Error processing item ${index}:`, error);
+    }
+  });
 }
 else
 {
@@ -243,7 +268,14 @@ else
  formData.append('vendorItems[0][items]', "");
 
   formValue.items.forEach((item, index) => {
-    formData.append(`items[${index}][item_id]`, item.item_id._id);
+    try {
+      if (!item) {
+        console.error(`Item at index ${index} is null or undefined`);
+        return; // Skip this iteration
+      }
+  
+      // Basic item properties
+      formData.append(`items[${index}][item_id]`, item.item_id._id);
     formData.append(`items[${index}][qty]`, item.qty);
     formData.append(`items[${index}][category]`, item.category);
     formData.append(`items[${index}][subCategory]`, item.subCategory);
@@ -254,17 +286,35 @@ else
     formData.append(`items[${index}][gst]`, "");
     formData.append(`items[${index}][freight]`, "");
   
-
-    // Append files separately
-
-    item.brandSelections.forEach((brand, fileIndex) => {
-      formData.append(`items[${index}][brandName]`, brand);
-    });
-
-   item.files.forEach((file, fileIndex) => {
-      formData.append(`items[${index}][attachment]`,  file, file.name);
-    });
-  }); 
+      // Brand selections
+      if (Array.isArray(item.brandSelections)) {
+        item.brandName = item.brandSelections.map(brandId => brandId);
+        item.brandSelections.forEach((brand, fileIndex) => {
+          if (brand) {
+            formData.append(`items[${index}][brandName]`, brand);
+          }
+        });
+      } else {
+        console.warn(`brandSelections for item ${index} is not an array`);
+      }
+  
+      // File attachments
+      if (item.files && Array.isArray(item.files)) {
+        item.files.forEach((file, fileIndex) => {
+          if (file && file.name) {
+            console.log(`Appending file for item ${index}:`, file.name);
+            formData.append(`items[${index}][attachment]`, file, file.name);
+          } else {
+            console.warn(`Invalid file object for item ${index}, file index ${fileIndex}`);
+          }
+        });
+      } else {
+        console.log(`No files to process for item ${index}`);
+      }
+    } catch (error) {
+      console.error(`Error processing item ${index}:`, error);
+    }
+  });
 
 }
 
@@ -328,6 +378,7 @@ else
         this.superSiteList=res[4].data;
         this.categoryList=res[5].data;
         this.filteredItemList = this.itemList;
+
         this.filteredBrandList = this.brandList;
        
         if(this.permissions.user.role === "superadmin"){
@@ -474,6 +525,7 @@ else
     const dynamicDataFormatted = title.name.replace(/[ ,]/g, '_');
      
    this.filteredItemList= this.itemList.filter(item => item.category === event.value);
+   this.itemCategoryList=this.itemList.filter(item => item.category === event.value);
    this.items = [];
    const items = this.purchaseRequestForm.get('items') as FormArray;
 

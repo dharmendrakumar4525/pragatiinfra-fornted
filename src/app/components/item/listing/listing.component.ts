@@ -171,7 +171,7 @@ export class ListingComponent implements OnInit {
     }
     this.httpService.DELETE(ITEM_API, { _id: id }).subscribe(res => {
       if (res) {
-        this.snack.notify("Item record has been deleted successfully.", 1);
+        this.snack.notify("Item record has been deleted successfully.", 2);
         this.getList();
       }
     }, (err) => {
@@ -271,7 +271,7 @@ console.log("deaw",file);
 
     this.http.post(`${environment.api_path}/item/upload-csv`, formData).subscribe({
       next: (res: any) => {
-        this.snack.notify('File imported successfully!', 2);
+        this.snack.notify('File imported successfully!', 1);
         this.getList();
       },
       error: (err) => {

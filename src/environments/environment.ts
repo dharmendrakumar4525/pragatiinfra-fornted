@@ -14,11 +14,11 @@ export const environment = {
   encryption: false,
   environmentType:'local',
 
-api_path: 'http://localhost:3000/api/web',
-api_base_path: 'http://localhost:3000',
+//api_path: 'http://localhost:3000/api/web',
+//api_base_path: 'http://localhost:3000',
 
-//api_path: 'https://stagingpr.avidusinteractive.com/api/web',
-//api_base_path: 'https://stagingpr.avidusinteractive.com',
+api_path: 'https://stagingpr.avidusinteractive.com/api/web',
+api_base_path: 'https://stagingpr.avidusinteractive.com',
 
    
 //api_path: 'https://pr.avidusinteractive.com/api/web',
