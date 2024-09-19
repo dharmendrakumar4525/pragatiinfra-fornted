@@ -50,6 +50,7 @@ export class PurchaseRequestComponent implements OnInit {
   siteList: any;
   superSiteList:any;
   vendorList:any;
+  brandNotSelected:boolean = false;
   vendorSearch: string = '';
   filteredVendorList: any[] = [];
   load = false;
@@ -108,9 +109,7 @@ export class PurchaseRequestComponent implements OnInit {
 
 
   onSubmit() {
-    if (this.load) {
-      return;
-    }
+  
 
     if (!this.purchaseRequestForm.valid) {
       console.log("Form is invalid", this.purchaseRequestForm);
@@ -127,8 +126,13 @@ export class PurchaseRequestComponent implements OnInit {
       return;
     }
 
+   
+
     let requestData: any = this.purchaseRequestForm.value;
-    const selectedCategory = this.categoryList.find((obj: { _id: any; }) => obj._id == requestData.title);
+    this.load = false;
+    console.log("here", requestData);
+    console.log(requestData.title);
+    const selectedCategory = this.categoryList.find((obj: { _id: any; }) => obj._id === requestData.title);
     console.log(selectedCategory);
     requestData['title'] = selectedCategory.name;
     requestData['requestNo'] = this.requestNo;
@@ -191,7 +195,7 @@ export class PurchaseRequestComponent implements OnInit {
       requestData.vendorItems = vendorItems;
     }
     
-    this.load = true;
+   
     console.log("Payload", requestData);
 
 
@@ -217,6 +221,7 @@ const formData = new FormData();
 
   // Append items and their files
   formValue.items.forEach((item, index) => {
+
     try {
       if (!item) {
         console.error(`Item at index ${index} is null or undefined`);
@@ -230,12 +235,21 @@ const formData = new FormData();
       formData.append(`items[${index}][subCategory]`, item.subCategory || '');
       formData.append(`items[${index}][remark]`, item.remark || '');
       formData.append(`items[${index}][uom]`, item.uom || '');
+
+      if(item.brandSelections.length === 0)
+        {
+          this.snack.notify("Select Atleast one Brand for every Item",2);
+          this.brandNotSelected=true;
+          return;
+        }
   
       // Brand selections
       if (Array.isArray(item.brandSelections)) {
+       
         item.brandName = item.brandSelections.map(brandId => brandId);
         item.brandSelections.forEach((brand, fileIndex) => {
           if (brand) {
+           
             formData.append(`items[${index}][brandName]`, brand);
           }
         });
@@ -319,6 +333,14 @@ else
 }
 
     console.log("THERE", formData)
+
+    if(this.brandNotSelected === true)
+
+    {
+      console.log(this.brandNotSelected);
+      this.brandNotSelected=false;
+      return;
+    }
 
     // Make a POST request to the PURCHASE_REQUEST_API with requestData
     this.httpService.POST(PURCHASE_REQUEST_API, formData).subscribe({
@@ -736,10 +758,10 @@ selectedItem(event: any, i: any) {
     const searchValue = event.target.value.toLowerCase();
     if (this.itemList && this.itemList.length > 0 ) {
       if (event.target.value) {
-        this.filteredItemList = this.itemList.filter(obj => obj.item_name.toLowerCase().includes(searchValue));
+        this.filteredItemList = this.itemCategoryList.filter(obj => obj.item_name.toLowerCase().includes(searchValue));
 
       }else{
-        this.filteredItemList = this.itemList;
+        this.filteredItemList = this.itemCategoryList;
       }
     }
   }

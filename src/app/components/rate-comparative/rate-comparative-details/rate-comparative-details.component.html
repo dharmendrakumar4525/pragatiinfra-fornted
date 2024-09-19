@@ -285,7 +285,7 @@
     <button class="p-btns-button"
       [ngStyle]="{'background-color': details.status=='approved' ? '#54AA52' : (details.status=='rejected' ? '#C7323B' : '#233A61') }"
       [disabled]="load">
-      <span>Approved</span>
+      <span>{{details.status=='rejected'? 'Rejected': 'Approved'}}</span>
     
     </button>
 
