@@ -184,7 +184,8 @@ export class RateComparativeUpdateComponent implements OnInit {
         freight_charges: totalData.freight,
         freight_tax: totalData.freightGst,
         total_amount: totalData.grandTotal,
-        preferred: totalData.preferred
+        preferred: totalData.preferred,
+        vendorRemark:totalData.vendorRemark,
       };
     });
   
@@ -317,6 +318,7 @@ export class RateComparativeUpdateComponent implements OnInit {
                 freight: 0,
                 freightGst: 0,
                 grandTotal: 0,
+                vendorRemark:"",
                 preferred:false,
             };
 
@@ -359,7 +361,7 @@ export class RateComparativeUpdateComponent implements OnInit {
                         uom: item.uomDetail.uom_name,
                         quantity: item.qty,
                         gst: item.tax.amount,
-                        remark:"",
+                        remarks:"",
             
                         vendors: {}
                     });
@@ -417,9 +419,12 @@ export class RateComparativeUpdateComponent implements OnInit {
       Object.keys(table.totals).forEach(vendorId => {
         const freightControlName = `table_${tableIndex}_vendor_${vendorId}_freight`;
         const freightGstControlName = `table_${tableIndex}_vendor_${vendorId}_freightGst`;
+        const vendorRemarkControlName = `table_${tableIndex}_vendor_${vendorId}_vendorRemark`;
+        
         
         this.vendorItemsForm.addControl(freightControlName, new FormControl(0, Validators.required));
         this.vendorItemsForm.addControl(freightGstControlName, new FormControl(0, Validators.required));
+        this.vendorItemsForm.addControl(vendorRemarkControlName, new FormControl(""));
         
     
       });
@@ -534,9 +539,12 @@ export class RateComparativeUpdateComponent implements OnInit {
   
       const freightControl = this.getFormControl(tableIndex, '', vendorId, 'freight');
       const freightGstControl = this.getFormControl(tableIndex, '', vendorId, 'freightGst');
+      const vendorRemarkControlName = this.getFormControl(tableIndex, '', vendorId, 'vendorRemark');
+      
   
       table.totals[vendorId].freight = parseFloat(freightControl.value) || 0;
       table.totals[vendorId].freightGst = parseFloat(freightGstControl.value) || 0;
+      table.totals[vendorId].vendorRemark=vendorRemarkControlName.value;
       table.totals[vendorId].grandTotal =
         table.totals[vendorId].totalAmount +
         table.totals[vendorId].gstAmount +

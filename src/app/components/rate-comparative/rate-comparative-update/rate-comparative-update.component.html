@@ -309,8 +309,25 @@
             {{ vendorItemsTables[0].totals[vendorId]?.grandTotal || '0' }}
           </td>
         </ng-container>
+        
         <td style="border-color: white;"></td>
       </tr>
+      <tr>
+        <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+        </td>
+        <td colspan="2" style="text-align: right; border: 0.5px solid;">Remarks</td>
+        <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
+          <td colspan="3" style="height:40px; border: 0.5px solid;">
+            <input type="text"
+            class="inputBoxes"
+                   [formControl]="getFormControl(0, '', vendorId, 'vendorRemark')"
+                   (input)="updateTotals(0)"
+                   [attr.data-control-name]="'table_0_vendor_' + vendorId + '_vendorRemark'">
+          </td>
+        </ng-container>
+       <td style="border-color: white;"></td>
+      </tr>
+      <tr>
     </tfoot>
   </table>
 

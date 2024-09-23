@@ -267,6 +267,15 @@
           
           <td style="border-color: white;"></td>
         </tr>
+        <tr>
+          <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+          </td>
+          <td colspan="2" style="text-align: right; border: 0.5px solid;">Remarks</td>
+          <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
+            <td colspan="3" style="height:50px; border: 0.5px solid;">{{ vendorItemsTables[0].totals[vendorId]?.vendorRemark}}</td>
+          </ng-container>
+          <td style="border-color: white;"></td>
+        </tr>
       </tfoot>
     </table>
   
