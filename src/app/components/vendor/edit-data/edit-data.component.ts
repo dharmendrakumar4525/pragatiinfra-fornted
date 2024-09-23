@@ -139,14 +139,14 @@ export class EditDataComponent implements OnInit {
       email: data.email,
       payment_terms: data.payment_terms,
       terms_condition: data.terms_condition,
-      // address: {
-      //   street_address: data.address.street_address,
-      //   street_address2: data.address.street_address2,
-      //   state: data.address.state,
-      //   city: data.address.city,
-      //   zip_code: data.address.zip_code,
-      //   country: data.address.country,
-      // },
+       address: {
+        street_address: data.address.street_address,
+        street_address2: data.address.street_address2,
+        state: data.address.state,
+         city: data.address.city,
+         zip_code: data.address.zip_code,
+       country: data.address.country,
+       },
       _id: data._id
 
     })
@@ -160,6 +160,7 @@ export class EditDataComponent implements OnInit {
 
   saveData() {
     if (this.editForm.valid) {
+      console.log("checking payload", this.editForm.value);
       this.httpService.PUT(VENDOR_API, this.editForm.value).subscribe(res => {
         this.snack.notify(" data has been saved sucessfully.", 1);
         this.router.navigate(['vendor']);

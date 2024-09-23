@@ -123,6 +123,7 @@ ngOnInit(): void {
             .GET(`${PURCHASE_ORDER_API}/detail`, { _id: params['id'] })
             .subscribe((res) => {
               this.poDetails = res.data;
+              console.log("check response",res.data);
               this.mail_section.patchValue(this.poDetails.vendor_message);
               this.term_condition.patchValue(this.poDetails.terms_condition);
 
@@ -250,6 +251,15 @@ ngOnInit(): void {
     const companyNameToMatch = this.poDetails.billing_address.company_name
       .toLowerCase()
       .trim();
+
+
+      console.log("checking company Name", companyNameToMatch);
+      if(companyNameToMatch ==="")
+      {
+        this.snack.notifyHtml("Select the Billing Address", 2);
+        return;
+      }
+        
 
     const filteredList = this.purchaseOrderList.filter((item) => {
       const itemCompanyName = item.billing_address.company_name
