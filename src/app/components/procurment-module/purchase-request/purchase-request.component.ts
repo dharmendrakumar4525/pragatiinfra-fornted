@@ -573,9 +573,9 @@ console.log("check for filtered", this.filteredItemList);
       if (res) {
         this.purchaseList = res[0].data; 
         const filteredList = this.purchaseList.filter(item => item.siteData.site_name.includes(siteName.site_name));
-       const index=filteredList.length-1;
-        console.log(filteredList[index].purchase_request_number);
-        this.requestNo = parseInt(filteredList[filteredList.length-1].purchase_request_number) + 1;
+      // const index=filteredList.length-1;
+        console.log(filteredList[0]);
+        this.requestNo = parseInt(filteredList[0].purchase_request_number) + 1;
         
         this.purchaseRequestForm.controls['purchase_request_number'].setValue(this.requestNo);
         

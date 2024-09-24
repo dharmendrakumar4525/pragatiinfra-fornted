@@ -6,6 +6,15 @@ mat-toolbar {
 .example-spacer {
   flex: 1 1 auto;
 }
+.scroll-container {
+  width: 100%; /* Adjust the width as per your layout */
+  overflow-x: auto; /* Enables horizontal scrolling */
+  white-space: nowrap; /* Prevents content from wrapping */
+}
+.scrollable-content {
+  display: inline-block; /* Ensures content is inline and scrolls horizontally */
+  min-width: min-content; /* Prevents content from shrinking and forces horizontal scroll */
+}
 .p-btns-button {
   height: 50px;
   font-size: 18px;
@@ -33,6 +42,7 @@ mat-toolbar {
 
 .inputBoxes{
   width:100%;
+  align-self: center;
   padding:10px;
   border-radius: 6px;
   border:1px solid #ccc;
@@ -109,7 +119,7 @@ td {
   border: 1px solid #94a3b8;
 
   text-align: left;
-  padding: 20px;
+  padding: 15px;
   color: #233a61;
   font-style: normal;
   font-size: 14px;

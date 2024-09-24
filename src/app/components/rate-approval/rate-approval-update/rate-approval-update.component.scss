@@ -49,6 +49,18 @@ mat-toolbar {
 }
 
 
+.scroll-container {
+  width: 100%; /* Adjust the width as per your layout */
+  overflow-x: auto; /* Enables horizontal scrolling */
+  white-space: nowrap; /* Prevents content from wrapping */
+}
+.scrollable-content {
+  display: inline-block; /* Ensures content is inline and scrolls horizontally */
+  min-width: min-content; /* Prevents content from shrinking and forces horizontal scroll */
+}
+
+
+
 .highlight {
   background-color: #ffcc00; /* Light yellow background */
   border: 3px solid #ffcc00; /* Optional: Yellow border */

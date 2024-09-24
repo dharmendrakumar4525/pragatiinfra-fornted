@@ -174,7 +174,9 @@
 
  <!---->
 
- <div *ngIf="vendorItemsTables && vendorItemsTables.length > 0">
+ <div *ngIf="vendorItemsTables && vendorItemsTables.length > 0" >
+  <div class="scroll-container">
+  <div class="scrollable-content">
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -185,7 +187,7 @@
         <th rowspan="2" style=" text-align: center; vertical-align: middle;">Quantity</th>
         <th rowspan="2" style=" text-align: center; vertical-align: middle;">GST %</th>
         <ng-container *ngFor="let vendor of vendorItemsTables[0].vendors; let i = index">
-          <th colspan="3" style="text-align: center; vertical-align: middle;">
+          <th colspan="3" style="text-align: center; vertical-align: middle; width:250px">
             <label>
               <input type="checkbox" (change)="toggleVendorPreferred(i, $event)" 
                      [checked]="vendorItemsTables[0].totals[getVendorKeys()[i]].preferred" />
@@ -198,9 +200,9 @@
       </tr>
       <tr>
         <ng-container *ngFor="let vendor of vendorItemsTables[0].vendors">
-          <th style=" text-align: center; vertical-align: middle;">Available Qty</th>
-          <th style=" text-align: center; vertical-align: middle;">Rate (₹)</th>
-          <th style=" text-align: center; vertical-align: middle;">Sub Total (₹)</th>
+          <th style=" text-align: center; width:50px; vertical-align: middle;">Available Qty</th>
+          <th style=" text-align: center; width:50px; vertical-align: middle;">Rate (₹)</th>
+          <th style=" text-align: center;  width:50px; vertical-align: middle;">Sub Total (₹)</th>
         </ng-container>
       </tr>
     </thead>
@@ -232,7 +234,7 @@
                      [attr.data-control-name]="'table_' + tableIndex + '_item_' + item.item_id + '_vendor_' + vendorId + '_rate'"
                      >
             </td>
-            <td style="text-align: center; vertical-align: middle;width:150px"
+            <td style="text-align: center; vertical-align: middle"
                 [ngClass]="{'lowest-amount': isSaved && isLowestAmount(tableIndex, item.item_id, vendorId)}">
               {{ getFormControl(tableIndex, item.item_id, vendorId, 'amount').value || '0' }}
             </td>
@@ -330,6 +332,9 @@
       <tr>
     </tfoot>
   </table>
+
+</div>
+</div>
 
 
   <div style="display: flex; justify-content: left; padding-top: 20px;">
