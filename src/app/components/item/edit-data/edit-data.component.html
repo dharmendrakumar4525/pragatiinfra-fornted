@@ -35,7 +35,22 @@
           </mat-form-field>
 
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" appearance="outline">
+          <mat-form-field appearance="outline">
+            <mat-label>Brands</mat-label>
+            <mat-select matInput formControlName="brands" multiple >
+              <mat-option *ngFor="let brand of brandList" [value]="brand._id" >
+                {{brand?.brand_name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="editForm.controls.category.errors?.['required']">
+              this field is required.
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3" appearance="outline">
 
 
           <mat-form-field>
@@ -54,7 +69,7 @@
         <div class="col-md-3">
 
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Sub Category</mat-label>
             <mat-select matInput formControlName="sub_category">
               <mat-option *ngFor="let subCategory of subCategoryList" [value]="subCategory?._id">
@@ -70,7 +85,7 @@
 
         <div class="col-md-3">
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>UOM</mat-label>
             <mat-select matInput formControlName="uom">
               <mat-option *ngFor="let uom of uomList" [value]="uom?._id">
@@ -84,9 +99,9 @@
 
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-3" >
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>GST</mat-label>
             <mat-select matInput formControlName="gst">
               <mat-option *ngFor="let gst of gstList" [value]="gst?._id">
@@ -100,7 +115,7 @@
 
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-3" appearance="outline">
           <mat-form-field appearance="outline">
             <mat-label>Specification</mat-label>
             <input matInput formControlName="specification">

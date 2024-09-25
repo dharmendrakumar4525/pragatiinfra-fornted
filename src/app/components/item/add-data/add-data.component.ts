@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CATEGORY_API, GST_API, ITEM_API, SUB_CATEGORY_API, UOM_API } from '@env/api_path';
+import { CATEGORY_API, GST_API, ITEM_API, SUB_CATEGORY_API,GET_BRAND_API, UOM_API } from '@env/api_path';
 import { environment } from '@env/environment';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
@@ -15,6 +15,7 @@ import { isEmpty } from 'lodash';
 export class AddDataComponent implements OnInit {
   gstList: any = [];
   uomList: any = [];
+  brandList: any = [];
   subCategoryList: any = [];
   categoryList: any = [];
 
@@ -23,6 +24,7 @@ export class AddDataComponent implements OnInit {
   addForm = new FormGroup({
     item_name: new FormControl('', Validators.required),
     item_number: new FormControl('', Validators.required),
+    brands: new FormControl([], Validators.required),
     category: new FormControl('', Validators.required),
     sub_category: new FormControl('', Validators.required),
     uom: new FormControl('', Validators.required),
@@ -41,13 +43,14 @@ export class AddDataComponent implements OnInit {
     const subCategory = http.get<any>(`${environment.api_path}${SUB_CATEGORY_API}`);
     const category = http.get<any>(`${environment.api_path}${CATEGORY_API}`);
     const gst = http.get<any>(`${environment.api_path}${GST_API}`);
-
-    this.httpService.multipleRequests([uom, subCategory, category, gst], {}).subscribe(res => {
+    const brands = http.get<any>(`${environment.api_path}${GET_BRAND_API}`);
+    this.httpService.multipleRequests([uom, subCategory, category, gst,brands], {}).subscribe(res => {
       this.uomList = res[0].data;
       this.subCategoryList = res[1].data;
       this.allSubCategoryList = res[1].data;
       this.categoryList = res[2].data;
       this.gstList = res[3].data;
+      this.brandList=res[4].data;
     }, (err) => {
       if (err.errors && !isEmpty(err.errors)) {
         let errMessage = '<ul>';
@@ -100,6 +103,8 @@ export class AddDataComponent implements OnInit {
     this.subCategoryList = this.allSubCategoryList.filter(obj => obj.category == value)
 
   }
+ 
+  
 
   ngOnInit(): void {
   }

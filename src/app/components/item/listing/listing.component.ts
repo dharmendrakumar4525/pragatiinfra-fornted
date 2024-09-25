@@ -7,7 +7,7 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
-import { CATEGORY_API, SUB_CATEGORY_API } from '@env/api_path';
+import { CATEGORY_API, SUB_CATEGORY_API,GET_BRAND_API } from '@env/api_path';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ToastService } from '@services/toast.service';
 import { MatDialog } from '@angular/material/dialog'; // Import MatDialog
@@ -25,6 +25,7 @@ export class ListingComponent implements OnInit {
   deletePermission: any;
   permissions: any;
   categoryList: any;
+  brandList:any;
   subCategoryList: any = [];
   itemList: any = [];
   list: any;
@@ -72,11 +73,13 @@ export class ListingComponent implements OnInit {
   getList() {
     const subCategory = this.http.get<any>(`${environment.api_path}${SUB_CATEGORY_API}`);
     const category = this.http.get<any>(`${environment.api_path}${CATEGORY_API}`);
-    this.httpService.multipleRequests([subCategory, category], {}).subscribe(res => {
+    const brands = this.http.get<any>(`${environment.api_path}${GET_BRAND_API}`);
+    this.httpService.multipleRequests([subCategory, category, brands], {}).subscribe(res => {
       if (res) {
         this.subCategoryList = res[0].data;
         console.log("Sub Category : ", this.subCategoryList);
         this.categoryList = res[1].data;
+        this.brandList=res[2].data;
       }
     }, (err) => {
       if (err.errors && !isEmpty(err.errors)) {
@@ -145,6 +148,23 @@ export class ListingComponent implements OnInit {
     return this.subCategoryList.filter((obj: { _id: any; }) => obj._id == id)[0]?.subcategory_name;
   }
 
+  getBrandNamesByIds(brandIds): string {
+    if(brandIds===undefined)
+    {
+      return '';
+    }
+    console.log(brandIds);
+    const brandMap = this.brandList.reduce((map, brand) => {
+      map[brand._id] = brand.brand_name;
+      return map;
+    }, {} as Record<string, string>);
+
+    return brandIds
+      .map(id => brandMap[id])
+      .filter(name => name)
+      .join(' / ');
+  }
+
   edit(id: any) {
     if (!this.editPermission) {
       this.toast.openSnackBar('Access to Item Master editing is restricted for your account.');
@@ -200,6 +220,7 @@ export class ListingComponent implements OnInit {
   async exportXlSX() {
     let filterReport = this.itemList.map((o: any) => {
       o.categoryName = o.categoryDetail?.name;
+      o.brandName=this.getBrandNamesByIds(o.brands);
       o.subCategoryName = o.subCategoryDetail?.subcategory_name;
       o.uomName = o.uomDetail?.uom_name;
       o.gstValue = o.gstDetail?.gst_percentage;
@@ -208,6 +229,7 @@ export class ListingComponent implements OnInit {
     let sheetHeaders = [
       "Item Number",
       "Item Name",
+      "Brands",
       "Category Name",
       "Sub Category Name",
       "UOM",
@@ -216,6 +238,7 @@ export class ListingComponent implements OnInit {
     ];
     let valueKey = ['item_number',
       'item_name',
+      "brandName",
       'categoryName',
       'subCategoryName',
       'uomName',
