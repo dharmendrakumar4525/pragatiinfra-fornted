@@ -232,6 +232,22 @@ ngOnInit(): void {
     });
   }
 
+  isArray(value: any): boolean {
+    return Array.isArray(value);
+  }
+
+  getFormattedBrandNames(brandName): string {
+    console.log("see BrandName", brandName);
+    if (this.isArray(brandName)) {
+        return (brandName as string[]).map(brand => {
+            return brand.trim() === '' ? 'others' : this.myBrandName(brand);
+        }).join(' / ');
+    } else {
+        return brandName.trim() === '' ? 'others' : this.myBrandName(brandName as string);
+    }
+}
+
+
   createOrder(): any {
     if (!this.validityDate.valid) {
       this.validityDate.markAsTouched();
@@ -240,7 +256,7 @@ ngOnInit(): void {
     let requestData: any = this.poDetails;
     //console.log("--requestDAta--",requestData)
     for (let i = 0; i < requestData.items.length; i++) {
-      const brandName = this.getBrandNamesByIds(requestData.items[i].item.brandName);
+      const brandName = requestData.items[i].item.brandName;
       requestData.items[i].item['brandName'] = brandName;
     }
 
@@ -274,11 +290,14 @@ ngOnInit(): void {
     console.log('-------------');
 
     requestData['po_number'] = this.poDetails.po_number;
+    requestData['approved_by']= this.permissions.user.name;
     requestData['status'] = 'approved';
     requestData['due_date'] = this.validityDate.value;
     requestData['vendor_message'] = this.mail_section.value;
     requestData.vendor_detail.terms_condition = this.term_condition.value;
     this.load = true;
+    console.log("checking payload________________________",requestData);
+    
     this.httpService
       .PUT(PURCHASE_ORDER_API, requestData)
       .pipe(
@@ -339,6 +358,7 @@ ngOnInit(): void {
 
  getBrandNamesByIds(brandIds): string {
     // Create a map for quick lookup of brand names by their IDs
+    console.log("check brand", brandIds);
     const brandMap = this.brandList.reduce((map, brand) => {
       map[brand._id] = brand.brand_name;
       return map;

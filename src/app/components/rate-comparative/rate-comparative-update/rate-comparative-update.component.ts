@@ -361,7 +361,10 @@ export class RateComparativeUpdateComponent implements OnInit {
                         uom: item.uomDetail.uom_name,
                         quantity: item.qty,
                         gst: item.tax.amount,
+                        pislBudget:0,
+                        pislBudgetSubTotal:0,
                         remarks:"",
+
             
                         vendors: {}
                     });
@@ -412,7 +415,9 @@ export class RateComparativeUpdateComponent implements OnInit {
         });
         
         const remarksControlName = `table_${tableIndex}_item_${item.item_id}_remarks`;
+        const pislBudgetControlName=`table_${tableIndex}_item_${item.item_id}_pislBudget`;
         this.vendorItemsForm.addControl(remarksControlName, new FormControl(''));
+        this.vendorItemsForm.addControl(pislBudgetControlName, new FormControl('', Validators.required));
       
       });
 
@@ -446,6 +451,9 @@ export class RateComparativeUpdateComponent implements OnInit {
       else if (field === 'remarks') {
       controlName = `table_${tableIndex}_item_${itemId}_${field}`;
 
+    }
+    else if (field === 'pislBudget') {
+      controlName = `table_${tableIndex}_item_${itemId}_${field}`;
     } else {
       controlName = `table_${tableIndex}_vendor_${vendorId}_${field}`;
     }
@@ -457,6 +465,21 @@ export class RateComparativeUpdateComponent implements OnInit {
       console.error(`Control not found: ${controlName}`);
  
       return new FormControl('');
+    }
+  }
+
+  updatePislBudget(item:any, tableIndex:number)
+  {
+    const remarkControl = this.getFormControl(tableIndex, item.item_id, "", 'pislBudget');
+    const table = this.vendorItemsTables[tableIndex];
+    const itemInTable = table.items.find(i => i.item_id === item.item_id);
+    if (itemInTable) {
+     
+      itemInTable.pislBudget =parseFloat(remarkControl.value) || 0 ; 
+
+     const BudgetSubTotal= itemInTable.pislBudget *itemInTable.quantity;
+     console.log(BudgetSubTotal);
+      itemInTable.pislBudgetSubTotal= parseFloat(BudgetSubTotal.toFixed(2)) ; // remark
     }
   }
 

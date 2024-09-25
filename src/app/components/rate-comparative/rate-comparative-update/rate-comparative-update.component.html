@@ -186,6 +186,8 @@
         <th rowspan="2" style=" text-align: center; vertical-align: middle;">UOM</th>
         <th rowspan="2" style=" text-align: center; vertical-align: middle;">Quantity</th>
         <th rowspan="2" style=" text-align: center; vertical-align: middle;">GST %</th>
+        <th rowspan="2" style=" text-align: center; vertical-align: middle;">Budget (₹)</th>
+        <th rowspan="2" style=" text-align: center; vertical-align: middle;">Budget SubTotal (₹)</th>
         <ng-container *ngFor="let vendor of vendorItemsTables[0].vendors; let i = index">
           <th colspan="3" style="text-align: center; vertical-align: middle; width:250px">
             <label>
@@ -216,6 +218,15 @@
           <td style=" text-align: center; vertical-align: middle;">{{ item.uom }}</td>
           <td style=" text-align: center; vertical-align: middle;">{{ item.quantity }}</td>
           <td style=" text-align: center; vertical-align: middle;">{{ item.gst }}</td>
+          <td >
+            <input type="number"
+            class="inputBoxes"
+            (input)="updatePislBudget(item, tableIndex)"
+           
+                   [formControl]="getFormControl(tableIndex, item.item_id, '', 'pislBudget')"
+                   [attr.data-control-name]="'table_' + tableIndex + '_item_' + item.item_id + '_pislBudget'">
+          </td>
+          <td style=" text-align: center; vertical-align: middle;">{{ item.pislBudgetSubTotal }}</td>
 
           <ng-container *ngFor="let vendorId of getVendorIds(table)">
             <td >
@@ -255,7 +266,7 @@
     <tfoot>
      
       <tr>
-        <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+        <td colspan="6" style="border-color: white; border-right: 0.5px solid;">
         </td>
         <td colspan="2" style="text-align: right; border: 0.5px solid;">Total Amount (₹)</td>
         <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
@@ -264,7 +275,7 @@
         <td style="border-color: white;"></td>
       </tr>
       <tr>
-        <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+        <td colspan="6" style="border-color: white; border-right: 0.5px solid;">
         </td>
         <td colspan="2" style="text-align: right; border: 0.5px solid;">GST Amount (₹)</td>
         <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
@@ -273,7 +284,7 @@
         <td style="border-color: white;"></td>
       </tr>
       <tr>
-        <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+        <td colspan="6" style="border-color: white; border-right: 0.5px solid;">
         </td>
         <td colspan="2" style="text-align: right; border: 0.5px solid;">Freight (₹)</td>
         <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
@@ -288,7 +299,7 @@
        <td style="border-color: white;"></td>
       </tr>
       <tr>
-        <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+        <td colspan="6" style="border-color: white; border-right: 0.5px solid;">
         </td>
         <td colspan="2" style="text-align: right; border: 0.5px solid;">Freight GST (%)</td>
         <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
@@ -303,7 +314,7 @@
         <td style="border-color: white;"></td>
       </tr>
       <tr>
-        <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+        <td colspan="6" style="border-color: white; border-right: 0.5px solid;">
         </td>
         <td colspan="2" style="text-align: right; border: 0.5px solid;">Grand Total (₹)</td>
         <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
@@ -315,7 +326,7 @@
         <td style="border-color: white;"></td>
       </tr>
       <tr>
-        <td colspan="4" style="border-color: white; border-right: 0.5px solid;">
+        <td colspan="6" style="border-color: white; border-right: 0.5px solid;">
         </td>
         <td colspan="2" style="text-align: right; border: 0.5px solid;">Remarks</td>
         <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">

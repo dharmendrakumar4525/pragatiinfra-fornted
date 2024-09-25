@@ -56,6 +56,7 @@ export class PurchaseRequestComponent implements OnInit {
   load = false;
   items: FormArray | any = [];
   uomList: any;
+  handleby:"";
   itemList: any;
   itemCategoryList:any;
   itemSelected: boolean = false;
@@ -205,7 +206,7 @@ const formData = new FormData();
  
   // Append non-file fields to FormData
   formData.append('title', formValue.title);
-  formData.append('handle_by', formValue.handle_by);
+  formData.append('handle_by', this.handleby);
   formData.append('date', formValue.date);
   formData.append('expected_delivery_date', formValue.expected_delivery_date);
   formData.append('purchase_request_number', formValue.purchase_request_number);
@@ -796,7 +797,7 @@ selectedItem(event: any, i: any) {
 
     // Retrieve user permissions from local storage and parse them as JSON
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
-
+  this.handleby= this.permissions.user.name;
     // Extract specific permissions related to ParentChildchecklist from the parsed data
     const rolePermission = this.permissions.user.role
     const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  

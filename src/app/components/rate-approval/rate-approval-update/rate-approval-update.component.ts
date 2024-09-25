@@ -478,6 +478,7 @@ getVendorKeys() {
         
         this.details['compareBy']=this.compareBy;
         this.details['po_number']=this.po_no;
+        this.details['handle_by']=this.permissions.user.name;
         this.details['Pocount']=Pocount;
         if(this.details.status=='revise')
             this.details['isRevised']=true;
