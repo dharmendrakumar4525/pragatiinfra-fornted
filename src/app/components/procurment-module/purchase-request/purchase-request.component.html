@@ -194,13 +194,13 @@
                   <td>
                     <input type="text" formControlName="qty" class="pr-form-field" placeholder="Enter" pattern="^\d+(\.\d{1,2})?$">
                     </td>
-                  <td>
-                    <mat-select multiple class="pr-form-field" placeholder="Select Brand">
-                      <mat-option *ngFor="let brand of brandList" [value]="brand._id" (click)="toggleBrandSelection(brand._id, i)">
-                        {{ brand.brand_name }}
-                      </mat-option>
-                    </mat-select>
-                  </td>
+                    <td>
+                      <mat-select multiple class="pr-form-field" placeholder="Select Brand">
+                        <mat-option *ngFor="let brand of filteredBrandLists[i]" [value]="brand._id" (click)="toggleBrandSelection(brand._id, i)">
+                          {{ brand.brand_name }}
+                        </mat-option>
+                      </mat-select>
+                    </td>
                   <td>
                  
                     <input type="text" formControlName="rate" class="pr-form-field"  placeholder="Enter" pattern="^\d+(\.\d{1,2})?$">
@@ -342,7 +342,7 @@
                   </td>
                   <td>
                     <mat-select multiple class="pr-form-field" placeholder="Select Brand">
-                      <mat-option *ngFor="let brand of brandList" [value]="brand._id" (click)="toggleBrandSelection(brand._id, i)">
+                      <mat-option *ngFor="let brand of filteredBrandLists[i]" [value]="brand._id" (click)="toggleBrandSelection(brand._id, i)">
                         {{ brand.brand_name }}
                       </mat-option>
                     </mat-select>

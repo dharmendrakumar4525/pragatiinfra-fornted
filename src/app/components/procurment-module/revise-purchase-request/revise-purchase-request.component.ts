@@ -24,6 +24,7 @@ export class RevisePurchaseRequestComponent implements OnInit {
   items: FormArray;
   uomList: any;
   itemList: any;
+  filteredBrandLists: any[] = [];
   filteredItemList: any;
   initialVendor:any;
   categoryList:any;
@@ -264,6 +265,7 @@ console.log(formData);
         this.vendorList = res[3].data;
         this.brandList=res[4].data
         this.categoryList=res[5].data;
+        
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -326,11 +328,47 @@ console.log(formData);
         subCategory: subCategory,
         uom: uom
       });
+      let theList=this.getBrandsForItem(selectedItem);
+     
+
+      this.filteredBrandLists[i] = theList;
+      console.log("check filteredList", theList);
     } 
   }
+
+
+  getBrandsForItem(item) {
+    console.log('checking item for brand', item);
+    if (item.brands) {
+      console.log('here check this');
+      const brandIds = item.brands;
+      let filterList= this.brandList.filter((brand) => brandIds.includes(brand._id));
+      console.log("check List", filterList);
+      return filterList;
+
+    } else {
+      return this.brandList;
+    }
+
+  }
   
-  
-  
+  getBrandsForExistingItem(itemObj) {
+    
+    const item = this.itemList.filter((obj)=>obj._id ===itemObj.item_id )
+    console.log("check received Item",item);
+
+    if (item[0].brands) {
+    console.log("here")
+      const brandIds = item[0].brands;
+      let filterList= this.brandList.filter((brand) => brandIds.includes(brand._id));
+      console.log("check List", filterList);
+      return filterList;
+
+    } else {
+      return this.brandList;
+    }
+
+  }
   
   
   
@@ -356,6 +394,7 @@ console.log(formData);
       
       if (Array.isArray(item.brandName)) {
         brandSelections = item.brandName;
+        console.log("check BrandSelections", brandSelections);
       } else if (typeof item.brandName === 'string') {
         brandSelections = [item.brandName];
       } else {
@@ -440,8 +479,11 @@ console.log("check for filtered", this.filteredItemList);
     });
 
     if (data.items && data.items.length > 0) {
-      data.items.map((item: any) => {
+      data.items.map((item: any, index) => {
         this.addItems(item);
+        let theList=this.getBrandsForExistingItem(item);
+      this.filteredBrandLists.push(theList);
+      
       })
     }
 console.log("checkForm", this.purchaseRequestForm);
@@ -452,6 +494,7 @@ console.log("checkForm", this.purchaseRequestForm);
   addItem(): void {
     this.items = this.purchaseRequestForm.get('items') as FormArray;
     this.items.push(this.createItem());
+    this.filteredBrandLists.push(this.brandList);
   }
 
   addItems(item: any): void {
@@ -459,6 +502,7 @@ console.log("checkForm", this.purchaseRequestForm);
     this.items = this.purchaseRequestForm.get('items') as FormArray;
     if (item) {
       this.items.push(this.createItem(item));
+     
     }
   }
 

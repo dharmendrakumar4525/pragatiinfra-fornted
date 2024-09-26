@@ -207,7 +207,7 @@
                 <td>
                   <mat-select multiple class="pr-form-field" placeholder="Select Brand"
                               [formControlName]="'brandSelections'">
-                    <mat-option *ngFor="let brand of brandList" [value]="brand._id">
+                    <mat-option *ngFor="let brand of filteredBrandLists[i]" [value]="brand._id">
                       {{ brand.brand_name }}
                     </mat-option>
                   </mat-select>
@@ -325,7 +325,7 @@
                 <td>
                   <mat-select multiple class="pr-form-field" placeholder="Select Brand"
                               [formControlName]="'brandSelections'">
-                    <mat-option *ngFor="let brand of brandList" [value]="brand._id">
+                    <mat-option *ngFor="let brand of filteredBrandLists[i]" [value]="brand._id">
                       {{ brand.brand_name }}
                     </mat-option>
                   </mat-select>
