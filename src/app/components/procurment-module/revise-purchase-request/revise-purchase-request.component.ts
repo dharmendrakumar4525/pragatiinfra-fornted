@@ -468,7 +468,7 @@ console.log("check for filtered", this.filteredItemList);
 
     this.purchaseRequestForm.patchValue({
       title: category._id,
-      date: data.date,
+      date: data.updated_at,
       expected_delivery_date: data.expected_delivery_date,
       purchase_request_number: data.purchase_request_number,
       site: data.site,

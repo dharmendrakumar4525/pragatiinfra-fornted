@@ -3,6 +3,7 @@ import { PURCHASE_REQUEST_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { isEmpty } from 'lodash';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
@@ -46,7 +47,9 @@ export class PurchaseRequestListComponent implements OnInit {
         const purchaseRequests = resp.data.map((item: any) => {
           return {
             ...item,
-            formattedDate: this.datePipe.transform(item.updated_at, 'DD-MM-YYYY')
+            formattedDate: moment(item.updated_at).format(
+              'DD-MM-YYYY'
+            )
           };
         });
 
