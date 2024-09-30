@@ -8,6 +8,7 @@ import { CustomMaterialModule } from 'app/ang-material.module';
 import { DirectiveModule } from 'app/shared/directives/directive.module';
 import { PurchaseOrderUpdateComponent } from './purchase-order-update/purchase-order-update.component';
 import { PurchaseOrderDetailsComponent } from './purchase-order-details/purchase-order-details.component';
+import { PurchaseOrderApprovalComponent } from './purchase-order-approval/purchase-order-approval.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { ESignComponent } from './e-sign/e-sign.component';
 import { BillingAddressPopupComponent } from './billing-address-popup/billing-address-popup.component';
@@ -27,6 +28,11 @@ const routes: Routes = [
     path: "update/:id",
     component: PurchaseOrderUpdateComponent
   },
+  {
+    path: "approve/:id",
+    component: PurchaseOrderApprovalComponent
+  },
+
 ];
 
 @NgModule({
@@ -34,6 +40,7 @@ const routes: Routes = [
     PurchaseOrderListComponent,
     PurchaseOrderUpdateComponent,
     PurchaseOrderDetailsComponent,
+    PurchaseOrderApprovalComponent,
     ESignComponent,
     BillingAddressPopupComponent,
     MailingAddressPopupComponent,

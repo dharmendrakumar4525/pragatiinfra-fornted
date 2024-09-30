@@ -71,6 +71,7 @@ import {DMRFormComponent} from '../dmr/dmr-form/dmr-form.component';
 import {TableOverviewComponent} from '../dmr/table-overview/table-overview.component';
 import {FinalDmrComponent} from '../dmr/final-dmr/final-dmr.component';
 import {BrandMasterComponent} from '../components/brand-master/brand-master.component'
+import { PurchaseOrderApprovalComponent } from '../components/purchase-order/purchase-order-approval/purchase-order-approval.component';
 export const routes: Routes = [
   {
     path: 'procurement',
@@ -291,6 +292,7 @@ export const routes: Routes = [
   { path: 'approvedpo', component: ApprovedpoComponent, canActivate: [AuthGuard] },
   { path: 'rejectedpo', component: RejectedpoComponent, canActivate: [AuthGuard] },
   { path: 'pendingpo', component: PendingpoComponent, canActivate: [AuthGuard] },
+  { path: 'approvepo', component: PurchaseOrderApprovalComponent, canActivate: [AuthGuard] },
   { path: 'apovendorpostatus', component: ApoVendorpostatusComponent, canActivate: [AuthGuard] },
   { path: 'pomcreator', component: PomcreatorComponent, canActivate: [AuthGuard] },
   { path: 'potoken', component: PotokenComponent, canActivate: [AuthGuard] },

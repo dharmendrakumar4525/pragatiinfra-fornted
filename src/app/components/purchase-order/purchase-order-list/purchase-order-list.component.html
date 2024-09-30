@@ -109,7 +109,9 @@
           <hr style="border: 1px solid #D9D9D9;height: 30px;">
   
           <td style="background-color: #233A61;color:#fff;width:200px;font-size: 14px;cursor: pointer;"
-            *ngIf="obj.status=='pending'" [routerLink]="['/purchase-order/update',obj._id]">View&nbsp;PO</td>
+            *ngIf="obj.status=='pending'" [routerLink]="['/purchase-order/update',obj._id]">Generate &nbsp;PO</td>
+            <td style="background-color: #233A61;color:#fff;width:200px;font-size: 14px;cursor: pointer;"
+            *ngIf="obj.status=='ApprovalPending'" [routerLink]="['/purchase-order/approve',obj._id]">View&nbsp;PO</td>
           <td style="background-color: #54AA52;color:#fff;width:200px;font-size: 14px;cursor: pointer;"
             *ngIf="obj.status =='approved'" [routerLink]="['/purchase-order/details',obj._id]">Approved Vendors</td>
           <td style="background-color: #C7323B;color:#fff;width:200px;font-size: 14px;cursor: pointer;"

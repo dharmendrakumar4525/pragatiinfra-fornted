@@ -1,4 +1,8 @@
-import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NgModule,
+  NO_ERRORS_SCHEMA,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
@@ -110,15 +114,19 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ConfirmationPopupModule } from '@component/project/confirmation-popup/confirmation-popup.module';
 import { MinTableDateModule } from '@pipe/min-table-date/min-table-date.module';
 import { DirectiveModule } from './shared/directives/directive.module';
-import { MaterialRecordSheetComponent} from './dmr/material-record-sheet/material-record-sheet.component';
-import {DMRFormComponent} from './dmr/dmr-form/dmr-form.component';
-import {TableOverviewComponent} from './dmr/table-overview/table-overview.component';
-import {ItemTablePopupComponent} from './dmr/item-table-popup/item-table-popup.component';
+import { MaterialRecordSheetComponent } from './dmr/material-record-sheet/material-record-sheet.component';
+import { DMRFormComponent } from './dmr/dmr-form/dmr-form.component';
+import { TableOverviewComponent } from './dmr/table-overview/table-overview.component';
+import { ItemTablePopupComponent } from './dmr/item-table-popup/item-table-popup.component';
 import { FinalDmrComponent } from './dmr/final-dmr/final-dmr.component';
-import { NgxUiLoaderHttpModule, NgxUiLoaderModule} from 'ngx-ui-loader';
-import { ngxUiLoaderConfig, ngxUiLoaderHttpConfig } from './ngx-ui-loader.config';
-import { JwtModule } from "@auth0/angular-jwt";
+import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
+import {
+  ngxUiLoaderConfig,
+  ngxUiLoaderHttpConfig,
+} from './ngx-ui-loader.config';
+import { JwtModule } from '@auth0/angular-jwt';
 import { BrandMasterComponent } from './components/brand-master/brand-master.component';
+
 import { BrandAddDataComponent } from './components/brand-master/add-data/add-data.component';
 
 export function tokenGetter() {
@@ -126,15 +134,23 @@ export function tokenGetter() {
 }
 
 @NgModule({
-  imports: [AppRoutingModule, BrowserModule, ReactiveFormsModule, HttpClientModule, FormsModule, CoreModule, SharedModule, CustomMaterialModule,
+  imports: [
+    AppRoutingModule,
+    BrowserModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    FormsModule,
+    CoreModule,
+    SharedModule,
+    CustomMaterialModule,
     FlexLayoutModule,
     JwtModule.forRoot({
       config: {
-          tokenGetter: tokenGetter,
-          allowedDomains: ['localhost:4200/'],
-          disallowedRoutes: ['']
-      }
-  }),
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:4200/'],
+        disallowedRoutes: [''],
+      },
+    }),
     FullCalendarModule,
     MatTooltipModule,
     NgxLocalStorageModule.forRoot(),
@@ -157,8 +173,6 @@ export function tokenGetter() {
       showBackground: false,
       clockwise: true,
       startFromZero: false,
-
-
     }),
     BrowserAnimationsModule,
     LocationPopupModule,
@@ -166,18 +180,108 @@ export function tokenGetter() {
     MinTableDateModule,
     DirectiveModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-    NgxUiLoaderHttpModule.forRoot(ngxUiLoaderHttpConfig)
+    NgxUiLoaderHttpModule.forRoot(ngxUiLoaderHttpConfig),
   ],
-  declarations: [AppComponent, HomeComponent, SearchPipe, SubActivitySearchPipe, DashboardComponent, AccountInfoComponent, AddProjectComponent, ViewProjectComponent, DataAnalysisComponent, CalenderComponent, ProgressSheetComponent, ProjectsComponent, AddTasksComponent, AddSubTasksComponent, LoginComponent, AddMemberComponent, UserManagementComponent, UsersComponent, RolesComponent, PermissionsComponent, AddUserComponent,
-    ForgotpasswordComponent, NewRoleComponent, NewPermissionComponent, AddDataComponent, ManagePermissionsComponent, CreatenewpasswordComponent, NoPermissionsComponent, RoleEditComponent, UserEditComponent, UsersDeleteMultipleComponent, RolesDeleteMultipleComponent, AboutUsComponent, MasteruserComponent, MasterCreateuserComponent, InnerAddMemberComponent, EditActivityComponent, EditSubActivityComponent, TaskDeleteMulActivityComponent, DeleteMulSubActivityComponent, SubActivitiesComponent, EditSubActivitiesComponent, AddSubActivitiesComponent, SitemasterComponent,
-    OrgmasterComponent, ItemmasterComponent, VendormasterComponent, CategorymanagementComponent, PurchaserequestComponent, PurchasereqlistComponent, RequisitionapprovalsComponent, ApprovedsummaryComponent, RejectedsummaryComponent, PendingsummaryComponent, RevisedpurchasereqlistComponent, ApprovedmaterialrequestComponent, RejectedpurchaserequestComponent, PendingpurchaserequestComponent, RatecomparativeComponent, RcomparativeComponent, RateapprovallistComponent, RevisedrateapprovallistComponent, VendorscomparativeapprovedComponent, VendorscomparativerejectedComponent,
-    VendorscomparativerevisedComponent, RateapprovalsComponent, RateapprovalsummaryComponent, RejectedratessummaryComponent, PendingratesComponent, VendorSelectionComponent, RejectReasonComponent, AddRemarksComponent, ProjectDeletePopupComponent, PolistComponent, PomapproverComponent, ApprovedpoComponent, RejectedpoComponent, PendingpoComponent, ApoVendorpostatusComponent, PomcreatorComponent, PotokenComponent, RejectedpomComponent, PomcreatorEsignComponent, InventoryComponent, PrstatusComponent, ModifyRemarksComponent,MaterialRecordSheetComponent,DMRFormComponent,TableOverviewComponent,ItemTablePopupComponent, FinalDmrComponent,BrandMasterComponent,BrandAddDataComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    SearchPipe,
+    SubActivitySearchPipe,
+    DashboardComponent,
+    AccountInfoComponent,
+    AddProjectComponent,
+    ViewProjectComponent,
+    DataAnalysisComponent,
+    CalenderComponent,
+    ProgressSheetComponent,
+    ProjectsComponent,
+    AddTasksComponent,
+    AddSubTasksComponent,
+    LoginComponent,
+    AddMemberComponent,
+    UserManagementComponent,
+    UsersComponent,
+    RolesComponent,
+    PermissionsComponent,
+    AddUserComponent,
+    ForgotpasswordComponent,
+    NewRoleComponent,
+    NewPermissionComponent,
+    AddDataComponent,
+    ManagePermissionsComponent,
+    CreatenewpasswordComponent,
+    NoPermissionsComponent,
+    RoleEditComponent,
+    UserEditComponent,
+    UsersDeleteMultipleComponent,
+    RolesDeleteMultipleComponent,
+    AboutUsComponent,
+    MasteruserComponent,
+    MasterCreateuserComponent,
+    InnerAddMemberComponent,
+    EditActivityComponent,
+    EditSubActivityComponent,
+    TaskDeleteMulActivityComponent,
+    DeleteMulSubActivityComponent,
+    SubActivitiesComponent,
+    EditSubActivitiesComponent,
+    AddSubActivitiesComponent,
+    SitemasterComponent,
+    OrgmasterComponent,
+    ItemmasterComponent,
+    VendormasterComponent,
+    CategorymanagementComponent,
+    PurchaserequestComponent,
+    PurchasereqlistComponent,
+    RequisitionapprovalsComponent,
+    ApprovedsummaryComponent,
+    RejectedsummaryComponent,
+    PendingsummaryComponent,
+    RevisedpurchasereqlistComponent,
+    ApprovedmaterialrequestComponent,
+    RejectedpurchaserequestComponent,
+    PendingpurchaserequestComponent,
+    RatecomparativeComponent,
+    RcomparativeComponent,
+    RateapprovallistComponent,
+    RevisedrateapprovallistComponent,
+    VendorscomparativeapprovedComponent,
+    VendorscomparativerejectedComponent,
+    VendorscomparativerevisedComponent,
+    RateapprovalsComponent,
+    RateapprovalsummaryComponent,
+    RejectedratessummaryComponent,
+    PendingratesComponent,
+    VendorSelectionComponent,
+    RejectReasonComponent,
+    AddRemarksComponent,
+    ProjectDeletePopupComponent,
+    PolistComponent,
+    PomapproverComponent,
+    ApprovedpoComponent,
+    RejectedpoComponent,
+    PendingpoComponent,
+    ApoVendorpostatusComponent,
+    PomcreatorComponent,
+    PotokenComponent,
+    RejectedpomComponent,
+    PomcreatorEsignComponent,
+    InventoryComponent,
+    PrstatusComponent,
+    ModifyRemarksComponent,
+    MaterialRecordSheetComponent,
+    DMRFormComponent,
+    TableOverviewComponent,
+    ItemTablePopupComponent,
+    FinalDmrComponent,
+    BrandMasterComponent,
+    BrandAddDataComponent,
+  ],
   providers: [AuthGuard],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
     //NO_ERRORS_SCHEMA
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-
-export class AppModule { }
+export class AppModule {}

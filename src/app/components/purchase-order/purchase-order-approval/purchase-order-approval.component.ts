@@ -24,11 +24,11 @@ import { UsersService } from '@services/users.service';
 import { environment } from '@env/environment';
 
 @Component({
-  selector: 'app-purchase-order-update',
-  templateUrl: './purchase-order-update.component.html',
-  styleUrls: ['./purchase-order-update.component.scss'],
+  selector: 'app-purchase-order-approval',
+  templateUrl: './purchase-order-approval.component.html',
+  styleUrls: ['./purchase-order-approval.component.scss'],
 })
-export class PurchaseOrderUpdateComponent implements OnInit {
+export class PurchaseOrderApprovalComponent implements OnInit {
   term_condition = new FormControl();
   mail_section = new FormControl();
   validityDate = new FormControl('', [Validators.required]);
@@ -265,51 +265,21 @@ ngOnInit(): void {
 
 
   createOrder(): any {
-    if (!this.validityDate.valid) {
-      this.validityDate.markAsTouched();
-      return false;
-    }
+   
     let requestData: any = this.poDetails;
     //console.log("--requestDAta--",requestData)
-    for (let i = 0; i < requestData.items.length; i++) {
-      const brandName = requestData.items[i].item.brandName;
-      requestData.items[i].item['brandName'] = brandName;
-    }
+    
 
-    console.log('---------------');
-    console.log('this.purchaseOrderNumber', this.purchaseOrderNumber);
-    console.log('---------------');
-
-    const companyNameToMatch = this.poDetails.billing_address.company_name
-      .toLowerCase()
-      .trim();
-
-
-      console.log("checking company Name", companyNameToMatch);
-      if(companyNameToMatch ==="")
-      {
-        this.snack.notifyHtml("Select the Billing Address", 2);
-        return;
-      }
-        
-
-    const filteredList = this.purchaseOrderList.filter((item) => {
-      const itemCompanyName = item.billing_address.company_name
-        ? item.billing_address.company_name.toLowerCase().trim()
-        : '';
-      return itemCompanyName.includes(companyNameToMatch);
-    });
-
-    this.purchaseOrderNumber = filteredList.length + 1;
+   
     console.log('-------------');
     console.log('this.poDetails.po_number', this.poDetails.po_number);
     console.log('-------------');
 
     requestData['po_number'] = this.poDetails.po_number;
     requestData['approved_by']= this.permissions.user.name;
-    requestData['status'] = 'ApprovalPending';
-    requestData['due_date'] = this.validityDate.value;
-    requestData['vendor_message'] = this.mail_section.value;
+    requestData['status'] = 'approved';
+    requestData['due_date'] = this.poDetails.due_date;
+    requestData['vendor_message'] = this.poDetails.vendor_message;
     requestData.vendor_detail.terms_condition = this.term_condition.value;
     this.load = true;
     console.log("checking payload________________________",requestData);

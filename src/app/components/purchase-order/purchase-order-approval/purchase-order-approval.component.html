@@ -47,8 +47,7 @@
     <div style="margin-top: 20px;">
       <div style="display: flex;gap:50px;flex-wrap: wrap;">
         <div class="topleft">
-          <span style="font-size: 14px;font-family: 'Poppins';color:#3568BA;margin-bottom: 10px;">Billing Address</span><mat-icon (click)="billingAddressPopup()"
-            style="position: relative;right: 27px;top: 9px;margin-left: 35px;color: #3568BA;width: 20px;height: 20px;font-size: 14px;cursor: pointer;">border_color</mat-icon><br>
+          <span style="font-size: 14px;font-family: 'Poppins';color:#3568BA;margin-bottom: 10px;">Billing Address</span><br>
           <div class="textarealeft">
 
             <span><b>Company Name: </b>{{poDetails?.billing_address?.company_name}}</span>
@@ -71,12 +70,7 @@
 
             <span><b>Date</b>: {{poDetails.date | date:'dd-MM-yyyy'}}</span>
             <span><b>Validity</b>:
-              <mat-form-field>
-                <input matInput [formControl]="validityDate" (focus)="picker.open()" [min]="minDate" [max]="maxDate"
-                  [matDatepicker]="picker">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
+              {{poDetails.due_date | date:'dd-MM-yyyy'}}
             </span>
             <span><b>PO NO</b>: {{poDetails?.po_number}}<input type="text"
                 style="width:120px;padding:5px;border:none;margin-left: 16px;"> </span>
@@ -205,8 +199,7 @@
        
       
         <div class="terms-condition-wrap">
-          <div>Vendor terms & other conditions <mat-icon
-            style="font-size: medium;position: relative;top:10px">border_color</mat-icon></div>
+          <div>Vendor terms & other conditions </div>
               <textarea class="terms-condition-textarea" [formControl]="term_condition">
               </textarea>
         </div>
@@ -258,7 +251,7 @@
               background-color: #233A61;color: #fff;
               border-radius: 5px;border-color: lightgrey;font-family: 'Poppins';
               font-size: 14px;">
-              Generate PO
+              Approve
             </button>
           </ng-container>
           <ng-template #noAddPermission>
@@ -274,28 +267,28 @@
 
         </div>
 
-      <div>
+     <div>
 
 
-        <ng-container *ngIf="editPermission; else noEditPermission">
-          <button (click)="updateStatus('revise')"
+
+        <ng-container *ngIf="deletePermission; else noDeletePermission">
+          <button (click)="updateStatus('rejected')"
           style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;
           border: 1px solid #94A3B8;border-radius: 5px;font-family: 'Poppins';
           font-size: 14px;">
-          Revise
+          Reject
         </button>
         </ng-container>
-        <ng-template #noEditPermission>
-          <button 
+        <ng-template #noDeletePermission>
+          <button (click)="updateStatus('rejected')"
           style="padding: 8px;width: 120px;background-color: #fff;color: #233A61;
           border: 1px solid #94A3B8;border-radius: 5px;font-family: 'Poppins';
           font-size: 14px;"
           disabled>
-          No Permission To Revise
+         No Permission to Reject
         </button>
         </ng-template>
       </div>
-     
     
 
     </div>

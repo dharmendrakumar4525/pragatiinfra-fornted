@@ -27,19 +27,23 @@ export class PurchaseOrderListComponent implements OnInit {
   statusList = [
     {
       value: 'pending',
-      label: 'Pending'
+      label: 'Generate PO'
+    },
+    {
+      value: 'ApprovalPending',
+      label: 'Pending PO'
     },
     {
       value: 'approved',
-      label: 'Approved'
+      label: 'Approved PO'
     },
     {
       value: 'rejected',
-      label: 'Rejected'
+      label: 'Rejected PO'
     },
     {
       value: 'revise',
-      label: 'Revise'
+      label: 'Revise PO'
     },
   ]
   rateComparativeList: any;
