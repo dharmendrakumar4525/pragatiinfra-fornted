@@ -7,6 +7,8 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
 import { BrandAddDataComponent } from './add-data/add-data.component';
 import { ToastService } from '@services/toast.service';
+import { AuthService } from '@services/auth/auth.service';
+import { UsersService } from '@services/users.service';
 
 @Component({
   selector: 'app-brand-master',
@@ -26,9 +28,15 @@ export class BrandMasterComponent implements OnInit {
     private excelService: ExcelService,
     private snack: SnackbarService,
     private dialog: MatDialog,
-    private toast:ToastService
+    private toast:ToastService,
+    private auth:AuthService, 
+    private userService: UsersService
     ) {
       this.permissions = JSON.parse(localStorage.getItem('loginData'))
+      this.userService.getUserss().subscribe(users => {
+        const currentUser = users.find(user => user._id === this.permissions.user._id);
+    
+        if (currentUser) {
     const rolePermission = this.permissions.user.role
     const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
       this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
@@ -44,6 +52,14 @@ export class BrandMasterComponent implements OnInit {
         }
       });
       this.getList();
+    }
+    else {
+      this.snack.notify('Invalid Credentials - User Details not Valid', 2);
+      this.auth.removeUser();
+      this.userService.updateLogin('logout');
+      this.router.navigate(['/login']);
+    }
+  })
      }
 
   ngOnInit(): void {

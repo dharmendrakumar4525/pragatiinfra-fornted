@@ -20,6 +20,8 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
+import { AuthService } from '@services/auth/auth.service';
+import { UsersService } from '@services/users.service';
 import { saveAs } from 'file-saver';
 import { forkJoin } from 'rxjs';
 
@@ -72,7 +74,9 @@ export class UpdatePrStatusComponent implements OnInit {
     private snack: SnackbarService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private auth: AuthService,
+    private userService: UsersService
   ) {
     this.getList();
     this.route.params.subscribe((params) => {
@@ -266,6 +270,12 @@ export class UpdatePrStatusComponent implements OnInit {
     this.permissions = JSON.parse(localStorage.getItem('loginData'));
 
     // Extract specific permissions related to ParentChildchecklist from the parsed data
+    this.userService.getUserss().subscribe((users) => {
+      const currentUser = users.find(
+        (user) => user._id === this.permissions.user._id
+      );
+
+      if (currentUser) {
     const rolePermission = this.permissions.user.role;
     const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;
     this.httpService.GET(GET_ROLE_API_PERMISSION, {}).subscribe({
@@ -301,5 +311,12 @@ export class UpdatePrStatusComponent implements OnInit {
           });
       }
     });
+  } else {
+    this.snack.notify('Invalid Credentials - User Details not Valid', 1);
+    this.auth.removeUser();
+    this.userService.updateLogin('logout');
+    this.router.navigate(['/login']);
+  }
+});
   }
 }

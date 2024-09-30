@@ -10,7 +10,9 @@ import { PURCHASE_REQUEST_API} from '@env/api_path';
 import { environment } from '@env/environment';
 import { formatDate } from '@angular/common'; 
 import * as moment from 'moment';
-
+import { UsersService } from '@services/users.service';
+import { AuthService } from '@services/auth/auth.service';
+import {Router } from '@angular/router';
 
 @Component({
   selector: 'app-rate-comparative-list',
@@ -61,6 +63,9 @@ export class RateComparativeListComponent implements OnInit {
   constructor(
     private httpService: RequestService,
     private http: HttpClient,
+    private auth: AuthService,
+    private userService: UsersService,
+    private router: Router,
     private snack: SnackbarService,){
     
       this.getList({ filter_by: this.filter_by, filter_value: this.filter_value, stage: 'rate_comparitive' });
@@ -216,6 +221,12 @@ export class RateComparativeListComponent implements OnInit {
         this.permissions = JSON.parse(localStorage.getItem('loginData'))
 
         // Extract specific permissions related to ParentChildchecklist from the parsed data
+        this.userService.getUserss().subscribe((users) => {
+          const currentUser = users.find(
+            (user) => user._id === this.permissions.user._id
+          );
+    
+          if (currentUser) {
         const rolePermission = this.permissions.user.role
         const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
           this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
@@ -232,6 +243,13 @@ export class RateComparativeListComponent implements OnInit {
     this.getReqNO();
     this.siteList= this.permissions.user.sites
       console.log("SiteSelect", this.siteList);
+    } else {
+      this.snack.notify('Invalid Credentials - User Details not Valid', 1);
+      this.auth.removeUser();
+      this.userService.updateLogin('logout');
+      this.router.navigate(['/login']);
+    }
+  });
 
   }
 }

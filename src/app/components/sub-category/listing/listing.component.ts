@@ -8,6 +8,8 @@ import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
 import { ToastService } from '@services/toast.service';
+import { AuthService } from '@services/auth/auth.service';
+import { UsersService } from '@services/users.service';
 @Component({
   selector: 'app-listing',
   templateUrl: './listing.component.html',
@@ -29,9 +31,17 @@ export class ListingComponent implements OnInit {
     private snack: SnackbarService,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private toast:ToastService
+    private toast:ToastService,
+    private auth: AuthService,
+    private userService: UsersService
   ) {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    this.userService.getUserss().subscribe((users) => {
+      const currentUser = users.find(
+        (user) => user._id === this.permissions.user._id
+      );
+
+      if (currentUser) {
     const rolePermission = this.permissions.user.role
     const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
       this.httpService.GET(GET_ROLE_API_PERMISSION,{}).subscribe({
@@ -47,6 +57,13 @@ export class ListingComponent implements OnInit {
         }
       });
     this.getList();
+  } else {
+    this.snack.notify('Invalid Credentials - User Details not Valid', 1);
+    this.auth.removeUser();
+    this.userService.updateLogin('logout');
+    this.router.navigate(['/login']);
+  }
+});
   }
 
   getList() {

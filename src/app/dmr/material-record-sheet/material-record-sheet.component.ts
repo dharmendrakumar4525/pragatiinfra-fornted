@@ -11,6 +11,10 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DmrService } from '@services/dmr.service';
 import { BehaviorSubject, forkJoin } from 'rxjs';
 import { ToastService } from '@services/toast.service';
+import { AuthService } from '@services/auth/auth.service';
+import { UsersService } from '@services/users.service';
+import { Router, ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-material-record-sheet',
   templateUrl: './material-record-sheet.component.html',
@@ -55,6 +59,9 @@ export class MaterialRecordSheetComponent implements OnInit {
     private snack:SnackbarService,
     private dmrService:DmrService,
     private toast:ToastService,
+    private auth: AuthService,
+    private userService: UsersService,
+    private router:Router,
     ) { 
       this.GetApprovedpurchaseOrderList({ filter_by: this.filter_by, filter_value: "pending" });
       this.getAllLocation();
@@ -62,7 +69,12 @@ export class MaterialRecordSheetComponent implements OnInit {
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
-    
+    this.userService.getUserss().subscribe((users) => {
+      const currentUser = users.find(
+        (user) => user._id === this.permissions.user._id
+      );
+
+      if (currentUser) {
     this.DMRPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[15]?.childList[1];
     this.DMRPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[15]?.childList[0];
     //console.log(this.DMRPermissionsView)
@@ -96,6 +108,13 @@ export class MaterialRecordSheetComponent implements OnInit {
     }
     
   );
+} else {
+  this.snack.notify('Invalid Credentials - User Details not Valid', 1);
+  this.auth.removeUser();
+  this.userService.updateLogin('logout');
+  this.router.navigate(['/login']);
+}
+});
   }
   onStatusChange(item) {
     this.GetApprovedpurchaseOrderList({ filter_by: this.filter_by, filter_value: item.value })

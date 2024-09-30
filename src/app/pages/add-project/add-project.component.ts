@@ -15,7 +15,10 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { UsersService } from '@services/users.service';
 import { DataAnalysisService } from '@services/data-analysis.service';
-import { LocationPopupComponent } from '@component/project/location-popup/location-popup.component'
+import { AuthService } from '@services/auth/auth.service';
+import { SnackbarService } from '@services/snackbar/snackbar.service';
+import { LocationPopupComponent } from '@component/project/location-popup/location-popup.component';
+
 export interface Fruit {
   name: string;
 }
@@ -77,6 +80,8 @@ export class AddProjectComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private dialog: MatDialog,
+    private auth: AuthService,
+    private snack: SnackbarService,
     private dataAnalysis: DataAnalysisService, private toast: ToastService, private _dialog: MatDialog, private taskService: TaskService,
     private projectService: AddProjectService, private userService: UsersService, private activeRoute: ActivatedRoute, private router: Router) { }
 
@@ -457,6 +462,12 @@ export class AddProjectComponent implements OnInit {
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    this.userService.getUserss().subscribe((users) => {
+      const currentUser = users.find(
+        (user) => user._id === this.permissions.user._id
+      );
+
+      if (currentUser) {
 
     this.projectsPermissions = this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[0]
 
@@ -519,6 +530,14 @@ export class AddProjectComponent implements OnInit {
         map((fruit: any | null) => fruit ? this._filter(fruit) : this.users.slice()));
       //console.log(this.tasksData)
     })
+
+  } else {
+    this.snack.notify('Invalid Credentials - User Details not Valid', 1);
+    this.auth.removeUser();
+    this.userService.updateLogin('logout');
+    this.router.navigate(['/login']);
+  }
+});
 
 
 

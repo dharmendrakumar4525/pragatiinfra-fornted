@@ -8,6 +8,8 @@ import { isEmpty } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import { ToastService } from '@services/toast.service';
 import { MatDialog } from '@angular/material/dialog'; // Import MatDialog
+import { AuthService } from '@services/auth/auth.service';
+import { UsersService } from '@services/users.service';
 
 @Component({
   selector: 'app-listing',
@@ -36,9 +38,17 @@ export class ListingComponent implements OnInit {
     private excelService: ExcelService,
     private snack: SnackbarService,
     private toast: ToastService,
-    public dialog: MatDialog // Inject MatDialog
+    public dialog: MatDialog, // Inject MatDialog
+    private auth: AuthService,
+    private userService: UsersService
   ) {
     this.permissions = JSON.parse(localStorage.getItem('loginData'));
+    this.userService.getUserss().subscribe((users) => {
+      const currentUser = users.find(
+        (user) => user._id === this.permissions.user._id
+      );
+
+      if (currentUser) {
     const rolePermission = this.permissions.user.role;
     const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;
     this.httpService.GET(GET_ROLE_API_PERMISSION, {}).subscribe({
@@ -88,6 +98,13 @@ export class ListingComponent implements OnInit {
         this.getList();
       }
     });
+  } else {
+    this.snack.notify('Invalid Credentials - User Details not Valid', 1);
+    this.auth.removeUser();
+    this.userService.updateLogin('logout');
+    this.router.navigate(['/login']);
+  }
+});
   }
 
   getList() {

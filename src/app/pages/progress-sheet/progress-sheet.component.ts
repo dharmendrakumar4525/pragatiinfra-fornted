@@ -22,77 +22,116 @@ import * as moment from 'moment';
 import { ElementRef, Renderer2 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Inject } from '@angular/core';
+import { AuthService } from '@services/auth/auth.service';
+import { UsersService } from '@services/users.service';
 declare var $: any;
 
 @Component({
   selector: 'app-progress-sheet',
   templateUrl: './progress-sheet.component.html',
   styleUrls: ['./progress-sheet.component.scss'],
-
 })
 export class ProgressSheetComponent implements OnInit {
-  projectId: any
+  projectId: any;
   progressData: any;
   // projectsData:any
-  tasks: any
+  tasks: any;
   projectsData = [];
   members = [];
   memberAddPermissions: any;
   activesData: any;
-  recentActivitiesLen: any
+  recentActivitiesLen: any;
   projectNameForm: FormGroup = this._fb.group({
     _id: [null],
   });
-  elem: any; isFullScreen: boolean;
+  elem: any;
+  isFullScreen: boolean;
   currentDate: any;
   project: any;
-  permissions: any
+  permissions: any;
   progressPermissionsView: any;
-  progressPermissionsEdit: any
-  recentActivities: any
+  progressPermissionsEdit: any;
+  recentActivities: any;
   projectsList: any;
   remarksPermissions: any;
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private httpService: RequestService,
     private snack: SnackbarService,
-    private activeRoute: ActivatedRoute, private toast: ToastService, private router: Router, private projectService: AddProjectService, private _fb: FormBuilder, private recentActivityService: RecentActivityService, private _dialog: MatDialog, private progressSheetService: ProgressSheetService, private taskService: TaskService, public dialog: MatDialog, private dataAnalysis: DataAnalysisService, private renderer: Renderer2, private el: ElementRef) {
+    private auth: AuthService,
+    private userService: UsersService,
+    private activeRoute: ActivatedRoute,
+    private toast: ToastService,
+    private router: Router,
+    private projectService: AddProjectService,
+    private _fb: FormBuilder,
+    private recentActivityService: RecentActivityService,
+    private _dialog: MatDialog,
+    private progressSheetService: ProgressSheetService,
+    private taskService: TaskService,
+    public dialog: MatDialog,
+    private dataAnalysis: DataAnalysisService,
+    private renderer: Renderer2,
+    private el: ElementRef
+  ) {
     this.currentDate = moment().startOf('day');
   }
 
   projectLocationsList: Array<any> = [];
 
   ngOnInit(): void {
-    this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    this.permissions = JSON.parse(localStorage.getItem('loginData'));
     //console.log(this.permissions)
-    this.progressPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[1]?.childList[1];
-    this.progressPermissionsEdit = this.permissions.permissions[0]?.ParentChildchecklist[1]?.childList[0];
-    this.remarksPermissions = this.permissions.permissions[0]?.ParentChildchecklist[2]?.childList[2];
-    this.memberAddPermissions=this.permissions.permissions[0]?.ParentChildchecklist[5]?.childList[0];
-    this.activeRoute.params.subscribe((params: any) => {
-      console.log(params.id)
-      this.projectId = params.id
-      this.progressSheetService.getProjectById(this.projectId).subscribe(data => {
-        this.project = data
-        this.projectNameForm.patchValue({
-          _id: this.project._id
-        })
-        console.log(this.project)
+    this.userService.getUserss().subscribe((users) => {
+      const currentUser = users.find(
+        (user) => user._id === this.permissions.user._id
+      );
 
-        this.projectLocationsList = this.project.locations;
-      })
+      if (currentUser) {
+        this.progressPermissionsView =
+          this.permissions.permissions[0]?.ParentChildchecklist[1]?.childList[1];
+        this.progressPermissionsEdit =
+          this.permissions.permissions[0]?.ParentChildchecklist[1]?.childList[0];
+        this.remarksPermissions =
+          this.permissions.permissions[0]?.ParentChildchecklist[2]?.childList[2];
+        this.memberAddPermissions =
+          this.permissions.permissions[0]?.ParentChildchecklist[5]?.childList[0];
+        this.activeRoute.params.subscribe((params: any) => {
+          console.log(params.id);
+          this.projectId = params.id;
+          this.progressSheetService
+            .getProjectById(this.projectId)
+            .subscribe((data) => {
+              this.project = data;
+              this.projectNameForm.patchValue({
+                _id: this.project._id,
+              });
+              console.log(this.project);
+
+              this.projectLocationsList = this.project.locations;
+            });
+        });
+        this.chkScreenMode();
+        this.elem = this.document.getElementsByTagName('body')[0];
+      } else {
+        this.snack.notify('Invalid Credentials - User Details not Valid', 1);
+        this.auth.removeUser();
+        this.userService.updateLogin('logout');
+        this.router.navigate(['/login']);
+      }
     });
-    this.chkScreenMode();
-    this.elem = this.document.getElementsByTagName('body')[0];
   }
-
 
   addData(subTask, locationIndex, structureIndex, activityIndex) {
     if (!this.progressPermissionsEdit?.isSelected) {
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
-        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-        data: "you don't have permissions to update sheet"
+        panelClass: [
+          'custom-modal',
+          'animate__animated',
+          'animate__fadeInDown',
+        ],
+        data: "you don't have permissions to update sheet",
         //data: supply
       });
       return;
@@ -100,46 +139,65 @@ export class ProgressSheetComponent implements OnInit {
     const dialogRef = this._dialog.open(AddDataComponent, {
       // width: '60%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-      data: subTask
+      data: subTask,
     });
-    dialogRef.afterClosed().subscribe(status => {
+    dialogRef.afterClosed().subscribe((status) => {
       // console.log(status.data);
 
       if (status && status.type && status.type == 1) {
         this.projectLocationsList[locationIndex];
-        this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal = this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal ? this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex].dailyCumulativeTotal : 0;
-        this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex] = { ...this.projectLocationsList[locationIndex].structures[structureIndex].activities[activityIndex], ...status.data };
+        this.projectLocationsList[locationIndex].structures[
+          structureIndex
+        ].activities[activityIndex].dailyCumulativeTotal = this
+          .projectLocationsList[locationIndex].structures[structureIndex]
+          .activities[activityIndex].dailyCumulativeTotal
+          ? this.projectLocationsList[locationIndex].structures[structureIndex]
+              .activities[activityIndex].dailyCumulativeTotal
+          : 0;
+        this.projectLocationsList[locationIndex].structures[
+          structureIndex
+        ].activities[activityIndex] = {
+          ...this.projectLocationsList[locationIndex].structures[structureIndex]
+            .activities[activityIndex],
+          ...status.data,
+        };
         let requestedData: any = {
           _id: this.project._id,
-          locations: this.projectLocationsList
-        }
+          locations: this.projectLocationsList,
+        };
 
-        this.httpService.PUT(PROJECT_API, requestedData).subscribe((res: any) => {
-          this.snack.notify("Data has been saved sucessfully.", 1);
-        }, (err) => {
-          if (err.errors && !isEmpty(err.errors)) {
-            let errMessage = '<ul>';
-            for (let e in err.errors) {
-              let objData = err.errors[e];
-              errMessage += `<li>${objData[0]}</li>`;
+        this.httpService.PUT(PROJECT_API, requestedData).subscribe(
+          (res: any) => {
+            this.snack.notify('Data has been saved sucessfully.', 1);
+          },
+          (err) => {
+            if (err.errors && !isEmpty(err.errors)) {
+              let errMessage = '<ul>';
+              for (let e in err.errors) {
+                let objData = err.errors[e];
+                errMessage += `<li>${objData[0]}</li>`;
+              }
+              errMessage += '</ul>';
+              this.snack.notifyHtml(errMessage, 2);
+            } else {
+              this.snack.notify(err.message, 2);
             }
-            errMessage += '</ul>';
-            this.snack.notifyHtml(errMessage, 2);
-          } else {
-            this.snack.notify(err.message, 2);
           }
-        })
+        );
       }
-
-    })
+    });
   }
 
   addMember() {
     if (!this.memberAddPermissions?.isSelected) {
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
-        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-        data: "you don't have permissions to add member"
+        panelClass: [
+          'custom-modal',
+          'animate__animated',
+          'animate__fadeInDown',
+        ],
+        data: "you don't have permissions to add member",
         //data: supply
       });
       return;
@@ -147,52 +205,55 @@ export class ProgressSheetComponent implements OnInit {
     const dialogRef = this._dialog.open(InnerAddMemberComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-      data: this.projectId
+      data: this.projectId,
     });
-    dialogRef.afterClosed().subscribe(status => {
+    dialogRef.afterClosed().subscribe((status) => {
       console.log(status);
       if (status === 'yes') {
-        this.dataAnalysis.getProjectById(this.projectId).subscribe(data => {
-          this.project = data
-          this.members = this.project.members
-          console.log(this.project)
-        })
+        this.dataAnalysis.getProjectById(this.projectId).subscribe((data) => {
+          this.project = data;
+          this.members = this.project.members;
+          console.log(this.project);
+        });
       }
       if (status === 'no') {
       }
-    })
+    });
   }
 
   onChangeProject(ev) {
     this.router.navigate(['/view-project/progress-sheet', ev.target.value]);
   }
 
-
-
   addremarks(activity): void {
     if (!this.remarksPermissions?.isSelected) {
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
-        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-        data: "you don't have permissions to view remarks"
+        panelClass: [
+          'custom-modal',
+          'animate__animated',
+          'animate__fadeInDown',
+        ],
+        data: "you don't have permissions to view remarks",
       });
       return;
     }
     const dialogRef = this.dialog.open(AddRemarksComponent, {
       width: '500px',
-      data: { id: activity._id }
+      data: { id: activity._id },
     });
-
   }
-
-
 
   addLocation() {
     if (!this.progressPermissionsEdit?.isSelected) {
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
-        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-        data: "you don't have permissions to update sheet"
+        panelClass: [
+          'custom-modal',
+          'animate__animated',
+          'animate__fadeInDown',
+        ],
+        data: "you don't have permissions to update sheet",
         //data: supply
       });
       return;
@@ -201,13 +262,15 @@ export class ProgressSheetComponent implements OnInit {
     const dialogPopup = this.dialog.open(LocationPopupComponent, {
       data: {
         type: 'location',
-        currentRecords: this.projectLocationsList
-      }
+        currentRecords: this.projectLocationsList,
+      },
     });
     dialogPopup.afterClosed().subscribe((result: any) => {
-
       if (result && result['option'] === 1) {
-        this.projectLocationsList = [...this.projectLocationsList, ...result.data.locations];
+        this.projectLocationsList = [
+          ...this.projectLocationsList,
+          ...result.data.locations,
+        ];
         this.updateRecords();
       }
     });
@@ -217,32 +280,36 @@ export class ProgressSheetComponent implements OnInit {
     if (!this.progressPermissionsEdit?.isSelected) {
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
-        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-        data: "you don't have permissions to update sheet"
+        panelClass: [
+          'custom-modal',
+          'animate__animated',
+          'animate__fadeInDown',
+        ],
+        data: "you don't have permissions to update sheet",
         //data: supply
       });
       return;
     }
-    const dialogPopup = this.dialog.open(ConfirmationPopupComponent, {
-    });
+    const dialogPopup = this.dialog.open(ConfirmationPopupComponent, {});
     dialogPopup.afterClosed().subscribe((result: any) => {
-
       if (result && result['option'] === 1) {
         this.projectLocationsList.splice(locationIndex, 1);
         console.log(this.projectLocationsList);
         this.updateRecords();
       }
     });
-
-
   }
 
   addStructure(locationIndex) {
     if (!this.progressPermissionsEdit?.isSelected) {
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
-        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-        data: "you don't have permissions to update sheet"
+        panelClass: [
+          'custom-modal',
+          'animate__animated',
+          'animate__fadeInDown',
+        ],
+        data: "you don't have permissions to update sheet",
         //data: supply
       });
       return;
@@ -250,49 +317,58 @@ export class ProgressSheetComponent implements OnInit {
     const dialogPopup = this.dialog.open(LocationPopupComponent, {
       data: {
         type: 'structure',
-        currentRecords: this.projectLocationsList[locationIndex].structures
-      }
+        currentRecords: this.projectLocationsList[locationIndex].structures,
+      },
     });
 
     dialogPopup.afterClosed().subscribe((result: any) => {
-
       if (result && result['option'] === 1) {
-        this.projectLocationsList[locationIndex].structures = [...this.projectLocationsList[locationIndex].structures, ...result.data.structures];
+        this.projectLocationsList[locationIndex].structures = [
+          ...this.projectLocationsList[locationIndex].structures,
+          ...result.data.structures,
+        ];
         this.updateRecords();
       }
     });
   }
 
-
   deleteStructure(locationIndex, structureIndex) {
     if (!this.progressPermissionsEdit?.isSelected) {
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
-        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-        data: "you don't have permissions to update sheet"
+        panelClass: [
+          'custom-modal',
+          'animate__animated',
+          'animate__fadeInDown',
+        ],
+        data: "you don't have permissions to update sheet",
         //data: supply
       });
       return;
     }
-    const dialogPopup = this.dialog.open(ConfirmationPopupComponent, {
-    });
+    const dialogPopup = this.dialog.open(ConfirmationPopupComponent, {});
     dialogPopup.afterClosed().subscribe((result: any) => {
-
       if (result && result['option'] === 1) {
-        this.projectLocationsList[locationIndex].structures.splice(structureIndex, 1);
+        this.projectLocationsList[locationIndex].structures.splice(
+          structureIndex,
+          1
+        );
         console.log(this.projectLocationsList);
         this.updateRecords();
       }
     });
-
   }
 
   addActivity(locationIndex, structureIndex) {
     if (!this.progressPermissionsEdit?.isSelected) {
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
-        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-        data: "you don't have permissions to update sheet"
+        panelClass: [
+          'custom-modal',
+          'animate__animated',
+          'animate__fadeInDown',
+        ],
+        data: "you don't have permissions to update sheet",
         //data: supply
       });
       return;
@@ -300,13 +376,20 @@ export class ProgressSheetComponent implements OnInit {
     const dialogPopup = this.dialog.open(LocationPopupComponent, {
       data: {
         type: 'activity',
-        currentRecords: this.projectLocationsList[locationIndex].structures[structureIndex].activities
-      }
+        currentRecords:
+          this.projectLocationsList[locationIndex].structures[structureIndex]
+            .activities,
+      },
     });
     dialogPopup.afterClosed().subscribe((result: any) => {
-
       if (result && result['option'] === 1) {
-        this.projectLocationsList[locationIndex].structures[structureIndex].activities = [... this.projectLocationsList[locationIndex].structures[structureIndex].activities, ...result.data.activities];
+        this.projectLocationsList[locationIndex].structures[
+          structureIndex
+        ].activities = [
+          ...this.projectLocationsList[locationIndex].structures[structureIndex]
+            .activities,
+          ...result.data.activities,
+        ];
         this.updateRecords();
       }
     });
@@ -316,57 +399,59 @@ export class ProgressSheetComponent implements OnInit {
     if (!this.progressPermissionsEdit?.isSelected) {
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
-        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-        data: "you don't have permissions to update sheet"
+        panelClass: [
+          'custom-modal',
+          'animate__animated',
+          'animate__fadeInDown',
+        ],
+        data: "you don't have permissions to update sheet",
         //data: supply
       });
       return;
     }
-    const dialogPopup = this.dialog.open(ConfirmationPopupComponent, {
-    });
+    const dialogPopup = this.dialog.open(ConfirmationPopupComponent, {});
     dialogPopup.afterClosed().subscribe((result: any) => {
-
       if (result && result['option'] === 1) {
-        this.projectLocationsList[locationIndex].structures[structureIndex].activities.splice(activityIndex, 1);
+        this.projectLocationsList[locationIndex].structures[
+          structureIndex
+        ].activities.splice(activityIndex, 1);
         console.log(this.projectLocationsList);
         this.updateRecords();
       }
     });
-
   }
 
   updateRecords() {
     let requestedData: any = {
       _id: this.project._id,
-      locations: this.projectLocationsList
-    }
+      locations: this.projectLocationsList,
+    };
 
-    this.httpService.PUT(PROJECT_API, requestedData).subscribe((res: any) => {
-      this.snack.notify("Data has been saved sucessfully.", 1);
-    }, (err) => {
-      if (err.errors && !isEmpty(err.errors)) {
-        let errMessage = '<ul>';
-        for (let e in err.errors) {
-          let objData = err.errors[e];
-          errMessage += `<li>${objData[0]}</li>`;
+    this.httpService.PUT(PROJECT_API, requestedData).subscribe(
+      (res: any) => {
+        this.snack.notify('Data has been saved sucessfully.', 1);
+      },
+      (err) => {
+        if (err.errors && !isEmpty(err.errors)) {
+          let errMessage = '<ul>';
+          for (let e in err.errors) {
+            let objData = err.errors[e];
+            errMessage += `<li>${objData[0]}</li>`;
+          }
+          errMessage += '</ul>';
+          this.snack.notifyHtml(errMessage, 2);
+        } else {
+          this.snack.notify(err.message, 2);
         }
-        errMessage += '</ul>';
-        this.snack.notifyHtml(errMessage, 2);
-      } else {
-        this.snack.notify(err.message, 2);
       }
-    })
+    );
   }
 
-
-
   toggleActivity(id) {
-
     if ($(`#location-${id}`).hasClass('collapsed')) {
       $(`#location-${id}`).removeClass('collapsed');
       $(`.location-${id}`).removeClass('cl-hide');
       $(`.toggle-structure`).removeClass('collapsed');
-
     } else {
       $(`#location-${id}`).addClass('collapsed');
       $(`.location-${id}`).addClass('cl-hide');
@@ -374,7 +459,6 @@ export class ProgressSheetComponent implements OnInit {
   }
 
   toggleStructure(id) {
-
     if ($(`#structure-${id}`).hasClass('collapsed')) {
       $(`#structure-${id}`).removeClass('collapsed');
       $(`.structure-${id}`).removeClass('cl-hide');
@@ -384,11 +468,9 @@ export class ProgressSheetComponent implements OnInit {
     }
   }
   CurrentDailyAskingRate(activityItem) {
-    if (activityItem?.base_line_start_date == null)
-      return;
+    if (activityItem?.base_line_start_date == null) return;
 
-    if (activityItem?.dailyCumulativeTotal >= activityItem?.quantity)
-      return 0;
+    if (activityItem?.dailyCumulativeTotal >= activityItem?.quantity) return 0;
 
     let temp: any;
     let Startdate: any;
@@ -398,58 +480,103 @@ export class ProgressSheetComponent implements OnInit {
     Startdate = moment(activityItem?.base_line_start_date).startOf('day');
 
     if (activityItem?.actual_revised_start_date != null) {
-      Startdate = moment(activityItem?.actual_revised_start_date).startOf('day');
+      Startdate = moment(activityItem?.actual_revised_start_date).startOf(
+        'day'
+      );
     }
-    let base_line_end_date = moment(activityItem?.base_line_end_date).startOf('day');
+    let base_line_end_date = moment(activityItem?.base_line_end_date).startOf(
+      'day'
+    );
     if (activityItem.addRevisesDates.length <= 0) {
       if (previousDate >= base_line_end_date) {
         temp = activityItem?.quantity - activityItem?.dailyCumulativeTotal;
       } else if (Startdate > previousDate) {
         temp = 0;
       } else {
-        temp = Math.ceil((activityItem?.quantity - activityItem?.dailyCumulativeTotal) / (moment(base_line_end_date).diff(previousDate, 'days')));
+        temp = Math.ceil(
+          (activityItem?.quantity - activityItem?.dailyCumulativeTotal) /
+            moment(base_line_end_date).diff(previousDate, 'days')
+        );
       }
     } else {
-      let R_end_date = moment(activityItem?.addRevisesDates[activityItem.addRevisesDates.length - 1]['revisedDate']).startOf('day');
+      let R_end_date = moment(
+        activityItem?.addRevisesDates[activityItem.addRevisesDates.length - 1][
+          'revisedDate'
+        ]
+      ).startOf('day');
 
       if (previousDate >= R_end_date) {
         temp = activityItem?.quantity - activityItem?.dailyCumulativeTotal;
       } else if (Startdate > previousDate) {
         temp = 0;
       } else {
-        temp = Math.ceil((activityItem?.quantity - activityItem?.dailyCumulativeTotal) / (moment(R_end_date).diff(previousDate, 'days')))
+        temp = Math.ceil(
+          (activityItem?.quantity - activityItem?.dailyCumulativeTotal) /
+            moment(R_end_date).diff(previousDate, 'days')
+        );
       }
     }
     return temp;
   }
   NoOfDaysBalanceAsPerBaseline(activityItem) {
-    if (activityItem?.base_line_start_date == null)
-      return;
+    if (activityItem?.base_line_start_date == null) return;
 
     let noofDaysBalanceasperbaseLine: any;
-    let diffValuebaseLine = moment(activityItem.base_line_end_date).diff(moment(activityItem.base_line_start_date), 'days')
+    let diffValuebaseLine = moment(activityItem.base_line_end_date).diff(
+      moment(activityItem.base_line_start_date),
+      'days'
+    );
     let baseLineWorkingDays = diffValuebaseLine + 1;
 
-    if (moment(activityItem.base_line_start_date).startOf('day') >= moment(this.currentDate).startOf('day')) {
+    if (
+      moment(activityItem.base_line_start_date).startOf('day') >=
+      moment(this.currentDate).startOf('day')
+    ) {
       noofDaysBalanceasperbaseLine = baseLineWorkingDays;
-    } else if (moment(activityItem.base_line_end_date).startOf('day') >= moment(this.currentDate).startOf('day')) {
-      noofDaysBalanceasperbaseLine = moment(activityItem.base_line_end_date).diff(moment(this.currentDate).startOf('day'), 'days') + 1;
+    } else if (
+      moment(activityItem.base_line_end_date).startOf('day') >=
+      moment(this.currentDate).startOf('day')
+    ) {
+      noofDaysBalanceasperbaseLine =
+        moment(activityItem.base_line_end_date).diff(
+          moment(this.currentDate).startOf('day'),
+          'days'
+        ) + 1;
     } else {
       noofDaysBalanceasperbaseLine = 0;
     }
     return noofDaysBalanceasperbaseLine;
   }
   NoOfDaysBalanceAsPerRevisedDates(activityItem) {
-    if (activityItem.addRevisesDates == null || activityItem.addRevisesDates.length == 0)
+    if (
+      activityItem.addRevisesDates == null ||
+      activityItem.addRevisesDates.length == 0
+    )
       return;
     let startDate = activityItem.base_line_start_date;
     if (activityItem.actual_revised_start_date != null)
       startDate = activityItem.actual_revised_start_date;
     let noofDaysBalanceasperrevisedEnddate: any;
-    let diffValuenoofDaysBalance = Math.abs(moment(activityItem.addRevisesDates.slice(-1)[0].revisedDate).diff(moment(this.currentDate), 'days'))
-    if (moment(startDate).startOf('day') >= moment(this.currentDate).startOf('day')) {
-      noofDaysBalanceasperrevisedEnddate = moment(activityItem.addRevisesDates.slice(-1)[0].revisedDate).diff(moment(startDate), 'days') + 1;
-    } else if (moment(activityItem.addRevisesDates.slice(-1)[0].revisedDate).startOf('day') >= moment(this.currentDate).startOf('day')) {
+    let diffValuenoofDaysBalance = Math.abs(
+      moment(activityItem.addRevisesDates.slice(-1)[0].revisedDate).diff(
+        moment(this.currentDate),
+        'days'
+      )
+    );
+    if (
+      moment(startDate).startOf('day') >=
+      moment(this.currentDate).startOf('day')
+    ) {
+      noofDaysBalanceasperrevisedEnddate =
+        moment(activityItem.addRevisesDates.slice(-1)[0].revisedDate).diff(
+          moment(startDate),
+          'days'
+        ) + 1;
+    } else if (
+      moment(activityItem.addRevisesDates.slice(-1)[0].revisedDate).startOf(
+        'day'
+      ) >= moment(this.currentDate).startOf('day')
+    ) {
       noofDaysBalanceasperrevisedEnddate = diffValuenoofDaysBalance + 1;
     } else {
       noofDaysBalanceasperrevisedEnddate = 0;
@@ -457,47 +584,64 @@ export class ProgressSheetComponent implements OnInit {
     return noofDaysBalanceasperrevisedEnddate;
   }
   TargetTillDateAsPerBaseline(activityItem) {
-    if (activityItem?.base_line_start_date == null)
-      return;
+    if (activityItem?.base_line_start_date == null) return;
     let previousDate = this.currentDate.clone().subtract(1, 'days');
     previousDate = moment(previousDate).startOf('day');
     let temp: any;
-    let base_line_start_date = moment(activityItem?.base_line_start_date).startOf('day');
-    let base_line_end_date = moment(activityItem?.base_line_end_date).startOf('day');
+    let base_line_start_date = moment(
+      activityItem?.base_line_start_date
+    ).startOf('day');
+    let base_line_end_date = moment(activityItem?.base_line_end_date).startOf(
+      'day'
+    );
 
     if (activityItem?.dailyCumulativeTotal == activityItem?.quantity)
-      temp = "Completed";
+      temp = 'Completed';
     else if (previousDate < base_line_start_date) {
       temp = 0;
     } else if (previousDate >= base_line_end_date)
       temp = activityItem?.quantity;
     else if (previousDate >= base_line_start_date) {
-      var baseLineWorkingDays = moment(this.currentDate).diff(base_line_start_date, 'days');
-      temp = Math.ceil((activityItem.quantity * baseLineWorkingDays) / activityItem.baseLineWorkingDays);
+      var baseLineWorkingDays = moment(this.currentDate).diff(
+        base_line_start_date,
+        'days'
+      );
+      temp = Math.ceil(
+        (activityItem.quantity * baseLineWorkingDays) /
+          activityItem.baseLineWorkingDays
+      );
     }
     return temp;
   }
 
   TargetTillDateAsPerRevisedEndDate(activityItem) {
-    if (activityItem.addRevisesDates.length <= 0)
-      return;
+    if (activityItem.addRevisesDates.length <= 0) return;
     let StartDate = activityItem?.base_line_start_date;
     if (activityItem?.actual_revised_start_date != null)
       StartDate = activityItem?.actual_revised_start_date;
     let temp: any;
     let Revisedbase_line_start_date = moment(StartDate).startOf('day');
-    let R_end_date = moment(activityItem?.addRevisesDates[activityItem.addRevisesDates.length - 1]['revisedDate']).startOf('day');
+    let R_end_date = moment(
+      activityItem?.addRevisesDates[activityItem.addRevisesDates.length - 1][
+        'revisedDate'
+      ]
+    ).startOf('day');
     let previousDate = this.currentDate.clone().subtract(1, 'days');
     previousDate = moment(previousDate).startOf('day');
     if (activityItem?.dailyCumulativeTotal == activityItem?.quantity)
-      temp = "Completed";
+      temp = 'Completed';
     else if (previousDate < Revisedbase_line_start_date) {
       temp = 0;
-    } else if (previousDate >= R_end_date)
-      temp = activityItem?.quantity;
+    } else if (previousDate >= R_end_date) temp = activityItem?.quantity;
     else if (previousDate >= Revisedbase_line_start_date) {
-      var RevisedLineWorkingDays = moment(this.currentDate).diff(Revisedbase_line_start_date, 'days');
-      temp = Math.ceil((activityItem.quantity * RevisedLineWorkingDays) / activityItem.workingDaysRevised);
+      var RevisedLineWorkingDays = moment(this.currentDate).diff(
+        Revisedbase_line_start_date,
+        'days'
+      );
+      temp = Math.ceil(
+        (activityItem.quantity * RevisedLineWorkingDays) /
+          activityItem.workingDaysRevised
+      );
     }
     return temp;
   }

@@ -11,6 +11,8 @@ import * as moment from 'moment';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 import { Router } from '@angular/router';
 import { RequestService } from '@services/https/request.service';
+import { AuthService } from '@services/auth/auth.service';
+
 
 export interface PeriodicElement {
   SelectAll: string;
@@ -50,8 +52,6 @@ export class UsersComponent implements OnInit {
   userPermissionsEdit: any;
   userPermissionsDelete: any;
   userPermissionsDeleteMul: any;
-
-
   viewPermission: any;
   editPermission: any;
   addPermission: any;
@@ -67,7 +67,7 @@ export class UsersComponent implements OnInit {
   recentActivities: any;
   recentActivitiesLen: any;
   permissions: any;
-  constructor(private httpService: RequestService, private userService: UsersService, private router: Router, private recentActivityService: RecentActivityService, private toast: ToastService, private _dialog: MatDialog,) { }
+  constructor(private httpService: RequestService, private auth:AuthService, private userService: UsersService, private router: Router, private recentActivityService: RecentActivityService, private toast: ToastService, private _dialog: MatDialog,) { }
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
@@ -129,6 +129,14 @@ export class UsersComponent implements OnInit {
         next: (data: any) => {
           console.log(data)
           this.toast.openSnackBar("User deleted Successfully");
+
+   if(this.permissions.user._id === id){
+    console.log("user Exist");
+    this.auth.removeUser();
+    this.userService.updateLogin('logout');
+    this.router.navigate(['/login']);
+   }
+
           this.userService.getUserss().subscribe(data => {
             //this.spinner.hide()
 

@@ -7,9 +7,10 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
-
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-
+import { AuthService } from '@services/auth/auth.service';
+import { UsersService } from '@services/users.service';
 import { PURCHASE_REQUEST_API} from '@env/api_path';
 import { environment } from '@env/environment';
 
@@ -55,9 +56,12 @@ export class PurchaseOrderListComponent implements OnInit {
   purchaseOrderList: any[] = [];
   purchase_request_number: any[] = [];
   constructor(
+    private router: Router,
     private httpService: RequestService,
     private snack: SnackbarService,
     private http: HttpClient,
+    private auth: AuthService,
+    private userService: UsersService
   ) {
     this.getList({ filter_by: this.filter_by, filter_value: this.filter_value });
   }
@@ -193,7 +197,12 @@ export class PurchaseOrderListComponent implements OnInit {
     this.getReqNO();
         // Retrieve user permissions from local storage and parse them as JSON
         this.permissions = JSON.parse(localStorage.getItem('loginData'))
-
+        this.userService.getUserss().subscribe((users) => {
+          const currentUser = users.find(
+            (user) => user._id === this.permissions.user._id
+          );
+    
+          if (currentUser) {
         // Extract specific permissions related to ParentChildchecklist from the parsed data
         const rolePermission = this.permissions.user.role
         const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;  
@@ -206,5 +215,12 @@ export class PurchaseOrderListComponent implements OnInit {
               console.log(err)
             }
           });
+        } else {
+          this.snack.notify('Invalid Credentials - User Details not Valid', 1);
+          this.auth.removeUser();
+          this.userService.updateLogin('logout');
+          this.router.navigate(['/login']);
+        }
+      });
   }
 }

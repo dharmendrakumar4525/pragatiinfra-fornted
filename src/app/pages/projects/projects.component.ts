@@ -3,12 +3,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddProjectService } from '@services/add-project.service';
 import { RecentActivityService } from '@services/recent-activity.service';
 import { AddMemberComponent } from '../add-member/add-member.component';
+import { SnackbarService } from '@services/snackbar/snackbar.service';
 import * as moment from 'moment';
 import { AboutUsComponent } from '../about-us/about-us.component';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
 import { ToastService } from '@services/toast.service';
 import { ProjectDeletePopupComponent } from '../project-delete-popup/project-delete-popup.component';
 import { Router } from '@angular/router';
+import { AuthService } from '@services/auth/auth.service';
+import { UsersService } from '@services/users.service';
 
 
 
@@ -46,82 +49,75 @@ export class ProjectsComponent implements OnInit {
   memberAddPermissions:any;
   projectsEditPermissions:any;
   projectsDeletePermissions:any;
-  constructor(private projectService: AddProjectService, private router:Router, private toast:ToastService, private _dialog: MatDialog, private recentActivityService:RecentActivityService) { }
+  constructor(private projectService: AddProjectService, private snack: SnackbarService, private auth:AuthService, private userService: UsersService, private router:Router, private toast:ToastService, private _dialog: MatDialog, private recentActivityService:RecentActivityService) { }
 
-  ngOnInit(): void {
-    this.permissions = JSON.parse(localStorage.getItem('loginData'))
-    console.log(this.permissions)
-   this.projectsViewPermissions = this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[1]
-   this.projectsEditPermissions = this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[2]
-   this.projectsDeletePermissions = this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[3]
-
-    this.memberAddPermissions = this.permissions.permissions[0]?.ParentChildchecklist[5]?.childList[0]
-
-    this.projectService.getProjects().subscribe(data=>{
-      //this.spinner.hide()
-      this.projects = data;
-      console.log("Projects", this.projects);
-      if(this.permissions.user.role !== 'superadmin' ){
-
-        
-        this.filterProjects = this.projects.filter((product) => {
-        
-          return product.members.some((prod) => {
-            return prod === this.permissions.user.email;
-          });
-        });
-        //push(this.projects.find(product => product.members.some(item => item === this.permissions.user.email)))
-        
-      console.log(this.filterProjects)
-      this.projects = this.filterProjects
-      }
-      
-      this.cards = [
-        {
-          title: ' Total  Projects',
-          count:this.projects.length
-        
-        },
-        {
-          title: 'Completed Projects',
-          count:'0'
-        },
-        {
-          title: 'Incomplete Projects',
-          count:this.projects.length
-        },
-        {
-          title: 'Overdue Projects',
-          count:'0'
-        },
+    ngOnInit(): void {
+      this.permissions = JSON.parse(localStorage.getItem('loginData'));
+      console.log(this.permissions);
     
-      ];
-      console.log("Hello There",this.projects)
-      for(let single of this.projects){
-        this.members.push(...single.members)
-      }
-      console.log("Members s",this.members)
-    });
-    this.recentActivityService.getRecentAtivities().subscribe(data=>{
-      this.recentActivities = data
-      for(let single of this.recentActivities){
-        single.time = moment(single.createdAt).fromNow()
-      }
-      this.recentActivitiesLen = this.recentActivities.length
-      
-    });
-    this.projectService.getAboutUs().subscribe(data=>{
-      //this.spinner.hide()
-      this.about = data
-      this.aboutUs = this.about[0]
-
-       //this.aboutUsLen = this.aboutUs.length
-      // if(this.aboutUsLen){
-      //   this.aboutUsForm.patchValue(this.aboutUs[0])
-      // }
-      // console.log(this.aboutUsLen)
-    });
-  }
+      this.userService.getUserss().subscribe(users => {
+        const currentUser = users.find(user => user._id === this.permissions.user._id);
+    
+        if (currentUser) {
+          // User exists, continue with other logic
+          this.projectsViewPermissions = this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[1];
+          this.projectsEditPermissions = this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[2];
+          this.projectsDeletePermissions = this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[3];
+          this.memberAddPermissions = this.permissions.permissions[0]?.ParentChildchecklist[5]?.childList[0];
+    
+          this.projectService.getProjects().subscribe(data => {
+            this.projects = data;
+            console.log("Projects", this.projects);
+    
+            if (this.permissions.user.role !== 'superadmin') {
+              this.filterProjects = this.projects.filter(product =>
+                product.members.some(member => member === this.permissions.user.email)
+              );
+    
+              console.log(this.filterProjects);
+              this.projects = this.filterProjects;
+            }
+    
+            this.cards = [
+              { title: 'Total Projects', count: this.projects.length },
+              { title: 'Completed Projects', count: '0' },
+              { title: 'Incomplete Projects', count: this.projects.length },
+              { title: 'Overdue Projects', count: '0' },
+            ];
+    
+            console.log("Hello There", this.projects);
+    
+            for (let single of this.projects) {
+              this.members.push(...single.members);
+            }
+            console.log("Members s", this.members);
+          });
+    
+          this.recentActivityService.getRecentAtivities().subscribe(data => {
+            this.recentActivities = data;
+    
+            for (let single of this.recentActivities) {
+              single.time = moment(single.createdAt).fromNow();
+            }
+    
+            this.recentActivitiesLen = this.recentActivities.length;
+          });
+    
+          this.projectService.getAboutUs().subscribe(data => {
+            this.about = data;
+            this.aboutUs = this.about[0];
+          });
+        } else {
+          // User does not exist, show notification
+          this.snack.notify('Invalid Credentials - User Details not Valid', 1);
+          this.auth.removeUser();
+          this.userService.updateLogin('logout');
+          this.router.navigate(['/login']);
+          
+        }
+      });
+    }
+    
   setIndex(ii){
     this.aa=ii;
     console.log

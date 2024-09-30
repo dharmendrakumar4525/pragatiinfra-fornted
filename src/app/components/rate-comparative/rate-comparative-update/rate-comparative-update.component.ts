@@ -25,7 +25,7 @@ import { RateComparativeVendorsComponent } from '../rate-comparative-vendors/rat
 import { isEmpty } from 'lodash';
 import { UsersService } from '@services/users.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { AuthService } from '@services/auth/auth.service';
 
 
 @Component({
@@ -94,7 +94,8 @@ export class RateComparativeUpdateComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private http: HttpClient,
-    private userService: UsersService
+    private userService: UsersService,
+    private auth: AuthService,
   ) {
     // Call the method to fetch the brand list
     this.getBrandList();
@@ -657,6 +658,12 @@ getVendorKeys() {
     this.permissions = JSON.parse(localStorage.getItem('loginData'));
 
     // Extract specific permissions related to ParentChildchecklist from the parsed data
+    this.userService.getUserss().subscribe((users) => {
+      const currentUser = users.find(
+        (user) => user._id === this.permissions.user._id
+      );
+
+      if (currentUser) {
     const rolePermission = this.permissions.user.role;
     const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;
     this.httpService.GET(GET_ROLE_API_PERMISSION, {}).subscribe({
@@ -725,5 +732,12 @@ console.log("checking Api",this.details);
           });
       }
     });
+  } else {
+    this.snack.notify('Invalid Credentials - User Details not Valid', 1);
+    this.auth.removeUser();
+    this.userService.updateLogin('logout');
+    this.router.navigate(['/login']);
+  }
+});
   }
 }

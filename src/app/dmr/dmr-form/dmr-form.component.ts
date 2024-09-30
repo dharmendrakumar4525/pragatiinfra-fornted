@@ -7,6 +7,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { isEmpty } from 'lodash';
 import { ToastService } from '@services/toast.service';
+import { AuthService } from '@services/auth/auth.service';
+import { UsersService } from '@services/users.service';
 import { DMRPURCHASE_ORDER_API,DmrEntryList,CREATE_DMR_ENTRY } from '@env/api_path';
 import { BehaviorSubject } from 'rxjs';
 import { DmrService } from '@services/dmr.service';
@@ -43,6 +45,8 @@ export class DMRFormComponent implements OnInit{
     private route:ActivatedRoute,
     private router:Router,
     private toast:ToastService,
+    private auth: AuthService,
+    private userService: UsersService,
     private dmrService:DmrService) { 
       this.route.params.subscribe((params:any)=>{
         this.PurchaseId=params.id;
@@ -77,6 +81,12 @@ export class DMRFormComponent implements OnInit{
   
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    this.userService.getUserss().subscribe((users) => {
+      const currentUser = users.find(
+        (user) => user._id === this.permissions.user._id
+      );
+
+      if (currentUser) {
     this.DMRPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[15]?.childList[1];
     
    // Define your observables
@@ -125,6 +135,13 @@ export class DMRFormComponent implements OnInit{
     }
   );
   this.once();
+} else {
+  this.snack.notify('Invalid Credentials - User Details not Valid', 1);
+  this.auth.removeUser();
+  this.userService.updateLogin('logout');
+  this.router.navigate(['/login']);
+}
+});
     
   }
   getAllLocation()

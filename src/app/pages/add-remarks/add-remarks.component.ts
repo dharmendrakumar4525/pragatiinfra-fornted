@@ -6,6 +6,9 @@ import { RequestService } from '@services/https/request.service';
 import { PROJECT_ACTIVITY_REMARK_DATA_API } from '@env/api_path';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { NoPermissionsComponent } from '../no-permissions/no-permissions.component';
+import { AuthService } from '@services/auth/auth.service';
+import { UsersService } from '@services/users.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-remarks',
@@ -23,6 +26,9 @@ export class AddRemarksComponent implements OnInit {
     private httpService: RequestService,
     private _dialog: MatDialog,
     private snack: SnackbarService,
+    private auth: AuthService,
+    private userService: UsersService,
+    private router: Router
   ) {
 
     this.getList();
@@ -57,8 +63,20 @@ export class AddRemarksComponent implements OnInit {
   ngOnInit(): void {
     this.today = new Date().getTime()
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    this.userService.getUserss().subscribe((users) => {
+      const currentUser = users.find(
+        (user) => user._id === this.permissions.user._id
+      );
+
+      if (currentUser) {
     this.editRemarksPermissions = this.permissions.permissions[0]?.ParentChildchecklist[2]?.childList[0];
- 
+  } else {
+    this.snack.notify('Invalid Credentials - User Details not Valid', 1);
+    this.auth.removeUser();
+    this.userService.updateLogin('logout');
+    this.router.navigate(['/login']);
+  }
+});
   }
 
 

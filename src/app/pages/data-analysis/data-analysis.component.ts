@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
-
+import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { Chart, registerables } from 'chart.js';
 import { AddProjectService } from '@services/add-project.service';
 import { DataAnalysisService } from '@services/data-analysis.service';
@@ -14,6 +14,8 @@ import { AboutUsComponent } from '../about-us/about-us.component';
 import { InnerAddMemberComponent } from '../inner-add-member/inner-add-member.component';
 import { ToastService } from '@services/toast.service';
 import { ProjectDeletePopupComponent } from '../project-delete-popup/project-delete-popup.component';
+import { AuthService } from '@services/auth/auth.service';
+import { UsersService } from '@services/users.service';
 
 Chart.register(...registerables);
 export interface Tile {
@@ -21,33 +23,29 @@ export interface Tile {
   cols: number;
   rows: number;
   text: string;
-
 }
-
 
 @Component({
   selector: 'app-data-analysis',
   templateUrl: './data-analysis.component.html',
-  styleUrls: ['./data-analysis.component.css']
+  styleUrls: ['./data-analysis.component.css'],
 })
 export class DataAnalysisComponent implements OnInit {
   projectsData = [];
   activesData: any;
-  dateFilter: (date: Date | null) => boolean =
-    (date: Date | null) => {
-      if (!date) {
-        return false;
-      }
-      const day = date.getDay();
-      return day == 1; // 1 means monday, 0 means sunday, etc.
-    };
+  dateFilter: (date: Date | null) => boolean = (date: Date | null) => {
+    if (!date) {
+      return false;
+    }
+    const day = date.getDay();
+    return day == 1; // 1 means monday, 0 means sunday, etc.
+  };
   tiles: Tile[] = [
     { text: 'One', cols: 3, rows: 3, color: 'lightblue' },
     { text: 'Two', cols: 1, rows: 6, color: 'lightgreen' },
     { text: 'Three', cols: 3, rows: 3, color: 'lightpink' },
-
   ];
-  projectId: any
+  projectId: any;
   project: any = {};
   projects: any;
   members = [];
@@ -55,17 +53,17 @@ export class DataAnalysisComponent implements OnInit {
   showDefaultFirst: any = {};
   recentActivitiesLen: any;
   memberAddPermissions: any;
-  projectEditPermissions:any;
+  projectEditPermissions: any;
   permissions: any;
   about: any;
   aboutUs: any;
   aboutUsLen: any;
-  graphData = []
+  graphData = [];
   projectsList: any;
   lineGraph: any;
   xAxis = [];
   totalMat: any;
-  xReqData = []
+  xReqData = [];
   myChart: any;
   month: any;
   day: any;
@@ -73,139 +71,155 @@ export class DataAnalysisComponent implements OnInit {
   projectNameForm: FormGroup = this._fb.group({
     _id: [null],
   });
-  constructor(private activeRoute: ActivatedRoute, private toast: ToastService, private router: Router, private _fb: FormBuilder, private progressSheetService: ProgressSheetService, private recentActivityService: RecentActivityService, private _dialog: MatDialog, private projectService: AddProjectService, private dataAnalysis: DataAnalysisService) { }
+  constructor(
+    private activeRoute: ActivatedRoute,
+    private toast: ToastService,
+    private router: Router,
+    private _fb: FormBuilder,
+    private progressSheetService: ProgressSheetService,
+    private recentActivityService: RecentActivityService,
+    private _dialog: MatDialog,
+    private projectService: AddProjectService,
+    private dataAnalysis: DataAnalysisService,
+    private snack: SnackbarService,
+    private auth: AuthService,
+    private userService: UsersService
+  ) {}
 
   ngOnInit(): void {
-    this.permissions = JSON.parse(localStorage.getItem('loginData'))
-    //console.log(this.permissions)
-    //this.projectsViewPermissions = this.permissions.permissions[0].ParentChildchecklist[0].childList[1]
-    this.memberAddPermissions = this.permissions.permissions[0]?.ParentChildchecklist[5]?.childList[0]
-    this.projectsDeletePermissions = this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[3]
-    this.projectEditPermissions=this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[2]
+    this.permissions = JSON.parse(localStorage.getItem('loginData'));
+    this.userService.getUserss().subscribe((users) => {
+      const currentUser = users.find(
+        (user) => user._id === this.permissions.user._id
+      );
+
+      if (currentUser) {
+    this.memberAddPermissions =
+      this.permissions.permissions[0]?.ParentChildchecklist[5]?.childList[0];
+    this.projectsDeletePermissions =
+      this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[3];
+    this.projectEditPermissions =
+      this.permissions.permissions[0]?.ParentChildchecklist[0]?.childList[2];
     this.month = new Date().toLocaleString('default', { month: 'short' });
     ///let year = new Date(single.date).getFullYear()
-    this.day = new Date().getDate()
-    this.projectService.getProjects().subscribe(data => {
+    this.day = new Date().getDate();
+    this.projectService.getProjects().subscribe((data) => {
       //this.spinner.hide()
-      this.projects = data
-      // console.log(this.projects)
-      // for(let single of this.projects){
-      //   this.members.push(...single.members)
-      // }
-      // console.log(this.members)
-    })
+      this.projects = data;
+     
+    });
 
     this.activeRoute.params.subscribe((params: any) => {
-      console.log(params.id)
-      this.projectId = params.id
+      console.log(params.id);
+      this.projectId = params.id;
 
-
-      this.progressSheetService.getActivitiesByProjectId(this.projectId).subscribe(data => {
-        this.activesData = data
-        console.log(this.activesData)
-        this.totalMat = this.activesData.map(item => item.total).reduce((prev, curr) => prev + curr, 0);
-        // for(let one of this.activesData){
-        //   this.graphData.push(one.dailyCumulativeTotal)
-        // }
-        // console.log(this.graphData)
-        this.activesData.forEach(obj => {
-          //this.grandTotal += obj['discAmount'];
-          //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
-          //console.log(this.grandTotal);
-          const arr = this.projectsData.filter(ele => ele['name'] === obj['taskName']);
-          if (arr.length === 0) {
-            this.projectsData.push(
-              { 'name': obj['taskName'] });
-          }
-        });
-
-        this.projectsData.forEach(obj => {
-          const uniqData = this.activesData.filter(ele => ele['taskName'] === obj['name']);
-          obj['result'] = uniqData;
-
-        });
-        console.log(this.projectsData);
-
-        this.showDefaultFirst = this.projectsData[0] ? this.projectsData[0] : {}
-        console.log(this.showDefaultFirst);
-
-
-        if(this.showDefaultFirst && this.showDefaultFirst.result){
-          for (let data of this.showDefaultFirst?.result) {
-            if (data.dailyCumulativeTotal && data.total) {
-              data.cpPercentage = ((100 * data.dailyCumulativeTotal) / data.total).toFixed(0)
-            } else {
-              data.cpPercentage = 0
+      this.progressSheetService
+        .getActivitiesByProjectId(this.projectId)
+        .subscribe((data) => {
+          this.activesData = data;
+          console.log(this.activesData);
+          this.totalMat = this.activesData
+            .map((item) => item.total)
+            .reduce((prev, curr) => prev + curr, 0);
+          // for(let one of this.activesData){
+          //   this.graphData.push(one.dailyCumulativeTotal)
+          // }
+          // console.log(this.graphData)
+          this.activesData.forEach((obj) => {
+            //this.grandTotal += obj['discAmount'];
+            //obj['Appt_Date_Time__c'] = this.commonService.getUsrDtStrFrmDBStr(obj['Appt_Date_Time__c'])[0];
+            //console.log(this.grandTotal);
+            const arr = this.projectsData.filter(
+              (ele) => ele['name'] === obj['taskName']
+            );
+            if (arr.length === 0) {
+              this.projectsData.push({ name: obj['taskName'] });
             }
+          });
 
+          this.projectsData.forEach((obj) => {
+            const uniqData = this.activesData.filter(
+              (ele) => ele['taskName'] === obj['name']
+            );
+            obj['result'] = uniqData;
+          });
+          console.log(this.projectsData);
+
+          this.showDefaultFirst = this.projectsData[0]
+            ? this.projectsData[0]
+            : {};
+          console.log(this.showDefaultFirst);
+
+          if (this.showDefaultFirst && this.showDefaultFirst.result) {
+            for (let data of this.showDefaultFirst?.result) {
+              if (data.dailyCumulativeTotal && data.total) {
+                data.cpPercentage = (
+                  (100 * data.dailyCumulativeTotal) /
+                  data.total
+                ).toFixed(0);
+              } else {
+                data.cpPercentage = 0;
+              }
+            }
           }
-        }
 
-        console.log(this.showDefaultFirst)
+          console.log(this.showDefaultFirst);
+        });
 
-
-
-      })
-
-      this.dataAnalysis.getProjectById(this.projectId).subscribe(data => {
-        this.project = data
+      this.dataAnalysis.getProjectById(this.projectId).subscribe((data) => {
+        this.project = data;
         this.projectNameForm.patchValue({
-          _id: this.project._id
-        })
-        this.members = this.project.members
-        console.log(this.project)
-      })
+          _id: this.project._id,
+        });
+        this.members = this.project.members;
+        console.log(this.project);
+      });
 
-      this.dataAnalysis.getLineGraph(this.projectId).subscribe(data => {
+      this.dataAnalysis.getLineGraph(this.projectId).subscribe((data) => {
         //this.spinner.hide()
-        this.lineGraph = data
+        this.lineGraph = data;
         for (let single of this.lineGraph) {
-          let month = new Date(single.date).toLocaleString('default', { month: 'short' });
-          let year = new Date(single.date).getFullYear()
-          let day = new Date(single.date).getDate()
-          single.reqDate = `${month} ${day},${year}`
+          let month = new Date(single.date).toLocaleString('default', {
+            month: 'short',
+          });
+          let year = new Date(single.date).getFullYear();
+          let day = new Date(single.date).getDate();
+          single.reqDate = `${month} ${day},${year}`;
         }
 
-        this.lineGraph.forEach(obj => {
-
-          const arr = this.graphData.filter(ele => ele['name'] === obj['reqDate']);
+        this.lineGraph.forEach((obj) => {
+          const arr = this.graphData.filter(
+            (ele) => ele['name'] === obj['reqDate']
+          );
           if (arr.length === 0) {
-            this.graphData.push(
-              { 'name': obj['reqDate'] });
+            this.graphData.push({ name: obj['reqDate'] });
           }
         });
 
-        this.graphData.forEach(obj => {
-          const uniqData = this.lineGraph.filter(ele => ele['reqDate'] === obj['name']);
+        this.graphData.forEach((obj) => {
+          const uniqData = this.lineGraph.filter(
+            (ele) => ele['reqDate'] === obj['name']
+          );
           obj['data'] = uniqData;
-
         });
         console.log(this.graphData);
 
-        let total = 0
+        let total = 0;
 
         for (let single of this.graphData) {
-
-          this.xAxis.push(single.name)
+          this.xAxis.push(single.name);
 
           for (let one of single.data) {
-
-            total = total + one.value
-
-
-
+            total = total + one.value;
           }
 
-          let totData = ((100 * total) / this.totalMat).toFixed(0)
+          let totData = ((100 * total) / this.totalMat).toFixed(0);
 
-          this.xReqData.push(totData)
-
-
+          this.xReqData.push(totData);
 
           //console.log(total)
 
           //this.cum
-
         }
 
         this.myChart = new Chart('overviewChart', {
@@ -218,7 +232,7 @@ export class DataAnalysisComponent implements OnInit {
                 data: this.xReqData,
                 backgroundColor: '#267ADC',
                 borderColor: '#267ADC',
-                borderWidth: 1
+                borderWidth: 1,
               },
               //   {
               //     label: 'Completed Task',
@@ -227,49 +241,34 @@ export class DataAnalysisComponent implements OnInit {
               //     borderColor: 'black',
               //     borderWidth: 1
               // }
-
-
-
-            ]
+            ],
           },
           options: {
             scales: {
               y: {
                 suggestedMin: 0,
-                suggestedMax: 100
-              }
-            }
-          }
+                suggestedMax: 100,
+              },
+            },
+          },
         });
 
         //console.log(this.lineGraph)
-
       });
-
     });
 
-
-
-
-
-
-
-
-
-
-    this.recentActivityService.getRecentAtivities().subscribe(data => {
-      this.recentActivities = data
+    this.recentActivityService.getRecentAtivities().subscribe((data) => {
+      this.recentActivities = data;
       for (let single of this.recentActivities) {
-        single.time = moment(single.createdAt).fromNow()
+        single.time = moment(single.createdAt).fromNow();
       }
-      this.recentActivitiesLen = this.recentActivities.length
-
+      this.recentActivitiesLen = this.recentActivities.length;
     });
 
-    this.projectService.getAboutUs().subscribe(data => {
+    this.projectService.getAboutUs().subscribe((data) => {
       //this.spinner.hide()
-      this.about = data
-      this.aboutUs = this.about[0]
+      this.about = data;
+      this.aboutUs = this.about[0];
 
       //this.aboutUsLen = this.aboutUs.length
       // if(this.aboutUsLen){
@@ -278,22 +277,29 @@ export class DataAnalysisComponent implements OnInit {
       // console.log(this.aboutUsLen)
     });
 
-    this.projectService.getProjects().subscribe(data => {
+    this.projectService.getProjects().subscribe((data) => {
       //this.spinner.hide()
       this.projectsList = data;
     });
-
-
-
+  } else {
+    this.snack.notify('Invalid Credentials - User Details not Valid', 1);
+    this.auth.removeUser();
+    this.userService.updateLogin('logout');
+    this.router.navigate(['/login']);
   }
-
+});
+  }
 
   addMember() {
     if (!this.memberAddPermissions?.isSelected) {
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
-        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-        data: "you don't have permissions to add member"
+        panelClass: [
+          'custom-modal',
+          'animate__animated',
+          'animate__fadeInDown',
+        ],
+        data: "you don't have permissions to add member",
         //data: supply
       });
       return;
@@ -301,16 +307,16 @@ export class DataAnalysisComponent implements OnInit {
     const dialogRef = this._dialog.open(InnerAddMemberComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-      data: this.projectId
+      data: this.projectId,
     });
-    dialogRef.afterClosed().subscribe(status => {
+    dialogRef.afterClosed().subscribe((status) => {
       console.log(status);
       if (status === 'yes') {
-        this.dataAnalysis.getProjectById(this.projectId).subscribe(data => {
-          this.project = data
-          this.members = this.project.members
-          console.log(this.project)
-        })
+        this.dataAnalysis.getProjectById(this.projectId).subscribe((data) => {
+          this.project = data;
+          this.members = this.project.members;
+          console.log(this.project);
+        });
         // this.projectService.getProjects().subscribe(data=>{
         //   //this.spinner.hide()
         //   this.projects = data
@@ -324,59 +330,59 @@ export class DataAnalysisComponent implements OnInit {
       }
       if (status === 'no') {
       }
-    })
+    });
   }
 
   onChange(ev) {
-    console.log(ev.target.value)
+    console.log(ev.target.value);
 
     let selectedBar = this.projectsData.filter((project) => {
-
       return project.name == ev.target.value;
-
     });
-    console.log(this.showDefaultFirst)
+    console.log(this.showDefaultFirst);
 
-
-    this.showDefaultFirst = selectedBar[0]
-
+    this.showDefaultFirst = selectedBar[0];
 
     for (let data of this.showDefaultFirst.result) {
       if (data.dailyCumulativeTotal && data.total) {
-        data.cpPercentage = ((100 * data.dailyCumulativeTotal) / data.total).toFixed(1)
+        data.cpPercentage = (
+          (100 * data.dailyCumulativeTotal) /
+          data.total
+        ).toFixed(1);
       } else {
-        data.cpPercentage = 0
+        data.cpPercentage = 0;
       }
-
     }
 
-    console.log(this.showDefaultFirst)
-
+    console.log(this.showDefaultFirst);
   }
 
   addAboutUs() {
     if (!this.projectEditPermissions?.isSelected) {
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
-        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-        data: "You don't have permissions to edit "
+        panelClass: [
+          'custom-modal',
+          'animate__animated',
+          'animate__fadeInDown',
+        ],
+        data: "You don't have permissions to edit ",
         //data: supply
       });
       return;
     }
     const dialogRef = this._dialog.open(AboutUsComponent, {
       width: '30%',
-      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown']
+      panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
       //data: supply
     });
-    dialogRef.afterClosed().subscribe(status => {
+    dialogRef.afterClosed().subscribe((status) => {
       console.log(status);
       if (status === 'yes') {
-
-        this.projectService.getAboutUs().subscribe(data => {
+        this.projectService.getAboutUs().subscribe((data) => {
           //this.spinner.hide()
-          this.about = data
-          this.aboutUs = this.about[0]
+          this.about = data;
+          this.aboutUs = this.about[0];
 
           //this.aboutUsLen = this.aboutUs.length
           // if(this.aboutUsLen){
@@ -393,140 +399,124 @@ export class DataAnalysisComponent implements OnInit {
       }
       if (status === 'no') {
       }
-    })
+    });
   }
 
   onChangeProject(ev) {
     this.router.navigate(['/view-project/data-analysis', ev.target.value]);
   }
 
-
   filterFrom(ev) {
-    console.log(ev.value)
+    console.log(ev.value);
 
-    this.month = new Date(ev.value).toLocaleString('default', { month: 'short' });
+    this.month = new Date(ev.value).toLocaleString('default', {
+      month: 'short',
+    });
     ///let year = new Date(single.date).getFullYear()
-    this.day = new Date(ev.value).getDate()
+    this.day = new Date(ev.value).getDate();
 
-
-    this.dataAnalysis.calenderFilter(ev.value, this.projectId).subscribe(
-
-      {
-        next: (data: any) => {
-          console.log(data)
-          this.graphData = []
-          this.xAxis = []
-          this.xReqData = []
-          this.lineGraph = data
-          for (let single of this.lineGraph) {
-            let month = new Date(single.date).toLocaleString('default', { month: 'short' });
-            let year = new Date(single.date).getFullYear()
-            let day = new Date(single.date).getDate()
-            single.reqDate = `${month} ${day},${year}`
-          }
-
-          this.lineGraph.forEach(obj => {
-
-            const arr = this.graphData.filter(ele => ele['name'] === obj['reqDate']);
-            if (arr.length === 0) {
-              this.graphData.push(
-                { 'name': obj['reqDate'] });
-            }
+    this.dataAnalysis.calenderFilter(ev.value, this.projectId).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.graphData = [];
+        this.xAxis = [];
+        this.xReqData = [];
+        this.lineGraph = data;
+        for (let single of this.lineGraph) {
+          let month = new Date(single.date).toLocaleString('default', {
+            month: 'short',
           });
-
-          this.graphData.forEach(obj => {
-            const uniqData = this.lineGraph.filter(ele => ele['reqDate'] === obj['name']);
-            obj['data'] = uniqData;
-
-          });
-          console.log(this.graphData);
-
-          let total = 0
-
-          for (let single of this.graphData) {
-
-            this.xAxis.push(single.name)
-
-            for (let one of single.data) {
-
-              total = total + one.value
-
-
-
-            }
-
-            let totData = ((100 * total) / this.totalMat).toFixed(0)
-
-            this.xReqData.push(totData)
-
-
-
-            //console.log(total)
-
-            //this.cum
-
-          }
-
-          // new Chart()
-
-          this.myChart.destroy();
-
-          this.myChart = new Chart('overviewChart', {
-            type: 'line',
-            data: {
-              labels: this.xAxis,
-              datasets: [
-                {
-                  label: 'Completed Task',
-                  data: this.xReqData,
-                  backgroundColor: '#267ADC',
-                  borderColor: '#267ADC',
-                  borderWidth: 1
-                },
-                //   {
-                //     label: 'Completed Task',
-                //     data: [20, 50, 90, 10, 70, 3],
-                //      backgroundColor: 'black',
-                //     borderColor: 'black',
-                //     borderWidth: 1
-                // }
-
-
-
-              ]
-            },
-            options: {
-              scales: {
-                y: {
-                  suggestedMin: 0,
-                  suggestedMax: 100
-                }
-              }
-            }
-          });
-
-
-        },
-        error: (err) => {
-          this.toast.openSnackBar("Something went wrong. Unable to Show graph");
-
-
-
-
+          let year = new Date(single.date).getFullYear();
+          let day = new Date(single.date).getDate();
+          single.reqDate = `${month} ${day},${year}`;
         }
-      }
 
-    )
+        this.lineGraph.forEach((obj) => {
+          const arr = this.graphData.filter(
+            (ele) => ele['name'] === obj['reqDate']
+          );
+          if (arr.length === 0) {
+            this.graphData.push({ name: obj['reqDate'] });
+          }
+        });
+
+        this.graphData.forEach((obj) => {
+          const uniqData = this.lineGraph.filter(
+            (ele) => ele['reqDate'] === obj['name']
+          );
+          obj['data'] = uniqData;
+        });
+        console.log(this.graphData);
+
+        let total = 0;
+
+        for (let single of this.graphData) {
+          this.xAxis.push(single.name);
+
+          for (let one of single.data) {
+            total = total + one.value;
+          }
+
+          let totData = ((100 * total) / this.totalMat).toFixed(0);
+
+          this.xReqData.push(totData);
+
+          //console.log(total)
+
+          //this.cum
+        }
+
+        // new Chart()
+
+        this.myChart.destroy();
+
+        this.myChart = new Chart('overviewChart', {
+          type: 'line',
+          data: {
+            labels: this.xAxis,
+            datasets: [
+              {
+                label: 'Completed Task',
+                data: this.xReqData,
+                backgroundColor: '#267ADC',
+                borderColor: '#267ADC',
+                borderWidth: 1,
+              },
+              //   {
+              //     label: 'Completed Task',
+              //     data: [20, 50, 90, 10, 70, 3],
+              //      backgroundColor: 'black',
+              //     borderColor: 'black',
+              //     borderWidth: 1
+              // }
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                suggestedMin: 0,
+                suggestedMax: 100,
+              },
+            },
+          },
+        });
+      },
+      error: (err) => {
+        this.toast.openSnackBar('Something went wrong. Unable to Show graph');
+      },
+    });
   }
 
-
   deleteProject(id) {
-
     if (!this.projectsDeletePermissions?.isSelected) {
       const dialogRef = this._dialog.open(NoPermissionsComponent, {
         width: '30%',
-        panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-        data: "you don't have permissions to Delete project"
+        panelClass: [
+          'custom-modal',
+          'animate__animated',
+          'animate__fadeInDown',
+        ],
+        data: "you don't have permissions to Delete project",
         //data: supply
       });
       return;
@@ -541,23 +531,18 @@ export class DataAnalysisComponent implements OnInit {
     //   return;
     // }
 
-
     const dialogRef = this._dialog.open(ProjectDeletePopupComponent, {
       width: '30%',
       panelClass: ['custom-modal', 'animate__animated', 'animate__fadeInDown'],
-      data: id
+      data: id,
     });
-    dialogRef.afterClosed().subscribe(status => {
+    dialogRef.afterClosed().subscribe((status) => {
       console.log(status);
       if (status === 'yes') {
-
         this.router.navigate(['/']);
       }
       if (status === 'no') {
       }
-    })
-
-
+    });
   }
-
 }

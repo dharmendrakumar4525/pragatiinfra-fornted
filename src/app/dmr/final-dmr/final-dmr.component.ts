@@ -3,6 +3,10 @@ import { DmrService } from '@services/dmr.service';
 import { RecentActivityService } from '@services/recent-activity.service';
 import * as moment from 'moment';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { AuthService } from '@services/auth/auth.service';
+import { UsersService } from '@services/users.service';
+import { SnackbarService } from '@services/snackbar/snackbar.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-final-dmr',
@@ -21,6 +25,11 @@ export class FinalDmrComponent implements OnInit {
   DMRPermissionsView:any;
   constructor(
     private recentActivityService: RecentActivityService,
+    private snack:SnackbarService,
+    private route:ActivatedRoute,
+    private router:Router,
+    private auth: AuthService,
+    private userService: UsersService,
     private dmrServide:DmrService,
     ) {
     this.recentActivityService.getRecentAtivities().subscribe(data => {
@@ -48,7 +57,21 @@ export class FinalDmrComponent implements OnInit {
 
   ngOnInit(): void {
     this.permissions = JSON.parse(localStorage.getItem('loginData'))
+    this.userService.getUserss().subscribe((users) => {
+      const currentUser = users.find(
+        (user) => user._id === this.permissions.user._id
+      );
+
+      if (currentUser) {
     this.DMRPermissionsView = this.permissions.permissions[0]?.ParentChildchecklist[15]?.childList[1];
+  } else {
+    this.snack.notify('Invalid Credentials - User Details not Valid', 1);
+    this.auth.removeUser();
+    this.userService.updateLogin('logout');
+    this.router.navigate(['/login']);
+  }
+  });
+      
   }
   search(event: any, type?: any) {
     if (this.OriginalfinalDmrList && this.OriginalfinalDmrList.length > 0) {

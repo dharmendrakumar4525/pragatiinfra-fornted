@@ -14,6 +14,9 @@ import { UOM_API } from '@env/api_path';
 import { ExcelService } from '@services/export-excel/excel.service';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
+import { AuthService } from '@services/auth/auth.service';
+import { UsersService } from '@services/users.service';
+
 @Component({
   selector: 'app-add-data',
   templateUrl: './add-data.component.html',
@@ -53,7 +56,9 @@ export class AddDataComponent implements OnInit {
     private httpService: RequestService,
     private excelService: ExcelService,
     private snack: SnackbarService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private auth: AuthService,
+    private userService: UsersService,
   ) {
     this.reviseMinDateArray = [];
     this.getUOMList();
