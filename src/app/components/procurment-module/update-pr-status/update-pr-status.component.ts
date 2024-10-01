@@ -225,6 +225,7 @@ export class UpdatePrStatusComponent implements OnInit {
       .PUT(PURCHASE_REQUEST_API, {
         _id: this.details._id,
         status: status,
+        approvedBy:this.permissions.user.name,
         remarks: this.purchaseRequestForm.value.remarks,
       })
       .subscribe((res) => {
