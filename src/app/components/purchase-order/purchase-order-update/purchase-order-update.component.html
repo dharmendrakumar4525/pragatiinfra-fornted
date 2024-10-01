@@ -94,11 +94,20 @@
           <div type="text" class="textareadown">
             <span style="margin-left: 20px;margin-top: 10px;width:500px"><b>Vendor Name: </b>{{poDetails.vendor_detail.vendor_name}}
               <br>
-              <span><b>Vendor Address: </b>
-              {{poDetails.vendor_detail.address.street_address}} {{poDetails.vendor_detail.address.street_address2}} {{poDetails.vendor_detail.address.city}} {{poDetails.vendor_detail.address.state}} {{poDetails.vendor_detail.address.country}} {{poDetails.vendor_detail.address.zip_code}}
+              <span>
+                <b>Vendor Address: </b>
+                <span [style.color]="combineAddress(poDetails.vendor_detail.address) === '' ? 'red' : 'inherit'">
+                  {{ combineAddress(poDetails.vendor_detail.address) === '' ? 'MISSING' : combineAddress(poDetails.vendor_detail.address) }}
+                </span>
+              </span>
             </span>
+            <span>
+              <b style="margin-left: 20px">GSTIN: </b>
+              <span [style.color]="poDetails.vendor_detail.gst_number === '' ? 'red' : 'inherit'">
+                {{ poDetails.vendor_detail.gst_number === "" ? "MISSING" : poDetails.vendor_detail.gst_number }}
+              </span>
             </span>
-           <span><b style="margin-left: 20px">GSTIN: </b>{{poDetails.vendor_detail.gst_number}}</span> 
+            
           </div>
           <div class="msg-teatarea">
             <p>{{poDetails.vendor_message_header}}</p>

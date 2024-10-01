@@ -9,7 +9,9 @@ import {
   RATE_COMPARATIVE_DETAIL_API,
   RATE_COMPARATIVE_API,
   GET_BRAND_API,
-  ITEM_API
+  GET_SITE_API,
+  GET_VENDOR_API,
+  ITEM_API,
 } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { ESignComponent } from '../e-sign/e-sign.component';
@@ -42,6 +44,8 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   purchaseOrderList: any[] = [];
   permissions: any;
   ItemList: any;
+  vendorList: any;
+  siteList: any;
   viewPermission: any;
   editPermission: any;
   addPermission: any;
@@ -57,103 +61,207 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     private http: HttpClient,
     private auth: AuthService,
     private userService: UsersService
-  ) { }
-
+  ) {}
 
   updateItemsWithDetails(itemList) {
-    const itemIds = this.poDetails.items.map(item => item.item.item_id);
+    const itemIds = this.poDetails.items.map((item) => item.item.item_id);
     const itemDetailsMap = itemList.reduce((map, item) => {
-        map[item._id] = item;
-        return map;
+      map[item._id] = item;
+      return map;
     }, {});
 
-    this.poDetails.items = this.poDetails.items.map(item => {
-        const itemId = item.item.item_id;
-        const details = itemDetailsMap[itemId] || {};
+    this.poDetails.items = this.poDetails.items.map((item) => {
+      const itemId = item.item.item_id;
+      const details = itemDetailsMap[itemId] || {};
 
-        return {
-            ...item,
-            item: {
-                ...item.item,
-                categoryDetail: details.categoryDetail || {},
-                subCategoryDetail: details.subCategoryDetail || {},
-                uomDetail: details.uomDetail || {},
-                item_name: details.item_name || item.item.item_name,
-                brandName: details.brandName || item.item.brandName,
-                attachment: details.attachment || item.item.attachment
-            }
-        };
+      return {
+        ...item,
+        item: {
+          ...item.item,
+          categoryDetail: details.categoryDetail || {},
+          subCategoryDetail: details.subCategoryDetail || {},
+          uomDetail: details.uomDetail || {},
+          item_name: details.item_name || item.item.item_name,
+          brandName: details.brandName || item.item.brandName,
+          attachment: details.attachment || item.item.attachment,
+        },
+      };
     });
-    console.log("checkDats", this.poDetails);
+    console.log('checkDats', this.poDetails);
   }
 
+  updateVendorWithDetails(vendorList) {
+   
 
-ngOnInit(): void {
-  // Retrieve user permissions from local storage and parse them as JSON
-  this.permissions = JSON.parse(localStorage.getItem('loginData'));
-
-  // Extract specific permissions related to ParentChildchecklist from the parsed data
-  this.userService.getUserss().subscribe((users) => {
-    const currentUser = users.find(
-      (user) => user._id === this.permissions.user._id
+    const matchingVendor = vendorList.find(
+      (vendor) =>
+        vendor.vendor_name === this.poDetails.vendor_detail.vendor_name
     );
 
-    if (currentUser) {
-  const rolePermission = this.permissions.user.role;
-  const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;
-  
-  // Fetch user permissions and initialize component state
-  this.httpService.GET(GET_ROLE_API_PERMISSION, {}).subscribe({
-    next: (resp: any) => {
-      this.viewPermission =
-        resp.dashboard_permissions[0].ParentChildchecklist[22].childList[0].isSelected;
-      this.addPermission =
-        resp.dashboard_permissions[0].ParentChildchecklist[22].childList[1].isSelected;
-      this.editPermission =
-        resp.dashboard_permissions[0].ParentChildchecklist[22].childList[2].isSelected;
-      this.deletePermission =
-        resp.dashboard_permissions[0].ParentChildchecklist[22].childList[3].isSelected;
-    },
-    error: (err) => {
-      console.log(err);
-    },
-  });
+    if (!matchingVendor) {
+      console.error('No matching vendor found.');
+      return null;
+    }
 
-  // Fetch brand list and item list
-  Promise.all([this.getBrandList(), this.getItemList()])
-    .then(([brandList, itemList]) => {
-      this.brandList = brandList;
-      this.ItemList = itemList;
+   
+    const vendor_detail = {
+      address: {
+        street_address: matchingVendor.address.street_address,
+        street_address2: matchingVendor.address.street_address2,
+        state: matchingVendor.address.state,
+        city: matchingVendor.address.city,
+        zip_code: matchingVendor.address.zip_code,
+        country: matchingVendor.address.country,
+      },
+      contact_person: matchingVendor.contact_person,
+      phone_number: matchingVendor.phone_number,
+      gst_number: matchingVendor.gst_number,
+      pan_number: matchingVendor.pan_number,
+      email: matchingVendor.email,
+      payment_terms: matchingVendor.payment_terms,
+      terms_condition: matchingVendor.terms_condition,
+      vendor_name: matchingVendor.vendor_name,
+      dialcode: matchingVendor.dialcode,
+    };
 
-      // Subscribe to route parameters to retrieve the id parameter
-      this.route.params.subscribe((params) => {
-        if (params['id']) {
-          this.httpService
-            .GET(`${PURCHASE_ORDER_API}/detail`, { _id: params['id'] })
-            .subscribe((res) => {
-              this.poDetails = res.data;
-              console.log("check response",res.data);
-              this.mail_section.patchValue(this.poDetails.vendor_message);
-              this.term_condition.patchValue(this.poDetails.terms_condition);
-
-              // Update items with details once purchase order details are fetched
-              this.updateItemsWithDetails(this.ItemList);
-            });
-        }
-      });
-    })
-    .catch((err) => {
-      console.error('Error fetching data', err);
-    });
-  } else {
-    this.snack.notify('Invalid Credentials - User Details not Valid', 1);
-    this.auth.removeUser();
-    this.userService.updateLogin('logout');
-    this.router.navigate(['/login']);
+    this.poDetails.vendor_detail=vendor_detail;
+    console.log(this.poDetails.vendor_detail);
   }
-});
-}
- 
+
+  updateSiteWithDetails(siteList) {
+    const matchingSite = siteList.find(
+      (site) => site.site_name === this.poDetails.delivery_address.company_name
+    );
+
+    if (!matchingSite) {
+      console.error('No matching site found.');
+      return;
+    }
+
+    const delivery_address = {
+      company_name: matchingSite.site_name,
+      site_code: matchingSite.code,
+      gst_number: '',
+      pan_card: '',
+      contact_person: matchingSite.store_manager,
+      contact_number: matchingSite.store_manager_phone_number,
+      email: matchingSite.site_manager_email,
+      street_address: matchingSite.address.street_address,
+      street_address2: matchingSite.address.street_address2,
+      state: matchingSite.address.state,
+      city: matchingSite.address.city,
+      zip_code: matchingSite.address.zip_code,
+      country: matchingSite.address.country,
+    };
+
+    this.poDetails.delivery_address = delivery_address;
+  }
+
+
+ combineAddress(address) {
+    // Extract values from the address object
+    const {
+      street_address,
+      street_address2,
+      state,
+      city,
+      zip_code,
+      country,
+    } = address;
+  
+    // Create an array of address parts, filtering out empty or falsy values
+    const addressParts = [
+      street_address,
+      street_address2,
+      state,
+      city,
+      zip_code,
+      country,
+    ].filter(part => part && part.trim() !== '');
+  
+    // Join the filtered parts with a comma and return the result
+    return addressParts.join(', ');
+  }
+  
+  
+  
+
+  ngOnInit(): void {
+    // Retrieve user permissions from local storage and parse them as JSON
+    this.permissions = JSON.parse(localStorage.getItem('loginData'));
+
+    // Extract specific permissions related to ParentChildchecklist from the parsed data
+    this.userService.getUserss().subscribe((users) => {
+      const currentUser = users.find(
+        (user) => user._id === this.permissions.user._id
+      );
+
+      if (currentUser) {
+        const rolePermission = this.permissions.user.role;
+        const GET_ROLE_API_PERMISSION = `/roles/role/${rolePermission}`;
+
+        // Fetch user permissions and initialize component state
+        this.httpService.GET(GET_ROLE_API_PERMISSION, {}).subscribe({
+          next: (resp: any) => {
+            this.viewPermission =
+              resp.dashboard_permissions[0].ParentChildchecklist[22].childList[0].isSelected;
+            this.addPermission =
+              resp.dashboard_permissions[0].ParentChildchecklist[22].childList[1].isSelected;
+            this.editPermission =
+              resp.dashboard_permissions[0].ParentChildchecklist[22].childList[2].isSelected;
+            this.deletePermission =
+              resp.dashboard_permissions[0].ParentChildchecklist[22].childList[3].isSelected;
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
+
+        // Fetch brand list and item list
+        Promise.all([
+          this.getBrandList(),
+          this.getItemList(),
+          this.getVendorList(),
+          this.getSiteList(),
+        ])
+          .then(([brandList, itemList, vendorList, siteList]) => {
+            this.brandList = brandList;
+            this.ItemList = itemList;
+            this.vendorList = vendorList;
+            this.siteList = siteList;
+
+            // Subscribe to route parameters to retrieve the id parameter
+            this.route.params.subscribe((params) => {
+              if (params['id']) {
+                this.httpService
+                  .GET(`${PURCHASE_ORDER_API}/detail`, { _id: params['id'] })
+                  .subscribe((res) => {
+                    this.poDetails = res.data;
+                    console.log('check response', res.data);
+                    this.mail_section.patchValue(this.poDetails.vendor_message);
+                    this.term_condition.patchValue(
+                      this.poDetails.terms_condition
+                    );
+
+                    // Update items with details once purchase order details are fetched
+                    this.updateItemsWithDetails(this.ItemList);
+                    this.updateSiteWithDetails(this.siteList);
+                    this.updateVendorWithDetails(this.vendorList);
+                  });
+              }
+            });
+          })
+          .catch((err) => {
+            console.error('Error fetching data', err);
+          });
+      } else {
+        this.snack.notify('Invalid Credentials - User Details not Valid', 1);
+        this.auth.removeUser();
+        this.userService.updateLogin('logout');
+        this.router.navigate(['/login']);
+      }
+    });
+  }
 
   async updateStatus(status: any) {
     if (status == 'revise') {
@@ -253,16 +361,19 @@ ngOnInit(): void {
   }
 
   getFormattedBrandNames(brandName): string {
-    console.log("see BrandName", brandName);
+    console.log('see BrandName', brandName);
     if (this.isArray(brandName)) {
-        return (brandName as string[]).map(brand => {
-            return brand.trim() === '' ? 'others' : this.myBrandName(brand);
-        }).join(' / ');
+      return (brandName as string[])
+        .map((brand) => {
+          return brand.trim() === '' ? 'others' : this.myBrandName(brand);
+        })
+        .join(' / ');
     } else {
-        return brandName.trim() === '' ? 'others' : this.myBrandName(brandName as string);
+      return brandName.trim() === ''
+        ? 'others'
+        : this.myBrandName(brandName as string);
     }
-}
-
+  }
 
   createOrder(): any {
     if (!this.validityDate.valid) {
@@ -284,14 +395,11 @@ ngOnInit(): void {
       .toLowerCase()
       .trim();
 
-
-      console.log("checking company Name", companyNameToMatch);
-      if(companyNameToMatch ==="")
-      {
-        this.snack.notifyHtml("Select the Billing Address", 2);
-        return;
-      }
-        
+    console.log('checking company Name', companyNameToMatch);
+    if (companyNameToMatch === '') {
+      this.snack.notifyHtml('Select the Billing Address', 2);
+      return;
+    }
 
     const filteredList = this.purchaseOrderList.filter((item) => {
       const itemCompanyName = item.billing_address.company_name
@@ -306,14 +414,14 @@ ngOnInit(): void {
     console.log('-------------');
 
     requestData['po_number'] = this.poDetails.po_number;
-    requestData['approved_by']= this.permissions.user.name;
+    requestData['approved_by'] = this.permissions.user.name;
     requestData['status'] = 'ApprovalPending';
     requestData['due_date'] = this.validityDate.value;
     requestData['vendor_message'] = this.mail_section.value;
     requestData.vendor_detail.terms_condition = this.term_condition.value;
     this.load = true;
-    console.log("checking payload________________________",requestData);
-    
+    console.log('checking payload________________________', requestData);
+
     this.httpService
       .PUT(PURCHASE_ORDER_API, requestData)
       .pipe(
@@ -363,7 +471,6 @@ ngOnInit(): void {
             errMessage += '</ul>';
             this.snack.notifyHtml(errMessage, 2);
             this.router.navigate(['/purchase-order']);
-            
           } else {
             this.snack.notify(err.message, 2);
             this.router.navigate(['/purchase-order']);
@@ -372,21 +479,20 @@ ngOnInit(): void {
       });
   }
 
- getBrandNamesByIds(brandIds): string {
+  getBrandNamesByIds(brandIds): string {
     // Create a map for quick lookup of brand names by their IDs
-    console.log("check brand", brandIds);
+    console.log('check brand', brandIds);
     const brandMap = this.brandList.reduce((map, brand) => {
       map[brand._id] = brand.brand_name;
       return map;
     }, {} as Record<string, string>);
-  
+
     // Map the brand IDs to their names and join them with '/'
     return brandIds
-      .map(id => brandMap[id])
-      .filter(name => name) // filter out any undefined names if ID does not exist
+      .map((id) => brandMap[id])
+      .filter((name) => name) // filter out any undefined names if ID does not exist
       .join(' / ');
   }
-
 
   billingAddressPopup() {
     // Open billing address popup
@@ -404,7 +510,7 @@ ngOnInit(): void {
 
         // Update billing address details in poDetails object
         this.poDetails.billing_address.company_name = result.data.companyName;
-        this.poDetails.billing_address.code=result.data.code;
+        this.poDetails.billing_address.code = result.data.code;
         this.poDetails.billing_address.street_address =
           result.data.address.street_address;
         this.poDetails.billing_address.street_address2 =
@@ -462,9 +568,13 @@ ngOnInit(): void {
               console.log('--filteredList--', filteredList);
 
               this.purchaseOrderNumber = filteredList.length + 1;
-              this.poDetails.po_number = `${this.poDetails.billing_address.code}/${this.poDetails.delivery_address.
-                site_code
-                }/${this.getCurrentFinancialYearShort()}/${this.convertToFiveDigitNumber(this.purchaseOrderNumber)}`;
+              this.poDetails.po_number = `${
+                this.poDetails.billing_address.code
+              }/${
+                this.poDetails.delivery_address.site_code
+              }/${this.getCurrentFinancialYearShort()}/${this.convertToFiveDigitNumber(
+                this.purchaseOrderNumber
+              )}`;
               console.log('-------------');
               console.log('this.poDetails.po_number', this.poDetails.po_number);
               console.log('-------------');
@@ -474,8 +584,6 @@ ngOnInit(): void {
     });
   }
 
- 
-
   mailingAddressPopup() {
     const address = this.dialog.open(MailingAddressPopupComponent, {
       autoFocus: false,
@@ -483,11 +591,31 @@ ngOnInit(): void {
     address.afterClosed().subscribe((result: any) => {});
   }
   getBrandList() {
-    return this.httpService.GET(GET_BRAND_API, {}).toPromise().then(res => res.data);
+    return this.httpService
+      .GET(GET_BRAND_API, {})
+      .toPromise()
+      .then((res) => res.data);
   }
 
   getItemList() {
-    return this.httpService.GET(ITEM_API, {}).toPromise().then(res => res.data);
+    return this.httpService
+      .GET(ITEM_API, {})
+      .toPromise()
+      .then((res) => res.data);
+  }
+
+  getVendorList() {
+    return this.httpService
+      .GET(GET_VENDOR_API, {})
+      .toPromise()
+      .then((res) => res.data);
+  }
+
+  getSiteList() {
+    return this.httpService
+      .GET(GET_SITE_API, {})
+      .toPromise()
+      .then((res) => res.data);
   }
   myBrandName(brandId: any) {
     // console.log("mybrandfunction",brandId)
@@ -496,7 +624,6 @@ ngOnInit(): void {
     return brand[0].brand_name;
   }
 
-  
   getCurrentFinancialYearShort() {
     const today = new Date();
     const year = today.getFullYear();
@@ -504,15 +631,17 @@ ngOnInit(): void {
 
     // Financial year starts in April
     if (month >= 4) {
-        return `${(year).toString().slice(-2)} - ${(year+1).toString().slice(-2)}`
+      return `${year.toString().slice(-2)} - ${(year + 1)
+        .toString()
+        .slice(-2)}`;
     } else {
-        return `${(year - 1).toString().slice(-2)} - ${(year).toString().slice(-2)}`;
+      return `${(year - 1).toString().slice(-2)} - ${year
+        .toString()
+        .slice(-2)}`;
     }
-}
+  }
 
- convertToFiveDigitNumber(number) {
-  return number.toString().padStart(4, '0');
-}
-
-
+  convertToFiveDigitNumber(number) {
+    return number.toString().padStart(4, '0');
+  }
 }
