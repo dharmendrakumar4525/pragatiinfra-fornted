@@ -43,6 +43,7 @@ export class RateApprovalUpdateComponent implements OnInit {
   vendorItemsTables: any[] = [];
   vendorItemsForm: FormGroup;
   id: any;
+  files:any;
   siteList: any;
   load = false;
   isSaved = true;
@@ -61,6 +62,7 @@ export class RateApprovalUpdateComponent implements OnInit {
   purchaseRequestForm = new FormGroup({
     title: new FormControl({ value: '', disabled: true }, Validators.required),
     date: new FormControl({ value: '', disabled: true }, Validators.required),
+    files:new FormControl([]),
     expected_delivery_date: new FormControl(
       { value: '', disabled: true },
       Validators.required
@@ -129,8 +131,10 @@ export class RateApprovalUpdateComponent implements OnInit {
       site: data.site,
       local_purchase: data.local_purchase,
       remarks: data.remarks,
+      files:data.files,
     });
     this.curr_site = data.site;
+    this.files=data.files,
     this.vendorItemsTables = data.vendorRatesVendorWise;
     console.log('vendorItemsTable', this.vendorItemsTables);
     this.purchaseRequestForm.controls['remarks'].disable();

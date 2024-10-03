@@ -25,6 +25,7 @@ export class RateComparativeDetailsComponent implements OnInit {
   finalVendorArray:any[]=[];
   VendorItems: FormArray = this.formBuilder.array([]);
   filteredItems:any;
+  files:any;
   isSaved = true;
   vendorItemsTables :any;
   purchaseRequestForm = new FormGroup({
@@ -36,6 +37,7 @@ export class RateComparativeDetailsComponent implements OnInit {
     site: new FormControl({value:'',disabled:true}, Validators.required),
     local_purchase: new FormControl({value:'',disabled:true}, Validators.required),
     remarks: new FormControl('', []),
+    files:new FormControl([]),
     items: this.formBuilder.array([]),
     _id: new FormControl()
   });
@@ -178,7 +180,9 @@ export class RateComparativeDetailsComponent implements OnInit {
       site: data.site,
       local_purchase: data.local_purchase,
       remarks: data.remarks,
+      files:data.files,
     });
+    this.files=data.files;
     this.vendorItemsTables=data.vendorRatesVendorWise;
     console.log("vendorItemsTable", this.vendorItemsTables);
     this.purchaseRequestForm.controls['remarks'].disable();

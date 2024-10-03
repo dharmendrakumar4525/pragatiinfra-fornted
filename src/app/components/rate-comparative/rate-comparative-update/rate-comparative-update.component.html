@@ -348,9 +348,24 @@
 </div>
 
 
-  <div style="display: flex; justify-content: left; padding-top: 20px;">
+<div class="upload-save-container">
+  <div class="upload-file-section">
+    <input type="file" (change)="onFilesSelected($event)" multiple>
+    <div *ngIf="files">
+      <ul>
+        <li *ngFor="let file of files" class="file-item">
+          {{ file.name }}
+          <button (click)="removeFile(file)" class="remove-file-btn">x</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="save-button-section">
     <button class="p-btns-button" (click)="saveAndHighlight()" [disabled]="isSaved">Save Rates</button>
-   </div>
+  </div>
+</div>
+
 </div>
 
 

@@ -302,3 +302,34 @@ form {
 input[readonly="true"],input[readonly],.mat-select-disabled {
   opacity: 0.6;
 }
+
+.upload-save-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.upload-file-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-item {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.remove-file-btn {
+  border: none;
+  color: red;
+  font-weight: bold;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.save-button-section {
+  padding-top: 20px;
+}
+

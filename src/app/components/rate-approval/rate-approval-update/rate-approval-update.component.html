@@ -306,8 +306,12 @@
   </div>
   </div>
   </div>
- 
-
+  <div *ngFor="let attachment of files; let i = index" style="margin: 20px; display: inline-block;">
+    <a [href]="attachment" style="border: 1px solid; padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px; font-size: 15px; margin-right: 10px;">
+      Vendor Rates attachment {{i + 1}}
+    </a>
+  </div>
+  
 
 
 
