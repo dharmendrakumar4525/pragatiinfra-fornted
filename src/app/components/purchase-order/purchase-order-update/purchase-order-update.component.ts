@@ -11,6 +11,7 @@ import {
   GET_BRAND_API,
   GET_SITE_API,
   GET_VENDOR_API,
+  ESIGN_UPLOAD_API,
   ITEM_API,
 } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
@@ -19,7 +20,7 @@ import { BillingAddressPopupComponent } from '../billing-address-popup/billing-a
 import { MailingAddressPopupComponent } from '../mailing-address-popup/mailing-address-popup.component';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
-import { forkJoin, of, switchMap } from 'rxjs';
+import { forkJoin, of, retry, switchMap } from 'rxjs';
 import { ORG_REQUEST_API } from '@env/api_path';
 import { AuthService } from '@services/auth/auth.service';
 import { UsersService } from '@services/users.service';
@@ -40,10 +41,15 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   load: boolean;
   esignImage: any;
   brandList: any;
+  vendorFiles:any;
+  fileUploaded=true;
   purchaseOrderNumber: number;
   purchaseOrderList: any[] = [];
   permissions: any;
   ItemList: any;
+  files:any[]=[];
+  vendorAttachmentLength:number;
+  rateApproval:any;
   vendorList: any;
   siteList: any;
   viewPermission: any;
@@ -230,6 +236,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
             this.vendorList = vendorList;
             this.siteList = siteList;
 
+
             // Subscribe to route parameters to retrieve the id parameter
             this.route.params.subscribe((params) => {
               if (params['id']) {
@@ -237,12 +244,15 @@ export class PurchaseOrderUpdateComponent implements OnInit {
                   .GET(`${PURCHASE_ORDER_API}/detail`, { _id: params['id'] })
                   .subscribe((res) => {
                     this.poDetails = res.data;
+                    this.getRateApprovalList(res.data.rate_approval_id);
+                    //this.vendorAttachmentLength = this.rateApproval.vendors_total.length;
+                    console.log("checking rateApproval",this.rateApproval);
                     console.log('check response', res.data);
                     this.mail_section.patchValue(this.poDetails.vendor_message);
                     this.term_condition.patchValue(
                       this.poDetails.terms_condition
                     );
-
+                      this.vendorFiles=res.data.vendor_files;
                     // Update items with details once purchase order details are fetched
                     this.updateItemsWithDetails(this.ItemList);
                     this.updateSiteWithDetails(this.siteList);
@@ -380,6 +390,13 @@ export class PurchaseOrderUpdateComponent implements OnInit {
       this.validityDate.markAsTouched();
       return false;
     }
+
+    if(!this.fileUploaded)
+    {
+  this.snack.notify("Files not Uploaded, Upload the files",2)
+  return false;
+    }
+
     let requestData: any = this.poDetails;
     //console.log("--requestDAta--",requestData)
     for (let i = 0; i < requestData.items.length; i++) {
@@ -412,7 +429,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     console.log('-------------');
     console.log('this.poDetails.po_number', this.poDetails.po_number);
     console.log('-------------');
-
+    requestData['vendor_files']=this.vendorFiles;
     requestData['po_number'] = this.poDetails.po_number;
     requestData['approved_by'] = this.permissions.user.name;
     requestData['status'] = 'ApprovalPending';
@@ -421,7 +438,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     requestData.vendor_detail.terms_condition = this.term_condition.value;
     this.load = true;
     console.log('checking payload________________________', requestData);
-
+   
     this.httpService
       .PUT(PURCHASE_ORDER_API, requestData)
       .pipe(
@@ -584,6 +601,112 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     });
   }
 
+  onFilesSelected(event: any): void {
+    const fileList: FileList = event.target.files;
+    console.log('file', fileList);
+    if(fileList.length+this.vendorFiles.length+this.files.length >this.vendorAttachmentLength)
+    {
+      
+      this.snack.notify(`only ${this.vendorAttachmentLength} files Required`,2);
+      return;
+    }
+    if (fileList.length > 0) {
+      const files = Array.from(fileList);
+
+      this.files = files;
+      this.fileUploaded=false;
+
+      console.log(this.files);
+    }
+  }
+
+  removeFile(file: File): void {
+    const updatedFiles = this.files.filter((f: File) => f.name !== file.name);
+    console.log('there', updatedFiles);
+    this.files = updatedFiles;
+    if(this.files.length<=0)
+    {
+       this.fileUploaded=true;
+    }
+  }
+
+  uploadFiles(){
+
+    const formData = this.convertToFormData(this.files);
+    this.load = true;
+    this.httpService.POST(ESIGN_UPLOAD_API, formData).subscribe({
+      next: (res) => {
+        console.log("check response", res);
+        this.vendorFiles=[...this.vendorFiles,...res.data.filename]
+        this.files=[];
+        this.rateApproval['files'] = this.vendorFiles;
+        console.log("check Payload here",  this.rateApproval);
+  
+        // Second API call to update the rate comparative data
+       
+        this.httpService.PUT("/rate-approval/Upload-files", this.rateApproval).subscribe({
+          next: (res) => {
+            this.fileUploaded=true;
+
+            this.snack.notify('File Uploaded Successfully', 1);
+            
+            this.load = false;
+          },
+          error: (err) => {
+            this.handleError(err);
+          }
+        });
+       
+      },
+      error: (err: any) => {
+        this.load = false; // Stop loading on error
+        this.handleError(err);
+      },
+    });
+  }
+
+  private handleError(err: any) {
+    let errMessage = '<ul>';
+    if (err.errors && !isEmpty(err.errors)) {
+      for (let e in err.errors) {
+        let objData = err.errors[e];
+        errMessage += `<li>${objData[0]}</li>`;
+      }
+    } else {
+      errMessage += `<li>${err.message}</li>`;
+    }
+    errMessage += '</ul>';
+    this.snack.notifyHtml(errMessage, 2);
+  }
+
+  convertToFormData( files: File[]): FormData {
+    const formData = new FormData();
+
+    const appendFormData = (formData: FormData, key: string, value: any) => {
+      if (Array.isArray(value)) {
+        value.forEach((element, index) => {
+          if (typeof element === 'object' && element !== null) {
+            appendFormData(formData, `${key}[${index}]`, element);
+          } else {
+            formData.append(`${key}[${index}]`, element);
+          }
+        });
+      } else if (typeof value === 'object' && value !== null) {
+        Object.keys(value).forEach((subKey) => {
+          appendFormData(formData, `${key}.${subKey}`, value[subKey]);
+        });
+      } else {
+        formData.append(key, value);
+      }
+    };
+
+    files.forEach((file, index) => {
+      formData.append(`files[${index}]`, file, file.name);
+    });
+
+    return formData;
+  }
+
   mailingAddressPopup() {
     const address = this.dialog.open(MailingAddressPopupComponent, {
       autoFocus: false,
@@ -610,6 +733,32 @@ export class PurchaseOrderUpdateComponent implements OnInit {
       .toPromise()
       .then((res) => res.data);
   }
+
+  getRateApprovalList(_id: string): void {
+    console.log(_id);
+    this.httpService
+      .GET(`${RATE_COMPARATIVE_DETAIL_API}`, { _id: _id })
+      .subscribe({
+        next: (res) => {
+          this.rateApproval = res.data.details;
+        
+          // Assuming rateApproval.vendors_total is an array
+          if (this.rateApproval && this.rateApproval.vendors_total) {
+            this.vendorAttachmentLength = this.rateApproval.vendors_total.length;
+          } else {
+            this.vendorAttachmentLength = 0; // Set to 0 if the array doesn't exist
+          }
+          console.log("checking here the ",this.rateApproval);
+        },
+
+        
+        error: (err) => {
+          console.error('Error fetching rate approval:', err);
+          this.vendorAttachmentLength = 0; // Set to 0 in case of an error
+        }
+      });
+  }
+  
 
   getSiteList() {
     return this.httpService

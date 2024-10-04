@@ -235,3 +235,26 @@ tr:nth-child(even) {
   //   width: 90%;
   // }
 }
+.file-list {
+  list-style-type: none; /* Remove default list styling */
+  padding: 0; /* Remove default padding */
+}
+
+.file-item {
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 20px; /* Rounded corners */
+  padding: 7px; /* Space inside the item */
+  margin: 5px 0; /* Space between items */
+  display: flex; /* Flexbox for alignment */
+  justify-content: space-between; /* Space between name and button */
+  align-items: center;
+  background-color: #f9f9f9; /* Center vertically */
+}
+
+.remove-file-btn {
+  color: red; /* Red font color for the button */
+  background: none; /* No background */
+  border: none; /* No border */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-weight: bold; /* Optional: make the text bold */
+}

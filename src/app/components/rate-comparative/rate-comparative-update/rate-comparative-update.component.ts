@@ -440,12 +440,6 @@ export class RateComparativeUpdateComponent implements OnInit {
       }
     };
 
-    // Append all key-value pairs from the data object
-  /*  Object.keys(data).forEach((key) => {
-      appendFormData(formData, key, data[key]);
-    }); */
-
-    // Append files to the FormData object
     files.forEach((file, index) => {
       formData.append(`files[${index}]`, file, file.name);
     });
@@ -762,11 +756,6 @@ export class RateComparativeUpdateComponent implements OnInit {
   onFilesSelected(event: any): void {
     const fileList: FileList = event.target.files;
     console.log('file', fileList);
-    if (fileList.length > 5) {
-      this.snack.notify('Can upload Maximum 5 Files', 2);
-      return;
-    }
-
     if (fileList.length > 0) {
       const files = Array.from(fileList);
 

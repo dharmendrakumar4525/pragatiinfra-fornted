@@ -503,6 +503,7 @@ export class RateApprovalUpdateComponent implements OnInit {
       this.details['po_number'] = this.po_no;
       this.details['handle_by'] = this.permissions.user.name;
       this.details['Pocount'] = Pocount;
+      this.details['files'] = this.files;
       if (this.details.status == 'revise') this.details['isRevised'] = true;
       this.details['status'] = 'approved';
     }
@@ -511,6 +512,7 @@ export class RateApprovalUpdateComponent implements OnInit {
     }
 
     console.log('details', this.details);
+    
 
     console.log('');
     this.load = true;
