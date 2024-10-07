@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PURCHASE_REQUEST_API } from '@env/api_path';
+import { PURCHASE_REQUEST_API, PURCHASE_ORDER_API } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
@@ -46,7 +46,8 @@ export class PrstatusComponent implements OnInit {
       }
   }
   getList() {
-    this.httpService.GET(PURCHASE_REQUEST_API, {}).subscribe(res => {
+    this.httpService.GET(PURCHASE_ORDER_API, {}).subscribe(res => {
+      console.log(res.data);
       this.prList = res.data;
       this.allprList=res.data
       // const date2 = new Date(this.allprList[1].expected_delivery_date);

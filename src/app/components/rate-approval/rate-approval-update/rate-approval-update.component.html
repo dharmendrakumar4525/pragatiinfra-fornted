@@ -306,9 +306,11 @@
   </div>
   </div>
   </div>
-  <div *ngFor="let attachment of files; let i = index" style="margin: 20px; display: inline-block;">
-    <a [href]="attachment" style="border: 1px solid; padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px; font-size: 15px; margin-right: 10px;">
-      Vendor Rates attachment {{i + 1}}
+  <div *ngFor="let file of files | keyvalue" style="margin: 20px; display: inline-block;">
+    <a [href]="file.value" 
+       style="border: 1px solid; padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px; font-size: 15px; margin-right: 10px;" 
+       target="_blank" rel="noopener noreferrer">
+      {{ getVendorNameByCode(file.key) }} Quotation <!-- Display the file name (key) -->
     </a>
   </div>
   

@@ -43,7 +43,7 @@ export class RateApprovalUpdateComponent implements OnInit {
   vendorItemsTables: any[] = [];
   vendorItemsForm: FormGroup;
   id: any;
-  files:any;
+  files: { [key: string]: any } = {};
   siteList: any;
   load = false;
   isSaved = true;
@@ -230,6 +230,11 @@ export class RateApprovalUpdateComponent implements OnInit {
     this.httpService.GET('/vendor', {}).subscribe((res) => {
       this.vendorList = res.data;
     });
+  }
+
+  getVendorNameByCode(vendorCode: string): string | undefined {
+    const vendor = this.vendorList.find(v => v.code === vendorCode);
+    return vendor ? vendor.vendor_name : "Other"; // Return the vendor name or undefined if not found
   }
 
   getVendorIds(table: any): string[] {

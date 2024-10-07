@@ -423,9 +423,15 @@
     </div>
 
     <div style="display: flex; gap: 20px; justify-content: end; align-items: center;">
-      <input type="file" (change)="onFilesSelected($event)" multiple />
+
+      <div *ngIf="poDetails.status !== 'rejected'">
+        <div *ngIf="poDetails.po_files.length===0">
+      <input type="file" (change)="onFilesSelected($event)" />
+      </div>
+      </div>
     
       <div *ngIf="poDetails.status !== 'rejected'">
+        <div *ngIf="poDetails.po_files.length===0">
         <button
           style="
             padding: 8px;
@@ -448,6 +454,7 @@
             style="margin-left: 10px; margin-right: 10px"
           />
         </button>
+      </div>
       </div>
     
       <div *ngIf="poDetails.status == 'approved'">

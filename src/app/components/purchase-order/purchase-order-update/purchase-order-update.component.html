@@ -437,22 +437,7 @@
           >
             <div>
               <div>
-                <h4
-                  *ngIf="
-                    vendorAttachmentLength -
-                      vendorFiles.length -
-                      files.length !==
-                    0
-                  "
-                  style="color: red; font-size: 14px"
-                >
-                  {{ vendorAttachmentLength - vendorFiles.length }} Vendor
-                  Quotations file Missing
-                </h4>
-                <h4>
-                  Total Vendor Quotation File :
-                  {{ vendorFiles.length + files.length }}
-                </h4>
+               <h4 *ngIf="pendingVendorFiles" style="font-weight: bold; color:red">{{getVendorNamesString(pendingVendorFiles)}} Quotation file Missing, Upload the File to Create PO</h4>
 
                 <input
                   type="file"

@@ -45,10 +45,7 @@ export class PurchaseOrderListComponent implements OnInit {
       value: 'revise',
       label: 'Revise PO'
     },
-    {
-      value: 'VendorAccepted',
-      label: 'Vendor Accepted PO'
-    },
+   
   ]
   rateComparativeList: any;
   filter_by = "status";

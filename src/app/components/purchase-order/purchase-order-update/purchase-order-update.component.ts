@@ -41,13 +41,14 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   load: boolean;
   esignImage: any;
   brandList: any;
-  vendorFiles:any;
+  vendorFiles:{ [key: string]: any } = {};;
   fileUploaded=true;
   purchaseOrderNumber: number;
   purchaseOrderList: any[] = [];
   permissions: any;
   ItemList: any;
   files:any[]=[];
+  pendingVendorFiles:any[]=[];
   vendorAttachmentLength:number;
   rateApproval:any;
   vendorList: any;
@@ -245,7 +246,8 @@ export class PurchaseOrderUpdateComponent implements OnInit {
                   .subscribe((res) => {
                     this.poDetails = res.data;
                     this.getRateApprovalList(res.data.rate_approval_id);
-                    //this.vendorAttachmentLength = this.rateApproval.vendors_total.length;
+                    
+                  
                     console.log("checking rateApproval",this.rateApproval);
                     console.log('check response', res.data);
                     this.mail_section.patchValue(this.poDetails.vendor_message);
@@ -396,6 +398,12 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   this.snack.notify("Files not Uploaded, Upload the files",2)
   return false;
     }
+
+    if(this.vendorAttachmentLength > Object.keys (this.vendorFiles).length)
+      {
+    this.snack.notify("All Vendor Quotation Mandatary, Upload the remaining",2)
+    return false;
+      }
 
     let requestData: any = this.poDetails;
     //console.log("--requestDAta--",requestData)
@@ -604,7 +612,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   onFilesSelected(event: any): void {
     const fileList: FileList = event.target.files;
     console.log('file', fileList);
-    if(fileList.length+this.vendorFiles.length+this.files.length >this.vendorAttachmentLength)
+    if(fileList.length+Object.keys (this.vendorFiles).length+this.files.length >this.vendorAttachmentLength)
     {
       
       this.snack.notify(`only ${this.vendorAttachmentLength} files Required`,2);
@@ -637,7 +645,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     this.httpService.POST(ESIGN_UPLOAD_API, formData).subscribe({
       next: (res) => {
         console.log("check response", res);
-        this.vendorFiles=[...this.vendorFiles,...res.data.filename]
+        this.vendorFiles = { ...this.vendorFiles, ...res.data.filename };
         this.files=[];
         this.rateApproval['files'] = this.vendorFiles;
         console.log("check Payload here",  this.rateApproval);
@@ -745,6 +753,10 @@ export class PurchaseOrderUpdateComponent implements OnInit {
           // Assuming rateApproval.vendors_total is an array
           if (this.rateApproval && this.rateApproval.vendors_total) {
             this.vendorAttachmentLength = this.rateApproval.vendors_total.length;
+            const vendorArray=this.createVendorArray(this.rateApproval.vendors_total);
+            const finalArray=this.getVendorsNotInObject(vendorArray, this.rateApproval.files)
+            this.pendingVendorFiles=finalArray;
+            console.log("check Final Array",finalArray);
           } else {
             this.vendorAttachmentLength = 0; // Set to 0 if the array doesn't exist
           }
@@ -758,7 +770,36 @@ export class PurchaseOrderUpdateComponent implements OnInit {
         }
       });
   }
+   getVendorNamesString(array: any[]): string {
+    return array.map(item => item.vendor_name).join(', ');
+  }
+
+
+  createVendorArray(items: any[]) {
+    console.log(this.vendorList);
+    return items.map(item => {
+      const vendorInfo = this.vendorList.find(vendor => vendor._id === item.vendor_id);
   
+      if (vendorInfo) {
+        return {
+          code: vendorInfo.code,
+          _id :vendorInfo._id,
+          vendor_name: vendorInfo.vendor_name
+        };
+      } else {
+        return {
+          vendor_code: 'Unknown',
+          vendor_name: 'Unknown'
+        };
+      }
+    });
+  }
+  
+  
+  getVendorsNotInObject(vendorArray: any[], vendorObject: any) {
+  return vendorArray.filter(vendor => !vendorObject.hasOwnProperty(vendor.vendor_code));
+}
+
 
   getSiteList() {
     return this.httpService

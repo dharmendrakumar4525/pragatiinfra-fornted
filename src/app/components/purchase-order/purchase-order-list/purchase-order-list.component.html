@@ -102,12 +102,18 @@
           </td>
          
           <hr style="border: 1px solid #D9D9D9;height: 30px;">
-          <td style="color: #4272BF;width:400px;">Requested on: {{obj.date}}</td>
-          <hr style="border: 1px solid hsl(0, 0%, 85%);height: 30px;">
-          <td style="color: #4272BF;width:500px;font-size: 15px;">Title&nbsp;: <span
-              style="color: #000000;">{{obj.title}}</span> </td>
+
+          <td style="color: #4272BF;width:300px;text-align: left;  padding: 10px;font-size: 15px;">
+            Title : {{obj.title}}<span style="color: #000000;"></span>
+          </td>
+         
           <hr style="border: 1px solid #D9D9D9;height: 30px;">
-  
+          <ng-container *ngIf="obj.status === 'approved'">
+            <td [ngStyle]="{ 'color': obj.po_files ? 'green' : 'red', 'width': '500px', 'font-size': '15px' }">
+              {{ obj.po_files ? 'Vendor Accepted PO' : 'Vendor Acceptance Pending' }}
+            </td>
+            <hr style="border: 1px solid #D9D9D9;height: 30px;">
+          </ng-container>
           <td style="background-color: #233A61;color:#fff;width:200px;font-size: 14px;cursor: pointer;"
             *ngIf="obj.status=='pending'" [routerLink]="['/purchase-order/update',obj._id]">Generate &nbsp;PO</td>
             <td style="background-color: #233A61;color:#fff;width:200px;font-size: 14px;cursor: pointer;"

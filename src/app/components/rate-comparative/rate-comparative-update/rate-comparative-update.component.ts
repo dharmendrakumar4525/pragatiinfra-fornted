@@ -230,7 +230,7 @@ export class RateComparativeUpdateComponent implements OnInit {
     this.httpService.POST(ESIGN_UPLOAD_API, formData).subscribe({
       next: (res) => {
         console.log("check response", res);
-        requestedData['files'] = res.data.filename;
+        requestedData['files'] = res.data.filenames;
         console.log("check Payload here", requestedData);
   
         // Second API call to update the rate comparative data

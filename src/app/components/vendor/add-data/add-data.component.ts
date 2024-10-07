@@ -15,10 +15,13 @@ export class AddDataComponent implements OnInit {
 
   AllSubCategoryList:any=[];
   subCategoryList:any=[];
+  vendorLength:number;
+
 
   addForm = new FormGroup({
     vendor_name: new FormControl("", Validators.required),
     category: new FormControl([], Validators.required),
+    code:new FormControl( 0, Validators.required),
     SubCategory:new FormControl([], Validators.required),
     contact_person: new FormControl("", Validators.required),
     dialcode: new FormControl('+91'),
@@ -46,6 +49,25 @@ export class AddDataComponent implements OnInit {
 
     this.httpService.GET(CATEGORY_API, {}).subscribe(res => {
       this.categoryList = res.data;
+      //console.log(this.categoryList)
+    }, (err) => {
+      if (err.errors && !isEmpty(err.errors)) {
+        let errMessage = '<ul>';
+        for (let e in err.errors) {
+          let objData = err.errors[e];
+          errMessage += `<li>${objData[0]}</li>`;
+        }
+        errMessage += '</ul>';
+        this.snack.notifyHtml(errMessage, 2);
+      } else {
+        this.snack.notify(err.message, 2);
+      }
+
+    })
+
+    this.httpService.GET(VENDOR_API, {}).subscribe(res => {
+      this.vendorLength = res.data.length+1;
+      this.addForm.get('code').setValue(this.vendorLength);
       //console.log(this.categoryList)
     }, (err) => {
       if (err.errors && !isEmpty(err.errors)) {

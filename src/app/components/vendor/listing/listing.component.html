@@ -35,6 +35,7 @@
           <tr>
             <th scope="col">SN.</th>
             <th scope="col">Vendor Name</th>
+            <th scope="col">Code</th>
             <th scope="col">Category</th>
             <th scope="col">Sub Category</th>
             <th scope="col">Contact Person</th>
@@ -51,6 +52,7 @@
           <tr *ngFor="let item of vendorList; let i = index">
             <td scope="row">{{ i + 1 }}</td>
             <td>{{ item?.vendor_name }}</td>
+            <td>{{ item?.code }}</td>
             <td>{{ item?.category }}</td>
             <td>{{ item?.SubCategory }}</td>
             <td>{{ item?.contact_person }}</td>

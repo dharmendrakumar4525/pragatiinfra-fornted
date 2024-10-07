@@ -177,7 +177,7 @@ export class NavigationSidePanelComponent implements OnInit, OnDestroy {
     },
 
     {
-      link_name: "PR status",
+      link_name: "PO status",
       link: '/prstatus',
       icon: "bx bx-collection",
       img: '../../../assets/images/icons/PR.svg',

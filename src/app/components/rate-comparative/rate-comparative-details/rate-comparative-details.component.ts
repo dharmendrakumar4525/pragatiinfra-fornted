@@ -22,12 +22,14 @@ export class RateComparativeDetailsComponent implements OnInit {
   siteList: any;
   load = false;
   items: FormArray;
+  vendorList: any[] = [];
   finalVendorArray:any[]=[];
   VendorItems: FormArray = this.formBuilder.array([]);
   filteredItems:any;
-  files:any;
+  files: { [key: string]: any } = {};
   isSaved = true;
   vendorItemsTables :any;
+
   purchaseRequestForm = new FormGroup({
     title: new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
@@ -37,7 +39,7 @@ export class RateComparativeDetailsComponent implements OnInit {
     site: new FormControl({value:'',disabled:true}, Validators.required),
     local_purchase: new FormControl({value:'',disabled:true}, Validators.required),
     remarks: new FormControl('', []),
-    files:new FormControl([]),
+    files:new FormControl({}),
     items: this.formBuilder.array([]),
     _id: new FormControl()
   });
@@ -58,6 +60,7 @@ export class RateComparativeDetailsComponent implements OnInit {
 
   ) {
     this.getSiteList();
+    this.getVendorList();
     this.getBrandList();
     this.userService.getUserss().subscribe(data => {
       this.users = data
@@ -182,7 +185,9 @@ export class RateComparativeDetailsComponent implements OnInit {
       remarks: data.remarks,
       files:data.files,
     });
-    this.files=data.files;
+
+    this.files = data.files;
+   
     this.vendorItemsTables=data.vendorRatesVendorWise;
     console.log("vendorItemsTable", this.vendorItemsTables);
     this.purchaseRequestForm.controls['remarks'].disable();
@@ -454,6 +459,12 @@ vendorTotal(item:any){
       //console.log("site",this.siteList)
     })
   }
+  getVendorList() {
+    this.httpService.GET('/vendor', {}).subscribe((res) => {
+      this.vendorList = res.data;
+    });
+  }
+
 
   isVendorSelected(items: any): any[] {
     //console.log(items,"Items")
@@ -461,6 +472,10 @@ vendorTotal(item:any){
       && vendor.subCategory==items.subCategoryDetail._id)
     //console.log(tempVendorList,"LLL")
     return tempVendorList;
+  }
+  getVendorNameByCode(vendorCode: string): string | undefined {
+    const vendor = this.vendorList.find(v => v.code === vendorCode);
+    return vendor ? vendor.vendor_name : "Other"; // Return the vendor name or undefined if not found
   }
   detailsOfVendor(vendor:any,type:any,i:any){
     // console.log("object")
@@ -522,6 +537,7 @@ vendorTotal(item:any){
               return false; // Exclude the item when it's already in temparr
             });
             this.patchData(res.data.details);  
+          
                      
           }, error: (error) => {
             this.router.navigate(['/rate-comparative'])

@@ -145,13 +145,15 @@ export class PurchaseOrderDetailsComponent implements OnInit {
   onFilesSelected(event: any): void {
     const fileList: FileList = event.target.files;
     console.log('file', fileList);
-    if (fileList.length > 0) {
+    
+    if (fileList.length === 1) {
       const files = Array.from(fileList);
 
       this.files = files;
 
       console.log(this.files);
     }
+
   }
 
   removeFile(file: File): void {
