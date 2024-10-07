@@ -66,7 +66,7 @@ export class AddDataComponent implements OnInit {
     })
 
     this.httpService.GET(VENDOR_API, {}).subscribe(res => {
-      this.vendorLength = res.data.length+1;
+      this.vendorLength = (res.data[res.data.length-1].code)+1;
       this.addForm.get('code').setValue(this.vendorLength);
       //console.log(this.categoryList)
     }, (err) => {
