@@ -233,7 +233,8 @@ export class RateApprovalUpdateComponent implements OnInit {
   }
 
   getVendorNameByCode(vendorCode: string): string | undefined {
-    const vendor = this.vendorList.find(v => v.code === vendorCode);
+    console.log("checking vendor code",parseInt(vendorCode, 10));
+    const vendor = this.vendorList.find(v => v.code.toString() === vendorCode);
     return vendor ? vendor.vendor_name : "Other"; // Return the vendor name or undefined if not found
   }
 

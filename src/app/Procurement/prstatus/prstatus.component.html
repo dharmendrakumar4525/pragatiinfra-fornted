@@ -84,9 +84,11 @@
 
     <tbody>
       <tr style="background-color: #f4f4f5" *ngFor="let item of prList">
-        <td style="text-align: center; width: 150px;">{{ item.po_number }}</td>
-        <td style="color: #000; width: 150px;">{{ item.title }}</td>
-        <td style="color: #000; width: 200px;">{{ item.delivery_address.company_name }}</td>
+        <td style="text-align: center; width: 150px">{{ item.po_number }}</td>
+        <td style="color: #000; width: 150px">{{ item.title }}</td>
+        <td style="color: #000; width: 200px">
+          {{ item.delivery_address.company_name }}
+        </td>
         <td>{{ item.due_date | date : "dd-MM-yyyy" }}</td>
         <td>{{ item.approved_by }}</td>
         <td>
@@ -103,12 +105,26 @@
             "
           >
             <ng-container>
-              {{ item.status }}
+              {{
+                item.status === "revise"
+                  ? "Revise"
+                  : item.status === "ApprovalPending"
+                  ? "Approval Pending"
+                  : item.status === "approved"
+                  ? "Approved"
+                  : item.status === "pending"
+                  ? "Pending"
+                  : item.status === "rejected"
+                  ? "Rejected"
+                  : item.status
+              }}
             </ng-container>
           </button>
         </td>
+
         <td>
           <button
+            (click)="downloadPRPdf(item.rate_approval_id)"
             style="
               padding: 15px;
               width: 150px;
@@ -125,13 +141,19 @@
         </td>
         <td>
           <button
+            (click)="downloadPOPdf(item._id)"
+            [disabled]="item.status !== 'approved'"
+            [ngStyle]="{
+              'background-color':
+                item.status === 'approved' ? '#233a61' : '#d3d3d3',
+              cursor: item.status === 'approved' ? 'pointer' : 'not-allowed',
+              color: item.status === 'approved' ? '#fff' : '#8c8c8c'
+            }"
             style="
               padding: 15px;
-              background-color: #233a61;
               width: 150px;
               font-family: 'Poppins';
               border-radius: 8px;
-              color: #fff;
               border-color: lightgrey;
               font-size: 14px;
             "
@@ -139,8 +161,11 @@
             <ng-container> Download PO </ng-container>
           </button>
         </td>
+
         <td>
           <button
+
+          (click)="downloadRCPdf(item.rate_approval_id)"
             style="
               padding: 15px;
               width: 250px;
@@ -156,6 +181,7 @@
         </td>
         <td>
           <button
+          (click)="downloadVendorQuotations(item.vendor_files)"
             style="
               padding: 15px;
               width: 250px;
@@ -171,12 +197,21 @@
         </td>
         <td>
           <button
+          
+            (click)="downloadVendorAcceptance(item.po_files)"
+            [disabled]="isObjectEmpty(item.po_files)"
+            [ngStyle]="{
+              'background-color': isObjectEmpty(item.po_files)
+                ? '#d3d3d3'
+                : '#f1f1f1',
+              cursor: isObjectEmpty(item.po_files) ? 'not-allowed' : 'pointer',
+              color: isObjectEmpty(item.po_files) ? '#a9a9a9' : '#233a61'
+            }"
             style="
               padding: 15px;
               width: 250px;
               font-family: 'Poppins';
               border-radius: 8px;
-              color: #233a61;
               border-color: lightgrey;
               font-size: 14px;
             "

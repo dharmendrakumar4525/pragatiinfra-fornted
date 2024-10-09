@@ -622,8 +622,16 @@ export class PurchaseRequestComponent implements OnInit {
           item.siteData.site_name.includes(siteName.site_name)
         );
         // const index=filteredList.length-1;
-        console.log(filteredList[0]);
-        this.requestNo = parseInt(filteredList[0].purchase_request_number) + 1;
+        console.log(filteredList);
+        if(filteredList.length===0)
+        {
+          this.requestNo=1;
+        }
+        else
+        {
+          this.requestNo = parseInt(filteredList[0].purchase_request_number) + 1;
+        }
+       
 
         this.purchaseRequestForm.controls['purchase_request_number'].setValue(
           this.requestNo

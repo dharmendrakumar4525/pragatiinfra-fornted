@@ -782,7 +782,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   
       if (vendorInfo) {
         return {
-          code: vendorInfo.code,
+          code: vendorInfo.code.toString(),
           _id :vendorInfo._id,
           vendor_name: vendorInfo.vendor_name
         };
@@ -797,8 +797,20 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   
   
   getVendorsNotInObject(vendorArray: any[], vendorObject: any) {
-  return vendorArray.filter(vendor => !vendorObject.hasOwnProperty(vendor.vendor_code));
+    console.log("checking vendorArray", vendorArray);
+    console.log("checking Object", vendorObject);
+
+    // Create an array of keys from vendorObject
+    const vendorCodes = Object.keys(vendorObject);
+     console.log(vendorCodes);
+    // Filter vendors whose vendor_code does not exist in vendorCodes
+    return vendorArray.filter(vendor => 
+        !vendorCodes.includes(vendor.code)
+    );
+
+    
 }
+
 
 
   getSiteList() {

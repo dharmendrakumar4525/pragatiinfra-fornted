@@ -437,7 +437,13 @@
           >
             <div>
               <div>
-               <h4 *ngIf="pendingVendorFiles" style="font-weight: bold; color:red">{{getVendorNamesString(pendingVendorFiles)}} Quotation file Missing, Upload the File to Create PO</h4>
+                <h4
+                  *ngIf="pendingVendorFiles && pendingVendorFiles.length > 0"
+                  style="font-weight: bold; color: red"
+                >
+                  {{ getVendorNamesString(pendingVendorFiles) }} Quotation file
+                  Missing, Upload the File to Create PO
+                </h4>
 
                 <input
                   type="file"
@@ -446,9 +452,15 @@
                   #fileInput
                   style="display: none"
                 />
-                <button type="button" (click)="fileInput.click()">
+
+                <button
+                  type="button"
+                  (click)="fileInput.click()"
+                  *ngIf="pendingVendorFiles && pendingVendorFiles.length > 0"
+                >
                   Choose Files
                 </button>
+
                 <div *ngIf="files">
                   <ul class="file-list">
                     <li *ngFor="let file of files" class="file-item">
@@ -480,6 +492,8 @@
               font-family: 'Poppins';
               font-size: 14px;
             "
+
+*ngIf="pendingVendorFiles && pendingVendorFiles.length > 0"
           >
             Upload Files
           </button>

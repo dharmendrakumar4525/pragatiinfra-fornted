@@ -109,8 +109,8 @@
          
           <hr style="border: 1px solid #D9D9D9;height: 30px;">
           <ng-container *ngIf="obj.status === 'approved'">
-            <td [ngStyle]="{ 'color': obj.po_files ? 'green' : 'red', 'width': '500px', 'font-size': '15px' }">
-              {{ obj.po_files ? 'Vendor Accepted PO' : 'Vendor Acceptance Pending' }}
+            <td [ngStyle]="{ 'color': obj.po_files.length !==0 ? 'green' : 'red', 'width': '500px', 'font-size': '15px' }">
+              {{ obj.po_files.length !==0 ? 'Vendor Accepted PO' : 'Vendor Acceptance Pending' }}
             </td>
             <hr style="border: 1px solid #D9D9D9;height: 30px;">
           </ng-container>

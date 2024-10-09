@@ -47,6 +47,10 @@ export class PurchaseOrderDetailsComponent implements OnInit {
     });
   }
 
+  isObjectEmpty(obj: any): boolean {
+    return !obj || Object.keys(obj).length === 0;
+  }
+
   fetchPurchaseOrderDetails(pageId: any) {
     this.httpService.GET(`${PURCHASE_ORDER_API}/detail`, { _id: pageId }).subscribe(res => {
       this.poDetails = res.data;
@@ -210,7 +214,7 @@ export class PurchaseOrderDetailsComponent implements OnInit {
 
 
   uploadFiles(){
-console.log("No files Selected");
+
     if(this.files.length===0)
     {
       this.snack.notify("No File Selected, Choose File First",2)
@@ -221,8 +225,10 @@ console.log("No files Selected");
     this.load = true;
     this.httpService.POST(ESIGN_UPLOAD_API, formData).subscribe({
       next: (res) => {
-        console.log("check response", res);
-        this.UpdateOrder(res.data.filename);
+       console.log(res.data.filenames);
+        const filesData = this.extractLinks(res.data.filenames);
+        console.log("checking File Data", filesData);
+        this.UpdateOrder(filesData);
        
       },
       error: (err: any) => {
@@ -230,6 +236,11 @@ console.log("No files Selected");
         this.handleError(err);
       },
     });
+  }
+
+  extractLinks(file) {
+    console.log(file);
+    return Object.values(file);
   }
 
   private handleError(err: any) {
@@ -308,7 +319,7 @@ console.log("No files Selected");
           this.load = false;
           //console.log(putResp, postResp);
 
-          this.snack.notify('Vendor Acceptance Form Uploaded Successfully.', 1);
+          this.snack.notify('Vendor Acceptance Document Uploaded Successfully.', 1);
           this.router.navigate(['/purchase-order']);
         },
         error: (err: any) => {
