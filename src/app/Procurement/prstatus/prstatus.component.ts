@@ -123,58 +123,55 @@ export class PrstatusComponent implements OnInit {
       });
   }
 
-  downloadVendorAcceptance(urls: string[]) {
-    urls.forEach((url) => {
-      const link = document.createElement('a');
-      link.href = url;
-      link.target = '_blank';
-      link.download = url.split('/').pop();
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+  downloadVendorAcceptance(urls: string[]): void {
+    const url: string = urls[0];
+    console.log(url);
+
+    // Create a temporary anchor element
+    const a: HTMLAnchorElement = document.createElement('a');
+    
+    // Set the href to the file URL and the download attribute to suggest downloading
+    a.href = url;
+    a.download = url.split('/').pop() || 'download'; // Set a default name if not available
+
+    // Force the download by simulating a click on the anchor element
+    a.target = '_blank'; // This ensures it does not open in the same tab
+    document.body.appendChild(a);  // Append the anchor to the DOM
+    a.click();  // Simulate the click to download the file
+    document.body.removeChild(a);  // Clean up by removing the anchor element
+}
+
+
+
+  downloadVendorQuotations(filesObject: any) {
+    // Downloads vendor quotations by extracting URLs from the object and passing them to downloadFiles
+    const fileUrlsArray: string[] = [];
+
+    // Extract file URLs from the object
+    for (const key in filesObject) {
+      if (filesObject.hasOwnProperty(key)) {
+        const fileUrl = filesObject[key];
+        fileUrlsArray.push(fileUrl);
+      }
+    }
+
+    // Pass the array of URLs to download all files
+    this.downloadFiles(fileUrlsArray);
+  }
+
+  downloadFiles(fileLinks: string[]) {
+    // Iterates over all the file URLs and triggers download for each
+    fileLinks.forEach((link) => {
+      const a = document.createElement('a');
+      a.href = link;
+      a.download = '';  // Optionally, you can set a specific file name here
+      document.body.appendChild(a);  // Append to the DOM
+      a.click();  // Trigger the download
+      document.body.removeChild(a);  // Remove the link element after download
     });
   }
 
-  downloadVendorQuotations(filesObject){
-console.log("here urls", filesObject);
-for (const key in filesObject) {
-  if (filesObject.hasOwnProperty(key)) {
-      const fileUrl = filesObject[key];  // Get the file URL
-      this.downloadFileAsBlob(fileUrl, key); // Download the file
-  }
-}
-  }
-
-
-  downloadFileAsBlob(fileUrl: string, filename: string) {
-    // Fetch the file as a blob
-    fetch(fileUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.blob();  // Convert the response to a Blob
-        })
-        .then(blob => {
-            // Create a new link element
-            const link = document.createElement('a');
-            const objectUrl = URL.createObjectURL(blob);  // Create a URL for the blob
-
-            link.href = objectUrl;
-            link.download = filename;  // Set the download filename
-
-            // Programmatically click the link to trigger the download
-            document.body.appendChild(link);
-            link.click();
-
-            // Clean up
-            URL.revokeObjectURL(objectUrl);  // Revoke the object URL to free memory
-            document.body.removeChild(link);
-        })
-        .catch(error => {
-            console.error('Download failed:', error);
-        });
-}
+  
 
   isObjectEmpty(obj: any): boolean {
     return !obj || Object.keys(obj).length === 0;

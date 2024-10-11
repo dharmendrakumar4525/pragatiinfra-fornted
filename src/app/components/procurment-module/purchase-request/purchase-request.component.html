@@ -141,9 +141,11 @@
             <tr>
               <th>S&nbsp;No</th>
               <th>Item*</th>
+              <th>Item specification</th>
               <th>Category</th>
               <th>Sub&nbsp;category</th>
               <th>Uom*</th>
+              <th>HSN Code</th>
               <th>Quantity*</th>
               <th>Brand Name</th>
               <!-- <th>Brand Name</th> -->
@@ -183,6 +185,10 @@
                     </mat-form-field>
                   </td>
                   <td style="color: #000;">
+                    {{item.get('specification')?.value}}
+                  </td>
+
+                  <td style="color: #000;">
                     {{item.get('category')?.value}}
                   </td>
                   <td style="color: #000;">
@@ -190,6 +196,9 @@
                   </td>
                   <td>
                     {{item.get('uom')?.value}}
+                  </td>
+                  <td>
+                    <input placeholder="Enter" formControlName="HSNcode" class="pr-form-field">
                   </td>
                   <td>
                     <input type="text" formControlName="qty" class="pr-form-field" placeholder="Enter" pattern="^\d+(\.\d{1,2})?$">
@@ -279,9 +288,11 @@
             <tr>
               <th>S&nbsp;No</th>
               <th>Item*</th>
+              <th>Item specification</th>
               <th>Category</th>
               <th>Sub&nbsp;category</th>
               <th>Uom*</th>
+              <th>HSN Code</th>
               <th>Quantity*</th>
               <th>Brand Name</th>
               <th>Remarks</th>
@@ -319,7 +330,9 @@
                       </mat-autocomplete>
                     </mat-form-field>
                   </td>
-                  
+                  <td style="color: #000;">
+                    {{item.get('specification')?.value}}
+                  </td>
 
                   <td style="color: #000;">
                     {{item.get('category')?.value}}
@@ -335,6 +348,9 @@
                       </mat-option>
   
                     </mat-select> -->
+                  </td>
+                  <td>
+                    <input placeholder="Enter" formControlName="HSNcode" class="pr-form-field">
                   </td>
                   <td>
                    

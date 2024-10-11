@@ -46,7 +46,7 @@ export class RateComparativeUpdateComponent implements OnInit {
   isButtonDisabled: boolean = true;
   isSelectDisabled: boolean = false;
   permissions: any;
-  files: any;
+  files: any[] = [];
   isSaved: boolean = false;
   ItemwiseVendorRate = new Map<string, any>();
   viewPermission: any;
@@ -141,6 +141,8 @@ export class RateComparativeUpdateComponent implements OnInit {
     return new FormGroup({
       item_id: new FormControl('', Validators.required),
       qty: new FormControl('', Validators.required),
+      specification: new FormControl('', Validators.required),
+      hsnCode: new FormControl('', Validators.required),
       category: new FormControl(''),
       subCategory: new FormControl(''),
       attachment: new FormControl(''),
@@ -153,6 +155,8 @@ export class RateComparativeUpdateComponent implements OnInit {
     if (item) {
       return new FormGroup({
         item_id: new FormControl(item.item_id, Validators.required),
+        specification: new FormControl(item.specification, Validators.required),
+        hsnCode: new FormControl(item.hsnCode, Validators.required),
         qty: new FormControl(item.qty, Validators.required),
         category: new FormControl(item.categoryDetail.name),
         subCategory: new FormControl(item.subCategoryDetail.subcategory_name),
@@ -217,39 +221,59 @@ export class RateComparativeUpdateComponent implements OnInit {
     requestedData['vendorItems'] = this.vendorItemsTables[0].items;
     requestedData['vendorRatesVendorWise'] = this.vendorItemsTables;
     requestedData['vendors_total'] = this.convertTotalsToVendorsTotal();
+    requestedData['files']={};
   
     console.log("there, checking payload", requestedData);
   
     // Convert files to FormData format
-    const formData = this.convertToFormData(this.files);
+
+    if(this.files.length>0)
+    {
+      const formData = this.convertToFormData(this.files);
   
-    // Set loading state to true before making the requests
-    this.load = true;
-  
-    // First API call to upload files
-    this.httpService.POST(ESIGN_UPLOAD_API, formData).subscribe({
-      next: (res) => {
-        console.log("check response", res);
-        requestedData['files'] = res.data.filenames;
-        console.log("check Payload here", requestedData);
-  
-        // Second API call to update the rate comparative data
-        this.httpService.PUT(RATE_COMPARATIVE_API, requestedData).subscribe({
-          next: (res) => {
-            this.snack.notify('Detail has been updated', 1);
-            this.router.navigate(['/rate-comparative']);
-            this.load = false;
-          },
-          error: (err) => {
-            this.handleError(err);
-          }
-        });
-      },
-      error: (err: any) => {
-        this.load = false; // Stop loading on error
-        this.handleError(err);
-      },
-    });
+      // Set loading state to true before making the requests
+      this.load = true;
+    
+      // First API call to upload files
+      this.httpService.POST(ESIGN_UPLOAD_API, formData).subscribe({
+        next: (res) => {
+          console.log("check response", res);
+          requestedData['files'] = res.data.filenames;
+          console.log("check Payload here", requestedData);
+    
+          // Second API call to update the rate comparative data
+          this.httpService.PUT(RATE_COMPARATIVE_API, requestedData).subscribe({
+            next: (res) => {
+              this.snack.notify('Detail has been updated', 1);
+              this.router.navigate(['/rate-comparative']);
+              this.load = false;
+            },
+            error: (err) => {
+              this.handleError(err);
+            }
+          });
+        },
+        error: (err: any) => {
+          this.load = false; // Stop loading on error
+          this.handleError(err);
+        },
+      });
+    }
+
+    else
+    {
+      this.httpService.PUT(RATE_COMPARATIVE_API, requestedData).subscribe({
+        next: (res) => {
+          this.snack.notify('Detail has been updated', 1);
+          this.router.navigate(['/rate-comparative']);
+          this.load = false;
+        },
+        error: (err) => {
+          this.handleError(err);
+        }
+      });
+    }
+    
   }
   
   // Method to handle error formatting
@@ -383,6 +407,8 @@ export class RateComparativeUpdateComponent implements OnInit {
             tableData.items.push({
               item_id: item._id,
               name: item.item_name,
+              specification: item.specification,
+              hsnCode:item.hsnCode,
               category: item.categoryDetail.name,
               subCategory: item.subCategoryDetail.subcategory_name,
               uom: item.uomDetail.uom_name,

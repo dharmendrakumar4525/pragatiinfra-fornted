@@ -144,9 +144,11 @@
         <tr>
           <th>S&nbsp;No</th>
           <th>Item*</th>
+          <th>Specification</th>
           <th>Category</th>
           <th>Sub&nbsp;category</th>
           <th>Uom*</th>
+          <th>HSN Code</th>
           <th>Quantity*</th>
           <!-- <th>Brand Name</th> -->
           <th>Rate</th>
@@ -185,6 +187,9 @@
                 </mat-form-field>
               </td>
               <td style="color: #000;">
+                {{item.get('specification')?.value}}
+              </td>
+              <td style="color: #000;">
                 {{item.get('category')?.value}}
               </td>
               <td style="color: #000;">
@@ -193,6 +198,9 @@
               <td>
                 {{item.get('uom')?.value}}
                
+              </td>
+              <td>
+                <input placeholder="Enter" formControlName="HSNcode" class="pr-form-field">
               </td>
               <td>
                 <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">
@@ -270,9 +278,11 @@
         <tr>
           <th>S&nbsp;No</th>
           <th>Item*</th>
+          <th>Specification</th>
           <th>Category</th>
           <th>Sub&nbsp;category</th>
           <th>Uom*</th>
+          <th>HSN Code</th>
           <th>Quantity*</th>
           <th>Brand Name</th>
           <th>Attachments</th>
@@ -309,6 +319,9 @@
                 </mat-form-field>
               </td>
               <td style="color: #000;">
+                {{item.get('specification')?.value}}
+              </td>
+              <td style="color: #000;">
                 {{item.get('category')?.value}}
               </td>
               <td style="color: #000;">
@@ -317,6 +330,9 @@
               <td>
                 {{item.get('uom')?.value}}
                
+              </td>
+              <td>
+                <input placeholder="Enter" formControlName="HSNcode" class="pr-form-field">
               </td>
               <td>
                 <input type="text" placeholder="Enter" digitOnly formControlName="qty" class="pr-form-field">

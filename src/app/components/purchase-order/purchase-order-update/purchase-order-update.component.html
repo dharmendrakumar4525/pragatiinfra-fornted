@@ -267,6 +267,55 @@
                 ><b>Vendor Name: </b>{{ poDetails.vendor_detail.vendor_name }}
                 <br />
                 <span>
+                  <b >Contact Person: </b>
+                  <span
+                    [style.color]="
+                      poDetails.vendor_detail.contact_person === ''
+                        ? 'red'
+                        : 'inherit'
+                    "
+                  >
+                    {{
+                      poDetails.vendor_detail.contact_person === ""
+                        ? "MISSING"
+                        : poDetails.vendor_detail.contact_person
+                    }}
+                  </span>
+                </span>
+                <br />
+                <span>
+                  <b >Mobile No.: </b>
+                  <span
+                    [style.color]="
+                      poDetails.vendor_detail.phone_number === ''
+                        ? 'red'
+                        : 'inherit'
+                    "
+                  >
+                    {{
+                      poDetails.vendor_detail.phone_number === ""
+                        ? "MISSING"
+                        : poDetails.vendor_detail.phone_number
+                    }}
+                  </span>
+                </span>
+                <br />
+                <span>
+                  <b>Email Id: </b>
+                  <span
+                    [style.color]="
+                      poDetails.vendor_detail.email === '' ? 'red' : 'inherit'
+                    "
+                  >
+                    {{
+                      poDetails.vendor_detail.email === ""
+                        ? "MISSING"
+                        : poDetails.vendor_detail.email
+                    }}
+                  </span>
+                </span>
+                <br />
+                <span>
                   <b>Vendor Address: </b>
                   <span
                     [style.color]="
@@ -299,6 +348,22 @@
                   }}
                 </span>
               </span>
+              <span>
+                <b style="margin-left: 20px">PAN: </b>
+                <span
+                  [style.color]="
+                    poDetails.vendor_detail.pan_number === ''
+                      ? 'red'
+                      : 'inherit'
+                  "
+                >
+                  {{
+                    poDetails.vendor_detail.pan_number === ""
+                      ? "MISSING"
+                      : poDetails.vendor_detail.pan_number
+                  }}
+                </span>
+              </span>
             </div>
             <div class="msg-teatarea">
               <p>{{ poDetails.vendor_message_header }}</p>
@@ -319,6 +384,8 @@
           <tr>
             <th>Item&nbsp;No</th>
             <th>Item&nbsp;Name</th>
+            <th>Specification</th>
+            <th>HSN Code</th>
             <!-- <th>Brand</th> -->
             <th>Quantity</th>
             <th>UOM</th>
@@ -328,6 +395,7 @@
             <th>Sub Total</th>
             <th>Tax</th>
             <th>Total</th>
+            <th>Remarks</th>
           </tr>
 
           <tbody>
@@ -340,6 +408,13 @@
               </td>
               <td>
                 {{ item.item.item_name }}
+              </td>
+              <td>
+                {{ item.item.specification }}
+              </td>
+              <td>
+                {{ item.item.hsnCode
+ }}
               </td>
               <td>
                 {{ item.item.qty }}
@@ -364,38 +439,41 @@
               <td style="color: #000">
                 {{ item.Total }}
               </td>
+              <td style="color: #000">
+                {{ item.remarks }}
+              </td>
             </tr>
           </tbody>
           <tr>
-            <td colspan="5" style="border: none; font-size: small">
+            <td colspan="6" style="border: none; font-size: small">
               Total&nbsp;amount
             </td>
-            <td colspan="5" style="border: none; font-size: small">
+            <td colspan="6" style="border: none; font-size: small">
               {{ poDetails.vendors_total[0].subTotal | currency : "INR" }}
             </td>
           </tr>
           <tr>
-            <td colspan="5" style="border: none; font-size: small">
+            <td colspan="6" style="border: none; font-size: small">
               Total&nbsp;Freight
             </td>
-            <td colspan="5" style="border: none; font-size: small">
+            <td colspan="6" style="border: none; font-size: small">
               {{ poDetails.vendors_total[0].freightTotal | currency : "INR" }}
             </td>
           </tr>
           <tr>
-            <td colspan="5" style="border: none; font-size: small">
+            <td colspan="6" style="border: none; font-size: small">
               GST&nbsp;amount
             </td>
-            <td colspan="5" style="border: none; font-size: small">
+            <td colspan="6" style="border: none; font-size: small">
               {{ poDetails.vendors_total[0].gstAmount | currency : "INR" }}
             </td>
           </tr>
           <tr>
-            <td colspan="5" style="border: none; font-size: small">
+            <td colspan="6" style="border: none; font-size: small">
               Grand&nbsp;total
             </td>
             <td
-              colspan="5"
+              colspan="6"
               style="
                 border: none;
                 color: #073b4c;
@@ -492,8 +570,7 @@
               font-family: 'Poppins';
               font-size: 14px;
             "
-
-*ngIf="pendingVendorFiles && pendingVendorFiles.length > 0"
+            *ngIf="pendingVendorFiles && pendingVendorFiles.length > 0"
           >
             Upload Files
           </button>

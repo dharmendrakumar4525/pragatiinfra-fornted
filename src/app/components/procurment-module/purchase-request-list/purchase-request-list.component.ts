@@ -19,6 +19,7 @@ import { UsersService } from '@services/users.service';
 export class PurchaseRequestListComponent implements OnInit {
   viewPermission: any;
   purchaseList: any;
+  revisePR: number;
   filter_by = "status";
   filter_value = "pending";
   requestType = "new";
@@ -69,6 +70,25 @@ export class PurchaseRequestListComponent implements OnInit {
           this.originalPurchaseList = filteredPurchaseRequests;
           this.purchaseList = filteredPurchaseRequests;
         }
+
+        this.httpService.GET(PURCHASE_REQUEST_API, { filter_by: this.filter_by, filter_value: "revise" }).subscribe({
+          next: (resp: any) => {
+            console.log("check revise DATA for this HERE", resp.data);
+            this.revisePR= resp.data.length;
+            console.log("number of revise", this.revisePR);
+          },  error: (err) => {
+            if (err.errors && !isEmpty(err.errors)) {
+              let errMessage = '<ul>';
+              for (let e in err.errors) {
+                let objData = err.errors[e];
+                errMessage += `<li>${objData[0]}</li>`;
+              }
+              errMessage += '</ul>';
+              this.snack.notifyHtml(errMessage, 2);
+            } else {
+              this.snack.notify(err.message, 2);
+            }
+          }})
       },
       error: (err) => {
         if (err.errors && !isEmpty(err.errors)) {

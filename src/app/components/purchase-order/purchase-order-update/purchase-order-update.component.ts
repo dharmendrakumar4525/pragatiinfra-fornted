@@ -80,7 +80,8 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     this.poDetails.items = this.poDetails.items.map((item) => {
       const itemId = item.item.item_id;
       const details = itemDetailsMap[itemId] || {};
-
+    console.log("checking Details here", details);
+    console.log(item);
       return {
         ...item,
         item: {
@@ -165,30 +166,32 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   }
 
 
- combineAddress(address) {
+  combineAddress(address) {
     // Extract values from the address object
+   
     const {
       street_address,
       street_address2,
-      state,
       city,
+      state,
       zip_code,
       country,
     } = address;
   
-    // Create an array of address parts, filtering out empty or falsy values
+    // Create an array of address parts, filtering out empty strings, null, undefined
     const addressParts = [
       street_address,
       street_address2,
-      state,
       city,
+      state,
       zip_code,
-      country,
+      country
     ].filter(part => part && part.trim() !== '');
   
     // Join the filtered parts with a comma and return the result
     return addressParts.join(', ');
   }
+  
   
   
   
@@ -399,11 +402,15 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   return false;
     }
 
-    if(this.vendorAttachmentLength > Object.keys (this.vendorFiles).length)
-      {
-    this.snack.notify("All Vendor Quotation Mandatary, Upload the remaining",2)
-    return false;
-      }
+
+     
+
+ if (this.vendorAttachmentLength > (this.vendorFiles ? Object.keys(this.vendorFiles).length :0)) {
+        console.log(Object.keys(this.vendorFiles).length);
+        console.log(this.vendorAttachmentLength);
+          this.snack.notify("All Vendor Quotation Mandatary, Upload the remaining",2)
+          return false;
+            }
 
     let requestData: any = this.poDetails;
     //console.log("--requestDAta--",requestData)
@@ -506,7 +513,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
 
   getBrandNamesByIds(brandIds): string {
     // Create a map for quick lookup of brand names by their IDs
-    console.log('check brand', brandIds);
+   
     const brandMap = this.brandList.reduce((map, brand) => {
       map[brand._id] = brand.brand_name;
       return map;
@@ -612,12 +619,14 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   onFilesSelected(event: any): void {
     const fileList: FileList = event.target.files;
     console.log('file', fileList);
-    if(fileList.length+Object.keys (this.vendorFiles).length+this.files.length >this.vendorAttachmentLength)
-    {
-      
-      this.snack.notify(`only ${this.vendorAttachmentLength} files Required`,2);
+    if (
+      (fileList?.length || 0) + (Object.keys(this.vendorFiles || {}).length) + (this.files?.length || 0) >
+      this.vendorAttachmentLength
+    ) {
+      this.snack.notify(`only ${this.vendorAttachmentLength} files required`, 2);
       return;
     }
+    
     if (fileList.length > 0) {
       const files = Array.from(fileList);
 
@@ -641,13 +650,18 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   uploadFiles(){
 
     const formData = this.convertToFormData(this.files);
+    console.log(formData);
     this.load = true;
     this.httpService.POST(ESIGN_UPLOAD_API, formData).subscribe({
       next: (res) => {
         console.log("check response", res);
-        this.vendorFiles = { ...this.vendorFiles, ...res.data.filename };
+        this.vendorFiles = {...res.data.filenames, ...this.vendorFiles,  };
+        console.log("check vendor Files", this.vendorFiles);
         this.files=[];
         this.rateApproval['files'] = this.vendorFiles;
+        const vendorArray=this.createVendorArray(this.rateApproval.vendors_total);
+        const finalArray=this.getVendorsNotInObject(vendorArray, this.rateApproval.files)
+        this.pendingVendorFiles=finalArray;
         console.log("check Payload here",  this.rateApproval);
   
         // Second API call to update the rate comparative data
@@ -688,25 +702,8 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   }
 
   convertToFormData( files: File[]): FormData {
+    console.log(files);
     const formData = new FormData();
-
-    const appendFormData = (formData: FormData, key: string, value: any) => {
-      if (Array.isArray(value)) {
-        value.forEach((element, index) => {
-          if (typeof element === 'object' && element !== null) {
-            appendFormData(formData, `${key}[${index}]`, element);
-          } else {
-            formData.append(`${key}[${index}]`, element);
-          }
-        });
-      } else if (typeof value === 'object' && value !== null) {
-        Object.keys(value).forEach((subKey) => {
-          appendFormData(formData, `${key}.${subKey}`, value[subKey]);
-        });
-      } else {
-        formData.append(key, value);
-      }
-    };
 
     files.forEach((file, index) => {
       formData.append(`files[${index}]`, file, file.name);
@@ -753,6 +750,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
           // Assuming rateApproval.vendors_total is an array
           if (this.rateApproval && this.rateApproval.vendors_total) {
             this.vendorAttachmentLength = this.rateApproval.vendors_total.length;
+            this.vendorFiles= this.rateApproval.files;
             const vendorArray=this.createVendorArray(this.rateApproval.vendors_total);
             const finalArray=this.getVendorsNotInObject(vendorArray, this.rateApproval.files)
             this.pendingVendorFiles=finalArray;
@@ -770,9 +768,12 @@ export class PurchaseOrderUpdateComponent implements OnInit {
         }
       });
   }
-   getVendorNamesString(array: any[]): string {
-    return array.map(item => item.vendor_name).join(', ');
+  getVendorNamesString(array: any[]): string {
+    return array
+      .map(item => `${item.vendor_name} (${item.code})`)
+      .join(', ');
   }
+  
 
 
   createVendorArray(items: any[]) {

@@ -114,6 +114,8 @@
       <tr>
         <th>S&nbsp;No</th>
               <th>Item*</th>
+              <th>Specification</th>
+              <th>HSN Code</th>
               <th>Category</th>
               <th>Sub&nbsp;category</th>
               <th>Uom*</th>
@@ -141,6 +143,11 @@
                 <!-- </mat-option>
 
               </mat-select> -->
+            </td>
+            <td>{{item.specification}}</td>
+            <td>
+              {{item.hsnCode}}
+  
             </td>
             <td style="color: #000;">
               {{item.categoryDetail.name}}
@@ -222,6 +229,8 @@
           <tr>
             <th>S&nbsp;No</th>
             <th>Item*</th>
+            <th>Specification</th>
+            <th> HSN Code</th>
             <th>Category</th>
             <th>Sub&nbsp;category</th>
             <th>Uom*</th>
@@ -238,6 +247,11 @@
               </td>
               <td>
                 {{getItemName(item.item_id)}}
+    
+              </td>
+              <td>{{item.specification}}</td>
+              <td>
+                {{item.hsnCode}}
     
               </td>
               <td style="color: #000;">

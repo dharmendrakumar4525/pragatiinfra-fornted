@@ -142,6 +142,18 @@
       <thead>
         <tr>
           <th rowspan="2" style=" text-align: center; width:300px; vertical-align: middle;">Item</th>
+          <th
+          rowspan="2"
+          style="text-align: center; width: 300px; vertical-align: middle"
+        >
+          Specification
+        </th>
+        <th
+          rowspan="2"
+          style="text-align: center; width: 300px; vertical-align: middle"
+        >
+          HSN Code
+        </th>
           <th rowspan="2" style=" text-align: center; width:250px; vertical-align: middle;">Category</th>
           <th rowspan="2" style=" text-align: center; width:250px; vertical-align: middle;">Sub-Category</th>
           <th rowspan="2" style=" text-align: center; vertical-align: middle;">UOM</th>
@@ -176,6 +188,24 @@
         <ng-container *ngFor="let table of vendorItemsTables; let tableIndex = index">
           <tr *ngFor="let item of table.items">
             <td style="text-align: center;width:300px; vertical-align: middle;">{{ item.name }}</td>
+            <td
+                  style="
+                    text-align: center;
+                    width: 300px;
+                    vertical-align: middle;
+                  "
+                >
+                  {{ item.specification }}
+                </td>
+                <td
+                  style="
+                    text-align: center;
+                    width: 300px;
+                    vertical-align: middle;
+                  "
+                >
+                  {{ item.hsnCode }}
+                </td>
             <td style="text-align: center; width:250px;vertical-align: middle;">{{ item.category }}</td>
             <td style="text-align: center;width:250px; vertical-align: middle;">{{ item.subCategory }}</td>
             <td style="text-align: center; vertical-align: middle;">{{ item.uom }}</td>
@@ -215,7 +245,7 @@
       <tfoot>
        
         <tr>
-          <td colspan="6" style="border-color: white; border-right: 0.5px solid;">
+          <td colspan="8" style="border-color: white; border-right: 0.5px solid;">
           </td>
           <td colspan="2" style="text-align: right; border: 0.5px solid;">Total Amount (₹)</td>
           <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
@@ -224,7 +254,7 @@
           <td style="border-color: white;"></td>
         </tr>
         <tr>
-          <td colspan="6" style="border-color: white; border-right: 0.5px solid;">
+          <td colspan="8" style="border-color: white; border-right: 0.5px solid;">
           </td>
           <td colspan="2" style="text-align: right; border: 0.5px solid;">GST Amount (₹)</td>
           <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
@@ -233,7 +263,7 @@
           <td style="border-color: white;"></td>
         </tr>
         <tr>
-          <td colspan="6" style="border-color: white; border-right: 0.5px solid;">
+          <td colspan="8" style="border-color: white; border-right: 0.5px solid;">
           </td>
           <td colspan="2" style="text-align: right; border: 0.5px solid;">Freight (₹)</td>
           <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
@@ -245,7 +275,7 @@
          <td style="border-color: white;"></td>
         </tr>
         <tr>
-          <td colspan="6" style="border-color: white; border-right: 0.5px solid;">
+          <td colspan="8" style="border-color: white; border-right: 0.5px solid;">
           </td>
           <td colspan="2" style="text-align: right; border: 0.5px solid;">Freight GST (%)</td>
           <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
@@ -257,7 +287,7 @@
           <td style="border-color: white;"></td>
         </tr>
         <tr>
-          <td colspan="6" style="border-color: white; border-right: 0.5px solid;">
+          <td colspan="8" style="border-color: white; border-right: 0.5px solid;">
           </td>
           <td colspan="2" style="text-align: right; border: 0.5px solid;">Grand Total (₹)</td>
           <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
@@ -273,7 +303,7 @@
           <td style="border-color: white;"></td>
         </tr>
         <tr>
-          <td colspan="6" style="border-color: white; border-right: 0.5px solid;">
+          <td colspan="8" style="border-color: white; border-right: 0.5px solid;">
           </td>
           <td colspan="2" style="text-align: right; border: 0.5px solid;">Remarks</td>
           <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">

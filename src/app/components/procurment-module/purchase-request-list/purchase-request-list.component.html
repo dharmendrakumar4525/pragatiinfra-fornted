@@ -65,12 +65,18 @@
           <input matInput placeholder="Site" (input)="search($event,'site')" />
         </mat-form-field></div>
     </div>
-    <div style="margin-top: 50px;position: relative;right:520px;">
+    <div style="margin-top: 50px; position: relative; right: 500px; white-space: nowrap;">
       <span [ngClass]="[requestType=='new' ? 'active' : 'inactive']" style="cursor: pointer;"
-        (click)="changeRequestType('new')">New&nbsp;request&nbsp;|</span>
-      <span [ngClass]="[ requestType=='revise' ? 'active' : 'inactive']" style="cursor: pointer;"
-        (click)="changeRequestType('revise')">&nbsp;Revised&nbsp;request</span>
+            (click)="changeRequestType('new')">
+        New request&nbsp;|
+      </span>
+      <span [ngClass]="[requestType=='revise' ? 'active' : 'inactive']" style="cursor: pointer;"
+            (click)="changeRequestType('revise')">
+        &nbsp;Revised request ({{revisePR}})
+      </span>
     </div>
+    
+    
   </div>
 
 <ng-container *ngIf="viewPermission; else noView">

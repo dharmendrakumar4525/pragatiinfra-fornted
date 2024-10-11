@@ -103,6 +103,7 @@ export class RevisePurchaseRequestComponent implements OnInit {
   createItemArrayForm() {
     return new FormGroup({
       item_id: new FormControl('', Validators.required),
+      HSNcode :new FormControl(''),
       rate :new FormControl('', Validators.required),
       qty: new FormControl('', Validators.required),
       category: new FormControl(null),
@@ -167,12 +168,13 @@ if(requestData.local_purchase==="no")
     // Append items and their files
     requestData.items.forEach((item, index) => {
       formData.append(`items[${index}][item_id]`, item.item_id._id);
+      formData.append(`items[${index}][specification]`, item.specification|| '');
       formData.append(`items[${index}][qty]`, item.qty);
       formData.append(`items[${index}][category]`, item.category);
       formData.append(`items[${index}][subCategory]`, item.subCategory);
       
       formData.append(`items[${index}][uom]`, item.uom);
-      
+      formData.append(`items[${index}][hsnCode]`, item.HSNcode || '');
 
       item.brandSelections.forEach((brand) => {
         formData.append(`items[${index}][brandName]`, brand);
@@ -201,12 +203,14 @@ formData.append('status', requestData.status);
 // Append items and their attachments
 requestData.items.forEach((item, index) => {
     formData.append(`items[${index}][item_id]`, item.item_id._id);
+    formData.append(`items[${index}][specification]`, item.specification|| '');
     formData.append(`items[${index}][qty]`, item.qty.toString());
     formData.append(`items[${index}][rate]`, item.rate.toString());
     formData.append(`items[${index}][category]`, item.category);
     formData.append(`items[${index}][subCategory]`, item.subCategory);
     formData.append(`items[${index}][remark]`, item.remark);
     formData.append(`items[${index}][uom]`, item.uom);
+    formData.append(`items[${index}][hsnCode]`, item.HSNcode || '');
     
     item.brandSelections.forEach((brand) => {
       formData.append(`items[${index}][brandName]`, brand);
@@ -322,11 +326,13 @@ console.log(formData);
       let category = selectedItem.categoryDetail.name;
       let subCategory = selectedItem.subCategoryDetail.subcategory_name;
       let uom = selectedItem.uomDetail.uom_name;
+      let specification= selectedItem.specification;
   
       this.items.at(i).patchValue({
         category: category,
         subCategory: subCategory,
-        uom: uom
+        uom: uom,
+        specification:specification
       });
       let theList=this.getBrandsForItem(selectedItem);
      
@@ -406,6 +412,7 @@ console.log(formData);
 
       return new FormGroup({
         item_id: new FormControl(catItem[0], Validators.required),
+        HSNcode :new FormControl(item.hsnCode),
         qty: new FormControl(item.qty, Validators.required),
         rate:new FormControl(item.rate),
         category: new FormControl(item.categoryDetail.name),
@@ -421,6 +428,7 @@ console.log(formData);
     else {
       return new FormGroup({
         item_id: new FormControl('', Validators.required),
+        HSNcode :new FormControl(''),
         qty: new FormControl('', Validators.required),
         rate:new FormControl(''),
         category: new FormControl(''),

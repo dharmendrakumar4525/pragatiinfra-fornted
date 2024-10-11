@@ -252,12 +252,14 @@ export class PurchaseRequestComponent implements OnInit {
             `items[${index}][item_id]`,
             item.item_id && item.item_id._id ? item.item_id._id : ''
           );
+          formData.append(`items[${index}][specification]`, item.specification|| '');
           formData.append(`items[${index}][qty]`, item.qty || '');
           formData.append(`items[${index}][category]`, item.category || '');
           formData.append(
             `items[${index}][subCategory]`,
             item.subCategory || ''
           );
+          formData.append(`items[${index}][hsnCode]`, item.HSNcode || '');
           formData.append(`items[${index}][remark]`, item.remark || '');
           formData.append(`items[${index}][uom]`, item.uom || '');
 
@@ -312,8 +314,10 @@ export class PurchaseRequestComponent implements OnInit {
 
           // Basic item properties
           formData.append(`items[${index}][item_id]`, item.item_id._id);
+          formData.append(`items[${index}][specification]`, item.specification|| '');
           formData.append(`items[${index}][qty]`, item.qty);
           formData.append(`items[${index}][category]`, item.category);
+          formData.append(`items[${index}][hsnCode]`, item.HSNcode || '');
           formData.append(`items[${index}][subCategory]`, item.subCategory);
           formData.append(`items[${index}][remark]`, item.remark);
           formData.append(`items[${index}][uom]`, item.uom);
@@ -464,6 +468,7 @@ export class PurchaseRequestComponent implements OnInit {
   createItem(): FormGroup {
     return this.formBuilder.group({
       item_id: new FormControl('', Validators.required),
+      HSNcode :new FormControl(''),
       qty: new FormControl('', [
         Validators.required,
         Validators.pattern(/^\d+(\.\d{1,2})?$/),
@@ -481,6 +486,7 @@ export class PurchaseRequestComponent implements OnInit {
   createLocalItem(): FormGroup {
     return this.formBuilder.group({
       item_id: new FormControl('', Validators.required),
+      HSNcode :new FormControl(''),
       qty: new FormControl('', [
         Validators.required,
         Validators.pattern(/^\d+(\.\d{1,2})?$/),
@@ -797,6 +803,7 @@ export class PurchaseRequestComponent implements OnInit {
       let category = selectedItem.categoryDetail.name;
       let subCategory = selectedItem.subCategoryDetail.subcategory_name;
       let uom = selectedItem.uomDetail.uom_name;
+      let specification= selectedItem.specification;
       if (this.items.length > 1) {
         this.itemSelected = true;
       }
@@ -804,6 +811,7 @@ export class PurchaseRequestComponent implements OnInit {
         category: category,
         subCategory: subCategory,
         uom: uom,
+        specification:specification
       });
 let theList=this.getBrandsForItem(selectedItem);
      
