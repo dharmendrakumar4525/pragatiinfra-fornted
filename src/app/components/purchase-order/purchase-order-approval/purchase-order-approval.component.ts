@@ -278,6 +278,7 @@ ngOnInit(): void {
     requestData['po_number'] = this.poDetails.po_number;
     requestData['approved_by']= this.permissions.user.name;
     requestData['status'] = 'approved';
+    requestData['poStartDate'] =this.poDetails.StartDate;
     requestData['due_date'] = this.poDetails.due_date;
     requestData['vendor_message'] = this.poDetails.vendor_message;
     requestData.vendor_detail.terms_condition = this.term_condition.value;

@@ -35,6 +35,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   term_condition = new FormControl();
   mail_section = new FormControl();
   validityDate = new FormControl('', [Validators.required]);
+  StartDate= new FormControl('', [Validators.required]);
   minDate = new Date();
   maxDate = new Date(new Date().setMonth(new Date().getMonth() + 12));
   poDetails: any;
@@ -350,7 +351,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
 
   openEsignModal() {
     // Check if validity date is provided
-    if (!this.validityDate.valid) {
+    if (!this.validityDate.valid || !this.StartDate.valid) {
       this.snack.notify('Please provide validity date', 2);
       return;
     }
@@ -391,8 +392,18 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   }
 
   createOrder(): any {
-    if (!this.validityDate.valid) {
+
+    
+
+    if (!this.validityDate.valid || !this.StartDate.valid) {
       this.validityDate.markAsTouched();
+      return false;
+    }
+
+    
+
+    if (this.StartDate.value > this.validityDate.value) {
+     this.snack.notify("Due date must be after the Validity Start date.", 2);
       return false;
     }
 
@@ -448,12 +459,13 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     requestData['po_number'] = this.poDetails.po_number;
     requestData['approved_by'] = this.permissions.user.name;
     requestData['status'] = 'ApprovalPending';
+    requestData['poStartDate'] =this.StartDate.value;
     requestData['due_date'] = this.validityDate.value;
     requestData['vendor_message'] = this.mail_section.value;
     requestData.vendor_detail.terms_condition = this.term_condition.value;
     this.load = true;
     console.log('checking payload________________________', requestData);
-   
+  
     this.httpService
       .PUT(PURCHASE_ORDER_API, requestData)
       .pipe(
@@ -525,6 +537,9 @@ export class PurchaseOrderUpdateComponent implements OnInit {
       .filter((name) => name) // filter out any undefined names if ID does not exist
       .join(' / ');
   }
+
+
+  
 
   billingAddressPopup() {
     // Open billing address popup

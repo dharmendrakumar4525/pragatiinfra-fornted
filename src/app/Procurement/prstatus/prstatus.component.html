@@ -124,7 +124,7 @@
 
         <td>
           <button
-            (click)="downloadPRPdf(item.rate_approval_id)"
+            (click)="downloadPRPdf(item.rate_approval_id, item)"
             style="
               padding: 15px;
               width: 150px;
@@ -141,7 +141,7 @@
         </td>
         <td>
           <button
-            (click)="downloadPOPdf(item._id)"
+            (click)="downloadPOPdf(item._id, item)"
             [disabled]="item.status !== 'approved'"
             [ngStyle]="{
               'background-color':
@@ -165,7 +165,7 @@
         <td>
           <button
 
-          (click)="downloadRCPdf(item.rate_approval_id)"
+          (click)="downloadRCPdf(item.rate_approval_id, item)"
             style="
               padding: 15px;
               width: 250px;

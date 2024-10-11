@@ -64,7 +64,8 @@ export class PrstatusComponent implements OnInit {
     });
   }
 
-  downloadPOPdf(pageId) {
+  downloadPOPdf(pageId, item) {
+    console.log(item);
     this.downloadLoading = true;
     this.httpService
       .GETPDF('generate/pdf', {
@@ -75,11 +76,13 @@ export class PrstatusComponent implements OnInit {
         this.downloadLoading = false;
         var blob = new Blob([res], { type: 'application/pdf' });
         let id = new Date().getTime();
-        saveAs(blob, `po-${id}.pdf`);
+        //saveAs(blob, `po-${id}.pdf`);
+        saveAs(blob, `po-${item.po_number}__${item.vendor_detail.vendor_name}  .pdf`);
       });
   }
 
-  downloadRCPdf(pageId) {
+  downloadRCPdf(pageId, item) {
+    console.log(item);
     console.log(pageId);
     this.downloadLoading = true;
     this.httpService
@@ -91,11 +94,13 @@ export class PrstatusComponent implements OnInit {
         this.downloadLoading = false;
         var blob = new Blob([res], { type: 'application/pdf' });
         let id = new Date().getTime();
-        saveAs(blob, `rc-${id}.pdf`);
+        saveAs(blob, `rc-${item.delivery_address.site_code}_${item.purchase_request_number}_${item.title}.pdf`);
+          
       });
   }
 
-  downloadPRPdf(rateApprovalId) {
+  downloadPRPdf(rateApprovalId, item) {
+    console.log(item);
     console.log(rateApprovalId);
     this.downloadLoading = true;
     this.httpService
@@ -114,7 +119,7 @@ export class PrstatusComponent implements OnInit {
               this.downloadLoading = false;
               var blob = new Blob([res], { type: 'application/pdf' });
               let id = new Date().getTime();
-              saveAs(blob, `pr-${id}.pdf`);
+              saveAs(blob, `pr-${item.delivery_address.site_code}_${item.purchase_request_number}_${item.title}.pdf`);
             });
         },
         error: (error) => {

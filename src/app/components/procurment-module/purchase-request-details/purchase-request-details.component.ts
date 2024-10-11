@@ -18,6 +18,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
 
   downloadLoading = false;
   id: any;
+  siteName:any;
   siteList: any;
   load = false;
   items: FormArray;
@@ -77,7 +78,14 @@ export class PurchaseRequestDetailsComponent implements OnInit {
         this.itemList = res[1].data;
         this.siteList = res[2].data;
         this.brandList=res[3].data;
+        this.siteName= this.siteList.filter((site) => {
+          if (site._id ===this.details.site ) {
+            return site;
       }
+    })
+
+    console.log(this.siteName);
+  }
     })
   }
 
@@ -216,7 +224,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
         this.downloadLoading = false;
         var blob = new Blob([res], { type: 'application/pdf' });
         let id = new Date().getTime();
-        saveAs(blob, `pr-${id}.pdf`);
+        saveAs(blob, `pr-${this.siteName[0].code}_${this.details.purchase_request_number}_${this.details.title}.pdf`);
       });
   }
 

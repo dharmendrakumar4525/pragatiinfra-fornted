@@ -163,7 +163,25 @@
           <div class="textarearight">
             <span><b>Date</b>: {{ poDetails.date | date : "dd-MM-yyyy" }}</span>
             <span
-              ><b>Validity</b>:
+            ><b>Validity From</b>:
+            <mat-form-field>
+              <input
+                matInput
+                [formControl]="StartDate"
+                (focus)="picker.open()"
+                [min]="minDate"
+                [max]="maxDate"
+                [matDatepicker]="picker"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </span>
+            <span
+              ><b>Validity Upto</b>:
               <mat-form-field>
                 <input
                   matInput

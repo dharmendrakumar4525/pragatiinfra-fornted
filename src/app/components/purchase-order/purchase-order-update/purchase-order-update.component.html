@@ -190,24 +190,37 @@
               <span
                 ><b>Date</b>: {{ poDetails.date | date : "dd-MM-yyyy" }}</span
               >
-              <span
-                ><b>Validity</b>:
+              <span>
+                <b>Valid From</b>:
+                <mat-form-field>
+                  <input
+                    matInput
+                    [formControl]="StartDate"
+                    (focus)="startDatePicker.open()"
+                    [min]="minDate"
+                    [max]="maxDate"
+                    [matDatepicker]="startDatePicker"
+                  />
+                  <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #startDatePicker></mat-datepicker>
+                </mat-form-field>
+              </span>
+              <span>
+                <b>Valid Upto</b>:
                 <mat-form-field>
                   <input
                     matInput
                     [formControl]="validityDate"
-                    (focus)="picker.open()"
+                    (focus)="validityDatePicker.open()"
                     [min]="minDate"
                     [max]="maxDate"
-                    [matDatepicker]="picker"
+                    [matDatepicker]="validityDatePicker"
                   />
-                  <mat-datepicker-toggle
-                    matSuffix
-                    [for]="picker"
-                  ></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
+                  <mat-datepicker-toggle matSuffix [for]="validityDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #validityDatePicker></mat-datepicker>
                 </mat-form-field>
               </span>
+              
               <span
                 ><b>PO NO</b>: {{ poDetails?.po_number
                 }}<input

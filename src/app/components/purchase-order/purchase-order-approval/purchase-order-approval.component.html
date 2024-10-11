@@ -69,7 +69,10 @@
           <div class="textarearight">
 
             <span><b>Date</b>: {{poDetails.date | date:'dd-MM-yyyy'}}</span>
-            <span><b>Validity</b>:
+            <span><b>Valid From</b>:
+              {{poDetails.poStartDate | date:'dd-MM-yyyy'}}
+            </span>
+            <span><b>Valid Upto</b>:
               {{poDetails.due_date | date:'dd-MM-yyyy'}}
             </span>
             <span><b>PO NO</b>: {{poDetails?.po_number}}<input type="text"

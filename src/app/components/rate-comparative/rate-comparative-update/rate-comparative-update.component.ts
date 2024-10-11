@@ -215,6 +215,7 @@ export class RateComparativeUpdateComponent implements OnInit {
     // Prepare the requested data
     let requestedData = this.rateComparativeForm.value;
     requestedData['_id'] = this.details._id;
+    requestedData['purchase_request_number']=this.details.purchase_request_number;
     requestedData['items'] = this.details.items;
     requestedData['stage'] = 'rate_approval';
     requestedData['handle_by'] = loginUser._id;

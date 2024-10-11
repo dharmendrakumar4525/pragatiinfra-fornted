@@ -19,6 +19,7 @@ export class PurchaseOrderDetailsComponent implements OnInit {
   term_condition = new FormControl();
   mail_section = new FormControl();
   validityDate = new FormControl();
+  StartDate = new FormControl();
   minDate = new Date();
   maxDate = new Date(new Date().setMonth(new Date().getMonth() + 12));
   poDetails: any;
@@ -55,12 +56,14 @@ export class PurchaseOrderDetailsComponent implements OnInit {
     this.httpService.GET(`${PURCHASE_ORDER_API}/detail`, { _id: pageId }).subscribe(res => {
       this.poDetails = res.data;
       this.esignImage = this.poDetails.sign;
+      this.StartDate.patchValue(this.poDetails.poStartDate);
       this.validityDate.patchValue(this.poDetails.due_date);
       this.term_condition.patchValue(this.poDetails.terms_condition);
       this.mail_section.patchValue(this.poDetails.vendor_message);
       this.mail_section.disable();
       this.term_condition.disable();
       this.validityDate.disable();
+      this.StartDate.disable();
 
       // After fetching PO details, call getBrandList and getItemList
       this.loadData();
@@ -132,7 +135,7 @@ export class PurchaseOrderDetailsComponent implements OnInit {
       this.downloadLoading = false;
       var blob = new Blob([res], { type: 'application/pdf' });
       let id = new Date().getTime();
-      saveAs(blob, `po-${id}.pdf`);
+      saveAs(blob, `po-${this.poDetails.po_number}__${this.poDetails.vendor_detail.vendor_name}  .pdf`);
     });
   }
 
