@@ -151,6 +151,7 @@ if (!this.purchaseRequestForm.valid) {
     this.load = true;
 
 console.log("there", requestData);
+
 const formData = new FormData();
 if(requestData.local_purchase==="no")
 {
@@ -180,6 +181,10 @@ if(requestData.local_purchase==="no")
         formData.append(`items[${index}][brandName]`, brand);
       });
   
+      item.attachment.forEach((file, fileIndex) => {
+        formData.append(`items[${index}][file][${fileIndex}]`,file );
+      });
+
       // Append each file in the 'files' array
       item.files.forEach((file, fileIndex) => {
         formData.append(`items[${index}][attachment][${fileIndex}]`, file, file.name);
@@ -214,6 +219,10 @@ requestData.items.forEach((item, index) => {
     
     item.brandSelections.forEach((brand) => {
       formData.append(`items[${index}][brandName]`, brand);
+    });
+
+    item.attachment.forEach((file, fileIndex) => {
+      formData.append(`items[${index}][file][${fileIndex}]`,file );
     });
 
     // Append files
@@ -341,6 +350,13 @@ console.log(formData);
       console.log("check filteredList", theList);
     } 
   }
+
+  removeAttachment(itemIndex: number, attachmentIndex: number): void {
+    const attachments = this.items.at(itemIndex).get('attachment').value;
+    attachments.splice(attachmentIndex, 1); // Remove the attachment at the specified index
+    this.items.at(itemIndex).get('attachment').setValue(attachments); // Update the form control with the new array
+  }
+
 
 
   getBrandsForItem(item) {

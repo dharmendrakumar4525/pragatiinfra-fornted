@@ -221,13 +221,15 @@
                   </mat-select>
                 </td>
              
-              <td>
-                <div *ngFor="let attachment of item.get('attachment').value; let j = index">
-                  <a [href]="attachment" target="_blank"> <p style="color: blue; text-decoration: underline; font-size: 12px; margin-top:-10px;"> Attachment {{j + 1}}</p>
-                  </a>
-                </div>
+                <td>
+                  <div *ngFor="let attachment of item.get('attachment').value; let j = index" style="display: flex; align-items: center;">
+                    <a [href]="attachment" target="_blank">
+                      <p style="color: blue; text-decoration: underline; font-size: 12px;">Attachment {{j + 1}}</p>
+                    </a>
+                    <button (click)="removeAttachment(i, j)" style="border: none; color: red; background: transparent; font-weight: bold; margin-left: 10px; margin-top: -15px;">&times;</button>
+                  </div>
+                </td>
                 
-              </td>
                 <td>
                  
                   <input type="file" (change)="onFilesSelected($event, i)" multiple>
@@ -347,13 +349,15 @@
                   </mat-select>
                 </td>
               
-              <td>
-                <div *ngFor="let attachment of item.get('attachment').value; let j = index">
-                  <a [href]="attachment" target="_blank"> <p style="color: blue; text-decoration: underline; font-size: 12px; margin-top:-10px;"> Attachment {{j + 1}}</p>
-                  </a>
-                </div>
+                <td>
+                  <div *ngFor="let attachment of item.get('attachment').value; let j = index" style="display: flex; align-items: center;">
+                    <a [href]="attachment" target="_blank">
+                      <p style="color: blue; text-decoration: underline; font-size: 12px;">Attachment {{j + 1}}</p>
+                    </a>
+                    <button (click)="removeAttachment(i, j)" style="border: none; color: red; background: transparent; font-weight: bold; margin-left: 10px; margin-top: -15px;">&times;</button>
+                  </div>
+                </td>
                 
-              </td>
                 <td>
                  
                   <input type="file" (change)="onFilesSelected($event, i)" multiple>

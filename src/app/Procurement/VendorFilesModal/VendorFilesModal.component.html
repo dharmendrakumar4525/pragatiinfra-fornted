@@ -1,0 +1,15 @@
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <h2>Vendor Files ({{data.poNumber}})</h2>
+  <button mat-icon-button (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div class="modal-content">
+  
+  <div *ngFor="let key of objectKeys(data.vendorFiles)">
+    <a [href]="data.vendorFiles[key]?.toString()" target="_blank" rel="noopener noreferrer">Vendor Code - {{ key }}</a>
+<br />
+  </div>
+  
+</div>

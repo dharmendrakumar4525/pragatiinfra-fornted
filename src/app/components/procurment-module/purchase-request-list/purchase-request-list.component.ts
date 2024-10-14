@@ -71,7 +71,7 @@ export class PurchaseRequestListComponent implements OnInit {
           this.purchaseList = filteredPurchaseRequests;
         }
 
-        this.httpService.GET(PURCHASE_REQUEST_API, { filter_by: this.filter_by, filter_value: "revise" }).subscribe({
+        this.httpService.GET(PURCHASE_REQUEST_API, { filter_by: this.filter_by, filter_value: "revised" }).subscribe({
           next: (resp: any) => {
             console.log("check revise DATA for this HERE", resp.data);
             this.revisePR= resp.data.length;

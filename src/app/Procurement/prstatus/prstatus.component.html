@@ -181,7 +181,7 @@
         </td>
         <td>
           <button
-          (click)="downloadVendorQuotations(item.vendor_files)"
+          (click)="openModal(item.vendor_files, item.po_number)"
             style="
               padding: 15px;
               width: 250px;
@@ -225,4 +225,44 @@
       </tr>
     </tbody>
   </table>
+</div>
+
+
+
+<!-- Inline Modal -->
+<div *ngIf="isModalOpen" class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h4>Vendor Files ({{po_number}})</h4>
+      <button
+      (click)="closeModal()"
+      style="
+        border: none;
+        height: 30px;
+        width: 30px; 
+        font-size: 18px;
+        border-radius: 15px; 
+        
+        color: white;
+        margin-top: -10px;
+        justify-content: center; 
+        align-items: center; 
+        font-weight: bold;
+       background: transparent;
+        cursor: pointer;
+      "
+    >
+      x
+    </button>
+     </div>
+    <div class="modal-body">
+      <ul *ngFor="let key of objectKeys(vendorFiles)">
+       
+        <a [attr.href]="vendorFiles[key]" target="_blank" rel="noopener noreferrer">
+          <li style="color:#233a61; font-weight: bold; padding: 10px; margin:10px; font-size: 15px; text-decoration: underline;"> Vendor Quotation (Code - {{ key }})</li>
+        </a>
+      
+      </ul>
+    </div>
+  </div>
 </div>

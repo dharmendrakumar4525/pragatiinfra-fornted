@@ -7,9 +7,12 @@ import {
 } from '@env/api_path';
 import { RequestService } from '@services/https/request.service';
 import { SnackbarService } from '@services/snackbar/snackbar.service';
+import { BrowserModule } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
 import { isEmpty } from 'lodash';
 import { saveAs } from 'file-saver';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { VendorFilesModalComponent } from '../VendorFilesModal/VendorFilesModal.component';
 
 @Component({
   selector: 'app-prstatus',
@@ -18,11 +21,16 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 })
 export class PrstatusComponent implements OnInit {
   prList: any;
+  po_number :string;
+  vendorFiles: { [key: string]: string } = {};  // Object to hold the key-value vendor files
+ 
+  isModalOpen = false;
   allprList: any = [];
   downloadLoading: boolean;
   constructor(
     private httpService: RequestService,
-    private snack: SnackbarService
+    private snack: SnackbarService,
+    public dialog: MatDialog,
   ) {}
 
   filterRecords(event: any) {
@@ -144,6 +152,22 @@ export class PrstatusComponent implements OnInit {
     document.body.appendChild(a);  // Append the anchor to the DOM
     a.click();  // Simulate the click to download the file
     document.body.removeChild(a);  // Clean up by removing the anchor element
+}
+
+
+openModal(vendorFiles, poNumber) {
+  this.vendorFiles=vendorFiles;
+  this.po_number=poNumber;
+  this.isModalOpen = true; // Open the modal
+}
+
+closeModal() {
+  this.isModalOpen = false; // Close the modal
+}
+
+// Helper function to get object keys
+objectKeys(obj: any) {
+  return Object.keys(obj);
 }
 
 

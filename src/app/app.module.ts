@@ -118,6 +118,7 @@ import { MaterialRecordSheetComponent } from './dmr/material-record-sheet/materi
 import { DMRFormComponent } from './dmr/dmr-form/dmr-form.component';
 import { TableOverviewComponent } from './dmr/table-overview/table-overview.component';
 import { ItemTablePopupComponent } from './dmr/item-table-popup/item-table-popup.component';
+import {VendorFilesModalComponent} from './Procurement/VendorFilesModal/VendorFilesModal.component'
 import { FinalDmrComponent } from './dmr/final-dmr/final-dmr.component';
 import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
 import {
@@ -276,6 +277,7 @@ export function tokenGetter() {
     FinalDmrComponent,
     BrandMasterComponent,
     BrandAddDataComponent,
+    VendorFilesModalComponent,
   ],
   providers: [AuthGuard],
   schemas: [
