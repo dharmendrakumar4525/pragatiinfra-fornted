@@ -263,6 +263,8 @@ export class RateComparativeUpdateComponent implements OnInit {
 
     else
     {
+
+      
       this.httpService.PUT(RATE_COMPARATIVE_API, requestedData).subscribe({
         next: (res) => {
           this.snack.notify('Detail has been updated', 1);
@@ -429,7 +431,8 @@ export class RateComparativeUpdateComponent implements OnInit {
           );
           if (matchedItem) {
             matchedItem.vendors[vendor] = {
-              requiredQty: matchedItem.quantity, // Assign the matched item's quantity
+              requiredQty: matchedItem.quantity,
+              preferred:false, // Assign the matched item's quantity
               rate: '',
               amount: '',
             };
@@ -762,7 +765,31 @@ export class RateComparativeUpdateComponent implements OnInit {
 
     // Update the preferred field for the vendor in the totals object
     this.vendorItemsTables[0].totals[vendorId].preferred = event.target.checked;
-  }
+
+    // If the current vendor is being set to preferred, set all other vendors to not preferred
+    if (event.target.checked) {
+        vendorKeys.forEach((key) => {
+            if (key !== vendorId) {
+                this.vendorItemsTables[0].totals[key].preferred = false;
+            }
+        });
+    }
+
+    // Now update the 'preferred' status in all the items for the selected vendor
+    this.vendorItemsTables[0].items.forEach((item) => {
+        const vendorIds = Object.keys(item.vendors);
+
+        // Set the selected vendor's preferred status for the current item
+        vendorIds.forEach((vId) => {
+            if (vId === vendorId) {
+                item.vendors[vId].preferred = event.target.checked;
+            } else {
+                item.vendors[vId].preferred = false;
+            }
+        });
+    });
+}
+
 
   // In your component
   getVendorKeys() {
