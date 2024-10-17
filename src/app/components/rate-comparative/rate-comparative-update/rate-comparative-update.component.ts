@@ -52,7 +52,7 @@ export class RateComparativeUpdateComponent implements OnInit {
   viewPermission: any;
   editPermission: any;
   addPermission: any;
-
+selectedVendorList:any[] = [];
   // deletePermission: any;
 
   /**
@@ -83,6 +83,9 @@ export class RateComparativeUpdateComponent implements OnInit {
   users: any;
   filteredItems: Array<any> = [];
   brandList: any;
+  // New form for vendor selection
+  filteredVendorList: any[] = []; // Array to hold filtered vendors
+  
 
   constructor(
     private router: Router,
@@ -93,7 +96,8 @@ export class RateComparativeUpdateComponent implements OnInit {
     private dialog: MatDialog,
     private http: HttpClient,
     private userService: UsersService,
-    private auth: AuthService
+    private auth: AuthService,
+    
   ) {
     // Call the method to fetch the brand list
     this.getBrandList();
@@ -111,6 +115,15 @@ export class RateComparativeUpdateComponent implements OnInit {
   vendorForm = this.formBuilder.group({
     vendor: this.formBuilder.array([]),
   });
+
+  vendorSelectionForm = this.formBuilder.group({
+    NewSelectionVendors: this.formBuilder.array([]) // Use FormArray for selected vendors
+  });
+
+
+
+
+  
 
   getList() {
     const site = this.http.get<any>(`${environment.api_path}${GET_SITE_API}`);
@@ -187,6 +200,7 @@ export class RateComparativeUpdateComponent implements OnInit {
           total_amount: totalData.grandTotal,
           preferred: totalData.preferred,
           vendorRemark: totalData.vendorRemark,
+          paymentTerms:totalData.paymentTerms,
         };
       }
     );
@@ -306,6 +320,7 @@ export class RateComparativeUpdateComponent implements OnInit {
         vendor.category.includes(items.categoryDetail._id) &&
         vendor.SubCategory.includes(items.subCategoryDetail._id)
     );
+ this.selectedVendorList= tempVendorList;
     return tempVendorList;
   }
 
@@ -371,6 +386,7 @@ export class RateComparativeUpdateComponent implements OnInit {
           freightGst: 0,
           grandTotal: 0,
           vendorRemark: '',
+          paymentTerms :'',
           preferred: false,
         };
 
@@ -515,7 +531,8 @@ export class RateComparativeUpdateComponent implements OnInit {
         const freightControlName = `table_${tableIndex}_vendor_${vendorId}_freight`;
         const freightGstControlName = `table_${tableIndex}_vendor_${vendorId}_freightGst`;
         const vendorRemarkControlName = `table_${tableIndex}_vendor_${vendorId}_vendorRemark`;
-
+       
+        const paymentTermsControlName = `table_${tableIndex}_vendor_${vendorId}_paymentTerms`;
         this.vendorItemsForm.addControl(
           freightControlName,
           new FormControl(0, Validators.required)
@@ -526,6 +543,10 @@ export class RateComparativeUpdateComponent implements OnInit {
         );
         this.vendorItemsForm.addControl(
           vendorRemarkControlName,
+          new FormControl('')
+        );
+        this.vendorItemsForm.addControl(
+          paymentTermsControlName,
           new FormControl('')
         );
       });
@@ -697,11 +718,18 @@ export class RateComparativeUpdateComponent implements OnInit {
         vendorId,
         'vendorRemark'
       );
-
+      
+      const paymentTermsControlName = this.getFormControl(
+        tableIndex,
+        '',
+        vendorId,
+        'paymentTerms'
+      );
       table.totals[vendorId].freight = parseFloat(freightControl.value) || 0;
       table.totals[vendorId].freightGst =
         parseFloat(freightGstControl.value) || 0;
       table.totals[vendorId].vendorRemark = vendorRemarkControlName.value;
+      table.totals[vendorId].paymentTerms = paymentTermsControlName.value;
       table.totals[vendorId].grandTotal =
         table.totals[vendorId].totalAmount +
         table.totals[vendorId].gstAmount +
@@ -831,6 +859,53 @@ export class RateComparativeUpdateComponent implements OnInit {
     );
   }
 
+  filterVendorList(event: Event) {
+    const inputElement = event.target as HTMLInputElement; // Cast to HTMLInputElement
+    const searchKeyword = inputElement.value; // Get the value
+
+    // Filter the vendors based on the search input
+    this.filteredVendorList = this.vendorsList.filter(vendor =>
+      vendor.vendor_name.toLowerCase().includes(searchKeyword.toLowerCase())
+    );
+  }
+
+  showSelectedVendors() {
+    // Get the selected vendor IDs from the form
+    const selectedVendors = this.vendorSelectionForm.get('NewSelectionVendors').value;
+
+    // Log the selected vendors
+    console.log('Selected Vendor IDs:', selectedVendors);
+
+    // Check if there are any selected vendors
+    if (selectedVendors && selectedVendors.length > 0) {
+        // Filter the vendorList to get the matching vendor objects
+        const matchingVendors = this.vendorsList.filter(vendor =>
+            selectedVendors.includes(vendor._id)
+        );
+
+        // Log or alert the matching vendor objects
+        console.log('Matching Vendor Objects:', matchingVendors);
+       
+        this.selectedVendorList=[...this.selectedVendorList, ...matchingVendors];
+        console.log(this.selectedVendorList);
+    } else {
+        alert('No vendors selected.');
+    }
+}
+
+  handleVendorSelectionChange(event: any) {
+    const selectedVendors = this.vendorSelectionForm.get('NewSelectionVendors') as FormArray;
+
+    // Clear the FormArray first
+    selectedVendors.clear();
+
+    // Add selected vendor IDs directly from the event value
+    event.value.forEach((vendorId: string) => {
+      selectedVendors.push(this.formBuilder.control(vendorId)); // Add selected vendor ID to FormArray
+    });
+
+    console.log('Selected Vendors:', selectedVendors.value); // Log the selected vendors
+  }
   /*-----------------------------*/
 
   /* -----------------------------------------*/
@@ -873,6 +948,7 @@ export class RateComparativeUpdateComponent implements OnInit {
                   this.details = res.data.details;
                   console.log('checking Api', this.details);
                   this.vendorsList = res.data.vendorsList;
+                this.filteredVendorList=this.vendorsList;
 
                   this.vendorsList.map((o: any) => {
                     this.vendorAssociatedData[o._id] = o;
@@ -902,6 +978,8 @@ export class RateComparativeUpdateComponent implements OnInit {
                     (this.vendorForm.get('vendor') as FormArray).push(
                       tempselectedVendors
                     );
+
+                    this.isVendorSelected(items);
                   });
 
                   console.log(this.vendorForm);

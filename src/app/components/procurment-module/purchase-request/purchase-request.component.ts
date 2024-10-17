@@ -77,6 +77,7 @@ export class PurchaseRequestComponent implements OnInit {
   itemCategoryList: any;
   itemSelected: boolean = false;
   filteredItemList: any;
+  filteredUOMLists: any[] = [];
   filteredBrandLists: any[] = [];
   itemFilteredBrandList: any;
   option = 2;
@@ -434,6 +435,7 @@ export class PurchaseRequestComponent implements OnInit {
           this.filteredItemList = this.itemList;
 
         this.filteredBrandLists.push(this.brandList);
+        this.filteredUOMLists.push(this.uomList);
 
           if (this.permissions.user.role === 'superadmin') {
             this.siteList = this.superSiteList;
@@ -458,6 +460,7 @@ export class PurchaseRequestComponent implements OnInit {
     else this.items.push(this.createItem());
 
     this.filteredBrandLists.push(this.brandList);
+    this.filteredUOMLists.push(this.uomList);
     console.log("checking List", this.filteredBrandLists);
   }
 
@@ -565,6 +568,21 @@ export class PurchaseRequestComponent implements OnInit {
     console.log('brandSelections', brandSelections);
   }
 
+ 
+    toggleUOMSelection(uomId: string, index: number): void {
+      console.log("here check this", uomId);
+      const itemControl = (this.purchaseRequestForm.get('items') as FormArray)
+        .controls[index] as FormGroup;
+    
+      const uomControl = itemControl.get('uom') as FormControl;
+    
+      // Set or update the UOM ID in the uom control
+      uomControl.setValue(uomId);
+      console.log("checking", itemControl);
+    }
+    
+  
+
   /**
    * Removes an item from the list of items in the purchase request form at the specified index.
    * @param i The index of the item to be removed.
@@ -604,6 +622,7 @@ export class PurchaseRequestComponent implements OnInit {
     }
 
    this.filteredBrandLists=[];
+   this.filteredUOMLists=[];
     this.addItem();
 
     console.log('check for filtered', this.filteredItemList);
@@ -802,7 +821,8 @@ export class PurchaseRequestComponent implements OnInit {
       // If the item occurs only once, update the FormArray item
       let category = selectedItem.categoryDetail.name;
       let subCategory = selectedItem.subCategoryDetail.subcategory_name;
-      let uom = selectedItem.uomDetail.uom_name;
+      
+      let HSNcode=selectedItem.HSNcode || "";
       let specification= selectedItem.specification;
       if (this.items.length > 1) {
         this.itemSelected = true;
@@ -810,11 +830,13 @@ export class PurchaseRequestComponent implements OnInit {
       this.items.at(i).patchValue({
         category: category,
         subCategory: subCategory,
-        uom: uom,
+        
+        HSNcode:HSNcode,
         specification:specification
       });
 let theList=this.getBrandsForItem(selectedItem);
-     
+     let theUOMList=this.getUOMFormItem(selectedItem);
+     this.filteredUOMLists[i]=theUOMList
 
       this.filteredBrandLists[i] = theList;
       console.log("check filteredList", theList);
@@ -832,6 +854,22 @@ let theList=this.getBrandsForItem(selectedItem);
 
     } else {
       return this.brandList;
+    }
+
+  }
+  
+  getUOMFormItem(item) {
+    console.log('checking item for uom', item);
+    if (item.uom) {
+      console.log('here check this',item.uom);
+      const uomIds = Array.isArray(item.uom) ? item.uom : [item.uom];
+      console.log('here check this',this.uomList);
+      let filterList= this.uomList.filter((uom) => uomIds.includes(uom._id));
+      console.log("check List", filterList);
+      return filterList;
+
+    } else {
+      return this.uomList;
     }
 
   }

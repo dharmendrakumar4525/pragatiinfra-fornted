@@ -26,7 +26,7 @@ export class EditDataComponent implements OnInit {
     brands: new FormControl([], Validators.required),
     category: new FormControl('', Validators.required),
     sub_category: new FormControl('', Validators.required),
-    uom: new FormControl('', Validators.required),
+    uom: new FormControl([], Validators.required),
     gst: new FormControl('', Validators.required),
     specification: new FormControl(''),
     _id: new FormControl()
@@ -104,7 +104,8 @@ export class EditDataComponent implements OnInit {
       category: data.category,
       brands :data.brands ||[],
       sub_category: data.sub_category,
-      uom: data.uom,
+      uom: Array.isArray(data.uom) ? data.uom : [data.uom],
+
       gst: data.gst,
       specification: data.specification,
       _id: data._id

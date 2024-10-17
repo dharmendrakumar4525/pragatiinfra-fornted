@@ -254,7 +254,40 @@
   </mat-card>
 
   <mat-card class="topcard" style="margin-top: 40px">
+    <h4 style="font-weight: bold;padding:10px">
     Select your vendor for each Category and Subcategory
+  </h4>
+    
+      
+    <form [formGroup]="vendorSelectionForm" style="display: flex;margin-Top:-50px; justify-content: flex-end; align-items: center;">
+      <div class="scroll-bar1" style="margin-right: 10px;margin-top:-10px"> <!-- Add some space between dropdown and button -->
+        <mat-form-field appearance="outline" style="width: 300px">
+          <mat-label>Add More Vendors</mat-label>
+          <mat-select multiple (selectionChange)="handleVendorSelectionChange($event)">
+            <!-- Custom search input in the dropdown -->
+            <div>
+              <mat-form-field appearance="fill">
+                <input matInput (input)="filterVendorList($event)" placeholder="Search vendors">
+              </mat-form-field>
+            </div>
+            <!-- Display the filtered list of vendors -->
+            <mat-option *ngFor="let vendor of filteredVendorList" [value]="vendor._id">
+              {{ vendor.vendor_name }} ({{vendor.code}})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    
+      <button class="p-btns-button" style="margin-top:-25px;" (click)="showSelectedVendors()">
+        Add Vendors
+      </button>
+    </form>
+    
+    
+    
+  
+     
+
     <form [formGroup]="vendorForm">
       <div class="scroll-bar1">
         <table>
@@ -270,7 +303,7 @@
             <td>{{ items.categoryDetail.name }}</td>
             <td>{{ items.subCategoryDetail.subcategory_name }}</td>
             <td>
-              <div *ngIf="isVendorSelected(items).length === 0; else Option">
+              <div *ngIf="selectedVendorList.length === 0; else Option">
                 No vendor available
               </div>
               <ng-template #Option [formGroupName]="i">
@@ -287,10 +320,10 @@
                       (selectionChange)="handleVendorChange()"
                     >
                       <mat-option
-                        *ngFor="let vendor of isVendorSelected(items)"
+                        *ngFor="let vendor of selectedVendorList"
                         [value]="vendor._id"
                       >
-                        {{ vendor?.vendor_name }}
+                        {{ vendor?.vendor_name }}  ({{vendor.code}})
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -748,6 +781,33 @@
                     (input)="updateTotals(0)"
                     [attr.data-control-name]="
                       'table_0_vendor_' + vendorId + '_vendorRemark'
+                    "
+                  />
+                </td>
+              </ng-container>
+              <td style="border-color: white"></td>
+            </tr>
+            <tr>
+              <td
+                colspan="8"
+                style="border-color: white; border-right: 0.5px solid"
+              ></td>
+              <td colspan="2" style="text-align: right; border: 0.5px solid">
+                Payment Terms
+              </td>
+              <ng-container
+                *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])"
+              >
+                <td colspan="3" style="height: 40px; border: 0.5px solid">
+                  <input
+                    type="text"
+                    class="inputBoxes"
+                    [formControl]="
+                      getFormControl(0, '', vendorId, 'paymentTerms')
+                    "
+                    (input)="updateTotals(0)"
+                    [attr.data-control-name]="
+                      'table_0_vendor_' + vendorId + '_paymentTerms'
                     "
                   />
                 </td>

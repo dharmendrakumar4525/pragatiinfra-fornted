@@ -144,8 +144,8 @@
               <th>Item specification</th>
               <th>Category</th>
               <th>Sub&nbsp;category</th>
-              <th>Uom*</th>
               <th>HSN Code</th>
+              <th>Uom*</th>
               <th>Quantity*</th>
               <th>Brand Name</th>
               <!-- <th>Brand Name</th> -->
@@ -195,11 +195,16 @@
                     {{item.get('subCategory')?.value}}
                   </td>
                   <td>
-                    {{item.get('uom')?.value}}
+                    {{item.get('HSNcode')?.value}}
                   </td>
                   <td>
-                    <input placeholder="Enter" formControlName="HSNcode" class="pr-form-field">
+                    <mat-select class="pr-form-field" placeholder="Select UOM">
+                      <mat-option *ngFor="let uom of filteredUOMLists[i]" [value]="uom._id" (click)="toggleUOMSelection(uom._id, i)">
+                        {{ uom.uom_name }}
+                      </mat-option>
+                    </mat-select>
                   </td>
+                 
                   <td>
                     <input type="text" formControlName="qty" class="pr-form-field" placeholder="Enter" pattern="^\d+(\.\d{1,2})?$">
                     </td>
@@ -291,8 +296,10 @@
               <th>Item specification</th>
               <th>Category</th>
               <th>Sub&nbsp;category</th>
-              <th>Uom*</th>
               <th>HSN Code</th>
+              <th>Uom*</th>
+             
+             
               <th>Quantity*</th>
               <th>Brand Name</th>
               <th>Remarks</th>
@@ -341,17 +348,24 @@
                     {{item.get('subCategory')?.value}}
                   </td>
                   <td>
-                    {{item.get('uom')?.value}}
+                    {{item.get('HSNcode')?.value}}
+                  </td>
+                  
+                    <td>
+                      <mat-select class="pr-form-field" placeholder="Select UOM">
+                        <mat-option *ngFor="let uom of filteredUOMLists[i]" [value]="uom._id" (click)="toggleUOMSelection(uom.uom_name, i)">
+                          {{ uom.uom_name }}
+                        </mat-option>
+                      </mat-select>
+                    </td>
                     <!-- <mat-select id="itemName" placeholder="Select UOM" formControlName="uom" class="select-form-field">
                       <mat-option [value]="item._id" *ngFor="let item of uomList">
                         {{item.unit}}
                       </mat-option>
   
                     </mat-select> -->
-                  </td>
-                  <td>
-                    <input placeholder="Enter" formControlName="HSNcode" class="pr-form-field">
-                  </td>
+                 
+                  
                   <td>
                    
                     <input type="text" formControlName="qty" class="pr-form-field" placeholder="Enter" pattern="^\d+(\.\d{1,2})?$">

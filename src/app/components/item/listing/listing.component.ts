@@ -7,7 +7,7 @@ import { SnackbarService } from '@services/snackbar/snackbar.service';
 import { isEmpty } from 'lodash';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
-import { CATEGORY_API, SUB_CATEGORY_API,GET_BRAND_API } from '@env/api_path';
+import { CATEGORY_API, SUB_CATEGORY_API,GET_BRAND_API, UOM_API } from '@env/api_path';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ToastService } from '@services/toast.service';
 import { MatDialog } from '@angular/material/dialog'; // Import MatDialog
@@ -28,6 +28,7 @@ export class ListingComponent implements OnInit {
   permissions: any;
   categoryList: any;
   brandList:any;
+  uomList:any;
   subCategoryList: any = [];
   itemList: any = [];
   list: any;
@@ -91,12 +92,14 @@ export class ListingComponent implements OnInit {
     const subCategory = this.http.get<any>(`${environment.api_path}${SUB_CATEGORY_API}`);
     const category = this.http.get<any>(`${environment.api_path}${CATEGORY_API}`);
     const brands = this.http.get<any>(`${environment.api_path}${GET_BRAND_API}`);
-    this.httpService.multipleRequests([subCategory, category, brands], {}).subscribe(res => {
+    const uoms = this.http.get<any>(`${environment.api_path}${UOM_API}`);
+    this.httpService.multipleRequests([subCategory, category, brands, uoms], {}).subscribe(res => {
       if (res) {
         this.subCategoryList = res[0].data;
         console.log("Sub Category : ", this.subCategoryList);
         this.categoryList = res[1].data;
         this.brandList=res[2].data;
+        this.uomList=res[3].data;
       }
     }, (err) => {
       if (err.errors && !isEmpty(err.errors)) {
@@ -182,6 +185,33 @@ export class ListingComponent implements OnInit {
       .join(' / ');
   }
 
+  getUOMNamesByIds(uomIds: string | string[]): string {
+    if (uomIds === undefined) {
+      return '';
+    }
+
+    const uomMap = this.uomList.reduce((map, uom) => {
+      map[uom._id] = uom.uom_name;
+      return map;
+    }, {} as Record<string, string>);
+
+    // Check if uomIds is a string
+    if (typeof uomIds === 'string') {
+      return uomMap[uomIds] || ''; // Return the UOM name or an empty string if not found
+    }
+
+    // If uomIds is an array
+    if (Array.isArray(uomIds)) {
+      return uomIds
+        .map(id => uomMap[id])
+        .filter(uom_name => uom_name)
+        .join(' / ');
+    }
+
+    return '';
+  }
+
+
   edit(id: any) {
     if (!this.editPermission) {
       this.toast.openSnackBar('Access to Item Master editing is restricted for your account.');
@@ -236,16 +266,54 @@ export class ListingComponent implements OnInit {
 
   async exportXlSX() {
     let filterReport = this.itemList.map((o: any) => {
+      console.log(o);
       o.categoryName = o.categoryDetail?.name;
       o.brandName=this.getBrandNamesByIds(o.brands);
       o.subCategoryName = o.subCategoryDetail?.subcategory_name;
-      o.uomName = o.uomDetail?.uom_name;
+      o.uomName = this.getUOMNamesByIds(o.uom);
+      o.gstValue = o.gstDetail?.gst_name;
+      console.log(o);
+      return o;
+    });
+    let sheetHeaders = [
+      "Item Number",
+      "Item Name",
+      "HSN Code",
+      "Brands",
+    
+      "Category Name",
+      "Sub Category Name",
+      "UOM",
+      "GST",
+      "Specification"
+    ];
+    let valueKey = ['item_number',
+      'item_name',
+      "HSNcode",
+      "brandName",
+      'categoryName',
+      'subCategoryName',
+      'uomName',
+      'gstValue',
+      'specification'];
+    let valueDataType = ['string', 'string', 'string', 'string', 'string', 'string', 'string','string',"string"];
+    let sheetName: any = "Item";
+    this.excelService.mapArrayToExcel(sheetName, sheetHeaders, valueKey, valueDataType, filterReport);
+  }
+
+  async exportAllXlSX() {
+    let filterReport = this.list.map((o: any) => {
+      o.categoryName = o.categoryDetail?.name;
+      o.brandName=this.getBrandNamesByIds(o.brands);
+      o.subCategoryName = o.subCategoryDetail?.subcategory_name;
+      o.uomName = this.getUOMNamesByIds(o.uom);
       o.gstValue = o.gstDetail?.gst_percentage;
       return o;
     });
     let sheetHeaders = [
       "Item Number",
       "Item Name",
+      "HSN Code",
       "Brands",
       "Category Name",
       "Sub Category Name",
@@ -255,42 +323,14 @@ export class ListingComponent implements OnInit {
     ];
     let valueKey = ['item_number',
       'item_name',
+      "HSNcode",
       "brandName",
       'categoryName',
       'subCategoryName',
       'uomName',
       'gstValue',
       'specification'];
-    let valueDataType = ['string', 'string', 'string', 'string', 'string', 'string', 'string'];
-    let sheetName: any = "Item";
-    this.excelService.mapArrayToExcel(sheetName, sheetHeaders, valueKey, valueDataType, filterReport);
-  }
-
-  async exportAllXlSX() {
-    let filterReport = this.list.map((o: any) => {
-      o.categoryName = o.categoryDetail?.name;
-      o.subCategoryName = o.subCategoryDetail?.subcategory_name;
-      o.uomName = o.uomDetail?.uom_name;
-      o.gstValue = o.gstDetail?.gst_percentage;
-      return o;
-    });
-    let sheetHeaders = [
-      "Item Number",
-      "Item Name",
-      "Category Name",
-      "Sub Category Name",
-      "UOM",
-      "GST",
-      "Specification"
-    ];
-    let valueKey = ['item_number',
-      'item_name',
-      'categoryName',
-      'subCategoryName',
-      'uomName',
-      'gstValue',
-      'specification'];
-    let valueDataType = ['string', 'string', 'string', 'string', 'string', 'string', 'string'];
+    let valueDataType = ['string', 'string', 'string', 'string', 'string', 'string', 'string','string',"string"];
     let sheetName: any = "Item";
     this.excelService.mapArrayToExcel(sheetName, sheetHeaders, valueKey, valueDataType, filterReport);
   }

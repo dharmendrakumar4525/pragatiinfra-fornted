@@ -43,7 +43,7 @@
                 {{brand?.brand_name}}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="editForm.controls.category.errors?.['required']">
+            <mat-error *ngIf="editForm.controls.brands.errors?.['required']">
               this field is required.
             </mat-error>
 
@@ -83,21 +83,23 @@
 
         </div>
 
-        <div class="col-md-3">
-
+       
+        <div class="col-md-3" appearance="outline">
           <mat-form-field appearance="outline">
             <mat-label>UOM</mat-label>
-            <mat-select matInput formControlName="uom">
-              <mat-option *ngFor="let uom of uomList" [value]="uom?._id">
+            <mat-select matInput formControlName="uom" multiple >
+              <mat-option *ngFor="let uom of uomList" [value]="uom?._id" >
                 {{uom?.uom_name}}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="editForm.controls.uom.errors?.['required']">
               this field is required.
             </mat-error>
+
           </mat-form-field>
 
         </div>
+        
 
         <div class="col-md-3" >
 

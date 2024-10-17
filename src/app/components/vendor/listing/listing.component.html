@@ -30,55 +30,58 @@
       </div>
     </div>
     <div class="section-body">
-      <table class="table pragati-table">
-        <thead>
-          <tr>
-            <th scope="col">SN.</th>
-            <th scope="col">Vendor Name</th>
-            <th scope="col">Code</th>
-            <th scope="col">Category</th>
-            <th scope="col">Sub Category</th>
-            <th scope="col">Contact Person</th>
-            <th scope="col">Phone Number</th>
-            <th scope="col">GST Number</th>
-            <th scope="col">PAN Number</th>
-            <th scope="col">Email</th>
-            <th scope="col">Payment Term</th>
-            <th scope="col">Term & Condtiion</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of vendorList; let i = index">
-            <td scope="row">{{ i + 1 }}</td>
-            <td>{{ item?.vendor_name }}</td>
-            <td>{{ item?.code }}</td>
-            <td>{{ item?.category }}</td>
-            <td>{{ item?.SubCategory }}</td>
-            <td>{{ item?.contact_person }}</td>
-            <td>{{ item?.phone_number }}</td>
-            <td>{{ item?.gst_number }}</td>
-            <td>{{ item?.pan_number }}</td>
-            <td>{{ item?.email }}</td>
-            <td>{{ item?.payment_terms }}</td>
-            <td>{{ item?.terms_condition }}</td>
-            <td>
-              <div class="action-btn-wrapper">
-                <a
-                  class="action-btn"
-                  (click)="edit(item._id)" 
-                  title="Edit"
-                  ><i class="fa fa-edit"></i>
-                </a>
-                <a class="action-btn" (click)="delete(item._id)" title="Delete"
-                  ><i class="fa fa-trash"></i
-                ></a>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div style="overflow-x: auto;overflow-y: auto; max-height: 700px; "> <!-- Only horizontal scrolling -->
+        <table class="table pragati-table" style="min-width: 1500px;"> <!-- Increased table width -->
+          <thead>
+            <tr>
+              <th scope="col" style="min-width: 50px;">SN.</th>
+              <th scope="col" style="min-width: 150px;">Vendor Name</th>
+              <th scope="col" style="min-width: 100px;">Code</th>
+              <th scope="col" style="min-width: 150px;">Category</th>
+              <th scope="col" style="min-width: 150px;">Sub Category</th>
+              <th scope="col" style="min-width: 150px;">Contact Person</th>
+              <th scope="col" style="min-width: 120px;">Phone Number</th>
+              <th scope="col" style="min-width: 150px;">GST Number</th>
+              <th scope="col" style="min-width: 150px;">PAN Number</th>
+              <th scope="col" style="min-width: 200px;">Email</th>
+              <th scope="col" style="min-width: 400px;">Address</th>
+              <th scope="col" style="min-width: 150px;">Payment Term</th>
+              <th scope="col" style="min-width: 200px;">Term & Condition</th>
+              <th scope="col" style="min-width: 100px;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of vendorList; let i = index">
+              <td scope="row">{{ i + 1 }}</td>
+              <td>{{ item?.vendor_name }}</td>
+              <td>{{ item?.code }}</td>
+              <td>{{ item?.category }}</td>
+              <td>{{ item?.SubCategory }}</td>
+              <td>{{ item?.contact_person }}</td>
+              <td>{{ item?.phone_number }}</td>
+              <td>{{ item?.gst_number }}</td>
+              <td>{{ item?.pan_number }}</td>
+              <td>{{ item?.email }}</td>
+              <td>{{combineAddress( item?.address) }}</td>
+              <td>{{ item?.payment_terms }}</td>
+              <td>{{ item?.terms_condition }}</td>
+              <td>
+                <div class="action-btn-wrapper">
+                  <a class="action-btn" (click)="edit(item._id)" title="Edit">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                  <a class="action-btn" (click)="delete(item._id)" title="Delete">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+    
+    
   </ng-container>
   <ng-template #noView>
     <h3

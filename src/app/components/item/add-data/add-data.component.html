@@ -35,7 +35,14 @@
           </mat-form-field>
 
         </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>HSN Code</mat-label>
+            <input matInput formControlName="HSNcode">
+            
+          </mat-form-field>
 
+        </div>
         <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>Brands</mat-label>
@@ -87,18 +94,19 @@
 
         </div>
 
+        
         <div class="col-md-3">
-
           <mat-form-field appearance="outline">
             <mat-label>UOM</mat-label>
-            <mat-select matInput formControlName="uom">
-              <mat-option *ngFor="let uom of uomList" [value]="uom?._id">
+            <mat-select matInput formControlName="uom" multiple >
+              <mat-option *ngFor="let uom of uomList" [value]="uom?._id" >
                 {{uom?.uom_name}}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="addForm.controls.uom.errors?.['required']">
               this field is required.
             </mat-error>
+
           </mat-form-field>
 
         </div>

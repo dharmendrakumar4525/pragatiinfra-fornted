@@ -311,6 +311,15 @@
           </ng-container>
           <td style="border-color: white;"></td>
         </tr>
+        <tr>
+          <td colspan="8" style="border-color: white; border-right: 0.5px solid;">
+          </td>
+          <td colspan="2" style="text-align: right; border: 0.5px solid;">Payment Terms</td>
+          <ng-container *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])">
+            <td colspan="3" style="height:50px; border: 0.5px solid;">{{ vendorItemsTables[0].totals[vendorId]?.paymentTerms}}</td>
+          </ng-container>
+          <td style="border-color: white;"></td>
+        </tr>
       </tfoot>
     </table>
   </div>

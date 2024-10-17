@@ -27,7 +27,9 @@
           <tr>
             <th scope="col">SN.</th>
             <th scope="col">Item Number</th>
+           
             <th scope="col">Item Name</th>
+            <th scope="col">HSN Code</th>
             <th scope="col">Brands</th>
             <th scope="col">Category</th>
             <th scope="col">Sub Category</th>
@@ -42,10 +44,11 @@
             <td scope="row">{{i + 1}}</td>
             <td>{{item.item_number}}</td>
             <td>{{item.item_name}}</td>
+            <td>{{item.HSNcode}}</td>
             <td>{{getBrandNamesByIds(item.brands)}}</td>
             <td>{{item?.categoryDetail?.name}}</td>
             <td>{{item?.subCategoryDetail?.subcategory_name}}</td>
-            <td>{{item?.uomDetail?.uom_name}}</td>
+            <td>{{getUOMNamesByIds(item?.uom)}}</td>
             <td>{{item?.gstDetail?.gst_name}}</td>
             <td>{{item.specification}}</td>
             <td>

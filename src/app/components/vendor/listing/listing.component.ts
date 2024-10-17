@@ -252,6 +252,33 @@ export class ListingComponent implements OnInit {
     this.excelService.mapArrayToExcel(sheetName, sheetHeaders, valueKey, valueDataType, filterReport);
   }
 
+  combineAddress(address) {
+    // Extract values from the address object
+   
+    const {
+      street_address,
+      street_address2,
+      city,
+      state,
+      zip_code,
+      country,
+    } = address;
+  
+    // Create an array of address parts, filtering out empty strings, null, undefined
+    const addressParts = [
+      street_address,
+      street_address2,
+      city,
+      state,
+      zip_code,
+      country
+    ].filter(part => part && part.trim() !== '');
+  
+    // Join the filtered parts with a comma and return the result
+    return addressParts.join(', ');
+  }
+  
+
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {

@@ -24,10 +24,11 @@ export class AddDataComponent implements OnInit {
   addForm = new FormGroup({
     item_name: new FormControl('', Validators.required),
     item_number: new FormControl('', Validators.required),
+    HSNcode: new FormControl(''),
     brands: new FormControl([], Validators.required),
     category: new FormControl('', Validators.required),
     sub_category: new FormControl('', Validators.required),
-    uom: new FormControl('', Validators.required),
+    uom: new FormControl([], Validators.required),
     gst: new FormControl('', Validators.required),
     specification: new FormControl('', Validators.required),
 
@@ -71,6 +72,7 @@ export class AddDataComponent implements OnInit {
 
   saveData() {
     if (this.addForm.valid) {
+      console.log(this.addForm.value);
       this.httpService.POST(ITEM_API, this.addForm.value).subscribe(res => {
         this.snack.notify("Data has been saved sucessfully.", 1);
         this.router.navigate(['item']);
