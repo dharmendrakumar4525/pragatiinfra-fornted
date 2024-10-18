@@ -163,40 +163,17 @@
           <div class="textarearight">
             <span><b>Date</b>: {{ poDetails.date | date : "dd-MM-yyyy" }}</span>
             <span
-            ><b>Validity From</b>:
-            <mat-form-field>
-              <input
-                matInput
-                [formControl]="StartDate"
-                (focus)="picker.open()"
-                [min]="minDate"
-                [max]="maxDate"
-                [matDatepicker]="picker"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="picker"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
+            ><b>Validity From</b>:  {{
+              poDetails.poStartDate | date : "dd-MM-yyyy"
+            }}
           </span>
             <span
-              ><b>Validity Upto</b>:
-              <mat-form-field>
-                <input
-                  matInput
-                  [formControl]="validityDate"
-                  (focus)="picker.open()"
-                  [min]="minDate"
-                  [max]="maxDate"
-                  [matDatepicker]="picker"
-                />
-                <mat-datepicker-toggle
-                  matSuffix
-                  [for]="picker"
-                ></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
+              ><b>Validity Upto</b>:  
+              {{
+                poDetails.
+due_date
+ | date : "dd-MM-yyyy"
+              }}
             </span>
             <span
               ><b>PO NO</b>: {{ poDetails?.po_number
@@ -376,7 +353,7 @@
               {{ item.item.qty }}
             </td>
             <td>
-              {{ getUomName(item.item) }}
+              {{item.uom}}
             </td>
 
             <td td style="color: #000">
@@ -511,6 +488,9 @@
         <div *ngIf="poDetails.po_files.length===0">
       <input type="file" (change)="onFilesSelected($event)" />
       </div>
+      <div *ngIf="poDetails.po_files.length!==0">
+        Vendor has Accepted the PO <a [href]="poDetails.po_files[0]" style="color: blue; text-decoration: underline;">Download Document</a>
+        </div>
       </div>
     
       <div *ngIf="poDetails.status !== 'rejected'">

@@ -94,19 +94,25 @@
       <tbody>
         <tr *ngFor="let obj of rateComparativeList;let index = index">
           <td style="color: #4272BF;width:200px;text-align: left;padding: 10px;font-size: 15px;">
-            Request no : <span style="color: #000000;">{{reqNo(obj.title)}}</span>
+            Request no : <span style="color: #000000;">{{obj.purchase_request_number }}</span>
           </td>
           
-          <td style="color: #4272BF;width:300px;text-align: left;  padding: 10px;font-size: 15px;">
-            PO No : {{obj.po_number}}<span style="color: #000000;"></span>
-          </td>
+          <td *ngIf="obj.status !== 'pending' && obj.status !== 'revise'" 
+          style="color: #4272BF;width:300px;text-align: left; padding: 10px;font-size: 15px;">
+        PO No : {{obj.po_number}}<span style="color: #000000;"></span>
+      </td>
+      
+
+          
          
           <hr style="border: 1px solid #D9D9D9;height: 30px;">
 
           <td style="color: #4272BF;width:300px;text-align: left;  padding: 10px;font-size: 15px;">
             Title : {{obj.title}}<span style="color: #000000;"></span>
           </td>
-         
+          <td style="color: #4272BF;width:300px;text-align: left;  padding: 10px;font-size: 15px;">
+            Site : {{obj.delivery_address.company_name}}<span style="color: #000000;"></span>
+          </td>
           <hr style="border: 1px solid #D9D9D9;height: 30px;">
           <ng-container *ngIf="obj.status === 'approved'">
             <td [ngStyle]="{ 'color': obj.po_files.length !==0 ? 'green' : 'red', 'width': '500px', 'font-size': '15px' }">

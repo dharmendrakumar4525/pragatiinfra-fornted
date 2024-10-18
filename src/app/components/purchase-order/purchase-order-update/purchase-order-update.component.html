@@ -197,7 +197,6 @@
                     matInput
                     [formControl]="StartDate"
                     (focus)="startDatePicker.open()"
-                    [min]="minDate"
                     [max]="maxDate"
                     [matDatepicker]="startDatePicker"
                   />
@@ -205,6 +204,7 @@
                   <mat-datepicker #startDatePicker></mat-datepicker>
                 </mat-form-field>
               </span>
+              
               <span>
                 <b>Valid Upto</b>:
                 <mat-form-field>
@@ -212,7 +212,7 @@
                     matInput
                     [formControl]="validityDate"
                     (focus)="validityDatePicker.open()"
-                    [min]="minDate"
+                    
                     [max]="maxDate"
                     [matDatepicker]="validityDatePicker"
                   />
@@ -433,7 +433,7 @@
                 {{ item.item.qty }}
               </td>
               <td style="color: #000">
-                {{ item.item.uomDetail.uom_name }}
+                {{ item.uom }}
               </td>
 
               <td>{{ getBrandNamesByIds(item.item.brandName) }}</td>

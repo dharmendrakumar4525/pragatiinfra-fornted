@@ -84,6 +84,7 @@ selectedVendorList:any[] = [];
   filteredItems: Array<any> = [];
   brandList: any;
   // New form for vendor selection
+  RevisedVendorList: any[] = [];
   filteredVendorList: any[] = []; // Array to hold filtered vendors
   
 
@@ -314,15 +315,28 @@ selectedVendorList:any[] = [];
    * @param items The items for which vendors are to be filtered.
    * @returns An array of vendors that match the category and subcategory of the items.
    */
+ 
   isVendorSelected(items: any): any[] {
+    // Filter vendors based on the category and subcategory
     let tempVendorList = this.vendorsList.filter(
       (vendor) =>
         vendor.category.includes(items.categoryDetail._id) &&
         vendor.SubCategory.includes(items.subCategoryDetail._id)
     );
- this.selectedVendorList= tempVendorList;
+
+    // Add the filtered vendors to selectedVendorList
+    this.selectedVendorList = [...this.selectedVendorList, ...tempVendorList];
+
+    // Remove the selected vendors from the vendorsList
+    this.RevisedVendorList = this.vendorsList.filter(
+      (vendor) => !tempVendorList.some(tempVendor => tempVendor._id === vendor._id)
+    );
+
+    this.filteredVendorList=this.RevisedVendorList;
+    // Return the temporary vendor list
     return tempVendorList;
-  }
+}
+
 
   /**
    * Getter method to access the vendor array from the vendor form.
@@ -864,7 +878,7 @@ selectedVendorList:any[] = [];
     const searchKeyword = inputElement.value; // Get the value
 
     // Filter the vendors based on the search input
-    this.filteredVendorList = this.vendorsList.filter(vendor =>
+    this.filteredVendorList = this.RevisedVendorList.filter(vendor =>
       vendor.vendor_name.toLowerCase().includes(searchKeyword.toLowerCase())
     );
   }
@@ -883,15 +897,23 @@ selectedVendorList:any[] = [];
             selectedVendors.includes(vendor._id)
         );
 
-        // Log or alert the matching vendor objects
+        // Log the matching vendor objects
         console.log('Matching Vendor Objects:', matchingVendors);
-       
-        this.selectedVendorList=[...this.selectedVendorList, ...matchingVendors];
-        console.log(this.selectedVendorList);
+
+        // Add unique vendors to the selectedVendorList
+        matchingVendors.forEach(vendor => {
+            // Check if the vendor is already in the selectedVendorList
+            if (!this.selectedVendorList.some(existingVendor => existingVendor._id === vendor._id)) {
+                this.selectedVendorList.push(vendor);
+            }
+        });
+
+        console.log('Updated Selected Vendor List:', this.selectedVendorList);
     } else {
         alert('No vendors selected.');
     }
 }
+
 
   handleVendorSelectionChange(event: any) {
     const selectedVendors = this.vendorSelectionForm.get('NewSelectionVendors') as FormArray;

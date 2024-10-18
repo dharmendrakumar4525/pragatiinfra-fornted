@@ -349,7 +349,7 @@ export class PurchaseOrderDetailsComponent implements OnInit {
           //console.log(putResp, postResp);
 
           this.snack.notify('Vendor Acceptance Document Uploaded Successfully.', 1);
-          this.router.navigate(['/purchase-order']);
+          this.poDetails.po_files=files;
         },
         error: (err: any) => {
           // Handle errors from either PUT or POST request
