@@ -846,7 +846,7 @@ selectedVendorList:any[] = [];
 
   detailsOfVendor(vendor: any) {
     let tempvendor = this.vendorsList.find((obj) => obj._id == vendor);
-    return tempvendor.vendor_name;
+    return `${tempvendor.vendor_name} (${tempvendor.code})`;
   }
 
   onFilesSelected(event: any): void {

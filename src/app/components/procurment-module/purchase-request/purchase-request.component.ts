@@ -67,6 +67,7 @@ export class PurchaseRequestComponent implements OnInit {
   superSiteList: any;
   vendorList: any;
   brandNotSelected: boolean = false;
+  UOMNotSelected:boolean = false;
   vendorSearch: string = '';
   filteredVendorList: any[] = [];
   load = false;
@@ -262,8 +263,9 @@ export class PurchaseRequestComponent implements OnInit {
           );
           formData.append(`items[${index}][hsnCode]`, item.HSNcode || '');
           formData.append(`items[${index}][remark]`, item.remark || '');
-          formData.append(`items[${index}][uom]`, item.uom || '');
-
+          
+            formData.append(`items[${index}][uom]`, item.uom || '');
+         
           if (item.brandSelections.length === 0) {
             this.snack.notify('Select Atleast one Brand for every Item', 2);
             this.brandNotSelected = true;
@@ -321,7 +323,9 @@ export class PurchaseRequestComponent implements OnInit {
           formData.append(`items[${index}][hsnCode]`, item.HSNcode || '');
           formData.append(`items[${index}][subCategory]`, item.subCategory);
           formData.append(`items[${index}][remark]`, item.remark);
-          formData.append(`items[${index}][uom]`, item.uom);
+         
+              formData.append(`items[${index}][uom]`, item.uom || '');
+           
           formData.append(`items[${index}][brandName]`, item.brandName._id);
           formData.append(`items[${index}][rate]`, item.rate);
           formData.append(`items[${index}][gst]`, '');
@@ -364,10 +368,13 @@ export class PurchaseRequestComponent implements OnInit {
 
     if (this.brandNotSelected === true) {
       console.log(this.brandNotSelected);
+     
       this.brandNotSelected = false;
+     
       return;
     }
 
+   
     // Make a POST request to the PURCHASE_REQUEST_API with requestData
     this.httpService.POST(PURCHASE_REQUEST_API, formData).subscribe({
       next: (resp: any) => {
@@ -481,7 +488,7 @@ export class PurchaseRequestComponent implements OnInit {
       attachment: new FormControl([]),
       files: new FormControl([]),
       remark: new FormControl(''),
-      uom: new FormControl(''),
+      uom: new FormControl('', Validators.required),
 
       brandSelections: this.formBuilder.array([]),
     });
