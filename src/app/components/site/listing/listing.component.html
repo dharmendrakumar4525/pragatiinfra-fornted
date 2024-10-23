@@ -33,7 +33,7 @@
       <table class="table pragati-table">
         <thead>
           <tr>
-            <th scope="col">SN.</th>
+            <th scope="col">Sr No.</th>
 
             <th scope="col">Locaton</th>
             <th scope="col">Site Name</th>
@@ -47,14 +47,14 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of siteList; let i = index">
-            <td scope="row">{{ i + 1 }}</td>
-            <td>{{ item.location }}</td>
-            <td>{{ item.site_name }}</td>
-            <td>{{ item.code }}</td>
-            <td>{{ item.store_manager }}</td>
-            <td>{{ item.store_manager_phone_number }}</td>
-            <td>{{ item.site_manager_email }}</td>
-            <td>
+            <td scope="row" style="text-align: right;">{{ i + 1 }}</td>
+            <td style="text-align: left;">{{ item.location }}</td>
+            <td style="text-align: left;">{{ item.site_name }}</td>
+            <td style="text-align: left;">{{ item.code }}</td>
+            <td style="text-align: left;">{{ item.store_manager }}</td>
+            <td style="text-align: right;">{{ item.store_manager_phone_number }}</td>
+            <td style="text-align: left;">{{ item.site_manager_email }}</td>
+            <td style="text-align: left;">
               {{
                 item.address.street_address +
                   " " +

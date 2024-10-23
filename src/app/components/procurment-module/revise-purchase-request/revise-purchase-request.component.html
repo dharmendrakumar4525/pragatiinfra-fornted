@@ -48,9 +48,19 @@
 
 
   <mat-card class="topcard">
-    <div style="display: flex;flex-wrap: wrap;gap:40px;width:1000px">
-      <div class="flex-div" style="display: flex;flex-direction: column; margin-bottom:-10px;">
-        <label style="color: #4272BF;font-size: 14px;">Request title <span class="star">*</span></label>
+    <div style="display: flex;flex-wrap: wrap;gap:50px;width:1200px">
+      <div class="flex-div" style="display: flex;flex-direction: column;">
+        <label style="color: #4272BF;font-size: 14px;margin-bottom:3px;">Request Type <span class="star">*</span></label>
+        <mat-select id="title" placeholder="Select Type" formControlName="prType"
+              style="padding: 10px;width: 200px; margin-right:-20px; height:50px;border:1px solid #ccc;border-radius: 6px;cursor: pointer;font-family: 'Poppins';">
+              <mat-option [value]="item" *ngFor="let item of prType">
+                {{item}}
+              </mat-option>
+            </mat-select>
+            
+      </div>
+      <div class="flex-div" style="display: flex;flex-direction: column;">
+        <label style="color: #4272BF;font-size: 14px;margin-bottom:3px;">Request title <span class="star">*</span></label>
         <mat-select id="title" placeholder="Select title" formControlName="title" (selectionChange)="selectedTitle($event)"
               style="padding: 10px;width: 200px; margin-right:-20px; height:50px;border:1px solid #ccc;border-radius: 6px;cursor: pointer;font-family: 'Poppins';">
               <mat-option [value]="item._id" *ngFor="let item of categoryList">
@@ -59,7 +69,7 @@
             </mat-select>
             
       </div>
-      <div  class="flex-div" style="display: flex;flex-direction: column;margin-left: 100px;">
+      <div  class="flex-div" style="display: flex;flex-direction: column;">
         <label style="color: #4272BF;font-size: 14px;">Request date</label>
 
        
@@ -98,7 +108,7 @@
         <input placeholder="Auto generate" formControlName="purchase_request_number" readonly
           style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
       </div>
-      <div style="display: flex;flex-direction: column;margin-left: 100px;">
+      <div style="display: flex;flex-direction: column;">
         <label style="color: #4272BF;font-size: 14px;">Site name <span class="star">*</span></label>
 
         <mat-select id="site" placeholder="Select site" formControlName="site"
@@ -109,7 +119,7 @@
 
         </mat-select>
       </div>
-      <div style="display: flex;flex-direction: column;margin-left: 100px;">
+      <div style="display: flex;flex-direction: column;">
         <label style="color: #4272BF;">Local Purchase <span class="star">*</span></label>
         <mat-radio-group aria-labelledby="example-radio-group-label" color="primary" class="example-radio-group"
           formControlName="local_purchase" (change)="handleLocalPurchaseChange()">
@@ -144,6 +154,7 @@
         <tr>
           <th>S&nbsp;No</th>
           <th>Item*</th>
+          <th>Item Code></th>
           <th>Specification</th>
           <th>Category</th>
           <th>Sub&nbsp;category</th>
@@ -152,7 +163,7 @@
           <th>Quantity*</th>
           <!-- <th>Brand Name</th> -->
           <th>Rate</th>
-          <th>Brand Name</th>
+          <th>Make List</th>
           <th>Attachments</th>
           <th>Upload</th>
           <th>Remarks</th>
@@ -185,6 +196,9 @@
                     </mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
+              </td>
+              <td style="color: #000;">
+                {{item.get('item_code')?.value}}
               </td>
               <td style="color: #000;">
                 {{item.get('specification')?.value}}
@@ -280,13 +294,14 @@
         <tr>
           <th>S&nbsp;No</th>
           <th>Item*</th>
+          <th>Item Code></th>
           <th>Specification</th>
           <th>Category</th>
           <th>Sub&nbsp;category</th>
           <th>Uom*</th>
           <th>HSN Code</th>
           <th>Quantity*</th>
-          <th>Brand Name</th>
+          <th>Make List</th>
           <th>Attachments</th>
           <th>Upload</th>
           <th>Remarks</th>
@@ -319,6 +334,9 @@
                     </mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
+              </td>
+              <td style="color: #000;">
+                {{item.get('item_code')?.value}}
               </td>
               <td style="color: #000;">
                 {{item.get('specification')?.value}}

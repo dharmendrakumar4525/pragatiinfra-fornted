@@ -62,6 +62,7 @@ export class RateApprovalUpdateComponent implements OnInit {
   purchaseRequestForm = new FormGroup({
     title: new FormControl({ value: '', disabled: true }, Validators.required),
     date: new FormControl({ value: '', disabled: true }, Validators.required),
+    prType: new FormControl({ value: '', disabled: true }, Validators.required),
     files:new FormControl([]),
     expected_delivery_date: new FormControl(
       { value: '', disabled: true },
@@ -125,6 +126,7 @@ export class RateApprovalUpdateComponent implements OnInit {
     this.purchaseRequestForm.patchValue({
       title: data.title,
       date: data.date,
+      prType:data.prType,
       expected_delivery_date: data.expected_delivery_date,
       rate_approval_number: data.rate_approval_number,
       handle_by: data.handle_by,

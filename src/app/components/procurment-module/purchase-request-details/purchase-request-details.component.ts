@@ -30,6 +30,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
   */
   purchaseRequestForm = new FormGroup({
     title: new FormControl('', Validators.required),
+    prType:new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
     expected_delivery_date: new FormControl('', Validators.required),
     purchase_request_number: new FormControl(''),
@@ -99,6 +100,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
     console.log("lets see data", data);
     this.purchaseRequestForm.patchValue({
       title: data.title,
+      prType:data.prType || "Site Establishment",
       date: data.date,
       expected_delivery_date: data.expected_delivery_date,
       purchase_request_number: data.purchase_request_number,
@@ -115,6 +117,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
     return new FormGroup({
       item_id: new FormControl('', Validators.required),
       qty: new FormControl('', Validators.required),
+      item_code:new FormControl(''),
       category: new FormControl(''),
       subCategory: new FormControl(''),
       attachment: new FormControl(''),
@@ -139,6 +142,7 @@ export class PurchaseRequestDetailsComponent implements OnInit {
       return new FormGroup({
         item_id: new FormControl(item.item_id, Validators.required),
         qty: new FormControl(item.qty, Validators.required),
+        item_code: new FormControl(item?.item_code || ""),
         category: new FormControl(item.categoryDetail.name),
         subCategory: new FormControl(item.subCategoryDetail.subcategory_name),
         attachment: new FormControl(item.attachment),

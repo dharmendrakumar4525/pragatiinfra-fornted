@@ -32,6 +32,7 @@ export class RateComparativeDetailsComponent implements OnInit {
 
   purchaseRequestForm = new FormGroup({
     title: new FormControl('', Validators.required),
+    prType:new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
     expected_delivery_date: new FormControl('', Validators.required),
     handle_by: new FormControl({value:'',disabled:true}, Validators.required),
@@ -176,6 +177,7 @@ export class RateComparativeDetailsComponent implements OnInit {
   patchData(data) {
     this.purchaseRequestForm.patchValue({
       title: data.title,
+      prType:data.prType,
       date: data.date,
       expected_delivery_date: data.expected_delivery_date,
       rate_approval_number: data.rate_approval_number,

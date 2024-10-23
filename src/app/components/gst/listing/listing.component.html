@@ -28,7 +28,7 @@
       <table class="table  pragati-table">
         <thead>
           <tr>
-            <th scope="col">SN.</th>
+            <th scope="col">Sr. No.</th>
 
             <th scope="col">GST Name</th>
             <th scope="col">Percentage</th>
@@ -38,9 +38,9 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of list;let i = index">
-            <td scope="row">{{i+1}}</td>
-            <td>{{item.gst_name}}</td>
-            <td>{{item.gst_percentage}}</td>
+            <td scope="row" style="text-align: right;">{{i+1}}</td>
+            <td style="text-align: left;">{{item.gst_name}}</td>
+            <td style="text-align: right;">{{item.gst_percentage}}</td>
             <td>
               <div class="action-btn-wrapper">
                 <a class="action-btn" (click)="edit(item._id)" title="Edit"><i class="fa fa-edit"></i>

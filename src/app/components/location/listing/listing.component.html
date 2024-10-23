@@ -28,7 +28,7 @@
     <table class="table  pragati-table">
       <thead>
         <tr>
-          <th scope="col">SN.</th>
+          <th scope="col">Sr. No.</th>
           <th scope="col">Location Name</th>
           <th scope="col">Action</th>
 
@@ -41,8 +41,8 @@
         </ng-container>
         <ng-container *ngIf="structureList && structureList.length>0">
           <tr *ngFor="let item of structureList;let i = index">
-            <td scope="row">{{i+1}}</td>
-            <td>{{item.location_name}}</td>
+            <td scope="row" style="text-align: right;">{{i+1}}</td>
+            <td style="text-align: left;">{{item.location_name}}</td>
             <td>
               <div class="action-btn-wrapper">
                 <a  

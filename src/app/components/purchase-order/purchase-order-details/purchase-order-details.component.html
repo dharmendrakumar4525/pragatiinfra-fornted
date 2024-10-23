@@ -315,13 +315,16 @@ due_date
         <tr>
           <th>Item&nbsp;No</th>
           <th>Item&nbsp;Name</th>
+          <th>Item Code</th>
           <th>Specification</th>
           <th>HSN Code</th>
+          <th>Category</th>
+          <th>SubCategory</th>
           <!-- <th>Brand</th> -->
           <th>Quantity</th>
           <th>UOM</th>
 
-          <th>Brand Name</th>
+          <th>Make List</th>
           <th>Rate</th>
           <th>Sub Total</th>
           <th>Tax</th>
@@ -341,10 +344,20 @@ due_date
               {{ item.item.item_name }}
             </td>
             <td>
+              {{ item.item.item_code || ""}}
+            </td>
+            <td>
               {{ item.item.specification }}
             </td>
             <td>
-              {{ item.item.hsnCode }}
+              {{ item.item.hsnCode
+}}
+            </td>
+            <td>
+              {{ item.item.categoryDetail.name }}
+            </td>
+            <td>
+              {{ item.item.subCategoryDetail.subcategory_name }}
             </td>
             <!-- <td style="text-align: center;">
               {{item.vendors[0].brand}}
@@ -384,35 +397,42 @@ due_date
           </tr>
         </tbody>
         <tr>
+          <td colspan="7" style="border: none; font-size: small" ></td>
           <td colspan="6" style="border: none; font-size: small">
             Total&nbsp;amount
           </td>
-          <td colspan="6" style="border: none; font-size: small">
+          <td colspan="1" style="border: none; font-size: small">
             {{ poDetails.vendors_total[0].subTotal | currency : "INR" }}
           </td>
+          <td colspan="1" style="border: none; font-size: small" ></td>
         </tr>
         <tr>
+          <td colspan="7" style="border: none; font-size: small" ></td>
           <td colspan="6" style="border: none; font-size: small">
             Total&nbsp;Freight
           </td>
-          <td colspan="6" style="border: none; font-size: small">
+          <td colspan="1" style="border: none; font-size: small">
             {{ poDetails.vendors_total[0].freightTotal | currency : "INR" }}
           </td>
+          <td colspan="1" style="border: none; font-size: small" ></td>
         </tr>
         <tr>
+          <td colspan="7" style="border: none; font-size: small" ></td>
           <td colspan="6" style="border: none; font-size: small">
             GST&nbsp;amount
           </td>
-          <td colspan="6" style="border: none; font-size: small">
+          <td colspan="1" style="border: none; font-size: small">
             {{ poDetails.vendors_total[0].gstAmount | currency : "INR" }}
           </td>
+          <td colspan="1" style="border: none; font-size: small" ></td>
         </tr>
         <tr>
+          <td colspan="7" style="border: none; font-size: small" ></td>
           <td colspan="6" style="border: none; font-size: small">
             Grand&nbsp;total
           </td>
           <td
-            colspan="6"
+            colspan="1"
             style="
               border: none;
               color: #073b4c;
@@ -422,6 +442,7 @@ due_date
           >
             {{ poDetails.vendors_total[0].total | currency : "INR" }}
           </td>
+          <td colspan="1" style="border: none; font-size: small" ></td>
         </tr>
       </table>
     </div>

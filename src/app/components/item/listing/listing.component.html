@@ -29,6 +29,7 @@
             <th scope="col">Item Number</th>
            
             <th scope="col">Item Name</th>
+            <th>Item Code</th>
             <th scope="col">HSN Code</th>
             <th scope="col">Brands</th>
             <th scope="col">Category</th>
@@ -41,16 +42,17 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of itemList; let i = index">
-            <td scope="row">{{i + 1}}</td>
-            <td>{{item.item_number}}</td>
-            <td>{{item.item_name}}</td>
-            <td>{{item.HSNcode}}</td>
-            <td>{{getBrandNamesByIds(item.brands)}}</td>
-            <td>{{item?.categoryDetail?.name}}</td>
-            <td>{{item?.subCategoryDetail?.subcategory_name}}</td>
-            <td>{{getUOMNamesByIds(item?.uom)}}</td>
-            <td>{{item?.gstDetail?.gst_name}}</td>
-            <td>{{item.specification}}</td>
+            <td scope="row" style="text-align: right;">{{i + 1}}</td>
+            <td style="text-align: right;">{{item.item_number}}</td>
+            <td style="text-align: left;">{{item.item_name}}</td>
+            <td style="text-align: left;">{{item.item_code}}</td>
+            <td style="text-align: left;">{{item.HSNcode}}</td>
+            <td style="text-align: left;">{{getBrandNamesByIds(item.brands)}}</td>
+            <td style="text-align: left;">{{item?.categoryDetail?.name}}</td>
+            <td style="text-align: left;">{{item?.subCategoryDetail?.subcategory_name}}</td>
+            <td style="text-align: left;">{{getUOMNamesByIds(item?.uom)}}</td>
+            <td style="text-align: left;">{{item?.gstDetail?.gst_name}}</td>
+            <td style="text-align: left;">{{item.specification}}</td>
             <td>
               <div class="action-btn-wrapper">
                 <a class="action-btn" (click)="edit(item._id)" title="Edit"><i class="fa fa-edit"></i></a>

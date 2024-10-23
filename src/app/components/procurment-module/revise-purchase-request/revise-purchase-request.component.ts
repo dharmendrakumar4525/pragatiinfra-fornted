@@ -29,6 +29,9 @@ export class RevisePurchaseRequestComponent implements OnInit {
   initialVendor:any;
   categoryList:any;
   brandList: any;
+  prType= ["Site Establishment",
+    "Normal"
+  ];
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -44,6 +47,7 @@ export class RevisePurchaseRequestComponent implements OnInit {
 
   purchaseRequestForm = new FormGroup({
     title: new FormControl('', Validators.required),
+    prType:new FormControl('', Validators.required),
     date: new FormControl(moment().format('DD-MM-YYYY'), Validators.required),
     expected_delivery_date: new FormControl(moment().add(1, 'days').format('DD-MM-YYYY'), Validators.required),
     purchase_request_number: new FormControl(''),
@@ -104,6 +108,7 @@ export class RevisePurchaseRequestComponent implements OnInit {
     return new FormGroup({
       item_id: new FormControl('', Validators.required),
       HSNcode :new FormControl(''),
+      item_code :new FormControl(''),
       rate :new FormControl('', Validators.required),
       qty: new FormControl('', Validators.required),
       category: new FormControl(null),
@@ -157,6 +162,7 @@ if(requestData.local_purchase==="no")
 {
   formData.append('_id', requestData._id);
   formData.append('title', requestData.title);
+  formData.append('prType', requestData.prType);
   formData.append('handle_by', "");
   formData.append('date', requestData.date);
   formData.append('expected_delivery_date', requestData.expected_delivery_date);
@@ -170,6 +176,7 @@ if(requestData.local_purchase==="no")
     requestData.items.forEach((item, index) => {
       formData.append(`items[${index}][item_id]`, item.item_id._id);
       formData.append(`items[${index}][specification]`, item.specification|| '');
+      formData.append(`items[${index}][item_code]`, item.item_code);
       formData.append(`items[${index}][qty]`, item.qty);
       formData.append(`items[${index}][category]`, item.category);
       formData.append(`items[${index}][subCategory]`, item.subCategory);
@@ -208,6 +215,7 @@ formData.append('status', requestData.status);
 // Append items and their attachments
 requestData.items.forEach((item, index) => {
     formData.append(`items[${index}][item_id]`, item.item_id._id);
+    formData.append(`items[${index}][item_code]`, item.item_code);
     formData.append(`items[${index}][specification]`, item.specification|| '');
     formData.append(`items[${index}][qty]`, item.qty.toString());
     formData.append(`items[${index}][rate]`, item.rate.toString());
@@ -334,12 +342,14 @@ console.log(formData);
       // If the item occurs only once, update the FormArray item
       let category = selectedItem.categoryDetail.name;
       let subCategory = selectedItem.subCategoryDetail.subcategory_name;
+      let item_code=selectedItem.item_code;
       let uom = selectedItem.uomDetail.uom_name;
       let specification= selectedItem.specification;
   
       this.items.at(i).patchValue({
         category: category,
         subCategory: subCategory,
+        item_code:item_code || "",
         uom: uom,
         specification:specification
       });
@@ -429,6 +439,7 @@ console.log(formData);
       return new FormGroup({
         item_id: new FormControl(catItem[0], Validators.required),
         HSNcode :new FormControl(item.hsnCode),
+        item_code :new FormControl(item.item_code),
         qty: new FormControl(item.qty, Validators.required),
         rate:new FormControl(item.rate),
         category: new FormControl(item.categoryDetail.name),
@@ -445,6 +456,7 @@ console.log(formData);
       return new FormGroup({
         item_id: new FormControl('', Validators.required),
         HSNcode :new FormControl(''),
+        item_code :new FormControl(''),
         qty: new FormControl('', Validators.required),
         rate:new FormControl(''),
         category: new FormControl(''),
@@ -492,6 +504,7 @@ console.log("check for filtered", this.filteredItemList);
 
     this.purchaseRequestForm.patchValue({
       title: category._id,
+      prType:data.prType || "Site Establishment",
       date: data.updated_at,
       expected_delivery_date: data.expected_delivery_date,
       purchase_request_number: data.purchase_request_number,

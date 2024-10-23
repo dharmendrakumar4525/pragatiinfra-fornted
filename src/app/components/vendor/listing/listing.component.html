@@ -34,17 +34,22 @@
         <table class="table pragati-table" style="min-width: 1500px;"> <!-- Increased table width -->
           <thead>
             <tr>
-              <th scope="col" style="min-width: 50px;">SN.</th>
+              <th scope="col" style="min-width: 50px;">Sr. No.</th>
               <th scope="col" style="min-width: 150px;">Vendor Name</th>
               <th scope="col" style="min-width: 100px;">Code</th>
+              <th scope="col" style="min-width: 100px;">Vendor Type</th>
+              <th scope="col" style="min-width: 100px;">Scope</th>
               <th scope="col" style="min-width: 150px;">Category</th>
               <th scope="col" style="min-width: 150px;">Sub Category</th>
               <th scope="col" style="min-width: 150px;">Contact Person</th>
               <th scope="col" style="min-width: 120px;">Phone Number</th>
               <th scope="col" style="min-width: 150px;">GST Number</th>
               <th scope="col" style="min-width: 150px;">PAN Number</th>
+              <th scope="col" style="min-width: 150px;">MSME Number</th>
               <th scope="col" style="min-width: 200px;">Email</th>
               <th scope="col" style="min-width: 400px;">Address</th>
+              <th scope="col" style="min-width: 150px;">City</th>
+              <th scope="col" style="min-width: 150px;">State</th>
               <th scope="col" style="min-width: 150px;">Payment Term</th>
               <th scope="col" style="min-width: 200px;">Term & Condition</th>
               <th scope="col" style="min-width: 100px;">Action</th>
@@ -52,19 +57,24 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of vendorList; let i = index">
-              <td scope="row">{{ i + 1 }}</td>
-              <td>{{ item?.vendor_name }}</td>
-              <td>{{ item?.code }}</td>
-              <td>{{ item?.category }}</td>
-              <td>{{ item?.SubCategory }}</td>
-              <td>{{ item?.contact_person }}</td>
-              <td>{{ item?.phone_number }}</td>
-              <td>{{ item?.gst_number }}</td>
-              <td>{{ item?.pan_number }}</td>
-              <td>{{ item?.email }}</td>
-              <td>{{combineAddress( item?.address) }}</td>
-              <td>{{ item?.payment_terms }}</td>
-              <td>{{ item?.terms_condition }}</td>
+              <td scope="row" style="text-align: right;">{{ i + 1 }}</td>
+              <td style="text-align: left;">{{ item?.vendor_name }}</td>
+              <td style="text-align: left;">{{ item?.code }}</td>
+              <td style="text-align: left;"></td>
+              <td style="text-align: left;"></td>
+              <td style="text-align: left;">{{ item?.category }}</td>
+              <td style="text-align: left;">{{ item?.SubCategory }}</td>
+              <td style="text-align: left;">{{ item?.contact_person }}</td>
+              <td style="text-align: right;">{{ item?.phone_number }}</td>
+              <td style="text-align: left;">{{ item?.gst_number }}</td>
+              <td style="text-align: left;">{{ item?.pan_number }}</td>
+              <td style="text-align: left;"></td>
+              <td style="text-align: left;">{{ item?.email }}</td>
+              <td style="text-align: left;">{{combineAddress( item?.address) }}</td>
+              <td style="text-align: left;">{{ item?.address?.city}}</td>
+              <td style="text-align: left;">{{item?.address?.state }}</td>
+              <td style="text-align: left;">{{ item?.payment_terms }}</td>
+              <td style="text-align: left;">{{ item?.terms_condition }}</td>
               <td>
                 <div class="action-btn-wrapper">
                   <a class="action-btn" (click)="edit(item._id)" title="Edit">

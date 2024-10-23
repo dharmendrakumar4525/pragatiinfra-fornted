@@ -61,6 +61,7 @@ selectedVendorList:any[] = [];
    */
   rateComparativeForm = new FormGroup({
     title: new FormControl('', Validators.required),
+    prType: new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
     expected_delivery_date: new FormControl('', Validators.required),
     handle_by: new FormControl(
@@ -140,6 +141,7 @@ selectedVendorList:any[] = [];
     let loginUser = JSON.parse(localStorage.getItem('loginData'));
     this.rateComparativeForm.patchValue({
       title: data.title,
+      prType:data.prType,
       date: data.date,
       expected_delivery_date: data.expected_delivery_date,
       rate_approval_number: data.rate_approval_number,
@@ -202,6 +204,7 @@ selectedVendorList:any[] = [];
           preferred: totalData.preferred,
           vendorRemark: totalData.vendorRemark,
           paymentTerms:totalData.paymentTerms,
+          QuoteReference:totalData.QuoteReference,
         };
       }
     );
@@ -400,6 +403,7 @@ selectedVendorList:any[] = [];
           freightGst: 0,
           grandTotal: 0,
           vendorRemark: '',
+          QuoteReference:'',
           paymentTerms :'',
           preferred: false,
         };
@@ -419,6 +423,7 @@ selectedVendorList:any[] = [];
         for (let item of tempFilteredItems) {
           const itemGroup = this.formBuilder.group({
             item: new FormControl(item),
+
             RequiredQuantity: new FormControl(item.qty, Validators.required),
             Rate: new FormControl('', [
               Validators.required,
@@ -440,6 +445,7 @@ selectedVendorList:any[] = [];
             tableData.items.push({
               item_id: item._id,
               name: item.item_name,
+              item_code:item.item_code,
               specification: item.specification,
               hsnCode:item.hsnCode,
               category: item.categoryDetail.name,
@@ -547,6 +553,8 @@ selectedVendorList:any[] = [];
         const vendorRemarkControlName = `table_${tableIndex}_vendor_${vendorId}_vendorRemark`;
        
         const paymentTermsControlName = `table_${tableIndex}_vendor_${vendorId}_paymentTerms`;
+        const QuoteReferenceControlName = `table_${tableIndex}_vendor_${vendorId}_QuoteReference`;
+        
         this.vendorItemsForm.addControl(
           freightControlName,
           new FormControl(0, Validators.required)
@@ -563,6 +571,11 @@ selectedVendorList:any[] = [];
           paymentTermsControlName,
           new FormControl('')
         );
+        this.vendorItemsForm.addControl(
+          QuoteReferenceControlName,
+          new FormControl('')
+        );
+        
       });
     });
 
@@ -739,11 +752,19 @@ selectedVendorList:any[] = [];
         vendorId,
         'paymentTerms'
       );
+      const QuoteReferenceControlName = this.getFormControl(
+        tableIndex,
+        '',
+        vendorId,
+        'QuoteReference'
+      );
+      
       table.totals[vendorId].freight = parseFloat(freightControl.value) || 0;
       table.totals[vendorId].freightGst =
         parseFloat(freightGstControl.value) || 0;
       table.totals[vendorId].vendorRemark = vendorRemarkControlName.value;
       table.totals[vendorId].paymentTerms = paymentTermsControlName.value;
+      table.totals[vendorId].QuoteReference = QuoteReferenceControlName.value;
       table.totals[vendorId].grandTotal =
         table.totals[vendorId].totalAmount +
         table.totals[vendorId].gstAmount +
@@ -846,9 +867,14 @@ selectedVendorList:any[] = [];
 
   detailsOfVendor(vendor: any) {
     let tempvendor = this.vendorsList.find((obj) => obj._id == vendor);
-    return `${tempvendor.vendor_name} (${tempvendor.code})`;
+    
+    if (tempvendor) {
+      return `${tempvendor.vendor_name} (${tempvendor.code})<br>${tempvendor.contact_person} - ${tempvendor.phone_number}`;
+    }
+  
+    return ''; // Return an empty string if no vendor is found
   }
-
+  
   onFilesSelected(event: any): void {
     const fileList: FileList = event.target.files;
     console.log('file', fileList);

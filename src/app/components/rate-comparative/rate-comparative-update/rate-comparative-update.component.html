@@ -123,6 +123,24 @@
   <mat-card class="topcard">
     <div style="display: flex; flex-wrap: wrap; gap: 10px; max-width: 100%">
       <div class="flex-div" style="display: flex; flex-direction: column">
+        <label style="color: #4272bf; font-size: 14px">Request Type </label>
+        <input
+          placeholder="Enter Type"
+          formControlName="prType"
+          readonly
+          style="
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            margin-top: 3px;
+            font-family: 'Poppins';
+            height: 50px;
+          "
+        />
+      </div>
+      <div class="flex-div" style="display: flex; flex-direction: column">
         <label style="color: #4272bf; font-size: 14px">Request title </label>
         <input
           placeholder="Enter title"
@@ -359,6 +377,12 @@
                 rowspan="2"
                 style="text-align: center; width: 300px; vertical-align: middle"
               >
+                Item Code
+              </th>
+              <th
+                rowspan="2"
+                style="text-align: center; width: 300px; vertical-align: middle"
+              >
                 Specification
               </th>
               <th
@@ -432,7 +456,7 @@
                           .preferred
                       "
                     />
-                    {{ vendor }}
+                    <span [innerHTML]="vendor"></span>
                   </label>
                 </th>
               </ng-container>
@@ -491,6 +515,16 @@
                 >
                   {{ item.name }}
                 </td>
+                
+                <td
+                style="
+                  text-align: center;
+                  width: 300px;
+                  vertical-align: middle;
+                "
+              >
+                {{ item.item_code }}
+              </td>
                 <td
                   style="
                     text-align: center;
@@ -649,7 +683,7 @@
           <tfoot>
             <tr>
               <td
-                colspan="8"
+                colspan="9"
                 style="border-color: white; border-right: 0.5px solid"
               ></td>
               <td colspan="2" style="text-align: right; border: 0.5px solid">
@@ -668,7 +702,7 @@
             </tr>
             <tr>
               <td
-                colspan="8"
+                colspan="9"
                 style="border-color: white; border-right: 0.5px solid"
               ></td>
               <td colspan="2" style="text-align: right; border: 0.5px solid">
@@ -685,7 +719,7 @@
             </tr>
             <tr>
               <td
-                colspan="8"
+                colspan="9"
                 style="border-color: white; border-right: 0.5px solid"
               ></td>
               <td colspan="2" style="text-align: right; border: 0.5px solid">
@@ -710,7 +744,7 @@
             </tr>
             <tr>
               <td
-                colspan="8"
+                colspan="9"
                 style="border-color: white; border-right: 0.5px solid"
               ></td>
               <td colspan="2" style="text-align: right; border: 0.5px solid">
@@ -737,7 +771,7 @@
             </tr>
             <tr>
               <td
-                colspan="8"
+                colspan="9"
                 style="border-color: white; border-right: 0.5px solid"
               ></td>
               <td colspan="2" style="text-align: right; border: 0.5px solid">
@@ -762,7 +796,7 @@
             </tr>
             <tr>
               <td
-                colspan="8"
+                colspan="9"
                 style="border-color: white; border-right: 0.5px solid"
               ></td>
               <td colspan="2" style="text-align: right; border: 0.5px solid">
@@ -789,7 +823,7 @@
             </tr>
             <tr>
               <td
-                colspan="8"
+                colspan="9"
                 style="border-color: white; border-right: 0.5px solid"
               ></td>
               <td colspan="2" style="text-align: right; border: 0.5px solid">
@@ -808,6 +842,33 @@
                     (input)="updateTotals(0)"
                     [attr.data-control-name]="
                       'table_0_vendor_' + vendorId + '_paymentTerms'
+                    "
+                  />
+                </td>
+              </ng-container>
+              <td style="border-color: white"></td>
+            </tr>
+            <tr>
+              <td
+                colspan="9"
+                style="border-color: white; border-right: 0.5px solid"
+              ></td>
+              <td colspan="2" style="text-align: right; border: 0.5px solid">
+                Vendor Quotation Reference
+              </td>
+              <ng-container
+                *ngFor="let vendorId of getVendorIds(vendorItemsTables[0])"
+              >
+                <td colspan="3" style="height: 40px; border: 0.5px solid">
+                  <input
+                    type="text"
+                    class="inputBoxes"
+                    [formControl]="
+                      getFormControl(0, '', vendorId, 'QuoteReference')
+                    "
+                    (input)="updateTotals(0)"
+                    [attr.data-control-name]="
+                      'table_0_vendor_' + vendorId + '_QuoteReference'
                     "
                   />
                 </td>

@@ -45,13 +45,18 @@
 
 <form [formGroup]="purchaseRequestForm">
   <mat-card class="topcard">
-    <div style="display: flex;flex-wrap: wrap;gap:40px;width:1000px">
+    <div style="display: flex;flex-wrap: wrap;gap:20px;width:1100px">
+      <div style="display: flex;flex-direction: column;">
+        <label style="color: #4272BF;font-size: 14px;">Request Type </label>
+        <input placeholder="Enter Type" formControlName="prType" [readonly]="true"
+          style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
+      </div>
       <div style="display: flex;flex-direction: column;">
         <label style="color: #4272BF;font-size: 14px;">Request title </label>
         <input placeholder="Enter title" formControlName="title" [readonly]="true"
           style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
       </div>
-      <div style="display: flex;flex-direction: column;margin-left: 100px;">
+      <div style="display: flex;flex-direction: column">
         <label style="color: #4272BF;font-size: 14px;">Request date</label>
         <mat-form-field appearance="outline">
           <input matInput [matDatepicker]="date" [readonly]="true" formControlName="date"
@@ -60,7 +65,7 @@
           <mat-datepicker #date></mat-datepicker>
         </mat-form-field>
       </div>
-      <div class="custom-form-group">
+      <div style="display: flex;flex-direction: column">
         <label class="custom-label" for="" style="color: #4272BF;font-size: 14px;"> Required by <span
             class="star">*</span>
         </label>
@@ -78,7 +83,7 @@
         <input placeholder="Auto generate" formControlName="purchase_request_number" readonly
           style="width:200px;padding:10px;border-radius: 6px;border:1px solid #9F9F9F;cursor: pointer;margin-top: 10px;font-family: 'Poppins';">
       </div>
-      <div style="display: flex;flex-direction: column;margin-left: 100px;">
+      <div style="display: flex;flex-direction: column;">
         <label style="color: #4272BF;font-size: 14px;">Site name <span class="star">*</span></label>
 
         <mat-select id="site" placeholder="Select site" formControlName="site"
@@ -114,13 +119,14 @@
       <tr>
         <th>S&nbsp;No</th>
               <th>Item*</th>
+              <th>Item Code</th>
               <th>Specification</th>
               <th>HSN Code</th>
               <th>Category</th>
               <th>Sub&nbsp;category</th>
               <th>Uom*</th>
               <th>Quantity*</th>
-              <th>Brand Name</th>
+              <th>Make List</th>
               <th>Rate</th>
               <!-- <th>Gst</th>
               <th>Freight</th> -->
@@ -144,6 +150,7 @@
 
               </mat-select> -->
             </td>
+            <td>{{item.item_code}}</td>
             <td>{{item.specification}}</td>
             <td>
               {{item.hsnCode}}
@@ -229,13 +236,14 @@
           <tr>
             <th>S&nbsp;No</th>
             <th>Item*</th>
+            <th>Item Code</th>
             <th>Specification</th>
             <th> HSN Code</th>
             <th>Category</th>
             <th>Sub&nbsp;category</th>
             <th>Uom*</th>
             <th>Quantity*</th>
-            <th>Brand Name</th>
+            <th>Make List</th>
            
             <th>Remarks</th>
             <th>Attachments</th> 
@@ -249,6 +257,7 @@
                 {{getItemName(item.item_id)}}
     
               </td>
+              <td>{{item.item_code}}</td>
               <td>{{item.specification}}</td>
               <td>
                 {{item.hsnCode}}

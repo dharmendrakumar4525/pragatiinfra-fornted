@@ -28,7 +28,7 @@
     <table class="table  pragati-table">
       <thead>
         <tr>
-          <th scope="col">SN.</th>
+          <th scope="col">Sr. No.</th>
           <th scope="col">Activity Name</th>
           <th scope="col">Action</th>
 
@@ -41,8 +41,8 @@
         </ng-container>
         <ng-container *ngIf="activityList && activityList.length>0">
           <tr *ngFor="let item of activityList;let i = index">
-            <td scope="row">{{i+1}}</td>
-            <td>{{item.activity_name}}</td>
+            <td scope="row" style="text-align: right;">{{i+1}}</td>
+            <td style="text-align: left;">{{item.activity_name}}</td>
             <td>
               <div class="action-btn-wrapper">
                 <a class="action-btn" (click)="edit(item._id)" title="Edit"><i class="fa fa-edit"></i>

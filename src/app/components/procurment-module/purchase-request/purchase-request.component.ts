@@ -90,6 +90,9 @@ export class PurchaseRequestComponent implements OnInit {
   filter_value = 'pending';
   curr_site: any;
   requestNo: number = 0;
+  prType= ["Site Establishment",
+    "Normal"
+  ];
 
   // updateRequestNo(newNumber: number): void {
   //   this.requestNo = newNumber;
@@ -117,6 +120,7 @@ export class PurchaseRequestComponent implements OnInit {
 
   purchaseRequestForm = new FormGroup({
     title: new FormControl('', Validators.required),
+    prType:new FormControl('', Validators.required),
     date: new FormControl(moment().format('DD-MM-YYYY'), Validators.required),
     expected_delivery_date: new FormControl(
       moment().add(1, 'days').format('DD-MM-YYYY'),
@@ -228,6 +232,7 @@ export class PurchaseRequestComponent implements OnInit {
     // Append non-file fields to FormData
     formData.append('title', formValue.title);
     formData.append('handle_by', this.handleby);
+    formData.append('prType', formValue.prType);
     formData.append('date', formValue.date);
     formData.append('expected_delivery_date', formValue.expected_delivery_date);
     formData.append(
@@ -256,6 +261,7 @@ export class PurchaseRequestComponent implements OnInit {
           );
           formData.append(`items[${index}][specification]`, item.specification|| '');
           formData.append(`items[${index}][qty]`, item.qty || '');
+          formData.append(`items[${index}][item_code]`, item.item_code);
           formData.append(`items[${index}][category]`, item.category || '');
           formData.append(
             `items[${index}][subCategory]`,
@@ -320,12 +326,11 @@ export class PurchaseRequestComponent implements OnInit {
           formData.append(`items[${index}][specification]`, item.specification|| '');
           formData.append(`items[${index}][qty]`, item.qty);
           formData.append(`items[${index}][category]`, item.category);
+          formData.append(`items[${index}][item_code]`, item.item_code);
           formData.append(`items[${index}][hsnCode]`, item.HSNcode || '');
           formData.append(`items[${index}][subCategory]`, item.subCategory);
           formData.append(`items[${index}][remark]`, item.remark);
-         
-              formData.append(`items[${index}][uom]`, item.uom || '');
-           
+          formData.append(`items[${index}][uom]`, item.uom || '');
           formData.append(`items[${index}][brandName]`, item.brandName._id);
           formData.append(`items[${index}][rate]`, item.rate);
           formData.append(`items[${index}][gst]`, '');
@@ -479,6 +484,7 @@ export class PurchaseRequestComponent implements OnInit {
     return this.formBuilder.group({
       item_id: new FormControl('', Validators.required),
       HSNcode :new FormControl(''),
+      item_code:new FormControl(''),
       qty: new FormControl('', [
         Validators.required,
         Validators.pattern(/^\d+(\.\d{1,2})?$/),
@@ -497,6 +503,7 @@ export class PurchaseRequestComponent implements OnInit {
     return this.formBuilder.group({
       item_id: new FormControl('', Validators.required),
       HSNcode :new FormControl(''),
+      item_code:new FormControl(''),
       qty: new FormControl('', [
         Validators.required,
         Validators.pattern(/^\d+(\.\d{1,2})?$/),
@@ -828,7 +835,7 @@ export class PurchaseRequestComponent implements OnInit {
       // If the item occurs only once, update the FormArray item
       let category = selectedItem.categoryDetail.name;
       let subCategory = selectedItem.subCategoryDetail.subcategory_name;
-      
+      let item_code=selectedItem.item_code;
       let HSNcode=selectedItem.HSNcode || "";
       let specification= selectedItem.specification;
       if (this.items.length > 1) {
@@ -837,7 +844,7 @@ export class PurchaseRequestComponent implements OnInit {
       this.items.at(i).patchValue({
         category: category,
         subCategory: subCategory,
-        
+        item_code:item_code || "",
         HSNcode:HSNcode,
         specification:specification
       });
