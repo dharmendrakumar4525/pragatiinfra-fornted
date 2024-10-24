@@ -15,16 +15,28 @@ export class EditDataComponent implements OnInit {
 
   AllSubCategoryList:any=[];
   subCategoryList:any=[];
+  vendorType : any=[
+    "Fabricator", "Manufacturer", "Trader", "contractor"
+  ];
+  scope:any=[
+    "Local(lv)",
+    "National(nv)",
+    "Global (gv)"
+  ];
+
   dataReadySubject = new BehaviorSubject<boolean>(false);
   editForm = new FormGroup({
     vendor_name: new FormControl("", Validators.required),
     category: new FormControl([], Validators.required),
     SubCategory:new FormControl([], Validators.required),
-    contact_person: new FormControl(""),
+    contact_person: new FormControl("", Validators.required),
     dialcode: new FormControl('+91'),
-    phone_number: new FormControl(''),
+    phone_number: new FormControl('', Validators.required),
     gst_number: new FormControl(''),
-    pan_number: new FormControl(''),
+    pan_number: new FormControl('', Validators.required),
+    MSME_number:new FormControl(''),
+    scope:new FormControl('', Validators.required),
+    vendor_type:new FormControl('', Validators.required),
     email: new FormControl(''),
     payment_terms: new FormControl(''),
     terms_condition: new FormControl(''),
@@ -136,6 +148,9 @@ export class EditDataComponent implements OnInit {
       gst_number: data.gst_number,
       phone_number: data.phone_number,
       pan_number: data.pan_number,
+      MSME_number:data.MSME_number,
+       scope:data.scope,
+          vendor_type:data.vendor_type,
       email: data.email,
       payment_terms: data.payment_terms,
       terms_condition: data.terms_condition,

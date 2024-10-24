@@ -235,19 +235,23 @@ export class ListingComponent implements OnInit {
     });
     let sheetHeaders = [
       "Vendor Name",
+      "Vendor Type",
+      "Vendor Scope",
+      
       "Category",
       "Sub Category",
       "Contact Person",
       "Phone Number",
       "GST Number",
       "PAN Number",
+      "MSME Number",
       "Email",
       "Payment Term",
       "Term & Condtiion",
       "Address"
     ];
-    let valueKey = ['vendor_name', 'category', 'SubCategory', 'contact_person', 'vendor_phone_number', 'gst_number', 'pan_number', 'email', 'payment_terms', 'terms_condition', 'address2'];
-    let valueDataType = ['string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string'];
+    let valueKey = ['vendor_name','vendor_type', 'scope','category', 'SubCategory', 'contact_person', 'vendor_phone_number', 'gst_number', 'pan_number','MSME_number', 'email', 'payment_terms', 'terms_condition', 'address2'];
+    let valueDataType = ['string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string','string', 'string', 'string'];
     let sheetName: any = "vendors";
     this.excelService.mapArrayToExcel(sheetName, sheetHeaders, valueKey, valueDataType, filterReport);
   }

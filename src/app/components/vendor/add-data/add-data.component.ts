@@ -16,6 +16,14 @@ export class AddDataComponent implements OnInit {
   AllSubCategoryList:any=[];
   subCategoryList:any=[];
   vendorLength:number;
+  vendorType : any=[
+    "Fabricator", "Manufacturer", "Trader", "contractor"
+  ];
+  scope:any=[
+    "Local(lv)",
+    "National(nv)",
+    "Global (gv)"
+  ];
 
 
   addForm = new FormGroup({
@@ -26,7 +34,10 @@ export class AddDataComponent implements OnInit {
     contact_person: new FormControl("", Validators.required),
     dialcode: new FormControl('+91'),
     phone_number: new FormControl('', Validators.required),
-    gst_number: new FormControl('', Validators.required),
+    gst_number: new FormControl(''),
+    MSME_number:new FormControl(''),
+    scope:new FormControl('', Validators.required),
+    vendor_type:new FormControl('', Validators.required),
     pan_number: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
     payment_terms: new FormControl(''),
@@ -35,10 +46,10 @@ export class AddDataComponent implements OnInit {
     address: new FormGroup({
       street_address: new FormControl(''),
       street_address2: new FormControl(''),
-      state: new FormControl(''),
-      city: new FormControl(''),
+      state: new FormControl('', Validators.required),
+      city: new FormControl('',Validators.required),
       zip_code: new FormControl(''),
-      country: new FormControl(''),
+      country: new FormControl('', Validators.required),
     })
   });
   categoryList: any;

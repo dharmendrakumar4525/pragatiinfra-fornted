@@ -26,7 +26,38 @@
           </mat-form-field>
 
         </div>
+        <div class="col-md-3">
 
+
+          <mat-form-field appearance="outline">
+            <mat-label>Vendor Type</mat-label>
+            <mat-select matInput formControlName="vendor_type">
+              <mat-option *ngFor="let type of vendorType" [value]="type">
+                {{type}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="addForm.controls.vendor_type.errors?.['required']">
+              this field is required.
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+
+
+          <mat-form-field appearance="outline">
+            <mat-label>Vendor Scope</mat-label>
+            <mat-select matInput formControlName="scope">
+              <mat-option *ngFor="let scopeLevel of scope" [value]="scopeLevel">
+                {{scopeLevel}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="addForm.controls.scope.errors?.['required']">
+              this field is required.
+            </mat-error>
+          </mat-form-field>
+
+        </div>
         <div class="col-md-3">
           <mat-form-field appearance="outline">
             <mat-label>Category</mat-label>
@@ -101,6 +132,19 @@
             </mat-error>
 
           </mat-form-field>
+          
+
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline">
+            <mat-label>MSME Number</mat-label>
+            <input matInput formControlName="MSME_number">
+            <mat-error *ngIf="addForm.controls.MSME_number.errors?.['required']">
+              this field is required.
+            </mat-error>
+
+          </mat-form-field>
+          
 
         </div>
         <div class="col-md-3">
